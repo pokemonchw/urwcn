@@ -1,8 +1,8 @@
-# URWCN · UnReal World 简体中文汉化
+# URWCN · 不真实的世界（UnReal World）简体中文汉化
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-URWCN 是 **Byayoi 同人社区**的《UnReal World》汉化作品。
+URWCN 是 **Byayoi 同人社区**的《不真实的世界》（UnReal World）汉化作品。
 
 社区官网：[byayoi.org](https://byayoi.org/)
 

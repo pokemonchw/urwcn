@@ -29,7 +29,7 @@ culture.topic.koivula.summary	中西部的农耕民族，拥有大片田地和�
 culture.topic.kuikka_tribe.summary	以潜鸟为图腾，靠捕鱼、狩猎和饲养驯鹿为生。
 culture.topic.owl_tribe.summary	游牧饲养驯鹿，在极北夏营与南方冬营间迁徙。
 culture.topic.seal_tribe.summary	北部海岸的居民，以海为生，将海豹奉为图腾。
-culture.ui.title	虚幻世界百科
+culture.ui.title	不真实的世界百科
 culture.ui.home	首页
 culture.ui.exit	退出
 culture.ui.keyword	输入关键词
@@ -43,14 +43,14 @@ culture.map.title	文化区域
 culture.map.indicators_title	文化区域图例
 culture.ui.no_info	抱歉，没有找到这个主题的相关信息。
 culture.ui.continue	按任意键继续
-culture.ui.intro_334200	你即将首次以这名角色进入《虚幻世界》。
+culture.ui.intro_334200	你即将首次以这名角色进入《不真实的世界》。
 culture.ui.intro_334214	游戏开始后，按[ESC]查看键盘命令和帮助。
 culture.ui.intro_334228	你可以从那里开始，逐步探索游戏的奥秘。<br><br>
 culture.ui.intro_334242	任何时候都可以按[F1]打开游戏百科。
 culture.ui.intro_334256	游戏也会提示你，哪些主题有更多信息可供查阅。<br><br>
 culture.ui.intro_334270	这个世界远比初看时更加丰富、深邃。
 culture.ui.intro_334284	探索和浏览百科，能激发想象，让游戏体验更加充实。
-culture.ui.intro_334298	关于《虚幻世界》和游戏的大多数疑问，也能在这里找到答案。<br><br>
+culture.ui.intro_334298	关于《不真实的世界》和游戏的大多数疑问，也能在这里找到答案。<br><br>
 culture.ui.intro_334312	现在可以自由浏览百科，也可以按[ESC]退出并开始游戏。
 culture.ui.intro_334326	先从世界的神话开始。随时按[HOME]返回主题索引。
 culture.topic.encyclopedia_3.title	百科首页
@@ -102,7 +102,7 @@ culture.link.53_0	计时与历法
 culture.link.53_1	年
 culture.link.53_2	月
 culture.link.53_3	月份
-culture.record.2348	对依靠土地谋生的人来说，季节与气候至关重要。《虚幻{WORLD}》模拟的是与四季紧密相连的古老时代，因此采用不同的计时方式。游戏中的北方古历与年时观念如下：
+culture.record.2348	对依靠土地谋生的人来说，季节与气候至关重要。《不真实的{WORLD}》模拟的是与四季紧密相连的古老时代，因此采用不同的计时方式。游戏中的北方古历与年时观念如下：
 culture.record.2437	
 culture.record.2527	
 culture.record.2545	
@@ -131,8 +131,8 @@ culture.record.3775	<br>
 culture.record.3788	冬半年：<br>泥泞月、凋零月、入冬月（秋季：十、十一、十二月）<br>岁中月、珠冰月、土醒月（冬季：一、二、三月）<br>
 culture.record.3877	
 culture.record.3963	
-culture.topic.encyclopedia_85.title	虚幻世界
-culture.link.85_0	虚幻世界
+culture.topic.encyclopedia_85.title	不真实的世界
+culture.link.85_0	不真实的世界
 culture.record.4053	各民族流传着不同的古歌与神话，讲述{WORLD}如何诞生，又如何变得“不再真实”。这些故事却有着清晰的共同核心；所有民族本就同出一源，这并不奇怪。基本的神话是这样的：<br>
 culture.record.4111	
 culture.record.4168	
@@ -202,7 +202,7 @@ culture.record.7207
 culture.record.7273	
 culture.record.7295	
 culture.record.7301	<br>
-culture.record.7351	第一个冬天过去后，人类再也听不懂风的歌声，也无法理解熊与森林的低吟。族中的智者说，{WORLD}已经不再真实，变成了虚幻{WORLD}。不过，人们仍能通过梦境与{SPELLS}回到真实{WORLD}。萨满于是成为人类与灵界之间的沟通者；那个彼世，才是真实的{WORLD}。
+culture.record.7351	第一个冬天过去后，人类再也听不懂风的歌声，也无法理解熊与森林的低吟。族中的智者说，{WORLD}已经不再真实，变成了不真实的{WORLD}。不过，人们仍能通过梦境与{SPELLS}回到真实{WORLD}。萨满于是成为人类与灵界之间的沟通者；那个彼世，才是真实的{WORLD}。
 culture.record.7413	
 culture.record.7478	
 culture.record.7542	
@@ -628,7 +628,7 @@ culture.record.30505
 culture.topic.encyclopedia_658.title	狗鱼
 culture.link.658_0	狗鱼
 culture.link.658_1	狗鱼
-culture.record.30630	狗鱼是内陆湖泊中常见的掠食性鱼，也是《虚幻{WORLD}》体型最大的鱼类之一，对渔人而言是珍贵的渔获。<br>
+culture.record.30630	狗鱼是内陆湖泊中常见的掠食性鱼，也是《不真实的{WORLD}》体型最大的鱼类之一，对渔人而言是珍贵的渔获。<br>
 culture.record.30734	
 culture.record.30740	<br>
 culture.record.30823	狗鱼在早春湖冰消融、水生植物开始生长后产卵，通常是烧垦月末至播种月初。它们聚集在水草丰茂的岸边浅水区，人们便用{TRIDENTS}、{SPEAR}，甚至{LIPPO}捕捉。产卵的狗鱼在浅水中十分显眼，可从岸边刺取或抄起。<br>
@@ -1447,7 +1447,7 @@ culture.record.84685	鞣好的{FUR}或{LEATHER}可用于制作{CLOTHES}，也可
 culture.record.84759	
 culture.topic.encyclopedia_1610.title	熏制
 culture.link.1610_0	熏制
-culture.record.84897	烟熏是在温热房间中以烟保存肉或鱼的方法。《虚幻{WORLD}》使用冷熏工艺，约需数周，制成的肉鱼能保存很久。<br>
+culture.record.84897	烟熏是在温热房间中以烟保存肉或鱼的方法。《不真实的{WORLD}》使用冷熏工艺，约需数周，制成的肉鱼能保存很久。<br>
 culture.record.84979	
 culture.record.85044	
 culture.record.85142	须用绳索或其他捆扎材料将肉鱼悬挂在室内，并持续维持火候。无须严格控制某个温度，但应每天充分烧热烟熏屋中的{FIREPLACE}。若漏了一天，第二天多加热一些，仍可弥补。<br>
@@ -2645,7 +2645,7 @@ culture.record.150005	<br>
 culture.topic.encyclopedia_3081.title	苍鹰
 culture.link.3081_0	苍鹰
 culture.link.3081_1	苍鹰
-culture.record.150184	苍鹰体格强壮，翅短而宽，尾长，在《虚幻{WORLD}》各处的老林中筑巢。它们捕食其他{BIRDS}与小型哺乳动物，猎物有时大至{HARES}。
+culture.record.150184	苍鹰体格强壮，翅短而宽，尾长，在《不真实的{WORLD}》各处的老林中筑巢。它们捕食其他{BIRDS}与小型哺乳动物，猎物有时大至{HARES}。
 culture.record.150254	
 culture.record.150256	
 culture.record.150335	苍鹰是候鸟，深秋离开，春季归来。
@@ -2654,13 +2654,13 @@ culture.link.3089_0	雕鸮
 culture.record.150493	雕鸮是一种大型猫头鹰，锈褐色羽毛带有黑色斑纹，双腿覆羽，爪与喙为黑色。头部很大，耳羽显眼，橙色双眼目光凌厉。
 culture.record.150620	
 culture.record.150622	
-culture.record.150744	除极北无林山区外，几乎整个《虚幻{WORLD}》的森林都零星有雕鸮繁殖。冬夜里能听到其低沉、空旷而悠远的求偶鸣声。
+culture.record.150744	除极北无林山区外，几乎整个《不真实的{WORLD}》的森林都零星有雕鸮繁殖。冬夜里能听到其低沉、空旷而悠远的求偶鸣声。
 culture.record.150851	
 culture.record.150853	
 culture.record.150977	雕鸮是猛禽，捕食{HARES}、小型哺乳动物与{BIRDS}。它们夜间活动，是非常高效的猎手。
 culture.topic.encyclopedia_3100.title	鹊鸭
 culture.link.3100_0	鹊鸭
-culture.record.151119	鹊鸭是常见水鸟，在《虚幻{WORLD}》各处的内陆及近海水域繁殖，能适应严酷环境。它们属于中型潜鸭，身体敦实，头大而圆，虹膜金黄，英文名“金眼”由此而来。
+culture.record.151119	鹊鸭是常见水鸟，在《不真实的{WORLD}》各处的内陆及近海水域繁殖，能适应严酷环境。它们属于中型潜鸭，身体敦实，头大而圆，虹膜金黄，英文名“金眼”由此而来。
 culture.record.151226	
 culture.record.151285	
 culture.record.151291	<br>
@@ -2673,13 +2673,13 @@ culture.record.151645
 culture.record.151766	它们背部深色，带白色斑纹，头部与粗颈后侧为深灰色，腹面主要为白色。喙结实尖锐、颜色深，虹膜为红色。
 culture.record.151868	
 culture.record.151870	
-culture.record.151988	黑喉潜鸟在《虚幻{WORLD}》各处水质清澈的荒野湖泊繁殖，以鱼为食，主要捕食鲈鱼与拟鲤。人们普遍喜爱并尊重它，在{KUIKKA-TRIBE}中更被视为神圣。
+culture.record.151988	黑喉潜鸟在《不真实的{WORLD}》各处水质清澈的荒野湖泊繁殖，以鱼为食，主要捕食鲈鱼与拟鲤。人们普遍喜爱并尊重它，在{KUIKKA-TRIBE}中更被视为神圣。
 culture.record.152086	
 culture.record.152088	
 culture.record.152174	黑喉潜鸟是候鸟，秋季很早便离开，春季返回。
 culture.topic.encyclopedia_3124.title	渡鸦
 culture.link.3124_0	渡鸦
-culture.record.152323	渡鸦是体型大、全身黑色、喙强壮的鸟，偏好广阔森林，零星分布于整个《虚幻{WORLD}》。它们敏感谨慎，也富有好奇心。
+culture.record.152323	渡鸦是体型大、全身黑色、喙强壮的鸟，偏好广阔森林，零星分布于整个《不真实的{WORLD}》。它们敏感谨慎，也富有好奇心。
 culture.record.152438	
 culture.record.152440	
 culture.record.152548	渡鸦主要食腐，取食{ANIMALS}尸体，但食谱也非常广，可视为杂食性鸟类。
@@ -2696,7 +2696,7 @@ culture.record.153171
 culture.record.153206	
 culture.topic.encyclopedia_3145.title	柳雷鸟
 culture.link.3145_0	柳雷鸟
-culture.record.153363	柳雷鸟是中型猎禽，在森林猎禽中数量最少，但整个《虚幻{WORLD}》都能找到，人们也常猎取其肉。
+culture.record.153363	柳雷鸟是中型猎禽，在森林猎禽中数量最少，但整个《不真实的{WORLD}》都能找到，人们也常猎取其肉。
 culture.record.153442	
 culture.record.153444	
 culture.record.153559	它们在沼泽边缘的干燥地面筑巢，位置常在树干旁、小树下或灌木下，初夏产卵。
@@ -2709,7 +2709,7 @@ culture.record.153977	除灰色爪部外，双腿覆有羽毛。体羽随季节�
 culture.record.154083	
 culture.topic.encyclopedia_3161.title	花尾榛鸡
 culture.link.3161_0	花尾榛鸡
-culture.record.154241	花尾榛鸡是《虚幻{WORLD}》最小的森林猎禽，常见程度仅次于{BLACK GROUSE}。身体圆润，头小，黑喙纤细，漂亮的羽毛上带褐、灰、白、黑色斑纹。
+culture.record.154241	花尾榛鸡是《不真实的{WORLD}》最小的森林猎禽，常见程度仅次于{BLACK GROUSE}。身体圆润，头小，黑喙纤细，漂亮的羽毛上带褐、灰、白、黑色斑纹。
 culture.record.154352	
 culture.record.154397	
 culture.record.154399	
