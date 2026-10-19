@@ -90,13 +90,19 @@ render::TextRequest glyph_request(Glyph& glyph,int x,int y,u32 color) {
     request.logical_height=*at<int>(0x26dc64);
     return request;
 }
+int glyph_advance(const render::Metrics& metrics) {
+    // Heavy outline glyphs need two logical pixels of tracking alongside
+    // showtext's native x-1 / x+1 shadows. Share this advance across surface
+    // and renderer measurement/drawing; ASCII keeps its native 8-pixel cell.
+    return metrics.logical_width+2;
+}
 int glyph_width(Glyph& glyph) {
     if(glyph.width<0) {
         auto request=glyph_request(glyph,0,0,0xffffffff);
         render::Metrics result{};
         u32 bytes=sizeof(result);
         require(host->invoke(ModuleId::render,render::op::measure,&request,sizeof(request),&result,&bytes));
-        glyph.width=result.logical_width;
+        glyph.width=glyph_advance(result);
     }
     return glyph.width;
 }
@@ -127,7 +133,7 @@ void textput(int x,int y,const char* text) {
             auto request=glyph_request(*glyph,x,y,color);
             render::Metrics result{}; u32 bytes=sizeof(result);
             require(host->invoke(ModuleId::render,render::op::draw,&request,sizeof(request),&result,&bytes));
-            x+=result.logical_width; cursor+=2;
+            x+=glyph_advance(result); cursor+=2;
         } else { putasc(x,y,*cursor++); x+=8; }
     }
 }
@@ -141,7 +147,7 @@ void rentextput(render::Renderer* renderer,int x,int y,const char* text,render::
             request.renderer=renderer;
             render::Metrics result{}; u32 bytes=sizeof(result);
             require(host->invoke(ModuleId::render,render::op::draw_renderer,&request,sizeof(request),&result,&bytes));
-            x+=result.logical_width; cursor+=2;
+            x+=glyph_advance(result); cursor+=2;
         } else { renderasc(renderer,x,y,*cursor++,color.r,color.g,color.b,flags); x+=8; }
     }
 }
@@ -881,7 +887,7 @@ Status invoke(u32 operation,const void* input,u32 bytes,void*,u32* capacity) {
     invalidate_glyph_widths();
     refresh_culture_words();
     scenario_selection_refresh=true;
-    if(*static_cast<const u32*>(input)&4u) font_redraw_pending=true;
+    if(*static_cast<const u32*>(input)&(4u|32u)) font_redraw_pending=true;
     if(capacity) *capacity=0;
     return Status::ok;
 }

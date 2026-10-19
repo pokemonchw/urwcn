@@ -36,6 +36,8 @@
 
 Linux 已确认的字体为正式包现有 `SourceHanSans.ttc`，使用 face 22 **Source Han Sans SC Heavy**（原生字重 900），SDL_ttf 样式仍为 regular，不叠加模拟粗体。Linux 的 ASCII 由游戏位图字体绘制，轮廓字体的校准集只包含固定参考集和完整词库中的非 ASCII 字符；原生 ASCII 的实际度量与推进保持原义。字号和字重修正的静态依据、发布状态见 [Linux 字号与字重记录](evidence/20261019-linux-font-size-weight.md)。
 
+Linux 非 ASCII 字符的推进量为实测逻辑宽度加 **2 逻辑像素字距**，随原生目标坐标变换进入实际输出；软件面与 renderer 的测量、绘制共享这一规则。末字符也保留完整字符格，与原生逐字推进契约一致；原生整串宽度、居中、折行、按钮及光标使用相同度量。字距在显示度量边界提供，不向词库插入空格，也不改变原生段落的分词空格语义。字号与字重保持不变；该调整不代表原生描边的完整样式包络已经接入。依据及交付状态见 [Linux 字距修正记录](evidence/20261019-linux-glyph-spacing.md)。
+
 使用游戏实际加载的 x86 SDL2 和对应 SDL2_ttf。本机静态依赖记录为 SDL2 2.30.0、SDL2_ttf 2.20.2，见 [本机分析](game-analysis.md)。字体身份包含实际文件内容身份、face index、样式、hinting 和后端版本，不能用文件名、字体对象地址或“微软雅黑”名称代替完整身份。
 
 TTF_OpenFontIndex 的字号参数是名义 point size，不是可见中文高度。“9 逻辑像素字面上限”不能直接实现为名义字号 9。必须通过实际光栅结果校准。

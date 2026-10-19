@@ -30,7 +30,7 @@ int renderer_text_width(render::Renderer* renderer,const char* text) {
             u32 bytes=sizeof(metrics);
             require(host->invoke(ModuleId::render,render::op::measure_renderer,
                                  &request,sizeof(request),&metrics,&bytes));
-            result+=metrics.logical_width;
+            result+=glyph_advance(metrics);
             p+=2;
         } else { result+=8; ++p; }
     }
