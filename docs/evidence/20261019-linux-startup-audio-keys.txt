@@ -1,0 +1,210 @@
+Linux 启动音频资源键静态清点（2026-10-19）
+
+仅读取游戏 ELF、目录文件名、audio.txt 及源词库；未运行游戏、Mod 产物、音频播放或测试。
+此记录保留本次修复前 startup.resource.* 词库状态；后续源码/词库修改和正式发布由主代理单独记录。
+
+来源：
+/home/lulika/.local/share/Steam/steamapps/common/UnRealWorld/urw3-bin
+ELF SHA256: 4bbbef363fe64678ae9674ff9330f3cb0bec813d94379483813de152c164aabe
+源词库: catalog/zh-CN/main_menu.tsv（修复前 109 个 startup.resource.* 键）
+本机 audio.txt 内容仅为 start；下述启动资源由已确认 ELF glob 和硬编码调用确定，不把 audio.txt 当资源清单。
+
+原生枚举与语义边界：
+- main 的 0xaa45 调用 load_samples(0)；0xaa54 调用 load_samples(1)。
+- load_samples(0): 0x174d0 引用 0x1de2a0 的 audio/*.ogg；0x174f0 调 Lataa_Sample。
+- load_samples(1): 先执行 42 个 load_sample(name,filename)；0x17477 引用 0x1de53d 的 audio/*.wav；0x17498 调 Lataa_Sample。
+- own_firstfile 0xf48c8 调 glob；own_finddata_name 0xf4952 调 __xpg_basename，传给 Lataa_Sample 的是文件基名。
+- Lataa_Sample 在 0x16e2b 取 0x1f8bd3 的 smear.wav 字符串，0x16e68 调 strstr，0x16e70 非零时直达返回路径 0x16e72，先于格式化和 initmsg；load_sample 在 0x16c50..0x16c62 同样跳过包含该子串的文件。本机唯一相符文件是 smear.wav，因此它不产生启动显示键。
+- Lataa_Sample 在 0x16ef0 查找首个点号并于 0x16efd 截断，再于 0x16f09 查找首个连字符并于 0x16f16 截断。
+- Lataa_Sample 的 0x16fea 将截断后的 r12 传入 sprintf；0x16ff5 使用 0x1de230 的 Loading audio: %s；0x17013 调 initmsg。
+- load_sample 的 0x16bf4 保存第一参数 name 到 r12；0x16d93 用 r12 格式化同一提示，0x16dbc 调 initmsg。该 name 与文件名是两个独立参数。
+- sound_init 的 0x170bf 只提供固定设备失败提示；start_sound 的 0x181ed 只提供固定开场提示；均不创建 startup.resource 键。
+- modules/semantic/semantic.cpp 的 startup_audio 将 startup.resource. 与 request.value 原样拼接；catalog 使用 std::map::find 精确匹配。
+
+清点结论：
+- 本机 .ogg/.wav 文件数: 126；仅按文件名截断得到 103 个候选键。原生明确跳过 smear.wav 后，125 个文件可进入后续加载分支，生成 102 个候选显示键。
+- ELF 硬编码调用数: 42；硬编码唯一语义键: 29；全部在修复前词库中。
+- 排除原生跳过项后的目录显示键与硬编码并集: 113 个唯一键。
+- 可达加载成功显示分支明确缺失 4 项: ritual, ritual2, ritual3, windfly2。
+- 四项均没有仅大小写不同的既有键；不能用大小写变换解释缺失。
+- 修复应添加这四个有原生来源的词条；smear.wav 在到达显示调用前被原生逻辑排除，不需要新增 startup.resource.smear。不替换游戏内部键、不引入通配词条或失败回退。
+
+缺失项的真实来源文件：
+  ritual.ogg	startup.resource.ritual
+  ritual2.ogg	startup.resource.ritual2
+  ritual3.ogg	startup.resource.ritual3
+  windfly2.ogg	startup.resource.windfly2
+
+全部目录文件与原生显示键（present/MISSING 表示修复前状态；NATIVE_SKIPPED 为原生在生成显示之前跳过）：
+filename	native_display_key	pre_fix_catalog
+ambience.ogg	ambience	present
+ambience.wav	ambience	present
+arrow.wav	arrow	present
+axework.ogg	axework	present
+axework.wav	axework	present
+bark.wav	bark	present
+bawl.wav	bawl	present
+bellow-a.wav	bellow	present
+bellow-b.wav	bellow	present
+bellow-c.wav	bellow	present
+bird_harakka.wav	bird_harakka	present
+bird_harakka2.wav	bird_harakka2	present
+bird_kapytikka.wav	bird_kapytikka	present
+bird_keltasirkku.wav	bird_keltasirkku	present
+bird_leppalintu.wav	bird_leppalintu	present
+bird_leppalintu2.wav	bird_leppalintu2	present
+bird_peippo.wav	bird_peippo	present
+bird_peippo2.wav	bird_peippo2	present
+bird_satakieli.wav	bird_satakieli	present
+bird_satakieli2.wav	bird_satakieli2	present
+bird_varis.wav	bird_varis	present
+bird_varis2.wav	bird_varis2	present
+birdcall_eagle_owl.ogg	birdcall_eagle_owl	present
+birdcall_eagle_owl.wav	birdcall_eagle_owl	present
+birdcall_goshawk.ogg	birdcall_goshawk	present
+birdcall_goshawk.wav	birdcall_goshawk	present
+birdcall_hazel_grouse.ogg	birdcall_hazel_grouse	present
+birdcall_hazel_grouse.wav	birdcall_hazel_grouse	present
+birdcall_kuikka.ogg	birdcall_kuikka	present
+birdcall_kuikka.wav	birdcall_kuikka	present
+birdcall_raven.ogg	birdcall_raven	present
+birdcall_raven.wav	birdcall_raven	present
+birdcall_swan.ogg	birdcall_swan	present
+birdcall_swan.wav	birdcall_swan	present
+bleat-a.wav	bleat	present
+bleat-b.wav	bleat	present
+block.wav	block	present
+breeze.ogg	breeze	present
+breeze.wav	breeze	present
+burp.wav	burp	present
+close_door.wav	close_door	present
+cough-a.wav	cough	present
+cough-b.wav	cough	present
+crack.wav	crack	present
+crawl.wav	crawl	present
+death.wav	death	present
+dig.ogg	dig	present
+dig.wav	dig	present
+eat.wav	eat	present
+faderun.wav	faderun	present
+fall.wav	fall	present
+fire.wav	fire	present
+fleshwork.ogg	fleshwork	present
+fleshwork.wav	fleshwork	present
+growl.wav	growl	present
+growl2.wav	growl2	present
+growl3.wav	growl3	present
+grunt.wav	grunt	present
+grunt2.wav	grunt2	present
+grunt3.wav	grunt3	present
+guffaw1.wav	guffaw1	present
+guffaw2.wav	guffaw2	present
+harr.wav	harr	present
+hit_grievous-a.wav	hit_grievous	present
+hit_grievous-b.wav	hit_grievous	present
+hit_minor-a.wav	hit_minor	present
+hit_minor-b.wav	hit_minor	present
+hit_npc.wav	hit_npc	present
+hit_serious-a.wav	hit_serious	present
+hit_serious-b.wav	hit_serious	present
+hitplr.wav	hitplr	present
+intro.ogg	intro	present
+kling.wav	kling	present
+lake.ogg	lake	present
+miss.wav	miss	present
+music_birth.ogg	music_birth	present
+music_chant.ogg	music_chant	present
+music_chantbeat.ogg	music_chantbeat	present
+music_munni.ogg	music_munni	present
+music_ritual.ogg	music_ritual	present
+open_door-a.ogg	open_door	present
+open_door-b.ogg	open_door	present
+owl.wav	owl	present
+owl2.wav	owl2	present
+rain.ogg	rain	present
+ritual.ogg	ritual	MISSING
+ritual2.ogg	ritual2	MISSING
+ritual3.ogg	ritual3	MISSING
+roar.wav	roar	present
+roar2.wav	roar2	present
+run.wav	run	present
+sauna_loyly.ogg	sauna_loyly	present
+sauna_small_loyly.ogg	sauna_small_loyly	present
+sauna_vasta.ogg	sauna_vasta	present
+ski.ogg	ski	present
+ski_crust.ogg	ski_crust	present
+smash.wav	smash	present
+smear.wav	smear	NATIVE_SKIPPED
+snarl.wav	snarl	present
+snort.wav	snort	present
+snort2.wav	snort2	present
+snuffle.wav	snuffle	present
+splash.wav	splash	present
+swing.wav	swing	present
+throw.wav	throw	present
+thump.wav	thump	present
+treefall_big.ogg	treefall_big	present
+treefall_small.ogg	treefall_small	present
+wade.ogg	wade	present
+walk.ogg	walk	present
+walk_deepsnow.ogg	walk_deepsnow	present
+walk_snowcrust.ogg	walk_snowcrust	present
+walk_soggy.ogg	walk_soggy	present
+walkinside.ogg	walkinside	present
+watersound.wav	watersound	present
+whimper.wav	whimper	present
+wind.ogg	wind	present
+windfly-a.ogg	windfly	present
+windfly-b.ogg	windfly	present
+windfly.ogg	windfly	present
+windfly2.ogg	windfly2	MISSING
+wolf.wav	wolf	present
+wolf2.wav	wolf2	present
+yelp-a.wav	yelp	present
+yelp-b.wav	yelp	present
+yelp-c.wav	yelp	present
+
+全部 ELF 硬编码 load_sample 调用：
+call_rva	name_rva	native_name	filename	pre_fix_catalog
+0x17167	0x1de2b5	howl	wolf.wav	present
+0x1717a	0x1de2b5	howl	wolf2.wav	present
+0x1718d	0x1e4e05	owl	owl.wav	present
+0x171a0	0x1e4e05	owl	owl2.wav	present
+0x171b3	0x1de2ce	swing	swing.wav	present
+0x171c6	0x1de2de	snarl	snarl.wav	present
+0x171d9	0x1de2ee	growl	growl.wav	present
+0x171ec	0x1de2ee	growl	growl2.wav	present
+0x171ff	0x1de2ee	growl	growl3.wav	present
+0x17212	0x1de313	roar	roar.wav	present
+0x17225	0x1de313	roar	roar2.wav	present
+0x17238	0x1de32e	treechop	axework.wav	present
+0x1724b	0x1f6481	fall	fall.wav	present
+0x1725e	0x1de349	bawl	bawl.wav	present
+0x17271	0x1de35a	snuffle	snuffle.wav	present
+0x17284	0x1de36c	grunt	grunt.wav	present
+0x17297	0x1de36c	grunt	grunt2.wav	present
+0x172aa	0x1de36c	grunt	grunt3.wav	present
+0x172bd	0x1de394	whimper	whimper.wav	present
+0x172d0	0x1de3a6	snort	snort.wav	present
+0x172e3	0x1de3a6	snort	snort2.wav	present
+0x172f6	0x1de3c6	varis	bird_varis.wav	present
+0x17309	0x1de3c6	varis	bird_varis2.wav	present
+0x1731c	0x1de3ef	kapytikka	bird_kapytikka.wav	present
+0x1732f	0x1de40a	harakka	bird_harakka.wav	present
+0x17342	0x1de40a	harakka	bird_harakka2.wav	present
+0x17355	0x1de439	keltasirkku	bird_keltasirkku.wav	present
+0x17368	0x1de459	leppalintu	bird_leppalintu.wav	present
+0x1737b	0x1de459	leppalintu	bird_leppalintu2.wav	present
+0x1738e	0x1de489	peippo	bird_peippo.wav	present
+0x173a1	0x1de489	peippo	bird_peippo2.wav	present
+0x173b4	0x1de4b5	satakieli	bird_satakieli2.wav	present
+0x173c7	0x1de4b5	satakieli	bird_satakieli2.wav	present
+0x173da	0x20ae13	water	watersound.wav	present
+0x173ed	0x1de4d7	harr	harr.wav	present
+0x17400	0x1de4e8	escape	faderun.wav	present
+0x17413	0x1de4f8	burp	burp.wav	present
+0x17426	0x1f0bba	run	run.wav	present
+0x17439	0x1de507	crawl	crawl.wav	present
+0x1744c	0x1de517	thump	thump.wav	present
+0x1745f	0x1de527	crack	crack.wav	present
+0x17472	0x1de537	death	death.wav	present

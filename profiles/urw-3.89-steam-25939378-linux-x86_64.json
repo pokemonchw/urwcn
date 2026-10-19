@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "game": "UnReal World",
+  "version": "3.89",
+  "platform": "linux-x86_64",
+  "steam_app_id": 351700,
+  "steam_build_id": "25939378",
+  "steam_depot_id": "351702",
+  "steam_depot_manifest": "3782365514047820172",
+  "executable": "urw3-bin",
+  "exe_sha256": "4bbbef363fe64678ae9674ff9330f3cb0bec813d94379483813de152c164aabe",
+  "elf_build_id": "9f3b6fb4493bdb4f4375750e71a1f12aafc59add",
+  "machine": "EM_X86_64",
+  "format": "ELF64 PIE",
+  "load_base": "dl_iterate_phdr main executable dlpi_addr",
+  "delivery_names": {
+    "launcher": "uwcn_launcher",
+    "resident": "package/uwcn_loader.dll",
+    "modules": "package/modules/uwcn_*.dll",
+    "note": "The launcher is an extensionless native ELF64 executable; library filenames retain .dll. No Wine dependency."
+  },
+  "font": {
+    "file": "fonts/SourceHanSans.ttc",
+    "sha256": "767e21e7b93c2d7d566745eb6496ad04dd73ee5ab85e4b7f54b69efaddbced85",
+    "face_index": 37,
+    "face": "Source Han Sans SC Bold",
+    "license": "SIL Open Font License 1.1"
+  },
+  "native_text_functions": {
+    "textwidth": "0x13b460",
+    "textput_clone": "0x13b760",
+    "rentextput": "0x13de10",
+    "New_rentext": "0x13e1b0",
+    "showtext": "0x13e8b0",
+    "centext": "0x13ea90",
+    "paragraph": "0x13ece0",
+    "plain_and_keyed_button": "0x144fb0",
+    "title": "0x146ed0"
+  },
+  "native_data": {
+    "screen": "0xa916ea0",
+    "current_color": "0xa916104",
+    "cursor_x": "0xa91610c",
+    "cursor_y": "0xa916108",
+    "resolution_x": "0x26dc68",
+    "resolution_y": "0x26dc64",
+    "list": "0x663ef80",
+    "list_entries": "0x663f120",
+    "list_entry_stride": "0xe8",
+    "list_entry_action": "0xc8"
+  },
+  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls.",
+  "ownership": "Native UI retains layout, wrapping, centering, controls, input, hit testing, background, caching and animation. Chinese glyphs draw synchronously inside native text leaves; no pixel tracking or text replay.",
+  "native_density": {
+    "screen_creation": "0x148c60",
+    "upload_texture_creation": "0x148c2d",
+    "native_upload_and_copy": "0x13a250",
+    "main_menu_background": "0x15ceeb..0x15cf44",
+    "main_menu_resize_boundary": "0xf6d9e",
+    "resources": "Native screen, BufSurface, SCREENSAVE, SCREENBUFFY, GAMESAVE, MENUBUFFER, named grabsurface caches, fade surfaces and HeadingBoxSurface/HeadingBoxSoftRen share the canvas output ratio. Asset pixel domains retain their original dimensions.",
+    "density_source": "Window-target logical presentation scale or SDL_GetRendererOutputSize at confirmed native creation/main-menu boundaries; native 800x600 raster remains the minimum when output is smaller.",
+    "local_sdl": "sdl2-compat 2.32.72 / SDL 3.4.16"
+  },
+  "pending_boundaries": [
+    "Resize-driven complete native reconstruction is established for the main menu only. Other active pages keep the last established canvas density until the next main-menu boundary; old bitmap caches are not text-replayed.",
+    "Linux showtext preserves its four native shadow calls, but the shadow budget is not yet propagated into font calibration and external width calls. This style envelope remains pending.",
+    "Pure refresh of setup body, already-dimmed profile panels, saved-character windows, ancestor pages and current Village page remains tied to native reconstruction.",
+    "Linux in-process module retirement/publication protocol is not implemented; Windows Reload is rejected for Linux."
+  ],
+  "runtime_verification": "Not performed; launching the game, running artifacts and tests are prohibited.",
+  "evidence": ["docs/evidence/20261019-linux-native-port.md", "docs/evidence/20261019-linux-font-density.md"]
+}

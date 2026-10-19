@@ -7,11 +7,12 @@ $ErrorActionPreference = 'Stop'
 if (!$BatchId -or $env:UWCN_COMPILE_BATCH -ne $BatchId) { throw 'Compilation must be submitted through root build.ps1 or build-queue.ps1.' }
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $compilerDirectory = Split-Path -Parent $CompilerPath
-$makePath = Join-Path $compilerDirectory 'make.exe'
+$makePath = Join-Path $compilerDirectory $(if ($Toolchain -eq 'Linux') { 'make' } else { 'make.exe' })
 $oldPath = $env:PATH
-$env:PATH = "$compilerDirectory;$oldPath"
+$env:PATH = $compilerDirectory + [IO.Path]::PathSeparator + $oldPath
 try {
-    & $CMakePath -S $projectRoot -B $BuildDirectory -G 'MinGW Makefiles' "-DCMAKE_CXX_COMPILER=$CompilerPath" "-DCMAKE_MAKE_PROGRAM=$makePath" '-DCMAKE_BUILD_TYPE=Release'
+    $generator = if ($Toolchain -eq 'Linux') { 'Unix Makefiles' } else { 'MinGW Makefiles' }
+    & $CMakePath -S $projectRoot -B $BuildDirectory -G $generator "-DCMAKE_CXX_COMPILER=$CompilerPath" "-DCMAKE_MAKE_PROGRAM=$makePath" '-DCMAKE_BUILD_TYPE=Release'
     if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed with exit code $LASTEXITCODE" }
     $buildArguments = @('--build',$BuildDirectory,'--parallel')
     if ($Module) { $buildArguments += '--target'; $buildArguments += @($Module | ForEach-Object { "uwcn_$_" }) }

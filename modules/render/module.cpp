@@ -100,5 +100,5 @@ void UWCN_CALL shutdown() {
 }
 const ModuleApi api{sizeof(ModuleApi),kHostAbi,ModuleId::render,initialize,invoke,save_state,restore_state,shutdown};
 }
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor{uwcn::kDescriptorMagic,uwcn::kHostAbi,static_cast<uwcn::u32>(uwcn::ModuleId::render),0x14c,1};
+UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor{uwcn::kDescriptorMagic,uwcn::kHostAbi,static_cast<uwcn::u32>(uwcn::ModuleId::render),uwcn::kModuleMachine,1};
 UWCN_EXPORT const uwcn::ModuleApi* UWCN_CALL uwcn_get_module_api() { return &api; }

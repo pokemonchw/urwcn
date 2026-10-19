@@ -1,5 +1,12 @@
 #include "font_engine.h"
+#if defined(_WIN32)
 #include <wincrypt.h>
+#else
+#include <dlfcn.h>
+#include <openssl/evp.h>
+#include <cstdlib>
+#include <fstream>
+#endif
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -8,8 +15,13 @@
 namespace uwcn::render {
 namespace {
 template<class T> bool symbol(HMODULE lib,const char* name,T& result) {
+#if defined(_WIN32)
     result=reinterpret_cast<T>(GetProcAddress(lib,name)); return result!=nullptr;
+#else
+    result=reinterpret_cast<T>(dlsym(lib,name)); return result!=nullptr;
+#endif
 }
+#if defined(_WIN32)
 bool sha256(const std::wstring& path,std::array<std::uint8_t,32>& result) {
     HANDLE file=CreateFileW(path.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
     if(file==INVALID_HANDLE_VALUE) return false;
@@ -28,6 +40,21 @@ bool sha256(const std::wstring& path,std::array<std::uint8_t,32>& result) {
     if(provider) CryptReleaseContext(provider,0);
     CloseHandle(file); return ok;
 }
+#else
+bool sha256(const std::string& path,std::array<std::uint8_t,32>& result) {
+    std::ifstream stream(path,std::ios::binary);
+    if(!stream) return false;
+    auto* context=EVP_MD_CTX_new();
+    EVP_DigestInit_ex(context,EVP_sha256(),nullptr);
+    char bytes[32768];
+    while(stream.read(bytes,sizeof(bytes)) || stream.gcount())
+        EVP_DigestUpdate(context,bytes,stream.gcount());
+    unsigned length{};
+    EVP_DigestFinal_ex(context,result.data(),&length);
+    EVP_MD_CTX_free(context);
+    return stream.eof();
+}
+#endif
 bool scalar(const std::string& text,std::size_t& offset,std::uint32_t& value) {
     const auto lead=static_cast<unsigned char>(text[offset++]);
     if(lead<0x80) { value=lead; return true; }
@@ -42,7 +69,12 @@ bool scalar(const std::string& text,std::size_t& offset,std::uint32_t& value) {
 }
 }
 bool Sdl::initialize() {
+#if defined(_WIN32)
     sdl=GetModuleHandleW(L"SDL2.dll"); if(!sdl) return false;
+#else
+    sdl=dlopen("libSDL2-2.0.so.0",RTLD_NOW|RTLD_LOCAL);
+    if(!sdl) return false;
+#endif
 #define SDL_BIND(name) if(!symbol(sdl,"SDL_" #name,name)) return false
     SDL_BIND(GetVersion); SDL_BIND(LockSurface); SDL_BIND(UnlockSurface);
     SDL_BIND(FreeSurface); SDL_BIND(CreateRGBSurfaceWithFormatFrom);
@@ -52,10 +84,15 @@ bool Sdl::initialize() {
     SDL_BIND(RenderCopyF); SDL_BIND(DestroyTexture);
 #undef SDL_BIND
     Version version{}; GetVersion(&version);
+#if defined(_WIN32)
     if(version.major!=2 || version.minor!=30 || version.patch!=0) return false;
     wchar_t module[MAX_PATH]; if(!GetModuleFileNameW(sdl,module,MAX_PATH)) return false;
     std::wstring library(module); library.erase(library.find_last_of(L"\\/")+1); library+=L"SDL2_ttf.dll";
     ttf=LoadLibraryExW(library.c_str(),nullptr,LOAD_WITH_ALTERED_SEARCH_PATH); if(!ttf) return false;
+#else
+    ttf=dlopen("libSDL2_ttf-2.0.so.0",RTLD_NOW|RTLD_LOCAL);
+    if(!ttf) return false;
+#endif
     if(!symbol(ttf,"TTF_Linked_Version",LinkedVersion)) return false;
 #define TTF_BIND(name) if(!symbol(ttf,"TTF_" #name,name)) return false
     TTF_BIND(Init); TTF_BIND(Quit); TTF_BIND(OpenFontIndex); TTF_BIND(CloseFont);
@@ -63,12 +100,24 @@ bool Sdl::initialize() {
     TTF_BIND(FontHeight); TTF_BIND(GlyphMetrics32); TTF_BIND(GlyphIsProvided32);
     TTF_BIND(SizeUTF8); TTF_BIND(RenderUTF8_Blended);
 #undef TTF_BIND
+#if defined(_WIN32)
     const auto* v=LinkedVersion(); if(!v || v->major!=2 || v->minor!=20 || v->patch!=2) return false;
+#endif
     if(Init()!=0) return false;
     ttf_reference=true;
     return true;
 }
-void Sdl::shutdown() { if(ttf_reference) Quit(); ttf_reference=false; if(ttf) FreeLibrary(ttf); ttf=nullptr; sdl=nullptr; }
+void Sdl::shutdown() {
+    if(ttf_reference) Quit();
+    ttf_reference=false;
+#if defined(_WIN32)
+    if(ttf) FreeLibrary(ttf);
+#else
+    if(ttf) dlclose(ttf);
+    if(sdl) dlclose(sdl);
+#endif
+    ttf=nullptr; sdl=nullptr;
+}
 namespace {
 std::uint32_t pack(Color c) { return c.r|(std::uint32_t(c.g)<<8)|(std::uint32_t(c.b)<<16)|(std::uint32_t(c.a)<<24); }
 bool read_glyph_surface(Sdl& api,Surface* source,Image& result) {
@@ -86,11 +135,16 @@ bool read_glyph_surface(Sdl& api,Surface* source,Image& result) {
 bool FontEngine::initialize(const std::string& repertoire) {
     glyphs_.clear();
     if(!api.initialize()) return false;
+#if defined(_WIN32)
     wchar_t directory[MAX_PATH]; if(!GetWindowsDirectoryW(directory,MAX_PATH)) return false;
     const std::wstring file=std::wstring(directory)+L"\\Fonts\\msyhbd.ttc";
     if(!sha256(file,identity_)) return false;
     const int length=WideCharToMultiByte(CP_UTF8,0,file.c_str(),-1,nullptr,0,nullptr,nullptr);
     std::vector<char> path(length); WideCharToMultiByte(CP_UTF8,0,file.c_str(),-1,path.data(),length,nullptr,nullptr); path_=path.data();
+#else
+    path_=std::getenv("UWCN_FONT");
+    if(!sha256(path_,identity_)) return false;
+#endif
     reference_="国田永高汉翻译Agjpqy0123456789_|()[]，。！？：；、（）【】《》“”‘’·—…";
     for(int c=32;c<127;++c) reference_.push_back(static_cast<char>(c));
     reference_+=repertoire;
@@ -217,6 +271,11 @@ void FontEngine::density_changed(double density) {
     }
 }
 CalibratedFont* FontEngine::font(double density,int line_height,int ink_height,int outline) {
+#if defined(__linux__)
+    constexpr long face=37; // Local SourceHanSans.ttc: Source Han Sans SC Bold.
+#else
+    constexpr long face=0;
+#endif
     const int physical_line=static_cast<int>(std::floor(line_height*density));
     const int physical_ink=static_cast<int>(std::floor(ink_height*density));
     if(physical_line<1 || physical_ink<1) return nullptr;
@@ -230,7 +289,7 @@ CalibratedFont* FontEngine::font(double density,int line_height,int ink_height,i
     // Descending search returns the same maximum eligible candidate without
     // assuming that hinted ink height is monotonic between point sizes.
     for(int size=physical_line*2;size>=1;--size) {
-        auto f=std::make_unique<CalibratedFont>(); f->font=api.OpenFontIndex(path_.c_str(),size,0); if(!f->font) return nullptr;
+        auto f=std::make_unique<CalibratedFont>(); f->font=api.OpenFontIndex(path_.c_str(),size,face); if(!f->font) return nullptr;
         api.SetFontStyle(f->font,0); api.SetFontHinting(f->font,0);
         f->point=size; f->ascent=api.FontAscent(f->font); f->descent=api.FontDescent(f->font); f->height=api.FontHeight(f->font);
         f->top=0; f->bottom=0; f->density=density; f->line_height=line_height; f->ink_budget=ink_height; f->outline=outline;

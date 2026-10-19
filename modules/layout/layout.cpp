@@ -103,5 +103,5 @@ Status UWCN_CALL restore(const void* input,u32 bytes) {
 void UWCN_CALL shutdown() { scalar_by_token.clear();token_by_scalar.clear(); }
 const ModuleApi api={sizeof(ModuleApi),kHostAbi,ModuleId::layout,initialize,invoke,save,restore,shutdown};
 }
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor={uwcn::kDescriptorMagic,uwcn::kHostAbi,4,0x14c,1};
+UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor={uwcn::kDescriptorMagic,uwcn::kHostAbi,4,uwcn::kModuleMachine,1};
 UWCN_EXPORT const uwcn::ModuleApi* UWCN_CALL uwcn_get_module_api() { return &api; }

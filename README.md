@@ -6,17 +6,37 @@ URWCN 是 **Byayoi 同人社区**的《UnReal World》汉化作品。
 
 社区官网：[byayoi.org](https://byayoi.org/)
 
-项目仓库：[pokemonchw/urwcn](https://github.com/pokemonchw/urwcn)。当前适配 **UnReal World 3.89 / Windows x86 / Steam Build 25939378**。中文在已确认的原生文本构建、格式化和显示边界生成，游戏继续管理布局、控件、输入和缓存，Mod 负责字形绘制；游戏业务、内部英文数据和设置动作保持原有语义。
+项目仓库：[pokemonchw/urwcn](https://github.com/pokemonchw/urwcn)。适配目标为 **UnReal World 3.89 / Steam Build 25939378**，包含 Windows x86 与 Linux x86-64 原生分支。Linux 的接入范围及尚待确认的高清边界见 [Linux 移植记录](docs/evidence/20261019-linux-native-port.md)，下文既有热发布回执属于 Windows。中文在已确认的原生文本构建、格式化和显示边界生成，游戏继续管理布局、控件、输入和缓存，Mod 负责字形绘制；游戏业务、内部英文数据和设置动作保持原有语义。
 
 游戏内按 **Shift+F10** 切换中英文显示。已接入范围、各界面的刷新边界和交付记录见下文。
 
+## 本机 Linux 原生构建与启动
+
+在 Linux 上通过同一个 PowerShell 7 队列入口编译并正式发布：
+
+```bash
+.toolchains/powershell/pwsh -NoProfile -File ./build.ps1 -Toolchain Linux -Publish
+```
+
+使用系统 x86-64 GCC、CMake、Make、OpenSSL 开发库、SDL2 和 SDL2_ttf；本机的便携 PowerShell 来自 [PowerShell 官方发行版](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6)。首次本机发布会从已安装的思源黑体集合复制简体中文 Bold 字面对应的字体文件，以及本机 Steam Runtime 的 SDL2_net 库和第三方许可证。
+
+Linux 正式入口是根目录无扩展名的 **`uwcn_launcher`**，由 C++ 编译为原生 ELF64 可执行文件。直接启动它即可，运行时无需 PowerShell 或 Wine；汉化资源和模块从相邻的 `package/` 加载。发布时安装应用菜单入口 **UnReal World 简体中文**，指向这一份正式启动器；也可在终端执行：
+
+```bash
+./uwcn_launcher
+```
+
+启动器读取 `package/linux-game-path.txt` 中的本机 Steam 游戏位置，也接受 `--game /完整路径/urw3-bin`。原游戏二进制、业务数据和设置原值保持原样。Linux 的运行中模块发布协议尚未实现，不能把 Windows 的 `-Reload` 用在 Linux 上。软件画布、菜单缓存及 Heading 软件目标已接入输出密度扩展，主菜单缩放沿原生构建重绘；其他页面缩放重建与描边预算仍待处理。源码、编译及正式发布状态见 [Linux 字体密度修正](docs/evidence/20261019-linux-font-density.md)。没有启动游戏、运行产物或自行测试。
+
+Linux 启动闪退的两次用户 core 分别确认了音频显示名重复扩展名处理、后续音频显示键缺失；另经静态审查修正了七参数原生调用误读临时栈的问题。源码及正式发布状态分别见 [首轮修复记录](docs/evidence/20261019-linux-startup-crash-fix.md) 和 [启动词库修复记录](docs/evidence/20261019-linux-startup-catalog-crash-fix.md)。未自行启动或测试，不以发布成功代替运行结果。
+
 ## 项目命名与构建
 
-项目名已由 `uwcn` 更名为 `urwcn`，从本仓库克隆时使用 `urwcn` 目录。现有 `uwcn_launcher.exe`、`package/uwcn_loader.dll`、`package/modules/uwcn_*.dll` 及内部 ABI、导出名和控制协议保留原名，沿用既有交付和热更新约定。历史证据中的旧项目名及绝对路径保留其记录时的含义。
+项目名已由 `uwcn` 更名为 `urwcn`，从本仓库克隆时使用 `urwcn` 目录。Linux 启动器为 `uwcn_launcher`，Windows 启动器为 `uwcn_launcher.exe`；`package/uwcn_loader.dll`、`package/modules/uwcn_*.dll` 及内部 ABI、导出名和控制协议保留原名。Linux 库虽然保留 `.dll` 文件名，实际格式为 ELF64。历史证据中的旧项目名及绝对路径保留其记录时的含义。
 
 本仓库提供源码、词库、构建适配和设计/静态证据文档。工具链、构建缓存、本地正式运行包和 `回收/` 中的历史文件不纳入 Git；游戏原始反编译、反汇编及字符串提取文件保留在本地，文档中的相关引用作为分析出处。下文已有交付回执记录的是本地发布状态，不表示仓库包含预编译运行包。
 
-使用 PowerShell 7 和 i686 MinGW C++20 工具链；CMake 最低版本为 3.24。所有编译统一通过根目录队列入口：
+Windows 构建使用 PowerShell 7 和 i686 MinGW C++20 工具链；CMake 最低版本为 3.24。所有编译统一通过根目录队列入口：
 
 ```powershell
 .\build.ps1 -CMakePath "C:\tools\cmake\bin\cmake.exe" -CompilerPath "C:\tools\w64devkit\bin\g++.exe"
@@ -81,9 +101,9 @@ URWCN 是 **Byayoi 同人社区**的《UnReal World》汉化作品。
 
 历史窗口的旧实现不能视为重建已完成；设置页以本轮原生接入记录为准，关于、鸣谢、先祖等界面仍以各自新接入及交付记录为准。Byayoi 标识以本轮原生页脚接入为准，历史固定行槽方案已废止。新增接入须另行记录已确认的原生边界，禁止照抄旧页面布局。
 
-统一构建入口为根 `build.ps1` / `build-queue.ps1`。正式启动器固定在根 `uwcn_launcher.exe`，驻留桥和六个业务 DLL 分别位于 `package/uwcn_loader.dll`、`package/modules/`。替换旧正式文件前先移入根 `回收/` 的事务目录；没有备用运行包。
+统一构建入口为根 `build.ps1` / `build-queue.ps1`。正式启动器固定在根目录：Linux 为 `uwcn_launcher`，Windows 为 `uwcn_launcher.exe`；驻留桥和六个业务库分别位于 `package/uwcn_loader.dll`、`package/modules/`。替换旧正式文件前先移入根 `回收/` 的事务目录；没有备用运行包。
 
-用户启动入口为根 `uwcn_launcher.exe`，默认游戏路径为 `D:\program\steam\steamapps\common\UnRealWorld\urw.exe`；也可传入 `--game "游戏完整路径"`。启动器核对已确认版本，在新建进程的游戏 PE 入口前装入正式驻留桥和模块，再恢复入口。当前 ABI 1 是本轮新框架，不声称能在历史 ABI 3 驻留桥上原位迁移。
+Windows 用户启动入口为根 `uwcn_launcher.exe`，默认游戏路径为 `D:\program\steam\steamapps\common\UnRealWorld\urw.exe`；也可传入 `--game "游戏完整路径"`。Windows 启动器核对已确认版本，在新建进程的游戏 PE 入口前装入正式驻留桥和模块，再恢复入口。当前 ABI 1 是本轮新框架，不声称能在历史 ABI 3 驻留桥上原位迁移。
 
 设置页已于批次 `bcd418e7f1574fe98569bea56747dd10`、事务 `80bf73a354c74db594bf27a86fe98fd9` 完成源码接入、统一队列编译和正式发布。Adapter、Semantic、词库、构建适配及发布清单的旧五件先移入 `回收/20261019-024201-80bf73a354c74db594bf27a86fe98fd9/`；正式清单十项 SHA-256 均与磁盘一致，既有进程 `65412` 返回 Applied。启动器与驻留桥沿用原文件。Applied 表示模块交接完成，不代表视觉验收；已经打开的设置页标题和底部缓存，等原生重新构建该页才更新。详见 [设置页交付记录](docs/evidence/20261019-setup-options-native.md)。此前 03 位置调整仍以 [署名交付记录](docs/evidence/20261019-footer-branding-native.md) 为准。
 

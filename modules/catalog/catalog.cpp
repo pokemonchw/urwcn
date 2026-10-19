@@ -50,5 +50,5 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
 void UWCN_CALL shutdown() { entries.clear();repertoire.clear(); }
 const ModuleApi api={sizeof(ModuleApi),kHostAbi,ModuleId::catalog,initialize,invoke,empty_save,empty_restore,shutdown};
 }
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor={uwcn::kDescriptorMagic,uwcn::kHostAbi,1,0x14c,1};
+UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor={uwcn::kDescriptorMagic,uwcn::kHostAbi,1,uwcn::kModuleMachine,1};
 UWCN_EXPORT const uwcn::ModuleApi* UWCN_CALL uwcn_get_module_api() { return &api; }

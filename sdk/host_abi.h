@@ -14,6 +14,11 @@ namespace uwcn {
 using u32 = std::uint32_t;
 using u64 = std::uint64_t;
 inline constexpr u32 kHostAbi = 1; // New reconstruction; not compatible with the removed ABI 3.
+#if defined(__linux__)
+inline constexpr u32 kModuleMachine = 0x3e; // ELF EM_X86_64; native pointer-sized service ABI.
+#else
+inline constexpr u32 kModuleMachine = 0x14c;
+#endif
 enum class ModuleId : u32 { catalog=1, semantic=2, render=3, layout=4, main_menu=5, adapter=6 };
 enum class Status : u32 { ok=0, invalid=1, unavailable=2, insufficient_buffer=3, failed=4 };
 enum class NativePhase : u32 { before=0, after=1, inline_before=2 };

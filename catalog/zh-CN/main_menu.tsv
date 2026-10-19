@@ -242,6 +242,9 @@ startup.resource.owl	猫头鹰鸣声
 startup.resource.owl2	猫头鹰鸣声 2
 startup.resource.peippo	苍头燕雀鸣声
 startup.resource.rain	雨声
+startup.resource.ritual	仪式乐曲
+startup.resource.ritual2	仪式乐曲 2
+startup.resource.ritual3	仪式乐曲 3
 startup.resource.roar	咆哮声
 startup.resource.roar2	咆哮声 2
 startup.resource.run	跑步声
@@ -275,6 +278,7 @@ startup.resource.watersound	流水声
 startup.resource.whimper	呜咽声
 startup.resource.wind	风声
 startup.resource.windfly	风掠声
+startup.resource.windfly2	风掠声 2
 startup.resource.wolf	狼嚎声
 startup.resource.wolf2	狼嚎声 2
 startup.resource.yelp	尖叫声

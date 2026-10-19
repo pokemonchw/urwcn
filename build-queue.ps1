@@ -2,10 +2,10 @@
 [CmdletBinding()]
 param(
     [ValidateSet('launcher','loader','catalog','semantic','render','layout','main_menu','adapter')][string[]]$Module,
-    [ValidateSet('MinGW')][string]$Toolchain = 'MinGW',
-    [string]$CMakePath = (Join-Path $PSScriptRoot '.toolchains/x86/w64devkit/bin/cmake.exe'),
-    [string]$CompilerPath = (Join-Path $PSScriptRoot '.toolchains/x86/w64devkit/bin/g++.exe'),
-    [string]$BuildDirectory = (Join-Path $PSScriptRoot 'build/mingw-x86'),
+    [ValidateSet('MinGW','Linux')][string]$Toolchain = $(if ($IsLinux) { 'Linux' } else { 'MinGW' }),
+    [string]$CMakePath = $(if ($IsLinux) { '/usr/bin/cmake' } else { Join-Path $PSScriptRoot '.toolchains/x86/w64devkit/bin/cmake.exe' }),
+    [string]$CompilerPath = $(if ($IsLinux) { '/usr/bin/g++' } else { Join-Path $PSScriptRoot '.toolchains/x86/w64devkit/bin/g++.exe' }),
+    [string]$BuildDirectory = $(Join-Path $PSScriptRoot $(if ($IsLinux) { 'build/linux-x86_64' } else { 'build/mingw-x86' })),
     [switch]$Publish,
     [switch]$Reload,
     [int[]]$TargetPid = 0,
@@ -14,6 +14,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $TargetPid = @($TargetPid | Sort-Object -Unique)
 if ($Reload) {
+    if ($Toolchain -eq 'Linux') { throw 'The Linux resident does not implement the Windows hot-publication protocol.' }
     $Publish = $true
     if ($TargetPid.Count -eq 0 -or @($TargetPid | Where-Object { $_ -le 0 }).Count -gt 0 -or !$Module -or $Module -contains 'loader' -or $Module -contains 'launcher') { throw '-Reload requires positive TargetPid values and an explicit compatible business Module set.' }
 }

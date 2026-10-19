@@ -1,5 +1,10 @@
 #pragma once
+#if defined(_WIN32)
 #include <windows.h>
+#else
+using HMODULE = void*;
+#define __cdecl
+#endif
 #include <cstdint>
 
 // Public SDL 2.30.0 ABI declarations. No SDL implementation or private TTF

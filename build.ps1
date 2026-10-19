@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param(
     [string[]]$Module,
-    [ValidateSet('MinGW')][string]$Toolchain = 'MinGW',
+    [ValidateSet('MinGW','Linux')][string]$Toolchain = $(if ($IsLinux) { 'Linux' } else { 'MinGW' }),
     [string]$CMakePath,
     [string]$CompilerPath,
     [string]$BuildDirectory,
