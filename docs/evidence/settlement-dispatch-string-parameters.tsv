@@ -1,0 +1,58 @@
+format_va	format_callsite	word	kind	source	proof
+00596564	0056ffb1	3	item	5915311	414CC0 selects record58F9FF8+n*0xAC; copy5915308; descriptor+9
+005da448	005702dc	2	bound	451770	005702c6 return
+005da8ec	00571cb1	2	bound	49C7D0	00571c9b return
+005b3b20	00571d38	2	bound	571d25 sprintf	58c680 intermediate takes49B040@571d12 +55EC00@571d05
+005da920	00571d88	2	bound	49C7D0	00571d72 return
+005b3b20	00571e0f	2	bound	571dfc sprintf	58c680 intermediate takes49B040@571de9 +55EC00@571ddc
+0058c680	00571d25	2	bound	49B040	00571d12 return
+0058c680	00571d25	3	bound	55EC00	00571d05 return
+0058c680	00571dfc	2	bound	49B040	00571de9 return
+0058c680	00571dfc	3	bound	55EC00	00571ddc return
+0058c680	00572506	2	bound	49B040	005724f7 return
+0058c680	00572506	3	bound	55EC00	005724e6 return
+0058c680	00572910	2	bound	49B040	00572901 return
+0058c680	00572910	3	bound	55EC00	005728f0 return
+0058c680	00572b70	2	bound	49B040	00572b61 return
+0058c680	00572b70	3	bound	55EC00	00572b50 return
+005daa80	00572928	2	bound	A621B60	548740 native construction bindings: windows_message_quests.inc
+005daa80	00572928	3	bound	572910 sprintf	native ring result
+005daa80	00572b88	2	bound	A621B60	548740 native construction bindings: windows_message_quests.inc
+005daa80	00572b88	3	bound	572b70 sprintf	native ring result
+005daa9c	00572955	2	bound	A620E90	548740 native construction bindings: windows_message_quests.inc
+005daa9c	00572955	3	bound	A620F90	548740 native construction bindings: windows_message_quests.inc
+005daa9c	00572955	4	bound	A620EF8	548740 native construction bindings: windows_message_quests.inc
+005daa9c	00572bb5	2	bound	A620E90	548740 native construction bindings: windows_message_quests.inc
+005daa9c	00572bb5	3	bound	A620F90	548740 native construction bindings: windows_message_quests.inc
+005daa9c	00572bb5	4	bound	A620EF8	548740 native construction bindings: windows_message_quests.inc
+005dab28	00573078	6	bound	4AE3F0	00573048 return NPC display
+005a915c	0057319d	2	bound	562BD0	00573187 indefinite of4AE3F0@57317a
+005a915c	0057319d	3	bound	49B970	00573159 return
+005daf24	0057681e	4	npc	6150EA0	40D2F0@5767ff loads NPC record; field+8
+005daf7c	00576a73	2	bound	4AE3F0	00576a5a return
+005db2a8	00578095	2	item	5915261	4C0110@57807e loads item descriptor+9
+005db2b4	005780cc	2	item	5915261	4C0110@5780b5 loads item descriptor+9
+005db2c4	00578103	2	item	5915261	4C0110@5780ec loads item descriptor+9
+005db504	005793ea	3	reputation	A622E52	483E80 reputation table58E5C4;484360 copies record+2 toA622E52
+005db514	00579415	3	reputation	A6232B8	484000 reputation table58E5E0; record1+2
+005db524	00579440	3	reputation	A62371E	484160 reputation table58E538; record2+2
+005db534	0057946b	3	reputation	A624450	484210 reputation tables58E570/58E554; record5+2
+005cc654	0057961f	2	non-message	A783C90	path sprintf consumed by fopen579631; F6510@579667 receives loadedQST record+31, not path
+005db808	0057a3b4	2	bound	4846C0	0057a39e return normal
+005db808	0057a3b4	3	bound	4846C0	0057a393 return mock
+005db82c	0057a455	2	bound	4846C0	0057a43f return normal
+005db82c	0057a455	3	bound	4846C0	0057a434 return mock
+005dbabc	0057aea8	3	identity	A784148	57CE15 sprintf(005903BC=%d) writes random numeric selector; 51C1D0/57CDD2 clear it
+005dbbec	0057b471	2	bound	49C760	0057b45b return; geography agent
+005dbc54	0057b8d1	2	item	4C0190 descriptor+9	57b896 record copiedto ESP+A288; actual arg pointer ESP+A291
+005dbc90	0057ba02	3	bound	452640	0057b9e8 return
+005dbca4	0057babd	2	bound	4AE3F0	0057baa4 return
+005dbca4	0057babd	3	npc	6150EA0	NPC record field+8
+005dbca4	0057babd	5	identity	6150EC8	NPC record field+48
+005dbe84	0057bfa7	2	item	5915261	4C0110@57bf90 descriptor+9
+005dbe94	0057bfdc	2	bound	452640	0057bfc6 return
+005dbef8	0057c130	4	identity	59152A4	item descriptor+76 TILEGFX native identifier shared withnextline
+005dbf3c	0057c156	2	identity	59152A4	TILEGFX identifier
+005dc0dc	0057c6ac	2	skill	5915289	item descriptor+49 skill name
+005dc0dc	0057c6ac	3	skill	451650	0057c68e return material skill
+005dc0f8	0057c6ee	2	item	5915261	4C0110@57c6d0 container descriptor+9

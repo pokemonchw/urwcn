@@ -9,6 +9,17 @@
 #include "native_paragraph.h"
 #include "native_language_input.h"
 #include "native_language_redraw.h"
+#include "native_menu_component.h"
+#include "native_root_component.h"
+#include "native_component_model.h"
+#include "native_component_binding.h"
+#include "native_image_component.h"
+#include "native_footer_component.h"
+#include "native_link_flow_component.h"
+#include "native_renderer_component_model.h"
+#include "native_renderer_component_binding.h"
+#include "native_ui_scene.h"
+#include "native_ui_cache_owners.h"
 #include "native_button.h"
 #include "setup_text_calls.h"
 #include "credits_text_calls.h"
@@ -81,7 +92,8 @@ enum Hook : u32 {
     ancestors_played, ancestors_living, ancestors_distance, ancestors_previous, ancestors_next,
     ancestors_select, ancestors_select_prefix, ancestors_select_suffix,
     ancestors_page_format, ancestors_page_text, ancestors_row,
-    ancestors_lived_format, ancestors_distance_format, ancestors_lived_text, ancestors_distance_text
+    ancestors_lived_format, ancestors_distance_format, ancestors_lived_text, ancestors_distance_text,
+    scenario_body_append=0x5700
 };
 enum class Scope : u32 {
     menu=1, footer=2, version=3, paragraph=4, text=5, allocation=6, menu_input=7,
@@ -95,7 +107,8 @@ enum class Scope : u32 {
     load_saved_panel=0xA0,
     ancestors_title=50, ancestors_select=51, ancestors_row=52,
     hud_centered=0x100, hud_penalty=0x101, hud_button=0x102,
-    hud_title=0x103, hud_renderer=0x104, hud_renderer_text=0x105, hud_scale=0x106
+    hud_title=0x103, hud_renderer=0x104, hud_renderer_text=0x105, hud_scale=0x106,
+    message_pending=0x200, message_body=0x201
 };
 struct Active {
     u64 token;
@@ -111,6 +124,7 @@ std::vector<Active> active;
 // Three original sprintf arguments, borrowed only for the synchronous DEDA0
 // summary call. No row index, position, text or page snapshot is retained.
 struct AncestorNumbers { std::int32_t age,days,kilometers; };
+struct ScenarioBodySource { u32 next_record,current_component,semantic; };
 
 template<class T> T* at(u32 rva) { return reinterpret_cast<T*>(host->image_base+rva); }
 template<class T> T* ptr(u32 address) { return reinterpret_cast<T*>(static_cast<std::uintptr_t>(address)); }
@@ -163,7 +177,10 @@ Status codec(u32 operation,const char* input,std::vector<char>& output) {
     CodecRequest request{input};
     return service_text(ModuleId::layout,operation,&request,sizeof(request),output);
 }
-Status translate(TextComponent component,const char* original,const char* value,std::vector<char>& encoded) {
+Status translate_culture_back(const char* original,const char* topic,std::vector<char>& encoded);
+Status translate_skills_limit(TextComponent component,const char* value,std::vector<char>& encoded);
+Status translate_help_record(TextComponent component,const char* value,std::vector<char>& encoded);
+Status resolve_display_text(TextComponent component,const char* original,const char* value,std::vector<char>& encoded) {
     // Keep encoding, font metrics and native targets active in both languages.
     // Intro fades overwrite existing pixels; one native sequence uses one mode.
     const bool intro=component==TextComponent::intro_north || component==TextComponent::intro_roleplaying
@@ -171,11 +188,20 @@ Status translate(TextComponent component,const char* original,const char* value,
         || (component==TextComponent::version && in(Scope::intro_version));
     if(!(intro ? intro_chinese : chinese_enabled))
         return codec(layout_op::encode_native,original,encoded);
+    if(component==TextComponent::culture_back) return translate_culture_back(original,value,encoded);
+    if(component==TextComponent::skills_limit_improve || component==TextComponent::skills_limit_degrade)
+        return translate_skills_limit(component,value,encoded);
+    if(component==TextComponent::skills_help_record || component==TextComponent::spells_help_record)
+        return translate_help_record(component,value,encoded);
     TextRequest request{component,original,value};
     std::vector<char> utf8;
     auto result=service_text(ModuleId::main_menu,text_op::translate,&request,sizeof(request),utf8);
     if(result!=Status::ok) return result;
     return codec(layout_op::encode_native,utf8.data(),encoded);
+}
+Status translate(TextComponent component,const char* original,const char* value,std::vector<char>& encoded) {
+    native_component_binding::note_source({component,original,value});
+    return resolve_display_text(component,original,value,encoded);
 }
 
 // 10E5A0/10DDB0 consume the current native surface. Its real physical size and
@@ -285,8 +311,102 @@ Status centered_text(const NativeEvent& e) {
     const auto status=metrics(ptr<char>(e.arguments[0]),measured);
     if(status!=Status::ok) return status;
     const auto x=static_cast<std::int32_t>(e.frame->ecx);
+    switch(e.id) {
+    case version_text:native_component_binding::note_source_for_consumer(e,TextComponent::version);break;
+    case about_version_text:native_component_binding::note_source_for_consumer(e,TextComponent::about_version);break;
+    case about_copyright_text:native_component_binding::note_source_for_consumer(e,TextComponent::about_copyright);break;
+    case about_publisher_text:native_component_binding::note_source_for_consumer(e,TextComponent::about_publisher);break;
+    case about_notes_text:native_component_binding::note_source_for_consumer(e,TextComponent::about_release_notes);break;
+    case about_install_text:native_component_binding::note_source_for_consumer(e,TextComponent::about_install_label);break;
+    case ancestors_page_text:native_component_binding::note_source_for_consumer(e,TextComponent::ancestors_page);break;
+    case about_website_text:case about_path_text:
+        native_component_binding::note_original_for_consumer(e,ptr<char>(e.arguments[0]));break;
+    default:break;
+    }
+    native_component_binding::note_center(e,x+measured.logical_width/2);
     active.push_back({e.token,Scope::text,0,x,1,x+measured.logical_width/2,e.arguments[2]});
     return Status::ok;
+}
+
+Status encode_component_original(const char* text,std::vector<char>& encoded) {
+    return codec(layout_op::encode_native,text,encoded);
+}
+Status decode_parser_original(const char* input,std::string& utf8) {
+    for(auto* p=reinterpret_cast<const unsigned char*>(input);*p;) {
+        const auto bytes=native_name_input::span(p);
+        if(bytes) { utf8.append(reinterpret_cast<const char*>(p),bytes);p+=bytes; }
+        else { append_utf8(utf8,native_name_input::native_scalar(*p));++p; }
+    }
+    return Status::ok;
+}
+Status encode_component_words(std::vector<char>& encoded) {
+    const auto words=native_paragraph_words(encoded.data());
+    encoded.assign(words.begin(),words.end());encoded.push_back(0);
+    return Status::ok;
+}
+Status measure_component_text(const char* encoded,std::int32_t& width) {
+    render::Metrics measured{};
+    const auto status=metrics(encoded,measured);
+    if(status==Status::ok) width=measured.logical_width;
+    return status;
+}
+u64 component_paint_token(native_component_model::Handle handle) {
+    return 0xFFFFFFFF00000000ull|handle;
+}
+void enter_component_paint(native_component_model::Handle handle,native_component_model::Kind kind,u32 outline) {
+    using Kind=native_component_model::Kind;
+    const auto scope=kind==Kind::panel || kind==Kind::legacy_panel ? Scope::titled_panel :
+        kind==Kind::button ? Scope::plain_button : kind==Kind::paragraph ? Scope::paragraph :
+        kind==Kind::centered_text ? Scope::hud_centered : kind==Kind::action_button ? Scope::creation_button : Scope::text;
+    active.push_back({component_paint_token(handle),scope,0,0,0,0,outline});
+}
+void leave_component_paint(native_component_model::Handle handle,native_component_model::Kind) {
+    end(component_paint_token(handle));
+}
+native_component_model::PaintServices component_paint_services() {
+    return {resolve_display_text,encode_component_original,encode_component_words,
+        measure_component_text,enter_component_paint,leave_component_paint};
+}
+u64 renderer_component_token(native_renderer_component_model::Handle handle) {
+    return 0xFFFFFFFE00000000ull|handle;
+}
+void enter_renderer_component(native_renderer_component_model::Handle handle,
+    native_renderer_component_model::Kind,u32 style) {
+    active.push_back({renderer_component_token(handle),Scope::hud_renderer_text,0,0,0,0,style&1u});
+}
+void leave_renderer_component(native_renderer_component_model::Handle handle,
+    native_renderer_component_model::Kind) {
+    end(renderer_component_token(handle));
+}
+native_renderer_component_model::PaintServices renderer_component_services() {
+    return {resolve_display_text,encode_component_original,encode_component_words,
+        measure_component_text,enter_renderer_component,leave_renderer_component};
+}
+void report_ui_status(const wchar_t* operation,Status status) {
+    if(status==Status::ok) return;
+    const auto text=std::wstring(operation)+L"; status="+std::to_wstring(static_cast<u32>(status));
+    host->log(text.c_str());
+}
+void cache_source_saved(native_ui_cache_owners::Slot slot) {
+    native_ui_scene::cache_saved(static_cast<u32>(slot));
+}
+void cache_source_before_restore(native_ui_cache_owners::Slot slot) {
+    u32 owner;
+    switch(slot) {
+    case native_ui_cache_owners::Slot::first:owner=0xA1C2014;break;
+    case native_ui_cache_owners::Slot::second:owner=0xA1BBD24;break;
+    case native_ui_cache_owners::Slot::menu:owner=0xA1C1CE0;break;
+    default:owner=0xA1C1CC4+(static_cast<u32>(slot)-2)*sizeof(u32);break;
+    }
+    report_ui_status(L"Native cache locale materialization",
+        native_ui_scene::prepare_cache(static_cast<u32>(slot),*at<void*>(owner)));
+}
+void cache_source_restored(native_ui_cache_owners::Slot slot,bool region) {
+    report_ui_status(L"Native cache source activation",
+        native_ui_scene::cache_restored(static_cast<u32>(slot),!region));
+}
+void cache_source_retired(native_ui_cache_owners::Slot slot) {
+    native_ui_scene::cache_retired(static_cast<u32>(slot));
 }
 Status paragraph_capacity(const char* encoded) {
     // 162323/162328: a single leading space occupies a separate native token.
@@ -340,10 +460,17 @@ Status character_creation_label(const NativeEvent& e,TextComponent component) {
         display=original_utf8.c_str();
     }
     std::vector<char> encoded;
-    const auto status=translate(component,display,nullptr,encoded);
+    native_menu_component::bind_row(e.frame->esi,component,display,nullptr,true);
+    const auto status=native_menu_component::resolve_row(e.frame->esi,encoded);
     if(status!=Status::ok) return status;
-    encoded.insert(encoded.begin(),original,suffix);
     return lend_text(e,encoded,e.arguments[0],Scope::character_creation_label);
+}
+
+void enter_menu_component(const NativeEvent& event,native_menu_component::Consumer consumer) {
+    using Consumer=native_menu_component::Consumer;
+    const auto kind=consumer==Consumer::title_panel ? Scope::character_creation_panel :
+        consumer==Consumer::button_row ? Scope::character_creation_label : Scope::text;
+    begin(event,kind,kind==Scope::text ? event.arguments[2] : 0);
 }
 
 Status profile_name_error(const NativeEvent& e,DispatchResult& result,TextComponent component,u32 source_rva) {
@@ -362,77 +489,26 @@ Status scenario_body_record(const NativeEvent& e) {
     // RNDCAMP.1 has thirteen nonempty body records and one empty separator.
     // FB712's terminal EOF read also leaves an empty record. Keep both native
     // empty sprintf/append calls, including their original whitespace.
-    if(!*original) return Status::ok;
     const auto story=std::find_if(active.rbegin(),active.rend(),
         [](const Active& scope){return scope.kind==Scope::scenario_story;});
-    auto& record=*ptr<u32>(story->allocation);
+    auto& source=*ptr<ScenarioBodySource>(story->allocation);
+    source.semantic=*original ? 1u : 0u;
+    if(!source.semantic) return Status::ok;
     const auto component=static_cast<TextComponent>(
-        static_cast<u32>(TextComponent::scenario_village_departure_1)+record++);
+        static_cast<u32>(TextComponent::scenario_village_departure_1)+source.next_record++);
+    source.current_component=static_cast<u32>(component);
     std::vector<char> encoded;
     const auto status=translate(component,original,nullptr,encoded);
     if(status!=Status::ok) return status;
+    const auto* format=ptr<char>(e.arguments[1]);
+    native_component_binding::note_prefix(e,std::string(format,std::strstr(format,"%s")).c_str());
     // This is an input-file record ordinal, not a rendered line. The original
     // sprintf keeps its <br>/space format, then 162300 tokenizes the result.
     // The thirteen fixed translations fit the native 0x400-byte destination.
     return lend_text(e,encoded,e.arguments[2],Scope::allocation);
 }
 
-Status capture_footer_edge(const NativeEvent& e) {
-    // 12510E supplies the live footer panel x and width. Its outer footer
-    // scope owns this one boundary value only until native construction ends.
-    const auto footer=std::find_if(active.rbegin(),active.rend(),
-        [](const Active& scope){return scope.kind==Scope::footer;});
-    auto* edge=static_cast<std::int32_t*>(host->allocate(sizeof(std::int32_t)));
-    if(!edge) return Status::failed;
-    *edge=static_cast<std::int32_t>(e.frame->ecx+e.arguments[0]);
-    footer->allocation=address(edge);
-    return Status::ok;
-}
-
-Status footer_branding(const NativeEvent& e) {
-    if(!chinese_enabled) return Status::ok;
-    // 125125 is this footer's original image call, before 125137 resets the
-    // production paragraph. The sibling uses the live panel edge and logo y;
-    // no screen positions or text rows are retained across this invocation.
-    begin(e,Scope::paragraph,1);
-    std::vector<char> credit,version;
-    auto status=translate(TextComponent::translation_credit,"",nullptr,credit);
-    if(status!=Status::ok) return status;
-    status=translate(TextComponent::translation_version,"",nullptr,version);
-    if(status!=Status::ok) return status;
-    render::Metrics credit_size{},version_size{};
-    status=metrics(credit.data(),credit_size);
-    if(status!=Status::ok) return status;
-    status=metrics(version.data(),version_size);
-    if(status!=Status::ok) return status;
-    const auto width=std::max(credit_size.logical_width,version_size.logical_width);
-    // The native footer uses a five-unit gap from hirvilogo.png to its label.
-    // Apply that same spacing to the explicitly requested adjacent component.
-    constexpr std::int32_t gap=5;
-    const auto footer=std::find_if(active.rbegin(),active.rend(),
-        [](const Active& scope){return scope.kind==Scope::footer;});
-    const auto label_x=*ptr<std::int32_t>(footer->allocation)-gap-width;
-    const auto logo_y=static_cast<std::int32_t>(e.arguments[0]);
-    const render::SpriteRequest sprite{*at<void*>(0x61BBB10),
-        label_x+(width-byayoi_sprite::width)/2,logo_y,800,600};
-    status=host->invoke(ModuleId::render,render::op::sprite,&sprite,sizeof(sprite),nullptr,nullptr);
-    if(status!=Status::ok) return status;
-
-    const std::string paragraph=std::string(credit.data())+"<br>"+version.data();
-    status=paragraph_capacity(paragraph.c_str());
-    if(status!=Status::ok) return status;
-    using Parse = void (__fastcall *)(u32,const char*);
-    reinterpret_cast<Parse>(host->image_base+0x162300)(1,paragraph.c_str());
-    using MapRGB = u32 (UWCN_CALL *)(const void*,unsigned char,unsigned char,unsigned char);
-    const auto* surface=*at<render::Surface*>(0x61BBB10);
-    const auto color=(*at<MapRGB>(0x18C1F8))(surface->format,176,196,222);
-    const NativeParagraphCall call{address(at<void>(0x10EB40)),label_x,logo_y+byayoi_sprite::height+gap,
-        width,byayoi_sprite::height,color,1};
-    // The original tokenizer, wrap comparisons, <br> advancement, cursor and
-    // word drawing run synchronously. Existing native width/glyph hooks apply.
-    uwcn_draw_native_paragraph(&call);
-    return Status::ok;
-}
+#include "footer.inc"
 
 Status redraw_menu();
 Status redraw_credits() {
@@ -533,11 +609,9 @@ Status redraw_scenario() {
 }
 void invalidate_windows_creation();
 void invalidate_windows_profile();
-void invalidate_windows_encyclopedia();
 Status invalidate() {
     invalidate_windows_creation();
     invalidate_windows_profile();
-    invalidate_windows_encyclopedia();
     native_language_redraw::request_ancestors();
     about_refresh_pending=true;
     credits_refresh_pending=true;
@@ -558,16 +632,29 @@ Status dispatch_windows_skills(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_encyclopedia(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_renderer(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_menu_background(const NativeEvent&,DispatchResult&,bool&);
+Status dispatch_windows_messages(const NativeEvent&,DispatchResult&,bool&);
 Status windows_creation_input(const NativeEvent&);
 bool windows_profile_input(const NativeEvent&);
-Status dispatch(const NativeEvent& e,DispatchResult& result) {
+Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     result={};
     bool handled{};
+    auto native_component=native_root_component::dispatch(e,result,handled);
+    if(handled) return native_component;
+    native_component=native_ui_cache_owners::dispatch(e,result,handled);
+    if(handled) return native_component;
+    native_component=native_renderer_component_model::dispatch(e,result,handled);
+    if(handled) return native_component;
+    native_component=native_image_component::dispatch(e,result,handled);
+    if(handled) return native_component;
+    if(e.id==0x7E00 && e.phase==NativePhase::inline_before)
+        native_ui_scene::menu_retired(native_menu_component::active());
+    native_component=native_menu_component::dispatch(e,result,handled);
+    if(handled) return native_component;
     auto extension=native_name_input::dispatch(e,result,handled);
     if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
     for(auto dispatch_extension:{dispatch_windows_profile,dispatch_windows_creation,
             dispatch_windows_skills,dispatch_windows_encyclopedia,dispatch_windows_renderer,
-            dispatch_windows_menu_background}) {
+            dispatch_windows_menu_background,dispatch_windows_messages}) {
         extension=dispatch_extension(e,result,handled);
         if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
     }
@@ -605,6 +692,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
                 std::to_string(static_cast<std::int32_t>(e.arguments[3]));
             status=formatted(e,TextComponent::ancestors_page,value.c_str());
         }
+        if(e.id==footer_initial || e.id==footer_loop) status=complete_native_footer();
         end(e.token);
         if(e.id==window_targets_rebuilt) return invalidate();
         return status;
@@ -632,8 +720,8 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         // 10B94 stores the selected RNDCAMP index plus 100; FB7F2 removes
         // that creation marker before this display call. RNDCAMP.1 is Village.
         if(*at<u32>(0xA32B0C8)==1) {
-            auto* record=static_cast<u32*>(host->allocate(sizeof(u32)));
-            *record=0;
+            auto* record=static_cast<ScenarioBodySource*>(host->allocate(sizeof(ScenarioBodySource)));
+            *record={};
             active.push_back({e.token,Scope::scenario_story,address(record),0,0,0,0});
         }
         break;
@@ -649,6 +737,15 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         break;
     case scenario_body_format:
         if(in(Scope::scenario_story)) return scenario_body_record(e);
+        break;
+    case scenario_body_append:
+        if(in(Scope::scenario_story)) {
+            const auto story=std::find_if(active.rbegin(),active.rend(),
+                [](const Active& scope){return scope.kind==Scope::scenario_story;});
+            const auto& source=*ptr<ScenarioBodySource>(story->allocation);
+            if(source.semantic) native_component_binding::note_source_for_consumer(e,
+                static_cast<TextComponent>(source.current_component));
+        }
         break;
     case scenario_body_paragraph:
         if(in(Scope::scenario_story)) begin(e,Scope::paragraph,e.arguments[3]);
@@ -705,7 +802,8 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
             const auto component=in(Scope::profile_culture) ? TextComponent::profile_culture_title :
                 in(Scope::profile_sex) ? TextComponent::profile_sex_title : TextComponent::character_creation_title;
             std::vector<char> encoded;
-            const auto status=translate(component,ptr<char>(e.arguments[2]),nullptr,encoded);
+            native_menu_component::bind_title(component,ptr<char>(e.arguments[2]));
+            const auto status=native_menu_component::resolve_title(encoded);
             if(status!=Status::ok) return status;
             // D01A5 -> 115E70(flags 4) -> 1157B0(mode 2): native left alignment.
             return lend_text(e,encoded,e.arguments[2],Scope::character_creation_panel);
@@ -742,6 +840,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         }
         break;
     case load_saved_empty_panel: case load_saved_list_panel:
+        native_menu_component::bind_title(TextComponent::load_saved_title,at<char>(0x5F54A38));
         begin(e,Scope::load_saved_panel); break;
     case load_saved_empty_text: case load_saved_key_text: {
         std::vector<char> encoded;
@@ -899,7 +998,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
             if(status!=Status::ok) return status;
             return lend_text(e,encoded,e.arguments[0],Scope::text);
         }
-        if(in(Scope::setup_panel) || in(Scope::ancestors_title) || in(Scope::character_creation_panel)
+        if(in(Scope::titled_panel) || in(Scope::setup_panel) || in(Scope::ancestors_title) || in(Scope::character_creation_panel)
             || in(Scope::profile_panel) || in(Scope::scenario_panel))
             begin(e,Scope::text,e.arguments[2]);
         break;
@@ -926,6 +1025,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         std::vector<char> encoded;
         const auto status=translate(component,suffix,nullptr,encoded);
         if(status!=Status::ok) return status;
+        native_component_binding::note_prefix(e,std::string(original,suffix).c_str());
         encoded.insert(encoded.begin(),original,suffix);
         // Keep the native key prefix/parser and lend only this synchronous
         // button call its localized label. 5F54A9C supplies the label outline.
@@ -1033,10 +1133,9 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         [[fallthrough]];
     case version_scope: begin(e,Scope::version); break;
     case footer_panel:
-        if(in(Scope::footer)) return capture_footer_edge(e);
+        if(in(Scope::footer)) footer_native_panel(e);
         break;
     case footer_logo:
-        if(in(Scope::footer)) return footer_branding(e);
         break;
     case production_paragraph: case copyright_paragraph: case authors_paragraph:
         if(in(Scope::footer)) begin(e,Scope::paragraph,e.arguments[3]);
@@ -1048,13 +1147,18 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         if(in(Scope::footer)) return append(e,TextComponent::authors);
         break;
     case copyright_append:
-        if(in(Scope::footer)) return paragraph_capacity(ptr<char>(e.frame->edx));
+        if(in(Scope::footer)) {
+            native_component_binding::note_source_for_consumer(e,TextComponent::copyright);
+            return paragraph_capacity(ptr<char>(e.frame->edx));
+        }
         break;
     case menu_text:
         if(in(Scope::menu)) {
             if(e.frame->ebx>7) return Status::invalid;
             std::vector<char> encoded;
-            auto status=translate(static_cast<TextComponent>(e.frame->ebx),ptr<char>(e.arguments[0]),nullptr,encoded);
+            native_menu_component::bind_row(e.frame->esi,static_cast<TextComponent>(e.frame->ebx),
+                ptr<char>(e.arguments[0]));
+            auto status=native_menu_component::resolve_row(e.frame->esi,encoded);
             if(status!=Status::ok) return status;
             if(encoded.size()>0x12C) return Status::insufficient_buffer;
             return lend_text(e,encoded,e.arguments[0],Scope::text);
@@ -1120,6 +1224,14 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
     return Status::ok;
 }
 
+Status dispatch(const NativeEvent& event,DispatchResult& result) {
+    native_component_binding::begin_event(event);
+    native_renderer_component_binding::begin_event(event);
+    const auto status=native_renderer_component_binding::finish_event(event,result,
+        dispatch_native(event,result));
+    return native_component_binding::finish_event(event,result,status);
+}
+
 HookSpec call(u32 id,u32 site,u32 target,u32 count) {
     HookSpec s{id,HookKind::call,site,target,count,5,{0xE8}};
     const auto relative=target-site-5;
@@ -1136,8 +1248,119 @@ HookSpec inline_hook(u32 id,u32 site,std::initializer_list<unsigned char> bytes)
 #include "windows_creation.inc"
 #include "windows_skills_spells.inc"
 #include "windows_encyclopedia.inc"
+Status translate_skills_limit(TextComponent component,const char* value,std::vector<char>& encoded) {
+    const char* key=component==TextComponent::skills_limit_improve ? "limit.improve" : "limit.degrade";
+    const TextRequest request{TextComponent::skills_text,"",key};
+    std::vector<char> utf8;
+    auto status=service_text(ModuleId::main_menu,text_op::translate,&request,sizeof(request),utf8);
+    if(status!=Status::ok) return status;
+    std::string text(utf8.data());text.replace(text.find("{value}"),7,value);
+    return codec(layout_op::encode_native,text.c_str(),encoded);
+}
+Status translate_help_record(TextComponent component,const char* value,std::vector<char>& encoded) {
+    const std::string identity(value);
+    const auto separator=identity.rfind('#');
+    if(identity.substr(separator+1)!="0") {encoded.assign(1,0);return Status::ok;}
+    const auto key=identity.substr(0,separator);
+    const TextRequest request{component==TextComponent::skills_help_record ?
+        TextComponent::skills_text : TextComponent::spells_text,"",key.c_str()};
+    std::vector<char> utf8;
+    const auto status=service_text(ModuleId::main_menu,text_op::translate,&request,sizeof(request),utf8);
+    return status==Status::ok ? codec(layout_op::encode_native,utf8.data(),encoded) : status;
+}
+Status translate_culture_back(const char*,const char* topic,std::vector<char>& encoded) {
+    std::vector<char> pattern;
+    auto status=windows_culture_text("ui.back",pattern);
+    if(status!=Status::ok) return status;
+    auto wide=[](const char* value) {
+        const int count=MultiByteToWideChar(CP_UTF8,0,value,-1,nullptr,0);
+        std::wstring result(static_cast<std::size_t>(count),L'\0');
+        MultiByteToWideChar(CP_UTF8,0,value,-1,result.data(),count);
+        return result;
+    };
+    const auto topic_name=wide(topic);
+    const WindowsEncyclopediaTopic* semantic_topic{};
+    for(const auto& candidate:windows_encyclopedia_topics) {
+        std::string native_name;
+        decode_parser_original(candidate.name,native_name);
+        const auto candidate_name=wide(native_name.c_str());
+        if(CompareStringOrdinal(topic_name.data(),-1,candidate_name.data(),-1,TRUE)==CSTR_EQUAL) {
+            semantic_topic=&candidate;break;
+        }
+    }
+    std::vector<char> title;
+    if(semantic_topic) status=windows_culture_text(std::string("topic.")+semantic_topic->key+".title",title);
+    else status=codec(layout_op::encode_native,topic,title);
+    if(status!=Status::ok) return status;
+    std::string text(pattern.data());
+    text.replace(text.find("{value}"),7,title.data());
+    encoded.assign(text.begin(),text.end());encoded.push_back(0);
+    return Status::ok;
+}
 #include "windows_renderer_text.inc"
 #include "windows_menu_redraw.inc"
+#include "windows_messages.inc"
+#include "windows_message_values.inc"
+#include "windows_message_items.inc"
+#include "windows_message_geography.inc"
+#include "windows_message_resources.inc"
+#include "windows_message_display.inc"
+#include "windows_message_formats.inc"
+#include "windows_message_format_builders.inc"
+#include "windows_message_helpers.inc"
+#include "windows_message_quests.inc"
+
+Status message_translate_value(const char* tag,const char* value,std::string& text) {
+    return windows_message_values::translate_tag(tag,value,text);
+}
+Status message_resolve_value(const char* domain,const char* value,std::string& text) {
+    return windows_message_values::resolve(domain,value,text);
+}
+Status dispatch_windows_messages(const NativeEvent& event,DispatchResult& result,bool& handled) {
+    if(event.id==windows_message_resources::tag_value) {
+        if(event.phase==NativePhase::before) windows_message_values::begin_tag();
+        const auto status=windows_message_resources::dispatch(event,result,handled);
+        if(event.phase==NativePhase::after) windows_message_values::end_tag();
+        return status;
+    }
+    for(auto dispatch:{windows_messages::dispatch,windows_message_values::dispatch,
+            windows_message_items::dispatch,windows_message_geography::dispatch,windows_message_resources::dispatch,
+            windows_message_display::dispatch,windows_message_formats::dispatch,
+            windows_message_helpers::dispatch,windows_message_quests::dispatch,
+            windows_message_format_builders::dispatch}) {
+        const auto status=dispatch(event,result,handled);
+        if(handled) return status;
+    }
+    return Status::ok;
+}
+void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
+    windows_messages::append_hooks(hooks);
+    windows_message_values::append_hooks(hooks);
+    windows_message_items::append_hooks(hooks);
+    windows_message_geography::append_hooks(hooks);
+    windows_message_resources::append_hooks(hooks);
+    windows_message_display::append_hooks(hooks);
+    windows_message_formats::append_hooks(hooks);
+    windows_message_format_builders::append_hooks(hooks);
+    windows_message_helpers::append_hooks(hooks);
+    windows_message_quests::append_hooks(hooks);
+}
+std::vector<unsigned char> save_windows_message_state() {
+    std::vector<unsigned char> state;
+    windows_messages::save(state);
+    windows_message_values::save(state);
+    windows_message_items::save(state);
+    windows_message_geography::save(state);
+    windows_message_resources::save(state);
+    return state;
+}
+void restore_windows_message_state(const unsigned char* state) {
+    windows_messages::restore(state);
+    windows_message_values::restore(state);
+    windows_message_items::restore(state);
+    windows_message_geography::restore(state);
+    windows_message_resources::restore(state);
+}
 Status dispatch_windows_renderer(const NativeEvent& e,DispatchResult& result,bool& handled) {
     return windows_renderer_text::dispatch(e,result,handled);
 }
@@ -1150,6 +1373,23 @@ Status UWCN_CALL initialize(const HostApi* api) {
     if(!api || api->size<sizeof(HostApi) || api->abi!=kHostAbi) return Status::invalid;
     host=api;
     native_language_redraw::initialize(api->image_base);
+    native_menu_component::initialize(api->image_base);
+    native_menu_component::configure(api,resolve_display_text,encode_component_original,enter_menu_component,end);
+    native_root_component::initialize(api->image_base);
+    native_component_model::initialize(api->image_base);
+    native_renderer_component_model::initialize(api->image_base);
+    native_renderer_component_binding::configure(api->image_base,renderer_component_services());
+    native_link_flow_component::initialize(api->image_base);
+    configure_windows_encyclopedia_flow_services();
+    native_image_component::initialize(api->image_base);
+    native_footer_component::initialize(api->image_base);
+    native_footer_component::configure(footer_services());
+    native_ui_scene::initialize(api->image_base,component_paint_services());
+    native_component_binding::configure(api->image_base,component_paint_services());
+    native_component_binding::set_parser_source_decoder(decode_parser_original);
+    native_ui_cache_owners::initialize(api->image_base);
+    native_ui_cache_owners::set_callbacks({cache_source_saved,cache_source_before_restore,
+        cache_source_restored,cache_source_retired});
     auto sdl=GetModuleHandleW(L"SDL2.dll");
     if(!sdl) return Status::unavailable;
     get_rgb=reinterpret_cast<GetRGB>(GetProcAddress(sdl,"SDL_GetRGB"));
@@ -1247,6 +1487,7 @@ Status UWCN_CALL initialize(const HostApi* api) {
         call(scenario_story_scope,0xFB7FD,0xFB390,0),
         call(scenario_panel,0xFB691,0x116270,5),
         call(scenario_body_format,0xFB74D,0x10D0,3),
+        call(scenario_body_append,0xFB75D,0x162300,0),
         call(scenario_body_paragraph,0xFB7A3,0x10EB40,4),
         call(scenario_introduction_1,0xFB80C,0x162300,0),
         call(scenario_introduction_2,0xFB818,0x162300,0),
@@ -1336,10 +1577,18 @@ Status UWCN_CALL initialize(const HostApi* api) {
     append_windows_skills_hooks(hooks);
     append_windows_encyclopedia_hooks(hooks);
     windows_renderer_text::append_hooks(hooks);
+    append_windows_message_hooks(hooks);
     native_name_input::append_hooks(hooks);
     append_windows_menu_background_hooks(hooks);
     native_language_input::append_hooks(host->image_base,hooks);
     native_language_redraw::append_hooks(hooks);
+    native_menu_component::append_hooks(hooks);
+    native_root_component::append_hooks(hooks);
+    native_image_component::append_hooks(hooks);
+    native_ui_cache_owners::append_hooks(hooks);
+    native_renderer_component_model::append_hooks(hooks);
+    native_component_binding::register_hooks(hooks);
+    native_renderer_component_binding::register_hooks(hooks);
     status=host->install_hooks(hooks.data(),static_cast<u32>(hooks.size()));
     if(status!=Status::ok) initialization_failure(L"native text hook installation",status);
     return status;
@@ -1365,22 +1614,31 @@ Status UWCN_CALL save_state(void* output,u32* bytes) {
     const auto native=native_targets::save();
     const auto redraw=native_language_redraw::save();
     const auto name=native_name_input::save();
+    const auto menu=native_menu_component::save();
+    const auto messages=save_windows_message_state();
     const u32 language[]={chinese_enabled?1u:0u,intro_chinese?1u:0u,
         native_language_input::save().f10_consumed,redraw.pending,redraw.rebuilding,
         name.active,name.committed};
     const u32 active_bytes=sizeof(u32)+static_cast<u32>(active.size()*sizeof(Active));
-    const u32 required=active_bytes+2*sizeof(u32)+sizeof(retired_routes)+static_cast<u32>(native.size())+sizeof(language);
+    const u32 required=active_bytes+4*sizeof(u32)+sizeof(retired_routes)+
+        static_cast<u32>(native.size())+sizeof(language)+static_cast<u32>(menu.size())+
+        static_cast<u32>(messages.size());
     if(!output || *bytes<required) { *bytes=required; return Status::insufficient_buffer; }
     const u32 count=static_cast<u32>(active.size());
     std::memcpy(output,&count,sizeof(count));
     if(count) std::memcpy(static_cast<unsigned char*>(output)+sizeof(count),active.data(),count*sizeof(Active));
     auto* suffix=static_cast<unsigned char*>(output)+active_bytes;
-    const u32 tag=0x34414448,native_bytes=static_cast<u32>(native.size());
+    const u32 tag=0x36414448,native_bytes=static_cast<u32>(native.size()),
+        menu_bytes=static_cast<u32>(menu.size()),message_bytes=static_cast<u32>(messages.size());
     std::memcpy(suffix,&tag,sizeof(tag)); suffix+=sizeof(tag);
     std::memcpy(suffix,&retired_routes,sizeof(retired_routes)); suffix+=sizeof(retired_routes);
     std::memcpy(suffix,&native_bytes,sizeof(native_bytes)); suffix+=sizeof(native_bytes);
+    std::memcpy(suffix,&menu_bytes,sizeof(menu_bytes)); suffix+=sizeof(menu_bytes);
+    std::memcpy(suffix,&message_bytes,sizeof(message_bytes)); suffix+=sizeof(message_bytes);
     std::memcpy(suffix,native.data(),native.size());
     std::memcpy(suffix+native.size(),language,sizeof(language));
+    std::memcpy(suffix+native.size()+sizeof(language),menu.data(),menu.size());
+    std::memcpy(suffix+native.size()+sizeof(language)+menu.size(),messages.data(),messages.size());
     *bytes=required;
     // Host::prepare_transaction invokes the non-sizing save exactly once on
     // the stopped native thread, before disabling or unloading any module.
@@ -1416,22 +1674,34 @@ Status UWCN_CALL restore_state(const void* input,u32 bytes) {
     std::memcpy(&tag,suffix,sizeof(tag)); suffix+=sizeof(tag);
     // HDA2 is the published predecessor, with Chinese always enabled. HDA3
     // appends only language/input state; native resource and Active layouts stay.
-    if(tag!=0x32414448 && tag!=0x33414448 && tag!=0x34414448) return Status::invalid;
+    if(tag!=0x32414448 && tag!=0x33414448 && tag!=0x34414448 && tag!=0x35414448 && tag!=0x36414448) return Status::invalid;
     std::memcpy(&retired_routes,suffix,sizeof(retired_routes)); suffix+=sizeof(retired_routes);
     std::memcpy(&native_bytes,suffix,sizeof(native_bytes)); suffix+=sizeof(native_bytes);
-    const u32 language_bytes=tag==0x34414448 ? 7*sizeof(u32) : tag==0x33414448 ? 5*sizeof(u32) : 0;
-    if(bytes!=prefix+native_bytes+language_bytes || retired_routes.count>retired_routes.entries.size()) return Status::invalid;
+    u32 menu_bytes{},message_bytes{};
+    if(tag==0x35414448 || tag==0x36414448) {
+        std::memcpy(&menu_bytes,suffix,sizeof(menu_bytes)); suffix+=sizeof(menu_bytes);
+    }
+    if(tag==0x36414448) {
+        std::memcpy(&message_bytes,suffix,sizeof(message_bytes)); suffix+=sizeof(message_bytes);
+    }
+    const u32 language_bytes=(tag==0x34414448 || tag==0x35414448 || tag==0x36414448) ? 7*sizeof(u32) :
+        tag==0x33414448 ? 5*sizeof(u32) : 0;
+    const u32 extended_header_bytes=tag==0x36414448 ? 2*sizeof(u32) : tag==0x35414448 ? sizeof(u32) : 0;
+    if(bytes!=prefix+extended_header_bytes+native_bytes+language_bytes+menu_bytes+message_bytes ||
+        retired_routes.count>retired_routes.entries.size()) return Status::invalid;
     auto status=native_targets::restore(suffix,native_bytes);
     if(status!=Status::ok) return status;
-    if(tag==0x33414448 || tag==0x34414448) {
+    if(tag==0x33414448 || tag==0x34414448 || tag==0x35414448 || tag==0x36414448) {
         u32 language[7]{};
         std::memcpy(language,suffix+native_bytes,language_bytes);
         chinese_enabled=language[0]!=0;
         intro_chinese=language[1]!=0;
         native_language_input::restore({language[2]});
         native_language_redraw::restore({language[3],language[4]});
-        if(tag==0x34414448) native_name_input::restore({language[5],language[6]});
+        if(tag==0x34414448 || tag==0x35414448 || tag==0x36414448) native_name_input::restore({language[5],language[6]});
     }
+    if(tag==0x35414448 || tag==0x36414448) native_menu_component::restore(suffix+native_bytes+language_bytes);
+    if(tag==0x36414448) restore_windows_message_state(suffix+native_bytes+language_bytes+menu_bytes);
     const auto routes=native_targets::routes();
     status=abi1_retirement::bind_routes(retired_routes,routes);
     if(status!=Status::ok) return status;
@@ -1446,6 +1716,7 @@ void UWCN_CALL shutdown() {
         native_raster::remove_raster_patches();
     }
     native_targets::forget();
+    native_menu_component::shutdown();
     active.clear(); host=nullptr; get_rgb=nullptr;
 }
 const ModuleApi api{sizeof(ModuleApi),kHostAbi,ModuleId::adapter,initialize,invoke,save_state,restore_state,shutdown};

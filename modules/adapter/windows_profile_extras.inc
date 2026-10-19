@@ -11,6 +11,21 @@ enum WindowsProfileHook : u32 {
     wp_attribute_draw=0x7850,wp_attribute_identity_width,wp_attribute_identity_draw,
     wp_portrait_footer,wp_title_width_first,wp_title_width_second
 };
+constexpr u32 wp_name_error_parser=0x57F2;
+// The three confirmed literal-copy constructors select this neutral display
+// resource. ESI is only success/failure at the later 118EE parser consumer.
+struct WindowsProfileErrorSource { u32 component,native_source_rva; };
+WindowsProfileErrorSource windows_profile_error_source{};
+void windows_profile_error_constructed(TextComponent component,u32 native_source_rva) {
+    windows_profile_error_source={static_cast<u32>(component),native_source_rva};
+}
+std::vector<std::uint8_t> save_windows_profile_error_source() {
+    const auto* bytes=reinterpret_cast<const std::uint8_t*>(&windows_profile_error_source);
+    return {bytes,bytes+sizeof(windows_profile_error_source)};
+}
+void restore_windows_profile_error_source(const void* bytes) {
+    std::memcpy(&windows_profile_error_source,bytes,sizeof(windows_profile_error_source));
+}
 bool windows_season_drawing;
 bool windows_attributes_drawing;
 bool windows_season_refresh=true;
@@ -45,7 +60,11 @@ constexpr WindowsProfileField windows_attribute_labels[]{
 Status windows_profile_text(const NativeEvent& e,TextComponent component,u32& destination,
                             Scope kind,const char* value=nullptr) {
     std::vector<char> encoded;
-    const auto status=translate(component,ptr<char>(destination),value,encoded);
+    Status status;
+    if(e.id==character_creation_panel) {
+        native_menu_component::bind_title(component,ptr<char>(destination),value);
+        status=native_menu_component::resolve_title(encoded);
+    } else status=translate(component,ptr<char>(destination),value,encoded);
     if(status!=Status::ok) return status;
     return lend_text(e,encoded,destination,kind);
 }
@@ -62,7 +81,7 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
     if(e.phase==NativePhase::after) {
         if(e.id==wp_season_draw) { windows_season_drawing=false;return Status::ok; }
         if(e.id==wp_attribute_draw) { windows_attributes_drawing=false;return Status::ok; }
-        if(e.id==wp_attribute_age && e.frame->edi!=0 && chinese_enabled) {
+        if(e.id==wp_attribute_age && e.frame->edi!=0) {
             std::vector<char> encoded;
             const auto age=std::to_string(e.arguments[2]);
             auto status=translate(TextComponent::profile_start_age,ptr<char>(e.arguments[0]),age.c_str(),encoded);
@@ -80,6 +99,12 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
         return windows_profile_text(e,windows_attribute_labels[e.id-wp_attribute_label_first].component,
                                     e.arguments[0],Scope::profile_panel);
     switch(e.id) {
+    case wp_name_error_parser: {
+        const auto& error=windows_profile_error_source;
+        native_component_binding::bind_source(e,native_text_resource::from_request({
+            static_cast<TextComponent>(error.component),at<char>(error.native_source_rva),nullptr}));
+        return Status::ok;
+    }
     case shared_title_text:
         if(native_name_input::contains_display(ptr<char>(e.arguments[0]))) {
             begin(e,Scope::text,e.arguments[2]);return Status::ok;
@@ -142,17 +167,20 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
         if(in(Scope::profile_panel)) { begin(e,Scope::text,e.arguments[2]);return Status::ok; }
         break;
     case wp_attribute_identity: {
-        if(!chinese_enabled) return Status::ok;
         // E677A formats Plr.name + Plr.inhabitant. choose_culture stores the
         // culture ID at Plr+0xD; preserve the existing display name verbatim.
         const auto* original=ptr<char>(e.frame->ecx);
         const auto* separator=std::strchr(original,' ');
         const std::string name(original,separator);
+        std::string original_culture,original_name;
+        decode_parser_original(separator+1,original_culture);
+        decode_parser_original(name.c_str(),original_name);
         std::vector<char> culture;
         const auto component=static_cast<TextComponent>(static_cast<u32>(TextComponent::profile_culture_0)+
             *at<unsigned char>(0xA32A6F5));
-        auto status=translate(component,separator+1,nullptr,culture);
+        auto status=translate(component,original_culture.c_str(),nullptr,culture);
         if(status!=Status::ok) return status;
+        native_component_binding::note_prefix(e,(original_name+" ").c_str());
         std::vector<char> encoded;
         status=native_name_input::display(name.c_str(),encoded);
         if(status!=Status::ok) return status;
@@ -184,7 +212,9 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
         e.frame->eax=static_cast<u32>(measured.logical_width);
         result.skip_original=1;return Status::ok;
     }
-    case wp_attribute_age_text:begin(e,Scope::text,e.arguments[2]);return Status::ok;
+    case wp_attribute_age_text:
+        native_component_binding::note_source_for_consumer(e,TextComponent::profile_start_age);
+        return centered_text(e);
     case wp_attribute_height:return windows_profile_text(e,TextComponent::profile_height,e.arguments[0],Scope::text);
     case wp_attribute_weight:return windows_profile_text(e,TextComponent::profile_weight,e.arguments[0],Scope::text);
     case wp_attribute_height_value:case wp_attribute_weight_value:
@@ -202,6 +232,7 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
     handled=false;return Status::ok;
 }
 void append_windows_profile_hooks(std::vector<HookSpec>& hooks) {
+    hooks.push_back(call(wp_name_error_parser,0x118EE,0x162300,0));
     hooks.push_back(call(wp_season_draw,0xFB36,0xCFFB0,0));
     hooks.push_back(call(wp_season_help,0xFA4D,0x162300,0));
     hooks.push_back(call(wp_season_footer,0xFA54,0xF210,0));

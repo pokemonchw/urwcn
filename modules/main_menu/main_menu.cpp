@@ -46,7 +46,7 @@ Status generate_translation_version(std::string& version) {
         "modules/uwcn_render.dll", "modules/uwcn_layout.dll",
         "modules/uwcn_main_menu.dll", "modules/uwcn_adapter.dll",
         "catalog/zh-CN/main_menu.tsv", "catalog/zh-CN/hud.tsv", "catalog/zh-CN/world_hud.tsv",
-        "catalog/zh-CN/cultures.tsv"
+        "catalog/zh-CN/cultures.tsv", "catalog/zh-CN/messages.tsv"
     };
     std::string identity="uwcn-package-version-v1\n";
     constexpr char hexadecimal[]="0123456789abcdef";

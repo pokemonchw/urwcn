@@ -1,0 +1,88 @@
+原生公共 UI 数据模型改造：首批源码与编译状态
+日期：2026-10-19（Asia/Shanghai）
+对象：不真实的世界 Windows x86 3.89 / Steam Build 25939378。
+
+目标与本批实际范围
+================
+用户明确要求通过 Hook 修改原生 UI，统一快速切换中英文，不继续为每页
+增加独立语言刷新函数。本批开始修改运行源码，但尚未完成该目标。
+
+本批只接通公共菜单实例的数据层和原生正常构建/消费生命周期。没有把
+单 active 菜单实例层称为全屏保留式 UI，没有新增逐页重绘地址表，也没有
+新增文字/位置绘制记录、像素跟踪、Present 叠字、测试、断言或兜底分支。
+
+源码
+====
+modules/adapter/native_menu_model.h/.cpp：
+- 原始模型使用游戏自己 fwrite/fread 的190h头与5AA0h行数组，保留内部
+  英文、原动作和原生输入/布局字段，不把中文显示副本写回业务数据。
+- 明确的实例句柄、创建、捕获、激活、退役和纯字节状态保存/恢复。
+- 激活先捕获真实当前模型；激活同一实例也不回灌过期选择或滚动值。
+- restore只恢复实例管理数据，不向运行中的游戏写入旧全局值。
+
+modules/adapter/native_menu_component.h/.cpp：
+- CF793：CF790覆盖共享菜单前退役当前实例；原A1读取继续重放。
+- CF97E：执行原最后的input_mode=0，再提交完整构建模型，续CF988。
+- CFFB6：从当前实例重新供给原生共享视图，原CFFB0继续读取和布局。
+- D03F3：执行原paint状态清零，保存原生布局结果，续D03FD。
+- 四处皆为共享原生函数内部边界，无页面判断和页面重绘回调。
+
+modules/adapter/module.cpp：
+- 接入初始化、四Hook登记、分发和退役。
+- 状态格式升为未正式发布的HDA5（35414448），保留已发布HDA2/3/4的
+  明确格式读取；HDA4迁移采用初始化时采纳的当前真实原生菜单。
+- HDA5后缀：tag、retired_routes、native_bytes、menu_bytes、native blob、
+  原7个语言/输入u32、menu blob。menu blob为next_handle、active_handle、
+  count和按handle排序的原始模型。没有业务代码指针或原生栈帧指针。
+
+静态审查
+========
+四处原指令、HIGHLOW绝对操作数、两个10字节MOV的续接长度，以及保存
+格式偏移已独立核对。方法为源码、原始反汇编及状态长度算术；没有运行
+游戏、注入、模拟输入、运行产物或测试，没有创建测试与断言。
+
+原生菜单原始范围和ABI依据：
+20261019-native-component-ownership-boundaries.md。
+整屏背景root可接线的确定证据：
+20261019-global-language-background-root.txt。
+
+仍需完成，不能据本批声称全局切换已实现
+====================================
+1. 建立真正的背景Root、稳定组件身份、语言中立文本资源及原生布局依赖。
+   本批没有把现有translate选择搬入各原生组件的持久资源。
+2. 段落、面板、按钮、居中文字等的普通构建/更新须消费各自同一原生实例。
+   字词/字符/字形调用不能成为新组件，不冻结旧语言算出的最终x/y。
+3. 原生缓存保留Root引用；覆盖一级内联保存、二级条件保存、按名缓存、
+   菜单工作面及HUD纹理快照。区域恢复不能直接等同整Root替换。
+4. 本批CF793按原共享菜单的生命周期销毁旧active。以后由父Root/cache
+   引用多菜单实例时，必须改为引用退役，不可直接沿用无条件destroy。
+5. 共同背景先重建，再由原生各组件重新测量、布局、绘制和更新命中，
+   最后让原缓存持有新像素。当前尚未接通这条全局失效链。
+6. 新协议不能追溯已过去的旧构造事件，首次迁移需确认的原生构建
+   bootstrap；不得从旧位图补造对象，也不把Applied当作画面已经刷新。
+7. 本批只有Windows数据层源码；Linux尚未实施同一公共组件改造。
+
+编译回执
+========
+根入口：build.ps1 -Module adapter（默认MinGW，无Publish/Reload）。
+Toolchain/CMakePath/CompilerPath/BuildDirectory/PackageDirectory均为队列
+默认值；源码提交后至所属批次结束保持冻结。
+请求：58c193dac31c4d37a7dfe6d0df981399。
+批次：c954b92959f44e85aac8f42f19bb8c28。
+已读取build/.compile-queue/results/<request>.json与完整batches/<batch>.log。
+Success=true，PublishRequested=false，ReloadRequested=false。
+一次配置、一次增量构建，编译两份新增cpp与module.cpp；新代码无编译警告，
+保留既有姓名SDL接口五项与GetRGB一项函数指针转换警告。
+完成时间：2026-10-19 22:28:19（Asia/Shanghai）。
+构建Adapter SHA-256：
+e97da90d55535bd13621f1402a940311d72b083b1daa523b36ba4b9f8060307d。
+
+正式发布
+========
+没有正式发布，没有运行时事务。根启动器、package/modules/正式业务库及
+package/release.json均未被本批编译修改，没有并行运行副本。
+只读比较时正式Adapter SHA-256为：
+e55fa878111ff1257c8231bbd819ee9c6f9e80c1230cee98df7d9f400fc0fb32。
+两值不同，只证明构建产物与正式交付的区分，不表示正式路径已更新。
+本批不替换旧交付文件，所以没有本批正式旧件需要移入回收；既有根回收/
+目录继续保留，不覆盖或永久删除历史交付文件。

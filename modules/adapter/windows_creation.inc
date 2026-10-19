@@ -102,14 +102,18 @@ void creation_words(std::vector<char>& encoded) {
 Status creation_lend(const NativeEvent& e,TextComponent component,const char* key,
                      u32& destination,CreationKind kind) {
     const auto* original=ptr<char>(destination);
+    const char* display=original;
+    if(kind==CreationKind::button) {
+        const auto* separator=std::strchr(original,'.');
+        display=separator ? separator+1 : original+3;
+    }
     std::vector<char> encoded;
-    auto status=translate(component,original,key,encoded);
+    auto status=translate(component,display,key,encoded);
     if(status!=Status::ok) return status;
     if(kind==CreationKind::words && chinese_enabled) creation_words(encoded);
-    if(kind==CreationKind::button && chinese_enabled) {
-        const auto* suffix=std::strchr(original,'.');
-        if(suffix) encoded.insert(encoded.begin(),original,suffix+1);
-        else encoded.insert(encoded.begin(),original,original+3); // confirmed <Y>/<N>
+    if(kind==CreationKind::button) {
+        native_component_binding::note_prefix(e,std::string(original,display).c_str());
+        encoded.insert(encoded.begin(),original,display);
     }
     const auto scope=kind==CreationKind::panel ? Scope::scenario_panel :
         (kind==CreationKind::words || kind==CreationKind::format) ? Scope::allocation : kind==CreationKind::center ? Scope::hud_centered :

@@ -1,0 +1,3 @@
+caller_va	format_callsite	destination	message_calls	format_va	format	format_origin	arguments
+00440b20	00440dd5	c65a9288	00440de2,00440e46	005aad8c	? %s	COPY@00440dd5(0x5aad8c)	
+00440b20	00440e39	c65a9288	00440de2,00440e46	005aad8c	? %s	COPY@00440e39(0x5aad8c)	

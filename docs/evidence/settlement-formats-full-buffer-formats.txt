@@ -1,0 +1,299 @@
+0058cc10	!The %s is full already!
+0058cc74	=Ok. Some %s has been ground into the %s.
+0058d2e8	Ansan asetuksen laatu: %d
+0058d308	:@The %s is now set and readied. Don't forget to check it after a day or two.
+0058d458	+You trigger and release the %s.
+0058d4d8	&Your %s gets hurt!
+0058e290	#%d %s
+0058f77c	!Bug! Couldn't resolve %s-skill. Report!
+005aad8c	? %s
+00591944	Tee_Puuha (dp %d) Cre[%d].Puuha[0] = %d
+005919ac	Saalistus kohti %d,%d (%s)
+00591a2c	#%d Menepaikkaan: %d,%d
+00591a44	Menepaikkaan: %d,%d reached - cancel now
+00591a70	Poistu paikkaan: %d,%d
+00591a88	headhome -> %d,%d (cr %d)
+00591aa4	puuha %d timeout
+00591ab8	#%d puuha on 0
+00592180	!@You encounter an animal. You think it's %s...
+005921b0	!@You encounter %s...
+00592280	#%s can not reach you and will be left behind.
+00592468	You shake the needles from your shoulders and come forward among the people. You are entering %s village...
+005924d8	You shake the needles from your shoulders and come forward among the people. You are entering %s settlement...
+005927f4	There is %s here and 
+005a9f38	%s%s%s
+00592c28	=This might be a good location considering the ongoing %s spawning period.
+00592c80	_The %s are spawning at this time of the year, but not quite at this location.
+00592cd0	_The %s is spawning at this time of the year, but not quite at this location.
+00592ff0	+You use the whole %s as a bait, hoping for bigger fish to get attracted in it.
+00593040	+You use pieces of %s as a bait.
+005933a8	Yrttivaikutus #%d - %s
+005935f4	lisaa yhteisravinto: %s maara: %d paino: %.2f
+00593624	lisattavan hinta: %.2f (%.2f/lbs)
+00593698	lisattavan hinta: %.2f (%.2f/lbs) yhteishnyt: %.2f (%.2f/lbs)
+005936d8	yhteisravintoesine %d,%d,%d neste: %d paino: %.2f
+00593720	Itemruoan_Tarve: ruoka = %d kcal/lbs -> massun vetoisuus %d Tarve: %.2f
+005937b8	Energiavaranto: %d
+005937cc	Vatsa: %d
+005937d8	void eat(%d) - Item: %s
+005937f0	Vatsa: %d kcal/100g:%d
+00593808	Itemruoan_Vatsatarve: %.2f
+005938f4	!That %s is unknown to you.
+00593910	!You know the %s is poisonous.
+00593950	EATMSG_TASTE:%u
+00593ad0	Vatsa: %d Energia: %u Jano: %d
+00593af0	RAVITSE: %s*%.2f -> Vatsa: %u Energia: %u Jano: %d
+00593bac	!The %s is empty!
+00593c34	Sailioi; kohde (%s) jo valmiiksi sailiossa #%d
+00593c94	sailio max_wt: %.2f
+00593cf0	Yhteisravintoesine H.P.R,N: %d %d %d %d Paino: %.2f
+00593d24	Yhteisravintoesine perlbs price: %.2f
+00596424	_You use the lit %s to %s.
+00596440	_You use the lit %s nearby to %s.
+005965d0	QLIST #%d = %d
+005966f0	_This process should be complete %s.
+00596818	?You can make %u %s from one %s.
+00596ac8	#%d MCinprocess %d,%d
+00596ae0	spent: %d needed: %d
+00596af8	after add spent: %d needed: %d
+00596b48	+There's really no need to repair this %s yet.
+00596b78	!Unfortunately this %s has been worn out beyond repair.
+00596cf4	+You have removed the %s haft from its head.
+00596d24	=You obtained %s and %s.
+00596c5c	!The %s doesn't have a separate head and haft to remove!
+00596efc	+You finish repairing your %s.
+0059721c	!One ft %s is too short to be shortened anymore.
+00597250	?How much of this %s %s you want to cut?
+005972ac	%.4f
+005971ec	!%s %s is too short to be shortened anymore.
+005972b4	=You cut %s piece from the %s.
+00597348	+You are about to join %s %s to another piece of tying equipment.
+0059738c	?Now select another %s to join them together.
+005974d0	=After tying the two %s together you now got %s %s.
+0059789c	+%s
+005988b4	+The %s drops on the ground.
+00598bf8	+Your worn out %s breaks apart.
+00598c40	Sailio palautuu, ESINE %u
+00598c70	+The %s is empty now.
+00598c88	Sailiokohta nyt slot #%d item %d * %d
+00598d70	!Emptying the %s will discard its contents for good.
+005955e8	!%s is completely full!
+00595600	poista lahdesailio %s [slot %d]
+00595620	Kaada_Astiaan() materiaali: %s paino %.2f
+0059564c	=You've got a full %s now.
+00595cb0	%s.Move
+00595ce4	Viewing: All items
+00595cf8	Viewing: %s
+00595d10	%c.All types
+005d8258	!You can't %s while %s!
+00596008	!This %s has no teeth to remove.
+00596064	=You got %s.
+00596404	!The string of your %s breaks!
+00599228	Kelpoisuus:%s
+0059929c	but suffers from %s quality.
+005992bc	and its %s quality certainly helps.
+005992e4	and, what is worse, of %s quality.
+00599308	even though its %s quality counts.
+0059932c	!%s
+00599330	use: %d%% maxqua: %d
+0059a1d4	materiaali: %s - %s - %.2f
+0059a1f0	vaateitem skill: %s
+0059a25c	valmistuva vaate %s. skill: %s palat: %d
+0059a288	paino: %.2f / %.2f
+0059a29c	B:%d E:%d T:%d P:%d S:%d FF:%d
+0059a848	!The %s doesn't have enough capacity for the selected ingredients.
+0059a92c	rejected: %s data #%d (chosen already)
+0059a954	check: %s data #%d
+0059a968	sopiva: %s data: %d,%d
+0059a980	start_invsearch laatu:%d hyvyys:%d
+0059a9a4	invsopiva: %s inv: %d
+0059a9f8	:Using %s is optional. Press [ESC] to skip the item selection.
+0059aa68	paras invstash: %s
+0059aa7c	paras datastash: %s
+0059aa90	!%u pieces at a time is the maximum. Selecting %u pieces.
+0059aad0	!All of the %s will be used which is far more than needed. You can cancel the task and shorten it to required length at will.
+0059ab50	!That %s is too short for the purpose.
+0059bdd4	newscheck; #%d dist %d
+0059be04	created:%d mindist:%d (now: %d)
+0059be60	news delivery: knowledge #%d
+0059be24	newstick in sync: created:%d, got:%d
+0059be80	newstick updated: created:%d, got:%d
+0059bea8	news created: %d min - now %d min
+0059becc	tiledist: %d minutedist: %d
+0059cbd4	%s ...
+0059cc3c	SPENDSTART %d (MIN %d, SEC: %d)
+0059cc70	%d minutes
+0059cc88	[%d]
+0059ce9c	#%s helps you with this task.
+0059cebc	#%s help you with this task.
+0059cedc	#You get some help with this task from %s.
+0059cf08	TimeHelp (%d pct) activated. Numohelpers: %d : spendtick %d
+0059cf44	SPENDEND l: %d spendtick: %d (MINDONE %d) CompaidCounter: %d
+0059d130	name: %s
+0059d13c	viim x,y: %d,%d
+0059d14c	meet: %d now: %u
+0059d160	sotu: %u
+0059c7cc	%s/ZOOMMAPS.DAT
+0059c7b8	%s/ZOOMINDEX.DAT
+0059d188	found isox,isoy zoommap: %d,%d
+0059d1a8	searching sotu %d
+0059d1bc	!On this map! %d,%d. 
+0059d848	+%s has burnt out.
+0059d85c	+Light of the %s is fading.
+0059e440	!The water is %s.
+0059e5d0	!You reckon the %s is somewhere up ahead, just out of sight. Move forward carefully to catch up with it.
+0059e70c	MovePlayer(%d) %d,%d -> %d,%d
+0059e72c	!You are not able move ahead %s!
+0059e750	!You can't run any longer %s!
+0059e770	movement result: %d
+0059e81c	ACTUAL_MOBILITY: %d
+0059e854	TOXY char: %d
+0059e864	kiipeilytarkistus: %d
+0059e900	movement result 2: %d
+0059ea7c	MoveTransport %d -> %d,%d
+0059eb44	playmove %s
+005a021c	!%s seems to notice your hideout!
+005a43d8	#%d maps read - please wait...
+0058f1ec	%s/%s.CRS
+005a441c	#%d objects kept.
+005a5230	:%s %s.
+005a529c	&You are %s
+005a52a8	Vatsa: %d Energiavaranto: %d
+005a53f4	!You fall %d meters and get your %s knocked on the way down!
+005a579c	!There is no external treatment for %s!
+005a5824	Yrttihoitotarve: %s
+005a5838	Yrttihoito: %s
+005a5858	!The %s still continues to bleed.
+005a587c	=Bleeding of the %s is now stopped.
+005a5920	!The treatment causes the %s to start bleeding.
+005a5fbc	_%s needed, but only your %s is in usable condition.
+005a6004	_%s needed.
+005a6010	!It will be slow and difficult to %s now.
+005a8a70	+You carve some shards of the %s into an ant nest as a sacrifice.
+005a8ab4	The %s got used completely.
+005a8ad0	!For some reason, this doesn't feel like the right place nor time to sacrifice the %s.
+005a8e50	_This spell about %s is performed by following the given instructions by using the common game mechanics and actions.
+005aa700	HOW MANY? (OF TOTAL %d)
+005903bc	%d
+005aa764	!The minimum is %d, which is now selected.
+005aace0	listhotkey %d - %s
+005aad1c	got pos %d
+005aad28	#%s: %s
+005aaf60	rakenna: [%d] pura: [%d]
+005aafd4	!Not possible! There's %s.
+005ab000	leftmins: %d spentmins: %d
+005ab1b0	!Placing %s there is either too far or incorrectly aligned from the framework center!
+005ac28c	#There is %s at this location.
+005ac2ac	#There are several objects %s:
+005ac2cc	#Things that are %s:
+005ac2e4	marked location - "%s"
+005ac2fc	Freezeitem: %s * %d [extrach: %d]
+005ac320	%d %s %s
+0058c680	%s %s
+005ac340	%s (being prepared)
+005ac3e4	%s %d
+005ac3ec	set %s
+005ac3f4	triggered %s
+005ac404	ansakelpoisia: %d
+005ac418	ansa spawn rnd: %d to %d,%d
+005ac434	%s set to catch fish
+005ac44c	HeatValue: %d
+005ac4a8	%s shaped figure in the distance
+0058c670	%s
+005ac4cc	[DEBUG_INFO] sotu: %d quest: %d
+005ac510	#You see %s %s.
+005ac520	:This fire will burn %s.
+005ac53c	_...and %u more.
+005ac550	%s (%d,%d) [mc: %d] syvyys:%d korkeus: %d (PINTA: %d) terrain_altitude: %.2f
+005ac5a0	mapwise ice: %d mm (%d cm)
+005ac5bc	True ice: %d mm (%d cm)
+005ac5d4	soc: %d
+005ac5dc	luontotyyppi: %d jaatyy:%d
+005ac5f8	'%s'
+005ac600	TYPE:%d DATA:%d Extra:%d Set_Day:%d (spent:%d, left:%d)
+005ac65c	_The water is %s.
+005ad090	!It is not possible to peel bark from a %s at this time of the year.
+005acfd4	!That's only a %s and doesn't provide proper bark.
+005ad1d8	[NAME:%s bark chunk]
+005ad1f0	+You managed to harvest %s from this tree.
+005ad750	UINTI debug suhde: %.2f
+005ad768	&You swim at ease.
+005ad77c	&You feel slightly fatigued from swimming.
+005ad7a8	&You are moderately fatigued from swimming.
+005ad7d4	&You are lacking the strength to swim much longer.
+005ad808	&You are exhausted and having trouble to keep afloat!
+005ad840	&You struggle in the water with your last bit of strength! You are in danger of drowning!
+005adac4	{fall}:You lose your grip %s!
+005adcb0	You start to cut the %s carcass...
+005adcf8	=You got %d edible cuts of %s meat.
+005ad6a8	I need some equipment to %s.
+005ade5c	!Do %s first! Only then it is possible to %s.
+005ae128	#Tanning process now requires you to %s.
+005ae78c	_You can spin %s of yarn on one go.
+005ae7b0	_From that stack of fibre you can spin about %s of yarn.
+005ae7f0	_From that stack of sinew fibre you can make about %s of sinew yarn.
+005aeac0	!Here you can process only %u plants on one go! Selecting %u pieces.
+005aeeb8	:You see %s is bleeding.
+005aeee4	Try to treat %s wounds?
+005b0c40	MOVEDODGE: %d
+005b0c50	>Dodge_ML(%d): %d
+005b0c78	Block with %s
+005b0c90	Counterstrike with %s
+005b0cfc	NPCdefend: %s Dge:%d Blk:%d chose:%d
+005b0f80	MISSILE olento_osuma - OGImpact: %d
+005b0fa4	MISSILE olento_osuma - NewImpact: %d (OGI %d+KE %d / 2)
+005b101c	A-SKILL:%s(%d) D-SKILL:%s(%d)
+005b0bbc	>WPMOD: A:%d D:%d = %d
+005b1090	>OUTNUMBERED BY %d NPCs
+005b10e8	ZonePenalty: %d
+005b10f8	>HANDPENALTY:%d
+005b1108	DEFENDER ZonePenalty: %d
+005b1138	>DEFENDER HANDPENALTY:%d
+005b1154	>A_BONUS:%d D_BONUS:%d
+005b116c	>A_PEN:%d D_PEN:%d
+005b1180	>EML_sync A_PEN:%d D_PEN:%d
+005b119c	Puolustus Ignore: SUCCESS (%d) BOOST
+005b11c4	Puolustus Ignore: SUCCESS NOW %d
+005b11e8	+The %s breaks!
+005b13a4	one handed penalty: %d
+005b13f4	You kick the %s behind you with your heel.
+005b1434	You kick the %s. Ouch!
+005b1488	!You can't reach to hit the %s! It's high above your head.
+005b62a4	?What do you want to call %s?
+005cc808	!%s quest has expired and is removed from the quest journal.
+005d88c4	!%s is not allowed on the wilderness map.
+005d9050	+You removed %s from that fishing rod.
+005d90a8	+You have unstrung the %s.
+005d91f8	+Now you have a %s.
+005d9328	+Now you have a strung %s ready to use.
+005d9374	applyShovel(%d) -> %d,%d
+0058ca90	!That's not possible because the ground is %s!
+005d9398	#You continue filling up the pit.
+005d93bc	#You start digging a pit.
+005d93d8	#You start filling up the pit.
+005d9414	predump dataloop #%d T:%d x:%d y:%d d:%d (GOT:%d)
+005d9448	finished, clearmcinprocess %d,%d
+005d9488	clear surface %d,%d
+005d94b8	trschk dataloop #%d T:%d x:%d y:%d d:%d (GOT:%d)
+005d94ec	trsfound #%d, Extra: %d
+005d9504	trsfound #%d changes -> T:%d x:%d y:%d d:%d (GOT:%d)
+005d9584	Tie npc: %d
+005d95bc	Tie Cre[%d].bfdom set to %d
+005d9714	You stroke the %s.
+005d98cc	!There's no special way to apply %s.
+005d9974	Here you notice %s %s %s
+005d99e8	Jaljen vahvuus: %d
+005d9a0c	Jaljen COUNT: %d
+005d9de4	_You are about to discard %s.
+005dc2a4	!Warning! %d streams closed!
+005dc2c4	%d / %d
+005dcbc0	PALELTUMAKOHTAOLETUS %s
+005dcbd8	kylmapoikkeama: %d
+005dcc2c	maxrise balance: %.2f bodymod %.2f
+005dcc50	maxrise: %.2f
+005dcc60	PLR_Lampotila: %d bodytemp_mod: %.2f
+005dcc88	%d -> %d
+005dcc94	:%s
+005dcc98	ARVOTTU PALELTUMAKOHTA: %s - %d
+005dccb8	!Your %s feels cold.
+005dcce8	:You feel a %s frostbite in your %s.

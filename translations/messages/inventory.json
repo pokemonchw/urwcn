@@ -1,0 +1,68 @@
+{
+  "files": [
+    {
+      "file": "urw_chat.txt",
+      "sha256": "929bb1d2ac761ccb23424f434cf5e8ed0fc8ab21b301d6c0d1244c63be561284",
+      "display_records": 79,
+      "translated_records": 79,
+      "translation_file": "urw_chat.zh-CN.lines"
+    },
+    {
+      "file": "urw_combat.txt",
+      "sha256": "9a420ad13ef6abfa1a1139fefdc0a0d7c7360ec3430a18fbf59387013b3636d7",
+      "display_records": 335,
+      "translated_records": 335,
+      "translation_file": "urw_combat.zh-CN.lines"
+    },
+    {
+      "file": "urw_defs.txt",
+      "sha256": "5a9b9572b5a537021e044334fe1f839ef23c1a64a262b79350f9bdb04e15efe9",
+      "display_records": 94,
+      "translated_records": 94,
+      "translation_file": "urw_defs.zh-CN.lines"
+    },
+    {
+      "file": "urw_msg.txt",
+      "sha256": "eff9d6af418210bffa6aeef3e93ec95bcd6d95f171a6ea64e48c4ac727eab7cc",
+      "display_records": 292,
+      "translated_records": 292,
+      "translation_file": "urw_msg.zh-CN.lines"
+    },
+    {
+      "file": "urw_pronouns.txt",
+      "sha256": "7c4093e84fa70bc376c00465cdb41ac3d286e26fb0ea2626a4325068f483289e",
+      "display_records": 21,
+      "translated_records": 21,
+      "translation_file": "urw_pronouns.zh-CN.lines"
+    },
+    {
+      "file": "urw_sounds.txt",
+      "sha256": "1124d2654fd168a32214d88666a55ec1878d87cc289a678412cd63a92c9de4bb",
+      "display_records": 104,
+      "translated_records": 104,
+      "translation_file": "urw_sounds.zh-CN.lines"
+    },
+    {
+      "file": "urw_tags.txt",
+      "sha256": "61c6eb11c86b39e094a7dd3e94c1c5e65acce8df9040620e6dddfd7ac0420abf",
+      "display_records": 5,
+      "translated_records": 5,
+      "translation_file": "urw_tags.zh-CN.lines"
+    },
+    {
+      "file": "urw_uname_flora.txt",
+      "sha256": "32702ea7c6d0400aea03f7ea4525f2f9a02175eb5e1abe8919f17b942fd1b967",
+      "display_records": 57,
+      "translated_records": 57,
+      "translation_file": "urw_uname_flora.zh-CN.lines"
+    }
+  ],
+  "total_display_records": 987,
+  "excluded": [
+    {
+      "file": "guide_values.txt",
+      "reason": "Grammar documentation and examples; not an urw_* display resource"
+    }
+  ],
+  "source_directory": "D:\\program\\steam\\steamapps\\common\\UnRealWorld\\messages"
+}

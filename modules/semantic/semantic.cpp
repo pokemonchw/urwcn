@@ -3,6 +3,7 @@
 #include "sdk/service_helpers.h"
 #include "hud_text.h"
 #include "world_hud_text.h"
+#include "message_text.h"
 
 namespace {
 using namespace uwcn;
@@ -353,6 +354,8 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
     }
     if(op!=text_op::translate || !input || bytes!=sizeof(TextRequest)) return Status::invalid;
     const auto& request=*static_cast<const TextRequest*>(input);
+    if(request.component>=TextComponent::message_literal && request.component<=TextComponent::message_more)
+        return translate_message(host_api,request,output,capacity);
     if(request.component==TextComponent::profile_measurement) {
         // UnitString_Length/Weight already selected the units, precision and
         // number. Translate only their suffix at the profile's title consumer.

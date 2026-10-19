@@ -1,0 +1,161 @@
+Static native renderer component source protocol, 2026-10-19
+
+Original inspected file:
+D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+Addresses below are RVAs; objdump virtual addresses are RVA + 00400000.
+No game, produced binary, test, or injected operation was run for this work.
+
+Complete component ABIs (all stack arguments caller-cleaned):
+
+10EFD0 renderer paragraph:
+  ECX renderer, EDX x; stack y, width, height, color, style.
+  The complete native method consumes the original 162300 parser word table.
+  10EFD0 saves ECX at EBP-C30 and EDX at EBP-C1C. EBP+8..18 are
+  respectively the five arguments. Style bit 2 chooses native line advance.
+
+1166C0 renderer panel:
+  ECX renderer, EDX x; stack y, width, height, title, flags, color.
+  Its original native body owns background, borders and title placement.
+  116745 and 116831 read the native panel background mode at 61BBAC8.
+
+10E260 renderer text block:
+  ECX renderer, EDX x; stack y, text, color, style.
+  Native x/y -1 cursor semantics remain in that original complete method.
+  A centered source must bind the original center operand/dependency, before
+  the old string's width subtraction, rather than saving that final x.
+
+113430 native centered heading:
+  ECX native target texture, EDX title. There are NO stack arguments.
+  Original body selects the real main renderer A2110CC, copies its native
+  clean heading texture 61BBCF0, calls its native title strip and text layout,
+  and restores the window target at the end. It is not interchangeable with
+  the software 10E910 paragraph-like centering helper.
+
+CFD10 marked renderer button/native menu row:
+  ECX native target texture, EDX original action; stack x, y, text.
+  The original action-search loop identifies an existing native row, then
+  paints via complete 114D20. It sets ESI=1 for an existing action.
+  CFE12 TEST ESI,ESI / JNE CFF6B skips registration for an existing action.
+  CFE1A..CFF65 owns action, origin, width, height and prefix width writes and
+  native row count increment; the existing renderer metric Hooks extend the
+  real native width operands at CFEAA/CFECB.
+
+Constructor/update extension:
+  Hook CFE08, exactly ten bytes:
+    C7 05 <image_base+61BBAC4> 00 00 00 00
+  This is a complete MOV, no relative instruction or ESP adjustment.
+  The Hook only acts during synchronous marked-button materialization.
+  Explicit MenuHandle ownership is installed first; the original action is
+  resolved against that owner's current native records (E8-byte stride,
+  action field 5F4EFD8). The Hook sets native count to that real row index and
+  ESI to zero. Original TEST/JNE therefore enters the original registration
+  branch. Full CFD10 recomputes native geometry. Count is restored afterward.
+  No Mod geometry fields or alternate hit algorithm are introduced.
+  The owned menu receives its new native fields; the previous active menu is
+  reinstalled with its latest input state. Cache versions explicitly clone
+  components with the cache's own Menu snapshot, not the live menu handle.
+
+Confirmed native target source lifecycles:
+  DF98F creates Magic's 800x600 render target; DF99E commits owner 5F8FAB8.
+  DFC75 creates the 250x120 infobox target; DFC87 commits owner 61BB644.
+  Both use the actual main renderer owner A2110CC. native_targets already
+  promotes these original create sites and sets target density through the
+  actual native SDL_SetRenderTarget gateway. Components store no glyph raster,
+  density snapshot, or output contribution.
+
+Magic clean background source:
+  All directly addressed .text references to 61BB648 are:
+    DF995 read before DF9B1 -> complete 113090 background-to-target method;
+    10C809 read old surface, 10C813 -> SDL_FreeSurface (IAT 18C1F4);
+    10C818 pushes literal 1AC780, 10C81D -> IMG_Load (IAT 18C294),
+    10C822 stores the newly loaded surface in 61BB648.
+  Literal 1AC780 is "truegfx/bg-supernatural.jpg".
+  Native 10C790 is its resource initialization/replacement lifecycle.
+  113090 uses EDX source surface and five stack slots: target texture,
+  two unused slots, width, height. It copies the original source into the
+  supplied native target and retires its temporary texture. This provides a
+  neutral native background source rather than a texture with old glyphs.
+  The infobox uses its complete original 1166C0 panel (DFCEF) to initialize
+  its native background after the target has been created.
+
+Source implementation:
+  native_renderer_component_model stores typed complete component inputs,
+  neutral TextSource/ParagraphSource, explicit native pointer-owning field
+  identities and owner lifetime. Upsert and prepare are shared by ordinary
+  construction and later complete native paint. Current-source map owns one
+  reference, Scene/cache owns explicit additional references; modifications
+  use COW. Native Menu references are retained with marked component versions.
+  State contains pure values and neutral source strings; no callback addresses,
+  translated text, old glyphs, clip fragments, or drawing contribution history.
+
+Integration boundaries:
+  Semantic producers must bind their confirmed native source ID/record ID and
+  actual TargetSource lifecycle. No generic low-level renderer call is mined
+  for ownership or history. A native target/root rebuild must initialize its
+  original clean background source before painting its retained components.
+  Components do not erase an old whole target by themselves and do not run at
+  SDL_RenderCopy, upload or SDL_RenderPresent.
+  The Scene's materialization context suppresses re-recording translated
+  162300 inputs as new neutral parser source. Ordinary semantic parser
+  producers must use the shared explicit parser-source binding protocol.
+
+Actual owner binding and native resource extension:
+  native_renderer_component_binding observes DF995 (8B 15 <61BB648>, six
+  bytes) and DFC7B (8B 0C B5 <5F5CD48>, seven bytes). These post-create
+  instructions are replayable and preserve native flags. At both entries the
+  cdecl CreateTexture arguments remain at the original ESP: renderer, format,
+  access, logical width, logical height. hook_host.cpp's inline dispatcher
+  exposes this actual entry ESP, not PUSHAD's saved intermediate ESP.
+  The source constructor therefore reads the original inputs rather than
+  introducing another fixed size table. DF99E/DFC87 remain native owner stores.
+
+  DF9B1 ordinary Before resolves the same original surface owner; After marks
+  the native background source ready. DFCEF's complete native Panel is the
+  infobox's initialized source root. Known empty-title panel source fields
+  DF9FB, DFA3F, DFCEF and footer 3CDED are complete typed native constructors.
+  Existing semantic calls DF9C1, DFAA6, DFB4B, DFD10, DFF85, DFFEC,
+  3CE45, 3CF2F and 3CFA8 synchronously borrow the shared component_binding
+  current neutral source; unrelated low-level renderer calls are not adopted.
+  Rows use their actual native action as identity; a repeated ritual action's
+  source is consequently not identified by its drawing position or token.
+
+  native_targets::make_component_texture now implements both the original
+  promoted CreateTexture calls and the explicit native owner constructor.
+  It obtains current output_scale, constructs the real physical native target,
+  and registers only native resource identity and logical/physical scale.
+  No UI contents, pixels, strings or coordinates enter native_targets state.
+
+  Target materialization installs a fresh native-owned target from that
+  constructor, paints its original neutral background then complete typed
+  components, and retires its former native resource. The two confirmed
+  Magic aliases are 5F4EB08 (DFE8D store) and A1C1CBC (D11A6 store from
+  5F4EB08); only aliases actually referencing the replaced resource are
+  replaced. The actual renderer target binding is restored, substituting the
+  replacement only when the caller had the retired texture selected.
+
+  While materializing a native software cache surface, the renderer owner
+  installation is temporary: owner slots, aliases and actual renderer target
+  are restored before retiring the temporary native target. Only the neutral
+  TargetOwner source and typed component references survive in Scene cache
+  state. A real whole-cache restore materializes the same source into the
+  actual native owner again and activates its own Menu view. This is not a
+  separate persistent Mod texture cache, and no old glyph texture is its base.
+
+  The original DestroyTexture gateway notifies retirement by exact registered
+  resource identity. This retires the active TargetOwner and source-map refs;
+  native cache snapshots keep their independently owned neutral versions.
+  Lifecycle notifications do not inspect SDL resource contents. C++ callback
+  addresses are rebound at configure and never serialized.
+
+  Scene source layers now own Flow and TargetOwner components. A sealed Flow
+  takes over its actual Menu's slot before its ActionButton children, so the
+  complete native 3D820 layout runs before native navigation constructors.
+  A native cache first snapshots Flow/Menu owners, then explicitly rebinds
+  software ActionButton and renderer MarkedButton versions to those same
+  frozen Menu handles. A later CFFB0 paint cannot replace a Flow's new links
+  with its former whole native Menu view.
+
+  Revision zero denotes the native-root construction phase. Resource creation
+  or retirement can occur in that phase, but no zero-background container is
+  created or traversed. Successful original native background construction is
+  the only transition that establishes the first paintable software root.

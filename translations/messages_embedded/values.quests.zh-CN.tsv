@@ -1,0 +1,29 @@
+domain	source	target
+treasure	in a cave	在一处洞穴内
+treasure	on a cliff	在一处峭壁上
+treasure	hidden somewhere around there	藏在那附近的某处
+treasure	hidden in the cave	藏在洞穴里
+treasure	buried in the ground	埋在地下
+treasure	somewhere inside there	就在里面的某处
+treasure	in the center of three adjacent boulders forming a triangle	位于三块相邻巨石围成的三角形中央
+treasure	casual wealth	普通财物
+treasure	cave	洞穴
+treasure	cliff	峭壁
+treasure	island	岛屿
+culture.native	kaumolais	考莫
+culture.native	driikiläis	德里基
+culture.native	kiesseläis	基耶塞
+culture.native	reemiläis	雷埃米
+culture.native	sartolais	萨尔托
+culture.native	islander	岛民
+culture.native	koivulais	科伊武
+culture.native	kuikka-tribe	潜鸟部落
+culture.native	owl-tribe	猫头鹰部落
+culture.native	seal-tribe	海豹部落
+culture.native	vagabond	流浪者
+culture.native	njerpez	涅尔佩兹
+culture.native	foreign	外族
+culture.native	forester	森林居民
+frost-severity	minor	轻微
+frost-severity	serious	严重
+frost-severity	severe	重度

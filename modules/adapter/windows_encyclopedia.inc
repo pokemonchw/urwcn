@@ -29,13 +29,13 @@ enum WindowsEncyclopediaHook : u32 {
     we_texture_preview_summary,we_texture_preview_button,
     we_map_software_title=0x79A0,we_map_renderer_title,
     we_map_software_first=0x79B0,we_map_renderer_first=0x79C0,
-    we_browser_scope_first=0x79D0,we_redraw_entry,we_redraw_exit,we_redraw_history,
-    we_select_wait,we_select_finish,we_cruise_finish,we_keyword_finish,
-    we_cruise_first,we_cruise_second,we_show_first=0x79E0
+    we_select_wait=0x79D4
 };
+constexpr u32 we_flow_begin=0x57F1;
 const WindowsEncyclopediaTopic* windows_encyclopedia_topic;
 const WindowsEncyclopediaTopic* windows_encyclopedia_preview;
 bool windows_encyclopedia_line;
+bool windows_encyclopedia_native_consuming;
 bool windows_encyclopedia_help;
 unsigned windows_encyclopedia_help_record;
 std::uint64_t windows_encyclopedia_record;
@@ -43,28 +43,8 @@ std::map<std::string,std::string> windows_encyclopedia_words;
 struct WindowsUpperSource { u64 token;std::string text; };
 std::vector<WindowsUpperSource> windows_encyclopedia_upper;
 u32 windows_encyclopedia_link_frame;
-bool windows_encyclopedia_refresh=true;
-bool windows_encyclopedia_redrawing;
-bool windows_encyclopedia_intro;
-void invalidate_windows_encyclopedia() { windows_encyclopedia_refresh=true; }
-Status redraw_windows_encyclopedia() {
-    const auto old_position=*at<u32>(0x5F54AB0);
-    const auto action=*at<u32>(0x5F4EF10+old_position*0xE8+0xC8);
-    const std::string link=action?"":at<char>(0x2CBB18+(old_position+2)*200);
-    const std::string topic=windows_encyclopedia_intro?"FIRST TIMER INFO":at<char>(0x2EA820);
-    windows_encyclopedia_redrawing=true;
-    using Browser=void (__fastcall *)(const char*);
-    reinterpret_cast<Browser>(host->image_base+0x3E680)(topic.c_str());
-    windows_encyclopedia_redrawing=false;
-    for(u32 row=0;row<*at<u32>(0x5F54A34);++row) {
-        const auto key=*at<u32>(0x5F4EF10+row*0xE8+0xC8);
-        if(key==action&&(action||link==at<char>(0x2CBB18+(row+2)*200))) {
-            *at<u32>(0x5F54AB0)=row;break;
-        }
-    }
-    windows_encyclopedia_refresh=false;
-    return refresh_menu_cache();
-}
+struct WindowsFlowScope { bool consuming,line;u32 link_frame; };
+std::vector<WindowsFlowScope> windows_encyclopedia_flow_scopes;
 std::string windows_link_spelling(std::string text) {
     for(auto& c:text) if(c==' ')c='.';
     return text;
@@ -132,6 +112,11 @@ std::string windows_encyclopedia_tokens(const char* input) {
     return words;
 }
 Status windows_culture_width(const char* input,std::int32_t& width) {
+    if(!windows_encyclopedia_line) {
+        render::Metrics measured{};
+        const auto status=native_name_input::measure(input,measured);
+        width=measured.logical_width;return status;
+    }
     // 3DBA1 -> 10E700 advances once per native token. Prefixes and lookahead
     // must add those same rounded advances, rather than round a merged string.
     // Native topic labels (including names containing spaces) remain one unit.
@@ -156,31 +141,44 @@ Status windows_culture_width(const char* input,std::int32_t& width) {
     return Status::ok;
 }
 Status windows_culture_lend(const NativeEvent& e,const std::string& key,u32& destination,Scope scope) {
-    if(!chinese_enabled)return Status::ok;
+    std::string original;
+    auto status=decode_parser_original(ptr<char>(destination),original);
+    if(status!=Status::ok)return status;
     std::vector<char> encoded;
-    const auto status=windows_culture_text(key,encoded);
+    status=translate(TextComponent::culture_text,original.c_str(),key.c_str(),encoded);
     return status==Status::ok ? lend_text(e,encoded,destination,scope) : status;
 }
 Status windows_culture_paragraph(const NativeEvent& e,const std::string& key) {
-    if(!chinese_enabled)return Status::ok;
+    std::string original;
+    auto status=decode_parser_original(ptr<char>(e.frame->edx),original);
+    if(status!=Status::ok)return status;
     std::vector<char> encoded;
-    auto status=windows_culture_text(key,encoded);
+    status=translate(TextComponent::culture_text,original.c_str(),key.c_str(),encoded);
     if(status!=Status::ok)return status;
     const auto words=native_paragraph_words(encoded.data());
     encoded.assign(words.begin(),words.end());encoded.push_back(0);
     return lend_text(e,encoded,e.frame->edx,Scope::allocation);
 }
 Status windows_culture_draw(const NativeEvent& e) {
-    if(!windows_encyclopedia_line)return Status::ok;
-    const auto text=windows_culture_display(ptr<char>(e.arguments[0]));
-    std::vector<char> encoded(text.begin(),text.end());encoded.push_back(0);
+    if(!windows_encyclopedia_native_consuming)return Status::ok;
+    std::vector<char> encoded;
+    if(windows_encyclopedia_line) {
+        const auto text=windows_culture_display(ptr<char>(e.arguments[0]));
+        encoded.assign(text.begin(),text.end());encoded.push_back(0);
+    } else {
+        const auto status=native_name_input::display(ptr<char>(e.arguments[0]),encoded);
+        if(status!=Status::ok)return status;
+    }
     return lend_text(e,encoded,e.arguments[0],Scope::text);
 }
-Status windows_encyclopedia_body(const NativeEvent& e,DispatchResult& result) {
-    if(!chinese_enabled||std::strlen(ptr<char>(e.frame->ecx))<=2)return Status::ok;
+Status windows_encyclopedia_flow_prepare(const native_link_flow_component::Record& record,
+    std::vector<std::string>& fragments) {
     std::vector<char> encoded;
-    auto status=windows_culture_text("record."+std::to_string(windows_encyclopedia_record),encoded);
+    auto status=native_text_resource::resolve_source(record.text,resolve_display_text,encode_component_original,encoded);
     if(status!=Status::ok)return status;
+    if(!chinese_enabled||record.text.policy==native_text_resource::TextPolicy::original) {
+        fragments.push_back(record.native_original);return Status::ok;
+    }
     std::string source;
     for(std::size_t i=0;encoded[i];) {
         if(encoded[i]!='{') { source.push_back(encoded[i++]);continue; }
@@ -188,12 +186,8 @@ Status windows_encyclopedia_body(const NativeEvent& e,DispatchResult& result) {
         source+=' ';source+=windows_link_spelling(std::string(encoded.data()+i+1,end-i-1));source+=' ';
         i=end+1;
     }
-    using Show=std::uintptr_t (__fastcall *)(const char*,const char*);
-    auto show=reinterpret_cast<Show>(host->image_base+0x3D820);
-    const auto previous=windows_encyclopedia_line;
-    windows_encyclopedia_line=true;
     std::string fragment;
-    auto submit=[&] { e.frame->eax=static_cast<u32>(show(fragment.c_str(),ptr<char>(e.frame->edx)));fragment.clear(); };
+    auto submit=[&] { fragments.push_back(std::move(fragment));fragment.clear(); };
     for(auto* p=reinterpret_cast<const unsigned char*>(source.c_str());*p;) {
         const auto* start=p;
         if(windows_encyclopedia_scalar(p))p+=2;
@@ -205,9 +199,40 @@ Status windows_encyclopedia_body(const NativeEvent& e,DispatchResult& result) {
         fragment.append(reinterpret_cast<const char*>(start),bytes);
     }
     if(!fragment.empty())submit();
-    else e.frame->eax=*at<u32>(0xA1C1CB4);
-    windows_encyclopedia_line=previous;
+    return Status::ok;
+}
+void windows_encyclopedia_flow_enter(native_link_flow_component::Handle,
+    const native_link_flow_component::Record& record) {
+    windows_encyclopedia_flow_scopes.push_back({windows_encyclopedia_native_consuming,
+        windows_encyclopedia_line,windows_encyclopedia_link_frame});
+    windows_encyclopedia_native_consuming=true;
+    windows_encyclopedia_line=chinese_enabled&&record.text.policy==native_text_resource::TextPolicy::semantic;
     windows_encyclopedia_link_frame=0;
+    native_component_binding::begin_parser_owner();
+}
+void windows_encyclopedia_flow_leave(native_link_flow_component::Handle) {
+    native_component_binding::end_parser_owner();
+    const auto previous=windows_encyclopedia_flow_scopes.back();windows_encyclopedia_flow_scopes.pop_back();
+    windows_encyclopedia_native_consuming=previous.consuming;
+    windows_encyclopedia_line=previous.line;windows_encyclopedia_link_frame=previous.link_frame;
+}
+void configure_windows_encyclopedia_flow_services() {
+    native_link_flow_component::configure({windows_encyclopedia_flow_prepare,
+        windows_encyclopedia_flow_enter,windows_encyclopedia_flow_leave});
+}
+Status windows_encyclopedia_body(const NativeEvent& e,DispatchResult& result) {
+    const auto* original=ptr<char>(e.frame->ecx);
+    std::string english;
+    auto status=decode_parser_original(original,english);if(status!=Status::ok)return status;
+    const auto key="record."+std::to_string(windows_encyclopedia_record);
+    // 3D8E7's real short-record grammar is retained as an original resource;
+    // translated continuation records may independently have an empty value.
+    const auto text=std::strlen(original)<=2 ? native_text_resource::original_text(english.c_str()) :
+        native_text_resource::from_request({TextComponent::culture_text,english.c_str(),key.c_str()});
+    const auto owner=native_link_flow_component::active();
+    const auto record=native_link_flow_component::append(owner,windows_encyclopedia_record,text,original,ptr<char>(e.frame->edx));
+    status=native_link_flow_component::consume(owner,record,e.frame->eax);
+    if(status!=Status::ok)return status;
     result.skip_original=1;return Status::ok;
 }
 u32 windows_encyclopedia_match(const NativeEvent& e) {
@@ -245,16 +270,6 @@ constexpr WindowsCultureMapCall windows_culture_map_calls[]{
 };
 Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
-    if(!windows_encyclopedia_redrawing&&windows_encyclopedia_refresh&&
-       (native_language_redraw::menu_input(e,0x3E1E3)||
-        (native_language_redraw::menu_input_tick(e)&&in(Scope::encyclopedia_input)))) {
-        const auto status=redraw_windows_encyclopedia();
-        if(status!=Status::ok)return status;
-        // D1120 owns this local previous-selection index. Native input resumes
-        // with its actual non-key result and the rebuilt native row identity.
-        *ptr<u32>(e.frame->ebp-0x430)=*at<u32>(0x5F54AB0);
-        handled=false;return Status::ok;
-    }
     if(e.phase==NativePhase::after) {
         if(e.id>=we_source_first&&e.id<we_source_first+3) {
             // The game uses UCRT FILEs. Its own fgetpos import returns the
@@ -299,58 +314,39 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
     if(e.id>=we_intro_first&&e.id<we_intro_first+10)
         return windows_culture_paragraph(e,"ui.intro_"+std::to_string(334200+(e.id-we_intro_first)*14));
     if(e.id>=we_navigation_first&&e.id<we_navigation_first+4) {
-        if(!chinese_enabled)return Status::ok;
         const char* keys[]{"ui.home","ui.back","ui.exit","ui.keyword"};
         const auto* original=ptr<char>(e.arguments[1]);
         const auto* suffix=std::strchr(original,'.')+1;
+        const std::string prefix(original,suffix);
+        std::string english;
+        auto status=decode_parser_original(suffix,english);if(status!=Status::ok)return status;
         std::vector<char> label;
-        auto status=windows_culture_text(keys[e.id-we_navigation_first],label);
-        if(status!=Status::ok)return status;
         if(e.id==we_navigation_first+1) {
-            const auto* topic=windows_find_topic(at<char>(0x2D1F20));
-            std::vector<char> title;
-            if(topic)status=windows_culture_text(std::string("topic.")+topic->key+".title",title);
-            else status=native_name_input::display(at<char>(0x2D1F20),title);
-            if(status!=Status::ok)return status;
-            std::string text(label.data());text.replace(text.find("{value}"),7,title.data());
-            label.assign(text.begin(),text.end());label.push_back(0);
-        }
-        label.insert(label.begin(),original,suffix);
+            std::string topic;
+            status=decode_parser_original(at<char>(0x2D1F20),topic);if(status!=Status::ok)return status;
+            status=translate(TextComponent::culture_back,english.c_str(),topic.c_str(),label);
+        } else status=translate(TextComponent::culture_text,english.c_str(),keys[e.id-we_navigation_first],label);
+        if(status!=Status::ok)return status;
+        native_component_binding::note_prefix(e,prefix.c_str());
+        label.insert(label.begin(),prefix.begin(),prefix.end());
         return lend_text(e,label,e.arguments[1],Scope::setup_exit,*at<u32>(0x5F54A9C));
     }
     switch(e.id) {
-    case we_redraw_entry:
-        if(windows_encyclopedia_redrawing) {
-            e.frame->edi=e.frame->ecx;e.frame->eax=0;result.resume_rva=0x3E6D1;
+    case we_flow_begin:
+        *at<u32>(0x61BBB3C)=60;
+        native_link_flow_component::begin({native_root_component::current(),0x3DF74,
+            static_cast<u32>(TextComponent::culture_text)},ptr<char>(e.frame->ebp-0x268));
+        result.resume_rva=0x3DF7E;
+        return Status::ok;
+    case we_select_wait: {
+        const auto flow=native_link_flow_component::active();
+        if(flow&&native_link_flow_component::menu_owner(flow)==native_menu_component::active()) {
+            native_link_flow_component::seal(flow);
+            native_ui_scene::flow_constructed(flow);
         }
+        begin(e,Scope::encyclopedia_input);
         return Status::ok;
-    case we_redraw_exit:
-        if(windows_encyclopedia_redrawing)result.resume_rva=0x3E942;
-        return Status::ok;
-    case we_redraw_history:
-        if(windows_encyclopedia_redrawing)result.skip_original=1;
-        return Status::ok;
-    case we_select_wait:
-        if(windows_encyclopedia_redrawing)result.skip_original=1;
-        else begin(e,Scope::encyclopedia_input);
-        return Status::ok;
-    case we_select_finish:
-        if(windows_encyclopedia_redrawing) {
-            e.frame->eax=address(at<char>(0x18C616));result.resume_rva=0x3E22C;
-        }
-        return Status::ok;
-    case we_cruise_finish:
-        if(windows_encyclopedia_redrawing) { e.frame->eax=0;result.resume_rva=0x3E3F2; }
-        return Status::ok;
-    case we_keyword_finish:
-        if(windows_encyclopedia_refresh&&!windows_encyclopedia_redrawing) {
-            const auto status=redraw_windows_encyclopedia();if(status!=Status::ok)return status;
-        }
-        return Status::ok;
-    case we_cruise_first:case we_cruise_second:
-        if(!windows_encyclopedia_redrawing)
-            windows_encyclopedia_intro=std::strcmp(ptr<char>(e.frame->ecx),"FIRST TIMER INFO")==0;
-        return Status::ok;
+    }
     case we_body:return windows_encyclopedia_body(e,result);
     case we_tokenize:
         if(windows_encyclopedia_line) {
@@ -360,7 +356,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         }
         return Status::ok;
     case we_upper_first:case we_upper_second:
-        if(windows_encyclopedia_line) {
+        if(windows_encyclopedia_native_consuming) {
             windows_encyclopedia_upper.push_back({e.token,ptr<char>(e.frame->ecx)});
             if(e.id==we_upper_second)windows_encyclopedia_link_frame=e.frame->ebp;
         }
@@ -374,7 +370,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         result.skip_original=1;
         return Status::ok;
     case we_word_fit:case we_pair_fit:
-        if(windows_encyclopedia_line) {
+        if(windows_encyclopedia_native_consuming) {
             std::int32_t measured{};
             const auto status=windows_culture_width(ptr<char>(e.frame->ebp-(e.id==we_word_fit?0x598:0xB90)),measured);
             if(status!=Status::ok)return status;
@@ -390,6 +386,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
     case we_word_text:case we_link_text:return windows_culture_draw(e);
     case we_space_text:
         if(windows_encyclopedia_line) { e.frame->eax=0;result.skip_original=1; }
+        else return windows_culture_draw(e);
         return Status::ok;
     case we_space_copy:
         // A transport scalar already carries its complete token boundary.
@@ -414,7 +411,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         result.skip_original=1;return Status::ok;
     }
     case we_measure_pair:
-        if(windows_encyclopedia_line) {
+        if(windows_encyclopedia_native_consuming) {
             std::int32_t prefix{},label{};
             auto status=windows_culture_width(ptr<char>(e.frame->ebp-0x194),prefix);
             if(status!=Status::ok)return status;
@@ -425,7 +422,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         }
         return Status::ok;
     case we_prefix_width:
-        if(windows_encyclopedia_line) {
+        if(windows_encyclopedia_native_consuming) {
             std::int32_t measured{};
             const auto status=windows_culture_width(ptr<char>(e.frame->ebp-0x194),measured);
             if(status!=Status::ok)return status;
@@ -434,7 +431,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         }
         return Status::ok;
     case we_label_width:
-        if(windows_encyclopedia_line) {
+        if(windows_encyclopedia_native_consuming) {
             std::int32_t measured{};
             const auto status=windows_culture_width(ptr<char>(e.frame->ebp-0xCC),measured);
             if(status!=Status::ok)return status;
@@ -442,7 +439,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         }
         return Status::ok;
     case we_underline:
-        if(windows_encyclopedia_line) {
+        if(windows_encyclopedia_native_consuming) {
             std::int32_t measured{};
             const auto status=windows_culture_width(ptr<char>(e.frame->ebp-0xCC),measured);
             if(status!=Status::ok)return status;
@@ -455,7 +452,6 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
                                                                e.arguments[2],Scope::titled_panel);
         return Status::ok;
     case we_browser_title:
-        windows_encyclopedia_refresh=false;
         return windows_culture_lend(e,"ui.title",e.arguments[0],Scope::text);
     case we_intro_title:return windows_culture_lend(e,"ui.first_timer_title",e.arguments[2],Scope::profile_panel);
     case we_notice:case we_initial_notice:return windows_culture_lend(e,"ui.no_info",e.arguments[0],Scope::text);
@@ -470,39 +466,29 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
             (e.id==we_preview_title?".title":".summary"),e.arguments[0],Scope::text);
         return Status::ok;
     case we_preview_button:
-        if(windows_encyclopedia_preview&&chinese_enabled) {
-            std::vector<char> label;auto status=windows_culture_text("ui.launch",label);
-            if(status!=Status::ok)return status;
+        if(windows_encyclopedia_preview) {
             const auto* original=ptr<char>(e.arguments[1]);
             const char* suffix=std::strchr(original,'.')+1;
-            label.insert(label.begin(),original,suffix);
+            const std::string prefix(original,suffix);
+            std::string english;
+            auto status=decode_parser_original(suffix,english);if(status!=Status::ok)return status;
+            std::vector<char> label;
+            status=translate(TextComponent::culture_text,english.c_str(),"ui.launch",label);
+            if(status!=Status::ok)return status;
+            native_component_binding::note_prefix(e,prefix.c_str());
+            label.insert(label.begin(),prefix.begin(),prefix.end());
             return lend_text(e,label,e.arguments[1],Scope::setup_exit,*at<u32>(0x5F54A9C));
         }
         return Status::ok;
     case we_map_software_title:return windows_culture_lend(e,"map.indicators_title",e.arguments[2],Scope::profile_panel);
     case we_map_renderer_title:return windows_culture_lend(e,"map.title",e.arguments[3],Scope::hud_renderer);
-    default:
-        if(e.id>=we_show_first&&e.id<we_show_first+3) {
-            if(!windows_encyclopedia_redrawing)windows_encyclopedia_intro=false;
-            return Status::ok;
-        }
-        handled=false;return Status::ok;
+    default:handled=false;return Status::ok;
     }
 }
 void append_windows_encyclopedia_hooks(std::vector<HookSpec>& hooks) {
-    hooks.push_back(inline_hook(we_redraw_entry,0x3E697,{0x8B,0xF9,0x33,0xC0,0x0F,0x1F,0x44,0,0}));
-    auto finish=inline_hook(we_redraw_exit,0x3E820,{0xA3,0,0,0,0});
-    const auto slave_flag=address(at<void>(0x61BBA5C));std::memcpy(finish.expected+1,&slave_flag,4);hooks.push_back(finish);
-    hooks.push_back(call(we_redraw_history,0x3DF0F,0x3C820,0));
+    auto flow=inline_hook(we_flow_begin,0x3DF74,{0xC7,0x05,0,0,0,0,0x3C,0,0,0});
+    const auto cursor=address(at<u32>(0x61BBB3C));std::memcpy(flow.expected+2,&cursor,sizeof(cursor));hooks.push_back(flow);
     hooks.push_back(call(we_select_wait,0x3E1DE,0xD1120,0));
-    auto selected=inline_hook(we_select_finish,0x3E1EF,{0x8B,0x0D,0,0,0,0});
-    const auto selected_index=address(at<void>(0x5F54AB0));std::memcpy(selected.expected+2,&selected_index,4);hooks.push_back(selected);
-    hooks.push_back(inline_hook(we_cruise_finish,0x3E4CF,{0x8B,0xC8,0x8D,0x54,0x24,0x10}));
-    hooks.push_back(inline_hook(we_keyword_finish,0x3E58E,{0x8B,0xC8,0x8D,0x54,0x24,0x10}));
-    hooks.push_back(call(we_cruise_first,0x3E813,0x3E2A0,0));
-    hooks.push_back(call(we_cruise_second,0x3E905,0x3E2A0,0));
-    const u32 show_topic[]{0x3E3E9,0x3E404,0x3E625};
-    for(u32 i=0;i<3;++i)hooks.push_back(call(we_show_first+i,show_topic[i],0x3DD10,0));
     const u32 reads[]{0x3DF9C,0x3DFBE,0x3E021};
     for(u32 i=0;i<3;++i)hooks.push_back(call(we_source_first+i,reads[i],0xD4280,1));
     hooks.push_back(call(we_body,0x3E054,0x3D820,0));
@@ -560,5 +546,63 @@ void append_windows_encyclopedia_hooks(std::vector<HookSpec>& hooks) {
     for(u32 i=0;i<std::size(windows_culture_map_calls);++i) {
         hooks.push_back(call(we_map_software_first+i,windows_culture_map_calls[i].software,0x10E5A0,3));
         hooks.push_back(call(we_map_renderer_first+i,windows_culture_map_calls[i].renderer,0x10E260,4));
+    }
+}
+
+// Adapter handoff state contains only ordinary semantic/input scope state and
+// token-owned call arguments. Topic pointers are static-table identities;
+// neither module addresses nor a translated page or layout is serialized.
+struct WindowsEncyclopediaStateWriter {
+    std::vector<std::uint8_t> bytes;
+    template<class T> void value(T scalar) {
+        const auto* first=reinterpret_cast<const std::uint8_t*>(&scalar);
+        bytes.insert(bytes.end(),first,first+sizeof(scalar));
+    }
+    void string(const std::string& text) {
+        value(static_cast<u32>(text.size()));bytes.insert(bytes.end(),text.begin(),text.end());
+    }
+};
+struct WindowsEncyclopediaStateReader {
+    const std::uint8_t* cursor;
+    template<class T> T value() {
+        T scalar;std::memcpy(&scalar,cursor,sizeof(scalar));cursor+=sizeof(scalar);return scalar;
+    }
+    std::string string() {
+        const auto size=value<u32>();std::string text(reinterpret_cast<const char*>(cursor),size);cursor+=size;return text;
+    }
+};
+std::vector<std::uint8_t> save_windows_encyclopedia_state() {
+    WindowsEncyclopediaStateWriter output;
+    output.value(windows_encyclopedia_topic ? static_cast<u32>(windows_encyclopedia_topic-windows_encyclopedia_topics) :
+        static_cast<u32>(std::size(windows_encyclopedia_topics)));
+    output.value(windows_encyclopedia_preview ? static_cast<u32>(windows_encyclopedia_preview-windows_encyclopedia_topics) :
+        static_cast<u32>(std::size(windows_encyclopedia_topics)));
+    output.value(windows_encyclopedia_line?1u:0u);output.value(windows_encyclopedia_native_consuming?1u:0u);
+    output.value(windows_encyclopedia_help?1u:0u);output.value(windows_encyclopedia_help_record);
+    output.value(windows_encyclopedia_record);output.value(windows_encyclopedia_link_frame);
+    output.value(static_cast<u32>(windows_encyclopedia_upper.size()));
+    output.value(static_cast<u32>(windows_encyclopedia_flow_scopes.size()));
+    for(const auto& source:windows_encyclopedia_upper) { output.value(source.token);output.string(source.text); }
+    for(const auto& scope:windows_encyclopedia_flow_scopes) {
+        output.value(scope.consuming?1u:0u);output.value(scope.line?1u:0u);output.value(scope.link_frame);
+    }
+    return std::move(output.bytes);
+}
+void restore_windows_encyclopedia_state(const void* payload) {
+    WindowsEncyclopediaStateReader input{static_cast<const std::uint8_t*>(payload)};
+    const auto topic=input.value<u32>(),preview=input.value<u32>();
+    windows_encyclopedia_topic=topic==std::size(windows_encyclopedia_topics) ? nullptr : &windows_encyclopedia_topics[topic];
+    windows_encyclopedia_preview=preview==std::size(windows_encyclopedia_topics) ? nullptr : &windows_encyclopedia_topics[preview];
+    windows_encyclopedia_line=input.value<u32>()!=0;windows_encyclopedia_native_consuming=input.value<u32>()!=0;
+    windows_encyclopedia_help=input.value<u32>()!=0;windows_encyclopedia_help_record=input.value<unsigned>();
+    windows_encyclopedia_record=input.value<std::uint64_t>();windows_encyclopedia_link_frame=input.value<u32>();
+    const auto upper_count=input.value<u32>(),scope_count=input.value<u32>();
+    windows_encyclopedia_upper.clear();windows_encyclopedia_flow_scopes.clear();
+    for(u32 index=0;index<upper_count;++index) {
+        const auto token=input.value<u64>();auto text=input.string();windows_encyclopedia_upper.push_back({token,std::move(text)});
+    }
+    for(u32 index=0;index<scope_count;++index) {
+        const bool consuming=input.value<u32>()!=0,line=input.value<u32>()!=0;const auto frame=input.value<u32>();
+        windows_encyclopedia_flow_scopes.push_back({consuming,line,frame});
     }
 }

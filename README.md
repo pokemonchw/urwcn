@@ -8,7 +8,11 @@ URWCN 是 **Byayoi 同人社区**的《不真实的世界》（UnReal World）�
 
 项目仓库：[pokemonchw/urwcn](https://github.com/pokemonchw/urwcn)。适配目标为 **UnReal World 3.89 / Steam Build 25939378**，包含 Windows x86 与 Linux x86-64 原生分支。Linux 的接入范围及尚待确认的高清边界见 [Linux 移植记录](docs/evidence/20261019-linux-native-port.md)，下文既有热发布回执属于 Windows。中文在已确认的原生文本构建、格式化和显示边界生成，游戏继续管理布局、控件、输入和缓存，Mod 负责字形绘制；游戏业务、内部英文数据和设置动作保持原有语义。
 
-游戏内按 **Shift+F10** 切换中英文显示。已接入范围、各界面的刷新边界和交付记录见下文。
+**共用消息区汉化目前是阶段性源码，尚未完成全部消息和分支，未编译、未发布。** 本次保存的范围和明确缺口见 [消息区进度记录](docs/evidence/20261019-shared-message-progress.md)。
+
+游戏内按 **Shift+F10** 切换全局语言选择；当前还未实现所有已打开界面的统一即时刷新。现有实现仍依赖各页原生重建，不能视为“全局快速切换”已经完成。公共组件、缓存与窗口事件的静态调查见 [全局语言刷新审查](docs/evidence/20261019-global-language-cache-audit.md)，已接入范围和交付记录见下文。
+
+通过 Hook 改造公共原生 UI 的源码工作已开始：首批接通共享菜单实例层并完成队列编译，尚未正式发布，也尚未接通全局语言重建链。具体源码与剩余工作见 [原生 UI 模型改造记录](docs/evidence/20261019-native-ui-model-implementation.txt)。
 
 Windows 百科“文化”页截图中的正文与链接错位已定位为原生逐词元推进和合串前缀取整不一致，源码已统一为按原生词元累计字宽，并保留游戏行缓冲中的完整词元边界。统一队列编译、正式发布及兼容业务热加载均已完成，PID `121728` 返回 Adapter 第2代 Applied；旧两件先移入 `回收/`。详细回执及刷新边界见 [百科词元度量修正](docs/evidence/20261019-windows-encyclopedia-token-metrics.md)；未自行运行或测试。
 

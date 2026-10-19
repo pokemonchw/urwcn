@@ -1,4 +1,6 @@
 #include "native_targets.h"
+#include "native_root_component.h"
+#include "native_ui_cache_owners.h"
 #include "scoped_api.h"
 #include <algorithm>
 #include <array>
@@ -27,6 +29,7 @@ std::uintptr_t base{};
 Scale canvas{800,600,800,600};
 std::unordered_map<Surface*,Scale> surfaces;
 std::unordered_map<Texture*,Scale> textures;
+TextureDestroying component_texture_retirement{};
 struct Api : scoped::NativeSdl {
     Surface* (__cdecl *CreateRGBSurface)(u32,int,int,int,u32,u32,u32,u32);
     Surface* (__cdecl *ConvertSurface)(Surface*,const PixelFormat*,u32);
@@ -140,13 +143,32 @@ void __cdecl free_surface(Surface* surface) {
     api.FreeSurface(surface);
 }
 int __cdecl blit(Surface* source,const Rect* src,Surface* destination,Rect* dst) {
-    return scoped::blit(api,source,src,scale(source),destination,dst,scale(destination),false);
+    const auto caller_return=static_cast<u32>(
+        reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base);
+    native_ui_cache_owners::before_blit(caller_return,source,destination);
+    const int result=scoped::blit(api,source,src,scale(source),destination,dst,scale(destination),false);
+    native_ui_cache_owners::after_blit(caller_return,source,destination,src!=nullptr,result);
+    return result;
 }
 int __cdecl blit_scaled(Surface* source,const Rect* src,Surface* destination,Rect* dst) {
     return scoped::blit(api,source,src,scale(source),destination,dst,scale(destination),true);
 }
 int __cdecl fill(Surface* destination,const Rect* rect,u32 color) {
-    return scoped::fill(api,destination,rect,scale(destination),color);
+    const auto caller_return=static_cast<u32>(
+        reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base);
+    const int result=scoped::fill(api,destination,rect,scale(destination),color);
+    native_root_component::native_clear_filled(caller_return,destination,result);
+    return result;
+}
+Texture* make_component_texture(Renderer* renderer,u32 format,int access,int w,int h) {
+    if(output_scale()!=Status::ok) return nullptr;
+    const Scale component_scale{w,h,
+        scoped::physical_rect({0,0,w,h},&canvas).w,
+        scoped::physical_rect({0,0,w,h},&canvas).h};
+    auto* result=api.CreateTexture(renderer,format,access,
+        component_scale.physical_width,component_scale.physical_height);
+    if(result) textures.emplace(result,component_scale);
+    return result;
 }
 Texture* __cdecl create_texture(Renderer* renderer,u32 format,int access,int w,int h) {
     const auto site=static_cast<u32>(reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base);
@@ -154,17 +176,13 @@ Texture* __cdecl create_texture(Renderer* renderer,u32 format,int access,int w,i
     // MagicProfile's native page and CompileInfoboxRitualList's description.
     // Both are native render targets; their logical rectangles remain native.
     const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2;
-    const Scale component_scale{w,h,
-        scoped::physical_rect({0,0,w,h},&canvas).w,
-        scoped::physical_rect({0,0,w,h},&canvas).h};
+    if(component) return make_component_texture(renderer,format,access,w,h);
     if(upload) {
         if(output_scale()!=Status::ok) return nullptr;
         w=canvas.physical_width; h=canvas.physical_height;
     }
-    if(component) { w=component_scale.physical_width;h=component_scale.physical_height; }
     auto* result=api.CreateTexture(renderer,format,access,w,h);
     if(result && upload) textures.emplace(result,canvas);
-    if(result && component) textures.emplace(result,component_scale);
     return result;
 }
 int __cdecl set_render_target(Renderer* renderer,Texture* target) {
@@ -192,6 +210,7 @@ Texture* __cdecl texture_from_surface(Renderer* renderer,Surface* surface) {
     return result;
 }
 void __cdecl destroy_texture(Texture* texture) {
+    if(component_texture_retirement) component_texture_retirement(address(texture));
     textures.erase(texture);
     api.DestroyTexture(texture);
 }
@@ -288,6 +307,17 @@ template<class T> void append(std::vector<std::uint8_t>& data,const T& value) {
 struct Record { u32 handle; Scale scale; };
 }
 
+u32 create_component_texture(u32 renderer,u32 format,std::int32_t access,
+    std::int32_t width,std::int32_t height) {
+    return address(make_component_texture(reinterpret_cast<Renderer*>(static_cast<std::uintptr_t>(renderer)),
+        format,access,width,height));
+}
+void destroy_component_texture(u32 texture) {
+    destroy_texture(reinterpret_cast<Texture*>(static_cast<std::uintptr_t>(texture)));
+}
+void observe_component_texture_retirement(TextureDestroying observer) {
+    component_texture_retirement=observer;
+}
 Status initialize(std::uintptr_t image_base,HMODULE sdl) {
     base=image_base;
 #define BIND(name) api.name=reinterpret_cast<decltype(api.name)>(GetProcAddress(sdl,"SDL_" #name)); if(!api.name) return Status::unavailable
@@ -477,6 +507,7 @@ Status restore(const void* input,u32 bytes) {
     return Status::ok;
 }
 void forget() {
+    component_texture_retirement=nullptr;
     surfaces.clear(); textures.clear(); base=0;
     // Cached native aliases continue to name the retired page, now bound to
     // original SDL. Its address is retained by the saved adapter state.
