@@ -1,0 +1,120 @@
+UnReal World 3.89：可装备部位的静态确认
+日期：2026-10-19
+
+结论
+====
+原版衣物/护甲的覆盖定义使用 16 种人体部位；手持物另外使用 2 个位置
+（primary / secondary）。不能把这两种数据相加解释为 18 个“一格一件”的
+固定装备槽：衣物保存在物品列表中，通过 worn 状态和覆盖掩码参与计算。
+一件衣物可以覆盖多个部位；同一部位可以汇总多件已穿戴物品的防护。
+左右肢体不在护甲覆盖掩码里分别占位。
+
+目标与方法
+==========
+文件：/home/lulika/.local/share/Steam/steamapps/common/UnRealWorld/urw3-bin
+平台：Linux x86-64 ELF PIE，UnReal World 3.89，Steam Build 25939378。
+SHA256：4bbbef363fe64678ae9674ff9330f3cb0bec813d94379483813de152c164aabe
+本记录中的地址均为 ELF RVA。Ghidra 导入基址为 0x100000；原始反编译输出
+中的函数和全局地址减去 0x100000 后，才可与本记录及 objdump 地址对应。
+
+使用 ELF 普通符号表、原始数据、objdump 反汇编与 Ghidra 12.1.2 PUBLIC
+反编译交叉确认。Ghidra 全文件分析对部分 GCC 异常表产生反汇编诊断，
+最终 Analysis succeeded；本结论涉及的覆盖位、循环边界和状态写入均另与
+原始指令核对。Ghidra 推断的返回类型、结构类型和临时变量不是原始源码；
+尤其小整数返回及 ItemStruct 按值传参处，须以原始指令为准。
+没有执行游戏、调用游戏函数、注入进程、模拟输入、运行测试或编译游戏/Mod。
+
+16 种覆盖部位
+=============
+原生编号  原身体名称  中文         字节偏移/位
+0         skull       颅顶/头部     +0x6A bit 0
+2         face        面部          +0x6A bit 2
+3         neck        颈部          +0x6A bit 3
+4         shoulder    肩部          +0x6A bit 4
+5         upper arm   上臂          +0x6A bit 5
+6         elbow       肘部          +0x6A bit 6
+7         forearm     前臂          +0x6A bit 7
+8         hand        手部          +0x6B bit 0
+9         thorax      胸部          +0x6B bit 1
+10        abdomen     腹部          +0x6B bit 2
+11        hip         髋部          +0x6B bit 3
+12        groin       裆部          +0x6B bit 4
+13        thigh       大腿          +0x6B bit 5
+14        knee        膝部          +0x6B bit 6
+15        calf        小腿          +0x6B bit 7
+16        foot        足部          +0x6C bit 0
+
+覆盖解析键使用 upper_arm；身体名称表显示 upper arm。其余上述单部位键与
+身体名称相同。多个覆盖位可以同时存在，不能把一件装备视为只属于一个部位。
+
+证据链
+======
+1. bodypart @ 0x26BD00，符号长度 0x98，即 19 个 8 字节指针。
+   0..16 为 skull、eye、face、neck、shoulder、upper arm、elbow、forearm、
+   hand、thorax、abdomen、hip、groin、thigh、knee、calf、foot；
+   17 是 tail，18 是 wing。
+   BODYPART(int,int) @ 0xF9C40 读取此表，并按生物类型替换部分部位名称。
+   因而“19”是通用身体名称项数，不能直接解释为玩家可装备部位数。
+
+2. SETITEM_value_ARMOUR_COVERAGE(char*,ItemStruct*) @ 0xD7CE0：
+   先清空 ItemStruct+0x6A、+0x6B、+0x6C，随后逐项识别上述 16 个部位键。
+   例如 0xD7D0B 写 skull 位，0xD7D23..0xD7D2D 写 face 位；
+   0xD7DED..0xD7E01 写 thorax 位；0xD7EDF 写 foot 位。
+   单部位解析没有 eye、tail、wing。后半段的 long_hauberk、shirt、cloak、
+   trousers 等是组合覆盖模板，不是新增身体部位。
+
+3. 内置衣甲初始化也使用相同覆盖体系：
+   InitObjs() @ 0xD9300 中的 0xDB5A0..0xDB667 迭代衣甲定义；
+   0xDB5F2 调 Prot1(type) @ 0xD6620，写 +0x6A；
+   0xDB600 调 Prot2(type) @ 0xD6790，写 +0x6B；
+   0xDB612..0xDB61B 将 type 属于 8..10 的判断写入 +0x6C。
+   独立 Prot3(type) @ 0xD69E0 同样表达 type - 8 < 3。
+   Prot1 的模板组合使用 bit 0、2..7，没有眼睛的 bit 1；Prot2 使用
+   bit 0..7；Prot3 只给出足部 bit 0。因此内置模板与单部位解析相互印证。
+
+4. ArmourItemProtects(ItemStruct*,int) @ 0x524E0：
+   part < 8：读取 +0x6A 的 part 位；
+   part 8..15：读取 +0x6B 的 part-8 位；
+   后续：读取 +0x6C 的 part-16 位。
+   这是“物品是否覆盖该部位”的查询，没有左/右参数，也没有左右独立覆盖位。
+   三字节存储容量本身不意味着存在 24 个实际装备部位。
+
+5. armour_coverage(int,char*) @ 0x1254E0 的原生显示循环确实迭代 0..18：
+   0x12580A 调 ArmourItemProtects，0x125821 比较 0x13 后退出。
+   该循环沿用 19 项通用身体编号，并不表示所有编号都有衣甲覆盖定义。
+
+6. PlrArmour(int,int) @ 0x527D0：
+   遍历 Plr+0x5E8 起的 100 个物品记录；筛选 category==2 和 +0x66 的
+   worn 位 0x20；用 ArmourItemProtects 判断该物品是否覆盖指定部位，
+   再累加 ObjArmourProtection 的返回值（0x52841 的 ADD）。
+   所以同一部位的防护来源可有多件衣物，并非一个部位只有一个物品格。
+   这里的 100 是物品列表长度，不能当作身体装备槽数。
+
+7. Wear(int) @ 0x5EA90 调 alreadyworn(-1,item,1) @ 0x5E040，穿戴成功后
+   对物品写 0x20 worn 状态；没有按部位往一个固定装备槽数组写入物品。
+   alreadyworn 检查既有衣物名称、类别关系和特定物品标识，并使用
+   WEAR_DOUBLE / WEAR_SIMILAR 拒绝重复或冲突穿戴。因此允许叠穿不代表
+   可以无限叠穿，也不能从 16 个覆盖部位推导最多能同时穿多少件。
+
+手持位置
+========
+wielding(int) @ 0x52C40：参数 1 查 ItemStruct+0x66 的 0x80 状态，
+参数 2 查 0x10 状态；没有物品时返回 1000。
+wieldcount 的玩家实现 @ 0x52CF0 分别查询 wielding(1) 和 wielding(2)。
+Wield(int,int,unsigned char) @ 0x5C880 也检查这两个位置，当两者均有物品
+时使用原生 BOTH_HANDS_WIELDED 消息。
+Wield 的主体 @ 0x52D20 在 0x52EBF / 0x530F0 分别写 0x10 / 0x80，
+并把 vMSG_weapon_slot 设为 2 / 1。
+随包 messages/guide_values.txt:6 明确把 weapon_slot 解释为 primary 或
+secondary weapon slot（1 / 2）。wieldCmd @ 0x72650 结合左右手伤势
+选择可用手；messages/urw_msg.txt:1009..1011 对应右手、左手受伤文本。
+据此确认两个手持位置。它们与护甲的 hand 覆盖位是不同业务字段。
+
+留存文件与状态
+==============
+以下原始提取文件和工具工程只在本地留存，不随源码仓库提交。
+docs/evidence/20261019-equipment-slots-ghidra.txt：本次实际反编译输出。
+docs/evidence/20261019-equipment-slots-disassembly.txt：函数原始指令及身体表。
+build/analysis/equipment-20261019/：本次 Ghidra 项目、提取脚本和完整日志。
+
+仅新增静态研究记录；游戏和 Mod 源码未修改，未构建产物，未正式发布。

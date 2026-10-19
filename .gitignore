@@ -19,6 +19,7 @@
 # Raw game extraction retained locally; publish authored analysis instead
 /docs/evidence/*.c
 /docs/evidence/*disassembly*.txt
+/docs/evidence/*ghidra*.txt
 /docs/evidence/*strings*.txt
 /docs/evidence/*strings*.tsv
 /docs/evidence/local-inspection.json

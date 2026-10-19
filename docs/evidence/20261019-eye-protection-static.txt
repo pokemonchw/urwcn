@@ -1,0 +1,72 @@
+UnReal World 3.89：眼睛防护的静态确认
+日期：2026-10-19
+
+结论
+====
+有办法：持盾并选择 High（高举）姿态，可以遮挡覆盖方向内射向眼睛的
+投射物。这是原生战斗逻辑中的实际盾牌遮挡，不是眼睛获得了衣甲防护值。
+原版衣甲的覆盖定义不设置 eye 位；面部、头部护甲不会自动扩展到眼睛。
+近战可用原生格挡/闪避防止攻击命中，高举姿态的上述自动遮挡专用于投射物。
+
+目标
+====
+/home/lulika/.local/share/Steam/steamapps/common/UnRealWorld/urw3-bin
+Linux x86-64，3.89，Steam Build 25939378。
+SHA256：4bbbef363fe64678ae9674ff9330f3cb0bec813d94379483813de152c164aabe
+下文为 ELF RVA；Ghidra 原始输出地址需减去导入基址 0x100000。
+
+直接静态证据
+============
+1. 眼睛的原生编号是 1，来自 bodypart @ 0x26BD00。
+   衣甲解析、内置覆盖模板、ArmourItemProtects 与 PlrArmour 的完整证据
+   见同目录 20261019-equipment-slots-static.txt。
+
+2. ShieldMode() @ 0x166E50：原生菜单列出 None / Center / High / Side。
+   选择 H（0x48）后，在 0x166F60..0x166F74 对 Plr+0x13AD 执行
+   (flags & 0xF5) | 4，明确设置 High 位并清除 Center / Side 位。
+   同一分支的原生消息明确说明高举盾牌会限制视野并减慢移动。
+
+3. mslhit_shieldcheck(int,int,int,ItemStruct*,int,int) @ 0x166B10：
+   第一个参数是受击者，第二个参数是身体部位；末两个参数为来袭者坐标。
+   玩家分支从 Plr+0x13AD 读取盾牌模式；High 位 4 已置且 Side 位 8 未置
+   时进入 0x166D33。它通过 reldir() 计算来袭方向与受击者朝向的关系。
+
+   对 eye（编号 1），High 分支的结果为：
+   - 相对方向 0、1、7：0x166DF8..0x166E1F 的跳转表包含 case 1，返回 true。
+   - 相对方向 2、6：0x166D53..0x166D7F 中，1 满足 part<=2 且 part>0，
+     返回 true。
+   - 相对方向 3、4、5：返回 false。
+
+   reldir() @ 0xBDCB0 依据 calcAngle、Kulma_Ilmansuunnaksi 与受击者朝向
+   计算相对方向；0 表示与自身朝向相同，4 表示相反方向。因此朝向来袭者
+   是能进入已确认遮挡范围的直接办法，不能将 High 解释为全方向保护。
+   原生逻辑还按盾牌种类处理其他部位的覆盖，眼睛在上述分支直接返回 true。
+
+4. 这不是未使用的辅助函数：Taistelu_TAPAHTUMA() @ 0x169F30 的投射物
+   处理实际调用它，调用点为 0x16BB66、0x16BF64、0x16C117。
+   传入 AttackerStrike+0xEC 的受击部位及 +0xF0 字段，先检查手持物的
+   SHIELD 分类。返回非零后，将 DefenderStrike+0x0C 设为 0x0E，防御
+   结果设为 3，再进入原生 ATTACK_RESULT。
+   ATTACK_RESULT() @ 0x167EE0 对防御类型 0x0E 使用 SHIELD_PROTECTS。
+   后续伤害处理仍由原生战斗流程执行，没有调用或模拟这条路径。
+
+5. HAAVOITA() @ 0x1695D0 在实际伤害计算中把受击部位原样传给
+   PlrArmour(part,attackType)，调用点 0x1699CE。这里没有把眼睛编号 1
+   改成面部编号 2 或颅顶编号 0，因此“面部装备会顺带保护眼睛”的推断
+   不成立。护甲覆盖与盾牌遮挡是两个不同环节。
+
+玩家操作与局限
+==============
+持盾时选择 High；已持盾时可按该手对应的攻击键 1 或 2 调整盾牌姿态，
+在原生 Shield mode 菜单中选 H。面向来袭者。High 会限制视野、降低移动
+速度；它不提供全方向保护，也不给眼部增加可穿戴装备的护甲值。
+操作说明与代价可在随包 GAME.NFO 的 SHIELD 段（1130..1156 行）交叉确认；
+近战 BLOCK 段（825 行起）说明手持盾/武器可用于格挡。
+
+留存与执行范围
+==============
+以下原始提取文件和工具工程只在本地留存，不随源码仓库提交。
+20261019-eye-protection-ghidra.txt：本次实际 Ghidra 反编译输出，包含调用者。
+20261019-eye-protection-disassembly.txt：原始指令与 reldir 方向表。
+build/analysis/equipment-20261019/：Ghidra 项目、提取脚本与日志。
+仅静态分析。未启动游戏、注入、模拟操作、运行测试或编译/发布 Mod。
