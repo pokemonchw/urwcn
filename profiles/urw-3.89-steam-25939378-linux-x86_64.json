@@ -51,6 +51,11 @@
   },
   "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 17 culture encyclopedia topics, culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers. All eleven farewell fields at endgame's native panel, showtext, centext and button calls.",
   "ownership": "Native UI retains layout, wrapping, centering, controls, input, hit testing, background, caching and animation. Chinese glyphs draw synchronously inside native text leaves; no pixel tracking or text replay.",
+  "language_redraw": {
+    "main_menu": "Shift+F10 rebuilds the native background/footer fragment 0x15ceeb..0x15cf44, peli_info at 0x15cbe0, LIST_Draw, MENUBUFFER and current selection before Flip. MakeStartList and LIST_Reset are not re-entered; original entries and selection remain native.",
+    "about_and_credits": "Rebuild the main menu, replace the owner's SCREENSAVE through save_page at 0x13d590, then rebuild the active native view with its input wait skipped. The original restore_page at view exit consumes the updated background.",
+    "ownership": "The same native reconstruction is used for main-menu resize. No UI coordinates, page snapshots, pixel tracking or deferred glyph operations are stored by this refresh path."
+  },
   "native_density": {
     "screen_creation": "0x148c60",
     "upload_texture_creation": "0x148c2d",
@@ -82,6 +87,7 @@
   "evidence": [
     "docs/evidence/20261019-linux-native-port.md",
     "docs/evidence/20261019-linux-font-density.md",
+    "docs/evidence/20261019-linux-language-residue.md",
     "docs/evidence/20261019-culture-info-native.md",
     "docs/evidence/20261019-farewell-native.md",
     "docs/evidence/20261019-linux-chinese-input.md"

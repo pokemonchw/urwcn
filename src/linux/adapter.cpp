@@ -658,22 +658,46 @@ void view_scope(Frame& frame) {
     frame.rax=call(frame,active_view);
     active_view=previous;
 }
+void redraw_list() {
+    native<void (*)()>(0xf5570)();
+    // Same owner and branch as LIST_Go at F865E/F866B. Save the newly
+    // drawn rows before restoring the native selection highlight.
+    if(*at<int>(0x663f014)!=2) native<void (*)()>(0x13d5a0)();
+    const auto position=*at<int>(0x663f010);
+    const auto skip=*at<int>(0x663f120+position*0xe8+0xe0);
+    if(!skip) native<void (*)(int,int)>(0xf3f80)(position,0);
+}
+void rebuild_main_menu() {
+    const auto previous=scope;
+    scope=Scope::main_menu;
+    // MakeStartList uses a frameless list: LIST_Draw does not erase its
+    // previous text. Re-enter the native background/footer fragment and
+    // panel/logo builder before drawing rows in the selected language.
+    redrawing_main_background=true;
+    uwcn_linux_redraw_main_fragment(host->image_base+0x15ceeb);
+    redrawing_main_background=false;
+    native<void (*)()>(0x15cbe0)();
+    redraw_list();
+    scope=previous;
+}
 void redraw_language() {
     if(active_view) {
+        rebuild_main_menu();
+        // UrW_Start owns SCREENSAVE around AboutScreen/CreditsScreen.
+        // Replace that native background before rebuilding the open view,
+        // so its eventual restore_page cannot bring back the old language.
+        native<void (*)()>(0x13d590)();
         redrawing_view=true;
         native<void (*)()>(active_view)();
         redrawing_view=false;
         native<void (*)()>(0x13fe50)();
         return;
     }
-    if(scope==Scope::main_menu || scope==Scope::creation || scope==Scope::culture || scope==Scope::sex) {
-        native<void (*)()>(0xf5570)();
-        // Same owner and branch as LIST_Go at F865E/F866B. Native selection
-        // restoration reads List.Position and ListEntries' original row flag.
-        if(*at<int>(0x663f014)!=2) native<void (*)()>(0x13d5a0)();
-        const auto position=*at<int>(0x663f010);
-        const auto skip=*at<int>(0x663f120+position*0xe8+0xe0);
-        if(!skip) native<void (*)(int,int)>(0xf3f80)(position,0);
+    if(scope==Scope::main_menu) {
+        rebuild_main_menu();
+        native<void (*)()>(0x13fe50)();
+    } else if(scope==Scope::creation || scope==Scope::culture || scope==Scope::sex) {
+        redraw_list();
         native<void (*)()>(0x13fe50)();
     }
 }
@@ -696,11 +720,8 @@ void resize_native_targets(Frame& frame) {
     frame.rax=call(frame,0x13a040); // Native map textures rebuild first.
     if(scope!=Scope::main_menu || active_view || !linux_targets::synchronize_main_menu()) return;
     invalidate_glyph_widths();
-    redrawing_main_background=true;
-    uwcn_linux_redraw_main_fragment(host->image_base+0x15ceeb);
-    redrawing_main_background=false;
-    native<void (*)()>(0x15cbe0)(); // Native menu panel and version.
-    redraw_language(); // LIST_Draw, native menu cache, selection, Flip.
+    rebuild_main_menu();
+    native<void (*)()>(0x13fe50)();
 }
 Status initialize(const HostApi* api) {
     host=api;
