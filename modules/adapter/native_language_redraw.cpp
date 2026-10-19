@@ -58,10 +58,13 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(loaded);
 }
 
+bool menu_input_tick(const NativeEvent& event) {
+    return event.id==setup_input_result && event.phase==NativePhase::inline_before;
+}
 bool menu_input(const NativeEvent& event,u32 caller_return_rva) {
     // These D1120 calls stay unhooked: EBP+4 identifies the actual menu caller.
     // Reuse the existing post-input hook without changing its returned action.
-    return event.id==setup_input_result && event.phase==NativePhase::inline_before
+    return menu_input_tick(event)
         && *reinterpret_cast<const u32*>(event.frame->ebp+4)==base+caller_return_rva;
 }
 

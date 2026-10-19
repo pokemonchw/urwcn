@@ -34,13 +34,13 @@ main.production	Enormous Elk<br>出品
 main.copyright	版权所有 (c) {value}<br>    Sami Maaranen
 main.authors	创作与编程：Sami Maaranen。<br>追加编程与共同设计：Erkka Lehmus。<br>Linux 与 MacOSX 移植主要由 Tuukka Pasanen 完成。<br><br>www.unrealworld.fi
 about.title	关于
-about.version	UnReal World — 版本 {value}
+about.version	不真实的世界 — 版本 {value}
 about.copyright	(c) {value} 作者：Sami Maaranen
 about.publisher	Enormous Elk 发行 · 2021
 about.release_notes	新功能、更新日志及发行说明，请查看安装目录中的 news.txt。
-about.install_label	UnReal World 安装目录：
+about.install_label	不真实的世界 安装目录：
 about.press_key	 按任意键继续 
-farewell.title	即将离开 UnReal World——最后的叮咛……
+farewell.title	即将离开 不真实的世界——最后的叮咛……
 farewell.tree	“当最后一棵树被砍倒，
 farewell.river	 当最后一条河被污染，
 farewell.fish	 当最后一条鱼被捕尽，
@@ -121,7 +121,7 @@ skills.name.SWIMMING	游泳
 skills.name.STEALTH	潜行
 spells.title	咒语与法术
 spells.exit	退出
-spells.encyclopedia	打开 UnReal World 百科，了解更多
+spells.encyclopedia	打开 不真实的世界 百科，了解更多
 spells.footer.title	咒语
 spells.footer.summary	咒语既能与精灵等异界生灵沟通，也能以法术影响现实世界。
 spells.help.initial	你最初掌握这些咒语与法术，用来与精灵及异界交流。在一生中，你还会学到更多。<br>准备好继续创建角色时，请退出此页；也可以将选择框移到想了解的咒语上，查看其说明。
@@ -475,7 +475,7 @@ scenario.confirm.story.12.9	你只剩随身携带的补给、工具，以及这�
 scenario.confirm.story.12.10	走进严酷的荒野，像其他流浪者一样，在不真实的世界中寻找属于自己的位置。
 scenario.confirm.story.12.11	（在这个情境中，你开局时拥有所属文化常见的装备和一位动物伙伴。
 scenario.confirm.story.12.12	如何在这个世界生活，由你自己选择。愿你旅途顺利，愿神灵眷顾你。）
-profile.heading	新角色即将踏入 UnReal World……
+profile.heading	新角色即将踏入 不真实的世界……
 profile.culture_title	选择文化
 profile.sex_title	选择性别
 profile.season_title	选择季节
@@ -606,7 +606,7 @@ intro.myth_8	伊涅赫莫人再听不懂风的歌唱，
 intro.myth_9	也听不懂熊与森林的低吟。
 intro.myth_10	族中的智者说，世界已不再真实。
 intro.myth_11	世界，已成虚幻。
-startup.loading	正在进入 UnReal World，请稍候……
+startup.loading	正在进入 不真实的世界，请稍候……
 startup.sound_init	正在初始化音频……
 startup.audio_device_failed	无法打开音频设备！—— 按任意键继续 ——
 startup.intro	正在载入开场音乐……

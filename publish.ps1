@@ -80,13 +80,13 @@ Categories=Game;RolePlaying;
         Add-Candidate $license.FullName ('licenses/' + $license.Name)
     }
 }
-if ((!$Reload -or !$IsLinux) -and @($files | Where-Object Changed).Count -eq 0 -and $retirements.Count -eq 0) { Write-Output 'Formal publication skipped: selected contents are unchanged.'; return }
+if (!$Reload -and @($files | Where-Object Changed).Count -eq 0 -and $retirements.Count -eq 0) { Write-Output 'Formal publication skipped: selected contents are unchanged.'; return }
 $changes = @($files | Where-Object Changed)
 $reloadModules = @($allModules | Where-Object { $name=$_; @($changes | Where-Object Relative -eq "modules/uwcn_$name.dll").Count -gt 0 })
 if (@($changes | Where-Object { $_.Relative.StartsWith('catalog/') }).Count -gt 0 -and $reloadModules -notcontains 'catalog') { $reloadModules += 'catalog' }
 # Explicit reload includes unchanged selected modules: the running generation
 # can lag behind disk, and an explicitly retried transaction must retain its mask.
-if ($IsLinux -and $Reload) { $reloadModules = @($allModules | Where-Object { $Module -contains $_ }) }
+if ($Reload) { $reloadModules = @($allModules | Where-Object { $Module -contains $_ }) }
 $identities = [ordered]@{}
 $currentManifest = Join-Path $PackageDirectory 'release.json'
 if (Test-Path -LiteralPath $currentManifest) {

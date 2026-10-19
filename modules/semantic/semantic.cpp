@@ -136,13 +136,8 @@ const char* key(TextComponent component) {
     case TextComponent::profile_back:return "profile.back";
     case TextComponent::profile_male:return "profile.male";
     case TextComponent::profile_female:return "profile.female";
-#ifdef __linux__
     case TextComponent::profile_name_help:return "profile.name_help_utf8";
     case TextComponent::profile_name_help_repeat:return "profile.name_help_repeat_utf8";
-#else
-    case TextComponent::profile_name_help:return "profile.name_help";
-    case TextComponent::profile_name_help_repeat:return "profile.name_help_repeat";
-#endif
     case TextComponent::profile_sex_help:return "profile.sex_help";
     case TextComponent::profile_name_too_short:return "profile.name_too_short";
     case TextComponent::profile_name_invalid:return "profile.name_invalid";

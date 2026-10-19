@@ -18,6 +18,8 @@
 #include <cstring>
 #include <initializer_list>
 #include <iterator>
+#include <map>
+#include <cstdio>
 #include <string>
 #include <vector>
 
@@ -39,6 +41,7 @@ bool profile_culture_refresh_pending=true;
 bool profile_sex_refresh_pending=true;
 bool scenario_refresh_pending=true;
 bool scenario_redrawing{};
+bool rebuilding_main_background{};
 
 enum Hook : u32 {
     menu_scope=1, footer_initial, footer_loop, version_scope, menu_input,
@@ -87,7 +90,8 @@ enum class Scope : u32 {
     setup_panel=30, setup_footer=31, setup_exit=32, intro_version=33,
     character_creation=34, character_creation_panel=35, character_creation_label=36,
     profile_culture=37, profile_sex=38, profile_panel=39, profile_footer=40,
-    scenario_story=41, scenario_panel=42,
+    scenario_story=41, scenario_panel=42, creation_button=43, creation_paragraph=44,
+    encyclopedia_input=45,
     load_saved_panel=0xA0,
     ancestors_title=50, ancestors_select=51, ancestors_row=52,
     hud_centered=0x100, hud_penalty=0x101, hud_button=0x102,
@@ -127,7 +131,8 @@ void begin(const NativeEvent& e,Scope kind,u32 outline=0) { active.push_back({e.
 u32 outline_budget() {
     for(auto i=active.rbegin();i!=active.rend();++i) {
         if(i->kind==Scope::text || i->kind==Scope::paragraph || i->kind==Scope::setup_exit
-            || i->kind==Scope::hud_centered || i->kind==Scope::hud_penalty || i->kind==Scope::hud_scale)
+            || i->kind==Scope::hud_centered || i->kind==Scope::hud_penalty || i->kind==Scope::hud_scale
+            || i->kind==Scope::creation_button || i->kind==Scope::creation_paragraph)
             return i->outline;
         if(i->kind==Scope::version || i->kind==Scope::intro_story || i->kind==Scope::titled_panel) return 1;
     }
@@ -184,13 +189,32 @@ render::TextRequest render_request(const char* utf8,std::int32_t x,std::int32_t 
         static_cast<u32>(r)|(static_cast<u32>(g)<<8)|(static_cast<u32>(b)<<16)|0xFF000000u,
         10,9,0,0,outline_budget(),800,600};
 }
-Status metrics(const char* encoded,render::Metrics& output) {
+Status metrics_at_outline(const char* encoded,u32 outline,render::Metrics& output) {
     std::vector<char> utf8;
     auto result=codec(layout_op::decode_native,encoded,utf8);
     if(result!=Status::ok) return result;
     auto request=render_request(utf8.data(),0,0,0);
+    request.outline=outline;
     u32 bytes=sizeof(output);
     return host->invoke(ModuleId::render,render::op::measure,&request,sizeof(request),&output,&bytes);
+}
+Status metrics(const char* encoded,render::Metrics& output) {
+    return metrics_at_outline(encoded,outline_budget(),output);
+}
+#include "native_name_input.inc"
+bool contains_display(const char* text) { return native_name_input::contains_display(text); }
+
+std::string native_paragraph_words(const char* encoded) {
+    std::string words;
+    for(auto* p=reinterpret_cast<const unsigned char*>(encoded);*p;) {
+        if(native_name_input::transport(p)) {
+            if(!words.empty() && words.back()!=' ' && words.back()!='>') words+=' ';
+            words.append(reinterpret_cast<const char*>(p),2);
+            words+=' ';
+            p+=2;
+        } else words.push_back(*p++);
+    }
+    return words;
 }
 Status draw(const NativeEvent& e) {
     std::vector<char> utf8;
@@ -199,6 +223,7 @@ Status draw(const NativeEvent& e) {
     auto request=render_request(utf8.data(),static_cast<std::int32_t>(e.frame->ecx),
         static_cast<std::int32_t>(e.frame->edx),*at<u32>(0xA211068));
     const auto* context=text_context();
+    if(!context) request.outline=*ptr<u32>(e.frame->ebp+0x10)&1u;
     if(context && context->centered) {
         request.centered=1;
         request.center_x=context->center_x+request.x-context->text_x;
@@ -293,6 +318,8 @@ Status append(const NativeEvent& e,TextComponent component) {
     std::vector<char> encoded;
     auto result=translate(component,original,nullptr,encoded);
     if(result!=Status::ok) return result;
+    const auto words=native_paragraph_words(encoded.data());
+    encoded.assign(words.begin(),words.end());encoded.push_back(0);
     result=paragraph_capacity(encoded.data());
     if(result!=Status::ok) return result;
     return lend_text(e,encoded,e.frame->edx,Scope::allocation);
@@ -461,6 +488,13 @@ Status refresh_menu_cache() {
 Status redraw_menu() {
     auto status=native_targets::promote();
     if(status!=Status::ok) return status;
+    // The native background draw also retires its own cached slave textures.
+    // Suppress only startup business assignments while replaying that balanced
+    // original drawing fragment, then rebuild footer, panel and menu pixels.
+    rebuilding_main_background=true;
+    status=host->native_fragment(0x125AA6,0x125AF5);
+    rebuilding_main_background=false;
+    if(status!=Status::ok) return status;
     // This balanced fragment performs the native footer, panel, version and
     // row drawing. Its end precedes D1120, so no input wait is re-entered.
     status=host->native_fragment(0x125BA3,0x125BE1);
@@ -497,7 +531,13 @@ Status redraw_scenario() {
     scenario_refresh_pending=false;
     return Status::ok;
 }
+void invalidate_windows_creation();
+void invalidate_windows_profile();
+void invalidate_windows_encyclopedia();
 Status invalidate() {
+    invalidate_windows_creation();
+    invalidate_windows_profile();
+    invalidate_windows_encyclopedia();
     native_language_redraw::request_ancestors();
     about_refresh_pending=true;
     credits_refresh_pending=true;
@@ -512,8 +552,25 @@ Status invalidate() {
 }
 
 Status dispatch_hud(const NativeEvent&,DispatchResult&,bool&);
+Status dispatch_windows_profile(const NativeEvent&,DispatchResult&,bool&);
+Status dispatch_windows_creation(const NativeEvent&,DispatchResult&,bool&);
+Status dispatch_windows_skills(const NativeEvent&,DispatchResult&,bool&);
+Status dispatch_windows_encyclopedia(const NativeEvent&,DispatchResult&,bool&);
+Status dispatch_windows_renderer(const NativeEvent&,DispatchResult&,bool&);
+Status dispatch_windows_menu_background(const NativeEvent&,DispatchResult&,bool&);
+Status windows_creation_input(const NativeEvent&);
+bool windows_profile_input(const NativeEvent&);
 Status dispatch(const NativeEvent& e,DispatchResult& result) {
     result={};
+    bool handled{};
+    auto extension=native_name_input::dispatch(e,result,handled);
+    if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
+    for(auto dispatch_extension:{dispatch_windows_profile,dispatch_windows_creation,
+            dispatch_windows_skills,dispatch_windows_encyclopedia,dispatch_windows_renderer,
+            dispatch_windows_menu_background}) {
+        extension=dispatch_extension(e,result,handled);
+        if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
+    }
     const auto language_input=native_language_input::dispatch(e,result,host->image_base);
     if(language_input.handled) {
         if(!language_input.toggle) return Status::ok;
@@ -527,6 +584,9 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         return redraw_profile_menu(0xF678);
     if(profile_sex_refresh_pending && native_language_redraw::menu_input(e,0xF43A))
         return redraw_profile_menu(0xF377);
+    if(windows_profile_input(e)) return redraw_profile_menu(0xFB36);
+    extension=windows_creation_input(e);
+    if(extension!=Status::ok) return extension;
     if(native_language_redraw::dispatch(e,result)) return Status::ok;
     // Published old SDL calls can return through their resident After bridge
     // after a transaction. Their tracking service and 17 old IDs are retired.
@@ -538,7 +598,8 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         if(e.id==about_version_format) status=formatted(e,TextComponent::about_version,ptr<char>(e.arguments[2]));
         if(e.id==about_copyright_format) status=formatted(e,TextComponent::about_copyright,ptr<char>(e.arguments[2]));
         if(e.id==about_publisher_format) status=formatted(e,TextComponent::about_publisher,nullptr);
-        if(e.id==about_button_character && in(Scope::plain_button)) status=native_button::character(e);
+        if(e.id==about_button_character && (in(Scope::plain_button)
+            || native_name_input::contains_display(native_button::label(e)))) status=native_button::character(e);
         if(e.id==ancestors_page_format) {
             const auto value=std::to_string(static_cast<std::int32_t>(e.arguments[2]))+" / "+
                 std::to_string(static_cast<std::int32_t>(e.arguments[3]));
@@ -791,13 +852,16 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         return lend_text(e,encoded,e.arguments[0],Scope::plain_button);
     }
     case about_button_width:
-        if(in(Scope::plain_button)) return native_button::width(e,result,metrics);
+        if(in(Scope::plain_button) || (native_name_input::contains_display(native_button::label(e))
+            && !std::strchr(native_button::label(e),'.'))) return native_button::width(e,result,metrics);
         break;
     case about_button_text:
         if(in(Scope::plain_button)) begin(e,Scope::text,e.arguments[2]);
         break;
     case about_button_advance:
-        if(in(Scope::plain_button)) return native_button::advance(e,result,metrics);
+        if(in(Scope::plain_button) || (native_name_input::contains_display(native_button::label(e))
+            && !std::strchr(native_button::label(e),'.')))
+            return native_button::advance(e,result,metrics);
         break;
     case about_wait:
         if(about_redrawing) result.skip_original=1;
@@ -871,7 +935,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         if(in(Scope::setup_exit) || in(Scope::character_creation_label)) begin(e,Scope::text,e.arguments[2]);
         break;
     case setup_exit_width:
-        if(in(Scope::setup_exit)) {
+        if(in(Scope::setup_exit) || native_name_input::contains_display(ptr<char>(e.frame->edi))) {
             // CFAF0 has already terminated its local copy at '.', while EDI
             // still owns the complete borrowed text. Preserve the native ESC
             // cell width, separator and margins; replace only suffix width.
@@ -1000,19 +1064,22 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         if(in(Scope::version)) return centered_text(e);
         break;
     case paragraph_text:
-        if(in(Scope::paragraph)) begin(e,Scope::text,e.arguments[2]);
+        if(in(Scope::paragraph) || native_name_input::contains_display(ptr<char>(e.arguments[0])))
+            begin(e,Scope::text,e.arguments[2]);
         break;
     case outline_top: case outline_bottom: case outline_left: case outline_right: case foreground:
-        if(text_context()) {
+        if(text_context() || native_name_input::contains_display(ptr<char>(e.arguments[0]))) {
             auto status=draw(e);
             if(status!=Status::ok) return status;
             result.skip_original=1;
         }
         break;
     case cursor_width:
-        if(text_context()) {
+        if(text_context() || native_name_input::contains_display(ptr<char>(e.frame->ebp-0x130))) {
             render::Metrics measured{};
-            auto status=metrics(ptr<char>(e.frame->ebp-0x130),measured);
+            const auto* display=ptr<char>(e.frame->ebp-0x130);
+            auto status=text_context() ? metrics(display,measured) :
+                metrics_at_outline(display,*ptr<u32>(e.frame->ebp+0x10)&1u,measured);
             if(status!=Status::ok) return status;
             *at<u32>(0x61BBB3C)=e.frame->ebx;
             e.frame->eax+=static_cast<u32>(measured.logical_width);
@@ -1029,7 +1096,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         }
         break;
     case paragraph_width:
-        if(in(Scope::paragraph)) {
+        if(in(Scope::paragraph) || native_name_input::contains_display(ptr<char>(e.frame->ebp-0x404))) {
             render::Metrics measured{};
             auto status=metrics(ptr<char>(e.frame->ebp-0x404),measured);
             if(status!=Status::ok) return status;
@@ -1039,7 +1106,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result) {
         }
         break;
     case paragraph_advance:
-        if(in(Scope::paragraph)) {
+        if(in(Scope::paragraph) || native_name_input::contains_display(ptr<char>(e.frame->ebp-0x804))) {
             render::Metrics measured{};
             auto status=metrics(ptr<char>(e.frame->ebp-0x804),measured);
             if(status!=Status::ok) return status;
@@ -1065,6 +1132,20 @@ HookSpec inline_hook(u32 id,u32 site,std::initializer_list<unsigned char> bytes)
     return s;
 }
 #include "hud_native.inc"
+#include "windows_profile_extras.inc"
+#include "windows_creation.inc"
+#include "windows_skills_spells.inc"
+#include "windows_encyclopedia.inc"
+#include "windows_renderer_text.inc"
+#include "windows_menu_redraw.inc"
+Status dispatch_windows_renderer(const NativeEvent& e,DispatchResult& result,bool& handled) {
+    return windows_renderer_text::dispatch(e,result,handled);
+}
+void initialization_failure(const wchar_t* boundary,Status status) {
+    const auto message=std::wstring(L"Adapter initialization failed at ")+boundary+L"; status="+
+        std::to_wstring(static_cast<u32>(status));
+    host->log(message.c_str());
+}
 Status UWCN_CALL initialize(const HostApi* api) {
     if(!api || api->size<sizeof(HostApi) || api->abi!=kHostAbi) return Status::invalid;
     host=api;
@@ -1073,17 +1154,21 @@ Status UWCN_CALL initialize(const HostApi* api) {
     if(!sdl) return Status::unavailable;
     get_rgb=reinterpret_cast<GetRGB>(GetProcAddress(sdl,"SDL_GetRGB"));
     if(!get_rgb) return Status::unavailable;
+    auto name_status=native_name_input::initialize(sdl);
+    if(name_status!=Status::ok) { initialization_failure(L"native name input API",name_status);return name_status; }
+    auto encyclopedia_status=initialize_windows_encyclopedia();
+    if(encyclopedia_status!=Status::ok) { initialization_failure(L"encyclopedia link catalog",encyclopedia_status);return encyclopedia_status; }
     auto status=abi1_retirement::retire_tracking_hooks(api->image_base,GetModuleHandleW(L"uwcn_loader.dll"),sdl,&retired_routes);
-    if(status!=Status::ok) return status;
+    if(status!=Status::ok) { initialization_failure(L"retired native bridge",status);return status; }
     status=native_targets::initialize(api->image_base,sdl);
-    if(status!=Status::ok) return status;
+    if(status!=Status::ok) { initialization_failure(L"native target API",status);return status; }
     status=native_targets::install();
-    if(status!=Status::ok) return status;
+    if(status!=Status::ok) { initialization_failure(L"native target gateway installation",status);return status; }
     const auto routes=native_targets::routes();
     status=abi1_retirement::bind_routes(retired_routes,routes);
-    if(status!=Status::ok) return status;
+    if(status!=Status::ok) { initialization_failure(L"retired route binding",status);return status; }
     status=native_raster::install_raster_patches(api->image_base,sdl);
-    if(status!=Status::ok) return status;
+    if(status!=Status::ok) { initialization_failure(L"native raster installation",status);return status; }
     std::vector<HookSpec> hooks{
         call(load_saved_empty_panel,0x124FE7,0xCFFB0,0),
         call(load_saved_list_panel,0x12508D,0xCFFB0,0),
@@ -1246,15 +1331,26 @@ Status UWCN_CALL initialize(const HostApi* api) {
         if(h.id==scenario_redraw_wait) std::memcpy(h.expected+2,&poll_event_import,4);
     }
     append_hud_hooks(hooks);
+    append_windows_profile_hooks(hooks);
+    append_windows_creation_hooks(hooks);
+    append_windows_skills_hooks(hooks);
+    append_windows_encyclopedia_hooks(hooks);
+    windows_renderer_text::append_hooks(hooks);
+    native_name_input::append_hooks(hooks);
+    append_windows_menu_background_hooks(hooks);
     native_language_input::append_hooks(host->image_base,hooks);
     native_language_redraw::append_hooks(hooks);
-    return host->install_hooks(hooks.data(),static_cast<u32>(hooks.size()));
+    status=host->install_hooks(hooks.data(),static_cast<u32>(hooks.size()));
+    if(status!=Status::ok) initialization_failure(L"native text hook installation",status);
+    return status;
 }
 Status UWCN_CALL invoke(u32 operation,const void* input,u32 bytes,void* output,u32* output_bytes) {
     if(operation==kNativeInvalidate) return invalidate();
     if(operation==kModuleDependenciesChanged) {
         if(!input || bytes!=sizeof(u32)) return Status::invalid;
         if(output_bytes) *output_bytes=0;
+        const auto status=initialize_windows_encyclopedia();
+        if(status!=Status::ok) return status;
         return invalidate();
     }
     if(operation!=kNativeDispatch || !input || bytes!=sizeof(NativeEvent) || !output_bytes) return Status::invalid;
@@ -1268,8 +1364,10 @@ Status UWCN_CALL save_state(void* output,u32* bytes) {
     if(!bytes) return Status::invalid;
     const auto native=native_targets::save();
     const auto redraw=native_language_redraw::save();
+    const auto name=native_name_input::save();
     const u32 language[]={chinese_enabled?1u:0u,intro_chinese?1u:0u,
-        native_language_input::save().f10_consumed,redraw.pending,redraw.rebuilding};
+        native_language_input::save().f10_consumed,redraw.pending,redraw.rebuilding,
+        name.active,name.committed};
     const u32 active_bytes=sizeof(u32)+static_cast<u32>(active.size()*sizeof(Active));
     const u32 required=active_bytes+2*sizeof(u32)+sizeof(retired_routes)+static_cast<u32>(native.size())+sizeof(language);
     if(!output || *bytes<required) { *bytes=required; return Status::insufficient_buffer; }
@@ -1277,7 +1375,7 @@ Status UWCN_CALL save_state(void* output,u32* bytes) {
     std::memcpy(output,&count,sizeof(count));
     if(count) std::memcpy(static_cast<unsigned char*>(output)+sizeof(count),active.data(),count*sizeof(Active));
     auto* suffix=static_cast<unsigned char*>(output)+active_bytes;
-    const u32 tag=0x33414448,native_bytes=static_cast<u32>(native.size());
+    const u32 tag=0x34414448,native_bytes=static_cast<u32>(native.size());
     std::memcpy(suffix,&tag,sizeof(tag)); suffix+=sizeof(tag);
     std::memcpy(suffix,&retired_routes,sizeof(retired_routes)); suffix+=sizeof(retired_routes);
     std::memcpy(suffix,&native_bytes,sizeof(native_bytes)); suffix+=sizeof(native_bytes);
@@ -1318,20 +1416,21 @@ Status UWCN_CALL restore_state(const void* input,u32 bytes) {
     std::memcpy(&tag,suffix,sizeof(tag)); suffix+=sizeof(tag);
     // HDA2 is the published predecessor, with Chinese always enabled. HDA3
     // appends only language/input state; native resource and Active layouts stay.
-    if(tag!=0x32414448 && tag!=0x33414448) return Status::invalid;
+    if(tag!=0x32414448 && tag!=0x33414448 && tag!=0x34414448) return Status::invalid;
     std::memcpy(&retired_routes,suffix,sizeof(retired_routes)); suffix+=sizeof(retired_routes);
     std::memcpy(&native_bytes,suffix,sizeof(native_bytes)); suffix+=sizeof(native_bytes);
-    const u32 language_bytes=tag==0x33414448 ? 5*sizeof(u32) : 0;
+    const u32 language_bytes=tag==0x34414448 ? 7*sizeof(u32) : tag==0x33414448 ? 5*sizeof(u32) : 0;
     if(bytes!=prefix+native_bytes+language_bytes || retired_routes.count>retired_routes.entries.size()) return Status::invalid;
     auto status=native_targets::restore(suffix,native_bytes);
     if(status!=Status::ok) return status;
-    if(tag==0x33414448) {
-        u32 language[5];
-        std::memcpy(language,suffix+native_bytes,sizeof(language));
+    if(tag==0x33414448 || tag==0x34414448) {
+        u32 language[7]{};
+        std::memcpy(language,suffix+native_bytes,language_bytes);
         chinese_enabled=language[0]!=0;
         intro_chinese=language[1]!=0;
         native_language_input::restore({language[2]});
         native_language_redraw::restore({language[3],language[4]});
+        if(tag==0x34414448) native_name_input::restore({language[5],language[6]});
     }
     const auto routes=native_targets::routes();
     status=abi1_retirement::bind_routes(retired_routes,routes);

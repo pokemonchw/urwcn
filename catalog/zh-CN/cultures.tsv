@@ -35,6 +35,7 @@ culture.ui.exit	退出
 culture.ui.keyword	输入关键词
 culture.ui.back	返回“{value}”
 culture.ui.keyword_title	输入关键词
+culture.ui.first_timer_title	初次冒险指南
 culture.ui.launch	查看文化介绍
 culture.ui.help_1	高亮的主题包含更多信息。用方向键选择主题后，
 culture.ui.help_2	按ENTER或用鼠标点击，即可查看对应条目。
@@ -3125,7 +3126,7 @@ culture.record.178017
 culture.topic.encyclopedia_1103.summary	闪避既是一项技能，也是一种防御动作，用于避开近战攻击。
 culture.topic.encyclopedia_1167.summary	踢击、拳击等徒手格斗能力，每次执行徒手战斗动作时自动运用。
 culture.topic.encyclopedia_2721.summary	吃饭、手工制作和战斗等场合都能使用的多用途工具。
-culture.topic.encyclopedia_2641.summary	剑主要由富裕的西方民族使用，在 UnReal World 的其他地区较为罕见。
+culture.topic.encyclopedia_2641.summary	剑主要由富裕的西方民族使用，在 不真实的世界 的其他地区较为罕见。
 culture.topic.encyclopedia_2921.summary	长矛有长木杆和专为近战设计的矛刃。
 culture.topic.encyclopedia_2846.summary	主要以木材或类似材料制成的单手棍棒。
 culture.topic.encyclopedia_914.summary	弓通常以木材制成，是用于发射箭矢的远程武器。
@@ -3133,7 +3134,7 @@ culture.topic.encyclopedia_2965.summary	弩将强力短弓横装在木托上，�
 culture.topic.encyclopedia_1130.summary	盾牌可格挡敌人的近战攻击，也可防御投射攻击。
 culture.topic.encyclopedia_1389.summary	种植作物，以及采收野生植物种子和叶片的能力。
 culture.topic.encyclopedia_1501.summary	辨认各种植物并了解其特性的能力。
-culture.topic.encyclopedia_676.summary	捕鱼是重要的生计来源，UnReal World 的各个民族都普遍从事。
+culture.topic.encyclopedia_676.summary	捕鱼是重要的生计来源，不真实的世界 的各个民族都普遍从事。
 culture.topic.encyclopedia_1541.summary	编织、制作渔网和抄网的技能。
 culture.topic.encyclopedia_1473.summary	辨认和跟随足迹的能力；熟练度决定能从足迹中获得多少信息。
 culture.topic.encyclopedia_1549.summary	设陷捕猎既包括制作各种陷阱，也决定布设陷阱的成效。

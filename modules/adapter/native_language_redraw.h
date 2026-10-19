@@ -16,6 +16,7 @@ void request();
 void request_ancestors();
 void append_hooks(std::vector<HookSpec>& hooks);
 bool menu_input(const NativeEvent& event,u32 caller_return_rva);
+bool menu_input_tick(const NativeEvent& event);
 bool dispatch(const NativeEvent& event,DispatchResult& result);
 State save();
 void restore(const State& state);

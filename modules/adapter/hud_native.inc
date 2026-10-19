@@ -51,7 +51,7 @@ Status hud_draw_renderer(const NativeEvent& e) {
     std::vector<char> utf8;
     auto status=codec(layout_op::decode_native,ptr<char>(e.arguments[1]),utf8);
     if(status!=Status::ok) return status;
-    u32 outline{};
+    u32 outline=*ptr<u32>(e.frame->ebp+0x14)&1u;
     for(auto i=active.rbegin();i!=active.rend();++i)
         if(i->kind==Scope::hud_renderer_text) { outline=i->outline; break; }
     const render::TextRequest request{utf8.data(),nullptr,ptr<void>(e.frame->ecx),
@@ -190,7 +190,7 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     }
     case hud_renderer_top: case hud_renderer_bottom: case hud_renderer_left:
     case hud_renderer_right: case hud_renderer_foreground:
-        if(in(Scope::hud_renderer_text)) {
+        if(in(Scope::hud_renderer_text) || native_name_input::contains_display(ptr<char>(e.arguments[1]))) {
             const auto status=hud_draw_renderer(e);
             if(status!=Status::ok) return status;
             result.skip_original=1;

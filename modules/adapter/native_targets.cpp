@@ -107,13 +107,27 @@ Surface* __cdecl create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 
     const bool canvas_owner=site==0x1179BF || site==0x10C180 || site==0x10C206 ||
         site==0x10C289 || site==0x10C48A || site==0x10C628 || site==0x10C3B1;
     const bool fade_owner=site==0x10D5E8 || site==0x10D65B;
+    const bool culture_owner=site==0xE3A6F;
+    const Scale component_scale{w,h,
+        scoped::physical_rect({0,0,w,h},&canvas).w,
+        scoped::physical_rect({0,0,w,h},&canvas).h};
     if(canvas_owner) {
         const Rect physical=scoped::physical_rect({0,0,w,h},&canvas);
         w=physical.w; h=physical.h;
     }
+    if(culture_owner) { w=component_scale.physical_width;h=component_scale.physical_height; }
     auto* result=api.CreateRGBSurface(flags,w,h,depth,r,g,b,a);
     if(result && (canvas_owner || fade_owner)) surfaces.emplace(result,canvas);
+    if(result && culture_owner) surfaces.emplace(result,component_scale);
     return result;
+}
+Renderer* __cdecl create_software_renderer(Surface* surface) {
+    auto* renderer=api.CreateSoftwareRenderer(surface);
+    const auto* surface_scale=scale(surface);
+    if(renderer && surface_scale) api.RenderSetScale(renderer,
+        float(surface_scale->physical_width)/surface_scale->logical_width,
+        float(surface_scale->physical_height)/surface_scale->logical_height);
+    return renderer;
 }
 Surface* __cdecl convert_surface(Surface* source,const PixelFormat* format,u32 flags) {
     auto* result=api.ConvertSurface(source,format,flags);
@@ -137,13 +151,39 @@ int __cdecl fill(Surface* destination,const Rect* rect,u32 color) {
 Texture* __cdecl create_texture(Renderer* renderer,u32 format,int access,int w,int h) {
     const auto site=static_cast<u32>(reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base);
     const bool upload=site==0x117973;
+    // MagicProfile's native page and CompileInfoboxRitualList's description.
+    // Both are native render targets; their logical rectangles remain native.
+    const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2;
+    const Scale component_scale{w,h,
+        scoped::physical_rect({0,0,w,h},&canvas).w,
+        scoped::physical_rect({0,0,w,h},&canvas).h};
     if(upload) {
         if(output_scale()!=Status::ok) return nullptr;
         w=canvas.physical_width; h=canvas.physical_height;
     }
+    if(component) { w=component_scale.physical_width;h=component_scale.physical_height; }
     auto* result=api.CreateTexture(renderer,format,access,w,h);
     if(result && upload) textures.emplace(result,canvas);
+    if(result && component) textures.emplace(result,component_scale);
     return result;
+}
+int __cdecl set_render_target(Renderer* renderer,Texture* target) {
+    const auto status=api.SetRenderTarget(renderer,target);
+    if(status!=0) return status;
+    const auto* target_scale=scale(target);
+    if(target_scale) return api.RenderSetScale(renderer,
+        float(target_scale->physical_width)/target_scale->logical_width,
+        float(target_scale->physical_height)/target_scale->logical_height);
+    return status;
+}
+int __cdecl query_texture(Texture* texture,u32* format,int* access,int* width,int* height) {
+    const auto status=api.QueryTexture(texture,format,access,width,height);
+    const auto* texture_scale=scale(texture);
+    if(status==0 && texture_scale) {
+        if(width) *width=texture_scale->logical_width;
+        if(height) *height=texture_scale->logical_height;
+    }
+    return status;
 }
 Texture* __cdecl texture_from_surface(Renderer* renderer,Surface* surface) {
     auto* result=api.CreateTextureFromSurface(renderer,surface);
@@ -162,9 +202,9 @@ int __cdecl copy_texture(Renderer* renderer,Texture* texture,const Rect* src,con
     return api.RenderCopy(renderer,texture,&physical,dst);
 }
 struct Import { u32 rva,id,original,replacement; };
-std::array<Import,10> imports{};
+std::array<Import,13> imports{};
 inline constexpr u32 gateway_stride=16;
-inline constexpr u32 gateway_bytes=10*gateway_stride;
+inline constexpr u32 gateway_bytes=13*gateway_stride;
 std::uint8_t* gateways{};
 bool installed{};
 u32 gateway(std::size_t index) { return address(gateways+index*gateway_stride); }
@@ -273,7 +313,10 @@ Status initialize(std::uintptr_t image_base,HMODULE sdl) {
         ENTRY(0x18C208,0x400B,CreateTexture,create_texture),
         ENTRY(0x18C1E0,0x4003,CreateTextureFromSurface,texture_from_surface),
         ENTRY(0x18C22C,0x4006,DestroyTexture,destroy_texture),
-        ENTRY(0x18C228,0x4005,RenderCopy,copy_texture)
+        ENTRY(0x18C228,0x4005,RenderCopy,copy_texture),
+        ENTRY(0x18C288,0,SetRenderTarget,set_render_target),
+        ENTRY(0x18C18C,0,QueryTexture,query_texture),
+        ENTRY(0x18C220,0,CreateSoftwareRenderer,create_software_renderer)
     }};
 #undef ENTRY
     return Status::ok;

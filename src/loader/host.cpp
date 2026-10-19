@@ -300,7 +300,8 @@ static DWORD WINAPI control_thread(void*) {
         bool wait=false; std::wstring response;
         {
             std::lock_guard<std::mutex> control(control_lock);
-            if(command==L"PREPARE" && (phase==TransactionPhase::idle || phase==TransactionPhase::applied || phase==TransactionPhase::cancelled)) {
+            if(command==L"PREPARE" && (phase==TransactionPhase::idle || phase==TransactionPhase::applied ||
+                                      phase==TransactionPhase::cancelled || phase==TransactionPhase::failed)) {
                 u32 mask=0; input>>mask; std::wstring path; std::getline(input,path); if(!path.empty() && path[0]==L' ') path.erase(0,1);
                 if(mask==0 || mask>63 || path.empty()) response=L"Failed invalid request";
                 else { transaction=id; change_mask=mask; stage_path=path; error_text.clear(); ResetEvent(control_done); phase=TransactionPhase::prepare_requested; wait=true; }
