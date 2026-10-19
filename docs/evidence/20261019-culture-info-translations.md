@@ -1,3 +1,5 @@
+> 历史记录：下述 17 主题、逐词显示与打开时固定语言描述已由 [百科修复记录](20261019-encyclopedia-complete.md) 的实现取代。旧发布回执保留，不能用作当前覆盖范围或刷新能力的说明。
+
 # 文化信息译文来源与覆盖
 
 本记录对应 Linux 版文化信息汉化。正文来自游戏安装目录 `/home/lulika/.local/share/Steam/steamapps/common/UnRealWorld/GAME.NFO`，按 CP437 解码读取。游戏原文件未改写。

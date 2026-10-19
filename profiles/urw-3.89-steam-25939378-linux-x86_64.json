@@ -49,7 +49,7 @@
     "list_entry_stride": "0xe8",
     "list_entry_action": "0xc8"
   },
-  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name/season and portrait help, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 17 culture encyclopedia topics, culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers. All eleven farewell fields at endgame's native panel, showtext, centext and button calls.",
+  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name/season, portrait help and attribute confirmation, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 312 GAME.NFO encyclopedia topics (313 source records), culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers. All eleven farewell fields at endgame's native panel, showtext, centext and button calls.",
   "ownership": "Native UI retains layout, wrapping, centering, controls, input, hit testing, background, caching and animation. Chinese glyphs draw synchronously inside native text leaves; no pixel tracking or text replay.",
   "language_redraw": {
     "main_menu": "Shift+F10 rebuilds the native background/footer fragment 0x15ceeb..0x15cf44, peli_info at 0x15cbe0, LIST_Draw, MENUBUFFER and current selection before Flip. MakeStartList and LIST_Reset are not re-entered; original entries and selection remain native.",
@@ -70,7 +70,8 @@
     "Resize-driven complete screen reconstruction is established for the main menu only. The map culture legend and MapviewMainTex obtain current output density at native map rebuild. Other active pages keep the last established screen density until the next main-menu boundary; old bitmap caches are not text-replayed.",
     "Linux showtext preserves its four native shadow calls, but the shadow budget is not yet propagated into font calibration and external width calls. This style envelope remains pending.",
     "Pure refresh of setup body, already-dimmed profile panels, saved-character windows, ancestor pages and current Village page remains tied to native reconstruction.",
-    "Culture encyclopedia immediate language refresh remains unimplemented; its persistent heading and navigation retain the entry language. Map culture legends consume the current language at native map reconstruction.",
+    "Attribute confirmation consumes Chinese at native construction. Its frameless list has no independent erasing redraw; the complete draw_profile function also resets the list, waits for input and writes REROLL. Immediate whole-page refresh is not established, and neither that function nor character_creation is replayed for language changes or hot publication.",
+    "Encyclopedia keyword editing defers language reconstruction until native getst returns; the in-progress editor is not replayed. The translated No_Info notice keeps its opening language until the native key wait ends; FIRST TIMER INFO supports native reconstruction. Map culture legends consume the current language at native map reconstruction.",
     "Farewell consumes the selected language at its native construction calls. Its wait loop has no confirmed pure redraw entry; Shift+F10 does not reconstruct already drawn farewell pixels. endgame is never re-entered for refresh because it owns music, fades, input waiting and process exit."
   ],
   "hot_reload": {
@@ -98,15 +99,27 @@
     "docs/evidence/20261019-linux-font-density.md",
     "docs/evidence/20261019-linux-language-residue.md",
     "docs/evidence/20261019-culture-info-native.md",
+    "docs/evidence/20261019-encyclopedia-complete.md",
     "docs/evidence/20261019-farewell-native.md",
     "docs/evidence/20261019-linux-chinese-input.md",
-    "docs/evidence/20261019-season-portrait-native.md"
+    "docs/evidence/20261019-season-portrait-native.md",
+    "docs/evidence/20261019-attribute-confirmation-native.md"
   ],
   "character_season_and_portrait": {
     "season_menu": "choose_month at 0x1c300: 0x1c3c1 -> LIST_Draw and 0x1c3c6 -> LIST_Go establish the season scope. Shared title 0xf5617 and button 0xf57d4 consumers borrow Chinese; actions 1/2/3/4/ESC and internal English records remain native.",
     "help": "0x1c314 and 0x1efa9 -> SANATAULUKKO_Lisaa(1, text): starting-season guidance and portrait-selection prompt. Existing paragraph width, cursor and glyph extensions consume the full encoded strings.",
     "language": "Shift+F10 rebuilds the active season list through native LIST_Draw, MENUBUFFER and highlight. Footer prompts retain their construction language until the next native construction; crtplr_info is not replayed because it consumes RNG. Previously completed panels retain native pixels.",
     "ownership": "Native menu mode 8, button prefixes, blank separator, selection geometry, mouse hit areas, portrait navigation and original season effects remain unchanged. Synchronous glyphs use the established native screen density."
+  },
+  "character_attributes": {
+    "owner": "draw_profile at 0x10d5d0, reached with mode 1 from character_creation; PROFILE_SCR at 0x10d470 owns the background and two group panels.",
+    "identity": "0x10d610 -> FullSubScreen borrows the original name prefix from plrnam and translates the inhabitant suffix with profile.culture_0..9. choose_culture at 0x1c0bf stores the culture index at Plr+0xD (0xac8604d); 0x1c0d6/0x1c0df copy CULTURE_INHABITANT[index] into Plr+0xE. The suffix is a cultural identity, not a personal surname. Keep the stored name, culture index and original inhabitant string unchanged; TekstiPalkki mode 5 uses the existing complete-text centering and glyph path.",
+    "age": "0x10d641 -> __sprintf_chk: the native R8 age is inserted into Chinese in the original 1024-byte display buffer, before native textwidth at 0x10d66d and showtext at 0x10d692. Mode 0 lifetime prose is outside this change.",
+    "labels": "Four winbox title calls, eleven desced_stat labels and two showtext labels borrow Chinese without changing positions, statbar arguments or portrait resources.",
+    "units": "0x10d95e and 0x10d9da -> TekstiPalkki: translate only the native UnitString_Length/Weight suffix. Preserve the exact native numeric string, unit selection, rounding and precision.",
+    "confirmation": "0x10db12/0x10db20 -> SANATAULUKKO_Lisaa for the two confirmation records; mode 2 explanatory records at 0x10da8a/0x10da98 use the same native paragraph route.",
+    "buttons": "0x10dbd7 -> LIST_Draw scopes shared button consumer 0xf57d4. Keep <Y>es./<N>o. prefixes, native English ListEntries, actions Y/N and blank row; translate Continue/Reroll suffixes. 0x10dbe7 -> LIST_Go retains the input scope. LIST_AdvStyle(1,0) changes text style only; length-based highlight remains disabled by LIST_Reset.",
+    "drawing": "Existing native screen density, title centering, paragraph width, cursor advancement and synchronous glyph output. Native UI retains background, list geometry, hit testing, caches and presentation; existing page pixels wait for native reconstruction."
   },
   "farewell": {
     "page": "endgame at 0x10e790, called from main at 0xa8f0",
@@ -120,13 +133,17 @@
   },
   "culture_information": {
     "source": "GAME.NFO (CP437), SHA-256 071f384ad992d0a688833693f207a5cf8a969b4811e5e6603597d189087a4d5d",
-    "topics": 17,
-    "body_records": 158,
+    "topics": 312,
+    "source_topic_records": 313,
+    "native_aliases": 447,
+    "translated_passages": 608,
+    "body_records": 2324,
     "selection_previews": 10,
-    "body_consumer": "0x514c8 -> link_show; source identity is the native FILE byte offset before fgetstr(150)",
-    "links": "Native English topic keys and ASCII aliases retained; matched display words use the same translation at native width and showtext calls.",
+    "hardcoded_copy": "FIRST TIMER INFO: ten native SANATAULUKKO_Lisaa calls at 0x51978..0x519f6; No_Info: 0x511a9 showtext and 0x511bf Piirra_Nappain. Both retain native input and layout.",
+    "body_consumer": "0x514c8 -> link_show; source identity is the native FILE byte offset after fgetstr(150), including comment skipping and 149-byte chunks",
+    "links": "Complete native English aliases retain their lookup identity. Multiword names are atomic display units; Chinese scalar tokens and aliases use the same conversion at native measurement and drawing calls. Native layout, line wrapping, list entries and hit boxes remain game-owned.",
     "drawing": "Native screen output-density path for encyclopedia/previews/legacy map. Modern map legend uses the native surface at return 0x10ac3b, CultureDialogTexture, MapviewMainTex and window at matching output density; synchronous glyph rendering only.",
     "map_legends": "Eleven culture names and both titles at kulttuuri_info(0x108940) and compile_CultureDialogTexture(0x10ac10). Native map reconstruction at 0x10b0c6 rebuilds the legend and its full-resolution target; native layout, colors and resource ownership remain unchanged.",
-    "language": "The encyclopedia keeps the language selected when opened; Shift+F10 takes effect when the browser is next opened."
+    "language": "Shift+F10 reconstructs the current topic, encyclopedia heading, help and navigation through native builders. It suppresses history insertion and nested input only during reconstruction and restores the original action/topic selection. Scope::attributes remains 10; encyclopedia_keyword, encyclopedia_intro and encyclopedia_notice are appended as 11, 12 and 13."
   }
 }

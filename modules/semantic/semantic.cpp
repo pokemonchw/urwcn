@@ -105,6 +105,31 @@ const char* key(TextComponent component) {
     case TextComponent::profile_season_winter:return "profile.season_winter";
     case TextComponent::profile_season_help:return "profile.season_help";
     case TextComponent::profile_portrait_help:return "profile.portrait_help";
+    case TextComponent::profile_start_age:return "profile.start_age";
+    case TextComponent::profile_appearance:return "profile.appearance";
+    case TextComponent::profile_personality:return "profile.personality";
+    case TextComponent::profile_physical:return "profile.physical";
+    case TextComponent::profile_physique:return "profile.physique";
+    case TextComponent::profile_strength:return "profile.strength";
+    case TextComponent::profile_endurance:return "profile.endurance";
+    case TextComponent::profile_dexterity:return "profile.dexterity";
+    case TextComponent::profile_agility:return "profile.agility";
+    case TextComponent::profile_speed:return "profile.speed";
+    case TextComponent::profile_eyesight:return "profile.eyesight";
+    case TextComponent::profile_hearing:return "profile.hearing";
+    case TextComponent::profile_smell_taste:return "profile.smell_taste";
+    case TextComponent::profile_touch:return "profile.touch";
+    case TextComponent::profile_intelligence:return "profile.intelligence";
+    case TextComponent::profile_will:return "profile.will";
+    case TextComponent::profile_height:return "profile.height";
+    case TextComponent::profile_weight:return "profile.weight";
+    case TextComponent::profile_measurement:return nullptr; // Native unit suffix is dispatched by invoke.
+    case TextComponent::profile_confirm_background:return "profile.confirm_background";
+    case TextComponent::profile_confirm_attributes:return "profile.confirm_attributes";
+    case TextComponent::profile_continue:return "profile.continue";
+    case TextComponent::profile_reroll:return "profile.reroll";
+    case TextComponent::profile_attributes_ready:return "profile.attributes_ready";
+    case TextComponent::profile_attributes_press_key:return "profile.attributes_press_key";
     case TextComponent::profile_name_title:return "profile.name_title";
     case TextComponent::profile_random:return "profile.random";
     case TextComponent::profile_cultures:return "profile.cultures";
@@ -208,6 +233,7 @@ bool has_value(TextComponent component) {
            component==TextComponent::about_copyright ||
            component==TextComponent::ancestors_page || component==TextComponent::ancestors_lived ||
            component==TextComponent::ancestors_journeyed ||
+           component==TextComponent::profile_start_age ||
            component==TextComponent::startup_audio || component==TextComponent::startup_audio_failed ||
            is_setup_value(component);
 }
@@ -250,6 +276,16 @@ Status UWCN_CALL initialize(const HostApi* host) {
                        TextComponent::profile_culture_2,TextComponent::profile_culture_3,TextComponent::profile_culture_4,
                        TextComponent::profile_culture_5,TextComponent::profile_culture_6,TextComponent::profile_culture_7,
                        TextComponent::profile_culture_8,TextComponent::profile_culture_9,
+                       TextComponent::profile_start_age,TextComponent::profile_appearance,
+                       TextComponent::profile_personality,TextComponent::profile_physical,TextComponent::profile_physique,
+                       TextComponent::profile_strength,TextComponent::profile_endurance,TextComponent::profile_dexterity,
+                       TextComponent::profile_agility,TextComponent::profile_speed,TextComponent::profile_eyesight,
+                       TextComponent::profile_hearing,TextComponent::profile_smell_taste,TextComponent::profile_touch,
+                       TextComponent::profile_intelligence,TextComponent::profile_will,
+                       TextComponent::profile_height,TextComponent::profile_weight,
+                       TextComponent::profile_confirm_background,TextComponent::profile_confirm_attributes,
+                       TextComponent::profile_continue,TextComponent::profile_reroll,
+                       TextComponent::profile_attributes_ready,TextComponent::profile_attributes_press_key,
                        TextComponent::setup_title,TextComponent::setup_fullscreen,TextComponent::setup_logical_resize,
                        TextComponent::setup_audio,TextComponent::setup_volume,TextComponent::setup_background_music,
                        TextComponent::setup_traditional_movement,TextComponent::setup_auto_enter_homestead,
@@ -307,6 +343,18 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
     }
     if(op!=text_op::translate || !input || bytes!=sizeof(TextRequest)) return Status::invalid;
     const auto& request=*static_cast<const TextRequest*>(input);
+    if(request.component==TextComponent::profile_measurement) {
+        // UnitString_Length/Weight already selected the units, precision and
+        // number. Translate only their suffix at the profile's title consumer.
+        const std::string original=request.original;
+        const auto separator=original.find(' ');
+        const auto name="profile.unit."+original.substr(separator+1);
+        const CatalogRequest lookup{name.c_str()};
+        std::string unit;
+        const auto status=invoke_text(host_api,ModuleId::catalog,catalog_op::lookup,&lookup,sizeof(lookup),unit);
+        if(status!=Status::ok) return status;
+        return copy_text(original.substr(0,separator+1)+unit,output,capacity);
+    }
     if(request.component==TextComponent::culture_text) {
         const std::string name=std::string("culture.")+request.value;
         const CatalogRequest lookup{name.c_str()};

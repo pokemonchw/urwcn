@@ -27,7 +27,7 @@ using linux_host::CallState;
 const HostApi* host;
 const linux_host::Hooks* hooks;
 bool chinese=true;
-enum class Scope { none,main_menu,creation,culture,sex,season,load_saved,ancestors,setup,encyclopedia };
+enum class Scope { none,main_menu,creation,culture,sex,season,load_saved,ancestors,setup,encyclopedia,attributes,encyclopedia_keyword,encyclopedia_intro,encyclopedia_notice };
 Scope scope=Scope::none;
 bool intro_active;
 bool intro_chinese;
@@ -268,6 +268,29 @@ const Binding bindings[]{
     {0x1bca5,0x1afe00,C::profile_sex_help,1},
     {0x1c314,0x1afe00,C::profile_season_help,1},
     {0x1efa9,0x1afe00,C::profile_portrait_help,1},
+    {0x10d4c9,0x1471a0,C::profile_physical,4,Value::literal,7},
+    {0x10d4f8,0x1471a0,C::profile_physique,4,Value::literal,7},
+    {0x10d80d,0x1471a0,C::profile_personality,4,Value::literal,7},
+    {0x10d88a,0x1471a0,C::profile_appearance,4,Value::literal,7},
+    {0x10d6b7,0x108880,C::profile_strength,2},
+    {0x10d6dc,0x108880,C::profile_endurance,2},
+    {0x10d701,0x108880,C::profile_dexterity,2},
+    {0x10d726,0x108880,C::profile_agility,2},
+    {0x10d74b,0x108880,C::profile_speed,2},
+    {0x10d770,0x108880,C::profile_eyesight,2},
+    {0x10d795,0x108880,C::profile_hearing,2},
+    {0x10d7ba,0x108880,C::profile_smell_taste,2},
+    {0x10d7df,0x108880,C::profile_touch,2},
+    {0x10d834,0x108880,C::profile_intelligence,2},
+    {0x10d859,0x108880,C::profile_will,2},
+    {0x10d8fd,0x13e8b0,C::profile_height,2},
+    {0x10d981,0x13e8b0,C::profile_weight,2},
+    {0x10d95e,0x146ed0,C::profile_measurement,3},
+    {0x10d9da,0x146ed0,C::profile_measurement,3},
+    {0x10db12,0x1afe00,C::profile_confirm_background,1},
+    {0x10db20,0x1afe00,C::profile_confirm_attributes,1},
+    {0x10da8a,0x1afe00,C::profile_attributes_ready,1},
+    {0x10da98,0x1afe00,C::profile_attributes_press_key,1},
     {0x1056ee,0x13b460,C::ancestors_order_label,0},
     {0x10570c,0x13e8b0,C::ancestors_order_label,2},
     {0x105aec,0x13e8b0,C::ancestors_empty,2},
@@ -352,6 +375,33 @@ void bound(Frame& frame) {
     frame.rax=call(arguments,binding->target,binding->arguments,frame);
 }
 void show_cursor(Frame& frame) { frame.rdx=width(reinterpret_cast<const char*>(frame.r14)); }
+void profile_identity(Frame& frame) {
+    Frame arguments=frame;
+    std::string display;
+    if(chinese) {
+        // choose_culture stores the CULTURE_INHABITANT index at Plr+0xD.
+        // plrnam supplies "name inhabitant"; borrow only its display prefix.
+        const auto* original=reinterpret_cast<const char*>(frame.rdi);
+        const auto* separator=std::strchr(original,' ');
+        const std::string name(original,separator);
+        const auto culture=*at<unsigned char>(0xac8604d);
+        const auto component=static_cast<C>(static_cast<u32>(C::profile_culture_0)+culture);
+        display=native_display(name.c_str())+" "+translated(component,separator+1);
+        arguments.rdi=reinterpret_cast<std::uintptr_t>(display.c_str());
+    }
+    frame.rax=call(arguments,0x1225e0);
+}
+void profile_start_age(Frame& frame) {
+    using Format=int (*)(char*,int,std::size_t,const char*,...);
+    const auto format=native<Format>(0x8f80);
+    auto* output=reinterpret_cast<char*>(frame.rdi);
+    const auto* original=reinterpret_cast<const char*>(frame.rcx);
+    if(chinese) {
+        const auto age=std::to_string(static_cast<unsigned>(frame.r8));
+        const auto display=translated(C::profile_start_age,original,age.c_str());
+        frame.rax=format(output,frame.rsi,frame.rdx,"%s",display.c_str());
+    } else frame.rax=format(output,frame.rsi,frame.rdx,original,static_cast<unsigned>(frame.r8));
+}
 void center_pair(Frame& frame) {
     frame.rdx=width(reinterpret_cast<const char*>(frame.rbp));
     frame.rcx=frame.rdx+width(reinterpret_cast<const char*>(frame.rbx));
@@ -394,6 +444,7 @@ void menu_draw(Frame& frame) {
     else if(site==0x1c000) scope=Scope::culture;
     else if(site==0x1bd1e || site==0x1bd58) scope=Scope::sex;
     else if(site==0x1c3c1) scope=Scope::season;
+    else if(site==0x10dbd7) scope=Scope::attributes;
     frame.rax=call(frame,0xf5570);
     scope=previous;
 }
@@ -422,7 +473,7 @@ void menu_button(Frame& frame) {
     Frame arguments=frame;
     const auto* original=reinterpret_cast<const char*>(frame.rdx);
     std::string encoded;
-    if(chinese && (scope==Scope::creation || scope==Scope::culture || scope==Scope::sex || scope==Scope::season || scope==Scope::setup)) {
+    if(chinese && (scope==Scope::creation || scope==Scope::culture || scope==Scope::sex || scope==Scope::season || scope==Scope::setup || scope==Scope::attributes)) {
         C component{};
         const auto row=(frame.rdx-(host->image_base+0x663f120))/0xe8;
         const auto action=*reinterpret_cast<const int*>(host->image_base+0x663f120+row*0xe8+0xc8);
@@ -440,6 +491,11 @@ void menu_button(Frame& frame) {
             else if(action=='R') component=C::profile_random;
             else if(action=='?') component=C::profile_cultures;
             else if(action==27) component=C::profile_back;
+        } else if(scope==Scope::attributes) {
+            switch(action) {
+            case 'Y':component=C::profile_continue;break;
+            case 'N':component=C::profile_reroll;break;
+            }
         } else if(scope==Scope::season) {
             switch(action) {
             case '1':component=C::profile_season_spring;break;
@@ -656,7 +712,8 @@ void ancestor_summary(Frame& frame) {
 struct MenuInput { u32 site; Scope scope; };
 const MenuInput menu_inputs[]{
     {0x15cf85,Scope::main_menu},{0x15d0e6,Scope::creation},
-    {0x1c07c,Scope::culture},{0x1bd2c,Scope::sex},{0x1c3c6,Scope::season}
+    {0x1c07c,Scope::culture},{0x1bd2c,Scope::sex},{0x1c3c6,Scope::season},
+    {0x10dbe7,Scope::attributes}
 };
 void menu_input(Frame& frame,Phase phase,CallState& state) {
     if(phase==Phase::before) {
@@ -715,7 +772,9 @@ void redraw_language() {
         native<void (*)()>(0x13fe50)();
         return;
     }
-    if(scope==Scope::main_menu) {
+    if(scope==Scope::encyclopedia || scope==Scope::encyclopedia_intro) {
+        redraw_culture();
+    } else if(scope==Scope::main_menu) {
         rebuild_main_menu();
         native<void (*)()>(0x13fe50)();
     } else if(scope==Scope::creation || scope==Scope::culture || scope==Scope::sex || scope==Scope::season) {
@@ -771,7 +830,9 @@ Status initialize(const HostApi* api) {
     hooks->instruction(0x145286,9,button_advance);
     hooks->instruction(0x127d7c,6,sink_width);
     for(const auto& binding:bindings) hooks->instruction(binding.site,5,bound);
-    for(auto site:{0x15cf80u,0x12ec3eu,0x15b065u,0x15b187u,0x15d0e1u,0x1c000u,0x1bd1eu,0x1bd58u,0x1c3c1u}) hooks->instruction(site,5,menu_draw);
+    hooks->instruction(0x10d610,5,profile_identity);
+    hooks->instruction(0x10d641,5,profile_start_age);
+    for(auto site:{0x15cf80u,0x12ec3eu,0x15b065u,0x15b187u,0x15d0e1u,0x1c000u,0x1bd1eu,0x1bd58u,0x1c3c1u,0x10dbd7u}) hooks->instruction(site,5,menu_draw);
     hooks->instruction(0xf572f,5,menu_text);
     hooks->instruction(0xf5617,5,menu_title);
     hooks->instruction(0xf57d4,5,menu_button);
