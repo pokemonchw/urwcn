@@ -90,6 +90,7 @@ enum class TextComponent : std::uint32_t {
     farewell_spirit = 0xE08, farewell_courage = 0xE09, farewell_press_key = 0xE0A,
     spells_text = 0xF00,
     skills_text = 0xF01,
+    world_generation_text = 0xF02,
     hud_label = 0x10000, hud_condition = 0x10001, hud_penalty = 0x10002,
     hud_action = 0x10003, hud_direction = 0x10004, hud_speed = 0x10005,
     world_place_gloss = 0x10100, world_location = 0x10101, world_region = 0x10102,

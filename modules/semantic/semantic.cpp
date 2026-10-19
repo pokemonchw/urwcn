@@ -223,6 +223,7 @@ const char* key(TextComponent component) {
     case TextComponent::culture_text:return nullptr; // Source-keyed culture consumer is dispatched by invoke.
     case TextComponent::spells_text:return nullptr; // Native spell ID/display consumer is dispatched by invoke.
     case TextComponent::skills_text:return nullptr; // Native skill display identity is dispatched by invoke.
+    case TextComponent::world_generation_text:return nullptr; // Native world-generation display consumer.
     }
     return nullptr;
 }
@@ -369,6 +370,11 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
     }
     if(request.component==TextComponent::skills_text) {
         const std::string name=std::string("skills.")+request.value;
+        const CatalogRequest lookup{name.c_str()};
+        return host_api->invoke(ModuleId::catalog,catalog_op::lookup,&lookup,sizeof(lookup),output,capacity);
+    }
+    if(request.component==TextComponent::world_generation_text) {
+        const std::string name=std::string("world_generation.")+request.value;
         const CatalogRequest lookup{name.c_str()};
         return host_api->invoke(ModuleId::catalog,catalog_op::lookup,&lookup,sizeof(lookup),output,capacity);
     }

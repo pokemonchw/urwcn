@@ -173,6 +173,14 @@
     "map_legends": "Eleven culture names and both titles at kulttuuri_info(0x108940) and compile_CultureDialogTexture(0x10ac10). Native map reconstruction at 0x10b0c6 rebuilds the legend and its full-resolution target; native layout, colors and resource ownership remain unchanged.",
     "language": "Shift+F10 reconstructs the current topic, encyclopedia heading, help and navigation through native builders. It suppresses history insertion and nested input only during reconstruction and restores the original action/topic selection. Scope::attributes remains 10; encyclopedia_keyword, encyclopedia_intro and encyclopedia_notice are appended as 11, 12 and 13."
   },
+  "world_generation": {
+    "owner": "kartta_main 0x7eb60, rndworld_screen 0x7e7f0 and NaytaMittakaava 0x7bb50; native screen, list, input and MENUBUFFER remain game-owned.",
+    "title": "0x7e856 -> winbox borrows the Chinese title and retains all seven native arguments, including flags 0x20 and the native left-aligned title branch.",
+    "controls": "0x7ed4f/0x7ed6a/0x7ee55/0x7ee70/0x7ee8b/0x7eea6/0x7eec1/0x7eedc -> LIST_ButtonSpotEntry borrow the original ASCII key prefix and a translated suffix. Native textwidth, full-character drawing, selection and mouse geometry consume the same complete label. Arrow controls and original actions are preserved.",
+    "scale": "0x7bbb1/0x7bc69 -> __sprintf_chk retain the original computed R8D integer and 100-byte buffer, translating only the format. 0x7bc27 translates the scale label. Native boxes, scale line, zoom arithmetic and units remain unchanged.",
+    "refresh": "After a compatible adapter reload or language change, the next native first-button call rebuilds rndworld_screen and only the native fragments 0x7ed00..0x7ed30 and 0x7ec18..0x7ec61. Native R15 preserves legend visibility; native LIST_Position/Set_LIST_Position preserve selection. Original button calls recreate geometry and the next LIST_Go owns its cache. No world generation, RNG, starting-location search or input wait is re-entered.",
+    "density": "Existing density-aware native software screen and caches; glyphs are rasterized synchronously in native text calls. No page coordinate table, pixel tracking or text replay is introduced. Immediate reconstruction during an already pending LIST_Go wait remains unconfirmed; refresh waits for the next native control-building pass. Existing non-main-menu resize and shadow-budget limitations remain."
+  },
   "skills": {
     "owner": "TaitoRuutu 0x1082a0 and NaytaOptioRuutu 0x1e5b0; original software screen, MENUBUFFER, list and selection lifecycle.",
     "headings": "0x107ea8/0x108325 -> SubScreen; 0x107f72/0x10808f/0x1081aa -> winbox (seven arguments). Native title centering consumes complete glyph width.",

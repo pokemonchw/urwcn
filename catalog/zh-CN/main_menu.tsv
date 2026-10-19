@@ -31,6 +31,18 @@ farewell.earth	热爱大地。它每天都在你的脚下，从未远离。
 farewell.spirit	亘古不息的生命力，在你我心中呼吸——别让它窒息。
 farewell.courage	勇敢倾听心声，追随灵魂，去看，去感受……就从此刻开始。
 farewell.press_key	按任意键继续
+world_generation.title	随机世界生成
+world_generation.zoom_in	放大
+world_generation.zoom_out	缩小
+world_generation.regions	切换文化区域显示
+world_generation.indicators	切换文化颜色图例
+world_generation.home_culture	在本族文化区域内开始
+world_generation.start_location	重新随机选择起点
+world_generation.new_world	重新生成世界
+world_generation.enter	进入这个世界开始游戏
+world_generation.zoom_format	缩放：%d%%
+world_generation.scale	比例尺：
+world_generation.distance_format	 = %d 公里
 skills.title	技能
 skills.lore	知识与工艺技能
 skills.physical	身体技能
