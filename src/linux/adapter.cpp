@@ -8,6 +8,7 @@
 #include "modules/render/sdl_api.h"
 #include <dlfcn.h>
 #include <SDL2/SDL_events.h>
+#include <SDL2/SDL_render.h>
 #include <array>
 #include <cstdio>
 #include <cstring>
@@ -75,6 +76,7 @@ Glyph* token(const unsigned char* text) {
     const auto found=glyphs.find((unsigned(*text)<<8)|text[1]);
     return found==glyphs.end() ? nullptr : &found->second;
 }
+#include "native_utf8.inc"
 render::TextRequest glyph_request(Glyph& glyph,int x,int y,u32 color) {
     render::TextRequest request{};
     request.utf8=glyph.utf8.c_str();
@@ -96,8 +98,9 @@ int glyph_width(Glyph& glyph) {
     return glyph.width;
 }
 int width(const char* text) {
+    const auto display=native_display(text);
     int result=0;
-    for(auto* cursor=reinterpret_cast<const unsigned char*>(text); *cursor; ) {
+    for(auto* cursor=reinterpret_cast<const unsigned char*>(display.c_str()); *cursor; ) {
         if(auto* glyph=token(cursor)) { result+=glyph_width(*glyph); cursor+=2; }
         else { result+=8; ++cursor; }
     }
@@ -111,9 +114,10 @@ u32 color_rgba() {
     return color.r|(u32(color.g)<<8)|(u32(color.b)<<16)|0xff000000u;
 }
 void textput(int x,int y,const char* text) {
+    const auto display=native_display(text);
     const auto putasc=native<void (*)(int,int,unsigned char)>(0x13b6c0);
     const auto color=color_rgba();
-    for(auto* cursor=reinterpret_cast<const unsigned char*>(text); *cursor && *cursor!='\n';) {
+    for(auto* cursor=reinterpret_cast<const unsigned char*>(display.c_str()); *cursor && *cursor!='\n';) {
         if(auto* glyph=token(cursor)) {
             auto request=glyph_request(*glyph,x,y,color);
             render::Metrics result{}; u32 bytes=sizeof(result);
@@ -123,8 +127,9 @@ void textput(int x,int y,const char* text) {
     }
 }
 void rentextput(render::Renderer* renderer,int x,int y,const char* text,render::Color color,unsigned flags) {
+    const auto display=native_display(text);
     const auto renderasc=native<void (*)(render::Renderer*,int,int,unsigned char,int,int,int,unsigned)>(0x13d700);
-    for(auto* cursor=reinterpret_cast<const unsigned char*>(text); *cursor && *cursor!='\n';) {
+    for(auto* cursor=reinterpret_cast<const unsigned char*>(display.c_str()); *cursor && *cursor!='\n';) {
         if(auto* glyph=token(cursor)) {
             auto request=glyph_request(*glyph,x,y,color.r|(u32(color.g)<<8)|(u32(color.b)<<16)|0xff000000u);
             request.renderer=renderer;
@@ -150,6 +155,7 @@ std::uint64_t& argument(Frame& frame,unsigned index) {
     case 3:return frame.rcx; case 4:return frame.r8; default:return frame.r9;
     }
 }
+#include "name_input.inc"
 enum class Value { literal,option,version,about_version,copyright,footer_copyright,key_suffix,page,place };
 struct Binding { u32 site,target; TextComponent component; unsigned argument; Value value=Value::literal; unsigned arguments=6; };
 using C=TextComponent;
@@ -700,6 +706,7 @@ Status initialize(const HostApi* api) {
     host=api;
     const auto get=reinterpret_cast<const linux_host::Hooks* (*)()>(dlsym(RTLD_DEFAULT,"uwcn_linux_hooks"));
     hooks=get();
+    install_name_input();
     install_culture_info();
     install_culture_map();
     linux_targets::install(*hooks);

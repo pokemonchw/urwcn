@@ -70,11 +70,21 @@
     "Farewell consumes the selected language at its native construction calls. Its wait loop has no confirmed pure redraw entry; Shift+F10 does not reconstruct already drawn farewell pixels. endgame is never re-entered for refresh because it owns music, fades, input waiting and process exit."
   ],
   "runtime_verification": "Not performed; launching the game, running artifacts and tests are prohibited.",
+  "character_name_input": {
+    "scope": "Choose_Name at 0x1e1e4 calls the existing getst editor; other input callers retain their original event behavior.",
+    "text_event": "0xf6e82 consumes the complete UTF-8 already copied by native SDL_TEXTINPUT handling. Native getkey -2 return bypasses processed_keysym; getst consumes the text at 0x1403ff after erasing its cursor.",
+    "editing": "Backspace at 0x1404db removes one complete scalar; native erase calls 0x140481/0x1406ba/0x140727 consume measured width. Native Enter, Escape, TAB/random-name, underscore and Flip remain in control.",
+    "ime": "sdl2-compat/SDL3 native composition and candidate UI; input rectangle derives from getst's cursor call 0x14038b and current renderer/window transform. No Mod composition overlay.",
+    "storage": "Plr.name remains 13 bytes including NUL, with getst's 12-byte payload and original minimum of 3 bytes. UTF-8 names and paths persist without display tokens. Typical Chinese characters use 3 bytes, allowing up to 4; mixed names share the byte budget.",
+    "display": "UTF-8 converts to transient glyph tokens only at native text/width boundaries, including showtext copy 0x13e8ef and renshowtext copy 0x13e324, before legacy byte remapping. Native target density and cache ownership remain unchanged.",
+    "case_and_path": "StrUpr 0xf91f0 and StrLwr 0xf9378 retain complete UTF-8 scalars; Choose_Name final path encoding at 0x1e31d preserves UTF-8. Original ASCII/legacy path conversion and file-existence checks remain native."
+  },
   "evidence": [
     "docs/evidence/20261019-linux-native-port.md",
     "docs/evidence/20261019-linux-font-density.md",
     "docs/evidence/20261019-culture-info-native.md",
-    "docs/evidence/20261019-farewell-native.md"
+    "docs/evidence/20261019-farewell-native.md",
+    "docs/evidence/20261019-linux-chinese-input.md"
   ],
   "farewell": {
     "page": "endgame at 0x10e790, called from main at 0xa8f0",

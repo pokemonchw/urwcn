@@ -96,6 +96,8 @@ profile.male	男性
 profile.female	女性
 profile.name_help	为角色取名，或按 TAB 或 * 随机生成姓名。<br>姓名须为 3–12 个字母，不能包含空格或特殊字符。
 profile.name_help_repeat	<br>请换一个姓名，或按 TAB 或 * 随机生成姓名。<br>姓名须为 3–12 个字母，不能包含空格或特殊字符。
+profile.name_help_utf8	输入姓名，或按 TAB 或 * 随机取名。<br>支持中文（最多4个常用汉字）或 3–12 个英文字母，可混输；不能包含空格或特殊字符。
+profile.name_help_repeat_utf8	<br>请换一个姓名，或按 TAB 或 * 随机取名。<br>支持中文（最多4个常用汉字）或 3–12 个英文字母，可混输；不能包含空格或特殊字符。
 profile.sex_help	请选择角色的性别。
 profile.name_too_short	姓名太短。
 profile.name_invalid	姓名不能包含空格或特殊字符。
