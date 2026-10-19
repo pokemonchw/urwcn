@@ -22,6 +22,8 @@ extern "C" void uwcn_linux_redraw_main_return();
 namespace {
 using namespace uwcn;
 using linux_host::Frame;
+using linux_host::Phase;
+using linux_host::CallState;
 const HostApi* host;
 const linux_host::Hooks* hooks;
 bool chinese=true;
@@ -98,6 +100,7 @@ int glyph_width(Glyph& glyph) {
     return glyph.width;
 }
 int width(const char* text) {
+    linux_host::BusinessCall lease(*hooks);
     const auto display=native_display(text);
     int result=0;
     for(auto* cursor=reinterpret_cast<const unsigned char*>(display.c_str()); *cursor; ) {
@@ -114,6 +117,7 @@ u32 color_rgba() {
     return color.r|(u32(color.g)<<8)|(u32(color.b)<<16)|0xff000000u;
 }
 void textput(int x,int y,const char* text) {
+    linux_host::BusinessCall lease(*hooks);
     const auto display=native_display(text);
     const auto putasc=native<void (*)(int,int,unsigned char)>(0x13b6c0);
     const auto color=color_rgba();
@@ -127,6 +131,7 @@ void textput(int x,int y,const char* text) {
     }
 }
 void rentextput(render::Renderer* renderer,int x,int y,const char* text,render::Color color,unsigned flags) {
+    linux_host::BusinessCall lease(*hooks);
     const auto display=native_display(text);
     const auto renderasc=native<void (*)(render::Renderer*,int,int,unsigned char,int,int,int,unsigned)>(0x13d700);
     for(auto* cursor=reinterpret_cast<const unsigned char*>(display.c_str()); *cursor && *cursor!='\n';) {
@@ -466,20 +471,21 @@ void ancestor_title(Frame& frame) {
     }
     frame.rax=call(arguments,0x146ed0);
 }
-void intro_line(Frame& frame) {
-    Frame arguments=frame;
+void intro_line(Frame& frame,Phase phase,CallState& state) {
+    if(phase==Phase::after) return;
     const auto line=(static_cast<int>(frame.r12)-400)/10;
     const auto component=static_cast<C>(static_cast<u32>(C::intro_story_0)+line);
     const auto site=frame.resume-host->image_base-5;
-    const auto* original=reinterpret_cast<const char*>(site==0x15c9ad ? frame.rdi : frame.rdx);
-    std::string encoded;
+    const auto index=site==0x15c9ad ? 0u : 2u;
+    state.target=site==0x15c9ad ? 0x13b460 : 0x15b8c0;
     if(intro_chinese) {
-        encoded=translated(component,original);
-        if(site==0x15c9ad) arguments.rdi=reinterpret_cast<std::uintptr_t>(encoded.c_str());
-        else arguments.rdx=reinterpret_cast<std::uintptr_t>(encoded.c_str());
+        const auto encoded=translated(component,reinterpret_cast<const char*>(argument(frame,index)));
+        state.text=static_cast<char*>(host->allocate(encoded.size()+1));
+        std::memcpy(state.text,encoded.c_str(),encoded.size()+1);
+        argument(frame,index)=reinterpret_cast<std::uintptr_t>(state.text);
     }
-    frame.rax=call(arguments,site==0x15c9ad ? 0x13b460 : 0x15b8c0);
 }
+
 struct Progress { C component; const char* value; };
 const Progress* progress;
 bool startup_audio_active;
@@ -513,10 +519,12 @@ void startup_draw(Frame& frame) {
     }
     frame.rax=call(arguments,0x13e8b0);
 }
-void poll_language(Frame& frame) {
-    const auto site=frame.resume-host->image_base-5;
-    const auto target=site==0xf6ce8 || site==0xf777e ? 0x8ea0 : 0x81e0;
-    frame.rax=call(frame,target);
+void poll_language(Frame& frame,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        const auto site=frame.resume-host->image_base-5;
+        state.target=site==0xf6ce8 || site==0xf777e ? 0x8ea0 : 0x81e0;
+        return;
+    }
     auto* event=reinterpret_cast<SDL_Event*>(frame.rdi);
     if(frame.rax && event->type==SDL_KEYDOWN && event->key.keysym.scancode==SDL_SCANCODE_F10 &&
        (event->key.keysym.mod & KMOD_SHIFT)) {
@@ -563,9 +571,8 @@ void spot_draw(Frame& frame) {
 }
 unsigned scenario_record;
 bool village;
-void scenario_scope(Frame& frame) {
-    scenario_record=0;
-    frame.rax=call(frame,0x124190);
+void scenario_scope(Frame&,Phase phase,CallState& state) {
+    if(phase==Phase::before) { scenario_record=0; state.target=0x124190; }
 }
 void scenario_title(Frame& frame) {
     Frame arguments=frame;
@@ -594,27 +601,26 @@ void scenario_append(Frame& frame) {
     }
     frame.rax=call(arguments,0x1afe00);
 }
-void intro_scope(Frame& frame) {
-    intro_chinese=chinese;
-    intro_active=true;
-    frame.rax=call(frame,0x15ca20);
-    intro_active=false;
+void intro_scope(Frame&,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        intro_chinese=chinese;
+        intro_active=true;
+        state.target=0x15ca20;
+    } else intro_active=false;
 }
-void startup_audio_scope(Frame& frame) {
-    const auto previous=startup_audio_active;
-    startup_audio_active=true;
-    const auto site=frame.resume-host->image_base-5;
-    frame.rax=call(frame,site==0xaa2c ? 0x17060 : site==0xaa4a ? 0x18130 : 0x17130);
-    startup_audio_active=previous;
+void startup_audio_scope(Frame& frame,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        state.data[0]=startup_audio_active;
+        startup_audio_active=true;
+        const auto site=frame.resume-host->image_base-5;
+        state.target=site==0xaa2c ? 0x17060 : site==0xaa4a ? 0x18130 : 0x17130;
+    } else startup_audio_active=state.data[0];
 }
 struct AncestorNumbers { int age,days,kilometers; };
-AncestorNumbers* ancestor_numbers;
-void ancestor_row(Frame& frame) {
-    AncestorNumbers numbers{};
-    auto* previous=ancestor_numbers;
-    ancestor_numbers=&numbers;
-    frame.rax=call(frame,0x1039b0);
-    ancestor_numbers=previous;
+std::vector<AncestorNumbers> ancestor_rows;
+void ancestor_row(Frame&,Phase phase,CallState& state) {
+    if(phase==Phase::before) { ancestor_rows.push_back({}); state.target=0x1039b0; }
+    else ancestor_rows.pop_back();
 }
 void ancestor_format(Frame& frame) {
     using Format=int (*)(char*,int,std::size_t,const char*,...);
@@ -622,11 +628,11 @@ void ancestor_format(Frame& frame) {
     const bool lived=frame.resume-host->image_base-5==0x103c0c;
     if(lived) {
         const int days=*reinterpret_cast<const int*>(frame.stack());
-        if(ancestor_numbers) { ancestor_numbers->age=static_cast<int>(frame.r9); ancestor_numbers->days=days; }
+        if(!ancestor_rows.empty()) { ancestor_rows.back().age=static_cast<int>(frame.r9); ancestor_rows.back().days=days; }
         frame.rax=format(reinterpret_cast<char*>(frame.rdi),static_cast<int>(frame.rsi),frame.rdx,
             reinterpret_cast<const char*>(frame.rcx),reinterpret_cast<const char*>(frame.r8),static_cast<int>(frame.r9),days);
     } else {
-        if(ancestor_numbers) ancestor_numbers->kilometers=static_cast<int>(frame.r9);
+        if(!ancestor_rows.empty()) ancestor_rows.back().kilometers=static_cast<int>(frame.r9);
         frame.rax=format(reinterpret_cast<char*>(frame.rdi),static_cast<int>(frame.rsi),frame.rdx,
             reinterpret_cast<const char*>(frame.rcx),reinterpret_cast<const char*>(frame.r8),static_cast<int>(frame.r9));
     }
@@ -634,9 +640,9 @@ void ancestor_format(Frame& frame) {
 void ancestor_summary(Frame& frame) {
     Frame arguments=frame;
     std::string encoded;
-    if(chinese && ancestor_numbers) {
+    if(chinese && !ancestor_rows.empty()) {
         const bool lived=frame.resume-host->image_base-5==0x103e18;
-        const auto& numbers=*ancestor_numbers;
+        const auto& numbers=ancestor_rows.back();
         const auto value=lived ? std::to_string(numbers.age)+" 岁，度过了 "+std::to_string(numbers.days)+" 天冒险生涯" :
             std::to_string(numbers.kilometers);
         encoded=translated(lived ? C::ancestors_lived : C::ancestors_journeyed,reinterpret_cast<const char*>(frame.rdx),value.c_str());
@@ -652,22 +658,27 @@ const MenuInput menu_inputs[]{
     {0x15cf85,Scope::main_menu},{0x15d0e6,Scope::creation},
     {0x1c07c,Scope::culture},{0x1bd2c,Scope::sex},{0x1c3c6,Scope::season}
 };
-void menu_input(Frame& frame) {
-    const auto previous=scope;
-    for(const auto& entry:menu_inputs)
-        if(entry.site==frame.resume-host->image_base-5) { scope=entry.scope; break; }
-    frame.rax=call(frame,0xf8630);
-    scope=previous;
+void menu_input(Frame& frame,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        state.data[0]=static_cast<u32>(scope);
+        for(const auto& entry:menu_inputs)
+            if(entry.site==frame.resume-host->image_base-5) { scope=entry.scope; break; }
+        state.target=0xf8630;
+    } else scope=static_cast<Scope>(state.data[0]);
 }
-int view_wait() {
-    return redrawing_view ? 0 : native<int (*)()>(0xf9060)();
+void view_wait(Frame& frame,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        state.target=0xf9060;
+        state.skip=redrawing_view;
+        if(state.skip) frame.rax=0;
+    }
 }
-void about_wait(Frame& frame) { frame.rax=view_wait(); }
-void view_scope(Frame& frame) {
-    const auto previous=active_view;
-    active_view=frame.resume-host->image_base-5==0x15cff4 ? 0x15a750 : 0x15a440;
-    frame.rax=call(frame,active_view);
-    active_view=previous;
+void view_scope(Frame& frame,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        state.data[0]=active_view;
+        active_view=frame.resume-host->image_base-5==0x15cff4 ? 0x15a750 : 0x15a440;
+        state.target=active_view;
+    } else active_view=state.data[0];
 }
 void redraw_list() {
     native<void (*)()>(0xf5570)();
@@ -736,7 +747,7 @@ void resize_native_targets(Frame& frame) {
 }
 Status initialize(const HostApi* api) {
     host=api;
-    const auto get=reinterpret_cast<const linux_host::Hooks* (*)()>(dlsym(RTLD_DEFAULT,"uwcn_linux_hooks"));
+    const auto get=reinterpret_cast<const linux_host::Hooks* (*)()>(dlsym(RTLD_DEFAULT,"uwcn_linux_hooks_v2"));
     hooks=get();
     install_name_input();
     install_culture_info();
@@ -766,31 +777,79 @@ Status initialize(const HostApi* api) {
     hooks->instruction(0xf57d4,5,menu_button);
     hooks->instruction(0x1e38c,5,name_error);
     hooks->instruction(0x10523a,5,ancestor_title);
-    for(auto site:{0x15c9adu,0x15c9c7u}) hooks->instruction(site,5,intro_line);
+    for(auto site:{0x15c9adu,0x15c9c7u}) hooks->around(site,intro_line,false);
     for(auto site:{0xaa27u,0x170bfu,0x181edu,0x16dbcu,0x17013u,0x16df1u,0x17043u}) hooks->instruction(site,5,startup_message);
     hooks->instruction(0x159c6d,5,startup_draw);
     for(const auto& spot:spots) hooks->instruction(spot.site,5,spot_scope);
     hooks->instruction(0xf502d,5,spot_draw);
-    hooks->instruction(0x124615,5,scenario_scope);
+    hooks->around(0x124615,scenario_scope,false);
     hooks->instruction(0x1244b8,5,scenario_title);
     hooks->instruction(0x124565,5,scenario_append);
-    hooks->instruction(0xa4f8,5,intro_scope);
-    for(auto site:{0xaa2cu,0xaa45u,0xaa4au,0xaa54u}) hooks->instruction(site,5,startup_audio_scope);
-    hooks->instruction(0x1055f1,5,ancestor_row);
+    hooks->around(0xa4f8,intro_scope,false);
+    for(auto site:{0xaa2cu,0xaa45u,0xaa4au,0xaa54u}) hooks->around(site,startup_audio_scope,false);
+    hooks->around(0x1055f1,ancestor_row,false);
     for(auto site:{0x103c0cu,0x103c97u}) hooks->instruction(site,5,ancestor_format);
     for(auto site:{0x103e18u,0x103e3cu}) hooks->instruction(site,5,ancestor_summary);
-    for(const auto& entry:menu_inputs) hooks->instruction(entry.site,5,menu_input);
-    for(auto site:{0x15cff4u,0x15cfc3u}) hooks->instruction(site,5,view_scope);
-    hooks->instruction(0x15ab41,5,about_wait);
-    hooks->replace(0x15a61a,5,reinterpret_cast<void*>(view_wait));
+    for(const auto& entry:menu_inputs) hooks->around(entry.site,menu_input,false);
+    for(auto site:{0x15cff4u,0x15cfc3u}) hooks->around(site,view_scope,false);
+    hooks->around(0x15ab41,view_wait,false);
+    hooks->around(0x15a61a,view_wait,true);
     for(auto site:{0xf6ce8u,0xf777eu,0xf6f00u,0xf7130u,0xf7181u,0xf71f1u,0xf7261u,0xf72d1u,0xf734du,0xf73a1u,0xf74f3u})
-        hooks->instruction(site,5,poll_language);
+        hooks->around(site,poll_language,false);
     hooks->finish();
     return Status::ok;
 }
-Status invoke(u32,const void*,u32,void*,u32*) { return Status::invalid; }
-void shutdown() { glyphs.clear(); }
-const ModuleApi api{sizeof(ModuleApi),kHostAbi,ModuleId::adapter,initialize,invoke,empty_save,empty_restore,shutdown};
+Status invoke(u32 operation,const void* input,u32 bytes,void*,u32* capacity) {
+    if(operation!=kModuleDependenciesChanged || !input || bytes!=sizeof(u32)) return Status::invalid;
+    invalidate_glyph_widths();
+    refresh_culture_words();
+    if(capacity) *capacity=0;
+    return Status::ok;
+}
+Status save_state(void* output,u32* capacity) {
+    linux_host::StateWriter state;
+    state.put(u32{1});
+    state.put(chinese); state.put(scope); state.put(intro_active); state.put(intro_chinese);
+    state.put(active_view); state.put(startup_audio_active);
+    state.put(scenario_record); state.put(village);
+    state.put(name_input_active); state.put(name_text_committed);
+    state.put(topic_id(culture_topic)); state.put(topic_id(culture_preview));
+    state.put(culture_browser_chinese); state.put(culture_help_active);
+    state.put(culture_help_record); state.put(culture_record_offset);
+    state.put(static_cast<u32>(ancestor_rows.size()));
+    for(const auto& row:ancestor_rows) state.put(row);
+    state.put(static_cast<u32>(glyphs.size()));
+    for(const auto& [id,glyph]:glyphs) { state.put(id); state.text(glyph.utf8); }
+    linux_targets::save(state);
+    return copy_output(state.bytes.data(),state.bytes.size(),output,capacity);
+}
+Status restore_state(const void* input,u32 bytes) {
+    linux_host::StateReader state(input,bytes);
+    if(state.get<u32>()!=1) return Status::invalid;
+    chinese=state.get<bool>(); scope=state.get<Scope>();
+    intro_active=state.get<bool>(); intro_chinese=state.get<bool>();
+    active_view=state.get<u32>(); startup_audio_active=state.get<bool>();
+    scenario_record=state.get<unsigned>(); village=state.get<bool>();
+    name_input_active=state.get<bool>(); name_text_committed=state.get<bool>();
+    culture_topic=topic_pointer(state.get<unsigned>()); culture_preview=topic_pointer(state.get<unsigned>());
+    culture_browser_chinese=state.get<bool>(); culture_help_active=state.get<bool>();
+    culture_help_record=state.get<unsigned>(); culture_record_offset=state.get<long>();
+    ancestor_rows.clear();
+    const auto rows=state.get<u32>();
+    for(u32 i=0;i<rows;++i) ancestor_rows.push_back(state.get<AncestorNumbers>());
+    glyphs.clear();
+    const auto count=state.get<u32>();
+    for(u32 i=0;i<count;++i) {
+        const auto id=state.get<unsigned>();
+        glyphs.emplace(id,Glyph{state.text(),-1});
+    }
+    linux_targets::restore(state);
+    if(state.remaining) return Status::invalid;
+    refresh_culture_words();
+    return Status::ok;
+}
+void shutdown() { glyphs.clear(); culture_words.clear(); }
+const ModuleApi api{sizeof(ModuleApi),kHostAbi,ModuleId::adapter,initialize,invoke,save_state,restore_state,shutdown};
 }
 UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor{uwcn::kDescriptorMagic,uwcn::kHostAbi,6,uwcn::kModuleMachine,1};
 UWCN_EXPORT const uwcn::ModuleApi* uwcn_get_module_api() { return &api; }

@@ -80,10 +80,13 @@ Categories=Game;RolePlaying;
         Add-Candidate $license.FullName ('licenses/' + $license.Name)
     }
 }
-if (@($files | Where-Object Changed).Count -eq 0 -and $retirements.Count -eq 0) { Write-Output 'Formal publication skipped: selected contents are unchanged.'; return }
+if ((!$Reload -or !$IsLinux) -and @($files | Where-Object Changed).Count -eq 0 -and $retirements.Count -eq 0) { Write-Output 'Formal publication skipped: selected contents are unchanged.'; return }
 $changes = @($files | Where-Object Changed)
 $reloadModules = @($allModules | Where-Object { $name=$_; @($changes | Where-Object Relative -eq "modules/uwcn_$name.dll").Count -gt 0 })
 if (@($changes | Where-Object { $_.Relative.StartsWith('catalog/') }).Count -gt 0 -and $reloadModules -notcontains 'catalog') { $reloadModules += 'catalog' }
+# Explicit reload includes unchanged selected modules: the running generation
+# can lag behind disk, and an explicitly retried transaction must retain its mask.
+if ($IsLinux -and $Reload) { $reloadModules = @($allModules | Where-Object { $Module -contains $_ }) }
 $identities = [ordered]@{}
 $currentManifest = Join-Path $PackageDirectory 'release.json'
 if (Test-Path -LiteralPath $currentManifest) {
@@ -100,6 +103,8 @@ foreach ($name in $allModules) {
 foreach ($file in $files | Where-Object { !$_.Relative.StartsWith('modules/') }) { $identities[$file.Relative]=$file.Hash }
 $manifest = [ordered]@{ format='uwcn-release-v1'; host_abi=1; transaction=$transaction; compile_batch=$BatchId; changed_modules=$reloadModules; files=$identities }
 if ($IsLinux) {
+    $manifest.host_abi=2
+    $manifest.hot_reload_protocol='UWCN_LINUX_CONTROL_V1'
     $manifest.platform='linux-x86_64'
     $manifest.binary_format='ELF64 (extensionless launcher; historical .dll library filenames retained)'
     $manifest.game_sha256='4bbbef363fe64678ae9674ff9330f3cb0bec813d94379483813de152c164aabe'
@@ -113,16 +118,33 @@ $candidateLines.Add('UWCN_CANDIDATE_V1')
 foreach ($file in $files | Where-Object { $_.Relative -ne $launcherName }) { $candidateLines.Add("$($file.Hash)`t$($file.Relative)") }
 [IO.File]::WriteAllLines((Join-Path $stage 'candidate-files.tsv'),$candidateLines,[Text.UTF8Encoding]::new($false))
 function Send-Control([int]$ProcessId,[string]$Command) {
-    $client = [IO.Pipes.NamedPipeClientStream]::new('.',"uwcn-$ProcessId",[IO.Pipes.PipeDirection]::InOut)
+    $socket = $null
+    if ($IsLinux) {
+        $socket = [Net.Sockets.Socket]::new([Net.Sockets.AddressFamily]::Unix,[Net.Sockets.SocketType]::Stream,[Net.Sockets.ProtocolType]::Unspecified)
+        # Abstract AF_UNIX name matches the resident; SO_PEERCRED checks UID.
+        $status = Get-Content -LiteralPath "/proc/$ProcessId/status"
+        $uidLine = $status | Where-Object { $_.StartsWith('Uid:') }
+        $processUid = ($uidLine -split '\s+')[2]
+        $endpoint = [Net.Sockets.UnixDomainSocketEndPoint]::new(([string][char]0) + "uwcn-$processUid-$ProcessId")
+        try { $socket.Connect($endpoint) }
+        catch {
+            $socket.Dispose()
+            throw "PID $ProcessId has no reachable Linux hot-update bridge: $($_.Exception.Message). The old startup-only resident cannot migrate in place."
+        }
+        $client = [Net.Sockets.NetworkStream]::new($socket,$true)
+    } else {
+        $client = [IO.Pipes.NamedPipeClientStream]::new('.',"uwcn-$ProcessId",[IO.Pipes.PipeDirection]::InOut)
+    }
     try {
-        $client.Connect(15000)
+        if (!$IsLinux) { $client.Connect(15000) }
         $encoding = [Text.UTF8Encoding]::new($false)
         $reader = [IO.StreamReader]::new($client,$encoding,$false,4096,$true)
-        $commandBytes = $encoding.GetBytes($Command + "`n")
-        $client.Write($commandBytes,0,$commandBytes.Length)
-        $client.Flush()
-        $response = $reader.ReadLine()
-        $reader.Dispose()
+        try {
+            $commandBytes = $encoding.GetBytes($Command + "`n")
+            $client.Write($commandBytes,0,$commandBytes.Length)
+            $client.Flush()
+            $response = $reader.ReadLine()
+        } finally { $reader.Dispose() }
         if (!$response) { throw 'Resident control channel closed without a receipt.' }
         return $response
     } finally { $client.Dispose() }

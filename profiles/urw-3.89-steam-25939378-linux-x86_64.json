@@ -70,10 +70,18 @@
     "Resize-driven complete screen reconstruction is established for the main menu only. The map culture legend and MapviewMainTex obtain current output density at native map rebuild. Other active pages keep the last established screen density until the next main-menu boundary; old bitmap caches are not text-replayed.",
     "Linux showtext preserves its four native shadow calls, but the shadow budget is not yet propagated into font calibration and external width calls. This style envelope remains pending.",
     "Pure refresh of setup body, already-dimmed profile panels, saved-character windows, ancestor pages and current Village page remains tied to native reconstruction.",
-    "Linux in-process module retirement/publication protocol is not implemented; Windows Reload is rejected for Linux.",
     "Culture encyclopedia immediate language refresh remains unimplemented; its persistent heading and navigation retain the entry language. Map culture legends consume the current language at native map reconstruction.",
     "Farewell consumes the selected language at its native construction calls. Its wait loop has no confirmed pure redraw entry; Shift+F10 does not reconstruct already drawn farewell pixels. endgame is never re-entered for refresh because it owns music, fades, input waiting and process exit."
   ],
+  "hot_reload": {
+    "host_abi": 2,
+    "control_protocol": "UWCN_LINUX_CONTROL_V1",
+    "transport": "Linux abstract AF_UNIX stream: NUL + uwcn-<effective UID>-<PID>; same-UID SO_PEERCRED",
+    "publication": "PREPARE -> ReadyToPublish -> archive old formal files -> replace formal files -> COMMIT -> Applied with SHA-256 and generation",
+    "dispatch": "Short Before / resident native call / short After; stable slot lookup after native input and animation waits",
+    "state": "Language, input scopes, native glyph alphabet, semantic invocation state and native resource density metadata; no retained UI pixels or text replay",
+    "migration": "Startup-only Linux ABI 1 resident cannot migrate in place. ABI 2 loads through the formal launcher on the next normal start; subsequent compatible business publication works at resident SDL control boundaries."
+  },
   "runtime_verification": "Not performed; launching the game, running artifacts and tests are prohibited.",
   "character_name_input": {
     "scope": "Choose_Name at 0x1e1e4 calls the existing getst editor; other input callers retain their original event behavior.",
@@ -86,6 +94,7 @@
   },
   "evidence": [
     "docs/evidence/20261019-linux-native-port.md",
+    "docs/evidence/20261019-linux-hot-reload.md",
     "docs/evidence/20261019-linux-font-density.md",
     "docs/evidence/20261019-linux-language-residue.md",
     "docs/evidence/20261019-culture-info-native.md",

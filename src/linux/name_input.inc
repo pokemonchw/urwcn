@@ -13,13 +13,16 @@ struct InputApi {
     void (*RenderLogicalToWindow)(SDL_Renderer*,float,float,int*,int*);
 } input_api;
 
-void name_input(Frame& frame) {
-    name_input_active=true;
-    name_text_committed=false;
-    input_api.StartTextInput();
-    frame.rax=call(frame,0x1402b0);
-    name_input_active=false;
-    input_api.StopTextInput();
+void name_input(Frame&,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        name_input_active=true;
+        name_text_committed=false;
+        input_api.StartTextInput();
+        state.target=0x1402b0;
+    } else {
+        name_input_active=false;
+        input_api.StopTextInput();
+    }
 }
 void input_stop(Frame& frame) {
     if(!name_input_active) frame.rax=call(frame,0x87e0);
@@ -145,7 +148,7 @@ void install_name_input() {
 #undef INPUT_BIND
     // The installed sdl2-compat uses SDL3's native IME UI setting.
     input_api.SetHint("SDL_IME_IMPLEMENTED_UI","none");
-    hooks->instruction(0x1e1e4,5,name_input);
+    hooks->around(0x1e1e4,name_input,false);
     hooks->instruction(0xf6e82,5,input_commit);
     hooks->instruction(0xf6cca,5,input_stop);
     hooks->instruction(0xf6f80,5,input_stop);

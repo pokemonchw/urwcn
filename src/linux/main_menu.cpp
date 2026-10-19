@@ -7,6 +7,7 @@ using namespace uwcn;
 const HostApi* host;
 Status initialize(const HostApi* api) { host=api; return Status::ok; }
 Status invoke(u32 op,const void* input,u32 bytes,void* output,u32* capacity) {
+    if(op==kModuleDependenciesChanged) return input && bytes==sizeof(u32) ? Status::ok : Status::invalid;
     return host->invoke(ModuleId::semantic,op,input,bytes,output,capacity);
 }
 void shutdown() { host=nullptr; }

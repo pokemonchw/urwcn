@@ -30,7 +30,15 @@ Linux 正式入口是根目录无扩展名的 **`uwcn_launcher`**，由 C++ 编�
 ./uwcn_launcher
 ```
 
-启动器读取 `package/linux-game-path.txt` 中的本机 Steam 游戏位置，也接受 `--game /完整路径/urw3-bin`。原游戏二进制、业务数据和设置原值保持原样。Linux 的运行中模块发布协议尚未实现，不能把 Windows 的 `-Reload` 用在 Linux 上。软件画布、菜单缓存及 Heading 软件目标已接入输出密度扩展，主菜单缩放沿原生构建重绘；其他页面缩放重建与描边预算仍待处理。源码、编译及正式发布状态见 [Linux 字体密度修正](docs/evidence/20261019-linux-font-density.md)。没有启动游戏、运行产物或自行测试。
+启动器读取 `package/linux-game-path.txt` 中的本机 Steam 游戏位置，也接受 `--game /完整路径/urw3-bin`。原游戏二进制、业务数据和设置原值保持原样。Linux 已接入运行中业务模块发布协议，支持统一队列的 `-Reload -TargetPid`，详见 [Linux 热更新](docs/evidence/20261019-linux-hot-reload.md)。软件画布、菜单缓存及 Heading 软件目标已接入输出密度扩展，主菜单缩放沿原生构建重绘；其他页面缩放重建与描边预算仍待处理。源码、编译及正式发布状态见 [Linux 字体密度修正](docs/evidence/20261019-linux-font-density.md)。没有启动游戏、运行产物或自行测试。
+
+Linux 热更新使用 ABI 2 驻留桥、同用户 Unix socket 和 `PREPARE → ReadyToPublish → COMMIT → Applied` 事务。业务模块在原生等待期间交接，保留语言、输入状态、中文编码和原生资源元数据；当前页面的已有像素仍按原生重绘时机更新。PowerShell 7 内的调用示例（将 `12345` 换成实际游戏 PID）：
+
+```powershell
+./build.ps1 -Toolchain Linux -Module adapter,render -Reload -TargetPid 12345
+```
+
+初版 Linux ABI 1 驻留层没有升级入口，无法向已经运行的旧进程原位安装新桥。新桥在用户下一次正常启动正式启动器后生效；之后兼容业务更新无需退出、返回主菜单或手动卸载。本次没有启动、关闭或重启游戏，也没有运行测试；源码、产物、正式发布与运行时状态分别见上述热更新记录。
 
 Linux 启动闪退的两次用户 core 分别确认了音频显示名重复扩展名处理、后续音频显示键缺失；另经静态审查修正了七参数原生调用误读临时栈的问题。源码及正式发布状态分别见 [首轮修复记录](docs/evidence/20261019-linux-startup-crash-fix.md) 和 [启动词库修复记录](docs/evidence/20261019-linux-startup-catalog-crash-fix.md)。未自行启动或测试，不以发布成功代替运行结果。
 

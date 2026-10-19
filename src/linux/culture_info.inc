@@ -60,25 +60,30 @@ std::string culture_display_words(const char* input) {
     }
     return result;
 }
-void culture_browser(Frame& frame) {
-    const auto previous_scope=scope;
-    const auto previous_view=active_view;
-    const auto* previous_topic=culture_topic;
-    const auto previous_language=culture_browser_chinese;
-    scope=Scope::encyclopedia;
-    active_view=0;
-    // This browser owns a persistent heading and a sequence of native topic
-    // caches. Keep its language until the native browser is opened again.
-    culture_browser_chinese=chinese;
-    frame.rax=call(frame,0x51a70);
-    culture_browser_chinese=previous_language;
-    culture_topic=previous_topic;
-    active_view=previous_view;
-    scope=previous_scope;
+unsigned topic_id(const CultureTopic* topic) { return topic ? unsigned(topic-culture_topics)+1 : 0; }
+const CultureTopic* topic_pointer(unsigned id) { return id ? &culture_topics[id-1] : nullptr; }
+void culture_browser(Frame&,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        state.data[0]=static_cast<u32>(scope);
+        state.data[1]=active_view;
+        state.data[2]=topic_id(culture_topic);
+        state.data[3]=culture_browser_chinese;
+        scope=Scope::encyclopedia;
+        active_view=0;
+        culture_browser_chinese=chinese;
+        state.target=0x51a70;
+    } else {
+        culture_browser_chinese=state.data[3];
+        culture_topic=topic_pointer(state.data[2]);
+        active_view=state.data[1];
+        scope=static_cast<Scope>(state.data[0]);
+    }
 }
-void culture_show_topic(Frame& frame) {
-    culture_topic=find_culture_topic(reinterpret_cast<const char*>(frame.rdi));
-    frame.rax=call(frame,0x511d0);
+void culture_show_topic(Frame& frame,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        culture_topic=find_culture_topic(reinterpret_cast<const char*>(frame.rdi));
+        state.target=0x511d0;
+    }
 }
 void culture_read_record(Frame& frame) {
     // Capture the native file's actual record identity, including its original
@@ -167,11 +172,12 @@ void culture_navigation(Frame& frame) {
     }
     frame.rax=call(arguments,0xf4f50);
 }
-void culture_help(Frame& frame) {
-    culture_help_record=0;
-    culture_help_active=culture_browser_chinese;
-    frame.rax=call(frame,0x1b0130);
-    culture_help_active=false;
+void culture_help(Frame&,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        culture_help_record=0;
+        culture_help_active=culture_browser_chinese;
+        state.target=0x1b0130;
+    } else culture_help_active=false;
 }
 void culture_help_append(Frame& frame) {
     Frame arguments=frame;
@@ -182,10 +188,11 @@ void culture_help_append(Frame& frame) {
     }
     frame.rax=call(arguments,0x1afe00);
 }
-void culture_preview_scope(Frame& frame) {
-    culture_preview=find_culture_topic(reinterpret_cast<const char*>(frame.rdi));
-    frame.rax=call(frame,0x4fe10);
-    culture_preview=nullptr;
+void culture_preview_scope(Frame& frame,Phase phase,CallState& state) {
+    if(phase==Phase::before) {
+        culture_preview=find_culture_topic(reinterpret_cast<const char*>(frame.rdi));
+        state.target=0x4fe10;
+    } else culture_preview=nullptr;
 }
 void culture_preview_text(Frame& frame) {
     Frame arguments=frame;
@@ -208,13 +215,17 @@ void culture_preview_button(Frame& frame) {
     }
     frame.rax=call(arguments,0xf4f50);
 }
-void install_culture_info() {
+void refresh_culture_words() {
+    culture_words.clear();
     const char* words[]{
 #include "culture_word_keys.inc"
     };
     for(const auto* word:words) culture_words.emplace(word,culture_text(std::string("word.")+word));
-    for(auto site:{0x106005u,0x106dadu,0x106efdu}) hooks->instruction(site,5,culture_browser);
-    for(auto site:{0x5176du,0x51858u,0x51868u,0x518bbu,0x518c8u,0x51967u}) hooks->instruction(site,5,culture_show_topic);
+}
+void install_culture_info() {
+    refresh_culture_words();
+    for(auto site:{0x106005u,0x106dadu,0x106efdu}) hooks->around(site,culture_browser,false);
+    for(auto site:{0x5176du,0x51858u,0x51868u,0x518bbu,0x518c8u,0x51967u}) hooks->around(site,culture_show_topic,false);
     for(auto site:{0x51467u,0x514fbu,0x5154eu}) hooks->instruction(site,5,culture_read_record);
     hooks->instruction(0x514c8,5,culture_body);
     for(auto site:{0x50d3cu,0x507a6u}) hooks->instruction(site,5,culture_upper);
@@ -223,9 +234,9 @@ void install_culture_info() {
     for(auto site:{0x50ee5u,0x50c39u}) hooks->instruction(site,5,culture_link_draw);
     for(auto site:{0x513f5u,0x51b16u,0x51910u}) hooks->instruction(site,5,culture_heading);
     for(auto site:{0x515d3u,0x5160cu,0x51627u,0x5170au}) hooks->instruction(site,5,culture_navigation);
-    hooks->instruction(0x517c3,5,culture_help);
+    hooks->around(0x517c3,culture_help,false);
     hooks->instruction(0x1b021d,5,culture_help_append);
-    hooks->instruction(0x1c03c,5,culture_preview_scope);
+    hooks->around(0x1c03c,culture_preview_scope,false);
     for(auto site:{0x4fefeu,0x4fffbu}) hooks->instruction(site,5,culture_preview_text);
     hooks->instruction(0x500d6,5,culture_preview_button);
 }

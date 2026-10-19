@@ -13,6 +13,7 @@ namespace scoped=adapter::scoped;
 namespace raster=adapter::native_raster;
 using Scale=scoped::SurfaceScale;
 std::uintptr_t base;
+const linux_host::Hooks* resident;
 Scale canvas;
 Scale mapview_canvas;
 bool building_mapview;
@@ -85,6 +86,7 @@ Scale output_scale(Renderer* renderer) {
     return {native_w,native_h,std::max(native_w,w),std::max(native_h,h)};
 }
 Surface* create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 b,u32 a) {
+    linux_host::BusinessCall lease(*resident);
     const auto site=reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base;
     // Return addresses of inspected native creations, not page coordinates.
     // fontsurface, tmpCharSurf, PELIGRAFIIKKA, maps and asset surfaces remain
@@ -104,24 +106,30 @@ Surface* create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 b,u32 a)
     return result;
 }
 Surface* convert_surface(Surface* source,const PixelFormat* format,u32 flags) {
+    linux_host::BusinessCall lease(*resident);
     auto* result=api.ConvertSurface(source,format,flags);
     if(const auto* ratio=scale(source); result && ratio) surfaces.emplace(result,*ratio);
     return result;
 }
 void free_surface(Surface* surface) {
+    linux_host::BusinessCall lease(*resident);
     surfaces.erase(surface);
     api.FreeSurface(surface);
 }
 int blit(Surface* source,const Rect* src,Surface* destination,Rect* dst) {
+    linux_host::BusinessCall lease(*resident);
     return scoped::blit(api,source,src,scale(source),destination,dst,scale(destination),false);
 }
 int blit_scaled(Surface* source,const Rect* src,Surface* destination,Rect* dst) {
+    linux_host::BusinessCall lease(*resident);
     return scoped::blit(api,source,src,scale(source),destination,dst,scale(destination),true);
 }
 int fill(Surface* surface,const Rect* rect,u32 color) {
+    linux_host::BusinessCall lease(*resident);
     return scoped::fill(api,surface,rect,scale(surface),color);
 }
 Renderer* software_renderer(Surface* surface) {
+    linux_host::BusinessCall lease(*resident);
     auto* renderer=api.CreateSoftwareRenderer(surface);
     if(const auto* ratio=scale(surface); renderer && ratio)
         api.RenderSetScale(renderer,float(ratio->physical_width)/ratio->logical_width,
@@ -129,12 +137,14 @@ Renderer* software_renderer(Surface* surface) {
     return renderer;
 }
 void destroy_renderer(Renderer* renderer) {
+    linux_host::BusinessCall lease(*resident);
     // SDL_DestroyRenderer destroys every texture it owns internally, without
     // returning through the game's SDL_DestroyTexture PLT entry.
     std::erase_if(textures,[renderer](const auto& entry) { return entry.second.renderer==renderer; });
     api.DestroyRenderer(renderer);
 }
 Texture* create_texture(Renderer* renderer,u32 format,int access,int w,int h) {
+    linux_host::BusinessCall lease(*resident);
     const auto site=reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base;
     const bool upload=site==0x148c32;
     if(upload) {
@@ -164,15 +174,18 @@ void mapview_target(linux_host::Frame& frame) {
     building_mapview=false;
 }
 Texture* texture_from_surface(Renderer* renderer,Surface* surface) {
+    linux_host::BusinessCall lease(*resident);
     auto* texture=api.CreateTextureFromSurface(renderer,surface);
     if(const auto* ratio=scale(surface); texture && ratio) textures.emplace(texture,TextureOwner{*ratio,renderer});
     return texture;
 }
 void destroy_texture(Texture* texture) {
+    linux_host::BusinessCall lease(*resident);
     textures.erase(texture);
     api.DestroyTexture(texture);
 }
 int query_texture(Texture* texture,u32* format,int* access,int* w,int* h) {
+    linux_host::BusinessCall lease(*resident);
     const int result=api.QueryTexture(texture,format,access,w,h);
     if(result==0) if(const auto* ratio=scale(texture)) {
         // TexToMainRen and the native image-size consumers still lay out in
@@ -184,12 +197,14 @@ int query_texture(Texture* texture,u32* format,int* access,int* w,int* h) {
     return result;
 }
 int copy_texture(Renderer* renderer,Texture* texture,const Rect* src,const Rect* dst) {
+    linux_host::BusinessCall lease(*resident);
     const auto* ratio=scale(texture);
     if(!src || !ratio) return api.RenderCopy(renderer,texture,src,dst);
     const auto physical=scoped::physical_rect(*src,ratio);
     return api.RenderCopy(renderer,texture,&physical,dst);
 }
 int set_render_target(Renderer* renderer,Texture* texture) {
+    linux_host::BusinessCall lease(*resident);
     const int result=api.SetRenderTarget(renderer,texture);
     // SDL2-compat resets a texture target's scale to 1 on each selection.
     // Reapply only this native resource's recorded output density. Switching
@@ -212,6 +227,7 @@ void unlock_screen(raster::Target target) {
     if(target.surface->flags&2u) api.UnlockSurface(target.surface);
 }
 void putpixel(int x,int y,u32 color) {
+    linux_host::BusinessCall lease(*resident);
     // putpix's original unsigned 799/599 checks, before any lock.
     if(unsigned(x)>799 || unsigned(y)>599) return;
     const auto target=lock_screen();
@@ -219,6 +235,7 @@ void putpixel(int x,int y,u32 color) {
     unlock_screen(target);
 }
 u32 getpixel(int x,int y) {
+    linux_host::BusinessCall lease(*resident);
     // getpix rejects against RESOLUTION_X/Y and returns zero out of range.
     if(x<0 || y<0 || x>=global<int>(0x26dc68) || y>=global<int>(0x26dc64)) return 0;
     const auto target=lock_screen();
@@ -227,12 +244,14 @@ u32 getpixel(int x,int y) {
     return color;
 }
 void putasc(int x,int y,unsigned char code) {
+    linux_host::BusinessCall lease(*resident);
     const auto* mask=reinterpret_cast<const std::uint8_t*>(base+0xa979780)+unsigned(code)*80;
     const auto target=lock_screen();
     raster::glyph(target,x,y,mask,global<u32>(0xa916104));
     unlock_screen(target);
 }
 void draw_line(int x1,int y1,int x2,int y2,u32 color) {
+    linux_host::BusinessCall lease(*resident);
     if(unsigned(x1)>799 || unsigned(x2)>799 || unsigned(y1)>599 || unsigned(y2)>599) return;
     const auto target=lock_screen();
     raster::line(target,x1,y1,x2,y2,color);
@@ -316,8 +335,35 @@ bool synchronize_main_menu() {
     global<Texture*>(0x68c3218)=heading_image(heading,0x1feedb);
     return true;
 }
+void save(linux_host::StateWriter& state) {
+    state.put(canvas);
+    state.put(mapview_canvas);
+    state.put(static_cast<u32>(surfaces.size()));
+    for(const auto& [surface,ratio]:surfaces) { state.put(surface); state.put(ratio); }
+    state.put(static_cast<u32>(textures.size()));
+    for(const auto& [texture,owner]:textures) {
+        state.put(texture); state.put(owner.ratio); state.put(owner.renderer);
+    }
+}
+void restore(linux_host::StateReader& state) {
+    canvas=state.get<Scale>();
+    mapview_canvas=state.get<Scale>();
+    surfaces.clear(); textures.clear();
+    const auto surface_count=state.get<u32>();
+    for(u32 i=0;i<surface_count;++i) {
+        auto* surface=state.get<Surface*>();
+        surfaces.emplace(surface,state.get<Scale>());
+    }
+    const auto texture_count=state.get<u32>();
+    for(u32 i=0;i<texture_count;++i) {
+        auto* texture=state.get<Texture*>();
+        const auto ratio=state.get<Scale>();
+        textures.emplace(texture,TextureOwner{ratio,state.get<Renderer*>()});
+    }
+}
 void install(const linux_host::Hooks& hooks) {
     base=hooks.base;
+    resident=&hooks;
 #define BIND(name) api.name=reinterpret_cast<decltype(api.name)>(dlsym(RTLD_DEFAULT,"SDL_" #name))
     BIND(UpperBlit); BIND(UpperBlitScaled); BIND(FillRect);
     BIND(CreateRGBSurface); BIND(ConvertSurface); BIND(FreeSurface);

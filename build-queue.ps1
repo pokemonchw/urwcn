@@ -14,7 +14,6 @@ param(
 $ErrorActionPreference = 'Stop'
 $TargetPid = @($TargetPid | Sort-Object -Unique)
 if ($Reload) {
-    if ($Toolchain -eq 'Linux') { throw 'The Linux resident does not implement the Windows hot-publication protocol.' }
     $Publish = $true
     if ($TargetPid.Count -eq 0 -or @($TargetPid | Where-Object { $_ -le 0 }).Count -gt 0 -or !$Module -or $Module -contains 'loader' -or $Module -contains 'launcher') { throw '-Reload requires positive TargetPid values and an explicit compatible business Module set.' }
 }

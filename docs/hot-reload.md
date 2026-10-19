@@ -1,5 +1,7 @@
 # UnReal World 汉化热重载设计
 
+> Linux 当前协议：ABI 2 驻留桥使用同用户 AF_UNIX 通道和分阶段原生调用，统一队列已接入 `-Reload`。具体实现、ABI 1 迁移限制及交付状态见 [Linux 热更新记录](evidence/20261019-linux-hot-reload.md)。下文 Windows ABI 与历史方案不代替 Linux 的实现边界。
+
 > 2026-10-19：本文为历史协议演进记录。当前要求仍为任意界面内兼容业务模块交接，短 Before/驻留原函数/短 After，不得等待返回 Footer 或让业务调用帧跨原生等待。重建 ABI 1 与历史 ABI 3 不兼容，旧 Applied 回执不是新桥已应用的证据。当前实现及交付状态见 [重建设计](rebuild-design.md) 与 README。
 
 2026-10-19 字体要求：现行规范见 [字体渲染](font-rendering.md)。保留指定字体、固定参考集校准、稳定包络、自然宽度、Blended 抗锯齿及实际输出密度生成字形；这些质量要求不授权全局像素跟踪、保存文字位置或在最终复制时重放。旧 font-design-compliance-static.txt 是代理实现记录，不能作为规范；该引用链及错误正文已更正，见 [出处记录](evidence/20261019-document-render-policy.md)。源码与交付状态以 [README](../README.md) 为准。
