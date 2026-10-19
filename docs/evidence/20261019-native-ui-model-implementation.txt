@@ -2,6 +2,11 @@
 日期：2026-10-19（Asia/Shanghai）
 对象：不真实的世界 Windows x86 3.89 / Steam Build 25939378。
 
+本文件前段为首批 HDA5 历史记录，不是当前交付状态。2026-10-20 的公共
+组件、MessageFlow、HUD、地图资源及缓存源已接线并整体编译、正式发布。
+后续发布批次和状态边界以 20261020-global-language-native-hook-delivery.md
+为准；本轮没有运行游戏或测试。
+
 目标与本批实际范围
 ================
 用户明确要求通过 Hook 修改原生 UI，统一快速切换中英文，不继续为每页
@@ -86,3 +91,37 @@ e55fa878111ff1257c8231bbd819ee9c6f9e80c1230cee98df7d9f400fc0fb32。
 两值不同，只证明构建产物与正式交付的区分，不表示正式路径已更新。
 本批不替换旧交付文件，所以没有本批正式旧件需要移入回收；既有根回收/
 目录继续保留，不覆盖或永久删除历史交付文件。
+
+2026-10-20 接续实现状态
+------------------------------------------------
+首批 HDA5 菜单数据层的编译回执保留为历史记录。当前源码已超出该阶段：
+- module.cpp 的全局失效调用 native_ui_scene::language_changed，不再选择页面重入函数；
+  native_language_redraw 只同步共同 D1120 输入帧的真实选择与原重画标志。
+- native_component_model/binding/calls 为原完整 Panel、Button、Paragraph、Heading、
+  Statistic、Action、CompoundHint、TitleStrip、ScaleRuler 提供中性源及同源普通消费。
+- 原 Menu 与 NFO Flow 的冻结显示源引用实际 InputOwner；缓存不把旧选择写回当前输入。
+  native_menu_storage 另按原 MENULIST.SAV 的七组 fwrite、六组 fread 认领实际模型。
+- 原生 Root 背景、Image、Footer、renderer owner、真实缓存槽及区域恢复源已接通；
+  不读取像素、不保存字形贡献、不在 Present 前遍历文字。
+- 消息构词新增中性 AST，保存原模板、实际 typed 参数与资源选择，普通两语言均登记；
+  F6510 的显示借入仍保留原英文业务及日志。MessageFlow 另接完整原生 UI 循环，
+  用新语言的真实循环重新产生分页、滚动及等待恢复相位，不复用旧字节索引。
+- HDA7 后缀保存 Menu、消息源及各公共组件 arena，原生目标构造源使用 NGT2。
+  此前正式 HDA4 缺少中性 Root/组件与原 cache constructor，不能从旧像素补发已过去的构建。
+  native_targets 的 NGT2 构造源与原 NGT1 不可假读为同格式，当前无原位全局源迁移实现。
+
+本轮已完成的后续边界：
+1. F6510/F5B00 的共同 MessageFlow、真实分页等待与原生 counter 写入生命周期；
+   见 20261020-native-message-flow-source-and-input.md。
+2. 完整世界地图构造、地图窗口、文化图例、HUD 状态格/摘要与原图形/纹理 owner；
+   见 20261020-native-hud-status-parser-sources.txt 及 native-renderer-resource-factories。
+3. 区域缓存完整构造、共享 prepare/commit、冻结引用图与实际资源事务；
+   见 20261020-cache-region-native-source.md。
+4. 根队列已整体编译、正式发布；随后生成并正式发布消息词库。请求、批次、
+   文件摘要、旧件回收目录与运行时未应用状态均见本文件开头引用的交付记录。
+
+明确保留的边界：旧 HDA4/NGT1 原位迁移没有实现；Linux 尚未移植本轮公共源。
+活动姓名字段由同次原生输入返回重新绘制，Scene 内尚无独立 NameField source；
+见 20261020-native-name-field-global-wake.md，不能把它称为已实现的 Scene 字段组件。
+
+本轮没有启动游戏、注入、模拟输入、运行测试、写测试或断言。编译仅生成交付产物。

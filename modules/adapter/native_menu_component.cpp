@@ -1,4 +1,5 @@
 #include "native_menu_component.h"
+#include "native_ui_scene.h"
 #include <algorithm>
 #include <cstring>
 #include <utility>
@@ -9,10 +10,14 @@ std::uintptr_t base{};
 const HostApi* host{};
 native_text_resource::Resolve resolve{};
 native_text_resource::EncodeOriginal encode_original{};
+DecodeOriginal decode_original{};
+BeforeConsume before_consume{};
 Enter enter_scope{};
 Leave leave_scope{};
+Measure measure{};
 Status paint_result=Status::ok;
 bool painting{};
+Handle painting_source{};
 bool native_consuming{};
 struct ConstructorSource { u64 token;native_text_resource::TextSource source; };
 std::vector<ConstructorSource> title_sources,row_sources;
@@ -20,12 +25,13 @@ struct Borrow { u64 token;u32 allocation; };
 std::vector<Borrow> borrows;
 enum Hook : u32 {
     constructor_begin=0x7E00,constructor_commit,paint_begin,paint_commit,
-    row_commit,plain_title
+    row_commit,plain_title,row_annotation,annotation_origin,selector_width,renderer_selector_width
 };
 // Reuse the existing CALL hooks; installing another patch at these sites would
 // replace the same native boundary twice. The root dispatch sends them here.
 constexpr u32 menu_text=10,menu_panel=221,menu_button=222;
 constexpr u32 rows_rva=0x5F4EF10;
+Handle source_handle() { return painting?painting_source:native_menu_model::active(); }
 
 template<class T> T* pointer(u32 value) {
     return reinterpret_cast<T*>(static_cast<std::uintptr_t>(value));
@@ -33,6 +39,23 @@ template<class T> T* pointer(u32 value) {
 u32 address(const void* value) { return static_cast<u32>(reinterpret_cast<std::uintptr_t>(value)); }
 u32 row_index(u32 native_record) {
     return (native_record-static_cast<u32>(base+rows_rva))/native_menu_model::row_stride;
+}
+native_text_resource::TextSource original_source(const char* text) {
+    std::string utf8;
+    // The configured decoder is the game's confirmed native single-byte /
+    // proper-name input conversion, before any display transport is borrowed.
+    decode_original(text,utf8);
+    return native_text_resource::original_text(utf8.c_str());
+}
+void bind_original_title() {
+    native_menu_model::bind_title(native_menu_model::active(),
+        original_source(reinterpret_cast<const char*>(base+0x5F54A38)));
+}
+void bind_original_row(u32 index) {
+    native_menu_model::bind_row(native_menu_model::active(),index,
+        original_source(reinterpret_cast<const char*>(base+rows_rva+index*native_menu_model::row_stride)),{});
+    native_menu_model::bind_annotation(native_menu_model::active(),index,
+        original_source(reinterpret_cast<const char*>(base+rows_rva+index*native_menu_model::row_stride+0x64)));
 }
 HookSpec absolute(u32 id,u32 site,u32 rva,std::uint8_t opcode) {
     HookSpec hook{id,HookKind::inline_code,site,0,0,5,{opcode}};
@@ -67,6 +90,14 @@ Status lend(const NativeEvent& event,const native_menu_model::TextBinding& bindi
     borrows.push_back({event.token,address(allocation)});
     enter_scope(event,consumer);
     return Status::ok;
+}
+Status measure_row(u32 index,std::int32_t& width) {
+    std::vector<char> encoded;
+    const auto status=resolve_binding(native_menu_model::row(source_handle(),index),encoded);
+    if(status!=Status::ok) {paint_result=status;return status;}
+    const auto measured=measure(encoded.data(),width);
+    if(measured!=Status::ok) paint_result=measured;
+    return measured;
 }
 void append(std::vector<std::uint8_t>& output,const void* data,u32 bytes) {
     const auto offset=output.size();
@@ -108,6 +139,7 @@ void read_sources(const std::uint8_t*& cursor,std::vector<ConstructorSource>& so
 void initialize(std::uintptr_t image_base) {
     base=image_base;
     painting=false;
+    painting_source=0;
     native_consuming=false;title_sources.clear();row_sources.clear();
     borrows.clear();
     native_menu_model::initialize(base);
@@ -116,13 +148,22 @@ void initialize(std::uintptr_t image_base) {
     native_menu_model::create_from_native();
 }
 void configure(const HostApi* api,native_text_resource::Resolve resolver,
-    native_text_resource::EncodeOriginal encoder,Enter enter,Leave leave) {
+    native_text_resource::EncodeOriginal encoder,DecodeOriginal decoder,
+    BeforeConsume before,Enter enter,Leave leave) {
     host=api;
     resolve=resolver;
     encode_original=encoder;
+    decode_original=decoder;
+    before_consume=before;
     enter_scope=enter;
     leave_scope=leave;
+    // The live predecessor model is adopted at initialize before services are
+    // rebound. Its actual count identifies precisely the native active rows.
+    bind_original_title();
+    const auto count=*reinterpret_cast<const u32*>(base+0x5F54A34);
+    for(u32 row=0;row<count;++row) bind_original_row(row);
 }
+void configure_measure(Measure callback) {measure=callback;}
 
 void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(absolute(constructor_begin,0xCF793,0x5F54BB4,0xA1));
@@ -135,6 +176,14 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(row);
     hooks.push_back({plain_title,HookKind::call,0xD027F,0x10E5A0,3,5,
         {0xE8,0x1C,0xE3,0x03,0x00}});
+    hooks.push_back({row_annotation,HookKind::call,0xD03C9,0x10E5A0,3,5,
+        {0xE8,0xD2,0xE1,0x03,0x00}});
+    hooks.push_back({annotation_origin,HookKind::inline_code,0xD03BB,0,0,7,
+        {0x8D,0x0C,0xFD,0x0F,0,0,0}});
+    hooks.push_back({selector_width,HookKind::inline_code,0xD07FB,0,0,7,
+        {0x8D,0x04,0xCD,0,0,0,0}});
+    hooks.push_back({renderer_selector_width,HookKind::inline_code,0xD0A49,0,0,7,
+        {0x8D,0x04,0xCD,0,0,0,0}});
 }
 
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
@@ -155,11 +204,12 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     case constructor_begin:
         // Only the active native-view reference retires. A real native cache
         // root can retain this Menu instance independently; no parent is guessed.
-        native_menu_model::deactivate();
+        native_ui_scene::menu_retired(active());native_menu_model::deactivate();
         return Status::ok;
     case constructor_commit:
         *reinterpret_cast<u32*>(base+0x5F54AB4)=0;
         native_menu_model::create_from_native();
+        bind_original_title();
         if(!title_sources.empty()) native_menu_model::bind_title(active(),title_sources.back().source);
         result.resume_rva=0xCF988;
         return Status::ok;
@@ -168,6 +218,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         // annotation and action have entered their native record.
         *reinterpret_cast<u32*>(base+0x5F54A34)=event.frame->esi;
         native_menu_model::capture_into(native_menu_model::active());
+        bind_original_row(event.frame->esi-1);
         if(!row_sources.empty()) native_menu_model::bind_row(active(),event.frame->esi-1,row_sources.back().source,{});
         result.resume_rva=0xCFAD1;
         return Status::ok;
@@ -180,19 +231,41 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         *reinterpret_cast<u32*>(base+0x61BBAC4)=0;
         native_menu_model::capture_into(native_menu_model::active());
         native_consuming=false;
+        native_ui_scene::menu_constructed(active());
         result.resume_rva=0xD03FD;
         return Status::ok;
     case menu_panel:case plain_title: {
-        const auto& binding=native_menu_model::title(native_menu_model::active());
-        if(!binding.bound) { handled=false;return Status::ok; }
-        return lend(event,binding,event.arguments[event.id==menu_panel?2:0],
-            event.id==menu_panel?Consumer::title_panel:Consumer::plain_title);
+        const auto consumer=event.id==menu_panel?Consumer::title_panel:Consumer::plain_title;
+        if(!painting) {
+            const auto status=before_consume(event,consumer);if(status!=Status::ok) return status;
+        }
+        const auto& binding=native_menu_model::title(source_handle());
+        return lend(event,binding,event.arguments[event.id==menu_panel?2:0],consumer);
     }
     case menu_text:case menu_button: {
-        const auto& binding=native_menu_model::row(native_menu_model::active(),row_index(event.frame->esi));
-        if(!binding.bound) { handled=false;return Status::ok; }
-        return lend(event,binding,event.arguments[0],
-            event.id==menu_button?Consumer::button_row:Consumer::plain_row);
+        const auto consumer=event.id==menu_button?Consumer::button_row:Consumer::plain_row;
+        if(!painting) {
+            const auto status=before_consume(event,consumer);if(status!=Status::ok) return status;
+        }
+        const auto& binding=native_menu_model::row(source_handle(),row_index(event.frame->esi));
+        return lend(event,binding,event.arguments[0],consumer);
+    }
+    case row_annotation:
+        return lend(event,native_menu_model::annotation(source_handle(),row_index(event.frame->esi)),
+            event.arguments[0],Consumer::annotation);
+    case annotation_origin: {
+        std::int32_t width;const auto status=measure_row(row_index(event.frame->esi),width);
+        if(status!=Status::ok) return status;
+        // Replace only the original LEA's width operand. The following native
+        // ADD [row+D0] remains the owner of the annotation's actual position.
+        event.frame->ecx=static_cast<u32>(width+0xF);result.resume_rva=0xD03C2;return Status::ok;
+    }
+    case selector_width:case renderer_selector_width: {
+        // Both native strlen exits keep EDX = original row address + 1.
+        std::int32_t width;const auto status=measure_row(row_index(event.frame->edx-1),width);
+        if(status!=Status::ok) return status;
+        event.frame->eax=static_cast<u32>(width);
+        result.resume_rva=event.id==selector_width?0xD0802:0xD0A50;return Status::ok;
     }
     default:
         handled=false;
@@ -202,6 +275,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
 
 Handle active() { return native_menu_model::active(); }
 Handle snapshot(Handle handle) { return native_menu_model::snapshot(handle); }
+Handle input_owner(Handle handle) { return native_menu_model::input_owner(handle); }
 void retain(Handle handle) { native_menu_model::retain(handle); }
 void release(Handle handle) { native_menu_model::release(handle); }
 void activate(Handle handle) { native_menu_model::activate(handle); }
@@ -224,16 +298,22 @@ void bind_row(u32 native_record,TextComponent component,const char* original,
     std::string prefix;
     if(action_suffix) {
         const auto* label=pointer<char>(native_record);
-        prefix.assign(label,std::strchr(label,'.')+1);
+        prefix.assign(label,static_cast<std::size_t>(std::strchr(label,'.')+1-label));
     }
     const auto source=native_text_resource::from_request({component,original,value});
     native_menu_model::bind_row(active(),row_index(native_record),source,prefix);
 }
 Status resolve_title(std::vector<char>& encoded) {
-    return resolve_binding(native_menu_model::title(active()),encoded);
+    return resolve_binding(native_menu_model::title(source_handle()),encoded);
 }
 Status resolve_row(u32 native_record,std::vector<char>& encoded) {
-    return resolve_binding(native_menu_model::row(active(),row_index(native_record)),encoded);
+    return resolve_binding(native_menu_model::row(source_handle(),row_index(native_record)),encoded);
+}
+void commit_row(Handle menu,u32 index,const native_text_resource::TextSource& source) {
+    const auto owner=input_owner(menu);
+    native_menu_model::bind_row(owner,index,source,{});
+    native_menu_model::bind_annotation(owner,index,
+        original_source(reinterpret_cast<const char*>(base+rows_rva+index*native_menu_model::row_stride+0x64)));
 }
 
 Status paint(Handle handle) {
@@ -243,6 +323,7 @@ Status paint(Handle handle) {
     paint_result=Status::ok;
     using Paint=void (UWCN_CALL *)();
     const auto& style=native_menu_model::style(handle);
+    painting_source=handle;
     painting=true;
     {
         native_component_style::PanelScope panel_style(style.panel);
@@ -250,7 +331,8 @@ Status paint(Handle handle) {
         reinterpret_cast<Paint>(base+0xCFFB0)();
     }
     painting=false;
-    native_menu_model::capture_into(handle);
+    painting_source=0;
+    native_menu_model::capture_into(active());
     const auto status=paint_result;
     if(previous) {
         activate(previous);
@@ -295,6 +377,6 @@ void shutdown() {
     borrows.clear();
     title_sources.clear();row_sources.clear();native_consuming=false;
     native_menu_model::initialize(0);
-    base=0;host=nullptr;resolve=nullptr;encode_original=nullptr;enter_scope=nullptr;leave_scope=nullptr;painting=false;
+    base=0;host=nullptr;resolve=nullptr;encode_original=nullptr;decode_original=nullptr;before_consume=nullptr;enter_scope=nullptr;leave_scope=nullptr;measure=nullptr;painting=false;painting_source=0;
 }
 }

@@ -28,7 +28,9 @@
 
 Locale `paint` 激活明确的 owned Menu，保留它最新的 header 输入，恢复整组 context 与初始 counted prefix，逐条调用同一个完整 `3D820`。由 `3D300` 生成全新的链接矩形后，仅接续原模型中的独立非零 action 行；没有把任何旧 action=0 链接矩形接回。真实 typed button 消费随后按原 action 在这个 owned Menu 中定位当前行，继续原完整控件方法重算它的文字和命中字段，不能使用此前的 row ordinal。选中项通过原英文 Link ID 或原 action 在新原生模型中重定位，保持实际业务动作。
 
-`snapshot` 复制中性 source 与原生 schema，并独立 snapshot 所拥有的 Menu；返回 handle 有一个待 cache 接管的引用。Scene 中与该 flow 共同归属的 typed button 也须明确重绑定到这个新的 Menu owner。Flow `activate` 供实际 native view/cache restore 一起安装该 Menu 与英文链接表；调用者须传真实缓存持有的 owner，不从当前页面或坐标推断。保存/恢复只包含 plain metadata、原 source 字符串和原生 schema，回调、临时编码、模块代码地址均不进入状态。
+每个独立 action 在 `seal` 时还复制该真实原 row 的中性 Menu label、原 prefix 和 annotation 资源；这些 owned source 随 snapshot 与 plain state 一起保存。重建产生新的 link row 数量后，接续 action 原生行的同一点将这些资源 `bind_row/bind_annotation` 到真实 InputOwner 的新 index，度量与注释不再引用旧 ordinal。资源来自实际普通构造绑定，不能用重建后显示字节补造 English。`CFAF0` 本身直接在 `CFBD4/CFCE5` 写 action/count，不经 `CF990`；它的原 `NOTEXTSPOT/TEXTSPOT` marker 保持在 native English record 中，原分支继续消费 marker。普通完整 ActionButton After 及 locale 的相同方法以 canonical typed `TextSource` 绑定独立的 Menu 度量资源，以该 actual row+64 的原文字段绑定 annotation；没有把完整显示字符串回写为 native marker。
+
+`snapshot` 冻结中性 source、seed 与原生资源 schema，Menu source 也有独立快照；返回 handle 有一个待 cache 接管的引用。Flow 和 Menu 快照均 retain 同一真实逻辑 InputOwner，当前 links/selection 不从冻结缓存恢复。Scene 中同属该 flow 的 typed button 明确重绑定到这个 Menu source 快照，实际 paint/activate 再归真实输入 owner。详见 [Menu 输入所有权](20261019-native-menu-input-owner.md)。保存/恢复只包含 plain metadata、原 source 字符串和原生 schema，回调、临时编码、模块代码地址均不进入状态。
 
 Scene 的普通 Menu child 必须由同层的 Flow owner 替换，后续该 owner 的 `CFFB0` 消费不能另挂一份旧完整 Menu 覆盖新链接结果。实现没有调用 `3DD10`、`3E680`、浏览历史、业务输入等待或页面 redraw callback。它扩展正常源构建与同一原生组件消费，不是文字贡献记录。
 

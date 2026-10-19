@@ -12,16 +12,19 @@ struct ImageSource {
     std::string descriptor;
     std::int32_t x,y;
     u32 border;
+    u32 constructor=0x112980;
 };
 struct Inputs {
     std::string descriptor;
     std::int32_t x,y;
     u32 border;
+    u32 constructor=0x112980;
 };
 struct PreparedSource {
     const char* descriptor;
     std::int32_t x,y;
     u32 border;
+    u32 constructor;
 };
 void initialize(std::uintptr_t image_base);
 void append_hooks(std::vector<HookSpec>&);

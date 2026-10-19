@@ -7,11 +7,13 @@ namespace uwcn::adapter::native_component_binding {
 using native_text_resource::TextSource;
 using native_component_model::ParagraphSource;
 using DecodeParserSource=Status (*)(const char*,std::string&);
+using EncodeParserSource=Status (*)(const char*,std::vector<char>&);
 
 void configure(std::uintptr_t image_base,const native_component_model::PaintServices&);
 // This decoder consumes the original game's byte encoding. Semantic producer
 // bindings supply their owned neutral source before any translated native call.
 void set_parser_source_decoder(DecodeParserSource);
+void set_parser_source_encoder(EncodeParserSource);
 void register_hooks(std::vector<HookSpec>&);
 
 // Each dispatch is synchronous. No NativeEvent, frame, argument pointer or
@@ -28,6 +30,7 @@ void note_center(const NativeEvent&,std::int32_t original_native_center_operand)
 // Repeated native records need an explicit identity from their producer. The
 // ordinary fixed-field contract otherwise uses its semantic CALL site RVA.
 void note_native_record(const NativeEvent&,u32 original_native_record);
+void note_native_field(const NativeEvent&,u32 actual_native_field);
 const TextSource* current_source();
 const TextSource& field_source(TextComponent);
 const TextSource* current_event_source();
@@ -51,8 +54,12 @@ void unbind_parser_source(u64 token);
 void begin_parser_owner();
 void end_parser_owner();
 bool has_paragraph_builder();
+void clear_paragraph_builder();
 Status restore_paragraph_builder();
 Status replace_paragraph_builder(const ParagraphSource&);
+// Borrow a paragraph as native parser input without replacing the canonical
+// current builder or its original count/composition source operations.
+Status consume_paragraph_source(const ParagraphSource&);
 
 // Root text fields and the native parser's current source are pure resources.
 // They contain no encoded word table, output lines, UI pixels or draw history.

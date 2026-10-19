@@ -10,14 +10,20 @@
 #include "native_language_input.h"
 #include "native_language_redraw.h"
 #include "native_menu_component.h"
+#include "native_menu_storage.h"
+#include "native_component_calls.h"
 #include "native_root_component.h"
 #include "native_component_model.h"
 #include "native_component_binding.h"
 #include "native_image_component.h"
 #include "native_footer_component.h"
 #include "native_link_flow_component.h"
+#include "native_message_source.h"
+#include "native_message_flow.h"
 #include "native_renderer_component_model.h"
 #include "native_renderer_component_binding.h"
+#include "native_hud_icons.h"
+#include "native_culture_legend.h"
 #include "native_ui_scene.h"
 #include "native_ui_cache_owners.h"
 #include "native_button.h"
@@ -43,16 +49,6 @@ abi1_retirement::RetirementRoutes retired_routes{};
 bool retired_for_publication{};
 bool chinese_enabled=true;
 bool intro_chinese=true;
-bool about_refresh_pending=true;
-bool about_redrawing{};
-bool credits_refresh_pending=true;
-bool credits_redrawing{};
-bool character_creation_refresh_pending=true;
-bool profile_culture_refresh_pending=true;
-bool profile_sex_refresh_pending=true;
-bool scenario_refresh_pending=true;
-bool scenario_redrawing{};
-bool rebuilding_main_background{};
 
 enum Hook : u32 {
     menu_scope=1, footer_initial, footer_loop, version_scope, menu_input,
@@ -83,7 +79,7 @@ enum Hook : u32 {
     profile_sex_help, profile_sex_footer, profile_name_too_short, profile_name_invalid, profile_name_exists,
     scenario_story_scope=260, scenario_panel, scenario_body_format, scenario_body_paragraph,
     scenario_introduction_1, scenario_introduction_2, scenario_introduction_3, scenario_introduction_4,
-    scenario_intro_paragraph, scenario_button, scenario_redraw_entry, scenario_redraw_wait,
+    scenario_intro_paragraph, scenario_button,
     setup_panel=300, shared_title_text, setup_controls_append, setup_config_append,
     setup_footer, shared_footer_paragraph, setup_exit_scope, setup_exit_text, setup_exit_width,
     setup_body_first=0x600, credits_append_first=0x700,
@@ -108,6 +104,7 @@ enum class Scope : u32 {
     ancestors_title=50, ancestors_select=51, ancestors_row=52,
     hud_centered=0x100, hud_penalty=0x101, hud_button=0x102,
     hud_title=0x103, hud_renderer=0x104, hud_renderer_text=0x105, hud_scale=0x106,
+    native_renderer_resource=0x107,
     message_pending=0x200, message_body=0x201
 };
 struct Active {
@@ -123,8 +120,30 @@ std::vector<Active> active;
 
 // Three original sprintf arguments, borrowed only for the synchronous DEDA0
 // summary call. No row index, position, text or page snapshot is retained.
-struct AncestorNumbers { std::int32_t age,days,kilometers; };
-struct ScenarioBodySource { u32 next_record,current_component,semantic; };
+struct AncestorNumbers { std::int32_t age,days,kilometers;u32 record_id; };
+
+native_text_resource::TextSource startup_progress_source;
+std::vector<std::uint8_t> save_startup_progress_source() {
+    std::vector<std::uint8_t> output;
+    const auto append=[&output](const auto& value) {
+        const auto* p=reinterpret_cast<const std::uint8_t*>(&value);output.insert(output.end(),p,p+sizeof(value));
+    };
+    const auto string=[&output,&append](const std::string& value) {
+        append(static_cast<u32>(value.size()));output.insert(output.end(),value.begin(),value.end());
+    };
+    append(static_cast<u32>(startup_progress_source.component));
+    append(startup_progress_source.has_value?1u:0u);
+    string(startup_progress_source.original);string(startup_progress_source.value);
+    return output;
+}
+void restore_startup_progress_source(const void* data) {
+    const auto* p=static_cast<const std::uint8_t*>(data);
+    const auto read=[&p]() {u32 value;std::memcpy(&value,p,sizeof(value));p+=sizeof(value);return value;};
+    const auto string=[&p,&read]() {const auto size=read();std::string value(reinterpret_cast<const char*>(p),size);p+=size;return value;};
+    const auto component=static_cast<TextComponent>(read());const auto has_value=read();
+    const auto original=string(),value=string();
+    startup_progress_source=native_text_resource::from_request({component,original.c_str(),has_value?value.c_str():nullptr});
+}
 
 template<class T> T* at(u32 rva) { return reinterpret_cast<T*>(host->image_base+rva); }
 template<class T> T* ptr(u32 address) { return reinterpret_cast<T*>(static_cast<std::uintptr_t>(address)); }
@@ -181,18 +200,31 @@ Status translate_culture_back(const char* original,const char* topic,std::vector
 Status translate_skills_limit(TextComponent component,const char* value,std::vector<char>& encoded);
 Status translate_help_record(TextComponent component,const char* value,std::vector<char>& encoded);
 Status resolve_display_text(TextComponent component,const char* original,const char* value,std::vector<char>& encoded) {
-    // Keep encoding, font metrics and native targets active in both languages.
-    // Intro fades overwrite existing pixels; one native sequence uses one mode.
-    const bool intro=component==TextComponent::intro_north || component==TextComponent::intro_roleplaying
-        || (component>=TextComponent::intro_story_0 && component<=TextComponent::intro_story_10)
-        || (component==TextComponent::version && in(Scope::intro_version));
-    if(!(intro ? intro_chinese : chinese_enabled))
+    // The same neutral native component resolves against the global language.
+    if(!chinese_enabled)
         return codec(layout_op::encode_native,original,encoded);
     if(component==TextComponent::culture_back) return translate_culture_back(original,value,encoded);
     if(component==TextComponent::skills_limit_improve || component==TextComponent::skills_limit_degrade)
         return translate_skills_limit(component,value,encoded);
     if(component==TextComponent::skills_help_record || component==TextComponent::spells_help_record)
         return translate_help_record(component,value,encoded);
+    std::string projected_value;
+    if(component==TextComponent::creation_complete_enter) {
+        const std::string identity(value);const auto separator=identity.find('|');
+        const auto culture_id=static_cast<u32>(std::stoul(identity.substr(0,separator)));
+        const auto culture_component=static_cast<TextComponent>(static_cast<u32>(TextComponent::profile_culture_0)+culture_id);
+        std::vector<char> culture,culture_utf8;
+        auto status=resolve_display_text(culture_component,"",nullptr,culture);
+        if(status!=Status::ok) return status;
+        status=codec(layout_op::decode_native,culture.data(),culture_utf8);
+        if(status!=Status::ok) return status;
+        projected_value=identity.substr(separator+1)+" "+culture_utf8.data();value=projected_value.c_str();
+    }
+    if(component==TextComponent::ancestors_lived) {
+        const std::string numbers(value);const auto separator=numbers.find('|');
+        projected_value=numbers.substr(0,separator)+" 岁，度过了 "+numbers.substr(separator+1)+" 天冒险生涯";
+        value=projected_value.c_str();
+    }
     TextRequest request{component,original,value};
     std::vector<char> utf8;
     auto result=service_text(ModuleId::main_menu,text_op::translate,&request,sizeof(request),utf8);
@@ -204,16 +236,17 @@ Status translate(TextComponent component,const char* original,const char* value,
     return resolve_display_text(component,original,value,encoded);
 }
 
-// 10E5A0/10DDB0 consume the current native surface. Its real physical size and
-// the confirmed 800x600 logical domain define the complete-string raster scale.
+// 10E5A0/10DDB0 consume the current native surface. Its actual native
+// constructor domain and physical size define the complete-string raster scale.
 render::TextRequest render_request(const char* utf8,std::int32_t x,std::int32_t y,u32 pixel) {
     void* surface=*at<void*>(0x61BBB10);
+    const auto domain=native_targets::component_surface_source(surface);
     auto format=*reinterpret_cast<void**>(reinterpret_cast<unsigned char*>(surface)+4);
     unsigned char r{},g{},b{};
     get_rgb(pixel,format,&r,&g,&b);
     return {utf8,surface,*at<void*>(0xA2110CC),x,y,
         static_cast<u32>(r)|(static_cast<u32>(g)<<8)|(static_cast<u32>(b)<<16)|0xFF000000u,
-        10,9,0,0,outline_budget(),800,600};
+        10,9,0,0,outline_budget(),domain.width,domain.height};
 }
 Status metrics_at_outline(const char* encoded,u32 outline,render::Metrics& output) {
     std::vector<char> utf8;
@@ -271,6 +304,7 @@ Status startup_progress(const NativeEvent& e,TextComponent component,const char*
     std::vector<char> encoded;
     auto status=translate(component,ptr<char>(e.frame->ecx),value,encoded);
     if(status!=Status::ok) return status;
+    startup_progress_source=native_text_resource::from_request({component,ptr<char>(e.frame->ecx),value});
     // 10E5A0 copies this display string into its native 0x12C-byte buffer.
     if(encoded.size()>0x12C) return Status::insufficient_buffer;
     // Keep 123DF0's ECX and English buffer intact: it truncates and logs that
@@ -339,6 +373,21 @@ Status decode_parser_original(const char* input,std::string& utf8) {
     }
     return Status::ok;
 }
+Status encode_parser_original(const char* utf8,std::vector<char>& native) {
+    std::vector<u32> scalars;
+    if(!decode_utf8(utf8,std::strlen(utf8),scalars)) return Status::invalid;
+    std::string result;
+    for(const auto scalar:scalars) {
+        // Inverse of the three confirmed native display-wrapper substitutions.
+        if(scalar==0xC4) result.push_back(static_cast<char>(0x8E));
+        else if(scalar==0xE4) result.push_back(static_cast<char>(0x84));
+        else if(scalar==0xF6) result.push_back(static_cast<char>(0x94));
+        else if(scalar<=0xFF) result.push_back(static_cast<char>(scalar));
+        else append_utf8(result,scalar);
+    }
+    native.assign(result.begin(),result.end());native.push_back(0);
+    return Status::ok;
+}
 Status encode_component_words(std::vector<char>& encoded) {
     const auto words=native_paragraph_words(encoded.data());
     encoded.assign(words.begin(),words.end());encoded.push_back(0);
@@ -355,10 +404,25 @@ u64 component_paint_token(native_component_model::Handle handle) {
 }
 void enter_component_paint(native_component_model::Handle handle,native_component_model::Kind kind,u32 outline) {
     using Kind=native_component_model::Kind;
-    const auto scope=kind==Kind::panel || kind==Kind::legacy_panel ? Scope::titled_panel :
-        kind==Kind::button ? Scope::plain_button : kind==Kind::paragraph ? Scope::paragraph :
-        kind==Kind::centered_text ? Scope::hud_centered : kind==Kind::action_button ? Scope::creation_button : Scope::text;
-    active.push_back({component_paint_token(handle),scope,0,0,0,0,outline});
+    const auto& model=native_component_model::get(handle);
+    const bool action_key=kind==Kind::button && model.text.prefix.find('.')!=std::string::npos;
+    const auto scope=kind==Kind::panel || kind==Kind::legacy_panel || kind==Kind::title_strip ? Scope::titled_panel :
+        kind==Kind::native_heading_band || kind==Kind::native_identity_heading ? Scope::titled_panel :
+        kind==Kind::button ? (action_key ? Scope::setup_exit : Scope::plain_button) : kind==Kind::paragraph ? Scope::paragraph :
+        kind==Kind::centered_text ? Scope::hud_centered : kind==Kind::action_button ? Scope::creation_button :
+        kind==Kind::compound_hint ? Scope::ancestors_select : Scope::text;
+    Active context{component_paint_token(handle),scope,0,0,0,0,outline};
+    if(kind==Kind::hud_status_cell)
+        active.push_back({component_paint_token(handle),Scope::hud_penalty,0,0,0,0,outline});
+    if(kind==Kind::text_block) {
+        const auto& x=std::get<native_component_model::TextBlockInputs>(model.inputs).anchor.x;
+        using Source=native_component_model::LayoutSource;
+        if(x.source==Source::center_input || x.source==Source::center_native_i32) {
+            context.centered=1;
+            context.center_x=x.source==Source::center_input ? x.input : *at<std::int32_t>(x.rva);
+        }
+    }
+    active.push_back(context);
 }
 void leave_component_paint(native_component_model::Handle handle,native_component_model::Kind) {
     end(component_paint_token(handle));
@@ -382,6 +446,10 @@ native_renderer_component_model::PaintServices renderer_component_services() {
     return {resolve_display_text,encode_component_original,encode_component_words,
         measure_component_text,enter_renderer_component,leave_renderer_component};
 }
+void enter_culture_resource(u64 revision) {
+    active.push_back({0xFFFFFFFB00000000ull|revision,Scope::native_renderer_resource,0,0,0,0,0});
+}
+void leave_culture_resource(u64 revision) {end(0xFFFFFFFB00000000ull|revision);}
 void report_ui_status(const wchar_t* operation,Status status) {
     if(status==Status::ok) return;
     const auto text=std::wstring(operation)+L"; status="+std::to_wstring(static_cast<u32>(status));
@@ -390,20 +458,16 @@ void report_ui_status(const wchar_t* operation,Status status) {
 void cache_source_saved(native_ui_cache_owners::Slot slot) {
     native_ui_scene::cache_saved(static_cast<u32>(slot));
 }
-void cache_source_before_restore(native_ui_cache_owners::Slot slot) {
-    u32 owner;
-    switch(slot) {
-    case native_ui_cache_owners::Slot::first:owner=0xA1C2014;break;
-    case native_ui_cache_owners::Slot::second:owner=0xA1BBD24;break;
-    case native_ui_cache_owners::Slot::menu:owner=0xA1C1CE0;break;
-    default:owner=0xA1C1CC4+(static_cast<u32>(slot)-2)*sizeof(u32);break;
-    }
-    report_ui_status(L"Native cache locale materialization",
-        native_ui_scene::prepare_cache(static_cast<u32>(slot),*at<void*>(owner)));
+Status cache_source_before_restore(native_ui_cache_owners::Slot slot,
+    const native_ui_cache_owners::RestoreInput& input,native_ui_cache_owners::PreparedRestore& prepared) {
+    const auto status=native_ui_scene::prepare_cache_restore(static_cast<u32>(slot),input,prepared);
+    report_ui_status(L"Native cache locale materialization",status);
+    return status;
 }
-void cache_source_restored(native_ui_cache_owners::Slot slot,bool region) {
+void cache_source_restored(native_ui_cache_owners::Slot slot,
+    const native_ui_cache_owners::PreparedRestore& prepared,int result) {
     report_ui_status(L"Native cache source activation",
-        native_ui_scene::cache_restored(static_cast<u32>(slot),!region));
+        native_ui_scene::cache_restored(static_cast<u32>(slot),prepared,result));
 }
 void cache_source_retired(native_ui_cache_owners::Slot slot) {
     native_ui_scene::cache_retired(static_cast<u32>(slot));
@@ -459,13 +523,11 @@ Status character_creation_label(const NativeEvent& e,TextComponent component) {
             append_utf8(original_utf8,*p);
         display=original_utf8.c_str();
     }
-    std::vector<char> encoded;
     native_menu_component::bind_row(e.frame->esi,component,display,nullptr,true);
-    const auto status=native_menu_component::resolve_row(e.frame->esi,encoded);
-    if(status!=Status::ok) return status;
-    return lend_text(e,encoded,e.arguments[0],Scope::character_creation_label);
+    return Status::ok;
 }
 
+Status bind_menu_consumer_source(const NativeEvent&,native_menu_component::Consumer);
 void enter_menu_component(const NativeEvent& event,native_menu_component::Consumer consumer) {
     using Consumer=native_menu_component::Consumer;
     const auto kind=consumer==Consumer::title_panel ? Scope::character_creation_panel :
@@ -473,7 +535,9 @@ void enter_menu_component(const NativeEvent& event,native_menu_component::Consum
     begin(event,kind,kind==Scope::text ? event.arguments[2] : 0);
 }
 
+void windows_profile_error_constructed(TextComponent,u32);
 Status profile_name_error(const NativeEvent& e,DispatchResult& result,TextComponent component,u32 source_rva) {
+    windows_profile_error_constructed(component,source_rva);
     std::vector<char> encoded;
     const auto status=translate(component,at<char>(source_rva),nullptr,encoded);
     if(status!=Status::ok) return status;
@@ -484,177 +548,72 @@ Status profile_name_error(const NativeEvent& e,DispatchResult& result,TextCompon
     return Status::ok;
 }
 
-Status scenario_body_record(const NativeEvent& e) {
-    const auto* original=ptr<char>(e.arguments[2]);
-    // RNDCAMP.1 has thirteen nonempty body records and one empty separator.
-    // FB712's terminal EOF read also leaves an empty record. Keep both native
-    // empty sprintf/append calls, including their original whitespace.
-    const auto story=std::find_if(active.rbegin(),active.rend(),
-        [](const Active& scope){return scope.kind==Scope::scenario_story;});
-    auto& source=*ptr<ScenarioBodySource>(story->allocation);
-    source.semantic=*original ? 1u : 0u;
-    if(!source.semantic) return Status::ok;
-    const auto component=static_cast<TextComponent>(
-        static_cast<u32>(TextComponent::scenario_village_departure_1)+source.next_record++);
-    source.current_component=static_cast<u32>(component);
-    std::vector<char> encoded;
-    const auto status=translate(component,original,nullptr,encoded);
-    if(status!=Status::ok) return status;
-    const auto* format=ptr<char>(e.arguments[1]);
-    native_component_binding::note_prefix(e,std::string(format,std::strstr(format,"%s")).c_str());
-    // This is an input-file record ordinal, not a rendered line. The original
-    // sprintf keeps its <br>/space format, then 162300 tokenizes the result.
-    // The thirteen fixed translations fit the native 0x400-byte destination.
-    return lend_text(e,encoded,e.arguments[2],Scope::allocation);
-}
-
 #include "footer.inc"
 
-Status redraw_menu();
-Status redraw_credits() {
-    auto status=native_targets::promote();
-    if(status!=Status::ok) return status;
-    using Native = void (UWCN_CALL *)();
-    // 125E4D..125E73 saves/restores the same native menu background as About.
-    reinterpret_cast<Native>(host->image_base+0x10DA60)();
-    status=redraw_menu();
-    if(status!=Status::ok) return status;
-    reinterpret_cast<Native>(host->image_base+0x10DA10)();
-    credits_redrawing=true;
-    // Complete prologue and epilogue; skip only 124685's input wait.
-    reinterpret_cast<Native>(host->image_base+0x1244F0)();
-    credits_redrawing=false;
-    credits_refresh_pending=false;
-    reinterpret_cast<Native>(host->image_base+0x10B720)();
-    return Status::ok;
-}
-Status redraw_about() {
-    auto status=native_targets::promote();
-    if(status!=Status::ok) return status;
-    // Run the complete native function so its prologue/epilogue stay balanced.
-    // Only its input wait is skipped during this synchronous redraw.
-    using Native = void (UWCN_CALL *)();
-    // The original About caller saves the menu in A1C2014. Restore and replace
-    // that native background so both the visible menu and its later restore
-    // use the new language. 10DA60/10DA10 own the copy and presentation.
-    reinterpret_cast<Native>(host->image_base+0x10DA60)();
-    status=redraw_menu();
-    if(status!=Status::ok) return status;
-    reinterpret_cast<Native>(host->image_base+0x10DA10)();
-    about_redrawing=true;
-    reinterpret_cast<Native>(host->image_base+0x1247C0)();
-    about_redrawing=false;
-    about_refresh_pending=false;
-    reinterpret_cast<Native>(host->image_base+0x10B720)();
-    return Status::ok;
-}
-Status refresh_menu_cache() {
-    using Blit = int (UWCN_CALL *)(void*,const void*,void*,void*);
-    // Repeat the exact D1189 logical rectangle through the native coordinate
-    // extension; the game-owned working surface receives actual drawn pixels.
-    auto blit=*at<Blit>(0x18C204);
-    auto rect=*at<render::Rect>(0x1DDAB0);
-    if(blit(*at<void*>(0x61BBB10),&rect,*at<void*>(0xA1C1CE0),&rect)!=0) return Status::failed;
-    using Selection = void (__fastcall *)(std::int32_t,std::int32_t);
-    reinterpret_cast<Selection>(host->image_base+0xD0650)(*at<std::int32_t>(0x5F54AB0),0);
-    using Present = void (UWCN_CALL *)();
-    reinterpret_cast<Present>(host->image_base+0x10B720)();
-    return Status::ok;
-}
-Status redraw_menu() {
-    auto status=native_targets::promote();
-    if(status!=Status::ok) return status;
-    // The native background draw also retires its own cached slave textures.
-    // Suppress only startup business assignments while replaying that balanced
-    // original drawing fragment, then rebuild footer, panel and menu pixels.
-    rebuilding_main_background=true;
-    status=host->native_fragment(0x125AA6,0x125AF5);
-    rebuilding_main_background=false;
-    if(status!=Status::ok) return status;
-    // This balanced fragment performs the native footer, panel, version and
-    // row drawing. Its end precedes D1120, so no input wait is re-entered.
-    status=host->native_fragment(0x125BA3,0x125BE1);
-    if(status!=Status::ok) return status;
-    return refresh_menu_cache();
-}
-Status redraw_character_creation() {
-    auto status=native_targets::promote();
-    if(status!=Status::ok) return status;
-    // One complete CFFB0 call rebuilds this native panel from its unchanged
-    // English rows. No CF790 initialization, input wait or creation action.
-    status=host->native_fragment(0x125CFB,0x125D00);
-    if(status!=Status::ok) return status;
-    return refresh_menu_cache();
-}
-Status redraw_profile_menu(u32 draw_call) {
-    auto status=native_targets::promote();
-    if(status!=Status::ok) return status;
-    // F678/F377 are complete CFFB0 calls using the current native menu table.
-    // Stop before selection business or input; retain the existing selection.
-    status=host->native_fragment(draw_call,draw_call+5);
-    if(status!=Status::ok) return status;
-    return refresh_menu_cache();
-}
-Status redraw_scenario() {
-    auto status=native_targets::promote();
-    if(status!=Status::ok) return status;
-    using Native = void (UWCN_CALL *)();
-    scenario_redrawing=true;
-    // Run the balanced native frame. FB7D1 skips only first-entry scenario
-    // business; D3CDC returns through the normal epilogue before input drain.
-    reinterpret_cast<Native>(host->image_base+0xFB7D0)();
-    scenario_redrawing=false;
-    scenario_refresh_pending=false;
-    return Status::ok;
-}
-void invalidate_windows_creation();
-void invalidate_windows_profile();
 Status invalidate() {
-    invalidate_windows_creation();
-    invalidate_windows_profile();
-    native_language_redraw::request_ancestors();
-    about_refresh_pending=true;
-    credits_refresh_pending=true;
-    character_creation_refresh_pending=true;
-    profile_culture_refresh_pending=true;
-    profile_sex_refresh_pending=true;
-    scenario_refresh_pending=true;
-    if(in(Scope::about)) return redraw_about();
-    if(in(Scope::credits)) return redraw_credits();
-    if(in(Scope::menu_input)) return redraw_menu();
+    const auto status=native_ui_scene::language_changed();
+    if(status!=Status::ok) return status;
+    const bool menu_active=*at<u32>(0x5F54DF0)!=0;
+    const bool menu_renderer=menu_active && *at<u32>(0x5F54B94)!=0;
+    // D153C/D196C/D19B3 own this shared native input phase. The original input
+    // component draws its current selection after its body has been rebuilt.
+    const auto draw_selection=[&] {
+        const auto selection=*at<u32>(0x5F54AB0);
+        constexpr u64 selection_token=0xFFFFFFFC00000000ull;
+        active.push_back({selection_token,menu_renderer ? Scope::hud_renderer_text : Scope::creation_button,
+            0,0,0,0,*at<u32>(0x5F54A9C)&1u});
+        if(menu_renderer) {
+            const native_component_calls::SelectorRendererCall call{
+                address(at<void>(0xD0850)),selection};
+            native_component_calls::uwcn_component_selector_renderer(&call);
+        } else reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0xD0650)(selection,0);
+        end(selection_token);
+    };
+    if(menu_active && !menu_renderer) draw_selection();
+    native_language_redraw::request();
+    // D1E26..D1E7B and D1ED1..D1F56 select the original presentation mode
+    // from these shared input/renderer fields. The modern path composes its
+    // native texture owners; 10B720 only uploads the software UI surface.
+    const bool renderer=menu_renderer || *at<u32>(0x5F55634);
+    using Present=void (UWCN_CALL *)();
+    if(renderer) {
+        reinterpret_cast<Present>(host->image_base+0x10B480)();
+        // D125A -> D1266 composes the frame before drawing the modern selector
+        // on the default target; composing afterward would erase that selector.
+        if(menu_renderer) draw_selection();
+        reinterpret_cast<Present>(host->image_base+0x10B680)();
+    } else reinterpret_cast<Present>(host->image_base+0x10B720)();
     return Status::ok;
 }
-
 Status dispatch_hud(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_profile(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_creation(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_skills(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_encyclopedia(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_renderer(const NativeEvent&,DispatchResult&,bool&);
-Status dispatch_windows_menu_background(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_messages(const NativeEvent&,DispatchResult&,bool&);
-Status windows_creation_input(const NativeEvent&);
-bool windows_profile_input(const NativeEvent&);
 Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     result={};
     bool handled{};
     auto native_component=native_root_component::dispatch(e,result,handled);
     if(handled) return native_component;
+    native_component=native_culture_legend::dispatch(e,result,handled);
+    if(handled) return native_component;
     native_component=native_ui_cache_owners::dispatch(e,result,handled);
+    if(handled) return native_component;
+    native_component=native_menu_storage::dispatch(e,result,handled);
     if(handled) return native_component;
     native_component=native_renderer_component_model::dispatch(e,result,handled);
     if(handled) return native_component;
     native_component=native_image_component::dispatch(e,result,handled);
     if(handled) return native_component;
-    if(e.id==0x7E00 && e.phase==NativePhase::inline_before)
-        native_ui_scene::menu_retired(native_menu_component::active());
     native_component=native_menu_component::dispatch(e,result,handled);
     if(handled) return native_component;
     auto extension=native_name_input::dispatch(e,result,handled);
     if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
     for(auto dispatch_extension:{dispatch_windows_profile,dispatch_windows_creation,
             dispatch_windows_skills,dispatch_windows_encyclopedia,dispatch_windows_renderer,
-            dispatch_windows_menu_background,dispatch_windows_messages}) {
+            dispatch_windows_messages}) {
         extension=dispatch_extension(e,result,handled);
         if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
     }
@@ -662,18 +621,9 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     if(language_input.handled) {
         if(!language_input.toggle) return Status::ok;
         chinese_enabled=!chinese_enabled;
-        native_language_redraw::request();
+        intro_chinese=chinese_enabled;
         return invalidate();
     }
-    if(character_creation_refresh_pending && native_language_redraw::menu_input(e,0x125D05))
-        return redraw_character_creation();
-    if(profile_culture_refresh_pending && native_language_redraw::menu_input(e,0xF8D4))
-        return redraw_profile_menu(0xF678);
-    if(profile_sex_refresh_pending && native_language_redraw::menu_input(e,0xF43A))
-        return redraw_profile_menu(0xF377);
-    if(windows_profile_input(e)) return redraw_profile_menu(0xFB36);
-    extension=windows_creation_input(e);
-    if(extension!=Status::ok) return extension;
     if(native_language_redraw::dispatch(e,result)) return Status::ok;
     // Published old SDL calls can return through their resident After bridge
     // after a transaction. Their tracking service and 17 old IDs are retired.
@@ -715,41 +665,6 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     if(e.id>=credits_append_first && e.id<credits_append_first+std::size(credits_text_calls))
         return append(e,credits_text_calls[e.id-credits_append_first].component);
     switch(e.id) {
-    case scenario_story_scope:
-        scenario_refresh_pending=false;
-        // 10B94 stores the selected RNDCAMP index plus 100; FB7F2 removes
-        // that creation marker before this display call. RNDCAMP.1 is Village.
-        if(*at<u32>(0xA32B0C8)==1) {
-            auto* record=static_cast<ScenarioBodySource*>(host->allocate(sizeof(ScenarioBodySource)));
-            *record={};
-            active.push_back({e.token,Scope::scenario_story,address(record),0,0,0,0});
-        }
-        break;
-    case scenario_panel:
-        if(in(Scope::scenario_story)) {
-            std::vector<char> encoded;
-            const auto status=translate(TextComponent::scenario_village_title,
-                ptr<char>(e.arguments[2]),nullptr,encoded);
-            if(status!=Status::ok) return status;
-            // FB691's flags 0x30 use the existing left-aligned native title.
-            return lend_text(e,encoded,e.arguments[2],Scope::scenario_panel);
-        }
-        break;
-    case scenario_body_format:
-        if(in(Scope::scenario_story)) return scenario_body_record(e);
-        break;
-    case scenario_body_append:
-        if(in(Scope::scenario_story)) {
-            const auto story=std::find_if(active.rbegin(),active.rend(),
-                [](const Active& scope){return scope.kind==Scope::scenario_story;});
-            const auto& source=*ptr<ScenarioBodySource>(story->allocation);
-            if(source.semantic) native_component_binding::note_source_for_consumer(e,
-                static_cast<TextComponent>(source.current_component));
-        }
-        break;
-    case scenario_body_paragraph:
-        if(in(Scope::scenario_story)) begin(e,Scope::paragraph,e.arguments[3]);
-        break;
     case scenario_introduction_1: return append(e,TextComponent::scenario_introduction_1);
     case scenario_introduction_2: return append(e,TextComponent::scenario_introduction_2);
     case scenario_introduction_3: return append(e,TextComponent::scenario_introduction_3);
@@ -763,17 +678,9 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         if(status!=Status::ok) return status;
         return lend_text(e,encoded,e.arguments[0],Scope::plain_button);
     }
-    case scenario_redraw_entry:
-        if(scenario_redrawing) result.resume_rva=0xFB7FD;
-        break;
-    case scenario_redraw_wait:
-        if(scenario_redrawing) result.resume_rva=0xD3D0F;
-        break;
     case profile_culture_scope:
-        profile_culture_refresh_pending=false;
         begin(e,Scope::profile_culture); break;
     case profile_sex_scope:
-        profile_sex_refresh_pending=false;
         begin(e,Scope::profile_sex); break;
     case profile_heading_panel: case profile_name_panel: {
         const auto component=e.id==profile_heading_panel ? TextComponent::profile_heading : TextComponent::profile_name_title;
@@ -795,50 +702,7 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     case profile_name_exists:
         return profile_name_error(e,result,TextComponent::profile_name_exists,0x190380);
     case character_creation_scope:
-        character_creation_refresh_pending=false;
         begin(e,Scope::character_creation); break;
-    case character_creation_panel:
-        if(in(Scope::character_creation) || in(Scope::profile_culture) || in(Scope::profile_sex)) {
-            const auto component=in(Scope::profile_culture) ? TextComponent::profile_culture_title :
-                in(Scope::profile_sex) ? TextComponent::profile_sex_title : TextComponent::character_creation_title;
-            std::vector<char> encoded;
-            native_menu_component::bind_title(component,ptr<char>(e.arguments[2]));
-            const auto status=native_menu_component::resolve_title(encoded);
-            if(status!=Status::ok) return status;
-            // D01A5 -> 115E70(flags 4) -> 1157B0(mode 2): native left alignment.
-            return lend_text(e,encoded,e.arguments[2],Scope::character_creation_panel);
-        }
-        break;
-    case character_creation_button:
-        if(in(Scope::profile_culture)) {
-            const auto action=*ptr<u32>(e.frame->esi+0xC8);
-            if(action>='0' && action<='9')
-                return character_creation_label(e,static_cast<TextComponent>(
-                    static_cast<u32>(TextComponent::profile_culture_0)+action-'0'));
-            switch(action) {
-            case 'R': return character_creation_label(e,TextComponent::profile_random);
-            case '?': return character_creation_label(e,TextComponent::profile_cultures);
-            case 27: return character_creation_label(e,TextComponent::profile_back);
-            }
-        }
-        if(in(Scope::profile_sex)) {
-            switch(*ptr<u32>(e.frame->esi+0xC8)) {
-            case 'M': return character_creation_label(e,TextComponent::profile_male);
-            case 'F': return character_creation_label(e,TextComponent::profile_female);
-            case 27: return character_creation_label(e,TextComponent::profile_back);
-            }
-        }
-        if(in(Scope::character_creation)) {
-            // The action field belongs to the unchanged English native row.
-            switch(*ptr<u32>(e.frame->esi+0xC8)) {
-            case 'Q': return character_creation_label(e,TextComponent::character_creation_quick);
-            case 'C': return character_creation_label(e,TextComponent::character_creation_custom);
-            case 'E': return character_creation_label(e,TextComponent::character_creation_easy);
-            case 'T': return character_creation_label(e,TextComponent::character_creation_too_easy);
-            case 27: return character_creation_label(e,TextComponent::character_creation_exit);
-            }
-        }
-        break;
     case load_saved_empty_panel: case load_saved_list_panel:
         native_menu_component::bind_title(TextComponent::load_saved_title,at<char>(0x5F54A38));
         begin(e,Scope::load_saved_panel); break;
@@ -876,7 +740,8 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     case ancestors_page_text:
         begin(e,Scope::text,e.arguments[2]); break;
     case ancestors_row: {
-        void* numbers=host->allocate(sizeof(AncestorNumbers));
+        auto* numbers=static_cast<AncestorNumbers*>(host->allocate(sizeof(AncestorNumbers)));
+        numbers->record_id=**ptr<u32*>(e.frame->ebp-0x5A8);
         active.push_back({e.token,Scope::ancestors_row,address(numbers),0,0,0,0});
         break;
     }
@@ -894,9 +759,10 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     case ancestors_lived_text: case ancestors_distance_text:
         if(in(Scope::ancestors_row)) {
             const auto& numbers=ancestor_numbers();
+            native_component_binding::note_native_record(e,numbers.record_id);
             const bool lived=e.id==ancestors_lived_text;
-            const auto value=lived ? std::to_string(numbers.age)+" 岁，度过了 "+
-                std::to_string(numbers.days)+" 天冒险生涯" : std::to_string(numbers.kilometers);
+            const auto value=lived ? std::to_string(numbers.age)+"|"+
+                std::to_string(numbers.days) : std::to_string(numbers.kilometers);
             std::vector<char> encoded;
             const auto status=translate(lived ? TextComponent::ancestors_lived : TextComponent::ancestors_journeyed,
                 ptr<char>(e.arguments[0]),value.c_str(),encoded);
@@ -910,10 +776,8 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         intro_chinese=chinese_enabled;
         break;
     case about_scope:
-        about_refresh_pending=false;
         begin(e,Scope::about); break;
     case credits_scope:
-        credits_refresh_pending=false;
         begin(e,Scope::credits); break;
     case credits_paragraph:
         begin(e,Scope::paragraph,e.arguments[3]); break;
@@ -962,24 +826,7 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
             && !std::strchr(native_button::label(e),'.')))
             return native_button::advance(e,result,metrics);
         break;
-    case about_wait:
-        if(about_redrawing) result.skip_original=1;
-        break;
-    case credits_wait:
-        if(credits_redrawing) result.skip_original=1;
-        break;
-    case about_input_tick:
-        // D3C80 owns this EBP frame. Exact original returns identify windows
-        // opened before their scope hooks existed. The shared hook ID stays.
-        if(about_refresh_pending && *ptr<u32>(e.frame->ebp+4)==host->image_base+0x124C4B)
-            return redraw_about();
-        if(credits_refresh_pending && *ptr<u32>(e.frame->ebp+4)==host->image_base+0x12468A)
-            return redraw_credits();
-        // FB868 tail-jumps into D3C80; its original caller return is 17E86A.
-        // Keep 17E865 unhooked so this also identifies already-open pages.
-        if(scenario_refresh_pending && *ptr<u32>(e.frame->ebp+4)==host->image_base+0x17E86A)
-            return redraw_scenario();
-        break;
+    case about_wait:case credits_wait:case about_input_tick:break;
     case setup_panel: {
         std::vector<char> encoded;
         const auto status=translate(TextComponent::setup_title,ptr<char>(e.arguments[2]),nullptr,encoded);
@@ -1054,7 +901,12 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         if(status!=Status::ok) return status;
         return lend_text(e,encoded,e.arguments[0],Scope::text);
     }
-    case intro_story_scope: begin(e,Scope::intro_story); break;
+    case intro_story_scope: {
+        auto* field=static_cast<u32*>(host->allocate(sizeof(u32)));
+        *field=static_cast<u32>(TextComponent::intro_story_0);
+        active.push_back({e.token,Scope::intro_story,address(field),0,0,0,0});
+        break;
+    }
     case intro_story_width:
         if(in(Scope::intro_story)) {
             // 125400..12542F copied the English table's EDI-indexed line to
@@ -1063,6 +915,8 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
             // bytes including NUL, within [EBP-70, EBP-4)'s 0x6C bytes.
             auto* display=ptr<char>(e.frame->ebp-0x70);
             const auto component=static_cast<TextComponent>(static_cast<u32>(TextComponent::intro_story_0)+e.frame->edi);
+            const auto owner=std::find_if(active.rbegin(),active.rend(),[](const Active& scope){return scope.kind==Scope::intro_story;});
+            *ptr<u32>(owner->allocation)=static_cast<u32>(component);
             std::vector<char> encoded;
             auto status=translate(component,display,nullptr,encoded);
             if(status!=Status::ok) return status;
@@ -1077,7 +931,24 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         }
         break;
     case intro_story_fade_text: case intro_story_settled_text:
-        if(in(Scope::intro_story)) begin(e,Scope::text,e.arguments[2]);
+        if(in(Scope::intro_story)) {
+            const auto owner=std::find_if(active.rbegin(),active.rend(),[](const Active& scope){return scope.kind==Scope::intro_story;});
+            const auto component=static_cast<TextComponent>(*ptr<u32>(owner->allocation));
+            native_component_binding::note_source_for_consumer(e,component);
+            render::Metrics old_width{},new_width{};
+            auto status=metrics_at_outline(ptr<char>(e.arguments[0]),e.arguments[2]&1u,old_width);
+            if(status!=Status::ok) return status;
+            const auto center=static_cast<std::int32_t>(e.frame->ecx)+old_width.logical_width/2;
+            native_component_binding::note_center(e,center);
+            const auto& source=native_component_binding::field_source(component);
+            std::vector<char> encoded;
+            status=native_text_resource::resolve_source(source,resolve_display_text,encode_component_original,encoded);
+            if(status!=Status::ok) return status;
+            status=metrics_at_outline(encoded.data(),e.arguments[2]&1u,new_width);
+            if(status!=Status::ok) return status;
+            e.frame->ecx=static_cast<u32>(center-new_width.logical_width/2);
+            return lend_text(e,encoded,e.arguments[0],Scope::text);
+        }
         break;
     case startup_heading: {
         std::vector<char> encoded;
@@ -1115,6 +986,8 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     case startup_progress_text:
         for(auto i=active.rbegin();i!=active.rend();++i) {
             if(i->kind==Scope::startup_progress) {
+                native_component_binding::bind_source(e,startup_progress_source);
+                native_component_binding::note_native_field(e,0);
                 e.arguments[0]=i->allocation;
                 begin(e,Scope::text,e.arguments[2]);
                 break;
@@ -1150,18 +1023,6 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         if(in(Scope::footer)) {
             native_component_binding::note_source_for_consumer(e,TextComponent::copyright);
             return paragraph_capacity(ptr<char>(e.frame->edx));
-        }
-        break;
-    case menu_text:
-        if(in(Scope::menu)) {
-            if(e.frame->ebx>7) return Status::invalid;
-            std::vector<char> encoded;
-            native_menu_component::bind_row(e.frame->esi,static_cast<TextComponent>(e.frame->ebx),
-                ptr<char>(e.arguments[0]));
-            auto status=native_menu_component::resolve_row(e.frame->esi,encoded);
-            if(status!=Status::ok) return status;
-            if(encoded.size()>0x12C) return Status::insufficient_buffer;
-            return lend_text(e,encoded,e.arguments[0],Scope::text);
         }
         break;
     case version_text:
@@ -1248,6 +1109,54 @@ HookSpec inline_hook(u32 id,u32 site,std::initializer_list<unsigned char> bytes)
 #include "windows_creation.inc"
 #include "windows_skills_spells.inc"
 #include "windows_encyclopedia.inc"
+Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Consumer consumer) {
+    using Consumer=native_menu_component::Consumer;
+    if(consumer==Consumer::plain_row && in(Scope::menu)) {
+        native_menu_component::bind_row(e.frame->esi,static_cast<TextComponent>(e.frame->ebx),
+            ptr<char>(e.arguments[0]));
+    } else if(consumer==Consumer::title_panel) {
+        if(windows_season_drawing)
+            native_menu_component::bind_title(TextComponent::profile_season_title,ptr<char>(e.arguments[2]));
+        else if(in(Scope::character_creation) || in(Scope::profile_culture) || in(Scope::profile_sex)) {
+            const auto component=in(Scope::profile_culture) ? TextComponent::profile_culture_title :
+                in(Scope::profile_sex) ? TextComponent::profile_sex_title : TextComponent::character_creation_title;
+            native_menu_component::bind_title(component,ptr<char>(e.arguments[2]));
+        }
+    } else if(consumer==Consumer::button_row) {
+        const auto action=*ptr<u32>(e.frame->esi+0xC8);
+        if(windows_season_drawing) {
+            if(action>='1' && action<='4') return character_creation_label(e,static_cast<TextComponent>(
+                static_cast<u32>(TextComponent::profile_season_spring)+action-'1'));
+            if(action==27) return character_creation_label(e,TextComponent::profile_back);
+        } else if(windows_attributes_drawing) {
+            if(action=='Y') return character_creation_label(e,TextComponent::profile_continue);
+            if(action=='N') return character_creation_label(e,TextComponent::profile_reroll);
+        } else if(in(Scope::profile_culture)) {
+            if(action>='0' && action<='9') return character_creation_label(e,static_cast<TextComponent>(
+                static_cast<u32>(TextComponent::profile_culture_0)+action-'0'));
+            switch(action) {
+            case 'R': return character_creation_label(e,TextComponent::profile_random);
+            case '?': return character_creation_label(e,TextComponent::profile_cultures);
+            case 27: return character_creation_label(e,TextComponent::profile_back);
+            }
+        } else if(in(Scope::profile_sex)) {
+            switch(action) {
+            case 'M': return character_creation_label(e,TextComponent::profile_male);
+            case 'F': return character_creation_label(e,TextComponent::profile_female);
+            case 27: return character_creation_label(e,TextComponent::profile_back);
+            }
+        } else if(in(Scope::character_creation)) {
+            switch(action) {
+            case 'Q': return character_creation_label(e,TextComponent::character_creation_quick);
+            case 'C': return character_creation_label(e,TextComponent::character_creation_custom);
+            case 'E': return character_creation_label(e,TextComponent::character_creation_easy);
+            case 'T': return character_creation_label(e,TextComponent::character_creation_too_easy);
+            case 27: return character_creation_label(e,TextComponent::character_creation_exit);
+            }
+        }
+    }
+    return Status::ok;
+}
 Status translate_skills_limit(TextComponent component,const char* value,std::vector<char>& encoded) {
     const char* key=component==TextComponent::skills_limit_improve ? "limit.improve" : "limit.degrade";
     const TextRequest request{TextComponent::skills_text,"",key};
@@ -1298,17 +1207,30 @@ Status translate_culture_back(const char*,const char* topic,std::vector<char>& e
     return Status::ok;
 }
 #include "windows_renderer_text.inc"
-#include "windows_menu_redraw.inc"
 #include "windows_messages.inc"
 #include "windows_message_values.inc"
+#include "windows_message_crafted_items.inc"
 #include "windows_message_items.inc"
+#include "windows_message_materials.inc"
 #include "windows_message_geography.inc"
+#include "windows_message_calendar.inc"
+#include "windows_message_prayers.inc"
 #include "windows_message_resources.inc"
 #include "windows_message_display.inc"
 #include "windows_message_formats.inc"
 #include "windows_message_format_builders.inc"
 #include "windows_message_helpers.inc"
 #include "windows_message_quests.inc"
+#include "windows_message_menu_echo.inc"
+#include "windows_message_menu_return.inc"
+#include "windows_message_appended.inc"
+#include "windows_message_transfers.inc"
+#include "windows_message_hearing.inc"
+#include "windows_message_weather.inc"
+#include "windows_message_debug_sources.inc"
+#include "windows_message_combat_body.inc"
+#include "windows_message_audit_copies.inc"
+#include "windows_message_late_sources.inc"
 
 Status message_translate_value(const char* tag,const char* value,std::string& text) {
     return windows_message_values::translate_tag(tag,value,text);
@@ -1324,10 +1246,15 @@ Status dispatch_windows_messages(const NativeEvent& event,DispatchResult& result
         return status;
     }
     for(auto dispatch:{windows_messages::dispatch,windows_message_values::dispatch,
-            windows_message_items::dispatch,windows_message_geography::dispatch,windows_message_resources::dispatch,
+            windows_message_items::dispatch,windows_message_materials::dispatch,windows_message_geography::dispatch,windows_message_calendar::dispatch,windows_message_prayers::dispatch,windows_message_resources::dispatch,
             windows_message_display::dispatch,windows_message_formats::dispatch,
             windows_message_helpers::dispatch,windows_message_quests::dispatch,
-            windows_message_format_builders::dispatch}) {
+            windows_message_format_builders::dispatch,windows_message_menu_echo::dispatch,
+            windows_message_menu_return::dispatch,
+            windows_message_appended::dispatch,windows_message_transfers::dispatch,
+            windows_message_hearing::dispatch,windows_message_weather::dispatch,
+            windows_message_debug_sources::dispatch,windows_message_combat_body::dispatch,
+            windows_message_audit_copies::dispatch,windows_message_late_sources::dispatch}) {
         const auto status=dispatch(event,result,handled);
         if(handled) return status;
     }
@@ -1337,13 +1264,26 @@ void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
     windows_messages::append_hooks(hooks);
     windows_message_values::append_hooks(hooks);
     windows_message_items::append_hooks(hooks);
+    windows_message_materials::append_hooks(hooks);
     windows_message_geography::append_hooks(hooks);
+    windows_message_calendar::append_hooks(hooks);
+    windows_message_prayers::append_hooks(hooks);
     windows_message_resources::append_hooks(hooks);
     windows_message_display::append_hooks(hooks);
     windows_message_formats::append_hooks(hooks);
     windows_message_format_builders::append_hooks(hooks);
     windows_message_helpers::append_hooks(hooks);
     windows_message_quests::append_hooks(hooks);
+    windows_message_menu_echo::append_hooks(hooks);
+    windows_message_menu_return::append_hooks(hooks);
+    windows_message_appended::append_hooks(hooks);
+    windows_message_transfers::append_hooks(hooks);
+    windows_message_hearing::append_hooks(hooks);
+    windows_message_weather::append_hooks(hooks);
+    windows_message_debug_sources::append_hooks(hooks);
+    windows_message_combat_body::append_hooks(hooks);
+    windows_message_audit_copies::append_hooks(hooks);
+    windows_message_late_sources::append_hooks(hooks);
 }
 std::vector<unsigned char> save_windows_message_state() {
     std::vector<unsigned char> state;
@@ -1351,7 +1291,13 @@ std::vector<unsigned char> save_windows_message_state() {
     windows_message_values::save(state);
     windows_message_items::save(state);
     windows_message_geography::save(state);
+    windows_message_calendar::save(state);
     windows_message_resources::save(state);
+    windows_message_helpers::save(state);
+    windows_message_quests::save(state);
+    windows_message_formats::save(state);
+    windows_message_format_builders::save(state);
+    windows_message_menu_echo::save(state);
     return state;
 }
 void restore_windows_message_state(const unsigned char* state) {
@@ -1359,7 +1305,45 @@ void restore_windows_message_state(const unsigned char* state) {
     windows_message_values::restore(state);
     windows_message_items::restore(state);
     windows_message_geography::restore(state);
+    windows_message_calendar::restore(state);
     windows_message_resources::restore(state);
+    windows_message_helpers::restore(state);
+    windows_message_quests::restore(state);
+    windows_message_formats::restore(state);
+    windows_message_format_builders::restore(state);
+    windows_message_menu_echo::restore(state);
+}
+std::vector<std::uint8_t> save_native_ui_state() {
+    const std::vector<std::vector<std::uint8_t>> sections{
+        native_root_component::save(),native_component_model::save(),native_component_binding::save(),
+        native_image_component::save(),native_footer_component::save(),native_renderer_component_model::save(),native_hud_icons::save(),
+        native_renderer_component_binding::save(),native_culture_legend::save(),native_link_flow_component::save(),
+        native_message_flow::save(),native_ui_scene::save(),
+        save_windows_encyclopedia_state(),save_windows_skill_help_sources(),save_windows_profile_error_source(),
+        save_startup_progress_source(),native_menu_storage::save()};
+    std::vector<std::uint8_t> output;
+    for(const auto& section:sections) {
+        const auto size=static_cast<u32>(section.size());
+        const auto* bytes=reinterpret_cast<const std::uint8_t*>(&size);
+        output.insert(output.end(),bytes,bytes+sizeof(size));
+        output.insert(output.end(),section.begin(),section.end());
+    }
+    return output;
+}
+void restore_native_ui_state(const void* payload) {
+    const auto* cursor=static_cast<const std::uint8_t*>(payload);
+    using Restore=void (*)(const void*);
+    const Restore restore_sections[]{native_root_component::restore,native_component_model::restore,
+        native_component_binding::restore,native_image_component::restore,native_footer_component::restore,
+        native_renderer_component_model::restore,native_hud_icons::restore,native_renderer_component_binding::restore,
+        native_culture_legend::restore,
+        native_link_flow_component::restore,native_message_flow::restore,native_ui_scene::restore,restore_windows_encyclopedia_state,
+        restore_windows_skill_help_sources,restore_windows_profile_error_source,restore_startup_progress_source,
+        native_menu_storage::restore};
+    for(const auto restore:restore_sections) {
+        u32 bytes;std::memcpy(&bytes,cursor,sizeof(bytes));cursor+=sizeof(bytes);
+        restore(cursor);cursor+=bytes;
+    }
 }
 Status dispatch_windows_renderer(const NativeEvent& e,DispatchResult& result,bool& handled) {
     return windows_renderer_text::dispatch(e,result,handled);
@@ -1374,19 +1358,27 @@ Status UWCN_CALL initialize(const HostApi* api) {
     host=api;
     native_language_redraw::initialize(api->image_base);
     native_menu_component::initialize(api->image_base);
-    native_menu_component::configure(api,resolve_display_text,encode_component_original,enter_menu_component,end);
+    native_menu_storage::initialize(api->image_base);
+    native_menu_component::configure(api,resolve_display_text,encode_component_original,decode_parser_original,
+        bind_menu_consumer_source,enter_menu_component,end);
+    native_menu_component::configure_measure(measure_component_text);
     native_root_component::initialize(api->image_base);
     native_component_model::initialize(api->image_base);
     native_renderer_component_model::initialize(api->image_base);
     native_renderer_component_binding::configure(api->image_base,renderer_component_services());
+    native_renderer_component_binding::configure_resource_services({enter_culture_resource,leave_culture_resource});
+    native_culture_legend::initialize(api->image_base,{enter_culture_resource,leave_culture_resource});
     native_link_flow_component::initialize(api->image_base);
     configure_windows_encyclopedia_flow_services();
+    native_message_flow::initialize(api->image_base);
+    native_message_flow::configure(windows_messages::flow_services());
     native_image_component::initialize(api->image_base);
     native_footer_component::initialize(api->image_base);
     native_footer_component::configure(footer_services());
     native_ui_scene::initialize(api->image_base,component_paint_services());
     native_component_binding::configure(api->image_base,component_paint_services());
     native_component_binding::set_parser_source_decoder(decode_parser_original);
+    native_component_binding::set_parser_source_encoder(encode_parser_original);
     native_ui_cache_owners::initialize(api->image_base);
     native_ui_cache_owners::set_callbacks({cache_source_saved,cache_source_before_restore,
         cache_source_restored,cache_source_retired});
@@ -1495,8 +1487,6 @@ Status UWCN_CALL initialize(const HostApi* api) {
         call(scenario_introduction_4,0xFB830,0x162300,0),
         call(scenario_intro_paragraph,0xFB84B,0x10EB40,4),
         call(scenario_button,0xFB85F,0x114680,1),
-        inline_hook(scenario_redraw_entry,0xFB7D1,{0x8B,0x35,0,0,0,0}),
-        inline_hook(scenario_redraw_wait,0xD3CDC,{0x8B,0x35,0,0,0,0}),
         call(setup_panel,0x105752,0x116270,5),
         // Shared physical consumers have one stable hook ID each (301/305).
         // Additional confirmed panels extend scope checks, not hook sites.
@@ -1564,13 +1554,6 @@ Status UWCN_CALL initialize(const HostApi* api) {
     // Both verification and resident replay use the loaded image address.
     const u32 cursor_y=address(at<void>(0x61BBB3C));
     for(auto& h:hooks) if(h.id==cursor_width) std::memcpy(h.expected+2,&cursor_y,4);
-    // Both MOV ESI,[absolute] operands have native HIGHLOW relocations.
-    const u32 scenario_index=address(at<void>(0xA32B0C8));
-    const u32 poll_event_import=address(at<void>(0x18C24C));
-    for(auto& h:hooks) {
-        if(h.id==scenario_redraw_entry) std::memcpy(h.expected+2,&scenario_index,4);
-        if(h.id==scenario_redraw_wait) std::memcpy(h.expected+2,&poll_event_import,4);
-    }
     append_hud_hooks(hooks);
     append_windows_profile_hooks(hooks);
     append_windows_creation_hooks(hooks);
@@ -1579,11 +1562,12 @@ Status UWCN_CALL initialize(const HostApi* api) {
     windows_renderer_text::append_hooks(hooks);
     append_windows_message_hooks(hooks);
     native_name_input::append_hooks(hooks);
-    append_windows_menu_background_hooks(hooks);
     native_language_input::append_hooks(host->image_base,hooks);
     native_language_redraw::append_hooks(hooks);
     native_menu_component::append_hooks(hooks);
+    native_menu_storage::append_hooks(hooks);
     native_root_component::append_hooks(hooks);
+    native_culture_legend::append_hooks(hooks);
     native_image_component::append_hooks(hooks);
     native_ui_cache_owners::append_hooks(hooks);
     native_renderer_component_model::append_hooks(hooks);
@@ -1616,29 +1600,33 @@ Status UWCN_CALL save_state(void* output,u32* bytes) {
     const auto name=native_name_input::save();
     const auto menu=native_menu_component::save();
     const auto messages=save_windows_message_state();
+    const auto ui=save_native_ui_state();
     const u32 language[]={chinese_enabled?1u:0u,intro_chinese?1u:0u,
         native_language_input::save().f10_consumed,redraw.pending,redraw.rebuilding,
         name.active,name.committed};
     const u32 active_bytes=sizeof(u32)+static_cast<u32>(active.size()*sizeof(Active));
-    const u32 required=active_bytes+4*sizeof(u32)+sizeof(retired_routes)+
+    const u32 required=active_bytes+5*sizeof(u32)+sizeof(retired_routes)+
         static_cast<u32>(native.size())+sizeof(language)+static_cast<u32>(menu.size())+
-        static_cast<u32>(messages.size());
+        static_cast<u32>(messages.size())+static_cast<u32>(ui.size());
     if(!output || *bytes<required) { *bytes=required; return Status::insufficient_buffer; }
     const u32 count=static_cast<u32>(active.size());
     std::memcpy(output,&count,sizeof(count));
     if(count) std::memcpy(static_cast<unsigned char*>(output)+sizeof(count),active.data(),count*sizeof(Active));
     auto* suffix=static_cast<unsigned char*>(output)+active_bytes;
-    const u32 tag=0x36414448,native_bytes=static_cast<u32>(native.size()),
-        menu_bytes=static_cast<u32>(menu.size()),message_bytes=static_cast<u32>(messages.size());
+    const u32 tag=0x37414448,native_bytes=static_cast<u32>(native.size()),
+        menu_bytes=static_cast<u32>(menu.size()),message_bytes=static_cast<u32>(messages.size()),
+        ui_bytes=static_cast<u32>(ui.size());
     std::memcpy(suffix,&tag,sizeof(tag)); suffix+=sizeof(tag);
     std::memcpy(suffix,&retired_routes,sizeof(retired_routes)); suffix+=sizeof(retired_routes);
     std::memcpy(suffix,&native_bytes,sizeof(native_bytes)); suffix+=sizeof(native_bytes);
     std::memcpy(suffix,&menu_bytes,sizeof(menu_bytes)); suffix+=sizeof(menu_bytes);
     std::memcpy(suffix,&message_bytes,sizeof(message_bytes)); suffix+=sizeof(message_bytes);
+    std::memcpy(suffix,&ui_bytes,sizeof(ui_bytes)); suffix+=sizeof(ui_bytes);
     std::memcpy(suffix,native.data(),native.size());
     std::memcpy(suffix+native.size(),language,sizeof(language));
     std::memcpy(suffix+native.size()+sizeof(language),menu.data(),menu.size());
     std::memcpy(suffix+native.size()+sizeof(language)+menu.size(),messages.data(),messages.size());
+    std::memcpy(suffix+native.size()+sizeof(language)+menu.size()+messages.size(),ui.data(),ui.size());
     *bytes=required;
     // Host::prepare_transaction invokes the non-sizing save exactly once on
     // the stopped native thread, before disabling or unloading any module.
@@ -1664,9 +1652,12 @@ Status UWCN_CALL restore_state(const void* input,u32 bytes) {
     if(bytes<active_bytes) return Status::invalid;
     active.resize(count);
     if(count) std::memcpy(active.data(),static_cast<const unsigned char*>(input)+sizeof(count),count*sizeof(Active));
-    // The published predecessor contains exactly this Active array. New native
-    // resource identities are appended under an explicit format tag.
-    if(bytes==active_bytes) return Status::ok;
+    // The first published format contained only Active scopes. It has neither
+    // resource constructors nor the neutral UI sources required by this model.
+    if(bytes==active_bytes) {
+        host->log(L"Active-only state has no native component/cache constructor sources; no in-place migration is implemented.");
+        return Status::unavailable;
+    }
     const auto prefix=active_bytes+2*sizeof(u32)+sizeof(retired_routes);
     if(bytes<prefix) return Status::invalid;
     const auto* suffix=static_cast<const unsigned char*>(input)+active_bytes;
@@ -1674,34 +1665,40 @@ Status UWCN_CALL restore_state(const void* input,u32 bytes) {
     std::memcpy(&tag,suffix,sizeof(tag)); suffix+=sizeof(tag);
     // HDA2 is the published predecessor, with Chinese always enabled. HDA3
     // appends only language/input state; native resource and Active layouts stay.
-    if(tag!=0x32414448 && tag!=0x33414448 && tag!=0x34414448 && tag!=0x35414448 && tag!=0x36414448) return Status::invalid;
+    // HDA6 was an unpublished translated-string snapshot; it is not the
+    // neutral Text graph stored by HDA7 and has no implemented migration.
+    if(tag!=0x32414448 && tag!=0x33414448 && tag!=0x34414448 && tag!=0x35414448 && tag!=0x37414448) return Status::invalid;
     std::memcpy(&retired_routes,suffix,sizeof(retired_routes)); suffix+=sizeof(retired_routes);
     std::memcpy(&native_bytes,suffix,sizeof(native_bytes)); suffix+=sizeof(native_bytes);
-    u32 menu_bytes{},message_bytes{};
-    if(tag==0x35414448 || tag==0x36414448) {
+    u32 menu_bytes{},message_bytes{},ui_bytes{};
+    if(tag==0x35414448 || tag==0x37414448) {
         std::memcpy(&menu_bytes,suffix,sizeof(menu_bytes)); suffix+=sizeof(menu_bytes);
     }
-    if(tag==0x36414448) {
+    if(tag==0x37414448) {
         std::memcpy(&message_bytes,suffix,sizeof(message_bytes)); suffix+=sizeof(message_bytes);
     }
-    const u32 language_bytes=(tag==0x34414448 || tag==0x35414448 || tag==0x36414448) ? 7*sizeof(u32) :
+    if(tag==0x37414448) {std::memcpy(&ui_bytes,suffix,sizeof(ui_bytes));suffix+=sizeof(ui_bytes);}
+    const u32 language_bytes=(tag==0x34414448 || tag==0x35414448 || tag==0x37414448) ? 7*sizeof(u32) :
         tag==0x33414448 ? 5*sizeof(u32) : 0;
-    const u32 extended_header_bytes=tag==0x36414448 ? 2*sizeof(u32) : tag==0x35414448 ? sizeof(u32) : 0;
-    if(bytes!=prefix+extended_header_bytes+native_bytes+language_bytes+menu_bytes+message_bytes ||
+    const u32 extended_header_bytes=tag==0x37414448 ? 3*sizeof(u32) : tag==0x35414448 ? sizeof(u32) : 0;
+    if(bytes!=prefix+extended_header_bytes+native_bytes+language_bytes+menu_bytes+message_bytes+ui_bytes ||
         retired_routes.count>retired_routes.entries.size()) return Status::invalid;
     auto status=native_targets::restore(suffix,native_bytes);
+    if(status==Status::unavailable)
+        host->log(L"NGT1 state has no native component/cache constructor sources; the current adapter cannot migrate this active UI to the global source model in place.");
     if(status!=Status::ok) return status;
-    if(tag==0x33414448 || tag==0x34414448 || tag==0x35414448 || tag==0x36414448) {
+    if(tag==0x33414448 || tag==0x34414448 || tag==0x35414448 || tag==0x37414448) {
         u32 language[7]{};
         std::memcpy(language,suffix+native_bytes,language_bytes);
         chinese_enabled=language[0]!=0;
         intro_chinese=language[1]!=0;
         native_language_input::restore({language[2]});
-        native_language_redraw::restore({language[3],language[4]});
-        if(tag==0x34414448 || tag==0x35414448 || tag==0x36414448) native_name_input::restore({language[5],language[6]});
+        if(tag==0x37414448) native_language_redraw::restore({language[3],language[4]});
+        if(tag==0x34414448 || tag==0x35414448 || tag==0x37414448) native_name_input::restore({language[5],language[6]});
     }
-    if(tag==0x35414448 || tag==0x36414448) native_menu_component::restore(suffix+native_bytes+language_bytes);
-    if(tag==0x36414448) restore_windows_message_state(suffix+native_bytes+language_bytes+menu_bytes);
+    if(tag==0x37414448) native_menu_component::restore(suffix+native_bytes+language_bytes);
+    if(tag==0x37414448) restore_windows_message_state(suffix+native_bytes+language_bytes+menu_bytes);
+    if(tag==0x37414448) restore_native_ui_state(suffix+native_bytes+language_bytes+menu_bytes+message_bytes);
     const auto routes=native_targets::routes();
     status=abi1_retirement::bind_routes(retired_routes,routes);
     if(status!=Status::ok) return status;
@@ -1715,8 +1712,22 @@ void UWCN_CALL shutdown() {
         native_targets::remove();
         native_raster::remove_raster_patches();
     }
-    native_targets::forget();
+    native_ui_cache_owners::shutdown();
+    native_ui_scene::shutdown();
+    native_message_flow::shutdown();
+    native_renderer_component_binding::shutdown();
+    native_culture_legend::shutdown();
+    native_hud_icons::shutdown();
+    native_renderer_component_model::shutdown();
+    native_link_flow_component::shutdown();
+    native_footer_component::shutdown();
+    native_image_component::shutdown();
+    native_component_binding::shutdown();
+    native_component_model::initialize(0);
+    native_root_component::shutdown();
+    native_menu_storage::shutdown();
     native_menu_component::shutdown();
+    native_targets::forget();
     active.clear(); host=nullptr; get_rgb=nullptr;
 }
 const ModuleApi api{sizeof(ModuleApi),kHostAbi,ModuleId::adapter,initialize,invoke,save_state,restore_state,shutdown};

@@ -1,0 +1,560 @@
+domain	source	target
+menu.title	TRAPS	陷阱
+menu.title	Fishing options	钓鱼选项
+menu.title	COOKERY OPTIONS	烹饪选项
+menu.title	BREAD AND BAKING RECIPES	面包与烘焙食谱
+menu.title	MEAT RECIPES	肉类食谱
+menu.title	CLOTHES	衣物
+menu.title	CLOTH GARMENTS	布衣
+menu.title	TEXTILECRAFT OPTIONS	纺织选项
+menu.title	BUILDING OPTIONS	建造选项
+menu.title	WOODEN BUILDING	木建筑
+menu.title	KOTA	科塔帐篷
+menu.title	HANDCRAFT OPTIONS	手工制作选项
+menu.title	ARROWS	箭矢
+menu.title	MODDED HANDCRAFT OPTIONS	模组手工制作选项
+menu.title	View what type of items?	查看哪类物品？
+menu.title	MOVEMENT AND REST ACTIONS	移动与休息动作
+menu.title	WOUND TREATMENT	伤口处理
+menu.title	Select target	选择目标
+menu.title	HELP AND GAME OPTIONS	帮助与游戏选项
+menu.title	BIRCH-BARK PEELING OPTIONS	剥取桦树皮选项
+menu.title	Timbercraft option	木材加工选项
+menu.title	Agriculture option	农耕选项
+menu.title	Hidework option	皮革加工选项
+menu.title	CARPENTRY OPTIONS	木工选项
+menu.title	BOWYER OPTIONS	制弓选项
+menu.title	Weapon Aspect	武器攻击方式
+menu.title	Aiming Zone	瞄准部位
+menu.title	Defense Maneuver	防御动作
+menu.title	Shield mode	盾牌模式
+menu.title	SHOUT A COMMAND TO	向谁喊出命令
+menu.label	All types	所有类别
+menu.label	Apply trap in your inventory	使用背包里的陷阱
+menu.label	Arrows	箭矢
+menu.label	Attack	攻击
+menu.label	Baking recipes	烘焙食谱
+menu.label	Boil / Herbal beverages	煮食／草药饮料
+menu.label	Build trap-fence	建造陷阱围栏
+menu.label	Building	建造
+menu.label	Butcher and skin a carcass	分割尸体并剥皮
+menu.label	Carve trunks into logs	将树干加工为原木
+menu.label	Center	中央
+menu.label	Cloth garments	布衣
+menu.label	Clothes	衣物
+menu.label	Come	过来
+menu.label	Containers	容器
+menu.label	Ember-roasted turnips	余烬烤芜菁
+menu.label	Fell some trees	砍一些树
+menu.label	Fish recipes	鱼类食谱
+menu.label	Fishing	钓鱼
+menu.label	Follow	跟随
+menu.label	Fur clothes	毛皮衣物
+menu.label	Game encyclopedia	游戏百科
+menu.label	General building information	建造基本说明
+menu.label	General trapping information	设陷阱基本说明
+menu.label	Get up (stand)	起身（站立）
+menu.label	Go prone (lay down)	伏地（趴下）
+menu.label	Group command	群体命令
+menu.label	Group command off	关闭群体命令
+menu.label	Hafting	安装柄杆
+menu.label	Hide and sneak	隐藏并潜行
+menu.label	High	高处
+menu.label	I shall name you...	我要给你取名……
+menu.label	Keyboard commands	键盘指令
+menu.label	Kota	科塔帐篷
+menu.label	Leather clothes	皮革衣物
+menu.label	Light a fire	生火
+menu.label	Lumber	木材
+menu.label	Meat recipes	肉类食谱
+menu.label	Miscellanous clothes	其他衣物
+menu.label	Modded handcraft options	模组手工制作选项
+menu.label	None	无
+menu.label	Porridge recipes	粥类食谱
+menu.label	Quit and optionally save	退出并选择是否保存
+menu.label	Quit the game	退出游戏
+menu.label	Rest until not fatigued	休息至疲劳消退
+menu.label	Roast some meat	烤一些肉
+menu.label	Run	奔跑
+menu.label	Save the game	保存游戏
+menu.label	Setup options	设置选项
+menu.label	Side	侧面
+menu.label	Sleep	睡觉
+menu.label	Spin yarn	纺线
+menu.label	Split trunks into boards	将树干劈成木板
+menu.label	Stand still - wait and rest	站定——等待与休息
+menu.label	Start following again	重新开始跟随
+menu.label	Stay	留下
+menu.label	Stay here	留在这里
+menu.label	Stop sneaking	停止潜行
+menu.label	Stop your tasks	停止工作
+menu.label	Textilecraft	纺织
+menu.label	Transport	搬运
+menu.label	Trapping	设陷阱
+menu.label	Tying equipment	绑扎用品
+menu.label	Unpaid	未付款
+menu.label	Utility articles	日用器具
+menu.label	Vegetable recipes	蔬菜食谱
+menu.label	Walk (stop running)	步行（停止奔跑）
+menu.label	Weapons	武器
+menu.label	Wooden building	木建筑
+menu.label	Eat now	现在进食
+menu.format	#%s: %s	#%s：%s
+menu.format	ANIMAL COMMANDS: %s	动物命令：%s
+menu.format	 (%d pieces)	（%d件）
+menu.format	%s%s	%s%s
+menu.title	ANIMAL GROUP COMMANDS	动物群体命令
+menu.title	COMPANION GROUP COMMANDS	同伴群体命令
+menu.title	COMPANION COMMANDS	同伴命令
+menu.label	Preferred types	偏好类别
+menu.label	Armours & Clothes	盔甲与衣物
+menu.label	Hides & Skins	兽皮
+menu.label	Tools	工具
+menu.label	Foods	食物
+menu.label	Timber	木料
+menu.label	Vehicles	车辆
+menu.label	Valuables	贵重物品
+menu.label	Plants	植物
+menu.label	Carcasses	尸体
+menu.label	Miscellaneous	杂物
+menu.label	Textiles & Yarn	纺织品与纱线
+menu.recipe	Stone-axe	石斧
+menu.recipe	Stone knife	石刀
+menu.recipe	Club	棍棒
+menu.recipe	Javelin	标枪
+menu.recipe	Spruce quick-bow	云杉速制弓
+menu.recipe	Shortbow	短弓
+menu.recipe	Longbow	长弓
+menu.recipe	Blunt arrow	钝头箭
+menu.recipe	Arrow shaft	箭杆
+menu.recipe	Stone arrowhead	石箭头
+menu.recipe	Bone arrowhead	骨箭头
+menu.recipe	Paw-board fox trap	夹爪板捕狐陷阱
+menu.recipe	Loop snare	绳套陷阱
+menu.recipe	Grainflail	连枷
+menu.recipe	Bandage	绷带
+menu.recipe	Torch	火把
+menu.recipe	Wooden shovel	木铲
+menu.recipe	Vasta	桑拿桦枝束
+menu.recipe	Bone sewing needle	骨缝衣针
+menu.recipe	Wooden cup	木杯
+menu.recipe	Wooden bowl	木碗
+menu.recipe	Birch-bark box	桦皮盒
+menu.recipe	Birch-bark basket	桦皮篮
+menu.recipe	Birch-bark pot	桦皮锅
+menu.recipe	Shingle basket	木片篮
+menu.recipe	Fishing rod	钓竿
+menu.recipe	Wooden fishhook	木鱼钩
+menu.recipe	Bone fishhook	骨鱼钩
+menu.recipe	Lippo	抄网
+menu.recipe	Netting needle	织网梭
+menu.recipe	Cloth cord	布绳
+menu.recipe	Cord	细绳
+menu.recipe	Leather cord	皮细绳
+menu.recipe	Rope	粗绳
+menu.recipe	Leather rope	皮粗绳
+menu.recipe	Birch-bark rope	桦皮绳
+menu.recipe	Spruce withe	云杉柔枝绑条
+menu.recipe	Birch withe	桦树柔枝绑条
+menu.recipe	Axe haft	斧柄
+menu.recipe	Spear haft	矛杆
+menu.recipe	Shovel haft	铲柄
+menu.recipe	Wooden stake	木桩
+menu.recipe	Staff	木杆
+menu.recipe	Wood slat	木条
+menu.recipe	Shingle	木瓦
+menu.recipe	Paddle	桨
+menu.recipe	Skis	滑雪板
+menu.recipe	Ski pole	滑雪杖
+menu.recipe	Raft	木筏
+menu.recipe	Sesta	撑篙
+menu.recipe	Spindle	纺锤
+menu.recipe	Leather belt	皮腰带
+menu.recipe	Leather cap	皮帽
+menu.recipe	Leather shirt	皮衬衫
+menu.recipe	Leather trousers	皮裤
+menu.recipe	Leather leggings	皮护腿
+menu.recipe	Leather shoes	皮鞋
+menu.recipe	Leather boots	皮靴
+menu.recipe	Leather forearm guards	皮前臂护甲
+menu.recipe	Leather shin guards	皮护胫
+menu.recipe	Leather cuirass	皮胸甲
+menu.recipe	Fur cap	毛皮帽
+menu.recipe	Fur shirt	毛皮衬衫
+menu.recipe	Fur mittens	毛皮连指手套
+menu.recipe	Fur leggings	毛皮护腿
+menu.recipe	Fur hood	毛皮兜帽
+menu.recipe	Fur boots	毛皮靴
+menu.recipe	Fur cloak	毛皮斗篷
+menu.recipe	Fur overcoat	毛皮大衣
+menu.recipe	Undershirt	贴身衬衣
+menu.recipe	Shirt	衬衫
+menu.recipe	Leggings	护腿
+menu.recipe	Trousers	裤子
+menu.recipe	Cloak	斗篷
+menu.recipe	Tunic	束腰外衣
+menu.recipe	Overcoat	大衣
+menu.recipe	Dress	长裙
+menu.recipe	Undergarment	贴身长衣
+menu.recipe	Apron	围裙
+menu.recipe	Cowl	头颈罩
+menu.recipe	Veil	头巾
+menu.recipe	Footrags	裹脚布
+menu.recipe	Birch-bark shoes	桦皮鞋
+menu.recipe	Birch-bark cap	桦皮帽
+menu.recipe	Woollen nalbound cap	羊毛单针编织帽
+menu.recipe	Woollen nalbound cowl	羊毛单针编织头颈罩
+menu.recipe	Woollen nalbound mittens	羊毛单针编织连指手套
+menu.recipe	Woollen nalbound knee socks	羊毛单针编织长袜
+menu.recipe	Woollen nalbound socks	羊毛单针编织短袜
+menu.recipe	Flatbread	薄饼
+menu.recipe	Porridge	粥
+menu.recipe	Oven porridge	烤粥
+menu.recipe	Seed porridge	籽粥
+menu.recipe	Berry porridge	浆果粥
+menu.recipe	Meat soup	肉汤
+menu.recipe	Meat stew	炖肉
+menu.recipe	Dried meat soup	肉干汤
+menu.recipe	Smoked meat soup	熏肉汤
+menu.recipe	Fish soup	鱼汤
+menu.recipe	Dried fish soup	鱼干汤
+menu.recipe	Smoked fish soup	熏鱼汤
+menu.recipe	Pea soup	豌豆汤
+menu.recipe	Green soup	青菜汤
+menu.recipe	Vegetable soup	蔬菜汤
+menu.recipe	Mushroom soup	蘑菇汤
+menu.recipe	Vegetable stew	炖蔬菜
+menu.recipe	North-west corner	西北墙角
+menu.recipe	Northern wall	北墙
+menu.recipe	North-east corner	东北墙角
+menu.recipe	Western wall	西墙
+menu.recipe	Inside of a building	建筑内部
+menu.recipe	Ceiling and floor	天花板与地板
+menu.recipe	Eastern wall	东墙
+menu.recipe	South-west corner	西南墙角
+menu.recipe	Southern wall	南墙
+menu.recipe	South-east corner	东南墙角
+menu.recipe	Shutter	窗板
+menu.recipe	Wall with a shutter	带窗板的墙
+menu.recipe	Fireplace	火塘
+menu.recipe	Door	门
+menu.recipe	Bench	长凳
+menu.recipe	Table	桌子
+menu.recipe	Sleeping bunk	卧铺
+menu.recipe	Sauna stove	桑拿炉
+menu.recipe	Framework	建筑框架
+menu.recipe	North-west corner of a kota	科塔帐篷西北角
+menu.recipe	Northern wall of a kota	科塔帐篷北壁
+menu.recipe	North-east corner of a kota	科塔帐篷东北角
+menu.recipe	Western wall of a kota	科塔帐篷西壁
+menu.recipe	Inside of a kota	科塔帐篷内部
+menu.recipe	Eastern wall of a kota	科塔帐篷东壁
+menu.recipe	South-west corner of a kota	科塔帐篷西南角
+menu.recipe	Southern wall of a kota	科塔帐篷南壁
+menu.recipe	South-east corner of a kota	科塔帐篷东南角
+menu.recipe	Kota doorway	科塔帐篷入口
+menu.recipe	Shelter	庇护所
+menu.recipe	Fence	围栏
+menu.recipe	Fence gate	围栏门
+menu.recipe	Cellar	地窖
+menu.label	Peel in long strips	剥成长条
+menu.label	Harvest as sheets	剥取整片树皮
+menu.label	Blunt	钝击
+menu.label	Edge	刃击
+menu.label	Point	刺击
+menu.label	Body	躯干
+menu.label	Dodge	闪避
+menu.label	Ignore	忽略
+menu.label	Defense maneuvers	防御动作
+menu.label	Choose a target in sight	选择视野内的目标
+menu.label	Eat now (all)	现在全部进食
+menu.label	Attack (all)	全部攻击
+menu.label	Head	头部
+menu.label	Arms	双臂
+menu.label	Legs	双腿
+menu.format	Head%s	头部%s
+menu.format	Arms%s	双臂%s
+menu.format	Legs%s	双腿%s
+menu.format	Block with %s	用%s格挡
+menu.format	Counterstrike with %s	用%s反击
+menu.aim-suffix	| -- tricky	| -- 较棘手
+menu.aim-suffix	| -- difficult	| -- 困难
+menu.aim-suffix	| -- very difficult	| -- 非常困难
+menu.recipe	STONE-AXE	石斧
+menu.recipe	STONE KNIFE	石刀
+menu.recipe	CLUB	棍棒
+menu.recipe	JAVELIN	标枪
+menu.recipe	SPRUCE QUICK-BOW	云杉速制弓
+menu.recipe	SHORTBOW	短弓
+menu.recipe	LONGBOW	长弓
+menu.recipe	BLUNT ARROW	钝头箭
+menu.recipe	ARROW SHAFT	箭杆
+menu.recipe	STONE ARROWHEAD	石箭头
+menu.recipe	BONE ARROWHEAD	骨箭头
+menu.recipe	PAW-BOARD FOX TRAP	夹爪板捕狐陷阱
+menu.recipe	LOOP SNARE	绳套陷阱
+menu.recipe	GRAINFLAIL	连枷
+menu.recipe	BANDAGE	绷带
+menu.recipe	TORCH	火把
+menu.recipe	WOODEN SHOVEL	木铲
+menu.recipe	VASTA	桑拿桦枝束
+menu.recipe	BONE SEWING NEEDLE	骨缝衣针
+menu.recipe	WOODEN CUP	木杯
+menu.recipe	WOODEN BOWL	木碗
+menu.recipe	BIRCH-BARK BOX	桦皮盒
+menu.recipe	BIRCH-BARK BASKET	桦皮篮
+menu.recipe	BIRCH-BARK POT	桦皮锅
+menu.recipe	SHINGLE BASKET	木片篮
+menu.recipe	FISHING ROD	钓竿
+menu.recipe	WOODEN FISHHOOK	木鱼钩
+menu.recipe	BONE FISHHOOK	骨鱼钩
+menu.recipe	LIPPO	抄网
+menu.recipe	NETTING NEEDLE	织网梭
+menu.recipe	CLOTH CORD	布绳
+menu.recipe	CORD	细绳
+menu.recipe	LEATHER CORD	皮细绳
+menu.recipe	ROPE	粗绳
+menu.recipe	LEATHER ROPE	皮粗绳
+menu.recipe	BIRCH-BARK ROPE	桦皮绳
+menu.recipe	SPRUCE WITHE	云杉柔枝绑条
+menu.recipe	BIRCH WITHE	桦树柔枝绑条
+menu.recipe	AXE HAFT	斧柄
+menu.recipe	SPEAR HAFT	矛杆
+menu.recipe	SHOVEL HAFT	铲柄
+menu.recipe	WOODEN STAKE	木桩
+menu.recipe	STAFF	木杆
+menu.recipe	WOOD SLAT	木条
+menu.recipe	SHINGLE	木瓦
+menu.recipe	PADDLE	桨
+menu.recipe	SKIS	滑雪板
+menu.recipe	SKI POLE	滑雪杖
+menu.recipe	RAFT	木筏
+menu.recipe	SESTA	撑篙
+menu.recipe	SPINDLE	纺锤
+menu.recipe	LEATHER BELT	皮腰带
+menu.recipe	LEATHER CAP	皮帽
+menu.recipe	LEATHER SHIRT	皮衬衫
+menu.recipe	LEATHER TROUSERS	皮裤
+menu.recipe	LEATHER LEGGINGS	皮护腿
+menu.recipe	LEATHER SHOES	皮鞋
+menu.recipe	LEATHER BOOTS	皮靴
+menu.recipe	LEATHER FOREARM GUARDS	皮前臂护甲
+menu.recipe	LEATHER SHIN GUARDS	皮护胫
+menu.recipe	LEATHER CUIRASS	皮胸甲
+menu.recipe	FUR CAP	毛皮帽
+menu.recipe	FUR SHIRT	毛皮衬衫
+menu.recipe	FUR MITTENS	毛皮连指手套
+menu.recipe	FUR LEGGINGS	毛皮护腿
+menu.recipe	FUR HOOD	毛皮兜帽
+menu.recipe	FUR BOOTS	毛皮靴
+menu.recipe	FUR CLOAK	毛皮斗篷
+menu.recipe	FUR OVERCOAT	毛皮大衣
+menu.recipe	UNDERSHIRT	贴身衬衣
+menu.recipe	SHIRT	衬衫
+menu.recipe	LEGGINGS	护腿
+menu.recipe	TROUSERS	裤子
+menu.recipe	CLOAK	斗篷
+menu.recipe	TUNIC	束腰外衣
+menu.recipe	OVERCOAT	大衣
+menu.recipe	DRESS	长裙
+menu.recipe	UNDERGARMENT	贴身长衣
+menu.recipe	APRON	围裙
+menu.recipe	COWL	头颈罩
+menu.recipe	VEIL	头巾
+menu.recipe	FOOTRAGS	裹脚布
+menu.recipe	BIRCH-BARK SHOES	桦皮鞋
+menu.recipe	BIRCH-BARK CAP	桦皮帽
+menu.recipe	WOOLLEN NALBOUND CAP	羊毛单针编织帽
+menu.recipe	WOOLLEN NALBOUND COWL	羊毛单针编织头颈罩
+menu.recipe	WOOLLEN NALBOUND MITTENS	羊毛单针编织连指手套
+menu.recipe	WOOLLEN NALBOUND KNEE SOCKS	羊毛单针编织长袜
+menu.recipe	WOOLLEN NALBOUND SOCKS	羊毛单针编织短袜
+menu.recipe	FLATBREAD	薄饼
+menu.recipe	PORRIDGE	粥
+menu.recipe	OVEN PORRIDGE	烤粥
+menu.recipe	SEED PORRIDGE	籽粥
+menu.recipe	BERRY PORRIDGE	浆果粥
+menu.recipe	MEAT SOUP	肉汤
+menu.recipe	MEAT STEW	炖肉
+menu.recipe	DRIED MEAT SOUP	肉干汤
+menu.recipe	SMOKED MEAT SOUP	熏肉汤
+menu.recipe	FISH SOUP	鱼汤
+menu.recipe	DRIED FISH SOUP	鱼干汤
+menu.recipe	SMOKED FISH SOUP	熏鱼汤
+menu.recipe	PEA SOUP	豌豆汤
+menu.recipe	GREEN SOUP	青菜汤
+menu.recipe	VEGETABLE SOUP	蔬菜汤
+menu.recipe	MUSHROOM SOUP	蘑菇汤
+menu.recipe	VEGETABLE STEW	炖蔬菜
+menu.recipe	NORTH-WEST CORNER	西北墙角
+menu.recipe	NORTHERN WALL	北墙
+menu.recipe	NORTH-EAST CORNER	东北墙角
+menu.recipe	WESTERN WALL	西墙
+menu.recipe	INSIDE OF A BUILDING	建筑内部
+menu.recipe	CEILING AND FLOOR	天花板与地板
+menu.recipe	EASTERN WALL	东墙
+menu.recipe	SOUTH-WEST CORNER	西南墙角
+menu.recipe	SOUTHERN WALL	南墙
+menu.recipe	SOUTH-EAST CORNER	东南墙角
+menu.recipe	SHUTTER	窗板
+menu.recipe	WALL WITH A SHUTTER	带窗板的墙
+menu.recipe	FIREPLACE	火塘
+menu.recipe	DOOR	门
+menu.recipe	BENCH	长凳
+menu.recipe	TABLE	桌子
+menu.recipe	SLEEPING BUNK	卧铺
+menu.recipe	SAUNA STOVE	桑拿炉
+menu.recipe	FRAMEWORK	建筑框架
+menu.recipe	NORTH-WEST CORNER OF A KOTA	科塔帐篷西北角
+menu.recipe	NORTHERN WALL OF A KOTA	科塔帐篷北壁
+menu.recipe	NORTH-EAST CORNER OF A KOTA	科塔帐篷东北角
+menu.recipe	WESTERN WALL OF A KOTA	科塔帐篷西壁
+menu.recipe	INSIDE OF A KOTA	科塔帐篷内部
+menu.recipe	EASTERN WALL OF A KOTA	科塔帐篷东壁
+menu.recipe	SOUTH-WEST CORNER OF A KOTA	科塔帐篷西南角
+menu.recipe	SOUTHERN WALL OF A KOTA	科塔帐篷南壁
+menu.recipe	SOUTH-EAST CORNER OF A KOTA	科塔帐篷东南角
+menu.recipe	KOTA DOORWAY	科塔帐篷入口
+menu.recipe	SHELTER	庇护所
+menu.recipe	FENCE	围栏
+menu.recipe	FENCE GATE	围栏门
+menu.recipe	CELLAR	地窖
+menu.recipe	stone-axe	石斧
+menu.recipe	stone knife	石刀
+menu.recipe	club	棍棒
+menu.recipe	javelin	标枪
+menu.recipe	spruce quick-bow	云杉速制弓
+menu.recipe	shortbow	短弓
+menu.recipe	longbow	长弓
+menu.recipe	blunt arrow	钝头箭
+menu.recipe	arrow shaft	箭杆
+menu.recipe	stone arrowhead	石箭头
+menu.recipe	bone arrowhead	骨箭头
+menu.recipe	paw-board fox trap	夹爪板捕狐陷阱
+menu.recipe	loop snare	绳套陷阱
+menu.recipe	grainflail	连枷
+menu.recipe	bandage	绷带
+menu.recipe	torch	火把
+menu.recipe	wooden shovel	木铲
+menu.recipe	vasta	桑拿桦枝束
+menu.recipe	bone sewing needle	骨缝衣针
+menu.recipe	wooden cup	木杯
+menu.recipe	wooden bowl	木碗
+menu.recipe	birch-bark box	桦皮盒
+menu.recipe	birch-bark basket	桦皮篮
+menu.recipe	birch-bark pot	桦皮锅
+menu.recipe	shingle basket	木片篮
+menu.recipe	fishing rod	钓竿
+menu.recipe	wooden fishhook	木鱼钩
+menu.recipe	bone fishhook	骨鱼钩
+menu.recipe	lippo	抄网
+menu.recipe	netting needle	织网梭
+menu.recipe	cloth cord	布绳
+menu.recipe	cord	细绳
+menu.recipe	leather cord	皮细绳
+menu.recipe	rope	粗绳
+menu.recipe	leather rope	皮粗绳
+menu.recipe	birch-bark rope	桦皮绳
+menu.recipe	spruce withe	云杉柔枝绑条
+menu.recipe	birch withe	桦树柔枝绑条
+menu.recipe	axe haft	斧柄
+menu.recipe	spear haft	矛杆
+menu.recipe	shovel haft	铲柄
+menu.recipe	wooden stake	木桩
+menu.recipe	staff	木杆
+menu.recipe	wood slat	木条
+menu.recipe	shingle	木瓦
+menu.recipe	paddle	桨
+menu.recipe	skis	滑雪板
+menu.recipe	ski pole	滑雪杖
+menu.recipe	raft	木筏
+menu.recipe	sesta	撑篙
+menu.recipe	spindle	纺锤
+menu.recipe	leather belt	皮腰带
+menu.recipe	leather cap	皮帽
+menu.recipe	leather shirt	皮衬衫
+menu.recipe	leather trousers	皮裤
+menu.recipe	leather leggings	皮护腿
+menu.recipe	leather shoes	皮鞋
+menu.recipe	leather boots	皮靴
+menu.recipe	leather forearm guards	皮前臂护甲
+menu.recipe	leather shin guards	皮护胫
+menu.recipe	leather cuirass	皮胸甲
+menu.recipe	fur cap	毛皮帽
+menu.recipe	fur shirt	毛皮衬衫
+menu.recipe	fur mittens	毛皮连指手套
+menu.recipe	fur leggings	毛皮护腿
+menu.recipe	fur hood	毛皮兜帽
+menu.recipe	fur boots	毛皮靴
+menu.recipe	fur cloak	毛皮斗篷
+menu.recipe	fur overcoat	毛皮大衣
+menu.recipe	undershirt	贴身衬衣
+menu.recipe	shirt	衬衫
+menu.recipe	leggings	护腿
+menu.recipe	trousers	裤子
+menu.recipe	cloak	斗篷
+menu.recipe	tunic	束腰外衣
+menu.recipe	overcoat	大衣
+menu.recipe	dress	长裙
+menu.recipe	undergarment	贴身长衣
+menu.recipe	apron	围裙
+menu.recipe	cowl	头颈罩
+menu.recipe	veil	头巾
+menu.recipe	footrags	裹脚布
+menu.recipe	birch-bark shoes	桦皮鞋
+menu.recipe	birch-bark cap	桦皮帽
+menu.recipe	woollen nalbound cap	羊毛单针编织帽
+menu.recipe	woollen nalbound cowl	羊毛单针编织头颈罩
+menu.recipe	woollen nalbound mittens	羊毛单针编织连指手套
+menu.recipe	woollen nalbound knee socks	羊毛单针编织长袜
+menu.recipe	woollen nalbound socks	羊毛单针编织短袜
+menu.recipe	flatbread	薄饼
+menu.recipe	porridge	粥
+menu.recipe	oven porridge	烤粥
+menu.recipe	seed porridge	籽粥
+menu.recipe	berry porridge	浆果粥
+menu.recipe	meat soup	肉汤
+menu.recipe	meat stew	炖肉
+menu.recipe	dried meat soup	肉干汤
+menu.recipe	smoked meat soup	熏肉汤
+menu.recipe	fish soup	鱼汤
+menu.recipe	dried fish soup	鱼干汤
+menu.recipe	smoked fish soup	熏鱼汤
+menu.recipe	pea soup	豌豆汤
+menu.recipe	green soup	青菜汤
+menu.recipe	vegetable soup	蔬菜汤
+menu.recipe	mushroom soup	蘑菇汤
+menu.recipe	vegetable stew	炖蔬菜
+menu.recipe	north-west corner	西北墙角
+menu.recipe	northern wall	北墙
+menu.recipe	north-east corner	东北墙角
+menu.recipe	western wall	西墙
+menu.recipe	inside of a building	建筑内部
+menu.recipe	ceiling and floor	天花板与地板
+menu.recipe	eastern wall	东墙
+menu.recipe	south-west corner	西南墙角
+menu.recipe	southern wall	南墙
+menu.recipe	south-east corner	东南墙角
+menu.recipe	shutter	窗板
+menu.recipe	wall with a shutter	带窗板的墙
+menu.recipe	fireplace	火塘
+menu.recipe	door	门
+menu.recipe	bench	长凳
+menu.recipe	table	桌子
+menu.recipe	sleeping bunk	卧铺
+menu.recipe	sauna stove	桑拿炉
+menu.recipe	framework	建筑框架
+menu.recipe	north-west corner of a kota	科塔帐篷西北角
+menu.recipe	northern wall of a kota	科塔帐篷北壁
+menu.recipe	north-east corner of a kota	科塔帐篷东北角
+menu.recipe	western wall of a kota	科塔帐篷西壁
+menu.recipe	inside of a kota	科塔帐篷内部
+menu.recipe	eastern wall of a kota	科塔帐篷东壁
+menu.recipe	south-west corner of a kota	科塔帐篷西南角
+menu.recipe	southern wall of a kota	科塔帐篷南壁
+menu.recipe	south-east corner of a kota	科塔帐篷东南角
+menu.recipe	kota doorway	科塔帐篷入口
+menu.recipe	shelter	庇护所
+menu.recipe	fence	围栏
+menu.recipe	fence gate	围栏门
+menu.recipe	cellar	地窖

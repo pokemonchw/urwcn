@@ -41,6 +41,7 @@ void configure(const Services&);
 // The active construction owns one reference; the returned handle is borrowed.
 Handle begin(native_text_resource::SourceKey,const char* topic);
 Handle active();
+Handle input_owner(Handle);
 // An actual native cache/view restore installs the matching owned menu and
 // English link table together. The caller supplies the real owner handle.
 void activate(Handle);
@@ -52,8 +53,9 @@ std::size_t append(Handle,u64 native_record,const native_text_resource::TextSour
 Status consume(Handle,std::size_t record,u32& native_return);
 void capture(Handle);
 // Seal at 3E1DE Before, after the original CFAF0 navigation constructors. This
-// captures their independent nonzero-action native records; no link rectangle
-// is copied into the source. The typed button source retains the full labels.
+// captures their independent nonzero-action native records and neutral Menu
+// label/annotation resources; no link rectangle is copied into the source.
+// The typed button source retains the full display labels separately.
 void seal(Handle);
 const Source& source(Handle);
 MenuHandle menu_owner(Handle);
@@ -63,8 +65,9 @@ u32 action_row(Handle,u32 action);
 
 void retain(Handle);
 void release(Handle);
-// A frozen cache adopts this new handle's single reference. Its owned native
-// Menu is independently snapshotted, including the latest live input fields.
+// A frozen cache adopts this new handle's single reference. Its source and
+// Menu resource snapshot retain the actual logical Flow/Menu input owners;
+// cached link ordinals and selection bytes never become a new input view.
 Handle snapshot(Handle);
 Status paint(Handle);
 

@@ -64,7 +64,7 @@ if ($IsLinux) {
     $desktopText = @"
 [Desktop Entry]
 Type=Application
-Name=UnReal World 简体中文
+Name=不真实的世界 简体中文
 Comment=Byayoi 同人社区 · Linux 原生汉化
 Exec="$PSScriptRoot/$launcherName"
 Path=$(Split-Path -Parent $game)

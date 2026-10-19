@@ -158,6 +158,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     case scope:
         if(event.phase==NativePhase::before) {
             state={1,0};
+            begin(event,Scope::text);
             api.StartTextInput();
         } else { state.active=0; api.StopTextInput(); }
         return Status::ok;

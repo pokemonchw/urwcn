@@ -28,11 +28,6 @@ void restore_windows_profile_error_source(const void* bytes) {
 }
 bool windows_season_drawing;
 bool windows_attributes_drawing;
-bool windows_season_refresh=true;
-void invalidate_windows_profile() { windows_season_refresh=true; }
-bool windows_profile_input(const NativeEvent& e) {
-    return windows_season_refresh&&native_language_redraw::menu_input(e,0xFB40);
-}
 Status windows_title_metrics(const char* input,render::Metrics& measured) {
     std::vector<char> encoded,utf8;
     auto status=native_name_input::display(input,encoded);
@@ -61,10 +56,7 @@ Status windows_profile_text(const NativeEvent& e,TextComponent component,u32& de
                             Scope kind,const char* value=nullptr) {
     std::vector<char> encoded;
     Status status;
-    if(e.id==character_creation_panel) {
-        native_menu_component::bind_title(component,ptr<char>(destination),value);
-        status=native_menu_component::resolve_title(encoded);
-    } else status=translate(component,ptr<char>(destination),value,encoded);
+    status=translate(component,ptr<char>(destination),value,encoded);
     if(status!=Status::ok) return status;
     return lend_text(e,encoded,destination,kind);
 }
@@ -111,7 +103,7 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
         }
         break;
     case wp_title_width_first:case wp_title_width_second:
-        if(native_name_input::contains_display(ptr<char>(e.frame->esi))) {
+        if(in(Scope::titled_panel) || in(Scope::profile_panel) || native_name_input::contains_display(ptr<char>(e.frame->esi))) {
             render::Metrics measured{};
             const auto status=windows_title_metrics(ptr<char>(e.frame->esi),measured);
             if(status!=Status::ok)return status;
@@ -136,29 +128,8 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
             return Status::ok;
         }
         break;
-    case wp_season_draw: windows_season_drawing=true;windows_season_refresh=false;return Status::ok;
+    case wp_season_draw: windows_season_drawing=true;return Status::ok;
     case wp_attribute_draw: windows_attributes_drawing=true;return Status::ok;
-    case character_creation_panel:
-        if(windows_season_drawing)
-            return windows_profile_text(e,TextComponent::profile_season_title,e.arguments[2],Scope::profile_panel);
-        break;
-    case character_creation_button:
-        if(windows_season_drawing || windows_attributes_drawing) {
-            const auto action=*ptr<u32>(e.frame->esi+0xC8);
-            TextComponent component{};
-            if(windows_season_drawing) {
-                if(action>='1' && action<='4') component=static_cast<TextComponent>(
-                    static_cast<u32>(TextComponent::profile_season_spring)+action-'1');
-                else if(action==27) component=TextComponent::profile_back;
-                else return Status::ok;
-            } else {
-                if(action=='Y') component=TextComponent::profile_continue;
-                else if(action=='N') component=TextComponent::profile_reroll;
-                else return Status::ok;
-            }
-            return character_creation_label(e,component);
-        }
-        break;
     case wp_season_help:return windows_profile_append(e,TextComponent::profile_season_help);
     case wp_portrait_help:return windows_profile_append(e,TextComponent::profile_portrait_help);
     case wp_season_footer:begin(e,Scope::profile_footer);return Status::ok;

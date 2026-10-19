@@ -24,11 +24,15 @@ function Hex-Text([string]$text) { return Hex-Bytes ([Text.Encoding]::UTF8.GetBy
 $entries=[Collections.Generic.SortedDictionary[string,string]]::new([StringComparer]::Ordinal)
 $entries['message.continue']='按 [空格] 继续'
 $entries['message.more']='[空格] 查看后续 -- [ESC] 跳过'
-foreach($name in @('direct','branches','branches_remaining','direct_dispatch')) {
+foreach($name in @('direct','branches','branches_remaining','direct_dispatch','direct_copied','direct_appended')) {
     foreach($line in [IO.File]::ReadAllLines((Join-Path $PSScriptRoot "messages_embedded/$name.zh-CN.tsv"))) {
         if(!$line -or $line.StartsWith('#')) {continue}
         $fields=$line.Split("`t",2)
-        $entries['message.literal.'+(Hex-Bytes (Read-LiteralBytes $fields[0]))]=$fields[1]
+        # The 3.89 embedded-literal inventory uses only E4/F6 above ASCII.
+        # message_source_utf8 passes their Unicode UTF-8 spelling to semantic,
+        # so the catalog identity must use the same spelling, not PE bytes.
+        $literal=[Text.Encoding]::Latin1.GetString((Read-LiteralBytes $fields[0]))
+        $entries['message.literal.'+(Hex-Text $literal)]=$fields[1]
     }
 }
 foreach($file in Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'messages_embedded') -Filter 'formats*.zh-CN.tsv') {

@@ -107,4 +107,120 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_native_heading(c
         "popl %ebx\n\t"
         "ret\n\t");
 }
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_compound_hint(const CompoundHintCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "pushl 16(%ebx)\n\t"
+        "pushl 12(%ebx)\n\t"
+        "movl 4(%ebx),%ecx\n\t"
+        "movl 8(%ebx),%edx\n\t"
+        "call *(%ebx)\n\t"
+        "addl $8,%esp\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_title_strip(const TitleStripCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "pushl 20(%ebx)\n\t"
+        "pushl 16(%ebx)\n\t"
+        "pushl 12(%ebx)\n\t"
+        "movl 4(%ebx),%ecx\n\t"
+        "movl 8(%ebx),%edx\n\t"
+        "call *(%ebx)\n\t"
+        "addl $12,%esp\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_selector_renderer(const SelectorRendererCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "pushl $0\n\t"
+        "xorl %ecx,%ecx\n\t"
+        "movl 4(%ebx),%edx\n\t"
+        "call *(%ebx)\n\t"
+        "addl $4,%esp\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_scale_ruler(const ScaleRulerCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "pushl 16(%ebx)\n\t"
+        "pushl 12(%ebx)\n\t"
+        "movl 4(%ebx),%ecx\n\t"
+        "movl 8(%ebx),%edx\n\t"
+        "call *(%ebx)\n\t"
+        "addl $8,%esp\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_world_map(const WorldMapCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "pushl 16(%ebx)\n\t"
+        "pushl 12(%ebx)\n\t"
+        "movl 4(%ebx),%ecx\n\t"
+        "movl 8(%ebx),%edx\n\t"
+        "call *(%ebx)\n\t"
+        "addl $8,%esp\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_world_map_marker(const WorldMapMarkerCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "pushl 4(%ebx)\n\t"
+        "xorl %ecx,%ecx\n\t"
+        "xorl %edx,%edx\n\t"
+        "call *(%ebx)\n\t"
+        "addl $4,%esp\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_no_argument(const NoArgumentCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "xorl %ecx,%ecx\n\t"
+        "xorl %edx,%edx\n\t"
+        "call *(%ebx)\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_hud_status_cell(const HudStatusCellCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "pushl 24(%ebx)\n\t"
+        "pushl $0\n\t"
+        "pushl 20(%ebx)\n\t"
+        "pushl 16(%ebx)\n\t"
+        "pushl 12(%ebx)\n\t"
+        "movl 4(%ebx),%ecx\n\t"
+        "movl 8(%ebx),%edx\n\t"
+        "call *(%ebx)\n\t"
+        "addl $20,%esp\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_hud_status_bar(const HudStatusBarCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "pushl 16(%ebx)\n\t"
+        "pushl 12(%ebx)\n\t"
+        "movl 4(%ebx),%ecx\n\t"
+        "movl 8(%ebx),%edx\n\t"
+        "call *(%ebx)\n\t"
+        "addl $8,%esp\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
 }

@@ -5,14 +5,27 @@
 // settlement-companion-builders-ghidra.c, settlement-data-source-producers-ghidra.c,
 // settlement-geography-builders-disassembly.txt and settlement-place-builder-disassembly.txt.
 namespace windows_message_values {
-void observe_value(u32,u32,const char*,const std::string&);
+void observe_value(u32,u32,const char*,const MessageText&);
+}
+namespace windows_message_calendar {
+void observe_geography(u32,const MessageText&);
 }
 namespace windows_message_geography {
 enum class Kind : u32 { terrain,region,direction,distance,combined,location,place_display,place,
-                        nearby,area,region_location };
+                        nearby,area,region_location,sapling,terrain_description };
 struct Site {u32 site,target,words;Kind kind;};
 constexpr u32 first_call=0xf000;
 const Site sites[]={
+    {0x1662eb,0x94bc0,1,Kind::terrain_description},
+    {0x1085fd,0x94bc0,1,Kind::terrain_description},
+    {0x3fbb,0x94bc0,1,Kind::terrain_description},
+    {0x94c23,0x7730,0,Kind::sapling},
+    {0x12f42a,0x7730,0,Kind::sapling},
+    {0x12f4d3,0x7730,0,Kind::sapling},
+    {0x132609,0x7730,0,Kind::sapling},
+    {0x1189bc,0x7730,0,Kind::sapling},
+    {0x118a0b,0x7730,0,Kind::sapling},
+    {0x11faf6,0x7730,0,Kind::sapling},
     {0x90418,0x7520,0,Kind::terrain},
     {0x8e637,0x7520,0,Kind::terrain},
     {0x1083c4,0x7520,0,Kind::terrain},
@@ -132,7 +145,10 @@ enum Hook : u32 {
     area_border,area_plain,region_location_format,constant_km_short,constant_km_couple,
     constant_miles_short,constant_miles_couple,distance_away,
     place_finnish,place_named,place_outside,place_prefix,place_suffix,
-    near_corner,near_close,area_neighbor_copy
+    near_corner,near_close,area_neighbor_copy,
+    sapling_last_word,tree_conditions,ice_base,snow_depth,snow_crust,snow_join,snow_clear,
+    ground_prefix,ground_base,ground_crag,ground_marsh,ground_rock,
+    snow_overwrite,snow_append,native_base_copy
 };
 enum class PlaceOrigin : u32 { identity,gloss };
 struct Frame {
@@ -141,7 +157,7 @@ struct Frame {
     PlaceOrigin origin=PlaceOrigin::identity;
     Status status=Status::ok;
     bool constant_distance{};
-    std::string body,first,second,pending;
+    MessageText body,first,second,pending;
 };
 std::vector<Frame> frames;
 
@@ -153,7 +169,7 @@ void save(std::vector<unsigned char>& state) {
         message_state_write(state,frame.kind);message_state_write(state,frame.origin);
         message_state_write(state,frame.status);message_state_write(state,frame.constant_distance);
         for(const auto* text:{&frame.body,&frame.first,&frame.second,&frame.pending})
-            message_state_string(state,*text);
+            native_message_source::write(state,*text);
     }
 }
 void restore(const unsigned char*& state) {
@@ -164,26 +180,26 @@ void restore(const unsigned char*& state) {
         message_state_read(state,frame.kind);message_state_read(state,frame.origin);
         message_state_read(state,frame.status);message_state_read(state,frame.constant_distance);
         for(auto* text:{&frame.body,&frame.first,&frame.second,&frame.pending})
-            message_state_string(state,*text);
+            *text=native_message_source::read(state);
     }
 }
-Status lookup(Frame& frame,const char* domain,const char* source,std::string& output) {
-    if(frame.status==Status::ok) frame.status=message_lookup_value(domain,source,output);
-    return frame.status;
+Status lookup(Frame& frame,const char* domain,const char* source,MessageText& output) {
+    output=message_source_lookup(domain,source);return frame.status;
 }
 Status format(Frame& frame,const char* source,
-              const std::vector<std::pair<const char*,std::string>>& arguments,
-              std::string& output) {
-    if(lookup(frame,"geography.format",source,output)!=Status::ok) return frame.status;
-    std::size_t start=0;
-    for(const auto& [specifier,value]:arguments) {
-        const auto position=output.find(specifier,start);
-        output.replace(position,std::strlen(specifier),value);
-        start=position+value.size();
-    }
-    return Status::ok;
+              const std::vector<std::pair<const char*,MessageText>>& arguments,
+              MessageText& output) {
+    std::vector<MessageText> values;std::vector<std::string> conversions;
+    for(const auto& [specifier,value]:arguments) {values.push_back(value);conversions.emplace_back(specifier);}
+    output=native_message_source::format(message_source_lookup("geography.format",source),
+        std::move(values),std::move(conversions));return frame.status;
 }
-
+void append(MessageText& destination,const MessageText& value) {
+    destination=native_message_source::concat({std::move(destination),value});
+}
+MessageText number(u32 word) {
+    return native_message_source::scalar(native_message_source::Scalar::signed32,word,"%d");
+}
 void append_hooks(std::vector<HookSpec>& hooks) {
     using native_name_input::native_call;
     using native_name_input::instruction;
@@ -216,6 +232,23 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     absolute(near_corner,0x9c1fa,{0xa1,0,0,0,0},1,0x19dd88);
     absolute(near_close,0x9c26f,{0xa1,0,0,0,0},1,0x19dda0);
     hooks.push_back(instruction(area_neighbor_copy,0x9c6e7,{0x8d,0x8d,0xc0,0xfe,0xff,0xff}));
+    hooks.push_back(native_call(sapling_last_word,0x7807,0xd4140,0));
+    absolute(tree_conditions,0x94d7c,{0x66,0xa1,0,0,0,0},2,0x19d7b8);
+    hooks.push_back(instruction(ice_base,0x94e3f,{0xc7,0x85,0x54,0xfe,0xff,0xff,0x49,0x63,0x65,0x00}));
+    hooks.push_back(native_call(snow_depth,0x94ec7,0x15e5f0,0));
+    hooks.push_back(native_call(snow_crust,0x94ee3,0x15e810,0));
+    absolute(snow_join,0x94f22,{0xa1,0,0,0,0},1,0x19d7bc);
+    hooks.push_back(native_call(snow_clear,0x94fb4,0x18ae60,3));
+    hooks.push_back(instruction(ground_prefix,0x95023,{0x81,0xfe,0xff,0x0b,0x00,0x00}));
+    hooks.push_back(instruction(ground_base,0x95061,{0x8d,0x95,0x54,0xfe,0xff,0xff}));
+    absolute(ground_crag,0x950cf,{0xa1,0,0,0,0},1,0x19d7e4);
+    absolute(ground_marsh,0x950aa,{0xa1,0,0,0,0},1,0x19d7f8);
+    absolute(ground_rock,0x950ee,{0xa1,0,0,0,0},1,0x19d7ec);
+    // These two native byte-copy loops select the complete semantic source.
+    // Repeated visits assign the same source; no bytes or layout are tracked.
+    hooks.push_back(instruction(snow_overwrite,0x95121,{0x8a,0x84,0x0d,0xbc,0xfe,0xff,0xff}));
+    hooks.push_back(instruction(snow_append,0x95135,{0x8d,0x4d,0x8c,0x49,0x0f,0x1f,0x80,0,0,0,0}));
+    hooks.push_back(instruction(native_base_copy,0x951b0,{0x8a,0x84,0x0d,0x54,0xfe,0xff,0xff}));
 }
 
 void receive_child(const Frame& child,const NativeEvent& event) {
@@ -228,7 +261,8 @@ void receive_child(const Frame& child,const NativeEvent& event) {
     // by the instructions immediately after each named CALL.
     if(parent.kind==Kind::combined) {
         if(child.site==0x9c819) parent.body=child.body;
-        if(child.site==0x9c85f) parent.body+="，"+child.body;
+        if(child.site==0x9c85f) parent.body=native_message_source::concat({std::move(parent.body),
+            message_source_lookup("geography.separator",", "),child.body});
     }
     if(parent.kind==Kind::location) {
         if(child.site==0x15ec9d) {
@@ -240,17 +274,19 @@ void receive_child(const Frame& child,const NativeEvent& event) {
     }
     if(parent.kind==Kind::nearby &&
        (child.site==0x9c233 || child.site==0x9c298 || child.site==0x9c2c4))
-        parent.body+=child.body;
+        append(parent.body,child.body);
     if(parent.kind==Kind::area) {
         if(child.site==0x9c3a9) parent.first=child.body;
         if(child.site==0x9c55c || child.site==0x9c5d4 ||
            child.site==0x9c645 || child.site==0x9c6b6) parent.second=child.body;
     }
+    if(parent.kind==Kind::sapling && child.site==0x77a2) parent.body=child.body;
+    if(parent.kind==Kind::terrain_description && child.site==0x94c23) parent.first=child.body;
 }
 
 Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
     const bool producer=event.id>=first_call && event.id<first_call+sizeof(sites)/sizeof(sites[0]);
-    handled=producer || (event.id>=distance_km && event.id<=area_neighbor_copy);
+    handled=producer || (event.id>=distance_km && event.id<=native_base_copy);
     if(!handled) return Status::ok;
     if(producer) {
         const auto& site=sites[event.id-first_call];
@@ -275,15 +311,18 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
                 // Finnish, named-place and out-of-world branches each mark
                 // identity explicitly. Only the English-gloss branch marks gloss.
                 if(frame.origin==PlaceOrigin::identity)
-                    frame.status=message_identity_value(original,frame.body);
+                    frame.body=message_source_identity(original);
                 break;
             case Kind::combined:case Kind::location:case Kind::place_display:
-            case Kind::nearby:case Kind::area:case Kind::region_location:break;
+            case Kind::nearby:case Kind::area:case Kind::region_location:
+            case Kind::sapling:case Kind::terrain_description:break;
             }
         }
+        frame.body.original=message_source_utf8(original);
         if(frame.status==Status::ok) {
-            message_bind_value(original,frame.body);
+            message_bind_source(original,frame.body);
             windows_message_values::observe_value(site.site,site.target,original,frame.body);
+            windows_message_calendar::observe_geography(site.site,frame.body);
         }
         receive_child(frame,event);
         return frame.status;
@@ -292,48 +331,43 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
     if(frame.status!=Status::ok) return frame.status;
     if(event.id<=region_location_format) {
         if(event.phase==NativePhase::after) {
-            message_bind_value(ptr<char>(frame.pending_owner),frame.pending);
+            message_bind_source(ptr<char>(frame.pending_owner),frame.pending);
             return frame.status;
         }
         frame.pending_owner=event.arguments[0];
         const auto* source=ptr<char>(event.arguments[1]);
         if(event.id==distance_km || event.id==distance_miles) {
-            format(frame,source,{{"%d",std::to_string(static_cast<std::int32_t>(event.arguments[2]))}},frame.pending);
+            format(frame,source,{{"%d",number(event.arguments[2])}},frame.pending);
             frame.body=frame.pending;
         } else if(event.id==distance_km_append || event.id==distance_miles_append) {
             // The native walk-duration branches have finished all constant
             // overwrites before reaching these two actual append formats.
             lookup(frame,"geography.distance",ptr<char>(event.frame->ebx),frame.body);
-            format(frame,source,{{"%d",std::to_string(static_cast<std::int32_t>(event.arguments[2]))}},frame.pending);
-            frame.body+=frame.pending;frame.constant_distance=false;
+            format(frame,source,{{"%d",number(event.arguments[2])}},frame.pending);
+            append(frame.body,frame.pending);frame.constant_distance=false;
         } else if(event.id==location_format) {
             // Native 55ED1B selected precisely one of these two copied values.
             const auto& argument=event.arguments[2]==frame.first_owner ? frame.first : frame.second;
             format(frame,source,{{"%s",argument}},frame.pending);frame.body=frame.pending;
         } else if(event.id==place_format || event.id==region_location_format) {
-            std::string name,gloss;
-            frame.status=message_translate_bound(ptr<char>(event.arguments[2]),name);
-            if(frame.status==Status::ok)
-                frame.status=message_translate_bound(ptr<char>(event.arguments[3]),gloss);
-            if(frame.status==Status::ok)
-                format(frame,source,{{"%s",name},{"%s",gloss}},frame.pending);
+            auto name=message_source_bound(ptr<char>(event.arguments[2]));
+            auto gloss=message_source_bound(ptr<char>(event.arguments[3]));
+            format(frame,source,{{"%s",name},{"%s",gloss}},frame.pending);
             frame.body=frame.pending;
         } else if(event.id==near_meters || event.id==near_yards) {
-            std::string direction;
-            frame.status=message_translate_bound(ptr<char>(event.arguments[3]),direction);
+            auto direction=message_source_bound(ptr<char>(event.arguments[3]));
             if(frame.status==Status::ok)
-                format(frame,source,{{"%d",std::to_string(static_cast<std::int32_t>(event.arguments[2]))},
+                format(frame,source,{{"%d",number(event.arguments[2])},
                                      {"%s",direction}},frame.pending);
             frame.body=frame.pending;
         } else if(event.id==near_visible) {
-            std::string direction;
-            frame.status=message_translate_bound(ptr<char>(event.arguments[2]),direction);
+            auto direction=message_source_bound(ptr<char>(event.arguments[2]));
             if(frame.status==Status::ok) format(frame,source,{{"%s",direction}},frame.pending);
             frame.body=frame.pending;
         } else if(event.id==near_inside) {
             format(frame,source,{},frame.pending);frame.body=frame.pending;
         } else if(event.id==area_border || event.id==area_plain) {
-            std::string size,direction;
+            MessageText size,direction;
             lookup(frame,"geography.size",ptr<char>(event.arguments[2]),size);
             if(event.id==area_border) {
                 lookup(frame,"direction",ptr<char>(event.arguments[5]),direction);
@@ -350,8 +384,11 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
         frame.constant_distance=true;break;
     case distance_away:
         if(!frame.constant_distance) {
-            std::string value;
-            format(frame," away",{{"%s",frame.body}},value);frame.body=std::move(value);
+            // 49C07A appends the actual native distance suffix. Chinese places
+            // the distance after its relation word, using this selected branch.
+            MessageText value;value.kind=native_message_source::Kind::format;
+            value.children={message_source_lookup("geography.format"," away"),std::move(frame.body)};
+            value.syntax={"%s"};frame.body=std::move(value);
         }
         break;
     case place_finnish:case place_named:case place_outside:
@@ -361,17 +398,48 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
         lookup(frame,"geography.prefix",at<char>(0x54f0200+event.frame->eax),frame.body);
         break;
     case place_suffix: {
-        std::string suffix;
+        MessageText suffix;
         lookup(frame,"geography.suffix",at<char>(0x54f5200+event.frame->eax),suffix);
-        frame.body+=suffix;break;
+        append(frame.body,suffix);break;
     }
     case near_corner:case near_close: {
-        std::string text;
+        MessageText text;
         lookup(frame,"geography.format",event.id==near_corner ? "just around the corner " : "just nearby ",text);
-        frame.body+=text;break;
+        append(frame.body,text);break;
     }
     case area_neighbor_copy:
-        message_bind_value(ptr<char>(event.frame->ebp-0x140),frame.second);break;
+        message_bind_source(ptr<char>(event.frame->ebp-0x140),frame.second);break;
+    case sapling_last_word:
+        if(event.phase==NativePhase::after) frame.body=native_message_source::concat({
+            message_source_lookup("tree",ptr<char>(event.frame->eax)),
+            message_source_lookup("geography.terrain-part"," sapling")});
+        break;
+    case tree_conditions:
+        frame.first=native_message_source::concat({std::move(frame.first),
+            message_source_lookup("geography.terrain-part"," ("),
+            message_source_lookup("geography.tree-condition",ptr<char>(event.frame->ebp-0xdc)),
+            message_source_lookup("geography.terrain-part",")")});break;
+    case ice_base:frame.first=message_source_lookup("geography.terrain-part","Ice");break;
+    case snow_depth:case snow_crust:
+        if(event.phase==NativePhase::after) {
+            const auto* native=ptr<char>(event.frame->eax);
+            auto source=message_source_lookup(event.id==snow_depth?"geography.snow":"geography.crust",native);
+            message_bind_source(native,source);
+            if(event.id==snow_depth)frame.second=std::move(source);else frame.pending=std::move(source);
+        }
+        break;
+    case snow_join:frame.second=native_message_source::concat({std::move(frame.second),
+        message_source_lookup("geography.terrain-part"," with "),frame.pending});break;
+    case snow_clear:if(event.phase==NativePhase::after)frame.second=native_message_source::original("");break;
+    case ground_prefix:frame.body=message_source_lookup("geography.terrain-prefix",ptr<char>(event.frame->ebp-0x74));break;
+    case ground_base:append(frame.body,frame.first);break;
+    case ground_crag:append(frame.body,message_source_lookup("geography.terrain-part","Crag"));break;
+    case ground_marsh:append(frame.body,message_source_lookup("geography.terrain-part","Marshland"));break;
+    case ground_rock:append(frame.body,message_source_lookup("geography.terrain-part","Base rock"));break;
+    case snow_overwrite:frame.body=frame.second;break;
+    case snow_append:frame.body=native_message_source::concat({std::move(frame.body),
+        message_source_lookup("geography.terrain-part",", and "),frame.second});break;
+    case native_base_copy:frame.body=frame.first;break;
     }
     return frame.status;
 }

@@ -1,0 +1,9 @@
+domain	source	target
+menu.return.title	CONTAINER OPTIONS	容器操作
+menu.return.title	LEASHING OPTIONS	牵引绳操作
+menu.return.title	ITEM PART OPTIONS	物品配件操作
+menu.return.label	Throw water on the sauna stove	向桑拿炉上泼水
+menu.return.label	Pour or put something into	倒入或放入物品
+menu.return.label	Unleash	解开牵引绳
+menu.return.label	Tie to a tree	拴在树上
+menu.format	Remove the %s	卸下%s

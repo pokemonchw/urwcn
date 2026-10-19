@@ -43,13 +43,21 @@
     "glyph_drawing": "mod render module within native resource operations",
     "layout_controls_input_cache_lifecycle": "game native UI"
   },
+  "global_native_ui_model": {
+    "platform": "Windows x86 3.89; this common-source revision is not implemented in the Linux branch",
+    "source": "Root, native components, Menu and Link/Message Flow, complete renderer factories and native cache constructors share neutral sources between normal display and locale invalidation",
+    "state": "HDA7 neutral arenas and NGT2 resource constructors; HDA4/NGT1 and the historical Active-only format have no implemented in-place migration",
+    "selection": "Native software D0650 precedes upload; modern 10B480 composition precedes D0850 selection and 10B680 presentation",
+    "historical_metadata": "Fields explicitly labelled historical below describe superseded page redraw hooks and are not the current global invalidation protocol",
+    "evidence": "docs/evidence/20261020-global-language-native-hook-delivery.md"
+  },
   "about_window": {
     "entry_rva": "0x1247C0",
     "scope": "native title, dynamic version and copyright, publisher, release notes, installation label and press-key button",
     "preserved_values": "native version getter, copyright years, author and publisher names, website, truncated installation path and input actions",
     "measurement": "native centering consumes actual font width; button retains native tiles and iterates complete encoded characters",
     "drawing": "immediate glyphs in the existing native physical-density surface",
-    "refresh": "native About redraw skips only its new input wait; pre-hook open windows refresh at the confirmed natural input-call boundary"
+    "historical_refresh": "HDA4 and earlier: native About redraw skipped its new input wait; superseded by global_native_ui_model"
   },
   "credits_window": {
     "entry_rva": "0x1244F0",
@@ -63,7 +71,7 @@
     "measurement": "shared native title centering, paragraph wrap and cursor advance, and full-character plain-button metrics",
     "drawing": "immediate glyph output to the native physical-density surface; native layout and caches",
     "original_name_encoding": "Latin-1 countrymen_1 is converted at its confirmed display boundary; other native strings are ASCII",
-    "refresh": "native menu background and complete Credits function rebuild; only the synchronous redraw wait is skipped; old open windows use D3C80 return 12468A at D3D05"
+    "historical_refresh": "HDA4 and earlier: whole Credits function plus background rebuilt with its wait skipped; superseded by global_native_ui_model"
   },
   "setup_options": {
     "entry_rva": "0x105700",
@@ -81,7 +89,7 @@
     "exit_suffix_draw_call": "0x1149F9",
     "exit_width_instruction": "0xCFC5D: 8D 04 CD 0A 00 00 00",
     "installation_path": "unchanged native _getcwd display",
-    "open_page_cache": "existing title/footer cache changes on native page reconstruction; no forced redraw or overlay"
+    "open_page_cache": "native cache slots retain neutral constructor sources and invalidate by language generation; no overlay"
   },
   "ancestors_list": {
     "entry_rva": "0xDE990",
@@ -102,8 +110,8 @@
     "shared_consumers": "0x115A94 title; 0x1149F9 key suffix; 0xCFC5D suffix width; 0x10E862 and 0x10E8F2 markup text leaves",
     "preserved": "character names, saved death-message text, original pronoun lookup, native numeric rounding, sorting, paging, selection and input actions",
     "drawing": "complete encoded strings and real font width within each native component call; immediate output to the native physical-density surface",
-    "refresh": "native D1120 continuation rebuilds background, title, named cache, rows and controls while retaining original sort arrays, page offset and selection; old open pages refresh at the next native non-key wake",
-    "redraw_hooks": [
+    "historical_refresh": "HDA4 and earlier: ancestor-specific D1120 reconstruction; superseded by global_native_ui_model",
+    "historical_redraw_hooks": [
       "0xD12B4",
       "0xDF187",
       "0xDEB84",
@@ -114,7 +122,7 @@
       "docs/evidence/20261019-ancestors-native.md",
       "docs/evidence/20261019-ancestors-redraw-native.md"
     ],
-    "state": "HDA3 sizes unchanged; redraw pending/rebuilding bit 1 identifies the ancestor list; three summary integers live only for one native row call"
+    "historical_state": "HDA3 used ancestor-specific pending bits; current neutral summary arguments are owned by common component sources"
   },
   "character_creation_menu": {
     "draw_scope_call": "0x125CFB -> 0xCFFB0",
@@ -126,7 +134,7 @@
     "preserved": "English menu records, Q/C/E/T/ESC prefixes and actions, two blank rows, native panel geometry and current selection",
     "measurement": "complete suffix decoding and real font cursor width; native mode 8 selection and mouse hit widths remain panel based",
     "drawing": "immediate glyph output at native target density inside the original component calls",
-    "refresh": "D12B4 with native caller 125D05 redraws balanced 125CFB..125D00, native working cache and selection; same input result retained",
+    "historical_refresh": "HDA4 and earlier: caller 125D05 selected a page redraw; superseded by global_native_ui_model",
     "evidence": [
       "docs/evidence/20261019-character-creation-static.txt",
       "docs/evidence/20261019-character-creation-disassembly.txt",
@@ -162,8 +170,8 @@
     "measurement": "native left-aligned titles, complete suffix metrics and native paragraph wrap/cursor extensions; ASCII key prefixes preserved",
     "drawing": "immediate complete glyphs in the existing native physical-density surface; no text replay or page snapshot",
     "preserved_values": "English culture/menu records including MENULIST.SAV, numeric choices, sex values, name bytes, validation, directory checks, random generation and input actions",
-    "refresh": "D12B4 recognizes caller F8D4/F43A and redraws the current culture/sex menu only; name-stage completed dimmed panels and heading/footer retain native reconstruction lifetime",
-    "pending_boundary": "pure redraw of completed culture/sex pixels during name entry is unconfirmed; no creation-stage or input replay",
+    "refresh": "common component/cache sources reconstruct culture/sex panels and heading/footer; the active name field redraws in the same original input return",
+    "name_field_boundary": "Scene has no separate NameField source; see docs/evidence/20261020-native-name-field-global-wake.md",
     "evidence": [
       "docs/evidence/20261019-character-profile-static.txt",
       "docs/evidence/20261019-character-profile-disassembly.txt",
@@ -187,9 +195,9 @@
     "introduction_paragraph_call": "0xFB84B -> 0x10EB40",
     "button_call": "0xFB85F -> 0x114680; existing full-character plain-button metrics",
     "preserved_values": "English source/story files, native scenario value and generation actions, picture selection, colors, layout, UI caches and continuation input",
-    "refresh": "D3D05 identifies original return 17E86A; complete FB7D0 redraw skips scenario business via FB7D1 -> FB7FD and input drain/wait via D3CDC -> D3D0F",
-    "state": "Original hook IDs retained; per synchronous story invocation only title ID and record ordinal; HDA4 adds native name input state",
-    "pending_boundary": "an already-blocked native input call must naturally return to D3D05; no synthesized input and no claim that Applied proves a visible refresh",
+    "historical_refresh": "HDA4 and earlier used the scenario-specific FB7D0 redraw; superseded by global_native_ui_model",
+    "state": "HDA7 stores the accepted native scenario record source and common component ownership; no scenario business replay",
+    "runtime_boundary": "no synthesized input; a publication receipt does not prove visible refresh",
     "evidence": [
       "docs/evidence/20261019-scenario-static-boundaries.txt",
       "docs/evidence/20261019-scenario-static-disassembly.txt",
@@ -209,7 +217,7 @@
     "scope": "status labels and selected states, penalties, action, direction, speed, command/repeat/help labels, wielded title, date, calendar, region, generated place gloss, scale and map kind",
     "preserved": "names, native numeric values and units, original English state/lexicons, actions, native controls, positions and caches",
     "drawing": "complete strings rendered synchronously at actual native target density; native width, wrap, centering and cursor paths consume matching font metrics",
-    "refresh_boundary": "ordinary native component reconstruction; no forced FA2A0/F9200/FAA30 replay because they contain state changes and RNG queries",
+    "refresh_boundary": "common neutral status Cell/Summary, full world-map and renderer factory sources; no forced FA2A0/F9200/FAA30 business replay",
     "evidence": [
       "docs/evidence/hud-right-static.txt",
       "docs/evidence/world-hud-static.txt",
@@ -233,7 +241,7 @@
     "preserved_values": "English title storage, save enumeration, character names, paths, selection and input actions",
     "measurement": "existing complete-string font metrics update native 10E5A0 cursor advance",
     "drawing": "immediate glyph output to the native physical-density surface; native panel and caches",
-    "refresh": "new language appears when the native window draws again; no save-scan replay or forced wait exit",
+    "refresh": "common component/cache invalidation rebuilds native display sources; save enumeration is not replayed",
     "evidence": "docs/evidence/20261019-load-saved-character-native.md"
   },
   "language_toggle": {
@@ -242,14 +250,10 @@
       "0xD1CD4",
       "0xD26AB"
     ],
-    "setup_rebuild_hooks": [
-      "0xD12B4",
-      "0x106B25",
-      "0x1057E2"
-    ],
+    "common_input_result_hook": "0xD12B4 synchronizes native selection and repaint state only",
     "intro_mode_boundary": "0x18097D -> 0x1254C0",
-    "behavior": "display only; native menu/about/credits/setup redraw; current intro sequence retains its entry language",
-    "state": "HDA4: seven u32 language/input/setup/name flags; reads previously published HDA2/HDA3; Windows Host ABI 1 unchanged"
+    "behavior": "display only; common Scene invalidation resolves the selected language through the same full native component consumers and cache constructors; no per-page reentry table",
+    "state": "HDA7/NGT2; Windows Host ABI remains 1 but that does not imply state compatibility with HDA4/NGT1"
   },
   "character_creation_complete": {
     "function_rva": "0x12F80",
@@ -257,10 +261,11 @@
     "button_call_rva": "0x13334",
     "native_consumers": "10E910 centered complete text and 114680 plain button; native font metrics, glyph advance, target pixels and caches",
     "identity": "Display-only name plus culture; UTF-8/Nordic name preserved, culture ID at A32A6F5 uses the existing ten-culture vocabulary. Native sprintf buffers and English player data are unchanged.",
-    "refresh": "Unhooked 1333C -> D3C80 keeps caller return 13341; existing D3D05 before-input call rebuilds pending page in a fresh 12F80 frame: 12F96 -> 13187, D3CDC -> D3D0F, 13341 -> 133C1. No character generation, saves or post-wait business is replayed.",
+    "historical_refresh": "HDA4 and earlier rebuilt a fresh 12F80 page frame; superseded by common component sources without character-generation or save replay",
     "evidence": ["docs/evidence/20261019-character-creation-complete-native.md", "docs/evidence/creation-complete-disassembly.txt", "docs/evidence/creation-complete-ghidra.c"]
   },
   "linux_progress_sync": {
+    "status": "Historical Windows synchronization from Linux 70fcd90; resource and refresh details below predate global_native_ui_model",
     "source_commit": "70fcd90",
     "target": "Windows x86 PE e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9",
     "encyclopedia": "All 312 topics / 313 GAME.NFO records, native link words and navigation; same GAME.NFO SHA256 as Linux",
@@ -270,8 +275,8 @@
     "names": "UTF-8 in original 13-byte name field, original 12-byte input budget, whole-scalar backspace, native SDL IME and cursor; Windows StrUnicode ASCII filenames retained",
     "farewell": "11 fields at native title/showtext/centext/button consumers; no pure redraw entry established for an already drawn farewell page",
     "drawing": "Complete native strings measured and drawn synchronously at actual native surface/renderer density; game owns wrap, controls, hit regions, caches and presentation",
-    "resource_metadata": "NGT1 surface/texture identity and logical/physical density only. Stable gateway page extends from 10 to 13 entries (208 bytes within original VirtualAlloc page). No pixels, semantic page or replay list retained",
-    "main_menu_refresh": "Original balanced 125AA6..125AF5 background/cache lifecycle followed by 125BA3..125BE1 footer/panel/menu lifecycle; startup-only assignments skipped during redraw",
+    "historical_resource_metadata": "NGT1 stored identity and density only; current NGT2 additionally stores confirmed neutral native constructors, not pixels or glyph replay lists",
+    "historical_main_menu_refresh": "HDA4 balanced page-specific background/footer/menu redraw; current common sources supersede that route",
     "evidence": [
       "docs/evidence/20261019-windows-progress-sync.md",
       "docs/evidence/20261019-windows-creation-sync-native.md",

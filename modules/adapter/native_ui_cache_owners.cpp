@@ -117,17 +117,34 @@ void initialize(std::uintptr_t image_base) {
 }
 void set_callbacks(const Callbacks& observers) { callbacks=observers; }
 
-void before_blit(u32 caller_return,const void* source,const void* destination) {
+u32 owner_field(Slot slot) {
+    switch(slot) {
+    case Slot::first:return 0xA1C2014;
+    case Slot::second:return 0xA1BBD24;
+    case Slot::menu:return 0xA1C1CE0;
+    default:return 0xA1C1CC4+(static_cast<u32>(slot)-static_cast<u32>(Slot::named0))*sizeof(u32);
+    }
+}
+void* surface(Slot slot) {return *at<void*>(owner_field(slot));}
+Status before_blit(u32 caller_return,const void* source,const void* destination,
+    const render::Rect* source_rect,render::Rect* destination_rect,BlitPreparation& prepared) {
     const auto copy=identify(caller_return,source,destination);
-    if(copy && copy->operation==Operation::restore) callbacks.before_restore(copy->slot);
+    if(copy && copy->operation==Operation::restore) {
+        prepared.restoring=true;prepared.slot=copy->slot;
+        return callbacks.before_restore(copy->slot,{source,source_rect,destination_rect},prepared.restore);
+    }
+    return Status::ok;
 }
 void after_blit(u32 caller_return,const void* source,const void* destination,
-    bool region,int native_result) {
+    const BlitPreparation& prepared,int native_result) {
+    if(prepared.restoring) {
+        callbacks.after_restore(prepared.slot,prepared.restore,native_result);
+        return;
+    }
     if(native_result!=0) return;
     const auto copy=identify(caller_return,source,destination);
     if(!copy) return;
     if(copy->operation==Operation::save) callbacks.save(copy->slot);
-    else callbacks.after_restore(copy->slot,region);
 }
 
 void append_hooks(std::vector<HookSpec>& hooks) {

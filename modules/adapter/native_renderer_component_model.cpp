@@ -1,5 +1,6 @@
 #include "native_renderer_component_model.h"
 #include "native_renderer_component_calls.h"
+#include "native_menu_component.h"
 #include <cstring>
 #include <map>
 #include <utility>
@@ -67,7 +68,8 @@ u32 text_style(const Component& component) {
         [](const Component& c){return std::get<ParagraphInputs>(c.inputs).style;},
         [](const Component& c){return std::get<TextBlockInputs>(c.inputs).style;},
         [](const Component&)->u32{return 1;},
-        [](const Component&)->u32{return global<u32>(0x5F54BA0)|2;}
+        [](const Component&)->u32{return global<u32>(0x5F54BA0)|2;},
+        [](const Component&)->u32{return 0;}
     };
     return readers[static_cast<u32>(component.kind)](component);
 }
@@ -82,11 +84,13 @@ struct TargetScope {
     using Set=int (__cdecl *)(u32,u32);
     u32 renderer,previous;
     Set set;
-    explicit TargetScope(NativeTarget target):renderer(target.renderer),
-        previous(global<Get>(0x18C26C)(renderer)),set(global<Set>(0x18C288)) {
-        set(renderer,target.texture);
+    explicit TargetScope(NativeTarget target):renderer(target.renderer),previous(0),set(nullptr) {
+        if(target.kind==TargetKind::texture) {
+            set=global<Set>(0x18C288);previous=global<Get>(0x18C26C)(renderer);
+            set(renderer,target.texture);
+        }
     }
-    ~TargetScope() { set(renderer,previous); }
+    ~TargetScope() {if(set) set(renderer,previous);}
 };
 struct MenuScope {
     native_menu_model::Handle owner,previous;
@@ -124,7 +128,10 @@ struct Writer {
         scalar(static_cast<u32>(value.size()));bytes.insert(bytes.end(),value.begin(),value.end());
     }
     void key(SourceKey value) { scalar(value.owner);scalar(value.native_source);scalar(value.field); }
-    void target(TargetSource value) { scalar(value.lifetime);scalar(value.renderer_owner_rva);scalar(value.texture_owner_rva); }
+    void target(TargetSource value) {
+        scalar(value.lifetime);scalar(value.renderer_owner_rva);scalar(value.texture_owner_rva);
+        scalar(static_cast<u32>(value.kind));scalar(value.surface_owner_rva);
+    }
     void text(const TextSource& value) {
         scalar(static_cast<u32>(value.component));string(value.original);string(value.value);
         scalar(value.has_value?1u:0u);scalar(static_cast<u32>(value.policy));string(value.prefix);string(value.suffix);
@@ -137,6 +144,7 @@ struct Writer {
     }
     void inputs(const ParagraphInputs& v) { anchor(v.origin);layout(v.width);layout(v.height);scalar(v.color);scalar(v.style); }
     void inputs(const TextBlockInputs& v) { anchor(v.anchor);scalar(v.color);scalar(v.style); }
+    void inputs(const LabelBoxInputs& v) {anchor(v.origin);layout(v.width);scalar(v.color);}
     void inputs(const HeadingInputs&) {}
     void inputs(const MarkedButtonInputs& v) { anchor(v.origin);scalar(v.row.owner);scalar(v.row.action); }
 };
@@ -147,7 +155,11 @@ struct Reader {
         const auto size=scalar<u32>();std::string v(reinterpret_cast<const char*>(cursor),size);cursor+=size;return v;
     }
     SourceKey key() { const auto owner=scalar<u64>(),source=scalar<u64>();const auto field=scalar<u32>();return {owner,source,field}; }
-    TargetSource target() { const auto life=scalar<u64>();const auto renderer=scalar<u32>(),texture=scalar<u32>();return {life,renderer,texture}; }
+    TargetSource target() {
+        const auto life=scalar<u64>();const auto renderer=scalar<u32>(),texture=scalar<u32>();
+        const auto kind=static_cast<TargetKind>(scalar<u32>());const auto surface=scalar<u32>();
+        return {life,renderer,texture,kind,surface};
+    }
     TextSource text() {
         const auto component=static_cast<TextComponent>(scalar<u32>());auto original=string(),value=string();
         const bool has=scalar<u32>()!=0;const auto policy=static_cast<native_text_resource::TextPolicy>(scalar<u32>());
@@ -180,6 +192,10 @@ struct Reader {
             [](Reader& in)->Inputs {
                 const auto origin=in.anchor();const auto owner=in.scalar<u32>(),action=in.scalar<u32>();
                 return MarkedButtonInputs{origin,{owner,action}};
+            },
+            [](Reader& in)->Inputs {
+                const auto origin=in.anchor();const auto width=in.layout();const auto color=in.scalar<u32>();
+                return LabelBoxInputs{origin,width,color};
             }
         };
         return readers[static_cast<u32>(kind)](*this);
@@ -200,6 +216,9 @@ Handle upsert_paragraph(SourceKey key,TargetSource target,const ParagraphInputs&
 Handle upsert_text_block(SourceKey key,TargetSource target,const TextBlockInputs& inputs,const TextSource& text) {
     return upsert({key,target,Kind::text_block,inputs,text,{}});
 }
+Handle upsert_label_box(SourceKey key,TargetSource target,const LabelBoxInputs& inputs,const TextSource& text) {
+    return upsert({key,target,Kind::label_box,inputs,text,{}});
+}
 Handle upsert_heading(SourceKey key,TargetSource target,const TextSource& text) {
     return upsert({key,target,Kind::heading,HeadingInputs{},text,{}});
 }
@@ -207,8 +226,17 @@ Handle upsert_marked_button(SourceKey key,TargetSource target,const MarkedButton
     return upsert({key,target,Kind::marked_button,inputs,text,{}});
 }
 const Component& get(Handle handle) { return models.find(handle)->second.component; }
+u32 display_style(Handle handle) {return text_style(get(handle));}
+void commit_native_row(Handle handle) {
+    const auto& component=get(handle);const auto& input=std::get<MarkedButtonInputs>(component.inputs);
+    const auto count=global<u32>(native_count);u32 index{};
+    for(;index<count;++index)
+        if(global<u32>(native_action+index*native_menu_model::row_stride)==input.row.action) break;
+    native_menu_component::commit_row(input.row.owner,index,component.text);
+}
 NativeTarget resolve_target(TargetSource target) {
-    return {global<u32>(target.renderer_owner_rva),global<u32>(target.texture_owner_rva)};
+    return {global<u32>(target.renderer_owner_rva),
+        target.kind==TargetKind::texture ? global<u32>(target.texture_owner_rva) : 0,target.kind};
 }
 void retain(Handle handle) { ++models.find(handle)->second.references; }
 void release(Handle handle) {
@@ -238,6 +266,7 @@ Status prepare(Handle handle,const PaintServices& services,PreparedText& prepare
         for(const auto& text:component.paragraph.fragments) {
             prepared.fragments.emplace_back();auto status=resolve_text(text,services,prepared.fragments.back());
             if(status!=Status::ok) return status;
+            if(!native_component_model::prepare_paragraph_fragment(text,prepared.fragments.back())) continue;
             status=services.paragraph_words(prepared.fragments.back());if(status!=Status::ok) return status;
         }
     } else {
@@ -256,7 +285,8 @@ Status paint(Handle handle,const PaintServices& services) {
         services.enter(handle,component.kind,text_style(component));
         const MarkedButtonCall call{static_cast<u32>(base+0xCFD10),target.texture,input.row.action,
             evaluate(input.origin.x),evaluate(input.origin.y),prepared.fragments.front().data()};
-        uwcn_renderer_marked_button(&call);services.leave(handle,component.kind);return Status::ok;
+        uwcn_renderer_marked_button(&call);commit_native_row(handle);
+        services.leave(handle,component.kind);return Status::ok;
     }
     services.enter(handle,component.kind,text_style(component));
     switch(component.kind) {
@@ -269,8 +299,7 @@ Status paint(Handle handle,const PaintServices& services) {
         uwcn_renderer_panel(&call);break;
     }
     case Kind::paragraph: {
-        using Parse=void (__fastcall *)(u32,const char*);const auto parse=reinterpret_cast<Parse>(base+0x162300);
-        parse(1,"");for(const auto& fragment:prepared.fragments) parse(0,fragment.data());
+        native_component_model::parse_prepared_paragraph(component.paragraph,prepared.fragments);
         const auto& input=std::get<ParagraphInputs>(component.inputs);
         const ParagraphCall call{static_cast<u32>(base+0x10EFD0),target.renderer,
             evaluate(input.origin.x),evaluate(input.origin.y),evaluate(input.width),evaluate(input.height),input.color,input.style};
@@ -289,6 +318,12 @@ Status paint(Handle handle,const PaintServices& services) {
     case Kind::heading: {
         const HeadingCall call{static_cast<u32>(base+0x113430),target.texture,prepared.fragments.front().data()};
         uwcn_renderer_heading(&call);break;
+    }
+    case Kind::label_box: {
+        const auto& input=std::get<LabelBoxInputs>(component.inputs);
+        const LabelBoxCall call{static_cast<u32>(base+0x111560),target.renderer,
+            evaluate(input.origin.x),evaluate(input.origin.y),evaluate(input.width),prepared.fragments.front().data(),input.color};
+        uwcn_renderer_label_box(&call);break;
     }
     case Kind::marked_button: break;
     }
@@ -317,6 +352,11 @@ std::vector<std::uint8_t> save() {
         std::visit([&output](const auto& input){output.inputs(input);},component.inputs);output.text(component.text);
         output.scalar(static_cast<u32>(component.paragraph.fragments.size()));
         for(const auto& fragment:component.paragraph.fragments) output.text(fragment);
+        output.scalar(static_cast<u32>(component.paragraph.grammar.size()));
+        for(const auto& grammar:component.paragraph.grammar) {
+            output.scalar(grammar.after_fragments);output.scalar(grammar.first_fragment);output.scalar(grammar.comma_count);
+            output.scalar(static_cast<u32>(grammar.operation));
+        }
     }
     for(const auto& [key,handle]:current_sources) {output.key(key);output.scalar(handle);}
     return std::move(output.bytes);
@@ -328,6 +368,11 @@ void restore(const void* payload) {
         const auto handle=input.scalar<u32>(),references=input.scalar<u32>();const auto key=input.key();const auto target=input.target();
         const auto kind=static_cast<Kind>(input.scalar<u32>());auto inputs=input.inputs(kind);auto text=input.text();ParagraphSource paragraph;
         const auto fragments=input.scalar<u32>();for(u32 j=0;j<fragments;++j) paragraph.fragments.push_back(input.text());
+        const auto grammars=input.scalar<u32>();for(u32 j=0;j<grammars;++j) {
+            const auto after=input.scalar<u32>(),word=input.scalar<u32>(),commas=input.scalar<u32>();
+            const auto operation=static_cast<native_component_model::ParagraphOperation>(input.scalar<u32>());
+            paragraph.grammar.push_back({after,word,commas,operation});
+        }
         // Menu reference ownership was serialized by native_menu_model. It is
         // restored once there, rather than acquired for a second time here.
         models.emplace(handle,Version{references,{key,target,kind,std::move(inputs),std::move(text),std::move(paragraph)}});

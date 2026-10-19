@@ -1,0 +1,102 @@
+2026-10-20 independent static review: native pagination and map components
+
+Input: original Windows PE urw.exe, preferred image base 00400000.
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9.
+All addresses below are RVAs. Read-only objdump inspection; no game execution,
+tests, test cases, assertions or compilation was performed for this review.
+
+F6510 / F5B00 native wait ABI
+
+Let P be the F6510 local-base ESP, after its three saved registers and before
+the eight bytes reserved by each native wait call. F6A22..F6A33 leaves two
+memset arguments on the stack (8 bytes) before CALL F6A38. F6C4C and F6D0C
+explicitly SUB ESP,8 before CALL F6C4F / F6D11. All three return phases begin
+with ADD ESP,8: F6A3D, F6C54 and F6D16.
+
+F5B00 PUSH EBP; F5B01 MOV EBP,ESP therefore gives wait EBP = P-16.
+F5B03 SUB ESP,1C; F5B15 PUSH EBX stores the parent's text index at EBP-20.
+F5B16 loads native cursor X into EBX; F5B1F saves cursor Y at EBP-18;
+F5B2A puts the incoming wait color in EDI. The parent's local color P+14 is
+consequently at wait EBP+24, not at EBP+14. Saved parent EBP is [EBP], and
+the executable parent return phase is [EBP+4]. These values match the current
+native_message_flow::install_continuation writes.
+
+The ordinary acknowledgement hook F5C13 runs before F5C16/F5C1C/F5C22 commit
+EDI, EBX and [EBP-18] into native color/cursor globals. Updating these exact
+inputs lets the original instructions commit the new native continuation.
+F5C3B..F5C4B still checks the original wait cookie, pops EDI/ESI/EBX, restores
+EBP and returns. No cookie, old frame-local array or stack range is copied.
+
+The generated F6510 call obtains its source index from the new language's
+native loop and its saved parent EBX. Its temporary stop bridge consumes the
+pending eight bytes then enters F6EBB, where the generated F6510 call performs
+its own unmodified cookie/epilogue. Only the original actual wait frame gets
+an executable-game return RVA. The actual native Space/Esc input loop is not
+entered by materialization and remains the ordinary call's input owner.
+
+When the new language has already completed the current record, the complete
+continuation uses original phase F6D16. ADD ESP,8 still executes; the CALL hook
+F6D19 skips that one F6020 scroll. At F6D1E the source hook supplies current
+native message X in EAX and enters F6D8A, avoiding a second tail/history-text
+append or draw. The ordinary F6510 call later performs sound/history business
+once. The generated call leaves at F6D8A before that business.
+
+Independent result: the reviewed wait-frame slots, callee-saved register
+restoration, native return phases, generated stop bridge and complete variant
+match the original instructions. This result does not claim that unrelated
+message producers or later viewport changes have been exhaustively reviewed.
+
+World-map complete native source / scene relationship
+
+605B0 direct CALL census: 5B7F9, 5F72D, 60AED. All three are registered by
+native_component_binding as complete components, with original ECX world X,
+EDX world Y, stack step and mode, and native 2F7FD3 large-tile input. Their
+SourceKey owner is the actual native_root_component current RootRevision;
+native_ui_scene keeps their handles, and paints the original complete 605B0
+after the root background. It does not rerun world-generation/input business.
+The 5F6EA call to native background constructor 1127C0 precedes 5F72D, so
+that ordinary world-selection page starts its own confirmed root source.
+5B7F9 is the original 5B7F0 map-only helper's complete map call. 60AED is the
+original 60AD0 complete current map call, followed by 60AFA marker and 60B02
+controls. Repeated calls replace the same actual constructor source key.
+
+60360 ABI correction: it is NOT an ECX-only / zero-stack API. At 60360 PUSH
+EBP, 60361 MOV EBP,ESP, 60363 MOV ECX,[EBP+8]. At 60AF9 the caller PUSHes
+the actual step, CALLs 60360 at 60AFA, then 60AFF ADD ESP,0C consumes that
+one argument and the preceding 605B0's two arguments. Binding args[0], the
+stack-count-one HookSpec and world_map_marker wrapper are therefore correct.
+Its semantic inputs also contain actual selected/view world coordinates;
+locale painting temporarily supplies those native globals, invokes complete
+60360, and restores the caller's globals. 60450 is a separate no-argument
+complete native zoom/distance control primitive.
+
+The modern legend owner 5F8FA78 is independent of 605B0. The only direct
+actual pointer read outside its factory is E3FB6 in native E3EE0; matches at
+E287B/E4E2F are array end-address comparisons, not texture-owner consumers.
+Factory E3A50 reads/frees old texture at E3BE7/E3BF4, clears owner E3BFD and
+stores newly created texture at E3C15. E3EE0 is a no-argument pure consumer:
+it reads real native flags 1EBCAC/1EBCAD and two image owners 5F8FA80 and
+5F8FA78, queries their native dimensions, copies them into owner5F937B0 using
+native source rectangles, draws optional native alpha boxes and resets target.
+Its only direct callers are E5ACF, E61F1 and E6209. E61F1/E6209 follow actual
+native flag changes; E5ACF immediately follows E3D90's target construction.
+
+5F937B0 is created by native E3D90: E3DAC destroys the prior resource;
+E3DCC SDL_CreateTexture(mainRenderer,16362004,2,800,600); E3DE8 stores it.
+The complete factory also consumes original image/file/help/paragraph/panel
+sources. E6587/E6596 is the later destroy/clear boundary; re-entering E3D90
+also replaces the old owner. Menu code maps this texture to its actual input
+view. Rebuilding E3A50's legend followed by E3EE0 on this actual owner is the
+confirmed dependency. Linux evidence mentioning 10B1B0 is a different binary
+and cannot establish a Windows 605B0 dependency.
+
+Menu original text resource schema
+
+CF790 commit now binds the actual native English title as TextPolicy::original
+before any explicitly pending semantic title overrides it. CF990 commit does
+the same for its newly committed native row before the semantic row override.
+On initialization, the actual live title and only native count rows are bound.
+The original native decoder is explicitly passed into configure; encoded or
+translated display output is not used as a source. All real Menu consumers
+therefore use the same source resolver and immediate HD scope for English and
+Chinese. Unused slots of the native fixed-capacity array are not UI resources.

@@ -16,14 +16,15 @@ std::map<Handle,Version> images;
 std::map<SourceKey,Handle> current_sources;
 struct Pending { u64 token;Handle handle; };
 std::vector<Pending> pending;
-struct AssetField { u32 id,site; };
+struct AssetField { u32 id,site,target=0x112980; };
 // Each entry names one confirmed native asset field, not a paint occurrence.
 // The footer already has module.cpp's footer_logo CALL hook (enum value 21).
 constexpr u32 footer_logo=21;
-constexpr std::array<AssetField,9> fields{{
+constexpr std::array<AssetField,11> fields{{
     {0x7F00,0x124732},{0x7F01,0x105729},{0x7F02,0x12EE4},
     {0x7F03,0xFB6BA},{0x7F04,0x10DDF},{0x7F05,0x10E52},
-    {0x7F06,0x10ED1},{0x7F07,0x18084B},{footer_logo,0x125125}
+    {0x7F06,0x10ED1},{0x7F07,0x18084B},{footer_logo,0x125125},
+    {0x7F08,0x12718,0x1125B0},{0x7F09,0xE697D,0x1125B0}
 }};
 struct NativeImageCall {
     u32 target;
@@ -87,8 +88,8 @@ void initialize(std::uintptr_t image_base) {
 void append_hooks(std::vector<HookSpec>& hooks) {
     for(const auto& field:fields) {
         if(field.id==footer_logo) continue;
-        HookSpec hook{field.id,HookKind::call,field.site,0x112980,1,5,{0xE8}};
-        const u32 relative=0x112980-field.site-5;
+        HookSpec hook{field.id,HookKind::call,field.site,field.target,1,5,{0xE8}};
+        const u32 relative=field.target-field.site-5;
         std::memcpy(hook.expected+1,&relative,sizeof(relative));hooks.push_back(hook);
     }
 }
@@ -101,7 +102,8 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
     handled=field->id!=footer_logo;
     if(event.phase==NativePhase::before) {
         const SourceKey key{native_root_component::current(),field->site,0};
-        const auto handle=upsert(key,capture(event));
+        auto input=capture(event);input.constructor=field->target;
+        const auto handle=upsert(key,input);
         retain(handle);pending.push_back({event.token,handle});
         const auto source=prepare(handle);
         event.frame->ecx=static_cast<u32>(reinterpret_cast<std::uintptr_t>(source.descriptor));
@@ -121,7 +123,7 @@ Inputs capture(const NativeEvent& event) {
         *reinterpret_cast<const u32*>(base+0x61BBAD0)};
 }
 Handle upsert(SourceKey key,const Inputs& inputs) {
-    ImageSource replacement{key,inputs.descriptor,inputs.x,inputs.y,inputs.border};
+    ImageSource replacement{key,inputs.descriptor,inputs.x,inputs.y,inputs.border,inputs.constructor};
     const auto source=current_sources.find(key);
     if(source!=current_sources.end()) {
         auto& current=images.find(source->second)->second;
@@ -137,7 +139,7 @@ Handle upsert(SourceKey key,const Inputs& inputs) {
 Handle current(SourceKey source) { return current_sources.at(source); }
 const ImageSource& get(Handle handle) { return images.find(handle)->second.source; }
 PreparedSource prepare(Handle handle) {
-    const auto& source=get(handle);return {source.descriptor.c_str(),source.x,source.y,source.border};
+    const auto& source=get(handle);return {source.descriptor.c_str(),source.x,source.y,source.border,source.constructor};
 }
 void retain(Handle handle) { ++images.find(handle)->second.references; }
 void release(Handle handle) {
@@ -160,7 +162,7 @@ void remove_owner(u64 owner) {
 Status paint(Handle handle) {
     const auto source=prepare(handle);
     const BorderScope border(source.border);
-    const NativeImageCall call{static_cast<u32>(base+0x112980),source.descriptor,source.x,source.y};
+    const NativeImageCall call{static_cast<u32>(base+source.constructor),source.descriptor,source.x,source.y};
     uwcn_paint_native_image(&call);
     return Status::ok;
 }
@@ -172,7 +174,7 @@ std::vector<std::uint8_t> save() {
     for(const auto& [handle,version]:images) {
         output.scalar(handle);output.scalar(version.references);output.key(version.source.source);
         output.string(version.source.descriptor);output.scalar(version.source.x);
-        output.scalar(version.source.y);output.scalar(version.source.border);
+        output.scalar(version.source.y);output.scalar(version.source.border);output.scalar(version.source.constructor);
     }
     for(const auto& [source,handle]:current_sources) { output.key(source);output.scalar(handle); }
     for(const auto& invocation:pending) { output.scalar(invocation.token);output.scalar(invocation.handle); }
@@ -186,8 +188,8 @@ void restore(const void* payload) {
     for(u32 i=0;i<count;++i) {
         const auto handle=input.scalar<u32>(),references=input.scalar<u32>();
         const auto key=input.key();auto descriptor=input.string();
-        const auto x=input.scalar<std::int32_t>(),y=input.scalar<std::int32_t>();const auto border=input.scalar<u32>();
-        images.emplace(handle,Version{references,{key,std::move(descriptor),x,y,border}});
+        const auto x=input.scalar<std::int32_t>(),y=input.scalar<std::int32_t>();const auto border=input.scalar<u32>(),constructor=input.scalar<u32>();
+        images.emplace(handle,Version{references,{key,std::move(descriptor),x,y,border,constructor}});
     }
     for(u32 i=0;i<sources;++i) {
         const auto key=input.key();const auto handle=input.scalar<u32>();current_sources.emplace(key,handle);

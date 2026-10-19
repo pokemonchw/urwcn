@@ -40,10 +40,10 @@ struct TextSource {
 
 inline TextSource from_request(const TextRequest& request) {
     return {request.component,request.original,request.value ? request.value : "",
-        request.value!=nullptr,TextPolicy::semantic};
+        request.value!=nullptr,TextPolicy::semantic,{},{}};
 }
 inline TextSource original_text(const char* original) {
-    return {TextComponent::load_character,original,{},false,TextPolicy::original};
+    return {TextComponent::load_character,original,{},false,TextPolicy::original,{},{}};
 }
 using Resolve = Status (*)(TextComponent,const char*,const char*,std::vector<char>&);
 using EncodeOriginal = Status (*)(const char*,std::vector<char>&);

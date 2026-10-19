@@ -1,11 +1,24 @@
 // 548740 builds treasure descriptions in real game-owned fields. Its random
 // placement, cave/chasm decisions, item generation and English data stay native.
 // Evidence: settlement-data-source-producers-ghidra.c and native disassembly.
+#include "windows_message_quest_records.inc"
 namespace windows_message_quests {
 enum Hook : u32 { island=0xe100,chasm,origin,title,origin_complete,place_copy,complete };
-struct Pending {u32 owner;std::string translated;Status status;};
+using Text=native_message_source::Text;
+struct Pending {u32 owner;Text source;};
 std::vector<Pending> pending;
+void save(std::vector<unsigned char>& output) {
+    message_state_write(output,static_cast<u32>(pending.size()));
+    for(const auto& value:pending) {message_state_write(output,value.owner);native_message_source::write(output,value.source);}
+    windows_message_quest_records::save(output);
+}
+void restore(const unsigned char*& input) {
+    u32 count;message_state_read(input,count);pending.clear();
+    for(u32 index=0;index<count;++index) {u32 owner;message_state_read(input,owner);pending.push_back({owner,native_message_source::read(input)});}
+    windows_message_quest_records::restore(input);
+}
 void append_hooks(std::vector<HookSpec>& hooks) {
+    windows_message_quest_records::append_hooks(hooks);
     using native_name_input::native_call;
     using native_name_input::instruction;
     hooks.push_back(native_call(island,0x1489aa,0x10d0,3));
@@ -16,67 +29,44 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(instruction(place_copy,0x148ef2,{0x8b,0x85,0x98,0xfa,0xff,0xff}));
     hooks.push_back(instruction(complete,0x148f0f,{0x8b,0x4d,0xf8,0x8b,0xd7}));
 }
-Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
+Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
+    const auto records=windows_message_quest_records::dispatch(event,result,handled);
+    if(handled)return records;
+    using namespace native_message_source;
     handled=event.id>=island && event.id<=complete;
     if(!handled) return Status::ok;
     if(event.id>=origin_complete) {
         if(event.phase==NativePhase::after) return Status::ok;
-        std::string text;
         if(event.id==origin_complete) {
-            auto status=message_translate_bound(ptr<char>(event.frame->ebp-0x554),text);
-            if(status!=Status::ok) return status;
-            std::string prefix;
-            status=message_lookup_value("treasure","casual wealth",prefix);
-            if(status==Status::ok) message_bind_value(at<char>(0xa220ef8),prefix+text);
-            return status;
+            message_bind_source(at<char>(0xa220ef8),concat({message_source_lookup("treasure","casual wealth"),
+                message_source_bound(ptr<char>(event.frame->ebp-0x554))}));return Status::ok;
         }
         if(event.id==place_copy) {
             auto* target=at<char>(0xa221028);
             const auto* source=ptr<char>(event.frame->ecx-static_cast<u32>(std::strlen(target))-1);
-            const auto status=message_translate_bound(source,text);
-            if(status==Status::ok) message_bind_value(target,text);
-            return status;
+            message_bind_source(target,message_source_bound(source));return Status::ok;
         }
-        // These are exactly the recovered inline-copy branches. The other
-        // two alternatives have already been bound at their real sprintf.
         const auto* location=at<char>(0xa221b60);
-        if(std::strcmp(location,"in a cave")==0 || std::strcmp(location,"on a cliff")==0) {
-            const auto status=message_lookup_value("treasure",location,text);
-            if(status!=Status::ok) return status;
-            message_bind_value(location,text);
-        }
+        if(std::strcmp(location,"in a cave")==0 || std::strcmp(location,"on a cliff")==0)
+            message_bind_source(location,message_source_lookup("treasure",location));
         auto* placement=at<char>(0xa220e90);
-        auto status=message_lookup_value("treasure",placement,text);
-        if(status!=Status::ok) return status;
-        message_bind_value(placement,text);
+        message_bind_source(placement,message_source_lookup("treasure",placement));
         const auto* cover=at<char>(0xa220f90);
         if(std::strcmp(cover,"somewhere inside there")==0 ||
-           std::strcmp(cover,"in the center of three adjacent boulders forming a triangle")==0) {
-            status=message_lookup_value("treasure",cover,text);
-            if(status==Status::ok) message_bind_value(cover,text);
-        }
-        return status;
+           std::strcmp(cover,"in the center of three adjacent boulders forming a triangle")==0)
+            message_bind_source(cover,message_source_lookup("treasure",cover));
+        return Status::ok;
     }
     if(event.phase==NativePhase::after) {
         auto value=std::move(pending.back());pending.pop_back();
-        if(value.status==Status::ok) message_bind_value(ptr<char>(value.owner),value.translated);
-        return value.status;
+        message_bind_source(ptr<char>(value.owner),std::move(value.source));return Status::ok;
     }
     const char* keys[]={"format.005b7b1c","format.005b7bdc","format.005b7c18","format.005b7c28"};
-    std::string format,value;
-    auto status=message_translate_template(keys[event.id-island],ptr<char>(event.arguments[1]),format);
-    if(status==Status::ok) {
-        status=event.id==origin ? message_lookup_value("culture.native",ptr<char>(event.arguments[2]),value) :
-            message_translate_bound(ptr<char>(event.arguments[2]),value);
-    }
-    if(status==Status::ok) {
-        const auto position=format.find("%s");format.replace(position,2,value);
-        if(event.id==title) {
-            const auto next=position+value.size();
-            status=message_lookup_value("treasure",ptr<char>(event.arguments[3]),value);
-            if(status==Status::ok) format.replace(format.find("%s",next),2,value);
-        }
-    }
-    pending.push_back({event.arguments[0],std::move(format),status});return status;
+    std::vector<Text> values{event.id==origin ? message_source_value("culture.native",ptr<char>(event.arguments[2])) :
+        message_source_bound(ptr<char>(event.arguments[2]))};
+    if(event.id==title) values.push_back(message_source_lookup("treasure",ptr<char>(event.arguments[3])));
+    std::vector<std::string> conversions(values.size(),"%s");
+    pending.push_back({event.arguments[0],format(message_source_template(keys[event.id-island],
+        ptr<char>(event.arguments[1])),std::move(values),std::move(conversions))});return Status::ok;
 }
 }

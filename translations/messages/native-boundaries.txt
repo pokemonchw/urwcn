@@ -1,5 +1,9 @@
 外置消息资源翻译与原生边界记录（2026-10-19）
 
+记录性质：以下未接入/未编译/未发布描述是资源翻译阶段的历史状态。
+最终共用消息接线、动态来源及正式发布以
+docs/evidence/20261020-shared-message-delivery.md 为准。
+
 范围
 从 D:/program/steam/steamapps/common/UnRealWorld/messages/ 读取安装版本的
 8 个 urw_*.txt，完整记录全部非空、非注释、非 .KEY. 行，共 987 条。

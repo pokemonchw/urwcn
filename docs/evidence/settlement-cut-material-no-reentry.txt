@@ -1,0 +1,29 @@
+Static scope: 467AA8 -> 451770 for category-7 cut-name descriptors
+
+The complete 451770 body is in settlement-value-producers-ghidra.c.
+It contains no direct 467A30 or 451650 call. For this actual category-7
+path, its category-12 corpse branch (4AE750), category-8 wood branch
+(55E2C0), and category-6 leash branch (4AD4F0) cannot execute.
+
+The remaining display-name operations are 4C0190 descriptor copies,
+451510 quality selection, 4D4310 text matching, 55EFF0 grammatical
+pluralization when the actual quantity permits, 4D4020 case conversion,
+and the native CRT copy/format operations. 451510 selects one of its
+seven fixed quality pointer tables. 4D4310 only copies the two input
+strings, invokes the CRT lowercase import, and compares literal/wildcard
+characters. 55EFF0 and 4D4020 only perform their already-decompiled
+text transformations. None calls 467A30 or writes 02130878.
+
+451650 is called separately by 467A30 after 451770. Its complete body is
+in settlement-animal-material-builders-ghidra.c. It copies descriptor
++31 to its own A889A28 buffer. Only the explicitly listed herb/type-B
+IDs/categories enter 439CC0 and possible 451770 recursion. A category-7
+cut descriptor outside those IDs returns its copied field directly.
+This statement is restricted to the actual cut-name path and does not
+claim that every possible 451770 category has the same call graph.
+
+Thus the category-7 cut-name display construction does not recursively
+invoke 467A30 between its native initial 02130878 clearing and the
+subsequent 467BB2 unknown-material guard. The separate 4C0AC0/4C0190
+record-copy proof is maintained by the crafted-item-source owner.
+No tests or game execution were performed.

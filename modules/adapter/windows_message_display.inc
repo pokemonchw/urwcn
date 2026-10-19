@@ -39,15 +39,18 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         if(status!=Status::ok) return status;
         return lend_text(event,encoded,event.arguments[0],Scope::plain_button);
     }
-    if(!in(Scope::message_body)) return Status::ok;
+    const auto* message=windows_messages::current(event.frame->ebp);
+    if(!message || message->kind!=Scope::message_body) return Status::ok;
     if(event.id==word_draw || event.id==tail_draw) {
-        // Pure ASCII words inside a translated message use the same metrics
-        // and immediate native-surface glyph path as its Chinese words.
+        // Both projected languages use the same native word, metrics and
+        // immediate native-surface glyph consumer, including ASCII words.
+        event.arguments[0]=address(windows_messages::word(windows_messages::display(event.frame->ebp)));
         begin(event,Scope::text,event.arguments[2]);
         return Status::ok;
     }
     if(event.id==character) {
-        const auto* source=at<unsigned char>(0x61a84b8)+event.frame->ebx;
+        const auto* source=reinterpret_cast<const unsigned char*>(windows_messages::source(
+            windows_messages::display(event.frame->ebp)))+event.frame->ebx;
         auto* single=ptr<unsigned char>(event.frame->esp+0x1c);
         auto* boundary=ptr<u32>(event.frame->esp+0x18);
         if(native_name_input::transport(source)) {
@@ -67,7 +70,8 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         return Status::ok;
     }
     render::Metrics measured{};
-    const auto status=metrics_at_outline(at<char>(0x61a96a0),0,measured);
+    auto* word=windows_messages::word(windows_messages::display(event.frame->ebp));
+    const auto status=metrics_at_outline(word,0,measured);
     if(status!=Status::ok) return status;
     const auto width=static_cast<u32>(measured.logical_width);
     switch(event.id) {
@@ -84,7 +88,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     case word_advance:
         event.frame->ecx-=event.frame->edx;
         event.frame->eax=*at<u32>(0x61a8cb8)+width;
-        *at<char>(0x61a96a0)=0;
+        *word=0;
         // Rejoin the original MOV [message_x],EAX after implementing its
         // word clear and replacing only the byte-based width expression.
         result.resume_rva=0xf6cc9;

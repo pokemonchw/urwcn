@@ -4,15 +4,17 @@
 
 URWCN 是 **Byayoi 同人社区**的《不真实的世界》（UnReal World）汉化作品。
 
+Windows 2026-10-20 的启动修正已正式发布：消息 Hook `C70C` 改到完整 `MOV ECX` 边界；文化图例 11 行文字统一读取实际文字参数，修正把颜色当指针导致的闪退。旧文件先移入 `回收/`，继续使用根 `uwcn_launcher.exe`。本次仅离线分析用户转储，没有自行运行或测试；最新源码、编译和发布回执见 [文化图例文字参数修正](docs/evidence/20261020-culture-legend-text-argument-fix.md)，前一项见 [Hook 边界修正记录](docs/evidence/20261020-startup-native-hook-boundary-fix.md)。
+
 社区官网：[byayoi.org](https://byayoi.org/)
 
 项目仓库：[pokemonchw/urwcn](https://github.com/pokemonchw/urwcn)。适配目标为 **UnReal World 3.89 / Steam Build 25939378**，包含 Windows x86 与 Linux x86-64 原生分支。Linux 的接入范围及尚待确认的高清边界见 [Linux 移植记录](docs/evidence/20261019-linux-native-port.md)，下文既有热发布回执属于 Windows。中文在已确认的原生文本构建、格式化和显示边界生成，游戏继续管理布局、控件、输入和缓存，Mod 负责字形绘制；游戏业务、内部英文数据和设置动作保持原有语义。
 
-**共用消息区汉化目前是阶段性源码，尚未完成全部消息和分支，未编译、未发布。** 本次保存的范围和明确缺口见 [消息区进度记录](docs/evidence/20261019-shared-message-progress.md)。
+共用消息区已接入中性文本来源与原生分页，当前 Windows 源码、业务库及生成词库已编译和正式发布。动态来源及已知历史数据边界见 [消息区交付记录](docs/evidence/20261020-shared-message-delivery.md)；词库项数不代表所有任意历史消息都可恢复其语义来源。
 
-游戏内按 **Shift+F10** 切换全局语言选择；当前还未实现所有已打开界面的统一即时刷新。现有实现仍依赖各页原生重建，不能视为“全局快速切换”已经完成。公共组件、缓存与窗口事件的静态调查见 [全局语言刷新审查](docs/evidence/20261019-global-language-cache-audit.md)，已接入范围和交付记录见下文。
+Windows 游戏内按 **Shift+F10** 切换中英文。当前正式版本通过 Hook 接入公共原生 UI，菜单、面板、段落、按钮、链接流、消息区、HUD、图例与缓存沿同一中性源重新消费原生构造和绘制接口；布局、选择、命中、输入及缓存生命周期继续由游戏管理。没有逐页重入表、像素跟踪或 Present 前叠字。
 
-通过 Hook 改造公共原生 UI 的源码工作已开始：首批接通共享菜单实例层并完成队列编译，尚未正式发布，也尚未接通全局语言重建链。具体源码与剩余工作见 [原生 UI 模型改造记录](docs/evidence/20261019-native-ui-model-implementation.txt)。
+本次公共 UI 改造已完成 Windows 统一队列编译和正式文件替换，旧文件先移入 `回收/`，从根 `uwcn_launcher.exe` 正常启动加载。旧 HDA4/NGT1 进程缺少构造源，不能原位迁移；发布前未发现游戏进程，本批没有发起热加载。Linux 尚未移植这一轮公共源改造。没有运行游戏、测试或验收画面；范围、编译警告、状态与发布回执见 [公共原生 UI 交付记录](docs/evidence/20261020-global-language-native-hook-delivery.md)。
 
 Windows 百科“文化”页截图中的正文与链接错位已定位为原生逐词元推进和合串前缀取整不一致，源码已统一为按原生词元累计字宽，并保留游戏行缓冲中的完整词元边界。统一队列编译、正式发布及兼容业务热加载均已完成，PID `121728` 返回 Adapter 第2代 Applied；旧两件先移入 `回收/`。详细回执及刷新边界见 [百科词元度量修正](docs/evidence/20261019-windows-encyclopedia-token-metrics.md)；未自行运行或测试。
 

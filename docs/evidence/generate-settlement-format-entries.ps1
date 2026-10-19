@@ -19,6 +19,8 @@ $lines=foreach($r in $rows) {
         if($last -eq 's') {
             $domain=$domains[$stringIndex++]
             if($domain -eq 'bound'){$kind='bound'}
+            elseif($domain -eq 'optional_bound'){$kind='optional_bound'}
+            elseif($domain -eq 'descriptor'){$kind='descriptor'}
             elseif($domain -eq 'control'){$kind='control'}
             elseif($domain.StartsWith('literal:')){$kind='literal';$tag='"format.'+$domain.Substring(8)+'"'}
             else{$tag='"'+$domain+'"'}

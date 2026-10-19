@@ -5,13 +5,8 @@
 // The game alone selects resource branches and expands original English text.
 // This observes those same operations. It stores no UI position or layout and
 // never calls a native builder again or writes an original game text buffer.
-Status message_translate_template(const char* key,const char* source,std::string& output);
-Status message_translate_value(const char* tag,const char* value,std::string& output);
-Status message_translate_bound(const char* original,std::string& output);
-Status message_identity_value(const char* original,std::string& output);
-void message_bind_value(const char* original,const std::string& translated);
 namespace windows_message_values {
-void observe_value(u32,u32,const char*,const std::string&);
+void observe_value(u32,u32,const char*,const MessageText&);
 }
 
 namespace windows_message_resources {
@@ -19,7 +14,7 @@ enum Hook : u32 {
     build_begin=0xb500,initial_lookup,tag_value,hear_lookup,body_lookup,
     hear_format,build_finish,chat_selected,chat_expand,chat_finish,chat_enter,
     lookup_plain_selected,lookup_branch_selected,lookup_debug_selector,
-    lookup_diagnostic,lookup_hear_selected
+    lookup_diagnostic,lookup_hear_selected,herbal_effect_name
 };
 
 enum class LookupOrigin : u32 { key_reference,selected_template,debug_selector,diagnostic };
@@ -27,7 +22,7 @@ enum class LookupOrigin : u32 { key_reference,selected_template,debug_selector,d
 struct Text {
     u32 owner{};
     std::string key;
-    std::string translated;
+    MessageText source;
     std::string query;
     Status status=Status::ok;
     bool present{};
@@ -52,7 +47,7 @@ std::vector<Chat> chats;
 void save_text(std::vector<unsigned char>& state,const Text& text) {
     message_state_write(state,text.owner);
     message_state_string(state,text.key);
-    message_state_string(state,text.translated);
+    native_message_source::write(state,text.source);
     message_state_string(state,text.query);
     message_state_write(state,text.status);
     message_state_write(state,text.present);
@@ -61,7 +56,7 @@ void save_text(std::vector<unsigned char>& state,const Text& text) {
 void restore_text(const unsigned char*& state,Text& text) {
     message_state_read(state,text.owner);
     message_state_string(state,text.key);
-    message_state_string(state,text.translated);
+    text.source=native_message_source::read(state);
     message_state_string(state,text.query);
     message_state_read(state,text.status);
     message_state_read(state,text.present);
@@ -121,7 +116,7 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(finish);
     // This LEA is reached only after the native .KEY. comparison succeeds.
     // Seven mood slots and the native selected-default slot remain untouched.
-    hooks.push_back(instruction(chat_selected,0x1616c4,{0x8d,0x8d,0xf8,0xfb,0xff,0xff}));
+    hooks.push_back(instruction(chat_selected,0x1616c4,{0x8d,0x85,0xf8,0xfb,0xff,0xff}));
     hooks.push_back(native_call(chat_expand,0x16168d,0x161330,0));
     hooks.push_back(instruction(chat_finish,0x1616b1,{0x8b,0x4d,0xfc,0x8b,0xc6}));
     hooks.push_back(instruction(chat_enter,0x161483,{0xb8,0x1c,0x38,0,0}));
@@ -138,6 +133,7 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     const auto hear=address(at<char>(0xa2248b8));
     std::memcpy(hear_selected.expected+1,&hear,4);
     hooks.push_back(hear_selected);
+    hooks.push_back(native_call(herbal_effect_name,0x3c802,0xf6510,0));
 }
 
 void begin_lookup(Build& build) {
@@ -147,21 +143,15 @@ void begin_lookup(Build& build) {
     build.lookup_hear=false;
 }
 
-Status lookup_translation(const Build& build,const char* key,const char* source,
-                          std::string& output) {
+MessageText lookup_source(const Build& build,const char* key,const char* original) {
     switch(build.lookup_origin) {
-    case LookupOrigin::selected_template:
-        return message_translate_template(key,source,output);
-    case LookupOrigin::diagnostic:
-        return message_translate_bound(source,output);
+    case LookupOrigin::selected_template:return message_source_template(key,original);
+    case LookupOrigin::diagnostic:return message_source_bound(original);
     case LookupOrigin::key_reference:
-    case LookupOrigin::debug_selector:
-        // These proven native branches expose the business identifier itself.
-        return message_identity_value(source,output);
+    case LookupOrigin::debug_selector:return message_source_identity(original);
     }
-    return Status::ok;
+    return {};
 }
-
 Text* expanding_text(u32 owner) {
     // 561330 is also called for business keys and unrelated text. Only these
     // buffers inside their already-entered native resource scopes qualify.
@@ -184,63 +174,51 @@ bool enclosed(const std::string& text,std::size_t position,char open,char close)
 }
 
 Status expand_observed_tag(Text& text,const char* tag,const char* value) {
-    if(text.status!=Status::ok) return text.status;
     const std::string token=std::string("<")+tag+">";
-    const auto position=text.translated.find(token);
-    std::string replacement;
-    if(enclosed(text.translated,position,'[',']') ||
-       enclosed(text.translated,position,'{','}')) {
-        // These actual tag values are native sublookup selectors or sound
-        // sample names. Translation happens only after the corresponding
-        // native [] lookup has chosen its display value.
-        replacement=value;
-    } else {
-        text.status=message_translate_value(tag,value,replacement);
-        if(text.status!=Status::ok) return text.status;
-    }
-    text.translated.replace(position,token.size(),replacement);
-    return Status::ok;
+    const auto position=text.source.original.find(token);
+    const bool control=enclosed(text.source.original,position,'[',']') ||
+                       enclosed(text.source.original,position,'{','}');
+    auto replacement=control ? message_source_identity(value) : message_source_tag(tag,value);
+    text.source=native_message_source::replace_first(std::move(text.source),token,std::move(replacement));
+    return text.status;
 }
 
 Status selected_subvalue(Text& text,const NativeEvent& event) {
     if(event.phase==NativePhase::before) {
-        begin_lookup(builds.back());
-        text.query=ptr<char>(event.frame->ecx);
-        return text.status;
+        begin_lookup(builds.back());text.query=ptr<char>(event.frame->ecx);return text.status;
     }
-    if(text.status!=Status::ok) return text.status;
-    std::string selected;
-    text.status=lookup_translation(builds.back(),text.query.c_str(),
-        ptr<char>(event.frame->eax),selected);
-    if(text.status!=Status::ok) return text.status;
-    const auto token=std::string("[")+text.query+"]";
-    // Chinese can put this same selected macro elsewhere in the sentence.
-    // We replace its identity, never reproduce the native branch decision.
-    text.translated.replace(text.translated.find(token),token.size(),selected);
-    text.query.clear();
-    return Status::ok;
+    auto selected=lookup_source(builds.back(),text.query.c_str(),ptr<char>(event.frame->eax));
+    const auto token=std::string("[")+message_source_utf8(text.query.c_str())+"]";
+    text.source=native_message_source::replace_first(std::move(text.source),token,std::move(selected));
+    text.query.clear();return text.status;
 }
-
 Status finish_build() {
     auto& build=builds.back();
     const auto status=build.body.status!=Status::ok ? build.body.status : build.hear.status;
     if(status==Status::ok) {
-        message_bind_value(ptr<char>(build.body.owner),build.body.translated);
+        message_bind_source(ptr<char>(build.body.owner),build.body.source);
         windows_message_values::observe_value(build.callsite,0x161b00,
-            ptr<char>(build.body.owner),build.body.translated);
+            ptr<char>(build.body.owner),build.body.source);
         if(build.hear.present)
-            message_bind_value(ptr<char>(build.hear.owner),build.hear.translated);
+            message_bind_source(ptr<char>(build.hear.owner),build.hear.source);
     }
     // The caller's native owner now carries the semantic association through
-    // message_bind_value. No completed message is retained in this observer.
+    // message_bind_source. No completed message is retained in this observer.
     builds.pop_back();
     return status;
 }
 
 Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
-    handled=event.id>=build_begin && event.id<=lookup_hear_selected;
+    handled=event.id>=build_begin && event.id<=herbal_effect_name;
     if(!handled) return Status::ok;
     switch(event.id) {
+    case herbal_effect_name:
+        // 43B9D0's final loop passes each record's +1 name field (CCB stride).
+        if(event.phase==NativePhase::before) {
+            const auto* native=ptr<char>(event.frame->ecx);
+            message_bind_source(native,message_source_lookup("herbal.effect",native));
+        }
+        return Status::ok;
     case build_begin:
         if(event.phase==NativePhase::before) {
             builds.emplace_back();
@@ -261,12 +239,10 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
             return Status::ok;
         }
         build.body.present=true;
-        build.body.status=lookup_translation(build,build.body.key.c_str(),
-            ptr<char>(event.frame->eax),build.body.translated);
+        build.body.source=lookup_source(build,build.body.key.c_str(),ptr<char>(event.frame->eax));
         build.hear.present=build.lookup_hear;
         if(build.hear.present)
-            build.hear.status=message_translate_template(build.hear.key.c_str(),
-                ptr<char>(build.hear.owner),build.hear.translated);
+            build.hear.source=message_source_template(build.hear.key.c_str(),ptr<char>(build.hear.owner));
         return build.body.status!=Status::ok ? build.body.status : build.hear.status;
     }
     case tag_value:
@@ -291,12 +267,9 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
         // The main body keeps its %s for its caller's separate native sprintf.
         if(event.phase==NativePhase::before) {
             if(build.hear.status!=Status::ok) return build.hear.status;
-            std::string argument;
-            build.hear.status=message_translate_value("%s",
-                ptr<char>(event.arguments[2]),argument);
-            if(build.hear.status!=Status::ok) return build.hear.status;
-            const auto position=build.hear.translated.find("%s");
-            build.hear.translated.replace(position,2,argument);
+            auto argument=message_source_tag("%s",ptr<char>(event.arguments[2]));
+            build.hear.source=native_message_source::replace_first(
+                std::move(build.hear.source),"%s",std::move(argument));
         }
         return build.hear.status;
     }
@@ -320,8 +293,7 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
             // subsequently constructs its own diagnostic at 5616A9.
             chat.body.present=*source!='\0';
             if(chat.body.present)
-                chat.body.status=message_translate_template(chat.body.key.c_str(),
-                    source,chat.body.translated);
+                chat.body.source=message_source_template(chat.body.key.c_str(),source);
         }
         if(chat.active && event.phase==NativePhase::after) {
             // 56169E tests the length of this just-expanded native result.
@@ -335,7 +307,7 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
         auto& chat=chats.back();
         const auto status=chat.body.status;
         if(chat.active && chat.body.present && status==Status::ok)
-            message_bind_value(ptr<char>(chat.body.owner),chat.body.translated);
+            message_bind_source(ptr<char>(chat.body.owner),chat.body.source);
         chats.pop_back();
         return status;
     }

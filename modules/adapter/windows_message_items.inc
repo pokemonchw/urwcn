@@ -3,7 +3,7 @@
 // Evidence: settlement-value-producers-ghidra.c and
 // settlement-item-builders-disassembly.txt. No UI layout is stored here.
 namespace windows_message_values {
-void observe_value(u32 callsite,u32 producer,const char* owner,const std::string& translated);
+void observe_value(u32 callsite,u32 producer,const char* owner,const MessageText& source);
 }
 namespace windows_message_items {
 enum Hook : u32 {
@@ -22,16 +22,16 @@ struct Frame {
     u32 pending_owner{};
     Status status=Status::ok;
     std::string base_source;
-    std::string prefix;
-    std::string body;
-    std::string tree;
-    std::string noun;
-    std::string primary;
-    std::string content;
-    std::string container;
-    std::string suffix;
-    std::string unit;
-    std::string pending;
+    MessageText prefix;
+    MessageText body;
+    MessageText tree;
+    MessageText noun;
+    MessageText primary;
+    MessageText content;
+    MessageText container;
+    MessageText suffix;
+    MessageText unit;
+    MessageText pending;
 };
 std::vector<Frame> frames;
 
@@ -42,9 +42,10 @@ void save(std::vector<unsigned char>& state) {
         message_state_write(state,frame.callsite);
         message_state_write(state,frame.pending_owner);
         message_state_write(state,frame.status);
-        for(const auto* text:{&frame.base_source,&frame.prefix,&frame.body,&frame.tree,
+        message_state_string(state,frame.base_source);
+        for(const auto* text:{&frame.prefix,&frame.body,&frame.tree,
             &frame.noun,&frame.primary,&frame.content,&frame.container,&frame.suffix,
-            &frame.unit,&frame.pending}) message_state_string(state,*text);
+            &frame.unit,&frame.pending}) native_message_source::write(state,*text);
     }
 }
 void restore(const unsigned char*& state) {
@@ -54,56 +55,59 @@ void restore(const unsigned char*& state) {
         message_state_read(state,frame.callsite);
         message_state_read(state,frame.pending_owner);
         message_state_read(state,frame.status);
-        for(auto* text:{&frame.base_source,&frame.prefix,&frame.body,&frame.tree,
+        message_state_string(state,frame.base_source);
+        for(auto* text:{&frame.prefix,&frame.body,&frame.tree,
             &frame.noun,&frame.primary,&frame.content,&frame.container,&frame.suffix,
-            &frame.unit,&frame.pending}) message_state_string(state,*text);
+            &frame.unit,&frame.pending}) *text=native_message_source::read(state);
     }
 }
 
-Status lookup(Frame& frame,const char* domain,const char* source,std::string& output) {
-    if(frame.status==Status::ok) frame.status=message_lookup_value(domain,source,output);
-    return frame.status;
+Status lookup(Frame& frame,const char* domain,const char* source,MessageText& output) {
+    output=message_source_lookup(domain,source);return frame.status;
 }
 Status format(Frame& frame,const char* domain,const char* source,
-              const std::vector<std::pair<const char*,std::string>>& arguments,
-              std::string& output) {
-    if(lookup(frame,domain,source,output)!=Status::ok) return frame.status;
-    std::size_t start=0;
-    for(const auto& [specifier,value]:arguments) {
-        const auto position=output.find(specifier,start);
-        output.replace(position,std::strlen(specifier),value);
-        start=position+value.size();
-    }
-    return Status::ok;
+              const std::vector<std::pair<const char*,MessageText>>& arguments,
+              MessageText& output) {
+    std::vector<MessageText> values;std::vector<std::string> conversions;
+    for(const auto& [specifier,value]:arguments) {values.push_back(value);conversions.emplace_back(specifier);}
+    output=native_message_source::format(message_source_lookup(domain,source),std::move(values),std::move(conversions));
+    return frame.status;
+}
+void append(MessageText& destination,const MessageText& value) {
+    destination=native_message_source::concat({std::move(destination),value});
 }
 void material_name(Frame& frame) {
-    format(frame,"item.wood",frame.base_source.c_str(),{{"%s",frame.tree}},frame.body);
+    // Native 451C5B / 451D3E replace the selected descriptor's wood atom.
+    // The exact descriptor names the immutable Chinese grammar pattern; the
+    // English result is supplied by that same native construction on finish.
+    MessageText result;result.kind=native_message_source::Kind::format;
+    result.children={message_source_lookup("item.wood",frame.base_source.c_str()),frame.tree};
+    result.syntax={"%s"};frame.body=std::move(result);
 }
-
 // The values observer calls this synchronously after a proven child producer.
 // Callsite selects the native copy destination; no English-token inference or
 // completed-value cache participates in this association.
-void observe_value(u32 callsite,u32 producer,const char*,const std::string& translated) {
+void observe_value(u32 callsite,u32 producer,const char*,const MessageText& source) {
     if(frames.empty()) return;
     auto& frame=frames.back();
     if(frame.kind==Kind::name) {
-        if(callsite==0x5198f && producer==0x51510) frame.prefix=translated;
-        if(callsite==0x5189c && producer==0xae750) frame.body=translated;
+        if(callsite==0x5198f && producer==0x51510) frame.prefix=source;
+        if(callsite==0x5189c && producer==0xae750) frame.body=source;
         if(producer==0x15e2c0 && callsite>=0x51b3e && callsite<=0x51d9d) {
-            frame.tree=translated;
+            frame.tree=source;
             if(callsite==0x51c5b || callsite==0x51d3e) material_name(frame);
         }
         if((producer==0x15eff0 || producer==0x15f400) &&
-           callsite>=0x52225 && callsite<=0x52522) frame.noun=translated;
+           callsite>=0x52225 && callsite<=0x52522) frame.noun=source;
     } else {
         if(producer==0x51770) {
-            if(callsite==0x52741) frame.body=frame.primary=translated;
-            if(callsite==0x527bf) frame.content=translated;
-            if(callsite==0x527ea) frame.container=translated;
+            if(callsite==0x52741) frame.body=frame.primary=source;
+            if(callsite==0x527bf) frame.content=source;
+            if(callsite==0x527ea) frame.container=source;
         }
         if((producer==0x15eff0 || producer==0x15f400) &&
-           callsite>=0x52838 && callsite<=0x52996) frame.noun=translated;
-        if(callsite==0x52a0a && producer==0x4b800) frame.unit=translated;
+           callsite>=0x52838 && callsite<=0x52996) frame.noun=source;
+        if(callsite==0x52a0a && producer==0x4b800) frame.unit=source;
     }
 }
 
@@ -122,7 +126,7 @@ void prepare_input(u32 callsite,u32 producer,const char* owner) {
     const bool tree_plural=frame.kind==Kind::name && callsite==0x51df7 && producer==0x15eff0;
     const bool name_case=frame.kind==Kind::name && callsite==0x525a3 && producer==0xd4020;
     const bool quantity_case=frame.kind==Kind::quantity && callsite==0x52aae && producer==0xd4020;
-    if(tree_plural || name_case || quantity_case) message_bind_value(owner,frame.body);
+    if(tree_plural || name_case || quantity_case) message_bind_source(owner,frame.body);
 }
 
 void append_hooks(std::vector<HookSpec>& hooks) {
@@ -172,8 +176,9 @@ Status finish(const NativeEvent& event) {
     auto frame=std::move(frames.back());frames.pop_back();
     const auto owner=event.frame->eax;
     const auto producer=frame.kind==Kind::name ? 0x51770u : 0x52640u;
+    frame.body.original=message_source_utf8(ptr<char>(owner));
     if(frame.status==Status::ok) {
-        message_bind_value(ptr<char>(owner),frame.body);
+        message_bind_source(ptr<char>(owner),frame.body);
         observe_value(frame.callsite,producer,ptr<char>(owner),frame.body);
         windows_message_values::observe_value(frame.callsite,producer,ptr<char>(owner),frame.body);
     } else {
@@ -197,18 +202,19 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
     if(frame.status!=Status::ok) return frame.status;
     if(event.id>=base_format) {
         if(event.phase==NativePhase::after) {
-            message_bind_value(ptr<char>(frame.pending_owner),frame.pending);
+            message_bind_source(ptr<char>(frame.pending_owner),frame.pending);
             return frame.status;
         }
         frame.pending_owner=event.arguments[0];
         const auto* source=ptr<char>(event.arguments[1]);
-        const auto number=[&](u32 word) {return std::to_string(static_cast<std::int32_t>(word));};
+        const auto number=[](u32 word) {return native_message_source::scalar(native_message_source::Scalar::signed32,word,"%d");};
         switch(event.id) {
         case base_format:
             frame.base_source=ptr<char>(event.arguments[2]);
-            lookup(frame,"item",frame.base_source.c_str(),frame.body);
+            frame.status=message_crafted_item_source(ptr<unsigned char>(event.arguments[2]-9),
+                ptr<char>(event.arguments[2]),frame.body);
             if(frame.status==Status::ok)
-                message_bind_value(ptr<char>(event.arguments[2]),frame.body);
+                message_bind_source(ptr<char>(event.arguments[2]),frame.body);
             frame.pending=frame.body;break;
         case tree_format:
             format(frame,"item",source,{{"%s",frame.tree},{"%s",frame.body}},frame.pending);
@@ -220,20 +226,19 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
             format(frame,"item",source,{{"%s",frame.body}},frame.pending);
             frame.body=frame.pending;break;
         case leash_format:case tied_format: {
-            std::string npc;
-            frame.status=message_translate_bound(ptr<char>(event.arguments[2]),npc);
+            auto npc=message_source_bound(ptr<char>(event.arguments[2]));
             if(frame.status==Status::ok)
                 format(frame,"item",source,{{"%s",npc}},frame.pending);
             frame.suffix=frame.pending;break;
         }
         case leash_id_format:
             format(frame,"item",source,{{"%d",number(event.arguments[2])}},frame.pending);
-            frame.suffix+=frame.pending;break;
+            append(frame.suffix,frame.pending);break;
         case flora_format:
             lookup(frame,"nameatom",ptr<char>(event.arguments[2]),frame.body);
             frame.pending=frame.body;break;
         case complete_format:
-            frame.body=frame.prefix+frame.body;
+            frame.body=native_message_source::concat({frame.prefix,std::move(frame.body)});
             frame.pending=frame.body;break;
         case container_format:
             format(frame,"item",source,{{"%s",frame.container},{"%s",frame.content}},frame.pending);
@@ -246,7 +251,7 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
             frame.body=frame.pending;break;
         case length_format:
             format(frame,"item",source,{{"%s",frame.unit}},frame.pending);
-            frame.body+=frame.pending;break;
+            append(frame.body,frame.pending);break;
         case count_format:
             format(frame,"item",source,{{"%d",number(event.arguments[2])},{"%s",frame.body}},frame.pending);
             frame.body=frame.pending;break;
@@ -254,25 +259,25 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
         return frame.status;
     }
     switch(event.id) {
-    case clear_quality:frame.prefix.clear();break;
+    case clear_quality:frame.prefix={};break;
     case stale_quality:lookup(frame,"item","stale",frame.prefix);break;
     case spoiled_quality:lookup(frame,"item","Spoiled ",frame.prefix);break;
     case rotten_quality:lookup(frame,"item","Rotten ",frame.prefix);break;
     case water_name:lookup(frame,"item","water",frame.body);break;
     case milk_name:lookup(frame,"item","milk",frame.body);break;
-    case leash_append:frame.body+=frame.suffix;break;
+    case leash_append:append(frame.body,frame.suffix);break;
     case wood_hook:case iron_hook:case bone_hook:case no_hook:case no_string: {
         const char* source=event.id==wood_hook ? " with wooden hook" :
             event.id==iron_hook ? " with iron hook" : event.id==bone_hook ? " with bone hook" :
             event.id==no_hook ? " with no hook" : " with no string";
-        std::string suffix;lookup(frame,"item",source,suffix);frame.body+=suffix;break;
+        MessageText suffix;lookup(frame,"item",source,suffix);append(frame.body,suffix);break;
     }
     case alternate_name:
         lookup(frame,"item.alternate",ptr<char>(event.frame->esp+0x671),frame.body);break;
-    case flora_append:frame.body+=frame.noun;break;
+    case flora_append:append(frame.body,frame.noun);break;
     case discard_length_quantity:frame.body=frame.primary;break;
     case quantity_ready:
-        message_bind_value(ptr<char>(*ptr<u32>(event.frame->esp+0x14)),frame.body);break;
+        message_bind_source(ptr<char>(*ptr<u32>(event.frame->esp+0x14)),frame.body);break;
     }
     return frame.status;
 }

@@ -1,0 +1,51 @@
+file	field	source
+flora_berries.txt	NAME	Blueberry
+flora_berries.txt	NAME	Lingonberry
+flora_berries.txt	NAME	Cranberry
+flora_berries.txt	NAME	Northern bilberry
+flora_berries.txt	NAME	Cloudberry
+flora_berries.txt	NAME	Strawberry
+flora_berries.txt	NAME	Crowberry
+flora_berries.txt	NAME	Raspberry
+flora_berries.txt	NAME	Black currant
+flora_cultivated.txt	NAME	Turnip
+flora_cultivated.txt	NAME	Pea
+flora_cultivated.txt	NAME	Broad bean
+flora_cultivated.txt	NAME	Barley
+flora_cultivated.txt	NAME	Rye
+flora_cultivated.txt	NAME	Hemp
+flora_cultivated.txt	NAME	Flax
+flora_herbs.txt	NAME	Nettle
+flora_herbs.txt	NAME	Yarrow
+flora_herbs.txt	NAME	Sorrel
+flora_herbs.txt	NAME	Meadsweet
+flora_herbs.txt	NAME	Golden rod
+flora_herbs.txt	NAME	Heather
+flora_mushroom.txt	NAME	Black ear mushroom
+flora_mushroom.txt	NAME	Sand mushroom
+flora_mushroom.txt	NAME	Noaidi's mushroom
+flora_mushroom.txt	NAME	Yellowcoat mushroom
+flora_mushroom.txt	NAME	Browncoat mushroom
+flora_mushroom.txt	NAME	Bearpaw mushroom
+flora_mushroom.txt	NAME	Hairy mushroom
+flora_mushroom.txt	NAME	Redlegger mushroom
+flora_mushroom.txt	NAME	Yellow fingers mushroom
+flora_mushroom.txt	NAME	Tellervo's gift mushroom
+flora_mushroom.txt	NAME	Ukko's mushroom
+flora_mushroom.txt	NAME	Soft mushroom
+flora_mushroom.txt	NAME	Ringed mushroom
+flora_newherbs.txt	NAME	Mother pipe
+flora_newherbs.txt	NAME	Bear pipe
+flora_newherbs.txt	NAME	Dog pipe
+flora_newherbs.txt	NAME	Wolf pipe
+flora_newherbs.txt	NAME	Water lily
+flora_newherbs.txt	NAME	Riverpig
+flora_newherbs.txt	NAME	Clayweed
+flora_newherbs.txt	NAME	Bogbean
+flora_newherbs.txt	NAME	Marsh calla
+flora_newherbs.txt	NAME	Lake reed
+flora_newherbs.txt	NAME	Milkweed
+flora_newherbs.txt	NAME	Burdock
+flora_newherbs.txt	NAME	Stonecrop
+flora_newherbs.txt	NAME	Roseroot
+flora_newherbs.txt	NAME	Bog flower

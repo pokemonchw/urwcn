@@ -1,0 +1,38 @@
+PE 3.89 calendar and place-context shared-message sources
+
+48A310 actual shared-message callers: 57231C, 572340, 572364,
+572388, 5723AC, 5723D0. The caller passes the native 0xCF-byte
+calendar record by value in its aligned 0xD0-byte stack area.
+The six flags are 1, 0x21, 2, 0x22, 4, 0x24. The Mod does not
+recalculate those flags or date fields.
+
+48A38B/48A3AE sprintf supplies the actual ordinal numeric operand.
+The existing native ordinal suffix logic runs unchanged. 48A474 is
+the actual 'last' replacement branch. 48A4A3 and 48A4CC supply the
+ordinary day/week/season wording and the native month-debug variant.
+The ordinary Chinese expression reorders the actual operands to
+season, ordinal, day; its English root is the same native sprintf
+result, not a reconstructed alternative native string.
+
+48A4E2 obtains the selected 55E910 result. That producer uses four
+native period labels or no prefix and the 13 fixed 100-byte month
+slots at 5EA3A0. The native zero slot is retained as an explicit empty
+month. Every resulting fixed source is in settlement-calendar-month-atoms.tsv.
+48A50F/48A515 observe the actual 'on ' and direct day-copy branch.
+48A57F/48A5A0/48A5E1 observe the complete native date formats.
+
+5772E8 calls 48E4F0, a place-context producer, not a weather function.
+Its culture prefix is supplied by 48E61A from the fixed culture table.
+Existing geography companions own the actual 48E637->407520 terrain
+and 48E6A3->48E420 place-name child results. They synchronously pass
+those neutral source expressions to the active place-context frame.
+48E68A is the actual native ' at ' append branch; 48E6B9 combines the
+selected prefix and place. Native coordinate and culture decisions
+remain unchanged, as do the 03989878 output buffer and all copies.
+
+All intermediate state is a source expression in the captured native
+call scope, matched by saved parent EBP and preserved through the
+module's existing source-state serialization. Other HUD invocations
+of these producers do not acquire this shared-message scope.
+No translated snapshots, UI positions, layout tables or pixel state
+are introduced. No tests or game execution were performed.

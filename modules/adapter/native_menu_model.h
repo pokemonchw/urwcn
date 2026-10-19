@@ -39,10 +39,13 @@ void initialize(std::uintptr_t image_base);
 // shared native ranges. After that normal construction, create the current
 // instance; subsequent native construction/consumption uses this same model.
 Handle create_from_native();
-// Copy only this native input/source model into a detached instance. The
-// returned handle owns one reference; the receiving cache adopts that reference.
-// No pixels, renderer output or native paint calls are copied or performed.
+// Freeze the neutral paint source. Its original logical input owner remains
+// live and is retained by this snapshot; cached pixels never own selection.
+// The receiving cache adopts the returned single reference.
 Handle snapshot(Handle handle);
+Handle input_owner(Handle handle);
+// Captures into the actual logical input owner, including when given a frozen
+// source handle. A frozen source's own neutral records are never overwritten.
 void capture_into(Handle handle);
 // Ordinary CFFB0 construction captures ambient panel inputs. Button inputs
 // come from the same captured native header consumed at D030F/D031A, since
@@ -57,8 +60,13 @@ void release(Handle handle);
 
 // Always capture the current native instance before installing another one,
 // including activation of the same handle. Live selection/scroll/input fields
-// must never be replaced by an earlier captured copy of the active instance.
+// must never be replaced by a source snapshot. A snapshot resolves its actual
+// logical input owner before installing any native bytes.
 void activate(Handle handle);
+// The original MENULIST.SAV fread has already installed its complete header
+// and rows. Adopt those bytes into that saved source's real InputOwner;
+// storage captures the departing owner before the first native read.
+void adopt_from_native(Handle saved_source);
 void deactivate();
 void destroy(Handle handle);
 Handle active();
@@ -66,8 +74,10 @@ Handle active();
 void bind_title(Handle handle,const native_text_resource::TextSource& source);
 void bind_row(Handle handle,u32 index,const native_text_resource::TextSource& source,
     const std::string& prefix);
+void bind_annotation(Handle handle,u32 index,const native_text_resource::TextSource& source);
 const TextBinding& title(Handle handle);
 const TextBinding& row(Handle handle,u32 index);
+const TextBinding& annotation(Handle handle,u32 index);
 
 // Serialized u32 metadata and original model bytes, ordered by handle. No
 // module-owned allocations or code pointers cross a business-module reload.

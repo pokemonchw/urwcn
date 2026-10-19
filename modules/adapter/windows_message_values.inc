@@ -4,9 +4,10 @@
 Status message_lookup_value(const char*,const char*,std::string&);
 Status message_translate_bound(const char*,std::string&);
 Status message_identity_value(const char*,std::string&);
-void message_bind_value(const char*,const std::string&);
+Status message_crafted_item_source(const unsigned char*,const char*,MessageText&);
+
 namespace windows_message_items {
-void observe_value(u32,u32,const char*,const std::string&);
+void observe_value(u32,u32,const char*,const MessageText&);
 void prepare_input(u32,u32,const char*);
 void observe_status(u32,u32,Status);
 }
@@ -16,10 +17,17 @@ constexpr u32 first_hook=0xc000;
 enum class Kind : u32 { quality,tree,direction,plural,singular,indefinite,definite,
     lowercase,npc,identity,bodypart,time,quantity,injury,hunger,thirst,trap,
     work,work_item,construction,activity,activity_copy,silhouette,burntime,
-    temperature,encounter,spell,profile,corpse_size,corpse_damage,corpse_age,corpse_injury };
+    temperature,encounter,spell,profile,corpse_size,corpse_damage,corpse_age,corpse_injury,
+    corpse,corpse_burn,craft,comma_list,list_add,count_list,treatment,flora,helper_list,bowstring,proper,injury_label,track_age,or_list };
 struct Site {u32 site,target;Kind kind;};
 // GENERATED_NATIVE_VALUE_SITES
 const Site sites[]={
+    {0x65167,0x15efb0,Kind::indefinite},
+    {0x15e49f,0x162930,Kind::or_list},
+    {0x167b15,0x167880,Kind::track_age},
+    {0xd7d02,0xd4ef0,Kind::injury_label},
+    {0xd7fdf,0xd4ef0,Kind::injury_label},
+    {0xd50d0,0xd4600,Kind::bodypart},
     {0x166b,0x15eff0,Kind::plural},
     {0x17ff,0x15eff0,Kind::plural},
     {0x18f7,0x15eff0,Kind::plural},
@@ -50,16 +58,21 @@ const Site sites[]={
     {0x6964,0x162bd0,Kind::indefinite},
     {0x6d49,0xd4600,Kind::bodypart},
     {0x6e08,0x5340,Kind::trap},
-    {0x13d25,0xd4020,Kind::lowercase},
     {0x1bec8,0x199b0,Kind::time},
     {0x27636,0xad4f0,Kind::npc},
     {0x2c82f,0x162bd0,Kind::indefinite},
     {0x2c8aa,0x15ee90,Kind::encounter},
     {0x2cd75,0xad4f0,Kind::npc},
+    {0x2cd7c,0x162e30,Kind::list_add},
+    {0x2cdbb,0x162ed0,Kind::count_list},
     {0x2da73,0x162bd0,Kind::indefinite},
     {0x2da9d,0x162bd0,Kind::indefinite},
     {0x2fa0e,0x162bd0,Kind::indefinite},
+    {0x2fae6,0x1627a0,Kind::comma_list},
     {0x2fdfe,0x162bd0,Kind::indefinite},
+    {0x2fed8,0x1627a0,Kind::comma_list},
+    {0x31131,0x1627a0,Kind::comma_list},
+    {0x31158,0x1627a0,Kind::comma_list},
     {0x31622,0x163840,Kind::activity_copy},
     {0x3263f,0x163190,Kind::activity},
     {0x3265d,0x163190,Kind::activity},
@@ -74,11 +87,16 @@ const Site sites[]={
     {0x38935,0x163190,Kind::activity},
     {0x38940,0x163190,Kind::activity},
     {0x3894e,0x163190,Kind::activity},
-    {0x3d09d,0xd4020,Kind::lowercase},
     {0x40c9f,0x162bd0,Kind::indefinite},
     {0x40d1f,0x51510,Kind::quality},
     {0x40d26,0x162bd0,Kind::indefinite},
     {0x40dfa,0x51510,Kind::quality},
+    {0x4151f,0x40b20,Kind::craft},
+    {0x4154d,0x40b20,Kind::craft},
+    {0x4155d,0x40b20,Kind::craft},
+    {0x4156d,0x40b20,Kind::craft},
+    {0x4157d,0x40b20,Kind::craft},
+    {0x4158d,0x40b20,Kind::craft},
     {0x41609,0x199b0,Kind::time},
     {0x41612,0x199b0,Kind::time},
     {0x41b8b,0x1070f0,Kind::work_item},
@@ -115,13 +133,13 @@ const Site sites[]={
     {0x48697,0x163190,Kind::activity},
     {0x486e2,0x163190,Kind::activity},
     {0x48721,0x163190,Kind::activity},
+    {0x490b2,0x48d50,Kind::bowstring},
     {0x4bd10,0x4b2f0,Kind::quantity},
-    {0x4be5a,0xd4020,Kind::lowercase},
-    {0x4bf70,0xd4020,Kind::lowercase},
     {0x4cb7b,0x199b0,Kind::time},
     {0x4fd4d,0x163190,Kind::activity},
     {0x4fe92,0x163190,Kind::activity},
     {0x50b1b,0x162cf0,Kind::definite},
+    {0x5189c,0xae750,Kind::corpse},
     {0x5198f,0x51510,Kind::quality},
     {0x51ac4,0x15eff0,Kind::plural},
     {0x51b3e,0x15e2c0,Kind::tree},
@@ -211,7 +229,9 @@ const Site sites[]={
     {0x8412f,0x162bd0,Kind::indefinite},
     {0x841e6,0x162bd0,Kind::indefinite},
     {0x842c0,0x162bd0,Kind::indefinite},
+    {0x89f9a,0xaaf20,Kind::helper_list},
     {0x987d1,0xae480,Kind::corpse_damage},
+    {0x9885f,0xd450,Kind::corpse_burn},
     {0x9c3b0,0xd4020,Kind::lowercase},
     {0x9c6ed,0xd4020,Kind::lowercase},
     {0x9f972,0xd4020,Kind::lowercase},
@@ -222,6 +242,8 @@ const Site sites[]={
     {0xa35fd,0xd4020,Kind::lowercase},
     {0xaac68,0xad4f0,Kind::npc},
     {0xab049,0xad4f0,Kind::npc},
+    {0xab050,0x162e30,Kind::list_add},
+    {0xab06d,0x162ed0,Kind::count_list},
     {0xadcfe,0xadbc0,Kind::corpse_size},
     {0xadd57,0xad4f0,Kind::npc},
     {0xae325,0xad4f0,Kind::npc},
@@ -229,13 +251,15 @@ const Site sites[]={
     {0xae7d8,0xae480,Kind::corpse_damage},
     {0xae800,0xadca0,Kind::profile},
     {0xae80f,0xadca0,Kind::profile},
+    {0xae85a,0xd450,Kind::corpse_burn},
     {0xae88d,0xd6f00,Kind::corpse_injury},
     {0xae944,0xae680,Kind::corpse_age},
     {0xaed15,0xadca0,Kind::profile},
+    {0xaedf2,0x162e30,Kind::list_add},
+    {0xaeef2,0x162e30,Kind::list_add},
+    {0xaf059,0x162e30,Kind::list_add},
+    {0xaf075,0x162ed0,Kind::count_list},
     {0xaf320,0xd71b0,Kind::injury},
-    {0xaf342,0xd4020,Kind::lowercase},
-    {0xaf58a,0xd4020,Kind::lowercase},
-    {0xaf7a2,0xd4020,Kind::lowercase},
     {0xb0330,0x846c0,Kind::identity},
     {0xb033d,0x846c0,Kind::identity},
     {0xb15e0,0xd4020,Kind::lowercase},
@@ -258,7 +282,9 @@ const Site sites[]={
     {0xd75d7,0xd71b0,Kind::injury},
     {0xd8c15,0xd71b0,Kind::injury},
     {0xd8d97,0xd4020,Kind::lowercase},
+    {0xd9174,0xd8a10,Kind::treatment},
     {0xd931c,0xd4020,Kind::lowercase},
+    {0xd93ba,0xd8a10,Kind::treatment},
     {0xd9922,0xd4020,Kind::lowercase},
     {0xd9a10,0xd71b0,Kind::injury},
     {0xd9a17,0xd4020,Kind::lowercase},
@@ -267,6 +293,11 @@ const Site sites[]={
     {0xd9c06,0xd4020,Kind::lowercase},
     {0xd9c77,0xd4020,Kind::lowercase},
     {0xdabac,0xd4020,Kind::lowercase},
+    {0xdc961,0x162e30,Kind::list_add},
+    {0xdca74,0x162e30,Kind::list_add},
+    {0xdcad1,0x162e30,Kind::list_add},
+    {0xdcbb9,0x162e30,Kind::list_add},
+    {0xdcc15,0x162ed0,Kind::count_list},
     {0xdcfdd,0xad4f0,Kind::npc},
     {0xdcff1,0xad4f0,Kind::npc},
     {0xdd005,0xad4f0,Kind::npc},
@@ -295,8 +326,11 @@ const Site sites[]={
     {0x102473,0xd4020,Kind::lowercase},
     {0x102d4b,0x4b2f0,Kind::quantity},
     {0x102e2a,0x4b2f0,Kind::quantity},
+    {0x107581,0x1627a0,Kind::comma_list},
     {0x10769d,0x101790,Kind::construction},
     {0x107701,0x162bd0,Kind::indefinite},
+    {0x107712,0xe1ef0,Kind::proper},
+    {0x10777e,0x3550,Kind::flora},
     {0x1077c8,0x1070f0,Kind::work_item},
     {0x1077d0,0x1018e0,Kind::work},
     {0x1077f4,0x1070f0,Kind::work_item},
@@ -308,6 +342,7 @@ const Site sites[]={
     {0x107ac8,0x5340,Kind::trap},
     {0x107da6,0xae3f0,Kind::silhouette},
     {0x107e28,0xadca0,Kind::profile},
+    {0x107ebc,0xae750,Kind::corpse},
     {0x107fb9,0x19610,Kind::burntime},
     {0x10866b,0x15e4d0,Kind::temperature},
     {0x118499,0x163840,Kind::activity_copy},
@@ -336,11 +371,15 @@ const Site sites[]={
     {0x11bb2e,0xd4020,Kind::lowercase},
     {0x11bc90,0xd4020,Kind::lowercase},
     {0x11c821,0xae680,Kind::corpse_age},
+    {0x11c831,0xae750,Kind::corpse},
     {0x11c89b,0x163840,Kind::activity_copy},
     {0x11cab9,0xad4f0,Kind::npc},
     {0x11d320,0x163190,Kind::activity},
     {0x11d366,0x163840,Kind::activity_copy},
     {0x11d3d2,0xae680,Kind::corpse_age},
+    {0x11d3e5,0xae750,Kind::corpse},
+    {0x11d443,0xd450,Kind::corpse_burn},
+    {0x11d460,0xae750,Kind::corpse},
     {0x11d4d9,0x163840,Kind::activity_copy},
     {0x11d52a,0xae480,Kind::corpse_damage},
     {0x11d5ab,0xd6f00,Kind::corpse_injury},
@@ -419,8 +458,6 @@ const Site sites[]={
     {0x1355d3,0x15eff0,Kind::plural},
     {0x1355f5,0xd4020,Kind::lowercase},
     {0x1355fc,0x15eff0,Kind::plural},
-    {0x1394b2,0xd4020,Kind::lowercase},
-    {0x1394d9,0xd4020,Kind::lowercase},
     {0x13a02c,0xad4f0,Kind::npc},
     {0x13a07d,0xad4f0,Kind::npc},
     {0x13a0b1,0xad4f0,Kind::npc},
@@ -440,9 +477,7 @@ const Site sites[]={
     {0x13d213,0x162bd0,Kind::indefinite},
     {0x13e7dd,0x199b0,Kind::time},
     {0x1403e8,0x163190,Kind::activity},
-    {0x140447,0xd4020,Kind::lowercase},
     {0x1407c8,0x162bd0,Kind::indefinite},
-    {0x1414e5,0xd4020,Kind::lowercase},
     {0x141533,0x15eff0,Kind::plural},
     {0x142f0c,0xad4f0,Kind::npc},
     {0x142f15,0xadbc0,Kind::corpse_size},
@@ -455,12 +490,6 @@ const Site sites[]={
     {0x149513,0xe7ef0,Kind::spell},
     {0x149532,0xe7ef0,Kind::spell},
     {0x14954a,0xe7ef0,Kind::spell},
-    {0x1498f5,0xd4020,Kind::lowercase},
-    {0x149915,0xd4020,Kind::lowercase},
-    {0x1499b1,0xd4020,Kind::lowercase},
-    {0x149a01,0xd4020,Kind::lowercase},
-    {0x149a3a,0xd4020,Kind::lowercase},
-    {0x149a90,0xd4020,Kind::lowercase},
     {0x14bba8,0xd4020,Kind::lowercase},
     {0x14bbc9,0xd4020,Kind::lowercase},
     {0x14ddaf,0xae3f0,Kind::silhouette},
@@ -475,7 +504,6 @@ const Site sites[]={
     {0x1551ab,0xad4f0,Kind::npc},
     {0x1551b2,0xd4020,Kind::lowercase},
     {0x155762,0xad4f0,Kind::npc},
-    {0x156480,0xd4020,Kind::lowercase},
     {0x1568c8,0xae3f0,Kind::silhouette},
     {0x157bbc,0xae3f0,Kind::silhouette},
     {0x15e42c,0x15e2c0,Kind::tree},
@@ -525,203 +553,176 @@ const Site sites[]={
     {0x1844a8,0xd4600,Kind::bodypart},
     {0x184532,0xd4600,Kind::bodypart},
 };
-struct Value {u32 site,producer,owner;std::string domain,source,translated;};
-struct Pending {Kind kind;u32 ecx,edx;Status status;std::string input,translated;std::vector<Value> children;};
+struct Value {u32 site,producer,owner;std::string domain,original;MessageText text;};
+struct Part {MessageText text;bool comma;};
+struct Pending {
+    Kind kind;u32 ecx,edx;std::string input;MessageText text,detail;
+    Status source_status=Status::ok;
+    std::vector<Value> children;std::vector<Part> parts;
+};
 std::vector<Pending> pending;
 std::vector<std::vector<Value>> tags;
-
 const char* producer_domain(u32 producer) {
     switch(producer) {
-    case 0x51770:case 0x52640:return "item";
+    case 0x51770:case 0x52640:case 0x1070f0:case 0x40b20:return "item";
     case 0x51510:return "item.quality";
     case 0x15e2c0:return "tree";
-    case 0xad4f0:return "npc";
+    case 0xad4f0:case 0xae3f0:case 0x15ee90:case 0xadca0:return "npc";
     case 0x846c0:return "identity";
     case 0xd4600:return "bodypart";
     case 0x15eba0:return "direction";
     case 0x15fd00:case 0x15fe60:return "status";
-    case 0x199b0:return "time";
+    case 0x199b0:case 0x19610:return "time";
     case 0x4b2f0:case 0x4b800:return "unit";
     case 0xd71b0:return "injury";
     case 0x5340:return "trap";
     case 0x1018e0:case 0x101790:return "work";
-    case 0x1070f0:return "item";
     case 0x163190:case 0x163840:return "activity";
-    case 0xae3f0:case 0x15ee90:return "npc";
-    case 0x19610:return "time";
     case 0x15e4d0:case 0x15f450:return "temperature";
     case 0xe7ef0:return "spell";
     case 0xadbc0:case 0xae480:case 0xae680:case 0xd6f00:case 0xd450:case 0xae750:return "corpse";
     default:return "bound";
     }
 }
+void observe_chain_value(u32,u32,const char*,const MessageText&);
 void begin_tag() {tags.emplace_back();}
 void end_tag() {tags.pop_back();}
-void observe_value(u32 site,u32 producer,const char* original,const std::string& translated) {
-    const Value value{site,producer,address(original),producer_domain(producer),original,translated};
+void observe_value(u32 site,u32 producer,const char* original,const MessageText& text) {
+    const Value value{site,producer,address(original),producer_domain(producer),original,text};
     if(!pending.empty()) pending.back().children.push_back(value);
     if(!tags.empty()) tags.back().push_back(value);
+    observe_chain_value(site,producer,original,text);
 }
-Status resolve(const char* domain,const char* source,std::string& translated) {
-    // Only actual child results of the currently executing native producer or
-    // 5601C0 tag expansion participate in native byte-copy propagation.
-    const auto find=[&](const std::vector<Value>& values) {
-        for(auto i=values.rbegin();i!=values.rend();++i) {
+MessageText source(const char* domain,const char* original) {
+    if(*original=='\0') return native_message_source::original("");
+    const auto find=[&](const std::vector<Value>& values)->const MessageText* {
+        for(auto i=values.rbegin();i!=values.rend();++i)
             if((std::strcmp(domain,"bound")==0 || i->domain==domain || i->domain=="bound") &&
-               i->source==source) {translated=i->translated;return true;}
-        }
-        return false;
+               i->original==original) return &i->text;
+        return nullptr;
     };
-    if(!pending.empty() && find(pending.back().children)) return Status::ok;
-    if(!tags.empty() && find(tags.back())) return Status::ok;
-    if(std::strcmp(domain,"bound")==0) return message_translate_bound(source,translated);
-    return message_lookup_value(domain,source,translated);
+    if(!pending.empty()) if(const auto* value=find(pending.back().children)) return *value;
+    if(!tags.empty()) if(const auto* value=find(tags.back())) return *value;
+    return std::strcmp(domain,"bound")==0 ? message_source_bound(original):message_source_lookup(domain,original);
 }
-Status name_value(const char* source,std::string& translated) {
-    if(*source=='\0') {translated.clear();return Status::ok;}
-    return resolve("bound",source,translated);
+Status resolve(const char* domain,const char* original,std::string& output) {
+    return message_project_source(source(domain,original),true,output);
 }
-Status pattern(const char*,const char*,std::initializer_list<std::string>,std::string&);
-Status quantity_value(const char* source,std::string& translated) {
-    // 44B2F0 and 44B800 append one of these unit strings to a native
-    // %.0f/%.1f/%.2f result. The native number and precision are retained.
-    const std::string value=source;
-    const auto split=value.find(' ');
-    if(split==std::string::npos) {
-        if(value.find_first_not_of("0123456789.-")==std::string::npos) {
-            translated=value;return Status::ok;
-        }
-        return message_lookup_value("unit",source,translated);
-    }
-    std::string unit;
-    const auto status=message_lookup_value("unit",value.substr(split+1).c_str(),unit);
-    if(status==Status::ok) translated=value.substr(0,split)+unit;
-    return status;
+MessageText pattern(const char* domain,const char* original,std::initializer_list<MessageText> values) {
+    return native_message_source::format(message_source_lookup(domain,original),values,
+        std::vector<std::string>(values.size(),"%s"));
 }
-Status time_value(const char* source,std::string& translated) {
-    const std::string value=source;
-    if(value.compare(0,6,"after ")==0 && value.size()>11 &&
-       value.compare(value.size()-5,5," days")==0) {
-        auto status=message_lookup_value("time","after %d days",translated);
-        if(status==Status::ok) translated.replace(translated.find("%d"),2,value.substr(6,value.size()-11));
-        return status;
-    }
-    if(value.compare(0,3,"by ")==0) {
-        std::string time;
-        const auto status=message_lookup_value("time",value.substr(3).c_str(),time);
-        return status==Status::ok ? pattern("time","by %s",{time},translated):status;
-    }
-    if(value.compare(0,5,"till ")==0) {
-        std::string time;
-        const auto status=message_lookup_value("time",value.substr(5).c_str(),time);
-        return status==Status::ok ? pattern("time","till %s",{time},translated):status;
-    }
-    return message_lookup_value("time",source,translated);
-}
-Status pattern(const char* domain,const char* original,
-               std::initializer_list<std::string> values,std::string& translated) {
-    auto status=message_lookup_value(domain,original,translated);
-    if(status!=Status::ok) return status;
-    std::size_t at=0;
-    for(const auto& value:values) {
-        at=translated.find("%s",at);
-        translated.replace(at,2,value);
-        at+=value.size();
-    }
-    return Status::ok;
-}
-Status npc_value(const Pending& call,std::string& translated) {
-    const auto index=static_cast<std::int32_t>(call.ecx);
-    const auto flags=call.edx;
-    if(index==-1) return message_lookup_value("npc","human",translated);
+MessageText npc_source(const Pending& call) {
+    const auto index=static_cast<std::int32_t>(call.ecx);const auto flags=call.edx;
+    if(index==-1) return message_source_lookup("npc","human");
     const auto* creature=at<unsigned char>(0x5d51400+static_cast<u32>(index)*0x568);
-    const auto category=creature[0];
-    const auto species=*reinterpret_cast<const u32*>(creature+0xbc);
-    const auto gender=creature[0xcf];
-    const auto known=creature[0x1dc];
+    const auto category=creature[0];const auto species=*reinterpret_cast<const u32*>(creature+0xbc);
+    const auto gender=creature[0xcf],known=creature[0x1dc];
     const auto* description=reinterpret_cast<const char*>(creature+8);
     const auto* proper_name=reinterpret_cast<const char*>(creature+0x30);
-    if(flags&1) return message_lookup_value("npc",category==1 ? "human":description,translated);
-    auto status=message_lookup_value("npc",description,translated);
-    if(status!=Status::ok) return status;
+    if(flags&1) return message_source_lookup("npc",category==1 ? "human":description);
+    auto text=message_source_lookup("npc",description);
     if(category!=1) {
         if(gender&2) {
             const char* young=species==0x25e || species==0x26b || species==0x26c || species==0x294
                 ? "calf" : species==0x265 || species==0x266 || species==0x267 ? "piglet"
                 : species==0x268 ? "lamb" : species==0x26a ? "puppy" : "cub";
-            std::string young_name;
-            status=message_lookup_value("npc",young,young_name);
-            if(status!=Status::ok) return status;
-            if(species==0x265 || species==0x266 || species==0x267 || species==0x268)
-                translated=young_name;
-            else translated+=young_name;
+            const auto name=message_source_lookup("npc",young);
+            if(species==0x265 || species==0x266 || species==0x267 || species==0x268) text=name;
+            else text=pattern("npc","%s %s",{text,name});
         } else if(gender&1) {
-            if(species==0x294) status=pattern("npc","bull %s",{translated},translated);
-            else if(species==0x268) status=message_lookup_value("npc","ram",translated);
-            else if(species==0x267) status=message_lookup_value("npc","boar",translated);
-            else if(species==0x26b || species==0x26c) {
-                std::string suffix;status=message_lookup_value("npc"," stag",suffix);translated+=suffix;
-            }
+            if(species==0x294) text=pattern("npc","bull %s",{text});
+            else if(species==0x268) text=message_source_lookup("npc","ram");
+            else if(species==0x267) text=message_source_lookup("npc","boar");
+            else if(species==0x26b || species==0x26c)
+                text=native_message_source::concat({text,message_source_lookup("npc"," stag")});
         } else {
-            if(species==0x25d) status=pattern("npc","female %s",{translated},translated);
-            else if(species==0x267) status=message_lookup_value("npc","sow",translated);
-            else if(species==0x26a) status=message_lookup_value("npc","female dog",translated);
-            else if(species==0x26b || species==0x26c) {
-                std::string suffix;status=message_lookup_value("npc"," doe",suffix);translated+=suffix;
-            }
+            if(species==0x25d) text=pattern("npc","female %s",{text});
+            else if(species==0x267) text=message_source_lookup("npc","sow");
+            else if(species==0x26a) text=message_source_lookup("npc","female dog");
+            else if(species==0x26b || species==0x26c)
+                text=native_message_source::concat({text,message_source_lookup("npc"," doe")});
         }
-        if(status!=Status::ok) return status;
     }
-    if(flags&8) {
-        std::string name;status=message_identity_value(proper_name,name);
-        return status==Status::ok ? pattern("npc","%s the %s",{name,translated},translated):status;
-    }
-    bool definite=true;
-    const std::string description_zh=translated;
+    if(flags&8) return pattern("npc","%s the %s",{message_source_identity(proper_name),text});
+    const auto description_text=text;bool definite=true;
     if((known&1) || (category==1 && *at<u32>(0xa2d28a0)!=0)) {
-        status=message_identity_value(proper_name,translated);
-        if(status!=Status::ok) return status;
-        if(flags&4) status=pattern("npc","%s the %s",{translated,description_zh},translated);
-        if(flags&2) status=message_identity_value(proper_name,translated);
+        text=message_source_identity(proper_name);
+        if(flags&4) text=pattern("npc","%s the %s",{text,description_text});
+        if(flags&2) text=message_source_identity(proper_name);
         definite=false;
     }
     if(known&2) {
-        status=message_identity_value(proper_name,translated);
-        if(status!=Status::ok) return status;
-        if(flags&2) definite=false;
-        if(flags&4) {
-            status=pattern("npc","%s called %s",{description_zh,translated},translated);
-            definite=true;
-        }
+        text=message_source_identity(proper_name);if(flags&2) definite=false;
+        if(flags&4) {text=pattern("npc","%s called %s",{description_text,text});definite=true;}
     }
-    if(status==Status::ok && (flags&2) && definite)
-        status=pattern("article","the %s",{translated},translated);
-    return status;
+    if((flags&2) && definite) text=pattern("article","the %s",{text});
+    return text;
 }
-Status translate_tag(const char* tag,const char* value,std::string& output) {
+MessageText tag_source(const char* tag,const char* original) {
+    // Exact shipped tags, classified from 5601C0. The native lookup alone
+    // consumes control tokens such as MALE/FEM/ANIMAL and attack aspects.
     const std::string name=tag;
-    const auto has=[&](const char* part){return name.find(part)!=std::string::npos;};
-    // These values select native branches or represent numbers; their exact
-    // English spelling is business data consumed by 560CB0/561B00.
-    if(name=="npc" || name=="who" || name=="attacker" || name=="defender" ||
-       name=="num" || name=="prepdays" || name=="weapon_slot" || name=="wc_bonus" ||
-       name=="attack_class" || name=="defense_class") {output=value;return Status::ok;}
-    if(name=="plr_name" || name=="identity") return message_identity_value(value,output);
-    if(has("direction")) return resolve("direction",value,output);
-    if(has("_sound") || has("_aggsound")) return resolve("sound",value,output);
-    if(name=="plr_gender") return resolve("npc",value,output);
-    if(has("reptitle") || name=="plr_identity" || name=="plr_bad_name") return resolve("identity",value,output);
-    if(has("item") || name=="attack_weapon" || name=="attack_bow" || name=="defend_weapon")
-        return resolve("item",value,output);
-    if(has("bodypart")) return resolve("bodypart",value,output);
-    if(has("aspect")) return resolve("aspect",value,output);
-    if(name=="status") return resolve("status",value,output);
-    if(has("npc") || has("attacker") || has("defender") || has("who")) {
-        if(std::strcmp(value,"you")==0) return message_lookup_value("npc",value,output);
-        return resolve("npc",value,output);
+    const auto one_of=[&](std::initializer_list<const char*> names) {
+        for(const auto* candidate:names) if(name==candidate) return true;
+        return false;
+    };
+    if(one_of({"npc","who","attacker","defender","num","prepdays","weapon_slot",
+        "wc_bonus","attack_class","defense_class","attack_aspect","defend_aspect"}))
+        return native_message_source::original(original);
+    if(name=="plr_name" || name=="identity") return message_source_identity(original);
+    if(name=="direction" || name=="npc_direction") return source("direction",original);
+    if(one_of({"npc_sound","npc_aggsound","attacker_sound","attacker_aggsound",
+        "defender_sound","defender_aggsound","who_sound","who_aggsound"})) return source("sound",original);
+    if(name=="plr_gender") return source("npc",original);
+    if(name=="plr_identity" || name=="plr_bad_name") return source("identity",original);
+    if(one_of({"reptitle_help_ind","reptitle_mischief_ind","reptitle_stealing",
+        "reptitle_tra_ind","reptitle_trading","reptitle_trading_ind"})) return source("reputation",original);
+    if(one_of({"fullitem","item","item_container","item_def","item_def_verbose","item_defdesc",
+        "item_ind","item_raw","item_verbose_def","item_verbose_ind","items","items_ind",
+        "items_nonum","items_verbose","raw_item","the_fullitem","the_fullitem(s)","the_item",
+        "the_item_container"})) return source("item",original);
+    if(name=="attack_weapon") return source("bound",at<char>(0x1e9e88));
+    if(name=="attack_bow") return source("bound",at<char>(0x1e9ce8));
+    if(name=="defend_weapon") return source("bound",at<char>(0x1e9c80));
+    if(name=="bodypart") return source("bound",at<char>(0x1e9db8));
+    if(name=="bodypart_counterstrike") return source("bound",at<char>(0x1e9d50));
+    if(name=="wounded_bodypart") return source("bound",at<char>(0x1e9bb0));
+    if(name=="status") return source("bound",at<char>(0x1e9b08));
+    if(one_of({"attacker_defdesc","attacker_desc","defender_defdesc","defender_desc",
+        "defender_descdesc","npc_defdesc","npc_definite_partitive","npc_desc","npc_ind",
+        "the_npc"})) return source("npc",original);
+    if(name=="var") return source("bound",at<char>(0x1e98d0));
+    if(name=="%s" || name=="bound") return source("bound",original);
+    return source(tag,original);
+}
+Status translate_tag(const char* tag,const char* original,std::string& output) {
+    return message_project_source(tag_source(tag,original),true,output);
+}
+const char* transform_domain(u32 site) {
+    // These inputs are raw descriptor fields, not a copied producer return.
+    // High p-code and the actual descriptor copies are recorded in
+    // settlement-value-transform-inputs.tsv / settlement-transform-upstreams-ghidra.c.
+    switch(site) {
+    case 0x166b:case 0x32867:case 0x35796:case 0x35b7d:case 0x58569:case 0x585bd:
+    case 0xb15e0:case 0xb1602:case 0xbc7a9:
+    case 0x12dc6d:case 0x12dd27:case 0x12dde6:case 0x12de5a:
+    case 0x1321c8:case 0x14de24:
+    case 0x17fab9:case 0x17fade:case 0x17fb0a:return "item";
+    case 0x11f5f6:return "item.alternate";
+    case 0x2c82f:case 0xa0996:case 0xc0d9a:case 0x14bba8:case 0x14bbc9:
+    case 0x14f2d1:case 0x14f36b:case 0x167ada:return "npc";
+    case 0x41cb2:return "menu.recipe";
+    case 0x2da73:case 0x2da9d:return "identity";
+    case 0xd5348:return "status";
+    case 0x58452:case 0x9f972:case 0xa35fd:case 0xdabac:
+    case 0x11bb2e:case 0x11bc90:case 0x17d182:return "posture";
+    case 0x83fd0:case 0x8412f:case 0x841e6:case 0x842c0:
+    case 0x1607a0:case 0x1607d2:return "reputation";
+    case 0x123a56:return "skill";
+    case 0x1638b3:return "activity";
+    default:return "bound";
     }
-    if(name=="%s" || name=="bound" || name=="var") return resolve("bound",value,output);
-    return resolve(tag,value,output);
 }
 #include "windows_message_value_builders.inc"
 void append_hooks(std::vector<HookSpec>& hooks) {
@@ -730,123 +731,133 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     append_builder_hooks(hooks);
 }
 Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
-    auto builder_status=dispatch_builder(event,handled);
-    if(handled) return builder_status;
+    const auto builder_status=dispatch_builder(event,handled);if(handled) return builder_status;
     handled=event.id>=first_hook && event.id<first_hook+sizeof(sites)/sizeof(sites[0]);
     if(!handled) return Status::ok;
-    const auto kind=sites[event.id-first_hook].kind;
+    const auto& site=sites[event.id-first_hook];const auto kind=site.kind;
     if(event.phase==NativePhase::before) {
-        Pending call{kind,event.frame->ecx,event.frame->edx,Status::ok,{},{}};
+        Pending call{};call.kind=kind;call.ecx=event.frame->ecx;call.edx=event.frame->edx;
         if(kind==Kind::plural || kind==Kind::singular || kind==Kind::indefinite ||
            kind==Kind::definite || kind==Kind::lowercase) {
-            const auto& site=sites[event.id-first_hook];
-            windows_message_items::prepare_input(site.site,site.target,ptr<char>(call.ecx));
-            call.input=ptr<char>(call.ecx);
-            const auto slash=call.input.find('/');
-            if((kind==Kind::plural || kind==Kind::singular) && slash!=std::string::npos)
-                call.status=message_lookup_value("grammar",call.input.c_str(),call.translated);
-            else call.status=name_value(ptr<char>(call.ecx),call.translated);
+            const auto* input=ptr<char>(call.ecx);
+            windows_message_items::prepare_input(site.site,site.target,input);call.input=input;
+            if((kind==Kind::plural || kind==Kind::singular) && call.input.find('/')!=std::string::npos)
+                call.text=message_source_lookup("grammar",input);
+            else if(std::strcmp(transform_domain(site.site),"item")==0)
+                // Every site in this exact group passes descriptor +9, as
+                // recorded in settlement-value-transform-inputs.tsv. Keep
+                // its native naming selector for persisted compound names.
+                call.source_status=message_crafted_item_source(reinterpret_cast<const unsigned char*>(input)-9,input,call.text);
+            else call.text=source(transform_domain(site.site),input);
         }
-        if(kind==Kind::encounter)
-            call.status=resolve("npc",ptr<char>(call.edx),call.translated);
-        pending.push_back(std::move(call));
-        return Status::ok;
+        if(kind==Kind::encounter) call.text=source(site.site==0x15efb6 ? "bound":"npc",ptr<char>(call.edx));
+        prepare_chain_call(call,site,event);
+        pending.push_back(std::move(call));return Status::ok;
     }
     auto& call=pending.back();
-    // These two native functions explicitly return nullptr for an out-of-range
-    // activity index; that branch does not produce a display value.
-    if((kind==Kind::work || kind==Kind::construction) && event.frame->eax==0) {
-        pending.pop_back();return Status::ok;
+    if(call.source_status!=Status::ok) {
+        const auto status=call.source_status;pending.pop_back();
+        windows_message_items::observe_status(site.site,site.target,status);return status;
     }
+    if((kind==Kind::work || kind==Kind::construction) && event.frame->eax==0) {pending.pop_back();return Status::ok;}
+    if(kind==Kind::list_add) {pending.pop_back();return Status::ok;}
     const auto* original=ptr<char>(kind==Kind::corpse_damage || kind==Kind::corpse_age ||
-        kind==Kind::corpse_injury ? call.edx:event.frame->eax);
-    const char* domain="bound";
-    auto status=call.status;
+        kind==Kind::corpse_injury ? call.edx:kind==Kind::corpse_burn || kind==Kind::helper_list ? call.ecx:event.frame->eax);
     switch(kind) {
-    case Kind::quality:domain="item.quality";status=message_lookup_value(domain,original,call.translated);break;
-    case Kind::tree:domain="tree";status=message_lookup_value(domain,original,call.translated);break;
-    case Kind::direction:domain="direction";status=message_lookup_value(domain,original,call.translated);break;
-    case Kind::npc:domain="npc";status=npc_value(call,call.translated);break;
-    case Kind::identity:domain="identity";status=identity_value(call,original,call.translated);break;
-    case Kind::bodypart:domain="bodypart";status=message_translate_bound(at<char>(0xa224eb0),call.translated);break;
-    case Kind::time:domain="time";status=time_value(original,call.translated);break;
-    case Kind::quantity:domain="unit";status=quantity_value(original,call.translated);break;
-    case Kind::injury:domain="injury";status=injury_value(call,original,call.translated);break;
-    case Kind::hunger:case Kind::thirst:domain="status";status=message_lookup_value(domain,original,call.translated);break;
-    case Kind::trap:domain="trap";status=resolve(domain,original,call.translated);break;
-    case Kind::work:domain="work";status=message_lookup_value(domain,original,call.translated);break;
-    case Kind::activity:domain="activity";status=message_lookup_value(domain,original,call.translated);break;
-    case Kind::activity_copy:domain="activity";status=resolve("bound",original,call.translated);break;
-    case Kind::work_item:domain="item";status=resolve(domain,original,call.translated);break;
-    case Kind::silhouette:domain="npc";status=resolve(domain,original,call.translated);break;
-    case Kind::burntime:domain="time";status=time_value(original,call.translated);break;
-    case Kind::temperature:domain="temperature";status=message_lookup_value(domain,original,call.translated);break;
-    case Kind::spell:domain="spell";status=message_lookup_value(domain,original,call.translated);break;
-    case Kind::corpse_size:domain="corpse";status=resolve(domain,original,call.translated);break;
-    case Kind::corpse_damage:case Kind::corpse_injury:
-        domain="corpse";
-        if(*original) status=resource_value(call.input.c_str(),original,call.translated);
-        else {call.translated.clear();status=Status::ok;}
+    case Kind::quality:call.text=message_source_lookup("item.quality",original);break;
+    case Kind::tree:call.text=message_source_lookup("tree",original);break;
+    case Kind::direction:call.text=message_source_lookup("direction",original);break;
+    case Kind::npc:call.text=npc_source(call);break;
+    case Kind::proper:call.text=message_source_identity(original);break;
+    case Kind::track_age:call.text=message_source_lookup("track-age",original);break;
+    case Kind::identity:call.text=identity_source(call,original);break;
+    case Kind::bodypart:call.text=source("bound",original);break;
+    // Formatted branches bind actual scalar arguments below; the other native
+    // time branches copy complete literal values. Neither parses output text.
+    case Kind::time:case Kind::burntime:call.text=source("time",original);break;
+    case Kind::quantity:call.text=message_source_bound(original);break;
+    case Kind::injury:call.text=injury_source(call,original);break;
+    case Kind::injury_label: {
+        if(call.input=="compound") {
+            MessageText part;
+            for(const auto& child:call.children) if(child.producer==0xd4600) part=child.text;
+            call.text=pattern("injury","%sin %s",{call.text,native_message_source::concat({call.detail,part})});
+        } else call.text=message_source_lookup("injury",original);
         break;
-    case Kind::corpse_age:
-        domain="corpse";status=message_lookup_value(domain,original,call.translated);break;
-    case Kind::construction:domain="work";status=resolve(domain,original,call.translated);break;
-    case Kind::profile:domain="npc";status=resolve(domain,original,call.translated);break;
-    case Kind::encounter:break;
-    case Kind::plural:case Kind::singular:case Kind::lowercase:break;
-    case Kind::indefinite:case Kind::definite:break;
     }
-    const auto translated=call.translated;
-    pending.pop_back();
-    const auto& site=sites[event.id-first_hook];
-    if(status==Status::ok) {
-        message_bind_value(original,translated);
-        observe_value(site.site,site.target,original,translated);
-        windows_message_items::observe_value(site.site,site.target,original,translated);
-    } else windows_message_items::observe_status(site.site,site.target,status);
-    return status;
+    case Kind::hunger:case Kind::thirst:call.text=message_source_lookup("status",original);break;
+    case Kind::trap:call.text=source("trap",original);break;
+    case Kind::work:call.text=message_source_lookup("work",original);break;
+    case Kind::activity:call.text=message_source_lookup("activity",original);break;
+    case Kind::activity_copy:case Kind::work_item:case Kind::silhouette:case Kind::construction:
+        call.text=source("bound",original);break;
+    case Kind::temperature:call.text=message_source_lookup("temperature",original);break;
+    case Kind::spell:call.text=message_source_lookup("spell",original);break;
+    case Kind::corpse_size:call.text=source("bound",original);break;
+    case Kind::corpse_damage:case Kind::corpse_injury:
+        call.text=*original ? message_source_template(call.input.c_str(),original):native_message_source::original("");break;
+    case Kind::corpse_age:case Kind::corpse_burn:
+        call.text=*original ? message_source_lookup("corpse",original):native_message_source::original("");break;
+    case Kind::profile:if(call.input!="normal" && call.input!="normalized") call.text=source("bound",original);break;
+    case Kind::craft:if(call.input!="list") call.text=source("bound",original);break;
+    case Kind::treatment:call.text=message_source_lookup("treatment",original);break;
+    case Kind::flora:call.text=source("bound",original);break;
+    case Kind::helper_list:call.text=source("bound",original);break;
+    case Kind::bowstring:
+        call.text=call.input=="formatted" ? source("bound",original):message_source_lookup("bowstring",original);break;
+    case Kind::comma_list:case Kind::or_list:call.text=comma_list_source(call,original);break;
+    case Kind::plural:
+        // 572E57 reads arbitrary user text for the native plural diagnostic;
+        // 572E80 echoes the native result, not an authored game noun.
+        if(site.site==0x172e79) call.text=message_source_identity(original);
+        break;
+    case Kind::corpse:case Kind::count_list:case Kind::list_add:case Kind::encounter:
+    case Kind::singular:case Kind::lowercase:case Kind::indefinite:case Kind::definite:break;
+    }
+    // These native grammar operations change the English spelling while
+    // retaining the same semantic child. Keep its lookup key (in particular
+    // the complete singular/plural slash entry) below the actual-owner node.
+    const bool transformed=kind==Kind::plural || kind==Kind::singular ||
+        kind==Kind::indefinite || kind==Kind::definite || kind==Kind::lowercase || kind==Kind::encounter;
+    auto text=transformed ? native_message_source::concat({call.text}):call.text;
+    text.original=message_source_utf8(original);capture_copy(site,event,text);pending.pop_back();
+    message_bind_source(original,text);observe_value(site.site,site.target,original,text);
+    windows_message_items::observe_value(site.site,site.target,original,text);return Status::ok;
 }
 void save(std::vector<unsigned char>& output) {
     const auto write_values=[&](const std::vector<Value>& values) {
         message_state_write(output,static_cast<u32>(values.size()));
         for(const auto& value:values) {
-            message_state_write(output,value.site);message_state_write(output,value.producer);
-            message_state_write(output,value.owner);message_state_string(output,value.domain);
-            message_state_string(output,value.source);message_state_string(output,value.translated);
+            message_state_write(output,value.site);message_state_write(output,value.producer);message_state_write(output,value.owner);
+            message_state_string(output,value.domain);message_state_string(output,value.original);native_message_source::write(output,value.text);
         }
     };
     message_state_write(output,static_cast<u32>(pending.size()));
     for(const auto& call:pending) {
-        message_state_write(output,call.kind);message_state_write(output,call.ecx);
-        message_state_write(output,call.edx);message_state_write(output,call.status);
-        message_state_string(output,call.input);message_state_string(output,call.translated);
-        write_values(call.children);
+        message_state_write(output,call.kind);message_state_write(output,call.ecx);message_state_write(output,call.edx);message_state_write(output,call.source_status);
+        message_state_string(output,call.input);native_message_source::write(output,call.text);native_message_source::write(output,call.detail);
+        write_values(call.children);message_state_write(output,static_cast<u32>(call.parts.size()));
+        for(const auto& part:call.parts) {message_state_write(output,part.comma);native_message_source::write(output,part.text);}
     }
-    message_state_write(output,static_cast<u32>(tags.size()));
-    for(const auto& tag:tags) write_values(tag);
-    save_builders(output);
+    message_state_write(output,static_cast<u32>(tags.size()));for(const auto& tag:tags) write_values(tag);save_builders(output);
 }
 void restore(const unsigned char*& input) {
     const auto read_values=[&](std::vector<Value>& values) {
         u32 count;message_state_read(input,count);
         for(u32 i=0;i<count;++i) {
-            Value value;message_state_read(input,value.site);message_state_read(input,value.producer);
-            message_state_read(input,value.owner);message_state_string(input,value.domain);
-            message_state_string(input,value.source);message_state_string(input,value.translated);
+            Value value;message_state_read(input,value.site);message_state_read(input,value.producer);message_state_read(input,value.owner);
+            message_state_string(input,value.domain);message_state_string(input,value.original);value.text=native_message_source::read(input);
             values.push_back(std::move(value));
         }
     };
-    u32 count;
-    message_state_read(input,count);pending.clear();
+    u32 count;message_state_read(input,count);pending.clear();
     for(u32 i=0;i<count;++i) {
-        Pending call;message_state_read(input,call.kind);message_state_read(input,call.ecx);
-        message_state_read(input,call.edx);message_state_read(input,call.status);
-        message_state_string(input,call.input);message_state_string(input,call.translated);
-        read_values(call.children);
+        Pending call;message_state_read(input,call.kind);message_state_read(input,call.ecx);message_state_read(input,call.edx);message_state_read(input,call.source_status);
+        message_state_string(input,call.input);call.text=native_message_source::read(input);call.detail=native_message_source::read(input);
+        read_values(call.children);u32 parts;message_state_read(input,parts);
+        for(u32 n=0;n<parts;++n) {Part part;message_state_read(input,part.comma);part.text=native_message_source::read(input);call.parts.push_back(std::move(part));}
         pending.push_back(std::move(call));
     }
-    message_state_read(input,count);tags.clear();tags.resize(count);
-    for(auto& tag:tags) read_values(tag);
-    restore_builders(input);
+    message_state_read(input,count);tags.clear();tags.resize(count);for(auto& tag:tags) read_values(tag);restore_builders(input);
 }
 }

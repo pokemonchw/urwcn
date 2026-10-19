@@ -22,6 +22,14 @@ struct TextBlockCall {
     const char* text;
     u32 color,style;
 };
+// 111560 owns its fill, four shaded borders and its nested 10E260 text.
+// ECX=renderer, EDX=x; y,width,text,color are caller-cleaned stack inputs.
+struct LabelBoxCall {
+    u32 function,renderer;
+    std::int32_t x,y,width;
+    const char* text;
+    u32 color;
+};
 // 113430 has no stack arguments: ECX is the native target texture and EDX
 // is its heading. Its own native body selects A2110CC and paints the title.
 struct HeadingCall { u32 function,texture;const char* title; };
@@ -33,6 +41,7 @@ struct MarkedButtonCall {
 extern "C" void UWCN_CALL uwcn_renderer_paragraph(const ParagraphCall*);
 extern "C" void UWCN_CALL uwcn_renderer_panel(const PanelCall*);
 extern "C" void UWCN_CALL uwcn_renderer_text_block(const TextBlockCall*);
+extern "C" void UWCN_CALL uwcn_renderer_label_box(const LabelBoxCall*);
 extern "C" void UWCN_CALL uwcn_renderer_heading(const HeadingCall*);
 extern "C" void UWCN_CALL uwcn_renderer_marked_button(const MarkedButtonCall*);
 }

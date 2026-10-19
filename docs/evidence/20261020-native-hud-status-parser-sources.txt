@@ -1,0 +1,153 @@
+2026-10-20 static source audit: complete native HUD status and parser phases
+
+Input: original Windows urw.exe, preferred image base 00400000.
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9.
+Addresses below are RVAs. Static objdump and source inspection only. No game,
+tests, generated artifact or compiler was run for this investigation.
+
+F8E20 complete native status cell
+
+Actual ABI is ECX original cell-column, EDX row, five caller-clean stack words:
+label, initial value, label color, unused word, native status-cache index.
+The function never reads [EBP+14], the unused fourth word. The Mod bridge
+supplies zero there and retains no borrowed pointer. Native F8E20 owns all
+cell geometry, its 114480 frame and its initial value text. F8F64 stores the
+record Y in A40EB30[index]; F8F6C stores X in A3FF21C[index]. These actual
+native cache record identities identify the source; the Mod has no row layout.
+
+Complete constructor CALL sites:
+FA5AF / FA5D3 / FA60D / FA62B / FA665 / FA683 / FA6BD / FA6DB / FA6F9 / FA733.
+The '+' literal at 1AA240 is an original-policy text source of its full cell.
+The parent prepares the label and value before the ordinary full constructor;
+the inner F8E84 is a consumer in that same parent and is not a separate node.
+
+FEF00 accepted bar-update sites and actual record Y fields:
+FF07B:A40EB5C, FF10F:A40EB60, 102DBA:A40EB30, 102F71:A40EB34,
+102FE1:A40EB38, 10306D:A40EB3C, 1030B0:A40EB40, 103141:A40EB44,
+10318D:A40EB48, 103242:A40EB4C.
+FEE50 accepted text-update sites and actual record Y fields:
+FF131:A40EB60, 102DCD:A40EB30, 102F84:A40EB34,
+103080:A40EB3C, 103154:A40EB44, 10326B:A40EB4C.
+
+Text and bar are accepted alternative value phases of the same real cell:
+102DAF JNE 102DC1 chooses FEE50 at 102DCD; the other branch calls FEF00 at
+102DBA then JMP 102DD2 at 102DBF. FF104 JNE FF126 chooses text FF131;
+the bar branch FF10F returns at FF125. Other paired calls have the same
+mutually exclusive branches. FEE50 and FEF00 both clear the native value
+rectangle (x+1,y,48,9). There is no text-over-live-bar update protocol to save.
+On locale materialization the complete F8E20 republishes native geometry,
+then the complete accepted FEE50 or FEF00 consumes those real record fields.
+
+F9910 complete native summary
+
+Five direct callers: 58C77, 89804, FA744, 1035CC, 1845F6. ECX is mode,
+zero stack arguments. Mode 0 builds the complete UI; mode 1 updates it.
+The locale consumer uses complete mode 0 from the same accepted source;
+ordinary calls retain their original mode. The complete function owns its
+native panels, captions, colored bars, ranges, selected status words and
+internal string scratch. It does not enter input, RNG or game simulation.
+
+Accepted source values are layout 1E6EC4, nutrition A32B17C, hunger/absorption
+byte A32BCE8, thirst A32B0D4, vigour A32B0D8 and warmth float bits A32BD14.
+Style is actual native frame 61BBCEC, shade A1C0EBC and PanelStyle fields.
+No player/status field is overwritten during either ordinary or locale use.
+The complete native UI's exact operand reads consume synchronous raw loans:
+
+Layout CMP-zero: F9941,F9CDE,F9E1E,F9EE2,F9F9D,FA081.
+Layout CMP-EBX: F9D6D,F9EA4.
+Nutrition MOV ESI: F9BF6; MOV ECX: F9EEB,F9F27.
+Hunger MOVZX ECX: F9C0D.
+Thirst signed IMUL operand: F9DC3; MOV EAX: F9E06.
+Vigour MOV EDX: FA0A2,FA190.
+Warmth MOVSS XMM2 inside the original word-selection helper: 15F486.
+
+MOV loans write only the original destination register and resume after the
+whole original instruction. CMP, IMUL and MOVSS use one-instruction bridges
+with the original operand/destination form and jump to the next native byte;
+they preserve native condition-code/XMM behavior. The original F9910 frame,
+all original local scratch and cookie/return sequence remain complete.
+15F450 and 15FF80 are original UI string producers, with native source ring
+and output scratch allocation; the Mod stores raw inputs, never their encoded
+output, UI positions or word-table snapshots. The operand hooks outside the
+explicit F9910 source consumption scope keep their original instruction.
+
+Private component hook IDs: 5513..551C cell constructors, 551D..5526 bars,
+5527 weight text, 5528..552C summary constructors, 552D..553D summary operands.
+
+Native parser source phases and language-dependent word indexes
+
+162300 consumes neutral fragments; 161E90 repairs native English list grammar;
+162100 scans the native word table, writes its count at 162189 and constructs
+a native source-ring string. A cached ParagraphSource must retain ordered
+grammar, count-zero and compose phases, not just concatenated input strings.
+The new ParagraphOperation phase is retained at its neutral fragment boundary.
+Materialization calls original 1620C0 reset, 162300 fragments, 161E90 grammar,
+the actual count-zero operation, and complete 162100 in their original order.
+It retains no encoded words or old native token table.
+
+161ED5 reads current count and scans backward as far as the incoming ECX.
+Consequently ECX is a native word index, not language-neutral source data.
+All twelve EXE direct callers have explicit start protocols:
+
+Grammar call   Native count snapshot read
+3A7EE          3A78E A1[A225314], then local [EBP-80C]
+3A86E          3A814 A1[A225314], then local [EBP-80C]
+3A8EE          3A894 A1[A225314], then local [EBP-80C]
+3A96E          3A914 A1[A225314], then local [EBP-80C]
+3A9EE          3A994 A1[A225314], then local [EBP-80C]
+AF38E          AF311 A1[A225314], then local [ESP+38]
+AF5D6          AF4B1 A1[A225314], then local [ESP+38]
+AF7FF          AF6BA A1[A225314], then local [ESP+38]
+40E78          original XOR ECX,ECX (start zero)
+AE33A          original XOR ECX,ECX (start zero)
+13402D         original XOR ECX,ECX (start zero)
+138A95         original XOR ECX,ECX (start zero)
+
+Each dynamic native count read occurs immediately after the parser input
+boundary it identifies. Hooks 553E..5545 retain that fragment boundary, never
+the count value or the caller's stack address. GrammarBoundary.first_fragment
+names this neutral source boundary. On rebuild, the actual original parser
+produces the current language's count there; 161E90 consumes that new count.
+The original ordinary call's ECX is unchanged. The grammar hook uses the
+actual return address in its confirmed native EBP frame to select the exact
+caller protocol; it does not retain a native frame or stack pointer.
+
+Global builder restoration also retains the original native compose ring slot
+identity, rebuilding through original 162100. Temporary typed/map paragraph
+consumption uses consume_paragraph_source without replacing the canonical
+builder source. restore_paragraph_builder subsequently restores its complete
+source phase AST, not a fragment-only approximation or encoded table.
+
+Independent known-map factory review
+
+E3DD2 is after original SDL_CreateTexture, before cleanup of all five args;
+constructor decoding of stack format/access/width/height is exact. E3E22
+calls 113430 with ECX=5F937B0 texture, EDX=original title, zero stack args.
+The complete no-argument E3D90 retains its original ESI measured first-
+paragraph height, feeding the panel at E3E71 and second paragraph at E3EA3.
+It is not replaced by stored old geometry. Native E3EE0 consumes actual
+5F8FA78 culture legend and native visibility flags; the legend resource epoch
+must precede the known-map consumer. Temporary map target/aliases stay live
+through the complete native cache Scene's later CFFB0 consumption and retire
+at end_native_cache_resources. The prior fragment-only builder replacement
+bug is corrected with temporary consume plus canonical builder restoration.
+
+CFAF0 direct Menu-record commit
+
+Complete CFAF0 bypasses CF990. CFBD4 writes the original action, CFBDA/CFBE3
+write its original native input geometry, CFC4C/CFC64 write dimensions, and
+CFCB0..CFCE1 write only the original NOTEXTSPOT/TEXTSPOT literal sentinel in
+row.label. CFCE5 increments the native row count. It never copies its borrowed
+full display label into the row, and never writes the annotation at row+64.
+Thus translated button input cannot replace the game's internal English
+row.label. Its ordinary full constructor still receives the canonical prepared
+source and owns painting/layout, while internal marker/action bytes stay native.
+
+Both ordinary CFAF0 After and locale paint_action now commit that same owned
+ActionButton TextSource into its real InputOwner's independent row binding.
+The actual record is input.row_id in duplicate-row mode, or found by the real
+action field at row+C8 in unique-action mode. The annotation is decoded from
+that same native row+64. commit_row does not write native model bytes, selection,
+geometry or frozen Menu snapshot source bindings. This closes the CF990 commit
+bypass for selector measurement and Flow row-source migration without encoding
+display strings back into an original-language source.

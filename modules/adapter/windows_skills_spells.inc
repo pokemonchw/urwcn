@@ -9,7 +9,6 @@ enum WindowsSkillsHook : u32 {
     wm_heading_text,wm_paragraph_first=0x7720,
     wm_footer_scope=0x7730,wm_footer_title,wm_footer_summary,wm_footer_button
 };
-constexpr u32 ws_help_record=0x7660;
 struct WindowsSkillHelpSource {
     u64 token;
     TextComponent component;
@@ -17,6 +16,39 @@ struct WindowsSkillHelpSource {
     native_component_model::ParagraphSource records;
 };
 std::vector<WindowsSkillHelpSource> windows_skill_help_sources;
+std::vector<std::uint8_t> save_windows_skill_help_sources() {
+    std::vector<std::uint8_t> output;
+    const auto scalar=[&output](const auto& value) {
+        const auto* data=reinterpret_cast<const std::uint8_t*>(&value);output.insert(output.end(),data,data+sizeof(value));
+    };
+    const auto string=[&output,&scalar](const std::string& value) {
+        scalar(static_cast<u32>(value.size()));output.insert(output.end(),value.begin(),value.end());
+    };
+    scalar(static_cast<u32>(windows_skill_help_sources.size()));
+    for(const auto& help:windows_skill_help_sources) {
+        scalar(help.token);scalar(static_cast<u32>(help.component));string(help.key);
+        scalar(static_cast<u32>(help.records.fragments.size()));
+        for(const auto& record:help.records.fragments) { string(record.original);string(record.value); }
+    }
+    return output;
+}
+void restore_windows_skill_help_sources(const void* bytes) {
+    auto* cursor=static_cast<const std::uint8_t*>(bytes);
+    const auto scalar=[&cursor](auto& value) { std::memcpy(&value,cursor,sizeof(value));cursor+=sizeof(value); };
+    const auto string=[&cursor,&scalar]() {
+        u32 count;scalar(count);std::string value(reinterpret_cast<const char*>(cursor),count);cursor+=count;return value;
+    };
+    u32 count;scalar(count);windows_skill_help_sources.clear();
+    for(u32 i=0;i<count;++i) {
+        u64 token;u32 component,records;scalar(token);scalar(component);auto key=string();scalar(records);
+        WindowsSkillHelpSource help{token,static_cast<TextComponent>(component),std::move(key),{}};
+        for(u32 record=0;record<records;++record) {
+            auto original=string(),value=string();
+            help.records.fragments.push_back(native_text_resource::from_request({help.component,original.c_str(),value.c_str()}));
+        }
+        windows_skill_help_sources.push_back(std::move(help));
+    }
+}
 void windows_skill_help_begin(const NativeEvent& e,TextComponent component,const char* key) {
     windows_skill_help_sources.push_back({e.token,component,key,{}});
 }
@@ -109,7 +141,7 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
         return windows_skill_lend(e,TextComponent::skills_text,std::string("level.")+ptr<char>(e.arguments[2]),
             e.arguments[2],Scope::allocation);
     case ws_heading_width:
-        if(native_name_input::contains_display(ptr<char>(e.frame->edi))) {
+        if(in(Scope::titled_panel) || native_name_input::contains_display(ptr<char>(e.frame->edi))) {
             render::Metrics measured{};
             const auto status=metrics(ptr<char>(e.frame->edi),measured);
             if(status!=Status::ok) return status;
@@ -119,7 +151,7 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
         }
         return Status::ok;
     case ws_heading_text:
-        if(native_name_input::contains_display(ptr<char>(e.arguments[0]))) return centered_text(e);
+        if(in(Scope::titled_panel) || native_name_input::contains_display(ptr<char>(e.arguments[0]))) return centered_text(e);
         return Status::ok;
     case wm_heading:
         return windows_skill_lend(e,TextComponent::spells_text,"title",e.frame->edx,Scope::allocation);
@@ -152,9 +184,6 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
     case ws_help:
         windows_skill_help_begin(e,TextComponent::skills_help_record,e.frame->ebx==1 ? "help.initial" : "help.general");
         return Status::ok;
-    case ws_help_record:
-        if(!windows_skill_help_sources.empty()) return windows_skill_help_record(e);
-        return Status::ok;
     default:
         if(e.id>=wm_help_first && e.id<wm_help_first+3) {
             constexpr const char* keys[]{"help.general","help.instant","help.initial"};
@@ -166,7 +195,6 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
     handled=false;return Status::ok;
 }
 void append_windows_skills_hooks(std::vector<HookSpec>& hooks) {
-    hooks.push_back(call(ws_help_record,0x162627,0x162300,0));
     hooks.push_back(call(ws_heading_first,0xE0789,0xF8F80,0));
     hooks.push_back(call(ws_heading_first+1,0xE0BC5,0xF8F80,0));
     constexpr u32 panels[]{0xE0882,0xE09A1,0xE0AD3};

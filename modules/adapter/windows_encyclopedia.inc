@@ -310,7 +310,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
                                    e.arguments[0],Scope::text);
     if(e.id>=we_map_renderer_first&&e.id<we_map_renderer_first+std::size(windows_culture_map_calls))
         return windows_culture_lend(e,std::string("topic.")+windows_culture_map_calls[e.id-we_map_renderer_first].key+".title",
-                                   e.arguments[2],Scope::hud_renderer);
+                                   e.arguments[1],Scope::hud_renderer);
     if(e.id>=we_intro_first&&e.id<we_intro_first+10)
         return windows_culture_paragraph(e,"ui.intro_"+std::to_string(334200+(e.id-we_intro_first)*14));
     if(e.id>=we_navigation_first&&e.id<we_navigation_first+4) {
@@ -459,6 +459,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
     case we_intro_paragraph:case we_help_paragraph:begin(e,Scope::paragraph,e.arguments[3]);return Status::ok;
     case we_help_scope:windows_encyclopedia_help=true;windows_encyclopedia_help_record=0;return Status::ok;
     case we_help_append:
+        if(!windows_skill_help_sources.empty()) return windows_skill_help_record(e);
         if(windows_encyclopedia_help)return windows_culture_paragraph(e,"ui.help_"+std::to_string(++windows_encyclopedia_help_record));
         return Status::ok;
     case we_preview_title:case we_preview_summary:

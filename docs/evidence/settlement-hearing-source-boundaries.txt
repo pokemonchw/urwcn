@@ -1,0 +1,38 @@
+PE 3.89 hearing-wrapper source propagation
+
+Functions 4FDCB0 and 4FE030 are fully decompiled in
+settlement-all-callers-ghidra.c. Their actual source-copy branches are
+recorded in settlement-hearing-wrapper-disassembly.txt.
+
+windows_message_hearing.inc observes 13 unconditional copy starts:
+4FDCE8: param2 (ESI) -> EBP-80C, immediate direct F6510 at 4FDD03.
+4FDD4B / 4FDDAF / 4FDDFB: selected native HEAR A6248B8 -> EBP-40C.
+4FDD66: actual explicit param3 (EDI) -> EBP-40C.
+4FDECD: selected visible param2 (ESI) -> A80EB70.
+4FDFB2: selected hearing EBP-40C -> A80EB70.
+4FE0B0 / 4FE11F / 4FE16B: selected native HEAR A6248B8 -> EBP-40C.
+4FE0D6: actual explicit param4 (ESI) -> EBP-40C.
+4FE1A7: selected visible param3 (ECX) -> A80EB70.
+4FE22F: selected hearing EBP-40C -> A80EB70.
+
+Each observation uses the actual owner-bound source expression and
+message_bind_copy immediately before the native NUL-terminated copy.
+No intervening native call exists inside any observed copy interval.
+The next actual copy overwrites the semantic identity exactly as the
+native buffer is overwritten, including FORCE_HEAR/ALWAYS_HEAR paths.
+The module neither reevaluates these markers nor visibility/distance
+conditions. Empty explicit strings retain their actual empty source.
+
+4FB310 marks direction for the HUD and invokes 4FAA30; 40C2F0 sets
+native sound direction/volume state. Neither changes A80EB70 prose.
+Their read-only decompilation is settlement-hearing-menu-ghidra.c.
+F6510 consumes the copied body at 4FDFF3/4FE273 normally.
+
+The 13 inline patches consist only of complete MOV/LEA/XOR/NOP
+instructions. Ghidra reports no flow reference to their interior
+bytes and no ESP-changing instruction. See the hearing rows in
+settlement-own-inline-boundaries.tsv (182 owned inline ranges total).
+No new mutable frame, translated snapshot, UI layout or global
+string-based resource search is introduced. Existing owner bindings
+carry the neutral source expressions through the original lifecycle.
+No compilation, tests or game execution were performed.

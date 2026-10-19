@@ -1,0 +1,765 @@
+craft-requirement	(#%d)	（#%d）
+craft-requirement	(%s leash)	（%s牵绳）
+craft-requirement	(%s)	（%s）
+craft-requirement	(tied to %s)	（拴在%s上）
+craft-requirement	%d %s	%d %s
+craft-requirement	%d ft	%d英尺
+craft-requirement	%s	%s
+craft-requirement	%s %s	%s%s
+craft-requirement	%s of %s	%s（%s）
+craft-requirement	%s%s	%s%s
+craft-requirement	ango	安戈倒钩矛
+craft-requirement	Ango	安戈倒钩矛
+craft-requirement	ango head	安戈倒钩矛头
+craft-requirement	Ango head	安戈倒钩矛头
+craft-requirement	apron	围裙
+craft-requirement	Apron	围裙
+craft-requirement	arrow	箭
+craft-requirement	Arrow	箭
+craft-requirement	arrow shaft	箭杆
+craft-requirement	Arrow shaft	箭杆
+craft-requirement	arrowhead	箭头
+craft-requirement	Arrowhead	箭头
+craft-requirement	axe haft	斧柄
+craft-requirement	Axe haft	斧柄
+craft-requirement	bag	袋子
+craft-requirement	Bag	袋子
+craft-requirement	bandage	绷带
+craft-requirement	Bandage	绷带
+craft-requirement	barley	大麦
+craft-requirement	Barley	大麦
+craft-requirement	barley grains	大麦粒
+craft-requirement	Barley grains	大麦粒
+craft-requirement	barley-flour	大麦粉
+craft-requirement	Barley-flour	大麦粉
+craft-requirement	bastard sword	手半剑
+craft-requirement	bastard Sword	手半剑
+craft-requirement	Bastard sword	手半剑
+craft-requirement	Bastard Sword	手半剑
+craft-requirement	battleaxe	战斧
+craft-requirement	Battleaxe	战斧
+craft-requirement	battleaxe head	战斧头
+craft-requirement	Battleaxe head	战斧头
+craft-requirement	battlesword	战斗巨剑
+craft-requirement	Battlesword	战斗巨剑
+craft-requirement	bear pipe	熊管草
+craft-requirement	Bear pipe	熊管草
+craft-requirement	bear pipe flowers	熊管草花
+craft-requirement	Bear pipe flowers	熊管草花
+craft-requirement	bear pipe leaves	熊管草叶
+craft-requirement	Bear pipe leaves	熊管草叶
+craft-requirement	bear pipe root	熊管草根
+craft-requirement	Bear pipe root	熊管草根
+craft-requirement	bearpaw mushroom	熊掌菇
+craft-requirement	Bearpaw mushroom	熊掌菇
+craft-requirement	birch twig	桦树枝
+craft-requirement	Birch twig	桦树枝
+craft-requirement	birch withe	桦树柔枝绑条
+craft-requirement	birch-bark basket	桦皮篮
+craft-requirement	Birch-bark basket	桦皮篮
+craft-requirement	birch-bark box	桦皮盒
+craft-requirement	Birch-bark box	桦皮盒
+craft-requirement	birch-bark cap	桦皮帽
+craft-requirement	Birch-bark cap	桦皮帽
+craft-requirement	birch-bark necklace	桦皮项链
+craft-requirement	Birch-bark necklace	桦皮项链
+craft-requirement	birch-bark pot	桦皮锅
+craft-requirement	Birch-bark pot	桦皮锅
+craft-requirement	birch-bark rope	桦皮绳
+craft-requirement	Birch-bark rope	桦皮绳
+craft-requirement	birch-bark shoes	桦皮鞋
+craft-requirement	Birch-bark shoes	桦皮鞋
+craft-requirement	black currant	黑加仑
+craft-requirement	Black currant	黑加仑
+craft-requirement	black currant bush	黑加仑灌木
+craft-requirement	Black currant bush	黑加仑灌木
+craft-requirement	black currants	黑加仑
+craft-requirement	Black currants	黑加仑
+craft-requirement	black ear mushroom	黑耳菇
+craft-requirement	Black ear mushroom	黑耳菇
+craft-requirement	block of %s wood	%s木块
+craft-requirement	Block of %s wood	%s木块
+craft-requirement	block of wood	木块
+craft-requirement	Block of wood	木块
+craft-requirement	blueberries	蓝莓
+craft-requirement	Blueberries	蓝莓
+craft-requirement	blueberry	蓝莓
+craft-requirement	Blueberry	蓝莓
+craft-requirement	blueberry shrub	蓝莓灌木
+craft-requirement	Blueberry shrub	蓝莓灌木
+craft-requirement	blunt arrow	钝头箭
+craft-requirement	Blunt arrow	钝头箭
+craft-requirement	board	木板
+craft-requirement	Board	木板
+craft-requirement	bog flower	沼泽花
+craft-requirement	Bog flower	沼泽花
+craft-requirement	bog flower leaves	沼泽花叶
+craft-requirement	Bog flower leaves	沼泽花叶
+craft-requirement	bogbean	睡菜
+craft-requirement	Bogbean	睡菜
+craft-requirement	bogbean leaves	睡菜叶
+craft-requirement	Bogbean leaves	睡菜叶
+craft-requirement	bogbean root	睡菜根
+craft-requirement	Bogbean root	睡菜根
+craft-requirement	bone arrowhead	骨箭头
+craft-requirement	Bone arrowhead	骨箭头
+craft-requirement	bone fishhook	骨鱼钩
+craft-requirement	Bone fishhook	骨鱼钩
+craft-requirement	bone sewing needle	骨缝衣针
+craft-requirement	Bone sewing needle	骨缝衣针
+craft-requirement	bone tipped arrow	骨镞箭
+craft-requirement	Bone tipped arrow	骨镞箭
+craft-requirement	bowstring	弓弦
+craft-requirement	Bowstring	弓弦
+craft-requirement	branch	树枝
+craft-requirement	Branch	树枝
+craft-requirement	bream	鳊鱼
+craft-requirement	Bream	鳊鱼
+craft-requirement	broad axe	宽刃斧
+craft-requirement	Broad axe	宽刃斧
+craft-requirement	broad axe head	宽刃斧头
+craft-requirement	Broad axe head	宽刃斧头
+craft-requirement	broad bean	蚕豆植株
+craft-requirement	Broad bean	蚕豆植株
+craft-requirement	broad beans	蚕豆
+craft-requirement	Broad beans	蚕豆
+craft-requirement	broad knife	宽刃刀
+craft-requirement	Broad knife	宽刃刀
+craft-requirement	broadhead	宽刃箭头
+craft-requirement	Broadhead	宽刃箭头
+craft-requirement	broadhead arrow	宽刃箭
+craft-requirement	Broadhead arrow	宽刃箭
+craft-requirement	broadsword	阔剑
+craft-requirement	Broadsword	阔剑
+craft-requirement	bronze ball pendant	青铜球吊坠
+craft-requirement	Bronze ball pendant	青铜球吊坠
+craft-requirement	bronze bear pendant	青铜熊吊坠
+craft-requirement	Bronze bear pendant	青铜熊吊坠
+craft-requirement	bronze bezel ring	青铜镶座戒指
+craft-requirement	Bronze bezel ring	青铜镶座戒指
+craft-requirement	bronze bracelet	青铜手镯
+craft-requirement	Bronze bracelet	青铜手镯
+craft-requirement	bronze brooch	青铜胸针
+craft-requirement	Bronze brooch	青铜胸针
+craft-requirement	bronze flower-ornamented comb	青铜花纹梳
+craft-requirement	Bronze flower-ornamented comb	青铜花纹梳
+craft-requirement	bronze horse-ornamented comb	青铜马纹梳
+craft-requirement	Bronze horse-ornamented comb	青铜马纹梳
+craft-requirement	browncoat mushroom	褐衣菇
+craft-requirement	Browncoat mushroom	褐衣菇
+craft-requirement	buckler	小圆盾
+craft-requirement	Buckler	小圆盾
+craft-requirement	burbot	江鳕
+craft-requirement	Burbot	江鳕
+craft-requirement	burdock	牛蒡
+craft-requirement	Burdock	牛蒡
+craft-requirement	burdock leaves	牛蒡叶
+craft-requirement	Burdock leaves	牛蒡叶
+craft-requirement	burdock root	牛蒡根
+craft-requirement	Burdock root	牛蒡根
+craft-requirement	burning %s	燃烧的%s
+craft-requirement	Burning %s	燃烧的%s
+craft-requirement	carving axe	刨削斧
+craft-requirement	Carving axe	刨削斧
+craft-requirement	carving axe head	刨削斧头
+craft-requirement	Carving axe head	刨削斧头
+craft-requirement	clayweed	黏土草
+craft-requirement	Clayweed	黏土草
+craft-requirement	clayweed leaves	黏土草叶
+craft-requirement	Clayweed leaves	黏土草叶
+craft-requirement	clayweed seeds	黏土草种子
+craft-requirement	Clayweed seeds	黏土草种子
+craft-requirement	cloak	斗篷
+craft-requirement	Cloak	斗篷
+craft-requirement	cloth cord	布绳
+craft-requirement	Cloth cord	布绳
+craft-requirement	cloudberries	云莓
+craft-requirement	Cloudberries	云莓
+craft-requirement	cloudberry	云莓
+craft-requirement	Cloudberry	云莓
+craft-requirement	cloudberry bramble	云莓丛
+craft-requirement	Cloudberry bramble	云莓丛
+craft-requirement	club	棍棒
+craft-requirement	Club	棍棒
+craft-requirement	cord	细绳
+craft-requirement	Cord	细绳
+craft-requirement	cowl	头颈罩
+craft-requirement	Cowl	头颈罩
+craft-requirement	cranberries	蔓越莓
+craft-requirement	Cranberries	蔓越莓
+craft-requirement	cranberry	蔓越莓
+craft-requirement	Cranberry	蔓越莓
+craft-requirement	cranberry shrub	蔓越莓灌木
+craft-requirement	Cranberry shrub	蔓越莓灌木
+craft-requirement	crossbow	弩
+craft-requirement	Crossbow	弩
+craft-requirement	crowberries	岩高兰果
+craft-requirement	Crowberries	岩高兰果
+craft-requirement	crowberry	岩高兰果
+craft-requirement	Crowberry	岩高兰果
+craft-requirement	crowberry shrub	岩高兰灌木
+craft-requirement	Crowberry shrub	岩高兰灌木
+craft-requirement	dog pipe	犬管草
+craft-requirement	Dog pipe	犬管草
+craft-requirement	dog pipe leaves	犬管草叶
+craft-requirement	Dog pipe leaves	犬管草叶
+craft-requirement	dog pipe root	犬管草根
+craft-requirement	Dog pipe root	犬管草根
+craft-requirement	dress	长裙
+craft-requirement	Dress	长裙
+craft-requirement	egg	蛋
+craft-requirement	Egg	蛋
+craft-requirement	firewood	柴火
+craft-requirement	Firewood	柴火
+craft-requirement	fisher's knife	渔刀
+craft-requirement	Fisher's knife	渔刀
+craft-requirement	fishing rod	钓竿
+craft-requirement	Fishing rod	钓竿
+craft-requirement	flat rye bread	黑麦薄饼
+craft-requirement	Flat rye bread	黑麦薄饼
+craft-requirement	flax	亚麻
+craft-requirement	Flax	亚麻
+craft-requirement	flax seeds	亚麻籽
+craft-requirement	Flax seeds	亚麻籽
+craft-requirement	footrags	裹脚布
+craft-requirement	Footrags	裹脚布
+craft-requirement	fur boots	毛皮靴
+craft-requirement	Fur boots	毛皮靴
+craft-requirement	fur cap	毛皮帽
+craft-requirement	Fur cap	毛皮帽
+craft-requirement	fur cloak	毛皮斗篷
+craft-requirement	Fur cloak	毛皮斗篷
+craft-requirement	fur hood	毛皮兜帽
+craft-requirement	Fur hood	毛皮兜帽
+craft-requirement	fur leggings	毛皮护腿
+craft-requirement	Fur leggings	毛皮护腿
+craft-requirement	fur mittens	毛皮连指手套
+craft-requirement	Fur mittens	毛皮连指手套
+craft-requirement	fur overcoat	毛皮大衣
+craft-requirement	Fur overcoat	毛皮大衣
+craft-requirement	fur shirt	毛皮衬衫
+craft-requirement	Fur shirt	毛皮衬衫
+craft-requirement	golden rod	一枝黄花
+craft-requirement	Golden rod	一枝黄花
+craft-requirement	golden rod flowers	一枝黄花的花
+craft-requirement	Golden rod flowers	一枝黄花的花
+craft-requirement	golden rod leaves	一枝黄花叶
+craft-requirement	Golden rod leaves	一枝黄花叶
+craft-requirement	grainflail	连枷
+craft-requirement	Grainflail	连枷
+craft-requirement	hairy mushroom	毛菇
+craft-requirement	Hairy mushroom	毛菇
+craft-requirement	handaxe	手斧
+craft-requirement	Handaxe	手斧
+craft-requirement	handaxe head	手斧头
+craft-requirement	Handaxe head	手斧头
+craft-requirement	heather	石南
+craft-requirement	Heather	石南
+craft-requirement	heather flowers	石南花
+craft-requirement	Heather flowers	石南花
+craft-requirement	heavy crossbow	重弩
+craft-requirement	heavy Crossbow	重弩
+craft-requirement	Heavy crossbow	重弩
+craft-requirement	Heavy Crossbow	重弩
+craft-requirement	hemp	大麻
+craft-requirement	Hemp	大麻
+craft-requirement	hemp leaves	大麻叶
+craft-requirement	Hemp leaves	大麻叶
+craft-requirement	hemp seeds	大麻籽
+craft-requirement	Hemp seeds	大麻籽
+craft-requirement	hunting bow	猎弓
+craft-requirement	Hunting bow	猎弓
+craft-requirement	hunting horn	猎号
+craft-requirement	hunting Horn	猎号
+craft-requirement	Hunting horn	猎号
+craft-requirement	Hunting Horn	猎号
+craft-requirement	hunting knife	猎刀
+craft-requirement	Hunting knife	猎刀
+craft-requirement	iron coudes	铁护肘
+craft-requirement	Iron coudes	铁护肘
+craft-requirement	iron fishhook	铁鱼钩
+craft-requirement	Iron fishhook	铁鱼钩
+craft-requirement	iron helm	铁头盔
+craft-requirement	Iron helm	铁头盔
+craft-requirement	iron kneecops	铁护膝
+craft-requirement	iron Kneecops	铁护膝
+craft-requirement	Iron kneecops	铁护膝
+craft-requirement	Iron Kneecops	铁护膝
+craft-requirement	iron sewing needle	铁缝衣针
+craft-requirement	Iron sewing needle	铁缝衣针
+craft-requirement	iron spectacle helm	铁眼罩盔
+craft-requirement	Iron spectacle helm	铁眼罩盔
+craft-requirement	javelin	标枪
+craft-requirement	Javelin	标枪
+craft-requirement	kaumolais knife	考莫刀
+craft-requirement	Kaumolais knife	考莫刀
+craft-requirement	kaumolais spear	考莫长矛
+craft-requirement	Kaumolais spear	考莫长矛
+craft-requirement	kaumolais spear head	考莫矛头
+craft-requirement	Kaumolais spear head	考莫矛头
+craft-requirement	knife	刀
+craft-requirement	Knife	刀
+craft-requirement	lake reed	湖苇
+craft-requirement	Lake reed	湖苇
+craft-requirement	lake reed root	湖苇根
+craft-requirement	Lake reed root	湖苇根
+craft-requirement	lamellar cuirass	札甲胸甲
+craft-requirement	Lamellar cuirass	札甲胸甲
+craft-requirement	lamellar forearm guards	札甲前臂护甲
+craft-requirement	Lamellar forearm guards	札甲前臂护甲
+craft-requirement	lamellar hauberk	札甲长身甲
+craft-requirement	Lamellar hauberk	札甲长身甲
+craft-requirement	lamellar rerebraces	札甲上臂甲
+craft-requirement	Lamellar rerebraces	札甲上臂甲
+craft-requirement	lamellar shin guards	札甲护胫
+craft-requirement	Lamellar shin guards	札甲护胫
+craft-requirement	lavaret	白鲑
+craft-requirement	Lavaret	白鲑
+craft-requirement	leather belt	皮腰带
+craft-requirement	Leather belt	皮腰带
+craft-requirement	leather boots	皮靴
+craft-requirement	Leather boots	皮靴
+craft-requirement	leather cap	皮帽
+craft-requirement	Leather cap	皮帽
+craft-requirement	leather cord	皮细绳
+craft-requirement	Leather cord	皮细绳
+craft-requirement	leather cuirass	皮胸甲
+craft-requirement	Leather cuirass	皮胸甲
+craft-requirement	leather forearm guards	皮前臂护甲
+craft-requirement	Leather forearm guards	皮前臂护甲
+craft-requirement	leather leggings	皮护腿
+craft-requirement	Leather leggings	皮护腿
+craft-requirement	leather rope	皮粗绳
+craft-requirement	Leather rope	皮粗绳
+craft-requirement	leather shin guards	皮护胫
+craft-requirement	Leather shin guards	皮护胫
+craft-requirement	leather shirt	皮衬衫
+craft-requirement	Leather shirt	皮衬衫
+craft-requirement	leather trousers	皮裤
+craft-requirement	Leather trousers	皮裤
+craft-requirement	leggings	护腿
+craft-requirement	Leggings	护腿
+craft-requirement	linen apron	亚麻围裙
+craft-requirement	Linen apron	亚麻围裙
+craft-requirement	linen cowl	亚麻头颈罩
+craft-requirement	Linen cowl	亚麻头颈罩
+craft-requirement	linen dress	亚麻长裙
+craft-requirement	Linen dress	亚麻长裙
+craft-requirement	linen footrags	亚麻裹脚布
+craft-requirement	Linen footrags	亚麻裹脚布
+craft-requirement	linen shirt	亚麻衬衫
+craft-requirement	Linen shirt	亚麻衬衫
+craft-requirement	linen trousers	亚麻裤
+craft-requirement	Linen trousers	亚麻裤
+craft-requirement	linen tunic	亚麻束腰外衣
+craft-requirement	Linen tunic	亚麻束腰外衣
+craft-requirement	linen undergarment	亚麻贴身长衣
+craft-requirement	Linen undergarment	亚麻贴身长衣
+craft-requirement	linen undershirt	亚麻贴身衬衣
+craft-requirement	Linen undershirt	亚麻贴身衬衣
+craft-requirement	linen veil	亚麻头巾
+craft-requirement	Linen veil	亚麻头巾
+craft-requirement	lingonberries	越橘
+craft-requirement	Lingonberries	越橘
+craft-requirement	lingonberry	越橘
+craft-requirement	Lingonberry	越橘
+craft-requirement	lingonberry shrub	越橘灌木
+craft-requirement	Lingonberry shrub	越橘灌木
+craft-requirement	lippo	抄网
+craft-requirement	Lippo	抄网
+craft-requirement	log	原木
+craft-requirement	Log	原木
+craft-requirement	long mail cowl	加长锁子甲头颈罩
+craft-requirement	long Mail Cowl	加长锁子甲头颈罩
+craft-requirement	Long mail cowl	加长锁子甲头颈罩
+craft-requirement	Long Mail Cowl	加长锁子甲头颈罩
+craft-requirement	long mail hauberk	加长锁子甲长身甲
+craft-requirement	long Mail Hauberk	加长锁子甲长身甲
+craft-requirement	Long mail hauberk	加长锁子甲长身甲
+craft-requirement	Long Mail Hauberk	加长锁子甲长身甲
+craft-requirement	longbow	长弓
+craft-requirement	Longbow	长弓
+craft-requirement	loop snare	绳套陷阱
+craft-requirement	Loop snare	绳套陷阱
+craft-requirement	mace	钉头锤
+craft-requirement	Mace	钉头锤
+craft-requirement	mail cowl	锁子甲头颈罩
+craft-requirement	mail Cowl	锁子甲头颈罩
+craft-requirement	Mail cowl	锁子甲头颈罩
+craft-requirement	Mail Cowl	锁子甲头颈罩
+craft-requirement	mail habergeon	锁子甲短袖甲衣
+craft-requirement	mail Habergeon	锁子甲短袖甲衣
+craft-requirement	Mail habergeon	锁子甲短袖甲衣
+craft-requirement	Mail Habergeon	锁子甲短袖甲衣
+craft-requirement	mail hauberk	锁子甲长身甲
+craft-requirement	mail Hauberk	锁子甲长身甲
+craft-requirement	Mail hauberk	锁子甲长身甲
+craft-requirement	Mail Hauberk	锁子甲长身甲
+craft-requirement	mail leggings	锁子甲护腿
+craft-requirement	mail Leggings	锁子甲护腿
+craft-requirement	Mail leggings	锁子甲护腿
+craft-requirement	Mail Leggings	锁子甲护腿
+craft-requirement	mail mittens	锁子甲连指手套
+craft-requirement	Mail mittens	锁子甲连指手套
+craft-requirement	marsh calla	水芋
+craft-requirement	Marsh calla	水芋
+craft-requirement	marsh calla leaves	水芋叶
+craft-requirement	Marsh calla leaves	水芋叶
+craft-requirement	marsh calla root	水芋根
+craft-requirement	Marsh calla root	水芋根
+craft-requirement	maul	长柄重槌
+craft-requirement	Maul	长柄重槌
+craft-requirement	meadsweet	蜜香草
+craft-requirement	Meadsweet	蜜香草
+craft-requirement	meadsweet flowers	蜜香草花
+craft-requirement	Meadsweet flowers	蜜香草花
+craft-requirement	meadsweet leaves	蜜香草叶
+craft-requirement	Meadsweet leaves	蜜香草叶
+craft-requirement	milk	奶
+craft-requirement	Milk	奶
+craft-requirement	milkweed	乳草
+craft-requirement	Milkweed	乳草
+craft-requirement	milkweed leaves	乳草叶
+craft-requirement	Milkweed leaves	乳草叶
+craft-requirement	milkweed root	乳草根
+craft-requirement	Milkweed root	乳草根
+craft-requirement	mother pipe	母管草
+craft-requirement	Mother pipe	母管草
+craft-requirement	mother pipe flowers	母管草花
+craft-requirement	Mother pipe flowers	母管草花
+craft-requirement	mother pipe leaves	母管草叶
+craft-requirement	Mother pipe leaves	母管草叶
+craft-requirement	mother pipe root	母管草根
+craft-requirement	Mother pipe root	母管草根
+craft-requirement	net	渔网
+craft-requirement	Net	渔网
+craft-requirement	netting needle	织网梭
+craft-requirement	Netting needle	织网梭
+craft-requirement	nettle	荨麻
+craft-requirement	Nettle	荨麻
+craft-requirement	nettle apron	荨麻布围裙
+craft-requirement	Nettle apron	荨麻布围裙
+craft-requirement	nettle cowl	荨麻布头颈罩
+craft-requirement	Nettle cowl	荨麻布头颈罩
+craft-requirement	nettle leaves	荨麻叶
+craft-requirement	Nettle leaves	荨麻叶
+craft-requirement	nettle seeds	荨麻种子
+craft-requirement	Nettle seeds	荨麻种子
+craft-requirement	nettle shirt	荨麻布衬衫
+craft-requirement	Nettle shirt	荨麻布衬衫
+craft-requirement	nettle trousers	荨麻布裤
+craft-requirement	Nettle trousers	荨麻布裤
+craft-requirement	nettle tunic	荨麻布束腰外衣
+craft-requirement	Nettle tunic	荨麻布束腰外衣
+craft-requirement	njerpez scimitar	涅尔佩兹弯刀
+craft-requirement	Njerpez scimitar	涅尔佩兹弯刀
+craft-requirement	noaidi's mushroom	诺艾迪菇
+craft-requirement	Noaidi's mushroom	诺艾迪菇
+craft-requirement	northern bilberries	北地蓝莓
+craft-requirement	Northern bilberries	北地蓝莓
+craft-requirement	northern bilberry	北方越橘
+craft-requirement	Northern bilberry	北方越橘
+craft-requirement	northern bilberry shrub	北地蓝莓灌木
+craft-requirement	Northern bilberry shrub	北地蓝莓灌木
+craft-requirement	northern bow	北方弓
+craft-requirement	Northern bow	北方弓
+craft-requirement	northern knife	北方刀
+craft-requirement	Northern knife	北方刀
+craft-requirement	northern spear	北方长矛
+craft-requirement	Northern spear	北方长矛
+craft-requirement	northern spear head	北方矛头
+craft-requirement	Northern spear head	北方矛头
+craft-requirement	overcoat	大衣
+craft-requirement	Overcoat	大衣
+craft-requirement	paddle	桨
+craft-requirement	Paddle	桨
+craft-requirement	paw-board fox trap	夹爪板捕狐陷阱
+craft-requirement	Paw-board fox trap	夹爪板捕狐陷阱
+craft-requirement	pea	豌豆植株
+craft-requirement	Pea	豌豆植株
+craft-requirement	peas	豌豆
+craft-requirement	Peas	豌豆
+craft-requirement	perch	鲈鱼
+craft-requirement	Perch	鲈鱼
+craft-requirement	pike	狗鱼
+craft-requirement	Pike	狗鱼
+craft-requirement	pike-perch	梭鲈
+craft-requirement	Pike-perch	梭鲈
+craft-requirement	pot	锅
+craft-requirement	Pot	锅
+craft-requirement	punt	平底船
+craft-requirement	Punt	平底船
+craft-requirement	raft	木筏
+craft-requirement	Raft	木筏
+craft-requirement	raspberries	覆盆子
+craft-requirement	Raspberries	覆盆子
+craft-requirement	raspberry	覆盆子
+craft-requirement	Raspberry	覆盆子
+craft-requirement	raspberry bush	覆盆子灌木
+craft-requirement	Raspberry bush	覆盆子灌木
+craft-requirement	redlegger mushroom	红脚菇
+craft-requirement	Redlegger mushroom	红脚菇
+craft-requirement	ringed mushroom	环纹菇
+craft-requirement	Ringed mushroom	环纹菇
+craft-requirement	riverpig	河猪草
+craft-requirement	Riverpig	河猪草
+craft-requirement	riverpig root	河猪草根
+craft-requirement	Riverpig root	河猪草根
+craft-requirement	roach	拟鲤
+craft-requirement	Roach	拟鲤
+craft-requirement	rock	岩石
+craft-requirement	Rock	岩石
+craft-requirement	rope	粗绳
+craft-requirement	Rope	粗绳
+craft-requirement	roseroot	红景天
+craft-requirement	Roseroot	红景天
+craft-requirement	roseroot leaves	红景天叶
+craft-requirement	Roseroot leaves	红景天叶
+craft-requirement	roseroot root	红景天根
+craft-requirement	Roseroot root	红景天根
+craft-requirement	rotten 	腐烂的
+craft-requirement	Rotten 	腐烂的
+craft-requirement	roundshield	圆盾
+craft-requirement	Roundshield	圆盾
+craft-requirement	rye	黑麦
+craft-requirement	Rye	黑麦
+craft-requirement	rye bread	黑麦面包
+craft-requirement	Rye bread	黑麦面包
+craft-requirement	rye grains	黑麦粒
+craft-requirement	Rye grains	黑麦粒
+craft-requirement	rye-flour	黑麦粉
+craft-requirement	Rye-flour	黑麦粉
+craft-requirement	salmon	鲑鱼
+craft-requirement	Salmon	鲑鱼
+craft-requirement	salt	盐
+craft-requirement	Salt	盐
+craft-requirement	sand mushroom	沙菇
+craft-requirement	Sand mushroom	沙菇
+craft-requirement	sauna scoop	桑拿水勺
+craft-requirement	Sauna scoop	桑拿水勺
+craft-requirement	scimitar	弯刀
+craft-requirement	Scimitar	弯刀
+craft-requirement	sesta	撑篙
+craft-requirement	Sesta	撑篙
+craft-requirement	shingle	木瓦
+craft-requirement	Shingle	木瓦
+craft-requirement	shingle basket	木片篮
+craft-requirement	Shingle basket	木片篮
+craft-requirement	shirt	衬衫
+craft-requirement	Shirt	衬衫
+craft-requirement	shortbow	短弓
+craft-requirement	Shortbow	短弓
+craft-requirement	shortsword	短剑
+craft-requirement	Shortsword	短剑
+craft-requirement	shovel	铁铲
+craft-requirement	Shovel	铁铲
+craft-requirement	shovel blade	铲头
+craft-requirement	Shovel blade	铲头
+craft-requirement	shovel haft	铲柄
+craft-requirement	Shovel haft	铲柄
+craft-requirement	sickle	镰刀
+craft-requirement	Sickle	镰刀
+craft-requirement	silver bird bracelet	银鸟手镯
+craft-requirement	Silver bird bracelet	银鸟手镯
+craft-requirement	silver chain bracelet	银链手镯
+craft-requirement	Silver chain bracelet	银链手镯
+craft-requirement	silver ring	银戒指
+craft-requirement	Silver ring	银戒指
+craft-requirement	silver sun-symbol pendant	银太阳纹吊坠
+craft-requirement	Silver sun-symbol pendant	银太阳纹吊坠
+craft-requirement	ski pole	滑雪杖
+craft-requirement	Ski pole	滑雪杖
+craft-requirement	skis	滑雪板
+craft-requirement	Skis	滑雪板
+craft-requirement	skramasaksi	萨克斯长刀
+craft-requirement	Skramasaksi	萨克斯长刀
+craft-requirement	slender %s trunk	细长的%s树干
+craft-requirement	Slender %s trunk	细长的%s树干
+craft-requirement	slender tree trunk	细树干
+craft-requirement	Slender tree trunk	细树干
+craft-requirement	small bronze brooch	小青铜胸针
+craft-requirement	Small bronze brooch	小青铜胸针
+craft-requirement	small knife	小刀
+craft-requirement	Small knife	小刀
+craft-requirement	small trident	小鱼叉
+craft-requirement	Small trident	小鱼叉
+craft-requirement	small trident head	小鱼叉头
+craft-requirement	Small trident head	小鱼叉头
+craft-requirement	soft mushroom	软菇
+craft-requirement	Soft mushroom	软菇
+craft-requirement	sorrel	酸模
+craft-requirement	Sorrel	酸模
+craft-requirement	sorrel leaves	酸模叶
+craft-requirement	Sorrel leaves	酸模叶
+craft-requirement	sorrel seeds	酸模种子
+craft-requirement	Sorrel seeds	酸模种子
+craft-requirement	spear	长矛
+craft-requirement	Spear	长矛
+craft-requirement	spear haft	矛杆
+craft-requirement	Spear haft	矛杆
+craft-requirement	spear head	矛头
+craft-requirement	Spear head	矛头
+craft-requirement	spindle	纺锤
+craft-requirement	Spindle	纺锤
+craft-requirement	splitting axe	劈柴斧
+craft-requirement	Splitting axe	劈柴斧
+craft-requirement	splitting axe head	劈柴斧头
+craft-requirement	Splitting axe head	劈柴斧头
+craft-requirement	spoiled 	变质的
+craft-requirement	Spoiled 	变质的
+craft-requirement	spruce quick-bow	云杉速制弓
+craft-requirement	Spruce quick-bow	云杉速制弓
+craft-requirement	spruce twig	云杉枝
+craft-requirement	Spruce twig	云杉枝
+craft-requirement	spruce withe	云杉柔枝绑条
+craft-requirement	Spruce withe	云杉柔枝绑条
+craft-requirement	staff	木杆
+craft-requirement	Staff	木杆
+craft-requirement	stale	不新鲜的
+craft-requirement	Stale	不新鲜的
+craft-requirement	stone	石块
+craft-requirement	Stone	石块
+craft-requirement	stone arrowhead	石箭头
+craft-requirement	Stone arrowhead	石箭头
+craft-requirement	stone knife	石刀
+craft-requirement	Stone knife	石刀
+craft-requirement	stone tipped arrow	石镞箭
+craft-requirement	Stone tipped arrow	石镞箭
+craft-requirement	stone-axe	石斧
+craft-requirement	Stone-axe	石斧
+craft-requirement	stonecrop	景天
+craft-requirement	Stonecrop	景天
+craft-requirement	stonecrop leaves	景天叶
+craft-requirement	Stonecrop leaves	景天叶
+craft-requirement	strawberries	草莓
+craft-requirement	Strawberries	草莓
+craft-requirement	strawberry	草莓
+craft-requirement	Strawberry	草莓
+craft-requirement	strawberry shrub	草莓丛
+craft-requirement	Strawberry shrub	草莓丛
+craft-requirement	tellervo's gift mushroom	泰勒沃赠礼菇
+craft-requirement	Tellervo's gift mushroom	泰勒沃赠礼菇
+craft-requirement	torch	火把
+craft-requirement	Torch	火把
+craft-requirement	tree trunk	树干
+craft-requirement	Tree trunk	树干
+craft-requirement	trident	三齿鱼叉
+craft-requirement	Trident	三齿鱼叉
+craft-requirement	trident head	三齿鱼叉头
+craft-requirement	Trident head	三齿鱼叉头
+craft-requirement	trousers	裤子
+craft-requirement	Trousers	裤子
+craft-requirement	trout	鳟鱼
+craft-requirement	Trout	鳟鱼
+craft-requirement	tunic	束腰外衣
+craft-requirement	Tunic	束腰外衣
+craft-requirement	turnip	芜菁
+craft-requirement	Turnip	芜菁
+craft-requirement	turnip seeds	芜菁种子
+craft-requirement	Turnip seeds	芜菁种子
+craft-requirement	ukko's mushroom	乌科菇
+craft-requirement	Ukko's mushroom	乌科菇
+craft-requirement	undergarment	贴身长衣
+craft-requirement	Undergarment	贴身长衣
+craft-requirement	undershirt	贴身衬衣
+craft-requirement	Undershirt	贴身衬衣
+craft-requirement	vasta	桑拿桦枝束
+craft-requirement	Vasta	桑拿桦枝束
+craft-requirement	veil	头巾
+craft-requirement	Veil	头巾
+craft-requirement	water	水
+craft-requirement	Water	水
+craft-requirement	water lily	睡莲
+craft-requirement	Water lily	睡莲
+craft-requirement	water lily root	睡莲根
+craft-requirement	Water lily root	睡莲根
+craft-requirement	wide trident	宽鱼叉
+craft-requirement	Wide trident	宽鱼叉
+craft-requirement	wide trident head	宽鱼叉头
+craft-requirement	Wide trident head	宽鱼叉头
+craft-requirement	winter %s	冬季%s
+craft-requirement	Winter %s	冬季%s
+craft-requirement	with bone hook	（装有骨鱼钩）
+craft-requirement	with iron hook	（装有铁鱼钩）
+craft-requirement	with no hook	（未装鱼钩）
+craft-requirement	with no string	（未装弦）
+craft-requirement	with wooden hook	（装有木鱼钩）
+craft-requirement	wolf pipe	狼管草
+craft-requirement	Wolf pipe	狼管草
+craft-requirement	wolf pipe leaves	狼管草叶
+craft-requirement	Wolf pipe leaves	狼管草叶
+craft-requirement	wolf pipe root	狼管草根
+craft-requirement	Wolf pipe root	狼管草根
+craft-requirement	wood	木材
+craft-requirement	wood 	木制
+craft-requirement	Wood 	木制
+craft-requirement	wood slat	木条
+craft-requirement	Wood slat	木条
+craft-requirement	wooden 	木制的
+craft-requirement	Wooden 	木制的
+craft-requirement	wooden bowl	木碗
+craft-requirement	Wooden bowl	木碗
+craft-requirement	wooden canteen	木水壶
+craft-requirement	Wooden canteen	木水壶
+craft-requirement	wooden cup	木杯
+craft-requirement	Wooden cup	木杯
+craft-requirement	wooden fishhook	木鱼钩
+craft-requirement	Wooden fishhook	木鱼钩
+craft-requirement	wooden mug	木马克杯
+craft-requirement	Wooden mug	木马克杯
+craft-requirement	wooden shovel	木铲
+craft-requirement	Wooden shovel	木铲
+craft-requirement	wooden stake	木桩
+craft-requirement	Wooden stake	木桩
+craft-requirement	wooden tub	木盆
+craft-requirement	Wooden tub	木盆
+craft-requirement	woodsman's axe	伐木斧
+craft-requirement	Woodsman's axe	伐木斧
+craft-requirement	woodsman's axe head	伐木斧头
+craft-requirement	Woodsman's axe head	伐木斧头
+craft-requirement	woollen apron	羊毛围裙
+craft-requirement	Woollen apron	羊毛围裙
+craft-requirement	woollen cloak	羊毛斗篷
+craft-requirement	Woollen cloak	羊毛斗篷
+craft-requirement	woollen dress	羊毛长裙
+craft-requirement	Woollen dress	羊毛长裙
+craft-requirement	woollen footrags	羊毛裹脚布
+craft-requirement	Woollen footrags	羊毛裹脚布
+craft-requirement	woollen leggings	羊毛护腿
+craft-requirement	Woollen leggings	羊毛护腿
+craft-requirement	woollen nalbound cap	羊毛单针编织帽
+craft-requirement	Woollen nalbound cap	羊毛单针编织帽
+craft-requirement	woollen nalbound cowl	羊毛单针编织头颈罩
+craft-requirement	Woollen nalbound cowl	羊毛单针编织头颈罩
+craft-requirement	woollen nalbound knee socks	羊毛单针编织长袜
+craft-requirement	Woollen nalbound knee socks	羊毛单针编织长袜
+craft-requirement	woollen nalbound mittens	羊毛单针编织连指手套
+craft-requirement	Woollen nalbound mittens	羊毛单针编织连指手套
+craft-requirement	woollen nalbound socks	羊毛单针编织短袜
+craft-requirement	Woollen nalbound socks	羊毛单针编织短袜
+craft-requirement	woollen overcoat	羊毛大衣
+craft-requirement	Woollen overcoat	羊毛大衣
+craft-requirement	woollen shirt	羊毛衬衫
+craft-requirement	Woollen shirt	羊毛衬衫
+craft-requirement	woollen trousers	羊毛裤
+craft-requirement	Woollen trousers	羊毛裤
+craft-requirement	woollen tunic	羊毛束腰外衣
+craft-requirement	Woollen tunic	羊毛束腰外衣
+craft-requirement	woollen undergarment	羊毛贴身长衣
+craft-requirement	Woollen undergarment	羊毛贴身长衣
+craft-requirement	woollen undershirt	羊毛贴身衬衣
+craft-requirement	Woollen undershirt	羊毛贴身衬衣
+craft-requirement	woollen veil	羊毛头巾
+craft-requirement	Woollen veil	羊毛头巾
+craft-requirement	yarrow	蓍草
+craft-requirement	Yarrow	蓍草
+craft-requirement	yarrow flowers	蓍草花
+craft-requirement	Yarrow flowers	蓍草花
+craft-requirement	yarrow leaves	蓍草叶
+craft-requirement	Yarrow leaves	蓍草叶
+craft-requirement	yarrow seeds	蓍草种子
+craft-requirement	Yarrow seeds	蓍草种子
+craft-requirement	yellow fingers mushroom	黄指菇
+craft-requirement	Yellow fingers mushroom	黄指菇
+craft-requirement	yellowcoat mushroom	黄衣菇
+craft-requirement	Yellowcoat mushroom	黄衣菇

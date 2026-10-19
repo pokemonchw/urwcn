@@ -7,10 +7,12 @@ namespace uwcn::adapter::native_menu_model {
 namespace {
 struct Instance {
     u32 references=1; // The active native view owns one reference.
+    Handle input_owner{};
     MenuModel native{};
     PaintStyle style{};
     TextBinding title;
     std::array<TextBinding,row_capacity> rows;
+    std::array<TextBinding,row_capacity> annotations;
 };
 std::uintptr_t base{};
 Handle next_handle=1;
@@ -100,6 +102,7 @@ void initialize(std::uintptr_t image_base) {
 Handle create_from_native() {
     const Handle handle=next_handle++;
     models.emplace(handle,Instance{});
+    models.find(handle)->second.input_owner=handle;
     capture_into(handle);
     capture_style(handle);
     active_handle=handle;
@@ -111,20 +114,24 @@ Handle snapshot(Handle handle) {
     const Handle copy=next_handle++;
     auto instance=models.find(handle)->second;
     instance.references=1;
+    retain(instance.input_owner);
     instance.title.key.owner=copy;
     for(auto& binding:instance.rows) binding.key.owner=copy;
+    for(auto& binding:instance.annotations) binding.key.owner=copy;
     models.emplace(copy,std::move(instance));
     return copy;
 }
 
+Handle input_owner(Handle handle) { return models.find(handle)->second.input_owner; }
+
 void capture_into(Handle handle) {
-    auto& model=models.find(handle)->second.native;
+    auto& model=models.find(input_owner(handle))->second.native;
     std::memcpy(model.header.data(),reinterpret_cast<const void*>(base+header_rva),header_bytes);
     std::memcpy(model.rows.data(),reinterpret_cast<const void*>(base+rows_rva),rows_bytes);
 }
 
 void capture_style(Handle handle) {
-    auto& instance=models.find(handle)->second;
+    auto& instance=models.find(input_owner(handle))->second;
     instance.style.panel=native_component_style::capture_panel();
     // D0287/D030F load header+10h into 61BBAC4; D0314/D031A load
     // header+7Ch into 61BBA54. The normal full menu consumer owns these writes.
@@ -136,10 +143,14 @@ const PaintStyle& style(Handle handle) { return models.find(handle)->second.styl
 void retain(Handle handle) { ++models.find(handle)->second.references; }
 void release(Handle handle) {
     auto instance=models.find(handle);
-    if(--instance->second.references==0) models.erase(instance);
+    if(--instance->second.references==0) {
+        const auto owner=instance->second.input_owner;models.erase(instance);
+        if(owner!=handle) release(owner);
+    }
 }
 
 void activate(Handle handle) {
+    handle=input_owner(handle);
     capture_active();
     const auto previous=active_handle;
     retain(handle);
@@ -154,6 +165,12 @@ void deactivate() {
     capture_active();
     const auto previous=active_handle;
     active_handle=0;
+    if(previous) release(previous);
+}
+
+void adopt_from_native(Handle saved_source) {
+    const auto owner=input_owner(saved_source),previous=active_handle;
+    retain(owner);active_handle=owner;capture_into(owner);
     if(previous) release(previous);
 }
 
@@ -175,6 +192,11 @@ void bind_row(Handle handle,u32 index,const native_text_resource::TextSource& so
 }
 const TextBinding& title(Handle handle) { return models.find(handle)->second.title; }
 const TextBinding& row(Handle handle,u32 index) { return models.find(handle)->second.rows[index]; }
+void bind_annotation(Handle handle,u32 index,const native_text_resource::TextSource& source) {
+    models.find(handle)->second.annotations[index]={true,
+        {handle,rows_rva+index*row_stride+0x64,static_cast<u32>(source.component)},source,{}};
+}
+const TextBinding& annotation(Handle handle,u32 index) { return models.find(handle)->second.annotations[index]; }
 
 std::vector<std::uint8_t> save() {
     capture_active();
@@ -185,6 +207,7 @@ std::vector<std::uint8_t> save() {
     for(const auto& [handle,instance]:models) {
         write_u32(payload,handle);
         write_u32(payload,instance.references);
+        write_u32(payload,instance.input_owner);
         append(payload,instance.native.header.data(),header_bytes);
         append(payload,instance.native.rows.data(),rows_bytes);
         write_u32(payload,instance.style.panel.background_mode);
@@ -193,6 +216,7 @@ std::vector<std::uint8_t> save() {
         write_u32(payload,instance.style.button.suffix_outline);
         write_binding(payload,instance.title);
         for(const auto& binding:instance.rows) write_binding(payload,binding);
+        for(const auto& binding:instance.annotations) write_binding(payload,binding);
     }
     return payload;
 }
@@ -207,6 +231,7 @@ void restore(const void* payload) {
         const auto handle=read_u32(cursor);
         auto& instance=models.emplace(handle,Instance{}).first->second;
         instance.references=read_u32(cursor);
+        instance.input_owner=read_u32(cursor);
         std::memcpy(instance.native.header.data(),cursor,header_bytes);
         cursor+=header_bytes;
         std::memcpy(instance.native.rows.data(),cursor,rows_bytes);
@@ -217,6 +242,7 @@ void restore(const void* payload) {
         instance.style.button.suffix_outline=read_u32(cursor);
         instance.title=read_binding(cursor);
         for(auto& binding:instance.rows) binding=read_binding(cursor);
+        for(auto& binding:instance.annotations) binding=read_binding(cursor);
     }
 }
 }

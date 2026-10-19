@@ -12,3 +12,57 @@ physical-requirement	one usable arm	一条可用的手臂
 physical-requirement	both hands	双手
 physical-requirement	one usable hand	一只可用的手
 action	do that	那样做
+message-punctuation	.	。
+message-punctuation	!	！
+message-punctuation	, 	、
+message-punctuation	 and 	和
+object-description	fire	火堆
+object-description	burnt-out fire	燃尽的火堆
+object-description	burnt-out fire with glowing embers	余烬仍在发光的火堆
+object-description	burnt-out fire with still warm embers	余烬尚温的火堆
+object-description	bloodscape	血迹
+nearby-object	your settlement	你的聚落
+nearby-object	a shelter	一处避难所
+nearby-object	a kota	一座科塔帐篷
+nearby-object	set traps	设置好的陷阱
+nearby-object	a net set to catch	布设好的渔网
+nearby-object	a punt	一艘平底船
+nearby-object	a raft	一个木筏
+fatigue-prefix	You are	你现在
+fatigue-prefix	You feel	你感到
+fatigue-prefix	You are getting	你开始感到
+fatigue-prefix	You are sleepy and	你困倦而且
+fatigue-prefix	You are very sleepy and	你非常困倦而且
+fatigue	Vigorous	精力充沛
+fatigue	Lively	精神饱满
+fatigue	A bit tired	有点疲倦
+fatigue	Tired	疲倦
+fatigue	Weary	疲惫
+fatigue	Extremely tired	极度疲惫
+fatigue	Ready to drop	累得快倒下
+fatigue	vigorous	精力充沛
+fatigue	lively	精神饱满
+fatigue	a bit tired	有点疲倦
+fatigue	tired	疲倦
+fatigue	weary	疲惫
+fatigue	extremely tired	极度疲惫
+fatigue	ready to drop	累得快倒下
+npc	creature	生物
+fish-spawning	pike	狗鱼
+fish-spawning	bream	鳊鱼
+fish-spawning	salmon	鲑鱼
+fish-spawning	lavaret	白鲑
+injury-change	 is getting dramatically worse.	正在急剧恶化。
+injury-change	 is getting worse.	正在恶化。
+injury-change	 eases a bit.	稍有好转。
+injury-change	 is getting much better.	正在明显好转。
+track-kind	tracks	足迹
+track-kind	running tracks	奔跑的足迹
+track-kind	limping tracks	跛行的足迹
+track-subject	unknown	不明生物
+track-subject	human	人类
+track-size	small	小型
+track-size	big	大型
+crafted-material	Mixed	混合
+crafted-name	beverage	饮料
+crafted-name-format	%s 	%s
