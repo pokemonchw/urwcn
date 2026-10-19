@@ -34,6 +34,7 @@ bool intro_chinese;
 u32 active_view;
 bool redrawing_view;
 bool redrawing_main_background;
+bool font_redraw_pending;
 void redraw_language();
 struct Glyph { std::string utf8; int width=-1; };
 std::map<unsigned,Glyph> glyphs;
@@ -581,6 +582,13 @@ void poll_language(Frame& frame,Phase phase,CallState& state) {
         state.target=site==0xf6ce8 || site==0xf777e ? 0x8ea0 : 0x81e0;
         return;
     }
+    if(font_redraw_pending) {
+        font_redraw_pending=false;
+        // Consume font invalidation after the resident publication completes,
+        // at the same native boundary as language refresh. These owners have
+        // confirmed full reconstruction, including their background caches.
+        if(scope==Scope::main_menu || active_view) redraw_language();
+    }
     auto* event=reinterpret_cast<SDL_Event*>(frame.rdi);
     if(frame.rax && event->type==SDL_KEYDOWN && event->key.keysym.scancode==SDL_SCANCODE_F10 &&
        (event->key.keysym.mod & KMOD_SHIFT)) {
@@ -868,6 +876,7 @@ Status invoke(u32 operation,const void* input,u32 bytes,void*,u32* capacity) {
     if(operation!=kModuleDependenciesChanged || !input || bytes!=sizeof(u32)) return Status::invalid;
     invalidate_glyph_widths();
     refresh_culture_words();
+    if(*static_cast<const u32*>(input)&4u) font_redraw_pending=true;
     if(capacity) *capacity=0;
     return Status::ok;
 }

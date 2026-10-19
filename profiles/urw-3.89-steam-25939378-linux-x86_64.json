@@ -22,8 +22,9 @@
   "font": {
     "file": "fonts/SourceHanSans.ttc",
     "sha256": "767e21e7b93c2d7d566745eb6496ad04dd73ee5ab85e4b7f54b69efaddbced85",
-    "face_index": 37,
-    "face": "Source Han Sans SC Bold",
+    "face_index": 22,
+    "face": "Source Han Sans SC Heavy",
+    "calibration": "All non-ASCII reference and catalog glyphs share the maximum size fitting the existing 9 logical-pixel ink and 10 logical-pixel line budgets. ASCII retains the native bitmap font and does not constrain this outline font's envelope.",
     "license": "SIL Open Font License 1.1"
   },
   "native_text_functions": {
@@ -56,6 +57,7 @@
     "about_and_credits": "Rebuild the main menu, replace the owner's SCREENSAVE through save_page at 0x13d590, then rebuild the active native view with its input wait skipped. The original restore_page at view exit consumes the updated background.",
     "ownership": "The same native reconstruction is used for main-menu resize. No UI coordinates, page snapshots, pixel tracking or deferred glyph operations are stored by this refresh path."
   },
+  "font_redraw": "A render-module dependency change invalidates glyph widths and requests native reconstruction at the next input-poll return for the main menu or About/Credits. Other owners consume the new font on native reconstruction; no page is replayed or input synthesized.",
   "native_density": {
     "screen_creation": "0x148c60",
     "upload_texture_creation": "0x148c2d",
@@ -98,6 +100,7 @@
     "docs/evidence/20261019-linux-native-port.md",
     "docs/evidence/20261019-linux-hot-reload.md",
     "docs/evidence/20261019-linux-font-density.md",
+    "docs/evidence/20261019-linux-font-size-weight.md",
     "docs/evidence/20261019-linux-language-residue.md",
     "docs/evidence/20261019-culture-info-native.md",
     "docs/evidence/20261019-encyclopedia-complete.md",

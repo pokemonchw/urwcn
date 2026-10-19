@@ -151,6 +151,11 @@ bool FontEngine::initialize(const std::string& repertoire) {
     std::set<std::uint32_t> seen;
     for(std::size_t i=0;i<reference_.size();) {
         const auto begin=i; std::uint32_t cp{}; if(!scalar(reference_,i,cp)) return false;
+#if defined(__linux__)
+        // Linux textput/rentextput leave ASCII to the native bitmap font.
+        // Its unused outline counterparts (notably '|') must not shrink CJK.
+        if(cp<0x80) continue;
+#endif
         if(cp>=32 && seen.insert(cp).second) glyphs_.push_back(reference_.substr(begin,i-begin));
     }
     return true;
@@ -272,7 +277,7 @@ void FontEngine::density_changed(double density) {
 }
 CalibratedFont* FontEngine::font(double density,int line_height,int ink_height,int outline) {
 #if defined(__linux__)
-    constexpr long face=37; // Local SourceHanSans.ttc: Source Han Sans SC Bold.
+    constexpr long face=22; // Local SourceHanSans.ttc: Source Han Sans SC Heavy.
 #else
     constexpr long face=0;
 #endif
