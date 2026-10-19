@@ -85,6 +85,7 @@ enum class TextComponent : std::uint32_t {
     scenario_village_advice_3 = 0xC1C,
     scenario_selection_text = 0xC20,
     scenario_confirmation_text = 0xC21,
+    game_course_text = 0xC22,
     culture_text = 0xD00,
     farewell_title = 0xE00, farewell_tree = 0xE01, farewell_river = 0xE02,
     farewell_fish = 0xE03, farewell_money = 0xE04, farewell_source = 0xE05,

@@ -58,7 +58,7 @@
     "about_and_credits": "Rebuild the main menu, replace the owner's SCREENSAVE through save_page at 0x13d590, then rebuild the active native view with its input wait skipped. The original restore_page at view exit consumes the updated background.",
     "ownership": "The same native reconstruction is used for main-menu resize. No UI coordinates, page snapshots, pixel tracking or deferred glyph operations are stored by this refresh path."
   },
-  "font_redraw": "A render-module or adapter-module change invalidates glyph widths and requests native reconstruction at the next input-poll return for the main menu or About/Credits. Scenario selection and confirmation use their confirmed LIST_Go input-return reconstruction. Other owners consume the new metrics on native reconstruction; no page is replayed or input synthesized.",
+  "font_redraw": "A render-module or adapter-module change invalidates glyph widths and requests native reconstruction at the next input-poll return for the main menu or About/Credits. Scenario selection, confirmation and game-course selection use their confirmed LIST_Go input-return reconstruction. Other owners consume the new metrics on native reconstruction; no page is replayed or input synthesized.",
   "native_density": {
     "screen_creation": "0x148c60",
     "upload_texture_creation": "0x148c2d",
@@ -115,7 +115,8 @@
     "docs/evidence/20261019-skills-confirmation-native.md",
     "docs/evidence/20261019-scenario-selection-native.md",
     "docs/evidence/20261019-scenario-confirmation-native.md",
-    "docs/evidence/20261019-all-scenarios-native.md"
+    "docs/evidence/20261019-all-scenarios-native.md",
+    "docs/evidence/20261019-game-course-native.md"
   ],
   "spells": {
     "owner": "MagicProfile 0x106b40; CompileMagicSubscreen 0x106710 and CompileInfoboxRitualList 0x106a00 own their target textures and reconstruction.",
@@ -206,6 +207,13 @@
     "refresh": "At 0xf871f after LIST_Go getkey returns naturally, the original caller at native RSP+0x458 identifies 0x1d365, including pages opened before publication. Rebuild SelectCampaign only through 0x1d30a, then resume its balanced epilogue 0x1d332. During this redraw only, crtplr_info(0) skips unused random(20) at 0x1bbfc. No input wait, scenario assignment or get_camp/story write is re-entered.",
     "cache_and_selection": "Native LIST_Position/Set_LIST_Position preserve the current selection; original background, title, rows and footer rebuild first, followed by save_menubuf, LIST_Highlight and Flip. The actual getkey result is preserved. Refresh consumes adapter reload, dependency invalidation or language change at the next natural input-return boundary; it does not synthesize an event or claim immediate visual completion from Applied.",
     "density": "Existing native screen output-density target; glyphs draw synchronously inside native component calls. No page coordinates, text snapshots, pixel tracking or deferred replay. Existing non-main-menu resize and shadow-budget limitations remain pending."
+  },
+  "game_course": {
+    "owner": "game_course 0x1d5a0: all 22 native text calls use 20 catalog records, including the two title calls, three course labels, all nine description records, three guidance records, completion labels/guidance and the existing museum tutorial variant.",
+    "display": "0x1d618 -> draw_campselgfx and 0x1d648 -> seven-argument winbox borrow the same Chinese title. Thirteen SANATAULUKKO_Lisaa calls preserve reset/append and complete native word-table ownership. Five LIST_ButtonSpotEntry calls keep the original ESC./A./B. prefixes and actions; both completed labels use showtext. English source data and task state remain untouched.",
+    "metrics": "Native paragraph wrapping consumes existing complete-character width/advance and separator extensions. Native button drawing and textwidth consume the same full label, so the game owns keycaps, highlight and hit rectangles. Glyphs draw synchronously at the existing native screen's output density, without page coordinates, pixel tracking or text replay.",
+    "redraw": "Existing LIST_Go input return 0xf871f identifies unchanged caller 0x1d872 at original RSP+0x458, including an already-open page. Re-enter display fragment 0x1d5e3 through the completed LIST_Draw at 0x1d868; skip grabscr, player-name copy, input waiting, selection actions and task generation. During synchronous redraw only, skip crtplr_info(0)'s unused random(20). Native LIST_Position/Set_LIST_Position, save_menubuf, LIST_Highlight and Flip retain selection and rebuild the cache. Hot reload, dependency changes and language switching request refresh on the next natural getkey return.",
+    "state": "Host ABI 2 and state-v1 remain unchanged. Three booleans describe invalidation, last construction language and synchronous reconstruction; no page text or geometry is retained. Applied confirms module handoff, not visual completion. Existing shadow-budget and non-main-menu resize reconstruction boundaries remain pending."
   },
   "scenario_confirmation": {
     "owner": "get_camp 0x1cdc0 writes the original English story.txt, then show_scenario 0x124190 reads it for display. Native scenario IDs, source files, image selection, Y/N keys and confirmation results remain unchanged.",

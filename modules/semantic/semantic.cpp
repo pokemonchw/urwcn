@@ -226,6 +226,7 @@ const char* key(TextComponent component) {
     case TextComponent::world_generation_text:return nullptr; // Native world-generation display consumer.
     case TextComponent::scenario_selection_text:return nullptr; // Native RNDCAMP display consumer.
     case TextComponent::scenario_confirmation_text:return nullptr; // Native story confirmation display.
+    case TextComponent::game_course_text:return nullptr; // Native game-course display calls.
     }
     return nullptr;
 }
@@ -387,6 +388,11 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
     }
     if(request.component==TextComponent::scenario_confirmation_text) {
         const std::string name=std::string("scenario.confirm.")+request.value;
+        const CatalogRequest lookup{name.c_str()};
+        return host_api->invoke(ModuleId::catalog,catalog_op::lookup,&lookup,sizeof(lookup),output,capacity);
+    }
+    if(request.component==TextComponent::game_course_text) {
+        const std::string name=std::string("game_course.")+request.value;
         const CatalogRequest lookup{name.c_str()};
         return host_api->invoke(ModuleId::catalog,catalog_op::lookup,&lookup,sizeof(lookup),output,capacity);
     }

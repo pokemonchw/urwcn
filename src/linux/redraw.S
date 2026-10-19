@@ -62,3 +62,23 @@ uwcn_linux_redraw_scenario_fragment:
 uwcn_linux_redraw_scenario_return:
     ret
 .size uwcn_linux_redraw_scenario_return,.-uwcn_linux_redraw_scenario_return
+
+.globl uwcn_linux_redraw_game_course_fragment
+.hidden uwcn_linux_redraw_game_course_fragment
+.type uwcn_linux_redraw_game_course_fragment,@function
+uwcn_linux_redraw_game_course_fragment:
+    # 1D5E3..1D86D uses RBP for winH and balances each native seventh
+    # argument itself. Supply native call alignment and preserve RBP.
+    pushq %rbp
+    subq $8,%rsp
+    call *%rdi
+    addq $8,%rsp
+    popq %rbp
+    ret
+.size uwcn_linux_redraw_game_course_fragment,.-uwcn_linux_redraw_game_course_fragment
+.globl uwcn_linux_redraw_game_course_return
+.hidden uwcn_linux_redraw_game_course_return
+.type uwcn_linux_redraw_game_course_return,@function
+uwcn_linux_redraw_game_course_return:
+    ret
+.size uwcn_linux_redraw_game_course_return,.-uwcn_linux_redraw_game_course_return

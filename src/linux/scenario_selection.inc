@@ -44,7 +44,7 @@ void scenario_selection_paragraph(Frame& frame) {
 void scenario_selection_footer_random(Frame& frame) {
     // crtplr_info(0) ignores random(20)'s result. Its original call remains
     // on normal entry; a pure redraw must not consume another random value.
-    if(!rebuilding_scenario_selection) frame.rax=call(frame,0xf4870);
+    if(!rebuilding_scenario_selection && !rebuilding_game_course) frame.rax=call(frame,0xf4870);
 }
 void scenario_selection_footer(Frame& frame) {
     frame.rax=call(frame,0x1bbf0);
@@ -60,6 +60,7 @@ void scenario_selection_input_return(Frame& frame) {
     // Keep 1D360 -> LIST_Go unhooked so that native return identity is stable.
     const auto caller=*reinterpret_cast<const std::uintptr_t*>(frame.stack()+0x458);
     scenario_confirmation_input_return(caller);
+    game_course_input_return(caller);
     if(caller==host->image_base+0x1d365 &&
        (scenario_selection_refresh || scenario_selection_chinese!=chinese)) {
         const auto selection=native<int (*)()>(0xf6100)();

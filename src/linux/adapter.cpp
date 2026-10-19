@@ -759,6 +759,7 @@ void ancestor_summary(Frame& frame) {
 #include "skills.inc"
 #include "world_generation.inc"
 #include "scenario_confirmation.inc"
+#include "game_course.inc"
 #include "scenario_selection.inc"
 
 struct MenuInput { u32 site; Scope scope; };
@@ -868,6 +869,7 @@ Status initialize(const HostApi* api) {
     install_world_generation();
     install_scenario_confirmation();
     install_scenario_selection();
+    install_game_course();
     linux_targets::install(*hooks);
     hooks->instruction(0x15cf21,5,main_background);
     hooks->instruction(0x15cf44,7,main_background_end);
@@ -923,6 +925,7 @@ Status invoke(u32 operation,const void* input,u32 bytes,void*,u32* capacity) {
     refresh_culture_words();
     scenario_selection_refresh=true;
     scenario_confirmation_refresh=true;
+    game_course_refresh=true;
     if(*static_cast<const u32*>(input)&(4u|32u)) font_redraw_pending=true;
     if(capacity) *capacity=0;
     return Status::ok;

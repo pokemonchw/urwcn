@@ -1,4 +1,24 @@
 # UWCn native UI component catalog. UTF-8, key TAB text. Native <br> is preserved.
+game_course.title	选择游戏进程
+game_course.name.free	不真实的世界
+game_course.name.wild	荒野求生
+game_course.name.advanced	进阶冒险
+game_course.name.tutorial	教学进程
+game_course.free.1	自由游玩，一切由你决定。除了自己想做或想尝试的事，你没有任何任务或职责。
+game_course.free.2	对于经验丰富、渴望自由的玩家，这是最理想的玩法；
+game_course.free.3	也适合新手先熟悉游戏机制，再尝试以任务为主的游戏进程。
+game_course.wild.1	通过任务学习荒野生存的基础知识，在游历大地、探索广阔世界的途中磨炼生存技能。
+game_course.wild.2	这个游戏进程从简单、基础的荒野生存任务开始，
+game_course.wild.3	带你逐步适应野外生活，最终走近人群，了解更安定的生活方式。
+game_course.advanced.1	多样的任务涵盖进阶荒野生存与狩猎技巧，带你全面认识《不真实的世界》：远近各地，
+game_course.advanced.2	熟悉的文化与遥远国度的人们，以及灵魂世界，并更深入地体验极北之地的生活与谋生之道。
+game_course.advanced.3	这个游戏进程适合经验更丰富的玩家。
+game_course.completed.wild	荒野求生——已完成
+game_course.completed.advanced	进阶冒险——已完成
+game_course.help.1	你可以选择带有教学性质的游戏进程，也可以在《不真实的世界》中完全自由地冒险。
+game_course.help.2	游戏进程会安排不同的任务与职责供你完成。
+game_course.help.3	随着进程推进，你将获得各进程独有的额外功能和新增内容作为奖励。
+game_course.help.completed	你已完成两个游戏进程。现在，继续在《不真实的世界》中自由冒险吧。
 menu.load_character	载入角色
 menu.create_character	创建角色
 menu.setup	设置
