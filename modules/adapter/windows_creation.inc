@@ -189,6 +189,12 @@ Status windows_creation_input(const NativeEvent& e) {
     if(creation_select_pending && native_language_redraw::menu_input(e,0x10B89)) return creation_rebuild(0);
     if(creation_confirmation_pending && native_language_redraw::menu_input(e,0x1077E)) return creation_rebuild(1);
     if(creation_course_pending && native_language_redraw::menu_input(e,0x110C5)) return creation_rebuild(2);
+    if(creation_world_pending && native_language_redraw::menu_input(e,0x60EA8)) {
+        // D1120 saves its caller's EDI after SUB ESP,434h and PUSH EBX/ESI.
+        // This is the world's current legend switch, not D1120's live EDI.
+        creation_world_legend=*ptr<u32>(e.frame->ebp-0x440);
+        return creation_rebuild(3);
+    }
     return Status::ok;
 }
 
@@ -200,11 +206,6 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
     }
     if(e.id>=creation_text_first && e.id<creation_text_first+std::size(creation_text_calls)) {
         const auto& field=creation_text_calls[e.id-creation_text_first];
-        if(field.site==0x60D32 && creation_world_pending && !creation_world_redrawing) {
-            creation_world_legend=e.frame->edi;
-            const auto status=creation_rebuild(3);
-            if(status!=Status::ok) return status;
-        }
         if(field.component==TextComponent::creation_complete_title) creation_complete_pending=false;
         auto& destination=field.kind==CreationKind::words ? e.frame->edx : e.arguments[field.argument];
         return creation_lend(e,field.component,field.key,destination,field.kind);
@@ -337,6 +338,7 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
         if(creation_world_redrawing) {e.frame->ebx=0;result.resume_rva=0x60CC2;}
         return Status::ok;
     case creation_world_exit:
+        creation_world_pending=false;
         if(creation_world_redrawing) result.resume_rva=0x6113D;
         return Status::ok;
     default:
