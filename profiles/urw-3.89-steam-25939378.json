@@ -256,7 +256,7 @@
     "target": "Windows x86 PE e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9",
     "encyclopedia": "All 312 topics / 313 GAME.NFO records, native link words and navigation; same GAME.NFO SHA256 as Linux",
     "culture": "Culture previews and both map legends; E3A6F native 200x160 surface and E3DD2 native map target at output density",
-    "skills_spells": "Skills names, mastery, point limits, confirmation Y/N; 25 spell names/descriptions and initial/general/instant help at PE display consumers",
+    "skills_spells": "Skills names, mastery, point limits, confirmation Y/N; 25 spell names/descriptions and initial/general/instant help at PE display consumers; DFFB9 scopes the spell texture footer, with title/complete summary/F1 caption at 3CE45/3CF2F/3CFA8 using spells vocabulary and the original SPELLS identity",
     "creation": "Season, portrait, full attribute confirmation, world generation 12 fields, scenario selection 29 fields, all 13 story titles/199 records and game-course 20 fields",
     "names": "UTF-8 in original 13-byte name field, original 12-byte input budget, whole-scalar backspace, native SDL IME and cursor; Windows StrUnicode ASCII filenames retained",
     "farewell": "11 fields at native title/showtext/centext/button consumers; no pure redraw entry established for an already drawn farewell page",

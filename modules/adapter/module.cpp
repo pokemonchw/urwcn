@@ -91,7 +91,7 @@ enum class Scope : u32 {
     character_creation=34, character_creation_panel=35, character_creation_label=36,
     profile_culture=37, profile_sex=38, profile_panel=39, profile_footer=40,
     scenario_story=41, scenario_panel=42, creation_button=43, creation_paragraph=44,
-    encyclopedia_input=45,
+    encyclopedia_input=45, spells_footer=46,
     load_saved_panel=0xA0,
     ancestors_title=50, ancestors_select=51, ancestors_row=52,
     hud_centered=0x100, hud_penalty=0x101, hud_button=0x102,

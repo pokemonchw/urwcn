@@ -6,7 +6,8 @@ enum WindowsSkillsHook : u32 {
     ws_name,ws_mastery,ws_help,ws_help_paragraph,ws_confirm_first=0x7640,
     ws_heading_width=0x7650,ws_heading_text,
     wm_heading=0x7700,wm_help_first=0x7710,wm_description=0x7714,wm_button,wm_exit,
-    wm_heading_text,wm_paragraph_first=0x7720
+    wm_heading_text,wm_paragraph_first=0x7720,
+    wm_footer_scope=0x7730,wm_footer_title,wm_footer_summary,wm_footer_button
 };
 Status windows_skill_lend(const NativeEvent& e,TextComponent component,const std::string& key,
                          u32& destination,Scope kind,bool prefix=false,bool words=false,u32 outline=0) {
@@ -114,6 +115,20 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
         return windows_skill_lend(e,TextComponent::spells_text,"exit",e.arguments[2],Scope::allocation,true);
     case wm_heading_text:
         begin(e,Scope::hud_renderer_text,e.arguments[3]&1u);return Status::ok;
+    case wm_footer_scope:
+        // 3CD20 draws the page footer synchronously and registers its F1 row.
+        begin(e,Scope::spells_footer);return Status::ok;
+    case wm_footer_title:case wm_footer_summary:
+        if(in(Scope::spells_footer))
+            return windows_skill_lend(e,TextComponent::spells_text,
+                e.id==wm_footer_title ? "footer.title" : "footer.summary",
+                e.arguments[1],Scope::hud_renderer_text,false,false,e.arguments[3]&1u);
+        return Status::ok;
+    case wm_footer_button:
+        if(in(Scope::spells_footer))
+            return windows_skill_lend(e,TextComponent::spells_text,"encyclopedia",
+                e.arguments[2],Scope::allocation,true);
+        return Status::ok;
     case ws_help:
         return Status::ok;
     default:
@@ -150,4 +165,8 @@ void append_windows_skills_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(wm_exit,0xDFFEC,0xCFD10,3));
     constexpr u32 paragraphs[]{0xDFAA6,0xDFB4B,0xDFD10};
     for(u32 i=0;i<std::size(paragraphs);++i) hooks.push_back(call(wm_paragraph_first+i,paragraphs[i],0x10EFD0,5));
+    hooks.push_back(call(wm_footer_scope,0xDFFB9,0x3CD20,1));
+    hooks.push_back(call(wm_footer_title,0x3CE45,0x10E260,4));
+    hooks.push_back(call(wm_footer_summary,0x3CF2F,0x10E260,4));
+    hooks.push_back(call(wm_footer_button,0x3CFA8,0xCFD10,3));
 }
