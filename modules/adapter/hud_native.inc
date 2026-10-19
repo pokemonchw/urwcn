@@ -10,7 +10,8 @@ enum HudHook : u32 {
     hud_month_append=0x6220,hud_month_paragraph,hud_scale_width,hud_scale_call,hud_scale_text,
     hud_action=0x6300,hud_direction,hud_speed,
     hud_renderer_wrapper,hud_renderer_top,hud_renderer_bottom,hud_renderer_left,
-    hud_renderer_right,hud_renderer_foreground,hud_speed_number,hud_target_entry
+    hud_renderer_right,hud_renderer_foreground,hud_speed_number,hud_target_entry,
+    hud_identity_width,hud_identity_draw_first,hud_identity_draw_second
 };
 struct HudSurfaceCall { u32 site; TextComponent component; };
 constexpr HudSurfaceCall hud_surface_calls[]{
@@ -69,6 +70,24 @@ Status hud_scale_metrics(const char* encoded,render::Metrics& measured) {
     request.outline=1; // 08FF1E pushes the native scale label's shadow flag.
     u32 bytes=sizeof(measured);
     return host->invoke(ModuleId::render,render::op::measure,&request,sizeof(request),&measured,&bytes);
+}
+Status hud_identity_display(const char* original,std::vector<char>& encoded) {
+    if(!chinese_enabled) return native_name_input::display(original,encoded);
+    // FA3F2 formats "%s %s" from Plr.name and Plr.inhabitant. Choose_Name
+    // excludes spaces in names; tribe suffixes themselves include "of ".
+    // choose_culture stores the culture ID at Plr+0xD. Borrow display text only.
+    const auto* separator=std::strchr(original,' ');
+    const std::string name(original,separator);
+    const auto component=static_cast<TextComponent>(static_cast<u32>(TextComponent::profile_culture_0)+
+        *at<unsigned char>(0xA32A6F5));
+    std::vector<char> culture;
+    auto status=translate(component,separator+1,nullptr,culture);
+    if(status!=Status::ok) return status;
+    status=native_name_input::display(name.c_str(),encoded);
+    if(status!=Status::ok) return status;
+    encoded.back()=' ';
+    encoded.insert(encoded.end(),culture.begin(),culture.end());
+    return Status::ok;
 }
 Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
@@ -158,6 +177,25 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     case hud_scale_text:
         if(in(Scope::hud_scale)) begin(e,Scope::text,e.arguments[2]);
         return Status::ok;
+    case hud_identity_width: {
+        std::vector<char> encoded;
+        auto status=hud_identity_display(ptr<char>(e.frame->ebp-0x408),encoded);
+        if(status!=Status::ok) return status;
+        render::Metrics measured{};
+        status=metrics_at_outline(encoded.data(),1,measured);
+        if(status!=Status::ok) return status;
+        // Replace only LEA EAX,[ECX*8]. Native division, centering and both
+        // panel branches continue with the width of the same display string.
+        e.frame->eax=static_cast<u32>(measured.logical_width);
+        result.skip_original=1;
+        return Status::ok;
+    }
+    case hud_identity_draw_first: case hud_identity_draw_second: {
+        std::vector<char> encoded;
+        const auto status=hud_identity_display(ptr<char>(e.arguments[0]),encoded);
+        if(status!=Status::ok) return status;
+        return lend_text(e,encoded,e.arguments[0],Scope::text);
+    }
     case hud_target_entry:
         return native_targets::promote_hud();
     case hud_speed:
@@ -225,6 +263,9 @@ void append_hud_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(inline_hook(hud_scale_width,0x907B3,{0x8D,0x04,0xCA,0x99,0x2B,0xC2}));
     hooks.push_back(call(hud_scale_call,0x907DB,0x8FE90,2));
     hooks.push_back(call(hud_scale_text,0x8FF44,0x10E5A0,3));
+    hooks.push_back(inline_hook(hud_identity_width,0xFA493,{0x8D,0x04,0xCD,0,0,0,0}));
+    hooks.push_back(call(hud_identity_draw_first,0xFA4D8,0x10E5A0,3));
+    hooks.push_back(call(hud_identity_draw_second,0xFA507,0x10E5A0,3));
     auto target=inline_hook(hud_target_entry,0xFAA4B,{0x8B,0x1D,0,0,0,0});
     const u32 color_import=address(at<void>(0x18C1E4));
     std::memcpy(target.expected+2,&color_import,4);

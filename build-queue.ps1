@@ -6,6 +6,7 @@ param(
     [string]$CMakePath = $(if ($IsLinux) { '/usr/bin/cmake' } else { Join-Path $PSScriptRoot '.toolchains/x86/w64devkit/bin/cmake.exe' }),
     [string]$CompilerPath = $(if ($IsLinux) { '/usr/bin/g++' } else { Join-Path $PSScriptRoot '.toolchains/x86/w64devkit/bin/g++.exe' }),
     [string]$BuildDirectory = $(Join-Path $PSScriptRoot $(if ($IsLinux) { 'build/linux-x86_64' } else { 'build/mingw-x86' })),
+    [string]$ModuleSourceDirectory = $PSScriptRoot,
     [switch]$Publish,
     [switch]$Reload,
     [int[]]$TargetPid = 0,
@@ -25,6 +26,7 @@ $configuration = [ordered]@{
     CMakePath=[IO.Path]::GetFullPath($CMakePath)
     CompilerPath=[IO.Path]::GetFullPath($CompilerPath)
     BuildDirectory=[IO.Path]::GetFullPath($BuildDirectory)
+    ModuleSourceDirectory=[IO.Path]::GetFullPath($ModuleSourceDirectory)
     Publish=[bool]$Publish
     Reload=[bool]$Reload
     TargetPid=$TargetPid
@@ -42,7 +44,7 @@ $stateMutex.WaitOne() | Out-Null
 try {
     if (Test-Path -LiteralPath $configurationFile) {
         $existing = Get-Content -LiteralPath $configurationFile -Raw
-        if ($existing.Trim() -ne $configurationText) { throw 'The active compile queue uses different Toolchain/CMakePath/CompilerPath/BuildDirectory/Publish/Reload/TargetPid/PackageDirectory. Wait for it to finish before changing these parameters.' }
+        if ($existing.Trim() -ne $configurationText) { throw 'The active compile queue uses different Toolchain/CMakePath/CompilerPath/BuildDirectory/ModuleSourceDirectory/Publish/Reload/TargetPid/PackageDirectory. Wait for it to finish before changing these parameters.' }
     } else { [IO.File]::WriteAllText($configurationFile,$configurationText,[Text.UTF8Encoding]::new($false)) }
     [IO.File]::WriteAllText((Join-Path $queue "pending/$requestId.json"),($request | ConvertTo-Json -Depth 8),[Text.UTF8Encoding]::new($false))
 } finally { $stateMutex.ReleaseMutex() }
@@ -79,6 +81,7 @@ try {
                 $options = @{
                     Toolchain=$Toolchain; CMakePath=$configuration.CMakePath; CompilerPath=$configuration.CompilerPath
                     BuildDirectory=$configuration.BuildDirectory; PackageDirectory=$configuration.PackageDirectory
+                    ModuleSourceDirectory=$configuration.ModuleSourceDirectory
                     Publish=[bool]$Publish; Reload=[bool]$Reload; TargetPid=$TargetPid; BatchId=$batchId
                 }
                 if (!$fullGraph) { $options.Module=$modules }
@@ -89,7 +92,7 @@ try {
                 $failure | Out-File -LiteralPath $log -Append -Encoding utf8
             } finally { Remove-Item Env:UWCN_COMPILE_BATCH }
             foreach ($entry in $requests) {
-                $result = [ordered]@{ RequestId=$entry.RequestId; BatchId=$batchId; Success=$success; Error=$failure; Modules=$modules; FullGraph=$fullGraph; Log=$log; PublishRequested=[bool]$Publish; ReloadRequested=[bool]$Reload; TargetPid=$TargetPid; CompletedAt=[DateTimeOffset]::UtcNow.ToString('o') }
+                $result = [ordered]@{ RequestId=$entry.RequestId; BatchId=$batchId; Success=$success; Error=$failure; Modules=$modules; FullGraph=$fullGraph; ModuleSourceDirectory=$configuration.ModuleSourceDirectory; Log=$log; PublishRequested=[bool]$Publish; ReloadRequested=[bool]$Reload; TargetPid=$TargetPid; CompletedAt=[DateTimeOffset]::UtcNow.ToString('o') }
                 $resultPath=Join-Path $queue "results/$($entry.RequestId).json"
                 $resultTemporary="$resultPath.tmp"
                 [IO.File]::WriteAllText($resultTemporary,($result | ConvertTo-Json -Depth 8),[Text.UTF8Encoding]::new($false))

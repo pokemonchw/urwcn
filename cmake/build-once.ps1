@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string[]]$Module,[string]$Toolchain,[string]$CMakePath,[string]$CompilerPath,[string]$BuildDirectory,
+    [string[]]$Module,[string]$Toolchain,[string]$CMakePath,[string]$CompilerPath,[string]$BuildDirectory,[string]$ModuleSourceDirectory,
     [switch]$Publish,[switch]$Reload,[int[]]$TargetPid = 0,[string]$PackageDirectory,[string]$BatchId
 )
 $ErrorActionPreference = 'Stop'
@@ -12,7 +12,8 @@ $oldPath = $env:PATH
 $env:PATH = $compilerDirectory + [IO.Path]::PathSeparator + $oldPath
 try {
     $generator = if ($Toolchain -eq 'Linux') { 'Unix Makefiles' } else { 'MinGW Makefiles' }
-    & $CMakePath -S $projectRoot -B $BuildDirectory -G $generator "-DCMAKE_CXX_COMPILER=$CompilerPath" "-DCMAKE_MAKE_PROGRAM=$makePath" '-DCMAKE_BUILD_TYPE=Release'
+    $moduleSourceCMake = $ModuleSourceDirectory.Replace('\','/')
+    & $CMakePath -S $projectRoot -B $BuildDirectory -G $generator "-DCMAKE_CXX_COMPILER=$CompilerPath" "-DCMAKE_MAKE_PROGRAM=$makePath" "-DUWCN_MODULE_SOURCE_ROOT:PATH=$moduleSourceCMake" '-DCMAKE_BUILD_TYPE=Release'
     if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed with exit code $LASTEXITCODE" }
     $buildArguments = @('--build',$BuildDirectory,'--parallel')
     if ($Module) { $buildArguments += '--target'; $buildArguments += @($Module | ForEach-Object { "uwcn_$_" }) }

@@ -16,13 +16,15 @@ add_library(uwcn_loader SHARED src/linux/host.cpp src/linux/control.cpp src/linu
 set_target_properties(uwcn_loader PROPERTIES PREFIX "" SUFFIX ".dll")
 target_link_libraries(uwcn_loader PRIVATE ${CMAKE_DL_LIBS} OpenSSL::Crypto pthread)
 foreach(module IN ITEMS catalog semantic layout render)
-  file(GLOB_RECURSE module_sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/modules/${module}/*.cpp")
+  file(GLOB_RECURSE module_sources CONFIGURE_DEPENDS "${UWCN_MODULE_SOURCE_ROOT}/modules/${module}/*.cpp")
   add_library(uwcn_${module} MODULE ${module_sources})
 endforeach()
-add_library(uwcn_main_menu MODULE src/linux/main_menu.cpp)
-add_library(uwcn_adapter MODULE src/linux/adapter.cpp src/linux/native_targets.cpp src/linux/redraw.S
-  modules/adapter/scoped_api.cpp modules/adapter/native_raster.cpp)
+add_library(uwcn_main_menu MODULE "${UWCN_MODULE_SOURCE_ROOT}/src/linux/main_menu.cpp")
+add_library(uwcn_adapter MODULE "${UWCN_MODULE_SOURCE_ROOT}/src/linux/adapter.cpp"
+  "${UWCN_MODULE_SOURCE_ROOT}/src/linux/native_targets.cpp" "${UWCN_MODULE_SOURCE_ROOT}/src/linux/redraw.S"
+  "${UWCN_MODULE_SOURCE_ROOT}/modules/adapter/scoped_api.cpp" "${UWCN_MODULE_SOURCE_ROOT}/modules/adapter/native_raster.cpp")
 foreach(module IN ITEMS catalog semantic layout render main_menu adapter)
+  target_include_directories(uwcn_${module} BEFORE PRIVATE "${UWCN_MODULE_SOURCE_ROOT}" "${UWCN_MODULE_SOURCE_ROOT}/sdk")
   set_target_properties(uwcn_${module} PROPERTIES PREFIX "" SUFFIX ".dll")
   target_compile_options(uwcn_${module} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-fno-gnu-unique> -fvisibility=hidden)
 endforeach()

@@ -6,6 +6,7 @@ param(
     [string]$CMakePath,
     [string]$CompilerPath,
     [string]$BuildDirectory,
+    [string]$ModuleSourceDirectory,
     [switch]$Publish,
     [switch]$Reload,
     [int[]]$TargetPid = 0,
