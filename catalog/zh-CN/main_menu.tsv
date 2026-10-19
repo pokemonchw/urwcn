@@ -51,6 +51,11 @@ farewell.earth	热爱大地。它每天都在你的脚下，从未远离。
 farewell.spirit	亘古不息的生命力，在你我心中呼吸——别让它窒息。
 farewell.courage	勇敢倾听心声，追随灵魂，去看，去感受……就从此刻开始。
 farewell.press_key	按任意键继续
+creation.complete_title	角色创建完成。
+creation.complete_enter	{value}即将踏入不真实的世界。
+creation.complete_proverb	“世事总会教人些什么，至少也会教人慢慢走。”
+creation.complete_source	——芬兰谚语
+creation.complete_press_key	按任意键继续
 world_generation.title	随机世界生成
 world_generation.zoom_in	放大
 world_generation.zoom_out	缩小

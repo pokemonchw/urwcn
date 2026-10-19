@@ -251,6 +251,15 @@
     "behavior": "display only; native menu/about/credits/setup redraw; current intro sequence retains its entry language",
     "state": "HDA4: seven u32 language/input/setup/name flags; reads previously published HDA2/HDA3; Windows Host ABI 1 unchanged"
   },
+  "character_creation_complete": {
+    "function_rva": "0x12F80",
+    "text_calls_rva": ["0x131D7", "0x13264", "0x132EB", "0x13320"],
+    "button_call_rva": "0x13334",
+    "native_consumers": "10E910 centered complete text and 114680 plain button; native font metrics, glyph advance, target pixels and caches",
+    "identity": "Display-only name plus culture; UTF-8/Nordic name preserved, culture ID at A32A6F5 uses the existing ten-culture vocabulary. Native sprintf buffers and English player data are unchanged.",
+    "refresh": "Unhooked 1333C -> D3C80 keeps caller return 13341; existing D3D05 before-input call rebuilds pending page in a fresh 12F80 frame: 12F96 -> 13187, D3CDC -> D3D0F, 13341 -> 133C1. No character generation, saves or post-wait business is replayed.",
+    "evidence": ["docs/evidence/20261019-character-creation-complete-native.md", "docs/evidence/creation-complete-disassembly.txt", "docs/evidence/creation-complete-ghidra.c"]
+  },
   "linux_progress_sync": {
     "source_commit": "70fcd90",
     "target": "Windows x86 PE e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9",

@@ -12,9 +12,10 @@ enum CreationHook : u32 {
     creation_course_entry,creation_course_exit,creation_footer_rng,
     creation_world_entry,creation_world_after_title,creation_world_after_map,
     creation_world_exit,creation_world_format_first=0xA170,
-    creation_world_number_first=0xA180,creation_footer_first=0xA190
+    creation_world_number_first=0xA180,creation_footer_first=0xA190,
+    creation_complete_enter=0xA1A0,creation_complete_entry,creation_complete_exit
 };
-enum class CreationKind { text,panel,words,button,center,format };
+enum class CreationKind { text,panel,words,button,plain_button,center,format };
 struct CreationTextCall {
     u32 site,target,count,argument;
     TextComponent component;
@@ -63,7 +64,11 @@ constexpr CreationTextCall creation_text_calls[]{
     {0xE70FC,0x10E5A0,3,0,TextComponent::farewell_earth,nullptr,CreationKind::text},
     {0xE712F,0x10E5A0,3,0,TextComponent::farewell_spirit,nullptr,CreationKind::text},
     {0xE7162,0x10E5A0,3,0,TextComponent::farewell_courage,nullptr,CreationKind::text},
-    {0xE7179,0x114680,1,0,TextComponent::farewell_press_key,nullptr,CreationKind::button}
+    {0xE7179,0x114680,1,0,TextComponent::farewell_press_key,nullptr,CreationKind::plain_button},
+    {0x131D7,0x10E910,4,1,TextComponent::creation_complete_title,nullptr,CreationKind::center},
+    {0x132EB,0x10E910,4,1,TextComponent::creation_complete_proverb,nullptr,CreationKind::center},
+    {0x13320,0x10E910,4,1,TextComponent::creation_complete_source,nullptr,CreationKind::center},
+    {0x13334,0x114680,1,0,TextComponent::creation_complete_press_key,nullptr,CreationKind::plain_button}
 };
 constexpr u32 creation_paragraph_calls[]{0x10B0B,0x10E34,0x10EA7,0x10F24};
 constexpr const char* creation_story_titles[]{
@@ -79,6 +84,7 @@ bool creation_select_pending=true,creation_confirmation_pending=true,creation_co
 bool creation_select_redrawing{},creation_confirmation_redrawing{},creation_course_redrawing{};
 bool creation_world_pending=true,creation_world_redrawing{};
 u32 creation_world_legend{};
+bool creation_complete_pending=true,creation_complete_redrawing{};
 
 // Transport delimiters feed the existing 5000 x 130-byte native word table.
 // These are character tokens, not display lines; 10EB40 decides every wrap.
@@ -100,20 +106,58 @@ Status creation_lend(const NativeEvent& e,TextComponent component,const char* ke
     auto status=translate(component,original,key,encoded);
     if(status!=Status::ok) return status;
     if(kind==CreationKind::words && chinese_enabled) creation_words(encoded);
-    if(kind==CreationKind::button && component!=TextComponent::farewell_press_key && chinese_enabled) {
+    if(kind==CreationKind::button && chinese_enabled) {
         const auto* suffix=std::strchr(original,'.');
         if(suffix) encoded.insert(encoded.begin(),original,suffix+1);
         else encoded.insert(encoded.begin(),original,original+3); // confirmed <Y>/<N>
     }
     const auto scope=kind==CreationKind::panel ? Scope::scenario_panel :
         (kind==CreationKind::words || kind==CreationKind::format) ? Scope::allocation : kind==CreationKind::center ? Scope::hud_centered :
-        kind==CreationKind::button ? (component==TextComponent::farewell_press_key ? Scope::plain_button : Scope::creation_button) : Scope::text;
+        kind==CreationKind::button ? Scope::creation_button : kind==CreationKind::plain_button ? Scope::plain_button : Scope::text;
     const auto outline=kind==CreationKind::text ? e.arguments[2] : kind==CreationKind::center ? e.arguments[3] :
-        kind==CreationKind::button && component!=TextComponent::farewell_press_key ? *at<u32>(0x5F54A9C) : 0;
+        kind==CreationKind::button ? *at<u32>(0x5F54A9C) : 0;
     return lend_text(e,encoded,destination,scope,outline);
 }
 void invalidate_windows_creation() {
     creation_select_pending=creation_confirmation_pending=creation_course_pending=creation_world_pending=true;
+    creation_complete_pending=true;
+}
+Status creation_complete_rebuild() {
+    auto status=native_targets::promote();
+    if(status!=Status::ok) return status;
+    creation_complete_redrawing=true;
+    // Keep 12F80's native stack frame; enter only its completed-page drawing.
+    // D3CDC returns before input, and 13341 goes straight to the epilogue.
+    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x12F80)();
+    creation_complete_redrawing=false;
+    creation_complete_pending=false;
+    return Status::ok;
+}
+Status creation_complete_identity(const NativeEvent& e) {
+    std::vector<char> encoded;
+    if(!chinese_enabled) {
+        const auto status=native_name_input::display(ptr<char>(e.arguments[1]),encoded);
+        if(status!=Status::ok) return status;
+    } else {
+        // 1321E builds Plr.name + Plr.inhabitant only for this display line.
+        // Use the same name and the confirmed Plr.culture ID, without writing
+        // either the native English identity or its formatted scratch buffer.
+        auto status=native_name_input::display(at<char>(0xA32A6E8),encoded);
+        if(status!=Status::ok) return status;
+        std::vector<char> name,culture,culture_utf8;
+        status=codec(layout_op::decode_native,encoded.data(),name);
+        if(status!=Status::ok) return status;
+        const auto component=static_cast<TextComponent>(static_cast<u32>(TextComponent::profile_culture_0)+
+            *at<unsigned char>(0xA32A6F5));
+        status=translate(component,at<char>(0xA32A6F6),nullptr,culture);
+        if(status!=Status::ok) return status;
+        status=codec(layout_op::decode_native,culture.data(),culture_utf8);
+        if(status!=Status::ok) return status;
+        const auto identity=std::string(name.data())+" "+culture_utf8.data();
+        status=translate(TextComponent::creation_complete_enter,ptr<char>(e.arguments[1]),identity.c_str(),encoded);
+        if(status!=Status::ok) return status;
+    }
+    return lend_text(e,encoded,e.arguments[1],Scope::hud_centered,e.arguments[3]);
 }
 Status creation_rebuild(u32 page) {
     auto status=native_targets::promote();
@@ -140,6 +184,8 @@ Status creation_rebuild(u32 page) {
     return refresh_menu_cache();
 }
 Status windows_creation_input(const NativeEvent& e) {
+    if(creation_complete_pending && e.id==about_input_tick && e.phase==NativePhase::before &&
+        *ptr<u32>(e.frame->ebp+4)==host->image_base+0x13341) return creation_complete_rebuild();
     if(creation_select_pending && native_language_redraw::menu_input(e,0x10B89)) return creation_rebuild(0);
     if(creation_confirmation_pending && native_language_redraw::menu_input(e,0x1077E)) return creation_rebuild(1);
     if(creation_course_pending && native_language_redraw::menu_input(e,0x110C5)) return creation_rebuild(2);
@@ -159,6 +205,7 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
             const auto status=creation_rebuild(3);
             if(status!=Status::ok) return status;
         }
+        if(field.component==TextComponent::creation_complete_title) creation_complete_pending=false;
         auto& destination=field.kind==CreationKind::words ? e.frame->edx : e.arguments[field.argument];
         return creation_lend(e,field.component,field.key,destination,field.kind);
     }
@@ -170,6 +217,16 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
         begin(e,Scope::profile_footer);return Status::ok;
     }
     switch(e.id) {
+    case creation_complete_enter:return creation_complete_identity(e);
+    case creation_complete_entry:
+        if(creation_complete_redrawing) result.resume_rva=0x13187;
+        return Status::ok;
+    case creation_complete_exit:
+        if(creation_complete_redrawing) result.resume_rva=0x133C1;
+        return Status::ok;
+    case scenario_redraw_wait:
+        if(creation_complete_redrawing) {result.resume_rva=0xD3D0F;return Status::ok;}
+        break;
     case scenario_story_scope: case creation_preview: {
         scenario_refresh_pending=false;
         auto* story=static_cast<CreationStory*>(host->allocate(sizeof(CreationStory)));
@@ -293,6 +350,11 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
     handled=false;return Status::ok;
 }
 void append_windows_creation_hooks(std::vector<HookSpec>& hooks) {
+    hooks.push_back(call(creation_complete_enter,0x13264,0x10E910,4));
+    auto complete_entry=inline_hook(creation_complete_entry,0x12F96,{0x89,0x0D,0,0,0,0});
+    const u32 complete_state=address(at<void>(0x217ABC));
+    std::memcpy(complete_entry.expected+2,&complete_state,4);hooks.push_back(complete_entry);
+    hooks.push_back(inline_hook(creation_complete_exit,0x13341,{0x33,0xC0,0x0F,0x1F,0x40,0x00}));
     for(u32 i=0;i<std::size(creation_text_calls);++i) {
         const auto& field=creation_text_calls[i];hooks.push_back(call(creation_text_first+i,field.site,field.target,field.count));
     }

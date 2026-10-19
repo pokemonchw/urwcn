@@ -41,6 +41,11 @@ const char* key(TextComponent component) {
     case TextComponent::farewell_spirit:return "farewell.spirit";
     case TextComponent::farewell_courage:return "farewell.courage";
     case TextComponent::farewell_press_key:return "farewell.press_key";
+    case TextComponent::creation_complete_title:return "creation.complete_title";
+    case TextComponent::creation_complete_enter:return "creation.complete_enter";
+    case TextComponent::creation_complete_proverb:return "creation.complete_proverb";
+    case TextComponent::creation_complete_source:return "creation.complete_source";
+    case TextComponent::creation_complete_press_key:return "creation.complete_press_key";
     case TextComponent::credits_title:return "credits.title";
     case TextComponent::credits_introduction_1:return "credits.introduction_1";
     case TextComponent::credits_introduction_2:return "credits.introduction_2";
@@ -235,6 +240,7 @@ bool has_value(TextComponent component) {
            component==TextComponent::ancestors_page || component==TextComponent::ancestors_lived ||
            component==TextComponent::ancestors_journeyed ||
            component==TextComponent::profile_start_age ||
+           component==TextComponent::creation_complete_enter ||
            component==TextComponent::startup_audio || component==TextComponent::startup_audio_failed ||
            is_setup_value(component);
 }
@@ -253,6 +259,9 @@ Status UWCN_CALL initialize(const HostApi* host) {
                        TextComponent::farewell_fish,TextComponent::farewell_money,TextComponent::farewell_source,
                        TextComponent::farewell_dedication,TextComponent::farewell_earth,TextComponent::farewell_spirit,
                        TextComponent::farewell_courage,TextComponent::farewell_press_key,
+                       TextComponent::creation_complete_title,TextComponent::creation_complete_enter,
+                       TextComponent::creation_complete_proverb,TextComponent::creation_complete_source,
+                       TextComponent::creation_complete_press_key,
                        TextComponent::credits_title,TextComponent::credits_introduction_1,
                        TextComponent::credits_introduction_2,TextComponent::credits_alexander,
                        TextComponent::credits_andrew,TextComponent::credits_artemis,TextComponent::credits_artemiy,
