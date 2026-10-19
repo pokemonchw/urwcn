@@ -106,7 +106,8 @@
     "docs/evidence/20261019-season-portrait-native.md",
     "docs/evidence/20261019-attribute-confirmation-native.md",
     "docs/evidence/20261019-spells-native.md",
-    "docs/evidence/20261019-skills-native.md"
+    "docs/evidence/20261019-skills-native.md",
+    "docs/evidence/20261019-skills-confirmation-native.md"
   ],
   "spells": {
     "owner": "MagicProfile 0x106b40; CompileMagicSubscreen 0x106710 and CompileInfoboxRitualList 0x106a00 own their target textures and reconstruction.",
@@ -176,6 +177,8 @@
     "mastery": "0x107bc9 -> __sprintf_chk translates the already selected taitoteksti_perus descriptor, retaining its (%s) format and all native level thresholds. All 11 descriptors are covered; percentages, meter bars and aptitude stars remain native.",
     "help": "0x10856a/0x1087ab preserve source help reads, then rebuild the same native word table with complete GENERAL/INITIAL Chinese guidance. 0x13ef3d removes only the visible Western space appended to encoded Chinese words; existing native paragraph width and cursor extensions retain wrapping and line height.",
     "options": "0x1e647 remaining-points label; 0x1e6a5/0x1e790 borrow translated paragraphs with original SKILLIMPROVE_onetime/decok values; 0x1e723/0x1e739 translate button suffixes. No point accounting, improvement limits or input actions change.",
+    "confirmation": "option_points 0x1e9f0: 0x1eab8 -> LIST_Reset borrows the Chinese title, preserving all seven native arguments including mode 6; 0x1eacb/0x1eae6/0x1eb01 -> LIST_Entry copy the Chinese question and original Y./N. prefixes plus translated labels into native display records. Original actions, blank rows, default N selection, undo and point accounting remain native.",
+    "confirmation_refresh": "The confirmation list consumes language at native construction. LIST_Draw -> Piirra_Ikkuna has transparent background branches that do not erase existing text. No immediate toggle or hot-load reconstruction is added; option_points and TaitoRuutu are never re-entered for refresh because they own skill changes and input waits.",
     "footer": "0x1084cb scopes existing GameInfo_Hotspot preview consumers for title, summary and F1. All 29 native skill topics receive summaries; AXE has no original GAME.NFO topic, and the native no-topic branch is preserved.",
     "density_and_refresh": "Glyphs are rasterized synchronously into the existing density-aware native screen. Native caches retain their pixels; this change does not re-enter TaitoRuutu or replay a page on hot load. Existing cached rows and help await native construction; full immediate redraw remains unconfirmed."
   }

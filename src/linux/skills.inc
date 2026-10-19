@@ -1,4 +1,4 @@
-// Linux 3.89 TaitoRuutu / NaytaOptioRuutu display boundaries.
+// Linux 3.89 TaitoRuutu / NaytaOptioRuutu / option_points display boundaries.
 // Native skill records, option accounting, actions and UI geometry stay native.
 std::string skills_text(const std::string& key) {
     return translated(C::skills_text,"",key.c_str());
@@ -7,6 +7,7 @@ struct SkillsBinding {
     u32 site,target;
     const char* key;
     unsigned argument,arguments=6;
+    bool key_suffix=false;
 };
 const SkillsBinding skills_bindings[]{
     {0x107ea8,0x1224c0,"title",0},
@@ -15,8 +16,14 @@ const SkillsBinding skills_bindings[]{
     {0x10808f,0x1471a0,"physical",4,7},
     {0x1081aa,0x1471a0,"combat",4,7},
     {0x1e647,0x13e8b0,"remaining",2},
-    {0x1e723,0x144fb0,"improve",2},
-    {0x1e739,0x144fb0,"degrade",2},
+    {0x1e723,0x144fb0,"improve",2,6,true},
+    {0x1e739,0x144fb0,"degrade",2,6,true},
+    // option_points builds a native mode-6 list. LIST_Reset/Entry copy
+    // these display arguments; original Y/N actions and blank rows stay native.
+    {0x1eab8,0xf4af0,"confirm.title",1,7},
+    {0x1eacb,0xf4d00,"confirm.question",1},
+    {0x1eae6,0xf4d00,"confirm.yes",1,6,true},
+    {0x1eb01,0xf4d00,"confirm.no",1,6,true},
 };
 void skills_bound(Frame& frame) {
     const auto site=frame.resume-host->image_base-5;
@@ -26,8 +33,8 @@ void skills_bound(Frame& frame) {
     std::string display;
     if(chinese) {
         display=skills_text(binding->key);
-        if(binding->target==0x144fb0) {
-            const auto* original=reinterpret_cast<const char*>(frame.rdx);
+        if(binding->key_suffix) {
+            const auto* original=reinterpret_cast<const char*>(argument(frame,binding->argument));
             display=std::string(original,std::strchr(original,'.')-original+1)+display;
         }
         argument(arguments,binding->argument)=reinterpret_cast<std::uintptr_t>(display.c_str());

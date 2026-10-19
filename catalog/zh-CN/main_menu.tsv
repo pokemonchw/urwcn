@@ -38,6 +38,10 @@ skills.combat	战斗技能
 skills.remaining	剩余分配点数：
 skills.improve	提升
 skills.degrade	降低
+skills.confirm.title	分配点数已用完
+skills.confirm.question	你对这样的分配满意吗？
+skills.confirm.yes	是。
+skills.confirm.no	否，撤销上次分配并返回。
 skills.help.initial	你的角色从所属文化与家庭中习得了以下技能，现在可以进一步调整。你有若干分配点数，可用于偏好的技能。请在列表中选中技能，按[+]提升，或按[-]降低。<br><br>技能进度条中的深色部分（若有）表示初始熟练度。<br><br>学习和发展技能的天赋以星号<lightgray>*</lightgray>表示。它由身体与精神属性决定，并影响每次技能提升的幅度。
 skills.help.general	在列表中选择一项技能即可使用。<br><br>在游戏主界面，同时按[ALT]+[技能快捷键a-z]可快速使用技能。<br><br>当天有所提升的技能标有<green>+</green>。<br><br>技能进度条中的深色部分（若有）表示原始熟练度。<br><br>学习和发展技能的天赋以星号<lightgray>*</lightgray>表示。它由身体与精神属性决定，并影响技能提升的速度。
 skills.limit.improve	最多可在初始水平上提升<green>{value}</green>级。<br>
