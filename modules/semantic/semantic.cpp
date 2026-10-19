@@ -98,6 +98,13 @@ const char* key(TextComponent component) {
     case TextComponent::profile_heading:return "profile.heading";
     case TextComponent::profile_culture_title:return "profile.culture_title";
     case TextComponent::profile_sex_title:return "profile.sex_title";
+    case TextComponent::profile_season_title:return "profile.season_title";
+    case TextComponent::profile_season_spring:return "profile.season_spring";
+    case TextComponent::profile_season_summer:return "profile.season_summer";
+    case TextComponent::profile_season_autumn:return "profile.season_autumn";
+    case TextComponent::profile_season_winter:return "profile.season_winter";
+    case TextComponent::profile_season_help:return "profile.season_help";
+    case TextComponent::profile_portrait_help:return "profile.portrait_help";
     case TextComponent::profile_name_title:return "profile.name_title";
     case TextComponent::profile_random:return "profile.random";
     case TextComponent::profile_cultures:return "profile.cultures";

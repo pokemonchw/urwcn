@@ -25,7 +25,7 @@ using linux_host::Frame;
 const HostApi* host;
 const linux_host::Hooks* hooks;
 bool chinese=true;
-enum class Scope { none,main_menu,creation,culture,sex,load_saved,ancestors,setup,encyclopedia };
+enum class Scope { none,main_menu,creation,culture,sex,season,load_saved,ancestors,setup,encyclopedia };
 Scope scope=Scope::none;
 bool intro_active;
 bool intro_chinese;
@@ -261,6 +261,8 @@ const Binding bindings[]{
     {0x1e371,0x1afe00,C::profile_name_help,1},
     {0x1e39a,0x1afe00,C::profile_name_help_repeat,1},
     {0x1bca5,0x1afe00,C::profile_sex_help,1},
+    {0x1c314,0x1afe00,C::profile_season_help,1},
+    {0x1efa9,0x1afe00,C::profile_portrait_help,1},
     {0x1056ee,0x13b460,C::ancestors_order_label,0},
     {0x10570c,0x13e8b0,C::ancestors_order_label,2},
     {0x105aec,0x13e8b0,C::ancestors_empty,2},
@@ -386,6 +388,7 @@ void menu_draw(Frame& frame) {
     else if(site==0x15d0e1) scope=Scope::creation;
     else if(site==0x1c000) scope=Scope::culture;
     else if(site==0x1bd1e || site==0x1bd58) scope=Scope::sex;
+    else if(site==0x1c3c1) scope=Scope::season;
     frame.rax=call(frame,0xf5570);
     scope=previous;
 }
@@ -402,9 +405,9 @@ void menu_text(Frame& frame) {
 void menu_title(Frame& frame) {
     Frame arguments=frame;
     std::string encoded;
-    if(chinese && (scope==Scope::load_saved || scope==Scope::creation || scope==Scope::culture || scope==Scope::sex)) {
+    if(chinese && (scope==Scope::load_saved || scope==Scope::creation || scope==Scope::culture || scope==Scope::sex || scope==Scope::season)) {
         const auto component=scope==Scope::load_saved ? C::load_saved_title : scope==Scope::creation ? C::character_creation_title :
-            scope==Scope::culture ? C::profile_culture_title : C::profile_sex_title;
+            scope==Scope::culture ? C::profile_culture_title : scope==Scope::season ? C::profile_season_title : C::profile_sex_title;
         encoded=translated(component,reinterpret_cast<const char*>(frame.r8));
         arguments.r8=reinterpret_cast<std::uintptr_t>(encoded.c_str());
     }
@@ -414,7 +417,7 @@ void menu_button(Frame& frame) {
     Frame arguments=frame;
     const auto* original=reinterpret_cast<const char*>(frame.rdx);
     std::string encoded;
-    if(chinese && (scope==Scope::creation || scope==Scope::culture || scope==Scope::sex || scope==Scope::setup)) {
+    if(chinese && (scope==Scope::creation || scope==Scope::culture || scope==Scope::sex || scope==Scope::season || scope==Scope::setup)) {
         C component{};
         const auto row=(frame.rdx-(host->image_base+0x663f120))/0xe8;
         const auto action=*reinterpret_cast<const int*>(host->image_base+0x663f120+row*0xe8+0xc8);
@@ -432,6 +435,14 @@ void menu_button(Frame& frame) {
             else if(action=='R') component=C::profile_random;
             else if(action=='?') component=C::profile_cultures;
             else if(action==27) component=C::profile_back;
+        } else if(scope==Scope::season) {
+            switch(action) {
+            case '1':component=C::profile_season_spring;break;
+            case '2':component=C::profile_season_summer;break;
+            case '3':component=C::profile_season_autumn;break;
+            case '4':component=C::profile_season_winter;break;
+            case 27:component=C::profile_back;break;
+            }
         } else {
             switch(action) {
             case 'M':component=C::profile_male;break;
@@ -639,7 +650,7 @@ void ancestor_summary(Frame& frame) {
 struct MenuInput { u32 site; Scope scope; };
 const MenuInput menu_inputs[]{
     {0x15cf85,Scope::main_menu},{0x15d0e6,Scope::creation},
-    {0x1c07c,Scope::culture},{0x1bd2c,Scope::sex}
+    {0x1c07c,Scope::culture},{0x1bd2c,Scope::sex},{0x1c3c6,Scope::season}
 };
 void menu_input(Frame& frame) {
     const auto previous=scope;
@@ -696,7 +707,7 @@ void redraw_language() {
     if(scope==Scope::main_menu) {
         rebuild_main_menu();
         native<void (*)()>(0x13fe50)();
-    } else if(scope==Scope::creation || scope==Scope::culture || scope==Scope::sex) {
+    } else if(scope==Scope::creation || scope==Scope::culture || scope==Scope::sex || scope==Scope::season) {
         redraw_list();
         native<void (*)()>(0x13fe50)();
     }
@@ -749,7 +760,7 @@ Status initialize(const HostApi* api) {
     hooks->instruction(0x145286,9,button_advance);
     hooks->instruction(0x127d7c,6,sink_width);
     for(const auto& binding:bindings) hooks->instruction(binding.site,5,bound);
-    for(auto site:{0x15cf80u,0x12ec3eu,0x15b065u,0x15b187u,0x15d0e1u,0x1c000u,0x1bd1eu,0x1bd58u}) hooks->instruction(site,5,menu_draw);
+    for(auto site:{0x15cf80u,0x12ec3eu,0x15b065u,0x15b187u,0x15d0e1u,0x1c000u,0x1bd1eu,0x1bd58u,0x1c3c1u}) hooks->instruction(site,5,menu_draw);
     hooks->instruction(0xf572f,5,menu_text);
     hooks->instruction(0xf5617,5,menu_title);
     hooks->instruction(0xf57d4,5,menu_button);

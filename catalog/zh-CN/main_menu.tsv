@@ -88,6 +88,13 @@ scenario.village_advice_3	 也有一处 安全的归所。）
 profile.heading	新角色即将踏入 UnReal World……
 profile.culture_title	选择文化
 profile.sex_title	选择性别
+profile.season_title	选择季节
+profile.season_spring	春季
+profile.season_summer	夏季
+profile.season_autumn	秋季
+profile.season_winter	冬季
+profile.season_help	请选择开始游戏的季节。夏季开局最容易，冬季最困难。
+profile.portrait_help	请为你的角色选择一幅肖像。
 profile.name_title	角色姓名
 profile.random	随机
 profile.cultures	文化介绍

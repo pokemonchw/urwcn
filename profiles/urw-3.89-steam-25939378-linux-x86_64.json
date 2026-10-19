@@ -49,7 +49,7 @@
     "list_entry_stride": "0xe8",
     "list_entry_action": "0xc8"
   },
-  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 17 culture encyclopedia topics, culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers. All eleven farewell fields at endgame's native panel, showtext, centext and button calls.",
+  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name/season and portrait help, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 17 culture encyclopedia topics, culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers. All eleven farewell fields at endgame's native panel, showtext, centext and button calls.",
   "ownership": "Native UI retains layout, wrapping, centering, controls, input, hit testing, background, caching and animation. Chinese glyphs draw synchronously inside native text leaves; no pixel tracking or text replay.",
   "language_redraw": {
     "main_menu": "Shift+F10 rebuilds the native background/footer fragment 0x15ceeb..0x15cf44, peli_info at 0x15cbe0, LIST_Draw, MENUBUFFER and current selection before Flip. MakeStartList and LIST_Reset are not re-entered; original entries and selection remain native.",
@@ -90,8 +90,15 @@
     "docs/evidence/20261019-linux-language-residue.md",
     "docs/evidence/20261019-culture-info-native.md",
     "docs/evidence/20261019-farewell-native.md",
-    "docs/evidence/20261019-linux-chinese-input.md"
+    "docs/evidence/20261019-linux-chinese-input.md",
+    "docs/evidence/20261019-season-portrait-native.md"
   ],
+  "character_season_and_portrait": {
+    "season_menu": "choose_month at 0x1c300: 0x1c3c1 -> LIST_Draw and 0x1c3c6 -> LIST_Go establish the season scope. Shared title 0xf5617 and button 0xf57d4 consumers borrow Chinese; actions 1/2/3/4/ESC and internal English records remain native.",
+    "help": "0x1c314 and 0x1efa9 -> SANATAULUKKO_Lisaa(1, text): starting-season guidance and portrait-selection prompt. Existing paragraph width, cursor and glyph extensions consume the full encoded strings.",
+    "language": "Shift+F10 rebuilds the active season list through native LIST_Draw, MENUBUFFER and highlight. Footer prompts retain their construction language until the next native construction; crtplr_info is not replayed because it consumes RNG. Previously completed panels retain native pixels.",
+    "ownership": "Native menu mode 8, button prefixes, blank separator, selection geometry, mouse hit areas, portrait navigation and original season effects remain unchanged. Synchronous glyphs use the established native screen density."
+  },
   "farewell": {
     "page": "endgame at 0x10e790, called from main at 0xa8f0",
     "fields": 11,
