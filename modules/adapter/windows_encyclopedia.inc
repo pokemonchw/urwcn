@@ -118,9 +118,42 @@ std::string windows_culture_display(const char* input) {
     }
     return result;
 }
-Status windows_culture_width(const char* input,render::Metrics& measured) {
-    const auto display=windows_culture_display(input);
-    return metrics(display.c_str(),measured);
+std::string windows_encyclopedia_tokens(const char* input) {
+    std::string words;
+    for(auto* p=reinterpret_cast<const unsigned char*>(input);*p;) {
+        if(windows_encyclopedia_scalar(p)) {
+            if(!words.empty()&&words.back()!=' '&&words.back()!='>')words+=' ';
+            words.append(reinterpret_cast<const char*>(p),2);words+=' ';p+=2;
+        }else if(*p==' ') {
+            if(!words.empty()&&words.back()!=' '&&words.back()!='>')words+=' ';
+            ++p;
+        }else words.push_back(*p++);
+    }
+    return words;
+}
+Status windows_culture_width(const char* input,std::int32_t& width) {
+    // 3DBA1 -> 10E700 advances once per native token. Prefixes and lookahead
+    // must add those same rounded advances, rather than round a merged string.
+    // Native topic labels (including names containing spaces) remain one unit.
+    width=0;
+    const auto whole=windows_encyclopedia_words.find(input);
+    if(whole!=windows_encyclopedia_words.end()) {
+        render::Metrics measured{};
+        const auto status=metrics(whole->second.c_str(),measured);
+        width=measured.logical_width;return status;
+    }
+    for(const char* p=input;*p;) {
+        if(*p==' ') { ++p;continue; }
+        const auto* start=p;
+        if(windows_encyclopedia_scalar(reinterpret_cast<const unsigned char*>(p)))p+=2;
+        else while(*p&&*p!=' '&&!windows_encyclopedia_scalar(reinterpret_cast<const unsigned char*>(p)))++p;
+        const auto display=windows_culture_display(std::string(start,p-start).c_str());
+        render::Metrics measured{};
+        const auto status=metrics(display.c_str(),measured);
+        if(status!=Status::ok)return status;
+        width+=measured.logical_width;
+    }
+    return Status::ok;
 }
 Status windows_culture_lend(const NativeEvent& e,const std::string& key,u32& destination,Scope scope) {
     if(!chinese_enabled)return Status::ok;
@@ -321,7 +354,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
     case we_body:return windows_encyclopedia_body(e,result);
     case we_tokenize:
         if(windows_encyclopedia_line) {
-            const auto words=native_paragraph_words(ptr<char>(e.frame->edx));
+            const auto words=windows_encyclopedia_tokens(ptr<char>(e.frame->edx));
             std::vector<char> encoded(words.begin(),words.end());encoded.push_back(0);
             return lend_text(e,encoded,e.frame->edx,Scope::allocation);
         }
@@ -342,14 +375,14 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         return Status::ok;
     case we_word_fit:case we_pair_fit:
         if(windows_encyclopedia_line) {
-            render::Metrics measured{};
+            std::int32_t measured{};
             const auto status=windows_culture_width(ptr<char>(e.frame->ebp-(e.id==we_word_fit?0x598:0xB90)),measured);
             if(status!=Status::ok)return status;
             if(e.id==we_pair_fit) {
                 e.frame->esi=*at<u32>(0xA1C1CB4);
                 e.frame->ecx-=e.frame->edx;
             }
-            e.frame->eax=(e.id==we_word_fit?e.frame->eax:e.frame->esi)+static_cast<u32>(measured.logical_width);
+            e.frame->eax=(e.id==we_word_fit?e.frame->eax:e.frame->esi)+static_cast<u32>(measured);
             if(e.id==we_word_fit) { e.frame->ecx=address(at<char>(0x19416C));result.skip_original=1; }
             else result.skip_original=1;
         }
@@ -359,7 +392,10 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         if(windows_encyclopedia_line) { e.frame->eax=0;result.skip_original=1; }
         return Status::ok;
     case we_space_copy:
-        if(windows_encyclopedia_line) {
+        // A transport scalar already carries its complete token boundary.
+        // Keep native separators after ASCII tokens, including adjacent links,
+        // without expanding every CJK scalar in the native 200-byte prefix.
+        if(windows_encyclopedia_line&&windows_encyclopedia_scalar(ptr<unsigned char>(e.frame->ebp-0x598))) {
             e.frame->esi=*at<u32>(0xA225314);result.resume_rva=0x3DC3B;
         }
         return Status::ok;
@@ -379,38 +415,38 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
     }
     case we_measure_pair:
         if(windows_encyclopedia_line) {
-            render::Metrics prefix{},label{};
+            std::int32_t prefix{},label{};
             auto status=windows_culture_width(ptr<char>(e.frame->ebp-0x194),prefix);
             if(status!=Status::ok)return status;
             status=windows_culture_width(ptr<char>(e.frame->edi),label);
             if(status!=Status::ok)return status;
             e.frame->ecx=*ptr<u32>(e.frame->ebp-0xABC);
-            e.frame->eax=e.frame->ecx+prefix.logical_width+label.logical_width;result.skip_original=1;
+            e.frame->eax=e.frame->ecx+prefix+label;result.skip_original=1;
         }
         return Status::ok;
     case we_prefix_width:
         if(windows_encyclopedia_line) {
-            render::Metrics measured{};
+            std::int32_t measured{};
             const auto status=windows_culture_width(ptr<char>(e.frame->ebp-0x194),measured);
             if(status!=Status::ok)return status;
-            e.frame->eax+=static_cast<u32>(measured.logical_width);
+            e.frame->eax+=static_cast<u32>(measured);
             e.frame->ecx=e.frame->edi;result.skip_original=1;
         }
         return Status::ok;
     case we_label_width:
         if(windows_encyclopedia_line) {
-            render::Metrics measured{};
+            std::int32_t measured{};
             const auto status=windows_culture_width(ptr<char>(e.frame->ebp-0xCC),measured);
             if(status!=Status::ok)return status;
-            e.frame->eax=measured.logical_width+3;result.skip_original=1;
+            e.frame->eax=measured+3;result.skip_original=1;
         }
         return Status::ok;
     case we_underline:
         if(windows_encyclopedia_line) {
-            render::Metrics measured{};
+            std::int32_t measured{};
             const auto status=windows_culture_width(ptr<char>(e.frame->ebp-0xCC),measured);
             if(status!=Status::ok)return status;
-            e.arguments[0]=e.frame->ecx+static_cast<u32>(measured.logical_width);
+            e.arguments[0]=e.frame->ecx+static_cast<u32>(measured);
         }
         return Status::ok;
     case we_topic_title:
