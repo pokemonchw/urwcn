@@ -708,6 +708,8 @@ void ancestor_summary(Frame& frame) {
 }
 #include "culture_info.inc"
 #include "culture_map.inc"
+#include "spells.inc"
+#include "skills.inc"
 
 struct MenuInput { u32 site; Scope scope; };
 const MenuInput menu_inputs[]{
@@ -811,6 +813,8 @@ Status initialize(const HostApi* api) {
     install_name_input();
     install_culture_info();
     install_culture_map();
+    install_spells();
+    install_skills();
     linux_targets::install(*hooks);
     hooks->instruction(0x15cf21,5,main_background);
     hooks->instruction(0x15cf44,7,main_background_end);

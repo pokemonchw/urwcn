@@ -17,6 +17,8 @@ const linux_host::Hooks* resident;
 Scale canvas;
 Scale mapview_canvas;
 bool building_mapview;
+Scale magic_canvas;
+bool building_magic;
 // Resource metadata only. Native owners retain their surfaces, pixels and
 // cache lifetimes. No text, UI positions or paint operations are retained.
 std::unordered_map<Surface*,Scale> surfaces;
@@ -147,6 +149,10 @@ Texture* create_texture(Renderer* renderer,u32 format,int access,int w,int h) {
     linux_host::BusinessCall lease(*resident);
     const auto site=reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base;
     const bool upload=site==0x148c32;
+    const bool spell_infobox=site==0x106a6a;
+    // CompileInfoboxRitualList is reached with the native window selected;
+    // its own target is selected only after this creation and text building.
+    const auto spell_ratio=spell_infobox ? output_scale(renderer) : magic_canvas;
     if(upload) {
         canvas=output_scale(renderer);
         w=canvas.physical_width; h=canvas.physical_height;
@@ -155,10 +161,14 @@ Texture* create_texture(Renderer* renderer,u32 format,int access,int w,int h) {
         // inspected MapviewMainTex owner, not every gamesize texture caller.
         const auto extent=scoped::physical_rect({0,0,w,h},&mapview_canvas);
         w=extent.w; h=extent.h;
+    } else if(building_magic || spell_infobox) {
+        const auto extent=scoped::physical_rect({0,0,w,h},&spell_ratio);
+        w=extent.w; h=extent.h;
     }
     auto* texture=api.CreateTexture(renderer,format,access,w,h);
     if(texture && upload) textures.emplace(texture,TextureOwner{canvas,renderer});
     else if(texture && building_mapview) textures.emplace(texture,TextureOwner{mapview_canvas,renderer});
+    else if(texture && (building_magic || spell_infobox)) textures.emplace(texture,TextureOwner{spell_ratio,renderer});
     return texture;
 }
 void mapview_target(linux_host::Frame& frame) {
@@ -172,6 +182,14 @@ void mapview_target(linux_host::Frame& frame) {
     reinterpret_cast<void (*)()>(base+0x10ac10)();
     frame.rax=reinterpret_cast<std::uintptr_t>(reinterpret_cast<Texture* (*)()>(base+0x13c3b0)());
     building_mapview=false;
+}
+void magic_target(linux_host::Frame& frame) {
+    // CompileMagicSubscreen owns replacement of MagicpageMainTex. Scope
+    // its native CreateGamesizeTex tail call, without changing other owners.
+    magic_canvas=output_scale(global<Renderer*>(0xa916ed0));
+    building_magic=true;
+    frame.rax=reinterpret_cast<std::uintptr_t>(reinterpret_cast<Texture* (*)()>(base+0x13c3b0)());
+    building_magic=false;
 }
 Texture* texture_from_surface(Renderer* renderer,Surface* surface) {
     linux_host::BusinessCall lease(*resident);
@@ -393,5 +411,6 @@ void install(const linux_host::Hooks& hooks) {
     hooks.replace(0x13b6c0,6,reinterpret_cast<void*>(putasc));
     hooks.replace(0x143c20,10,reinterpret_cast<void*>(draw_line));
     hooks.instruction(0x10b0c6,5,mapview_target);
+    hooks.instruction(0x10672d,5,magic_target);
 }
 }

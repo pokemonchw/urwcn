@@ -49,7 +49,7 @@
     "list_entry_stride": "0xe8",
     "list_entry_action": "0xc8"
   },
-  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name/season, portrait help and attribute confirmation, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 312 GAME.NFO encyclopedia topics (313 source records), culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers. All eleven farewell fields at endgame's native panel, showtext, centext and button calls.",
+  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name/season, portrait help and attribute confirmation, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 312 GAME.NFO encyclopedia topics (313 source records), culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers. All eleven farewell fields at endgame's native panel, showtext, centext and button calls. MagicProfile title, 25 spell names and descriptions, initial/general/instant guidance, exit and encyclopedia footer at native texture builders.",
   "ownership": "Native UI retains layout, wrapping, centering, controls, input, hit testing, background, caching and animation. Chinese glyphs draw synchronously inside native text leaves; no pixel tracking or text replay.",
   "language_redraw": {
     "main_menu": "Shift+F10 rebuilds the native background/footer fragment 0x15ceeb..0x15cf44, peli_info at 0x15cbe0, LIST_Draw, MENUBUFFER and current selection before Flip. MakeStartList and LIST_Reset are not re-entered; original entries and selection remain native.",
@@ -72,7 +72,8 @@
     "Pure refresh of setup body, already-dimmed profile panels, saved-character windows, ancestor pages and current Village page remains tied to native reconstruction.",
     "Attribute confirmation consumes Chinese at native construction. Its frameless list has no independent erasing redraw; the complete draw_profile function also resets the list, waits for input and writes REROLL. Immediate whole-page refresh is not established, and neither that function nor character_creation is replayed for language changes or hot publication.",
     "Encyclopedia keyword editing defers language reconstruction until native getst returns; the in-progress editor is not replayed. The translated No_Info notice keeps its opening language until the native key wait ends; FIRST TIMER INFO supports native reconstruction. Map culture legends consume the current language at native map reconstruction.",
-    "Farewell consumes the selected language at its native construction calls. Its wait loop has no confirmed pure redraw entry; Shift+F10 does not reconstruct already drawn farewell pixels. endgame is never re-entered for refresh because it owns music, fades, input waiting and process exit."
+    "Farewell consumes the selected language at its native construction calls. Its wait loop has no confirmed pure redraw entry; Shift+F10 does not reconstruct already drawn farewell pixels. endgame is never re-entered for refresh because it owns music, fades, input waiting and process exit.",
+    "MagicProfile consumes language and current window density at native reconstruction; the selected description consumes them at CompileInfoboxRitualList. Immediate whole-page language or hot-publication refresh is not established. MagicProfile is not replayed because it owns list reset, music, input and spell selection; existing pixels stay native until reconstruction."
   ],
   "hot_reload": {
     "host_abi": 2,
@@ -103,8 +104,20 @@
     "docs/evidence/20261019-farewell-native.md",
     "docs/evidence/20261019-linux-chinese-input.md",
     "docs/evidence/20261019-season-portrait-native.md",
-    "docs/evidence/20261019-attribute-confirmation-native.md"
+    "docs/evidence/20261019-attribute-confirmation-native.md",
+    "docs/evidence/20261019-spells-native.md",
+    "docs/evidence/20261019-skills-native.md"
   ],
+  "spells": {
+    "owner": "MagicProfile 0x106b40; CompileMagicSubscreen 0x106710 and CompileInfoboxRitualList 0x106a00 own their target textures and reconstruction.",
+    "title": "0x106777 -> SubscreenToTexture; native renderTekstiPalkki centering consumes renderer glyph metrics at 0x147d93/0x147eac.",
+    "names": "0x106cd8 -> LIST_toTex_ButtonSpotEntry borrows original key prefix plus Chinese name indexed by native RitualList at 0x6692660. Native English spell data, numbering, instant flags, actions and TEXTSPOT entries remain unchanged. Exit uses 0x106d38.",
+    "descriptions": "0x106a9d -> SANATAULUKKO_Lisaa uses the native RBX list index. All 25 nonempty taikakeinoS records have complete translated names and summary descriptions; five instruction-detail slots and spell execution consumers are outside this page.",
+    "guidance": "0x106834/0x106870/0x1068b7 preserve SANATAULUKKO_finfo source reads, then replace its display word table with the complete GENERAL/INSTANT/INITIAL translation.",
+    "footer": "0x106d03 scopes native toTex_GameInfo_Hotspot; 0x501cb/0x502b9/0x5030c translate title, complete summary and F1 caption. SPELLS stays the native encyclopedia lookup identity.",
+    "metrics": "0x13f3d8/0x13f51a extend renderer paragraph width/advance; 0x13f44a omits Western separator space after Chinese tokens; 0x145cba extends plain button text advance; 0xf5392/0xf53b2 provide the same renderer metrics to native hotspot sizing. Native tokenization, wrapping, line heights, keycaps, hit regions and selection remain owned by the game.",
+    "density": "0x10672d scopes the native CreateGamesizeTex tail call; 0x106a65 creates the native description target. Both receive current window density at their confirmed construction boundaries. Resource maps store only identity, scale and renderer ownership, never text, position or pixel history. Glyphs draw synchronously into these targets."
+  },
   "character_season_and_portrait": {
     "season_menu": "choose_month at 0x1c300: 0x1c3c1 -> LIST_Draw and 0x1c3c6 -> LIST_Go establish the season scope. Shared title 0xf5617 and button 0xf57d4 consumers borrow Chinese; actions 1/2/3/4/ESC and internal English records remain native.",
     "help": "0x1c314 and 0x1efa9 -> SANATAULUKKO_Lisaa(1, text): starting-season guidance and portrait-selection prompt. Existing paragraph width, cursor and glyph extensions consume the full encoded strings.",
@@ -125,9 +138,19 @@
     "page": "endgame at 0x10e790, called from main at 0xa8f0",
     "fields": 11,
     "panel": "0x10e81e -> winbox(0x1471a0), text in R8; seventh argument remains on the original native stack",
-    "quote": ["0x10e960", "0x10e977", "0x10e98e", "0x10e9a5", "0x10e9bc"],
+    "quote": [
+      "0x10e960",
+      "0x10e977",
+      "0x10e98e",
+      "0x10e9a5",
+      "0x10e9bc"
+    ],
     "dedication": "0x10e9f5 -> centext(0x13ea90), text in RCX; native word flow and centering consume extended width",
-    "closing": ["0x10ea27", "0x10ea59", "0x10ea8b"],
+    "closing": [
+      "0x10ea27",
+      "0x10ea59",
+      "0x10ea8b"
+    ],
     "button": "0x10eaa1 -> Piirra_Nappain(0x144fb0), text in RDX; native tile count and cursor advance consume extended width",
     "drawing": "Synchronous glyphs into native screen at its actual output density, using the established software target path. Native colors, shadow calls, frame, image, caches, fades, input wait and shutdown remain owned by the game."
   },
@@ -145,5 +168,15 @@
     "drawing": "Native screen output-density path for encyclopedia/previews/legacy map. Modern map legend uses the native surface at return 0x10ac3b, CultureDialogTexture, MapviewMainTex and window at matching output density; synchronous glyph rendering only.",
     "map_legends": "Eleven culture names and both titles at kulttuuri_info(0x108940) and compile_CultureDialogTexture(0x10ac10). Native map reconstruction at 0x10b0c6 rebuilds the legend and its full-resolution target; native layout, colors and resource ownership remain unchanged.",
     "language": "Shift+F10 reconstructs the current topic, encyclopedia heading, help and navigation through native builders. It suppresses history insertion and nested input only during reconstruction and restores the original action/topic selection. Scope::attributes remains 10; encyclopedia_keyword, encyclopedia_intro and encyclopedia_notice are appended as 11, 12 and 13."
+  },
+  "skills": {
+    "owner": "TaitoRuutu 0x1082a0 and NaytaOptioRuutu 0x1e5b0; original software screen, MENUBUFFER, list and selection lifecycle.",
+    "headings": "0x107ea8/0x108325 -> SubScreen; 0x107f72/0x10808f/0x1081aa -> winbox (seven arguments). Native title centering consumes complete glyph width.",
+    "names": "0x107db2 -> LIST_ButtonSpotEntry borrows the original ASCII keycap prefix plus one of 30 translated skill names. Its native textwidth stores the dimensions used by selection and mouse input. Plr skill records, indices, hotkeys and ordering remain unchanged.",
+    "mastery": "0x107bc9 -> __sprintf_chk translates the already selected taitoteksti_perus descriptor, retaining its (%s) format and all native level thresholds. All 11 descriptors are covered; percentages, meter bars and aptitude stars remain native.",
+    "help": "0x10856a/0x1087ab preserve source help reads, then rebuild the same native word table with complete GENERAL/INITIAL Chinese guidance. 0x13ef3d removes only the visible Western space appended to encoded Chinese words; existing native paragraph width and cursor extensions retain wrapping and line height.",
+    "options": "0x1e647 remaining-points label; 0x1e6a5/0x1e790 borrow translated paragraphs with original SKILLIMPROVE_onetime/decok values; 0x1e723/0x1e739 translate button suffixes. No point accounting, improvement limits or input actions change.",
+    "footer": "0x1084cb scopes existing GameInfo_Hotspot preview consumers for title, summary and F1. All 29 native skill topics receive summaries; AXE has no original GAME.NFO topic, and the native no-topic branch is preserved.",
+    "density_and_refresh": "Glyphs are rasterized synchronously into the existing density-aware native screen. Native caches retain their pixels; this change does not re-enter TaitoRuutu or replay a page on hot load. Existing cached rows and help await native construction; full immediate redraw remains unconfirmed."
   }
 }
