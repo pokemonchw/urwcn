@@ -197,7 +197,7 @@ scenario.introduction_1	下文讲述 你的开局情境， 并简要介绍 角�
 scenario.introduction_2	你可以 将它当作旅途的指引， 也可以 全然不理会。
 scenario.introduction_3	它只告诉你， 角色为何来到这里； 此后的故事， 由你书写。 世间有 无数道路 等待踏足，
 scenario.introduction_4	无数风景 等待欣赏， 无数清风 等待感受， 还有无数秘密 藏在四周， 也藏在你的内心……
-scenario.press_key	 按任意键继续 — UnReal World 正等待着你 
+scenario.press_key	 按任意键继续 — 不真实的世界 正等待着你 
 scenario.village_departure_1	十六岁那年， 你离开了 家园和村庄。 在童年和少年时代，
 scenario.village_departure_2	你学会了 族人的技能 和生活方式。 直到有一天， 你决定 踏上旅途，
 scenario.village_departure_3	去寻找 属于自己的道路， 无论它 通向何方。
@@ -211,6 +211,35 @@ scenario.village_arrival_4	先看看 这个村庄 能为你提供什么， 或�
 scenario.village_advice_1	（在村庄开始冒险， 是一种 较为安全的开局方式。 你可以先 备齐装备，
 scenario.village_advice_2	 再踏入荒野； 旅途中 若遭遇挫折或危险，
 scenario.village_advice_3	 也有一处 安全的归所。）
+scenario.select.title	选择开局情境
+scenario.select.name.0	不真实的世界
+scenario.select.name.1	村庄
+scenario.select.name.2	逃亡的奴隶
+scenario.select.name.3	不幸的狩猎之旅
+scenario.select.name.4	孤独的拓荒者
+scenario.select.name.5	受伤、无助与恐惧
+scenario.select.name.6	陷阱与诱捕
+scenario.select.name.7	我想当渔夫
+scenario.select.name.8	废弃的陷阱围栏
+scenario.select.name.9	废弃营地
+scenario.select.name.10	农耕
+scenario.select.name.11	有强盗！
+scenario.select.name.12	并非所有流浪者都迷失了方向
+scenario.select.summary.0	你将在一片辽阔而陌生的荒野中开始旅程。
+scenario.select.summary.1	你将在一座陌生却看起来温馨的村庄外开始旅程。
+scenario.select.summary.2	被涅尔佩兹人奴役多年后，你终于迈出逃离他们魔掌的第一步。
+scenario.select.summary.3	你的父亲倒毙在地，杀死他的野兽仍在附近。
+scenario.select.summary.4	你独自来到一片陌生的土地，身旁有两间尚未完工的小屋。
+scenario.select.summary.5	你身负重伤，被人遗弃，任其自生自灭，只能在荒野中挣扎求生。
+scenario.select.summary.6	你带着齐全的设陷捕猎工具开始旅程。
+scenario.select.summary.7	你带着丰富的捕鱼装备，踏上成为渔夫的道路。
+scenario.select.summary.8	你在荒野中发现了一道废弃的陷阱围栏。
+scenario.select.summary.9	你发现了一处废弃营地，里面有遮蔽所、柴火和实用物品。
+scenario.select.summary.10	你拥有一些珍贵的种子，准备试试自己的农耕本领。
+scenario.select.summary.11	你在荒野中遇到了一伙强盗。
+scenario.select.summary.12	你与一位四条腿的伙伴，一同踏入严酷的荒野。
+scenario.select.help.1	请选择你想体验的开局情境。除第一个“不真实的世界”外，其余情境都会提供大致的
+scenario.select.help.2	身世背景，以及一条可供你继续探索的故事线。
 profile.heading	新角色即将踏入 UnReal World……
 profile.culture_title	选择文化
 profile.sex_title	选择性别

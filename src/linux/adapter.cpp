@@ -719,6 +719,7 @@ void ancestor_summary(Frame& frame) {
 #include "spells.inc"
 #include "skills.inc"
 #include "world_generation.inc"
+#include "scenario_selection.inc"
 
 struct MenuInput { u32 site; Scope scope; };
 const MenuInput menu_inputs[]{
@@ -825,6 +826,7 @@ Status initialize(const HostApi* api) {
     install_spells();
     install_skills();
     install_world_generation();
+    install_scenario_selection();
     linux_targets::install(*hooks);
     hooks->instruction(0x15cf21,5,main_background);
     hooks->instruction(0x15cf44,7,main_background_end);
@@ -878,6 +880,7 @@ Status invoke(u32 operation,const void* input,u32 bytes,void*,u32* capacity) {
     if(operation!=kModuleDependenciesChanged || !input || bytes!=sizeof(u32)) return Status::invalid;
     invalidate_glyph_widths();
     refresh_culture_words();
+    scenario_selection_refresh=true;
     if(*static_cast<const u32*>(input)&4u) font_redraw_pending=true;
     if(capacity) *capacity=0;
     return Status::ok;

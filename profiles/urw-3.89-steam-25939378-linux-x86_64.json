@@ -110,7 +110,8 @@
     "docs/evidence/20261019-attribute-confirmation-native.md",
     "docs/evidence/20261019-spells-native.md",
     "docs/evidence/20261019-skills-native.md",
-    "docs/evidence/20261019-skills-confirmation-native.md"
+    "docs/evidence/20261019-skills-confirmation-native.md",
+    "docs/evidence/20261019-scenario-selection-native.md"
   ],
   "spells": {
     "owner": "MagicProfile 0x106b40; CompileMagicSubscreen 0x106710 and CompileInfoboxRitualList 0x106a00 own their target textures and reconstruction.",
@@ -192,5 +193,14 @@
     "confirmation_refresh": "The confirmation list consumes language at native construction. LIST_Draw -> Piirra_Ikkuna has transparent background branches that do not erase existing text. No immediate toggle or hot-load reconstruction is added; option_points and TaitoRuutu are never re-entered for refresh because they own skill changes and input waits.",
     "footer": "0x1084cb scopes existing GameInfo_Hotspot preview consumers for title, summary and F1. All 29 native skill topics receive summaries; AXE has no original GAME.NFO topic, and the native no-topic branch is preserved.",
     "density_and_refresh": "Glyphs are rasterized synchronously into the existing density-aware native screen. Native caches retain their pixels; this change does not re-enter TaitoRuutu or replay a page on hot load. Existing cached rows and help await native construction; full immediate redraw remains unconfirmed."
+  },
+  "scenario_selection": {
+    "owner": "SelectCampaign 0x1d100 reads RNDCAMP.0..12; all source files, scenario indices, story creation, original LIST_SpotEntry rectangles and input actions remain native.",
+    "title": "0x1d17b -> draw_campselgfx borrows the Chinese title before the original 1024-byte copy, background dimming and seven-argument winbox.",
+    "names": "0x1d23a -> showtext uses the native R12D minus one RNDCAMP file index for 13 names. 0x1d254 -> LIST_SpotEntry is unchanged; these hit areas are native rectangles, not text-length-derived buttons.",
+    "paragraphs": "0x1d271 -> SANATAULUKKO_Lisaa borrows each of 13 complete summaries; 0x1d2f5/0x1d303 borrow the two footer records. Chinese scalar word tokens use the existing software paragraph width, spacing, cursor and glyph extensions; original reset/append flags, wrapping, line spacing and colors remain native.",
+    "refresh": "At 0xf871f after LIST_Go getkey returns naturally, the original caller at native RSP+0x458 identifies 0x1d365, including pages opened before publication. Rebuild SelectCampaign only through 0x1d30a, then resume its balanced epilogue 0x1d332. During this redraw only, crtplr_info(0) skips unused random(20) at 0x1bbfc. No input wait, scenario assignment or get_camp/story write is re-entered.",
+    "cache_and_selection": "Native LIST_Position/Set_LIST_Position preserve the current selection; original background, title, rows and footer rebuild first, followed by save_menubuf, LIST_Highlight and Flip. The actual getkey result is preserved. Refresh consumes adapter reload, dependency invalidation or language change at the next natural input-return boundary; it does not synthesize an event or claim immediate visual completion from Applied.",
+    "density": "Existing native screen output-density target; glyphs draw synchronously inside native component calls. No page coordinates, text snapshots, pixel tracking or deferred replay. Existing non-main-menu resize and shadow-budget limitations remain pending."
   }
 }
