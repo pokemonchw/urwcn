@@ -1,0 +1,6 @@
+//@category Static source extraction
+import ghidra.app.decompiler.*;import ghidra.app.script.GhidraScript;import ghidra.program.model.listing.*;import ghidra.program.model.symbol.*;import ghidra.program.model.data.*;import java.io.*;import java.nio.charset.StandardCharsets;import java.nio.file.*;
+public class settlement_TargetsMax extends GhidraScript{
+ public void run()throws Exception{String[]args=getScriptArgs();DecompInterface dc=new DecompInterface();DecompileOptions opt=new DecompileOptions();opt.setMaxPayloadMBytes(256);dc.setOptions(opt);dc.toggleCCode(true);dc.openProgram(currentProgram);try(PrintWriter out=new PrintWriter(Files.newBufferedWriter(Path.of(args[0]),StandardCharsets.UTF_8))){for(int i=1;i<args.length;i++){Function f=getFunctionContaining(toAddr(args[i]));out.println("\n/* Function "+f.getEntryPoint()+" */");DecompileResults r=dc.decompileFunction(f,600,monitor);if(r.getDecompiledFunction()!=null)out.println(r.getDecompiledFunction().getC());else out.println("/* "+r.getErrorMessage()+" */");out.println("/* References:");for(Reference ref:getReferencesTo(f.getEntryPoint())){Function c=getFunctionContaining(ref.getFromAddress());out.println(ref.getFromAddress()+" caller "+(c==null?"none":c.getEntryPoint()));}out.println("*/");out.flush();println("Extra "+f.getEntryPoint());}}finally{dc.dispose();}}
+}
+

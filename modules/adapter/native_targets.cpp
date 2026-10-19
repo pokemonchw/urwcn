@@ -1,4 +1,6 @@
 #include "native_targets.h"
+#include "native_root_component.h"
+#include "native_ui_cache_owners.h"
 #include "scoped_api.h"
 #include <algorithm>
 #include <array>
@@ -27,6 +29,9 @@ std::uintptr_t base{};
 Scale canvas{800,600,800,600};
 std::unordered_map<Surface*,Scale> surfaces;
 std::unordered_map<Texture*,Scale> textures;
+std::unordered_map<Surface*,SurfaceSource> surface_sources;
+TextureDestroying component_texture_retirement{};
+SurfaceDestroying component_surface_retirement{};
 struct Api : scoped::NativeSdl {
     Surface* (__cdecl *CreateRGBSurface)(u32,int,int,int,u32,u32,u32,u32);
     Surface* (__cdecl *ConvertSurface)(Surface*,const PixelFormat*,u32);
@@ -108,6 +113,7 @@ Surface* __cdecl create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 
         site==0x10C289 || site==0x10C48A || site==0x10C628 || site==0x10C3B1;
     const bool fade_owner=site==0x10D5E8 || site==0x10D65B;
     const bool culture_owner=site==0xE3A6F;
+    const SurfaceSource neutral{flags,w,h,depth,r,g,b,a};
     const Scale component_scale{w,h,
         scoped::physical_rect({0,0,w,h},&canvas).w,
         scoped::physical_rect({0,0,w,h},&canvas).h};
@@ -119,6 +125,7 @@ Surface* __cdecl create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 
     auto* result=api.CreateRGBSurface(flags,w,h,depth,r,g,b,a);
     if(result && (canvas_owner || fade_owner)) surfaces.emplace(result,canvas);
     if(result && culture_owner) surfaces.emplace(result,component_scale);
+    if(result && canvas_owner) surface_sources.emplace(result,neutral);
     return result;
 }
 Renderer* __cdecl create_software_renderer(Surface* surface) {
@@ -133,38 +140,68 @@ Surface* __cdecl convert_surface(Surface* source,const PixelFormat* format,u32 f
     auto* result=api.ConvertSurface(source,format,flags);
     const auto* source_scale=scale(source);
     if(result && source_scale) surfaces.emplace(result,*source_scale);
+    const auto constructor=surface_sources.find(source);
+    if(result && constructor!=surface_sources.end()) {
+        auto neutral=constructor->second;
+        neutral.flags=flags;neutral.depth=format->bits;
+        neutral.red_mask=format->rmask;neutral.green_mask=format->gmask;
+        neutral.blue_mask=format->bmask;neutral.alpha_mask=format->amask;
+        surface_sources.emplace(result,neutral);
+    }
     return result;
 }
 void __cdecl free_surface(Surface* surface) {
+    if(component_surface_retirement) component_surface_retirement(address(surface));
     surfaces.erase(surface);
+    surface_sources.erase(surface);
     api.FreeSurface(surface);
 }
 int __cdecl blit(Surface* source,const Rect* src,Surface* destination,Rect* dst) {
-    return scoped::blit(api,source,src,scale(source),destination,dst,scale(destination),false);
+    const auto caller_return=static_cast<u32>(
+        reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base);
+    native_ui_cache_owners::BlitPreparation prepared;
+    const auto status=native_ui_cache_owners::before_blit(caller_return,source,destination,src,dst,prepared);
+    if(status!=Status::ok) return -1;
+    const auto* from=prepared.restoring && prepared.restore.has_source ? &prepared.restore.source : src;
+    auto* to=prepared.restoring && prepared.restore.has_destination ? &prepared.restore.destination : dst;
+    const int result=scoped::blit(api,source,from,scale(source),destination,to,scale(destination),false);
+    if(prepared.restoring && dst) *dst=prepared.restore.destination;
+    native_ui_cache_owners::after_blit(caller_return,source,destination,prepared,result);
+    return result;
 }
 int __cdecl blit_scaled(Surface* source,const Rect* src,Surface* destination,Rect* dst) {
     return scoped::blit(api,source,src,scale(source),destination,dst,scale(destination),true);
 }
 int __cdecl fill(Surface* destination,const Rect* rect,u32 color) {
-    return scoped::fill(api,destination,rect,scale(destination),color);
+    const auto caller_return=static_cast<u32>(
+        reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base);
+    const int result=scoped::fill(api,destination,rect,scale(destination),color);
+    native_root_component::native_clear_filled(caller_return,destination,result);
+    return result;
+}
+Texture* make_component_texture(Renderer* renderer,u32 format,int access,int w,int h) {
+    if(output_scale()!=Status::ok) return nullptr;
+    const Scale component_scale{w,h,
+        scoped::physical_rect({0,0,w,h},&canvas).w,
+        scoped::physical_rect({0,0,w,h},&canvas).h};
+    auto* result=api.CreateTexture(renderer,format,access,
+        component_scale.physical_width,component_scale.physical_height);
+    if(result) textures.emplace(result,component_scale);
+    return result;
 }
 Texture* __cdecl create_texture(Renderer* renderer,u32 format,int access,int w,int h) {
     const auto site=static_cast<u32>(reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base);
     const bool upload=site==0x117973;
     // MagicProfile's native page and CompileInfoboxRitualList's description.
     // Both are native render targets; their logical rectangles remain native.
-    const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2;
-    const Scale component_scale{w,h,
-        scoped::physical_rect({0,0,w,h},&canvas).w,
-        scoped::physical_rect({0,0,w,h},&canvas).h};
+    const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2 || site==0x116EF2;
+    if(component) return make_component_texture(renderer,format,access,w,h);
     if(upload) {
         if(output_scale()!=Status::ok) return nullptr;
         w=canvas.physical_width; h=canvas.physical_height;
     }
-    if(component) { w=component_scale.physical_width;h=component_scale.physical_height; }
     auto* result=api.CreateTexture(renderer,format,access,w,h);
     if(result && upload) textures.emplace(result,canvas);
-    if(result && component) textures.emplace(result,component_scale);
     return result;
 }
 int __cdecl set_render_target(Renderer* renderer,Texture* target) {
@@ -192,6 +229,7 @@ Texture* __cdecl texture_from_surface(Renderer* renderer,Surface* surface) {
     return result;
 }
 void __cdecl destroy_texture(Texture* texture) {
+    if(component_texture_retirement) component_texture_retirement(address(texture));
     textures.erase(texture);
     api.DestroyTexture(texture);
 }
@@ -263,6 +301,9 @@ Status replace_surface(u32 slot,int logical_width) {
     if(copied!=0 || restored!=Status::ok || apply(replacement,original)!=Status::ok) return Status::failed;
     global<Surface*>(slot)=replacement;
     surfaces.erase(old); surfaces.emplace(replacement,canvas);
+    surface_sources.erase(old);
+    surface_sources.emplace(replacement,SurfaceSource{0,logical_width,600,32,
+        format->rmask,format->gmask,format->bmask,format->amask});
     api.FreeSurface(old);
     return Status::ok;
 }
@@ -286,8 +327,75 @@ template<class T> void append(std::vector<std::uint8_t>& data,const T& value) {
     data.insert(data.end(),begin,begin+sizeof(value));
 }
 struct Record { u32 handle; Scale scale; };
+struct SurfaceRecord {u32 handle;SurfaceSource source;};
 }
 
+u32 create_component_texture(u32 renderer,u32 format,std::int32_t access,
+    std::int32_t width,std::int32_t height) {
+    return address(make_component_texture(reinterpret_cast<Renderer*>(static_cast<std::uintptr_t>(renderer)),
+        format,access,width,height));
+}
+void destroy_component_texture(u32 texture) {
+    destroy_texture(reinterpret_cast<Texture*>(static_cast<std::uintptr_t>(texture)));
+}
+void observe_component_texture_retirement(TextureDestroying observer) {
+    component_texture_retirement=observer;
+}
+void observe_component_surface_retirement(SurfaceDestroying observer) {component_surface_retirement=observer;}
+Status component_texture_source(u32 texture,TextureSource& source) {
+    auto* native_texture=reinterpret_cast<Texture*>(static_cast<std::uintptr_t>(texture));
+    if(api.QueryTexture(native_texture,&source.format,&source.access,&source.width,&source.height)!=0)
+        return Status::failed;
+    const auto* native_scale=scale(native_texture);
+    if(native_scale) {source.width=native_scale->logical_width;source.height=native_scale->logical_height;}
+    return Status::ok;
+}
+SurfaceSource component_surface_source(const void* surface) {
+    return surface_sources.find(const_cast<Surface*>(static_cast<const Surface*>(surface)))->second;
+}
+u32 create_component_surface(const SurfaceSource& source) {
+    if(output_scale()!=Status::ok) return 0;
+    const auto extent=scoped::physical_rect({0,0,source.width,source.height},&canvas);
+    auto* surface=api.CreateRGBSurface(source.flags,extent.w,extent.h,source.depth,
+        source.red_mask,source.green_mask,source.blue_mask,source.alpha_mask);
+    if(surface) {surfaces.emplace(surface,canvas);surface_sources.emplace(surface,source);}
+    return address(surface);
+}
+void destroy_component_surface(u32 surface) {
+    free_surface(reinterpret_cast<Surface*>(static_cast<std::uintptr_t>(surface)));
+}
+Status create_component_hud_target(const SurfaceSource& source,HudTarget& target) {
+    target.surface=create_component_surface(source);
+    if(!target.surface) return Status::failed;
+    auto* surface=reinterpret_cast<Surface*>(static_cast<std::uintptr_t>(target.surface));
+    if(api.SetSurfaceRLE(surface,1)!=0) {destroy_component_surface(target.surface);return Status::failed;}
+    auto* renderer=create_software_renderer(surface);
+    if(!renderer) {destroy_component_surface(target.surface);return Status::failed;}
+    target.renderer=address(renderer);
+    Texture* direction{};Texture* marker{};
+    if(hud_image(renderer,0x1ACAB8,direction)!=Status::ok ||
+        hud_image(renderer,0x1ACAD0,marker)!=Status::ok) {
+        api.DestroyRenderer(renderer);destroy_component_surface(target.surface);return Status::failed;
+    }
+    target.direction=address(direction);target.marker=address(marker);return Status::ok;
+}
+void destroy_component_hud_target(const HudTarget& target) {
+    api.DestroyRenderer(reinterpret_cast<Renderer*>(static_cast<std::uintptr_t>(target.renderer)));
+    destroy_component_surface(target.surface);
+}
+Status copy_hud_component(u32 surface) {
+    // FB202..FB239 obtains this complete native output rectangle from these
+    // four fields. Native SDL owns clipping and the actual surface transfer.
+    Rect destination{global<std::int32_t>(0x619F974),global<std::int32_t>(0x619F978),
+        global<std::int32_t>(0x619F97C),global<std::int32_t>(0x619F980)};
+    return copy_cache_component(surface,nullptr,&destination);
+}
+Status copy_cache_component(u32 surface,const Rect* source,Rect* destination) {
+    auto* input=reinterpret_cast<Surface*>(static_cast<std::uintptr_t>(surface));
+    auto* output=global<Surface*>(0x61BBB10);
+    return scoped::blit(api,input,source,scale(input),output,destination,scale(output),false)==0
+        ? Status::ok : Status::failed;
+}
 Status initialize(std::uintptr_t image_base,HMODULE sdl) {
     base=image_base;
 #define BIND(name) api.name=reinterpret_cast<decltype(api.name)>(GetProcAddress(sdl,"SDL_" #name)); if(!api.name) return Status::unavailable
@@ -397,8 +505,13 @@ Status promote_hud() {
     const Rect extent=scoped::physical_rect({0,0,width,height},&canvas);
     const float sx=float(canvas.physical_width)/canvas.logical_width;
     const float sy=float(canvas.physical_height)/canvas.logical_height;
-    if(scale(old_surface) && old_surface->w==extent.w && old_surface->h==extent.h)
+    const auto* source_format=old_surface->format;
+    const SurfaceSource neutral{0,width,height,32,source_format->rmask,source_format->gmask,
+        source_format->bmask,source_format->amask};
+    if(scale(old_surface) && old_surface->w==extent.w && old_surface->h==extent.h) {
+        surface_sources.insert_or_assign(old_surface,neutral);
         return api.RenderSetScale(old_renderer,sx,sy)==0 ? Status::ok : Status::failed;
+    }
 
     SurfaceProperties original{};
     if(properties(old_surface,original)!=Status::ok) return Status::failed;
@@ -430,37 +543,51 @@ Status promote_hud() {
     api.DestroyRenderer(old_renderer);
     surfaces.erase(old_surface);
     surfaces.emplace(replacement,canvas);
+    surface_sources.erase(old_surface);surface_sources.emplace(replacement,neutral);
     api.FreeSurface(old_surface);
     return Status::ok;
 }
 std::vector<std::uint8_t> save() {
     std::vector<std::uint8_t> result;
-    append(result,u32{0x3154474E}); // NGT1: identity and scale only.
+    append(result,u32{0x3254474E}); // NGT2: identity, scale and neutral constructors.
     append(result,canvas);
     append(result,address(gateways));
     append(result,static_cast<u32>(surfaces.size()));
     append(result,static_cast<u32>(textures.size()));
+    append(result,static_cast<u32>(surface_sources.size()));
     for(const auto& [handle,s]:surfaces) append(result,Record{address(handle),s});
     for(const auto& [handle,s]:textures) append(result,Record{address(handle),s});
+    for(const auto& [handle,source]:surface_sources) append(result,SurfaceRecord{address(handle),source});
     return result;
 }
 Status restore(const void* input,u32 bytes) {
-    constexpr u32 header=sizeof(u32)+sizeof(Scale)+3*sizeof(u32);
-    if(!input || bytes<header) return Status::invalid;
+    constexpr u32 header=sizeof(u32)+sizeof(Scale)+4*sizeof(u32);
+    if(!input || bytes<sizeof(u32)) return Status::invalid;
     const auto* data=static_cast<const std::uint8_t*>(input);
-    u32 magic{},saved_gateways{},surface_count{},texture_count{};
+    u32 magic{},saved_gateways{},surface_count{},texture_count{},source_count{};
     std::memcpy(&magic,data,4);
+    // NGT1 contains no neutral native constructors and cannot reconstruct
+    // the new component owners from its former bitmap/scale identities.
+    if(magic==0x3154474E) return Status::unavailable;
+    if(bytes<header) return Status::invalid;
     std::memcpy(&saved_gateways,data+4+sizeof(Scale),4);
     std::memcpy(&surface_count,data+8+sizeof(Scale),4);
     std::memcpy(&texture_count,data+12+sizeof(Scale),4);
-    if(magic!=0x3154474E || bytes!=header+(std::size_t(surface_count)+texture_count)*sizeof(Record)) return Status::invalid;
+    std::memcpy(&source_count,data+16+sizeof(Scale),4);
+    if(magic!=0x3254474E || bytes!=header+(std::size_t(surface_count)+texture_count)*sizeof(Record)+
+        std::size_t(source_count)*sizeof(SurfaceRecord)) return Status::invalid;
     std::memcpy(&canvas,data+4,sizeof(canvas));
-    surfaces.clear(); textures.clear();
+    surfaces.clear(); textures.clear();surface_sources.clear();
     const auto* records=data+header;
     for(u32 i=0;i<surface_count+texture_count;++i) {
         Record record{}; std::memcpy(&record,records+i*sizeof(Record),sizeof(record));
         if(i<surface_count) surfaces.emplace(reinterpret_cast<Surface*>(record.handle),record.scale);
         else textures.emplace(reinterpret_cast<Texture*>(record.handle),record.scale);
+    }
+    const auto* constructors=records+(std::size_t(surface_count)+texture_count)*sizeof(Record);
+    for(u32 i=0;i<source_count;++i) {
+        SurfaceRecord record;std::memcpy(&record,constructors+i*sizeof(record),sizeof(record));
+        surface_sources.emplace(reinterpret_cast<Surface*>(record.handle),record.source);
     }
     // Host runs initialize and restore without advancing a native game frame.
     // Its temporary page has therefore never escaped into a cached game call.
@@ -477,7 +604,9 @@ Status restore(const void* input,u32 bytes) {
     return Status::ok;
 }
 void forget() {
-    surfaces.clear(); textures.clear(); base=0;
+    component_texture_retirement=nullptr;
+    component_surface_retirement=nullptr;
+    surfaces.clear(); textures.clear();surface_sources.clear(); base=0;
     // Cached native aliases continue to name the retired page, now bound to
     // original SDL. Its address is retained by the saved adapter state.
     gateways=nullptr;

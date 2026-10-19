@@ -1,0 +1,49 @@
+Shared-message source closure: resources, upper menu echo, terrain (static only)
+
+This file records successive static-review stages; counts such as 169 inline ranges
+apply to their recorded stage. Final integrated source and publication status:
+20261020-shared-message-delivery.md.
+
+Terrain initializer
+- 408080 is the native writer of the 600-byte descriptor table 005EC798; displayed name is +9.
+- Its 76 distinct literal/DAT-string name sources are in settlement-terrain-name-atoms.tsv.
+- The complete decompiled initializer has no immediate-value assignment into offsets +9..+48; those names are the observed NUL-terminated copy loops.
+- Five complete-record copies also occur: 606D78->606FD0 retains Sea; 611188->5F2558 is overwritten by Inside of a kota; 611188->5F4F88 by Surface of the Earth; 611188->5FA640 by Inside of a building; 5FA640->5FA898 by Cave floor. These add no new name source.
+- Remaining slots are native zero-initialized BSS empty names. Exact empty terrain entry is retained.
+- 407520 adds Your settlement / Small lake / Lake; all three and lowercase forms are in terrain.
+
+Terrain compounds
+- 407730 preserves native 4076C0 selection. Its real 407807 last-word branch is followed by ' sapling'. 4192D0 permits that branch only for native terrain codes 10, 11, 12 (Birch, Young birch, Young spruce), so the last-word input is birch/spruce. No arbitrary name splitting is performed by the Mod.
+- 494BC0 is observed at its three native callers and each actual text branch: tree conditions, Ice replacement, 55E5F0 snow depth, 55E810 crust, native ' with ', cleared snow, moss/lichen prefix, original ground/Base rock/Crag/Marshland, snow overwrite or append, and native final empty-buffer base copy.
+- All retained state is source expressions in the same native construction stack. Final 33883E8 owner is bound after native case normalization. No world predicates are reevaluated by the Mod.
+- Evidence: settlement-terrain-description-primitives-ghidra.c, settlement-terrain-sapling-word-ghidra.c, settlement-terrain-sapling-predicate-ghidra.c, settlement-terrain-description-disassembly.txt, settlement-terrain-sapling-disassembly.txt.
+
+Upper menu echo
+- Native upper row table is 0659F988, stride 0x20C. It differs from the lower CF790 model's E8 rows.
+- 186 captured row sources, 103 actual clip instructions, 35 5002B0 callers are recorded in windows_message_menu_echo.inc. Full classification is settlement-menu-caption-clip-sources.tsv.
+- Four builders 4FFB30/4FFCC0/4FFD60/4FFF30 also serve other UI callers; interior observations use saved native parent EBP to associate only a captured call. The native_call bridge substitutes its return address, so EBP+4 must not be used for this association.
+- Fixed labels are at most 28 English bytes plus their 2-byte action prefix. Finite treatment and aim suffix options also stay within the native 34-byte limit. Four BODYPART calls use key=0 and the native 4FFC32 rewrite cancels any prior clipping.
+- The actual NO DISPLAY branch clears the semantic echo, and the actual first-'|' branch applies the before_separator source node. The delimiter is preserved in the three aim suffix translations.
+- Dynamic clipping sources: NPC names from 4F8D97/546820 and file-defined sections from 438D0F/4482AF/4489FC pass 4FFBFF/4FFC08; weapon compounds from 52ED06/52EDD7/52EEA8 pass 52ED1F+52ED28 / 52EDF0+52EDF9 / 52EEC1+52EECA.
+- 4FFBFA compares native byte length with 34, writes '..' at row+32 and NUL at row+34. 500818 finds '.', 500834 selects bytes after it, and 500846 formats this already clipped caption. Returning complete translated caption plus '..' would reveal source content the native caption omitted, so it is not implemented as an equivalence.
+- Clipped echoes now retain exactly the native caption prefix before the actual two dots. Neutral original-name nodes retain only those visible characters. Finite natural-language lookup leaves use an independently authored exact prefix entry, keyed by original domain/full source and visible prefix. Complete visible words have explicit translations; an unfinished word contributes no hidden word ending. The actual native '..' remains the ellipsis. This policy was explicitly approved by root for this native branch.
+- Composite source graphs are reduced at the corresponding original argument span. Complete grammar and argument spans remain; a partially visible grammar literal uses one of the explicit reduced-format translations. This does not truncate Chinese bytes, remeasure a row, create UI positions or expose a hidden argument.
+- Stock weapon rows have a two-byte key prefix: 'Block with ' leaves 19 original item-name bytes; 'Counterstrike with ' leaves 11. NPC lookup leaves can be cut at any native byte boundary after a variable proper name. All exact finite prefix entries and their completed visible phrases are recorded in settlement-menu-prefix-translations.tsv; authored phrase translations are in settlement-author-menu-prefixes.ps1.
+- The installed external menudef section files contain only comments, so those native source branches currently have no selectable caption words. No invented future/modded section-name translation is provided.
+- 546809's NPC result is observed before the native toupper and rebound after the actual 546819 first-byte write. Interior row association continues to use parent EBP, not the bridge-modified return address.
+- The three weapon caption producers and 451A97 now consume the actual descriptor via message_crafted_item_source(descriptor, name, out), including the native persisted material/recipe grammar. The source graph stays live through native row construction; no translated string is stored in an item record.
+- Prefix coverage includes the actual crafted atoms, native wood substitutions, cooking/animal and recipe formats. Every reduced format is keyed by its complete original grammar, so the same visible character fragment cannot acquire meaning from an unrelated format. The generated inventory lists every exact entry; empty targets intentionally represent a word the native cut did not finish, not a missing translation or an English fallback.
+- For example, the Counterstrike caption leaves 11 name bytes: native 'Kaumolais s' contributes the complete culture term only, not the hidden 'spear'. A cut inside a proper name retains its actual complete visible characters. The native parser's span/native_scalar codec is applied against the complete original row caption and the actual native byte limit; a half UTF-8 scalar is never decoded as a legacy single-byte character.
+
+No game execution, injection, input simulation, compilation or tests were performed for this work.
+
+Calendar and place context
+- windows_message_calendar.inc captures the six actual shared-message 48A310 callers and 5772E8 -> 48E4F0. The other three 48A310 callers are HUD/death-history UI, with no shared-message flow evidence.
+- Its calendar operands and selected month-stage strings are captured from the same native calls. All eight season labels, 65 finite month-stage results, ordinary/debug formats, and ordinal branches are in values.calendar.zh-CN.tsv (85 entries).
+- 48E4F0 is a place-context producer. Its actual culture, terrain and place-name branches use the corresponding source expressions; it is not a weather producer.
+- The four new inline observations were included in the static Ghidra instruction/reference inventory. All 169 owned inline ranges end at a complete instruction boundary, have no incoming flow reference inside the patched bytes, and contain no ESP adjustment.
+- Authoring order for the final catalogue: generate crafted grammar first; run settlement-author-menu-prefixes.ps1 afterwards; run settlement-author-calendar.ps1; then run the central message catalogue generator. These commands generate source data, not tests.
+Final fixed incantation addition
+- Trace's final direct-flow audit identified 4E9320's three fixed rituals. windows_message_prayers.inc binds their completed actual input at 4E9900/4E9A30; values.prayers.zh-CN.tsv contains the 16 complete intro/verse results with native control and quote bytes.
+- No extra intermediate state is added. settlement-author-prayers.ps1 authors the exact inventory from the original PE literals; the existing direct literal vocabulary already covers the failed ritual-condition message.
+- After the crafted-item owner froze its final material.cut-native inventory, settlement-author-menu-prefixes.ps1 generated 54912 exact prefix entries with no unassigned complete visible phrase. The native spoiled prefix is translated only together with its actually completed visible phrase.

@@ -1,0 +1,86 @@
+domain	source	target
+calendar.ordinal	%d	第%d
+calendar.ordinal	last	最后一
+calendar.part	on 	在
+calendar.part	 at 	，位于
+calendar.format	day %d of %s week before %s	%s前的%s周，第%d天
+calendar.format	%s of month:%d	%s日，月份：%d
+calendar.format	in %s, during %s, on %s	在%s，%s，%s
+calendar.format	%s, %s, %s	%s，%s，%s
+calendar.format	in %s, during %s	在%s，%s
+calendar.format	%s, %s	%s，%s
+calendar.format	%s 	%s
+calendar.format	%s%s	%s%s
+calendar.season	winter season	冬季
+calendar.season	midwinter point	仲冬时节
+calendar.season	midwinter	仲冬
+calendar.season	latter winter	冬末
+calendar.season	summer season	夏季
+calendar.season	midsummer point	仲夏时节
+calendar.season	midsummer	仲夏
+calendar.season	latter summer	夏末
+calendar.moon		
+calendar.moon	beginning of 	开始时
+calendar.moon	early 	初期
+calendar.moon	late 	后期
+calendar.moon	end of 	结束时
+calendar.moon	january	一月
+calendar.moon	beginning of january	一月初
+calendar.moon	early january	一月上旬
+calendar.moon	late january	一月下旬
+calendar.moon	end of january	一月末
+calendar.moon	february	二月
+calendar.moon	beginning of february	二月初
+calendar.moon	early february	二月上旬
+calendar.moon	late february	二月下旬
+calendar.moon	end of february	二月末
+calendar.moon	march	三月
+calendar.moon	beginning of march	三月初
+calendar.moon	early march	三月上旬
+calendar.moon	late march	三月下旬
+calendar.moon	end of march	三月末
+calendar.moon	april	四月
+calendar.moon	beginning of april	四月初
+calendar.moon	early april	四月上旬
+calendar.moon	late april	四月下旬
+calendar.moon	end of april	四月末
+calendar.moon	may	五月
+calendar.moon	beginning of may	五月初
+calendar.moon	early may	五月上旬
+calendar.moon	late may	五月下旬
+calendar.moon	end of may	五月末
+calendar.moon	june	六月
+calendar.moon	beginning of june	六月初
+calendar.moon	early june	六月上旬
+calendar.moon	late june	六月下旬
+calendar.moon	end of june	六月末
+calendar.moon	july	七月
+calendar.moon	beginning of july	七月初
+calendar.moon	early july	七月上旬
+calendar.moon	late july	七月下旬
+calendar.moon	end of july	七月末
+calendar.moon	august	八月
+calendar.moon	beginning of august	八月初
+calendar.moon	early august	八月上旬
+calendar.moon	late august	八月下旬
+calendar.moon	end of august	八月末
+calendar.moon	september	九月
+calendar.moon	beginning of september	九月初
+calendar.moon	early september	九月上旬
+calendar.moon	late september	九月下旬
+calendar.moon	end of september	九月末
+calendar.moon	october	十月
+calendar.moon	beginning of october	十月初
+calendar.moon	early october	十月上旬
+calendar.moon	late october	十月下旬
+calendar.moon	end of october	十月末
+calendar.moon	november	十一月
+calendar.moon	beginning of november	十一月初
+calendar.moon	early november	十一月上旬
+calendar.moon	late november	十一月下旬
+calendar.moon	end of november	十一月末
+calendar.moon	december	十二月
+calendar.moon	beginning of december	十二月初
+calendar.moon	early december	十二月上旬
+calendar.moon	late december	十二月下旬
+calendar.moon	end of december	十二月末

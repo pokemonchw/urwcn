@@ -1,0 +1,988 @@
+file	line	key	selector	kind	source	target
+urw_chat.txt	3	TRADE_LETS_BARTER	:( 	dialogue	And just what did you <reptitle_trading> think of offering?	你这个<reptitle_trading>，到底打算拿什么来换？
+urw_chat.txt	4	TRADE_LETS_BARTER	:| 	dialogue	So let's barter! What have you got to offer, <plr_identity>?	那就交易吧！你有什么可以拿来换，<plr_identity>？
+urw_chat.txt	5	TRADE_LETS_BARTER	:) 	dialogue	My pleasure to start trading with <reptitle_trading_ind>.	很高兴和<reptitle_trading_ind>做买卖。
+urw_chat.txt	8	TRADE_ACCEPT_OFFER	:( 	dialogue	Maybe I just might accept this offer. Do we have a deal now, <plr_bad_name>?	我也许可以接受这个价。就这么成交了，<plr_bad_name>？
+urw_chat.txt	9	TRADE_ACCEPT_OFFER	:| 	dialogue	I do accept your offer. Shall we close the deal then?	我接受你的出价。那就成交？
+urw_chat.txt	10	TRADE_ACCEPT_OFFER	:) 	dialogue	This will do just fine. I'm happy with this deal if you are?	这些正合适。我很满意，你也觉得可以就成交吧？
+urw_chat.txt	13	TRADE_DEAL	:( 	dialogue	So be it, <plr_bad_name>.	就这样吧，<plr_bad_name>。
+urw_chat.txt	14	TRADE_DEAL	:| 	dialogue	We have to come to an agreement over this trade.	这笔交易总得谈妥才行。
+urw_chat.txt	15	TRADE_DEAL	:) 	dialogue	Thank you once again, <plr_identity>.	再次感谢，<plr_identity>。
+urw_chat.txt	18	TRADE_GENEROUS_DEAL	:( 	dialogue	I'm pleasantly surprised. Maybe you are not <reptitle_trading_ind> after all.	真叫我意外。也许你并不是<reptitle_trading_ind>。
+urw_chat.txt	19	TRADE_GENEROUS_DEAL	:| 	dialogue	Thank you, <plr_identity>. That was generous.	谢谢你，<plr_identity>。真慷慨。
+urw_chat.txt	20	TRADE_GENEROUS_DEAL	:) 	dialogue	Many thanks, <plr_identity>! You are not only <reptitle_trading_ind>, but generous too.	非常感谢，<plr_identity>！你不但是<reptitle_trading_ind>，而且很慷慨。
+urw_chat.txt	24	NPC_CAN_TRADE	:( 	dialogue	There are few things I could trade away, <plr_bad_name>, although I would prefer to do so with someone other than you.	我有些东西可以交易，<plr_bad_name>，不过更想卖给别人。
+urw_chat.txt	25	NPC_CAN_TRADE	:| 	dialogue	I have some goods to trade.	我有些货物可以交易。
+urw_chat.txt	26	NPC_CAN_TRADE	:) 	dialogue	If you find my goods interesting I'm happy to trade with you, <plr_identity>.	如果你看得上我的货物，我很乐意和你交易，<plr_identity>。
+urw_chat.txt	29	NPC_CANT_TRADE	:( 	dialogue	I do not trade my goods.	我的东西不拿来交易。
+urw_chat.txt	30	NPC_CANT_TRADE	:| 	dialogue	Sorry, <plr_identity>. I've got nothing to trade.	抱歉，<plr_identity>。我没什么可以交易的。
+urw_chat.txt	31	NPC_CANT_TRADE	:) 	dialogue	I'm sorry to disappoint <reptitle_tra_ind>, but I don't have anything to trade.	抱歉让<reptitle_tra_ind>失望了，我没什么可交易的。
+urw_chat.txt	34	TRADE_BRIEFING	:| 	dialogue	If you like the goods around here, just pick up the ones you need and come talk to me about trading for them. 	你要是看上了这里的货物，就拿起需要的东西，来找我谈怎么换。
+urw_chat.txt	37	TRADE_BANNED		dialogue	Leave our goods alone! We do not trade.	别动我们的东西！我们不做买卖。
+urw_chat.txt	43	TRADE_STOPPAGE		dialogue	For the time being we keep our goods to ourselves and do not trade with anyone.	眼下我们要留着这些东西，谁来也不换。
+urw_chat.txt	47	DEMAND_PAYMENT	:( 	dialogue	You <reptitle_stealing> need to pay your debt right now!	你这个<reptitle_stealing>，马上还清欠账！
+urw_chat.txt	48	DEMAND_PAYMENT	:| 	dialogue	You owe us for the goods you have picked.	你拿了我们的货，还欠着账。
+urw_chat.txt	49	DEMAND_PAYMENT	:) 	dialogue	Would you care to barter for the goods you've gotten?	要不要谈谈你拿走的那些货物怎么换？
+urw_chat.txt	52	FAILED_PAYMENT	:( 	dialogue	Bah! You better be prepared next time!	呸！下次最好准备好了再来！
+urw_chat.txt	53	FAILED_PAYMENT	:| 	dialogue	Next time come barter only when you are up to it.	下次想好了再来交易。
+urw_chat.txt	54	FAILED_PAYMENT	:) 	dialogue	Hmph! I though you were reliable when it comes to trading.	哼！我还以为你做买卖挺可靠。
+urw_chat.txt	58	MISCHIEF_TELL_OFF	:( 	dialogue	How many times does <reptitle_mischief_ind> like you need to be told off before you stop!	像你这样的<reptitle_mischief_ind>，到底要警告多少次才肯住手！
+urw_chat.txt	59	MISCHIEF_TELL_OFF	:| 	dialogue	There are certain things you are not allowed to do!	有些事是不许做的！
+urw_chat.txt	60	MISCHIEF_TELL_OFF	:) 	dialogue	You need to follow certain rules around here.	在这里要守规矩。
+urw_chat.txt	64	DROP_OUR_GOODS	:( 	dialogue	Drop our goods right now, you <reptitle_stealing>!	马上放下我们的东西，你这个<reptitle_stealing>！
+urw_chat.txt	65	DROP_OUR_GOODS	:| 	dialogue	Drop our goods right now!	马上放下我们的东西！
+urw_chat.txt	66	DROP_OUR_GOODS	:) 	dialogue	I have to ask you to drop our goods now!	请你现在就放下我们的东西！
+urw_chat.txt	69	ADULT_TOPIC	:| 	dialogue	Talk to the adults.	去和大人说吧。
+urw_chat.txt	73	GREET_MORNING	:( 	dialogue	Hmpf.	哼。
+urw_chat.txt	74	GREET_MORNING	:| 	dialogue	Good morning, <plr_identity>.	早上好，<plr_identity>。
+urw_chat.txt	75	GREET_MORNING	:) 	dialogue	Good morning and an even better day to you, <plr_identity>!	早上好，祝你今天过得更好，<plr_identity>！
+urw_chat.txt	78	GREET_NIGHT	:( 	dialogue	Why are you bothering me at this hour, <plr_bad_name>?	这么晚了，来烦我干什么，<plr_bad_name>？
+urw_chat.txt	79	GREET_NIGHT	:| 	dialogue	You are bothering us at unusual hour, <plr_identity>.	这个时候来打扰我们，可不太合适，<plr_identity>。
+urw_chat.txt	80	GREET_NIGHT	:) 	dialogue	Don't you ever sleep, <plr_identity>?	你都不睡觉的吗，<plr_identity>？
+urw_chat.txt	83	GREET	:( 	dialogue	I am listening, <plr_bad_name>.	我听着呢，<plr_bad_name>。
+urw_chat.txt	84	GREET	:| 	dialogue	Greetings, <plr_identity>.	你好，<plr_identity>。
+urw_chat.txt	85	GREET	:) 	dialogue	Good day, <plr_identity>.	日安，<plr_identity>。
+urw_chat.txt	88	GREET_LONG_TIME	:( 	dialogue	So you <plr_bad_name> have returned.	你这个<plr_bad_name>又回来了。
+urw_chat.txt	89	GREET_LONG_TIME	:| 	dialogue	I haven't seen you much around here lately!	最近很少见你在这附近啊！
+urw_chat.txt	90	GREET_LONG_TIME	:) 	dialogue	It's good to see you again!	很高兴又见到你！
+urw_chat.txt	93	GREET_LONGER_TIME	:( 	dialogue	I hoped you <plr_bad_name> wouldn't ever return.	我还指望你这个<plr_bad_name>再也别回来。
+urw_chat.txt	94	GREET_LONGER_TIME	:| 	dialogue	Where have you been hiding yourself?	你都躲到哪儿去了？
+urw_chat.txt	95	GREET_LONGER_TIME	:) 	dialogue	Good to see you after such a long time!	好久不见，真高兴见到你！
+urw_chat.txt	98	GREET_QUERY	:( 	dialogue	What do you want?	你想干什么？
+urw_chat.txt	99	GREET_QUERY	:| 	dialogue	What's on your mind?	你在想什么？
+urw_chat.txt	100	GREET_QUERY	:) 	dialogue	What can I do for you?	有什么可以帮你的吗？
+urw_chat.txt	103	INTRODUCTION_REMARK	:( 	dialogue	Good to know you, <plr_name>.	很高兴认识你，<plr_name>。
+urw_chat.txt	104	INTRODUCTION_REMARK	:| 	dialogue	I'm pleased to meet you, <plr_name>.	幸会，<plr_name>。
+urw_chat.txt	105	INTRODUCTION_REMARK	:) 	dialogue	<plr_name>, it was about time to hear your name at last.	<plr_name>，总算听到你的名字了。
+urw_chat.txt	109	WOM_BAD_INFO		dialogue	Our neighbours came to warn us about %s.	邻居们来警告我们，要小心%s。
+urw_chat.txt	110	WOM_BAD_INFO	many: 	dialogue	We've been warned about %s at this area.	我们收到过警告，说这附近有%s。
+urw_chat.txt	113	WOM_BAD_NEWS		dialogue	Unpleasant news about %s have reached us.	有关%s的坏消息已经传到我们这里。
+urw_chat.txt	114	WOM_BAD_NEWS	many: 	dialogue	We have received many news about %s.	我们收到了不少有关%s的消息。
+urw_chat.txt	117	WOM_BAD_RUMORS		dialogue	Disturbing rumor about %s has been spreading around here lately.	最近这里一直流传着有关%s的令人不安的传言。
+urw_chat.txt	118	WOM_BAD_RUMORS	many: 	dialogue	Many unpleasant rumors about %s have come to our attention.	我们听说了不少有关%s的坏传闻。
+urw_chat.txt	121	BANISH_PRECAUTION	:( 	dialogue	We don't want you around here, <plr_bad_name>. Go away!	我们不想在这里看到你，<plr_bad_name>。滚开！
+urw_chat.txt	122	BANISH_PRECAUTION	:| 	dialogue	You are not welcome here now, <plr_identity>. 	你现在不受欢迎，<plr_identity>。
+urw_chat.txt	123	BANISH_PRECAUTION	:) 	dialogue	We have to ask you to leave for some time, <plr_identity>. 	我们得请你离开一阵子，<plr_identity>。
+urw_chat.txt	126	THEFT_SUSPICION		dialogue	We keep an eye out for thieves, <plr_identity>.	我们可一直提防着小偷，<plr_identity>。
+urw_chat.txt	129	THEFT_CHARGE		dialogue	You seem to be one shameless thief, <plr_identity>!	你看来就是个无耻的小偷，<plr_identity>！
+urw_chat.txt	132	MURDER_SUSPICION		dialogue	We keep an eye out for you too, <plr_identity>.	我们也会盯着你，<plr_identity>。
+urw_chat.txt	135	MURDER_CHARGE		dialogue	You have blood on your hands, <plr_identity>! 	你手上沾了人命，<plr_identity>！
+urw_chat.txt	140	DELIVER_GENERAL	:( 	dialogue	For me? Well thank you, <plr_identity>.	给我的？那就谢谢你了，<plr_identity>。
+urw_chat.txt	141	DELIVER_GENERAL	:| 	dialogue	I accept your offerings, <plr_identity>.	你的礼物我收下了，<plr_identity>。
+urw_chat.txt	142	DELIVER_GENERAL	:) 	dialogue	Thanks, <plr_identity>. This might come in handy.	谢谢，<plr_identity>。这东西也许用得上。
+urw_chat.txt	146	DELIVER_HELP	:( 	dialogue	This is much appreciated, <plr_identity>.	实在感谢，<plr_identity>。
+urw_chat.txt	147	DELIVER_HELP	:| 	dialogue	My humble thanks, <plr_identity>. Your favours will be remembered.	衷心感谢，<plr_identity>。你的恩情我们会记住。
+urw_chat.txt	148	DELIVER_HELP	:) 	dialogue	You are such <reptitle_help_ind>, <plr_identity>! I hope we can repay your favours one day.	你真是<reptitle_help_ind>，<plr_identity>！希望有一天能报答你的恩情。
+urw_chat.txt	152	DELIVER_COMP	:| 	dialogue	Alright, companion. I got it.	好，伙伴，我明白了。
+urw_chat.txt	157	LOWREP_REFUSAL		dialogue	Bah! I don't feel like helping you on that matter, <plr_bad_name>.	呸！这事我可不想帮你，<plr_bad_name>。
+urw_chat.txt	161	BLACKSMITH_UNCLAIMED_ORDER	:( 	dialogue	You dare to ask, <reptitle_trading>! You didn't come to claim it in time, so I don't have it for you anymore.	你这个<reptitle_trading>，还敢来问！你没按时来取，我已经不给你留着了。
+urw_chat.txt	162	BLACKSMITH_UNCLAIMED_ORDER	:| 	dialogue	Phew, it is too late to ask now! You <plr_bad_name> didn't come to claim it in time, so I gave it to somebody else.	唉，现在问太迟了！你这个<plr_bad_name>没按时来取，我就给别人了。
+urw_chat.txt	163	BLACKSMITH_UNCLAIMED_ORDER	:) 	dialogue	I'm sorry, <plr_identity>, but as you didn't come to claim it in time I gave it to somebody else.	抱歉，<plr_identity>，你没按时来取，我就给别人了。
+urw_combat.txt	15	S_FAIL	PC	branch	fail	未能
+urw_combat.txt	16	S_FAIL	*	branch	fails	未能
+urw_combat.txt	19	S_TRY	PC	branch	try	尝试
+urw_combat.txt	20	S_TRY	*	branch	tries	尝试
+urw_combat.txt	25	HANDMODE	1	branch	primary	主手
+urw_combat.txt	26	HANDMODE	2	branch	secondary	副手
+urw_combat.txt	32	WIELD_WEAPON	PC	branch	+<the_fullitem> wielded as a [HANDMODE:<weapon_slot>] weapon.	+你将<the_fullitem>作为[HANDMODE:<weapon_slot>]武器握在手中。
+urw_combat.txt	33	WIELD_WEAPON	*	branch	<npc_desc> wields <fullitem>.	<npc_desc>拿起了<fullitem>。
+urw_combat.txt	36	UNWIELD_WEAPON	PC	branch	+You unwield your <fullitem>.	+你收起了手中的<fullitem>。
+urw_combat.txt	37	UNWIELD_WEAPON	*	branch	<npc_desc> unwields <fullitem>.	<npc_desc>收起了手中的<fullitem>。
+urw_combat.txt	40	LOAD_CROSSBOW	PC	branch	+You start to load <the_fullitem>.	+你开始给<the_fullitem>装填。
+urw_combat.txt	41	LOAD_CROSSBOW	*	branch	<npc_desc> starts to load <fullitem>.	<npc_desc>开始给<fullitem>装填。
+urw_combat.txt	68	ATTACK_NOUN	POINT	branch	thrust	刺击
+urw_combat.txt	69	ATTACK_NOUN	EDGE	branch	strike	劈砍
+urw_combat.txt	70	ATTACK_NOUN	BLUNT	branch	blow	敲击
+urw_combat.txt	71	ATTACK_NOUN	SHOOT	branch	shot	射击
+urw_combat.txt	72	ATTACK_NOUN	THROW	branch	throw	投掷
+urw_combat.txt	73	ATTACK_NOUN	PUNCH	branch	punch	拳击
+urw_combat.txt	74	ATTACK_NOUN	KICK	branch	kick	踢击
+urw_combat.txt	75	ATTACK_NOUN	BITE	branch	snap	咬击
+urw_combat.txt	76	ATTACK_NOUN	CLAW	branch	claw	爪击
+urw_combat.txt	77	ATTACK_NOUN	PAW	branch	claw	爪击
+urw_combat.txt	78	ATTACK_NOUN	CRUSH	branch	hug	搂压
+urw_combat.txt	79	ATTACK_NOUN	HOOF	branch	kick	踢击
+urw_combat.txt	80	ATTACK_NOUN	HORN	branch	butt	顶撞
+urw_combat.txt	81	ATTACK_NOUN	ANTLER	branch	butt	顶撞
+urw_combat.txt	82	ATTACK_NOUN	TUSK	branch	bite	咬击
+urw_combat.txt	83	ATTACK_NOUN	BEAK	branch	beak	啄击
+urw_combat.txt	84	ATTACK_NOUN	BIG_BITE	branch	bite	咬击
+urw_combat.txt	85	ATTACK_NOUN	*	branch	attack	攻击
+urw_combat.txt	89	ATTACK_VERB	POINT	branch	to stab	刺向
+urw_combat.txt	90	ATTACK_VERB	EDGE	branch	to slash	劈砍
+urw_combat.txt	91	ATTACK_VERB	BLUNT	branch	to swing	挥击
+urw_combat.txt	92	ATTACK_VERB	SHOOT	branch	to shoot	射击
+urw_combat.txt	93	ATTACK_VERB	THROW	branch	to throw	投向
+urw_combat.txt	94	ATTACK_VERB	PUNCH	branch	to punch	拳击
+urw_combat.txt	95	ATTACK_VERB	KICK	branch	to kick	踢击
+urw_combat.txt	96	ATTACK_VERB	NIP	branch	to nip	轻咬
+urw_combat.txt	97	ATTACK_VERB	SNAP	branch	to snap at	猛咬
+urw_combat.txt	98	ATTACK_VERB	BITE	branch	to bite	撕咬
+urw_combat.txt	99	ATTACK_VERB	RIP	branch	to claw	爪击
+urw_combat.txt	100	ATTACK_VERB	SMACK	branch	to smack	拍击
+urw_combat.txt	101	ATTACK_VERB	CRUSH	branch	to crush	压碎
+urw_combat.txt	102	ATTACK_VERB	BIG_BITE	branch	to bite	撕咬
+urw_combat.txt	103	ATTACK_VERB	HOOF_KICK	branch	to kick	踢击
+urw_combat.txt	104	ATTACK_VERB	RAM	branch	to ram	顶撞
+urw_combat.txt	105	ATTACK_VERB	CHARGE	branch	to charge	冲撞
+urw_combat.txt	106	ATTACK_VERB	ANTLER*	branch	to gore	角挑
+urw_combat.txt	107	ATTACK_VERB	CLAW	branch	to claw	爪击
+urw_combat.txt	108	ATTACK_VERB	SAVAGE	branch	to savage	猛咬
+urw_combat.txt	109	ATTACK_VERB	SNAKEBITE	branch	to strike	突袭咬向
+urw_combat.txt	110	ATTACK_VERB	PECK	branch	to peck	啄击
+urw_combat.txt	111	ATTACK_VERB	SCRATCH	branch	to scratch	抓挠
+urw_combat.txt	112	ATTACK_VERB	PAW	branch	to bite	撕咬
+urw_combat.txt	113	ATTACK_VERB	SQUEEZE	branch	to crush	压碎
+urw_combat.txt	114	ATTACK_VERB	HORN	branch	to charge	冲撞
+urw_combat.txt	115	ATTACK_VERB	HOOF	branch	to kick	踢击
+urw_combat.txt	116	ATTACK_VERB	TUSK	branch	to charge	冲撞
+urw_combat.txt	117	ATTACK_VERB	ANTLER	branch	to gore	角挑
+urw_combat.txt	118	ATTACK_VERB	BEAK	branch	to peck	啄击
+urw_combat.txt	123	ATTACK_HITS	SHOOT	branch	shot hits	射击命中
+urw_combat.txt	124	ATTACK_HITS	THROW	branch	throw lands	投掷命中
+urw_combat.txt	125	ATTACK_HITS	NIP	branch	teeth snap	牙齿咬住
+urw_combat.txt	126	ATTACK_HITS	SNAP	branch	jaws bite	双颚咬住
+urw_combat.txt	127	ATTACK_HITS	BITE	branch	fangs tear	獠牙撕扯着
+urw_combat.txt	128	ATTACK_HITS	RIP	branch	claws rip	利爪撕开
+urw_combat.txt	129	ATTACK_HITS	SMACK	branch	paw slams	爪掌拍中
+urw_combat.txt	130	ATTACK_HITS	CRUSH	branch	paws grab	双爪抓住
+urw_combat.txt	131	ATTACK_HITS	BIG_BITE	branch	maw lunges	大口咬向
+urw_combat.txt	132	ATTACK_HITS	HOOF_KICK	branch	hoof stabs	蹄子踢中
+urw_combat.txt	133	ATTACK_HITS	RAM	branch	horns charge	犄角撞上
+urw_combat.txt	134	ATTACK_HITS	CHARGE	branch	charge hits	冲撞击中
+urw_combat.txt	135	ATTACK_HITS	ANTLER*	branch	antlers rake	鹿角划过
+urw_combat.txt	136	ATTACK_HITS	CLAW	branch	claws slash	利爪划开
+urw_combat.txt	137	ATTACK_HITS	SAVAGE	branch	jaws snap	双颚猛咬
+urw_combat.txt	138	ATTACK_HITS	SNAKEBITE	branch	fangs lunge	毒牙刺向
+urw_combat.txt	139	ATTACK_HITS	PECK	branch	beak thrusts	鸟喙刺中
+urw_combat.txt	140	ATTACK_HITS	SCRATCH	branch	claws swipe	利爪扫过
+urw_combat.txt	141	ATTACK_HITS	PAW	branch	paw slams	爪掌拍中
+urw_combat.txt	142	ATTACK_HITS	SQUEEZE	branch	paws grab	双爪抓住
+urw_combat.txt	143	ATTACK_HITS	HORN	branch	horns charge	犄角撞上
+urw_combat.txt	144	ATTACK_HITS	HOOF	branch	hoof stabs	蹄子踢中
+urw_combat.txt	145	ATTACK_HITS	TUSK	branch	body lunges	身体扑向
+urw_combat.txt	146	ATTACK_HITS	ANTLER	branch	antlers rake	鹿角划过
+urw_combat.txt	147	ATTACK_HITS	BEAK	branch	beak thrusts	鸟喙刺中
+urw_combat.txt	154	WEAPON_ATTACK_DECLARATION	PC	branch	You try [ATTACK_VERB:<attack_aspect>] <defender_defdesc> with your <attack_weapon>.	你试着用<attack_weapon>[ATTACK_VERB:<attack_aspect>]<defender_defdesc>。
+urw_combat.txt	155	WEAPON_ATTACK_DECLARATION	*	branch	<attacker_defdesc> tries [ATTACK_VERB:<attack_aspect>] <defender_defdesc> with [PP_GEN:<attacker>] <attack_weapon>.	<attacker_defdesc>试着用[PP_GEN:<attacker>]<attack_weapon>[ATTACK_VERB:<attack_aspect>]<defender_defdesc>。
+urw_combat.txt	156	WEAPON_ATTACK_DECLARATION	HEAR	branch	You hear sounds of fighting in the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]传来打斗声。
+urw_combat.txt	159	UNARMED_ATTACK_DECLARATION	PC	branch	You try [ATTACK_VERB:<attack_aspect>] <defender_defdesc>.	你试着[ATTACK_VERB:<attack_aspect>]<defender_defdesc>。
+urw_combat.txt	160	UNARMED_ATTACK_DECLARATION	ANIMAL	branch	<attacker_defdesc> tries [ATTACK_VERB:<attack_aspect>] <defender_defdesc>.	<attacker_defdesc>试着[ATTACK_VERB:<attack_aspect>]<defender_defdesc>。
+urw_combat.txt	161	UNARMED_ATTACK_DECLARATION	*	branch	<attacker_defdesc> tries [ATTACK_VERB:<attack_aspect>] <defender_defdesc>.	<attacker_defdesc>试着[ATTACK_VERB:<attack_aspect>]<defender_defdesc>。
+urw_combat.txt	164	BOW_ATTACK_DECLARATION	PC	branch	You aim your <attack_bow> at <defender_defdesc> and shoot.	你用<attack_bow>瞄准<defender_defdesc>，射了出去。
+urw_combat.txt	165	BOW_ATTACK_DECLARATION	*	branch	<attacker_desc> aims [PP_GEN:<attacker>] <attack_bow> at <defender_defdesc> and shoots.	<attacker_desc>用[PP_GEN:<attacker>]<attack_bow>瞄准<defender_defdesc>，射了出去。
+urw_combat.txt	168	THROW_ATTACK_DECLARATION	PC	branch	You try to throw your <attack_weapon> at <defender_defdesc>.	你试着把<attack_weapon>掷向<defender_defdesc>。
+urw_combat.txt	169	THROW_ATTACK_DECLARATION	*	branch	<attacker_desc> tries to throw [PP_GEN:<attacker>] <attack_weapon> at <defender_defdesc>.	<attacker_desc>试着把[PP_GEN:<attacker>]<attack_weapon>掷向<defender_defdesc>。
+urw_combat.txt	173	BAD_MELEE_WEAPON		plain	!You can not strike with <item_ind>.	!你不能用<item_ind>进行近战攻击。
+urw_combat.txt	180	MELEE_INFERIOR	PC	branch	Your clumsy [ATTACK_NOUN:<attack_aspect>] is barely an attack	你笨拙地使出[ATTACK_NOUN:<attack_aspect>]，勉强算得上攻击
+urw_combat.txt	181	MELEE_INFERIOR	ANIMAL	branch	It makes a slow and clumsy attempt [ATTACK_VERB:<attack_aspect>] [PP_OBJ:<defender>]	它缓慢而笨拙地试图[ATTACK_VERB:<attack_aspect>][PP_OBJ:<defender>]
+urw_combat.txt	182	MELEE_INFERIOR	*	branch	[PP_GEN:<attacker>] pathetic [ATTACK_NOUN:<attack_aspect>] is barely an attack	[PP_GEN:<attacker>][ATTACK_NOUN:<attack_aspect>]糟糕透顶，勉强算得上攻击
+urw_combat.txt	185	MELEE_MARGINAL	PC	branch	You fail to do more than a sloppy [ATTACK_NOUN:<attack_aspect>]	你只能勉强使出一记草率的[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	186	MELEE_MARGINAL	ANIMAL	branch	It fails [ATTACK_VERB:<attack_aspect>] [PP_OBJ:<defender>] efficiently	它没能有效地[ATTACK_VERB:<attack_aspect>][PP_OBJ:<defender>]
+urw_combat.txt	187	MELEE_MARGINAL	*	branch	[PP_SUBJ:<attacker>] fails to do more than a sloppy [ATTACK_NOUN:<attack_aspect>]	[PP_SUBJ:<attacker>]只能勉强使出一记草率的[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	190	MELEE_GOOD	PC	branch	You execute a skilled [ATTACK_NOUN:<attack_aspect>]	你熟练地使出一记[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	191	MELEE_GOOD	ANIMAL	branch	It rushes [ATTACK_VERB:<attack_aspect>] [PP_OBJ:<defender>]	它猛冲过来[ATTACK_VERB:<attack_aspect>][PP_OBJ:<defender>]
+urw_combat.txt	192	MELEE_GOOD	*	branch	[PP_SUBJ:<attacker>] executes a skilled [ATTACK_NOUN:<attack_aspect>]	[PP_SUBJ:<attacker>]熟练地使出一记[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	195	MELEE_SUPERIOR	PC	branch	You carry out a perfect [ATTACK_NOUN:<attack_aspect>]	你完美地使出一记[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	196	MELEE_SUPERIOR	ANIMAL	branch	Its attempt [ATTACK_VERB:<attack_aspect>] [PP_OBJ:<defender>] is fast and furious	它迅猛地[ATTACK_VERB:<attack_aspect>][PP_OBJ:<defender>]
+urw_combat.txt	197	MELEE_SUPERIOR	*	branch	[PP_SUBJ:<attacker>] carries out a perfect [ATTACK_NOUN:<attack_aspect>]	[PP_SUBJ:<attacker>]完美地使出一记[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	204	MISSILE_INFERIOR	PC	branch	You totally blow your [ATTACK_NOUN:<attack_aspect>] sending the <attack_weapon> wild	你的[ATTACK_NOUN:<attack_aspect>]完全失手，<attack_weapon>飞得毫无准头
+urw_combat.txt	205	MISSILE_INFERIOR	*	branch	[PP_SUBJ:<attacker>] totally blows [PP_GEN:<attacker>] [ATTACK_NOUN:<attack_aspect>] sending the <attack_weapon> wild	[PP_SUBJ:<attacker>]完全失手，[PP_GEN:<attacker>][ATTACK_NOUN:<attack_aspect>]让<attack_weapon>飞得毫无准头
+urw_combat.txt	208	MISSILE_MARGINAL	PC	branch	You fail to deliver a steady [ATTACK_NOUN:<attack_aspect>]	你的[ATTACK_NOUN:<attack_aspect>]没能保持稳定
+urw_combat.txt	209	MISSILE_MARGINAL	*	branch	[PP_SUBJ:<attacker>] fails to deliver a steady [ATTACK_NOUN:<attack_aspect>]	[PP_SUBJ:<attacker>]没能稳定地完成[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	212	MISSILE_GOOD	PC	branch	You execute a steady [ATTACK_NOUN:<attack_aspect>]	你稳稳地完成了[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	213	MISSILE_GOOD	*	branch	[PP_SUBJ:<attacker>] executes a steady [ATTACK_NOUN:<attack_aspect>]	[PP_SUBJ:<attacker>]稳稳地完成了[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	216	MISSILE_SUPERIOR	PC	branch	You carry out a perfectly true [ATTACK_NOUN:<attack_aspect>]	你的[ATTACK_NOUN:<attack_aspect>]精准无比
+urw_combat.txt	217	MISSILE_SUPERIOR	*	branch	[PP_SUBJ:<attacker>] carries out a perfectly true [ATTACK_NOUN:<attack_aspect>]	[PP_SUBJ:<attacker>]使出了精准无比的[ATTACK_NOUN:<attack_aspect>]
+urw_combat.txt	227	TRAJECTORY_INFERIOR		plain	the <attack_weapon> travels badly off course barely reaching <defender_defdesc>	<attack_weapon>严重偏离方向，勉强飞到<defender_defdesc>附近
+urw_combat.txt	230	TRAJECTORY_MARGINAL		plain	the <attack_weapon> flies slightly off <defender_defdesc>	<attack_weapon>稍稍偏离了<defender_defdesc>
+urw_combat.txt	233	TRAJECTORY_GOOD		plain	the <attack_weapon> flies true at <defender_defdesc>	<attack_weapon>准确地飞向<defender_defdesc>
+urw_combat.txt	236	TRAJECTORY_SUPERIOR		plain	the <attack_weapon> flies straight at <defender_defdesc>	<attack_weapon>径直飞向<defender_defdesc>
+urw_combat.txt	242	TARGET_SIZE_MISS		plain	the [ATTACK_NOUN:<attack_aspect>] isn't accurate enough to hit a target that size.	这次[ATTACK_NOUN:<attack_aspect>]不够准确，无法击中这么小的目标。
+urw_combat.txt	248	TARGET_LOCATION_MISS		plain	the [ATTACK_NOUN:<attack_aspect>] isn't accurate enough to hit that challenging a mark.	这次[ATTACK_NOUN:<attack_aspect>]不够准确，无法击中如此难瞄准的目标。
+urw_combat.txt	253	SHIELD_PROTECTS	PC	branch	the shield protects you.	盾牌护住了你。
+urw_combat.txt	254	SHIELD_PROTECTS	*	branch	the shield protects [PP_OBJ:<defender>].	盾牌护住了[PP_OBJ:<defender>]。
+urw_combat.txt	261	COUNTERSTRIKE_INFERIOR	PC	branch	you fumble with your <defend_weapon> failing your counterstrike attempt.	你没拿稳<defend_weapon>，反击失败了。
+urw_combat.txt	262	COUNTERSTRIKE_INFERIOR	*	branch	[PP_SUBJ:<defender>] fumbles with [PP_GEN:<defender>] <defend_weapon> failing [PP_GEN:<defender>] counterstrike attempt.	[PP_SUBJ:<defender>]没拿稳[PP_GEN:<defender>]<defend_weapon>，[PP_GEN:<defender>]反击失败了。
+urw_combat.txt	265	COUNTERSTRIKE_MARGINAL	PC	branch	you counterstrike but fail to make a decent [ATTACK_NOUN:<defend_aspect>] with your <defend_weapon>.	你试着反击，却没能用<defend_weapon>使出像样的[ATTACK_NOUN:<defend_aspect>]。
+urw_combat.txt	266	COUNTERSTRIKE_MARGINAL	*	branch	[PP_SUBJ:<defender>] counterstrikes but fails to make a decent [ATTACK_NOUN:<defend_aspect>] with [PP_GEN:<defender>] <defend_weapon>.	[PP_SUBJ:<defender>]试着反击，却没能用[PP_GEN:<defender>]<defend_weapon>使出像样的[ATTACK_NOUN:<defend_aspect>]。
+urw_combat.txt	269	COUNTERSTRIKE_GOOD	PC	branch	you skilfully counterstrike with your <defend_weapon> [ATTACK_NOUN:<defend_aspect>].	你熟练地用<defend_weapon>使出[ATTACK_NOUN:<defend_aspect>]，予以反击。
+urw_combat.txt	270	COUNTERSTRIKE_GOOD	*	branch	[PP_SUBJ:<defender>] skilfully counterstrikes with [PP_GEN:<defender>] <defend_weapon> [ATTACK_NOUN:<defend_aspect>].	[PP_SUBJ:<defender>]熟练地用[PP_GEN:<defender>]<defend_weapon>使出[ATTACK_NOUN:<defend_aspect>]，予以反击。
+urw_combat.txt	273	COUNTERSTRIKE_SUPERIOR	PC	branch	you perform an excellent counterstrike with a deft [ATTACK_NOUN:<defend_aspect>] of your <defend_weapon>.	你巧妙地用<defend_weapon>使出[ATTACK_NOUN:<defend_aspect>]，完成了一次出色的反击。
+urw_combat.txt	274	COUNTERSTRIKE_SUPERIOR	*	branch	[PP_SUBJ:<defender>] performs an excellent counterstrike with a deft [ATTACK_NOUN:<defend_aspect>] of [PP_GEN:<defender>] <defend_weapon>.	[PP_SUBJ:<defender>]巧妙地用[PP_GEN:<defender>]<defend_weapon>使出[ATTACK_NOUN:<defend_aspect>]，完成了一次出色的反击。
+urw_combat.txt	281	COUNTERATTACK_INFERIOR	*	branch	[PP_SUBJ:<defender>] makes a slow and clumsy counterattack trying [ATTACK_VERB:<defend_aspect>] [PP_OBJ:<attacker>].	[PP_SUBJ:<defender>]缓慢而笨拙地反击，试图[ATTACK_VERB:<defend_aspect>][PP_OBJ:<attacker>]。
+urw_combat.txt	284	COUNTERATTACK_MARGINAL	*	branch	[PP_SUBJ:<defender>] counterattacks but fails [ATTACK_VERB:<defend_aspect>] [PP_OBJ:<attacker>] efficiently.	[PP_SUBJ:<defender>]发起反击，却没能有效地[ATTACK_VERB:<defend_aspect>][PP_OBJ:<attacker>]。
+urw_combat.txt	287	COUNTERATTACK_GOOD	*	branch	[PP_SUBJ:<defender>] rushes to counterattack aiming [ATTACK_VERB:<defend_aspect>] [PP_OBJ:<attacker>].	[PP_SUBJ:<defender>]冲上前反击，试图[ATTACK_VERB:<defend_aspect>][PP_OBJ:<attacker>]。
+urw_combat.txt	290	COUNTERATTACK_SUPERIOR	*	branch	[PP_SUBJ:<defender>] makes a furious counterattack [ATTACK_VERB:<defend_aspect>] [PP_OBJ:<attacker>].	[PP_SUBJ:<defender>]猛烈反击，[ATTACK_VERB:<defend_aspect>][PP_OBJ:<attacker>]。
+urw_combat.txt	295	BLOCK_INFERIOR	PC	branch	you fumble with your <defend_weapon> making a shaky block.	你笨拙地摆弄着<defend_weapon>，勉强招架。
+urw_combat.txt	296	BLOCK_INFERIOR	*	branch	[PP_SUBJ:<defender>] fumbles with [PP_GEN:<defender>] <defend_weapon> making a shaky block.	[PP_SUBJ:<defender>]笨拙地摆弄着[PP_GEN:<defender>]<defend_weapon>，勉强招架。
+urw_combat.txt	299	BLOCK_MARGINAL	PC	branch	you make an awkward attempt to block with your <defend_weapon>.	你笨拙地试着用<defend_weapon>格挡。
+urw_combat.txt	300	BLOCK_MARGINAL	*	branch	[PP_SUBJ:<defender>] makes an awkward attempt to block with [PP_GEN:<defender>] <defend_weapon>.	[PP_SUBJ:<defender>]笨拙地试着用[PP_GEN:<defender>]<defend_weapon>格挡。
+urw_combat.txt	303	BLOCK_GOOD	PC	branch	you quickly raise your <defend_weapon> to block it.	你迅速举起<defend_weapon>格挡。
+urw_combat.txt	304	BLOCK_GOOD	*	branch	[PP_SUBJ:<defender>] quickly raises [PP_GEN:<defender>] <defend_weapon> to block it.	[PP_SUBJ:<defender>]迅速举起[PP_GEN:<defender>]<defend_weapon>格挡。
+urw_combat.txt	307	BLOCK_SUPERIOR	PC	branch	you duck behind the cover of your <defend_weapon> making an excellent block.	你缩身藏在<defend_weapon>后，完成了出色的格挡。
+urw_combat.txt	308	BLOCK_SUPERIOR	*	branch	[PP_SUBJ:<defender>] ducks behind the cover of [PP_GEN:<defender>] <defend_weapon> making an excellent block.	[PP_SUBJ:<defender>]缩身藏在[PP_GEN:<defender>]<defend_weapon>后，完成了出色的格挡。
+urw_combat.txt	316	DODGE_INFERIOR	PC	branch	your attempt to dodge turns into a stumble.	你试图闪避，却踉跄了一下。
+urw_combat.txt	317	DODGE_INFERIOR	ANIMAL	branch	it doesn't do much to avoid the attack.	它几乎没能躲开攻击。
+urw_combat.txt	318	DODGE_INFERIOR	*	branch	[PP_GEN:<defender>] attempt to dodge turns into a stumble.	[PP_GEN:<defender>]闪避变成了踉跄。
+urw_combat.txt	321	DODGE_MARGINAL	PC	branch	your attempt to dodge is clumsy and late.	你的闪避又笨拙又迟缓。
+urw_combat.txt	322	DODGE_MARGINAL	ANIMAL	branch	it makes a late attempt to leap away.	它试图跳开，却晚了一步。
+urw_combat.txt	323	DODGE_MARGINAL	*	branch	[PP_GEN:<defender>] attempt to dodge is clumsy and late.	[PP_GEN:<defender>]闪避又笨拙又迟缓。
+urw_combat.txt	326	DODGE_GOOD	PC	branch	you quickly dodge aside.	你迅速闪到一旁。
+urw_combat.txt	327	DODGE_GOOD	ANIMAL	branch	it quickly rushes aside.	它迅速冲到一旁。
+urw_combat.txt	328	DODGE_GOOD	*	branch	[PP_SUBJ:<defender>] quickly dodges aside.	[PP_SUBJ:<defender>]迅速闪到一旁。
+urw_combat.txt	331	DODGE_SUPERIOR	PC	branch	you dodge like a swan.	你像天鹅般轻巧地躲开了。
+urw_combat.txt	332	DODGE_SUPERIOR	ANIMAL	branch	it gracefully leaps away from the attack.	它轻巧地跳开，避过攻击。
+urw_combat.txt	333	DODGE_SUPERIOR	*	branch	[PP_SUBJ:<defender>] dodges like a swan.	[PP_SUBJ:<defender>]像天鹅般轻巧地躲开了。
+urw_combat.txt	346	MOVEMENT_DODGE_SUCCESS	PC	branch	you don't stay put, making a lucky dodge.	你没有停在原地，幸运地躲过了攻击。
+urw_combat.txt	347	MOVEMENT_DODGE_SUCCESS	*	branch	[PP_SUBJ:<defender>] doesn't stay put, making a lucky dodge.	[PP_SUBJ:<defender>]没有停在原地，幸运地躲过了攻击。
+urw_combat.txt	350	MOVEMENT_DODGE_FAILURE	PC	branch	your movements don't significantly hamper [PP_GEN:<attacker>] [ATTACK_NOUN:<attack_aspect>].	你的移动没能明显妨碍[PP_GEN:<attacker>][ATTACK_NOUN:<attack_aspect>]。
+urw_combat.txt	351	MOVEMENT_DODGE_FAILURE	*	branch	[PP_GEN:<defender>] movements don't significantly hamper [PP_GEN:<attacker>] [ATTACK_NOUN:<attack_aspect>].	[PP_GEN:<defender>]移动没能明显妨碍[PP_GEN:<attacker>][ATTACK_NOUN:<attack_aspect>]。
+urw_combat.txt	357	MOVING_DODGE_SUCCESS	PC	branch	you move fast enough to get out of the way.	你移动得足够快，及时躲开了。
+urw_combat.txt	358	MOVING_DODGE_SUCCESS	*	branch	[PP_SUBJ:<defender>] moves fast enough to get out of the way.	[PP_SUBJ:<defender>]移动得足够快，及时躲开了。
+urw_combat.txt	361	MOVING_DODGE_FAILURE	PC	branch	you don't make it out of the way.	你没能及时躲开。
+urw_combat.txt	362	MOVING_DODGE_FAILURE	*	branch	[PP_SUBJ:<defender>] doesn't make it out of the way.	[PP_SUBJ:<defender>]没能及时躲开。
+urw_combat.txt	371	ATTACKER_STRIKE_LIGHT	PC	branch	[PP_GEN:<attacker>] [ATTACK_NOUN:<attack_aspect>] glances off of [PP_GEN:<defender>] <bodypart> still hurting [PP_OBJ:<defender>].	[PP_GEN:<attacker>][ATTACK_NOUN:<attack_aspect>]擦过[PP_GEN:<defender>]<bodypart>，仍然伤到了[PP_OBJ:<defender>]。
+urw_combat.txt	372	ATTACKER_STRIKE_LIGHT	ANIMAL	branch	It barely catches [PP_OBJ:<defender>] but manages [ATTACK_VERB:<attack_aspect>] [PP_OBJ:<defender>] in [PP_GEN:<defender>] <bodypart>.	它勉强碰到[PP_OBJ:<defender>]，但还是成功[ATTACK_VERB:<attack_aspect>][PP_OBJ:<defender>]，击中了[PP_GEN:<defender>]<bodypart>。
+urw_combat.txt	373	ATTACKER_STRIKE_LIGHT	*	branch	[PP_GEN:<attacker>] [ATTACK_NOUN:<attack_aspect>] glances off of [PP_GEN:<defender>] <bodypart> still hurting [PP_OBJ:<defender>].	[PP_GEN:<attacker>][ATTACK_NOUN:<attack_aspect>]擦过[PP_GEN:<defender>]<bodypart>，仍然伤到了[PP_OBJ:<defender>]。
+urw_combat.txt	376	ATTACKER_STRIKE	PC	branch	You land a solid hit to [PP_GEN:<defender>] <bodypart>.	你结结实实地击中了[PP_GEN:<defender>]<bodypart>。
+urw_combat.txt	377	ATTACKER_STRIKE	ANIMAL	branch	Its [ATTACK_HITS:<attack_aspect>] [PP_GEN:<defender>] <bodypart>.	它的[ATTACK_HITS:<attack_aspect>][PP_GEN:<defender>]<bodypart>。
+urw_combat.txt	378	ATTACKER_STRIKE	*	branch	[PP_SUBJ:<attacker>] lands a solid hit to [PP_GEN:<defender>] <bodypart>.	[PP_SUBJ:<attacker>]结结实实地击中了[PP_GEN:<defender>]<bodypart>。
+urw_combat.txt	381	ATTACKER_STRIKE_HARD	PC	branch	Your <attack_weapon> strikes hard to [PP_GEN:<defender>] <bodypart>!	你的<attack_weapon>重重击中了[PP_GEN:<defender>]<bodypart>！
+urw_combat.txt	382	ATTACKER_STRIKE_HARD	ANIMAL	branch	Its [ATTACK_HITS:<attack_aspect>] [PP_GEN:<defender>] <bodypart> fiercely!	它的[ATTACK_HITS:<attack_aspect>][PP_GEN:<defender>]<bodypart>，力道凶猛！
+urw_combat.txt	383	ATTACKER_STRIKE_HARD	*	branch	[PP_GEN:<attacker>] <attack_weapon> strikes hard to [PP_GEN:<defender>] <bodypart>!	[PP_GEN:<attacker>]<attack_weapon>重重击中了[PP_GEN:<defender>]<bodypart>！
+urw_combat.txt	395	DEFENDER_STRIKE_LIGHT	PC	branch	[PP_GEN:<defender>] [ATTACK_NOUN:<defend_aspect>] glances off of [PP_GEN:<attacker>] <bodypart_counterstrike> still hurting [PP_OBJ:<attacker>].	[PP_GEN:<defender>][ATTACK_NOUN:<defend_aspect>]擦过[PP_GEN:<attacker>]<bodypart_counterstrike>，仍然伤到了[PP_OBJ:<attacker>]。
+urw_combat.txt	396	DEFENDER_STRIKE_LIGHT	ANIMAL	branch	It barely catches [PP_OBJ:<attacker>] but manages [ATTACK_VERB:<defend_aspect>] [PP_OBJ:<attacker>] in [PP_GEN:<attacker>] <bodypart_counterstrike>.	它勉强碰到[PP_OBJ:<attacker>]，但还是成功[ATTACK_VERB:<defend_aspect>][PP_OBJ:<attacker>]，击中了[PP_GEN:<attacker>]<bodypart_counterstrike>。
+urw_combat.txt	397	DEFENDER_STRIKE_LIGHT	*	branch	[PP_GEN:<defender>] [ATTACK_NOUN:<defend_aspect>] glances off of [PP_GEN:<attacker>] <bodypart_counterstrike> still hurting [PP_OBJ:<attacker>].	[PP_GEN:<defender>][ATTACK_NOUN:<defend_aspect>]擦过[PP_GEN:<attacker>]<bodypart_counterstrike>，仍然伤到了[PP_OBJ:<attacker>]。
+urw_combat.txt	400	DEFENDER_STRIKE	PC	branch	You land a solid hit to [PP_GEN:<attacker>] <bodypart_counterstrike>.	你结结实实地击中了[PP_GEN:<attacker>]<bodypart_counterstrike>。
+urw_combat.txt	401	DEFENDER_STRIKE	ANIMAL	branch	Its [ATTACK_HITS:<defend_aspect>] [PP_GEN:<attacker>] <bodypart_counterstrike>.	它的[ATTACK_HITS:<defend_aspect>][PP_GEN:<attacker>]<bodypart_counterstrike>。
+urw_combat.txt	402	DEFENDER_STRIKE	*	branch	[PP_SUBJ:<defender>] lands a solid hit to [PP_GEN:<attacker>] <bodypart_counterstrike>.	[PP_SUBJ:<defender>]结结实实地击中了[PP_GEN:<attacker>]<bodypart_counterstrike>。
+urw_combat.txt	405	DEFENDER_STRIKE_HARD	PC	branch	Your <defend_weapon> strikes hard to [PP_GEN:<attacker>] <bodypart_counterstrike>!	你的<defend_weapon>重重击中了[PP_GEN:<attacker>]<bodypart_counterstrike>！
+urw_combat.txt	406	DEFENDER_STRIKE_HARD	ANIMAL	branch	Its [ATTACK_HITS:<defend_aspect>] [PP_GEN:<attacker>] <bodypart_counterstrike> fiercely!	它的[ATTACK_HITS:<defend_aspect>][PP_GEN:<attacker>]<bodypart_counterstrike>，力道凶猛！
+urw_combat.txt	407	DEFENDER_STRIKE_HARD	*	branch	[PP_GEN:<defender>] <defend_weapon> strikes hard to [PP_GEN:<attacker>] <bodypart_counterstrike>!	[PP_GEN:<defender>]<defend_weapon>重重击中了[PP_GEN:<attacker>]<bodypart_counterstrike>！
+urw_combat.txt	416	CONJUNCTION_BOTH_FAIL		plain	even though	尽管
+urw_combat.txt	424	BOTH_STRIKE		plain	!Both parties manage to hurt each other.	!双方都伤到了对方。
+urw_combat.txt	430	MELEE_BLOCK	PC	branch	You block [PP_GEN:<attacker>] <attack_weapon>.	你挡住了[PP_GEN:<attacker>]<attack_weapon>。
+urw_combat.txt	431	MELEE_BLOCK	*	branch	<defender_defdesc> blocks [PP_GEN:<attacker>] <attack_weapon>.	<defender_defdesc>挡住了[PP_GEN:<attacker>]<attack_weapon>。
+urw_combat.txt	436	MELEE_PARRY	PC	branch	You deftly parry [PP_GEN:<attacker>] <attack_weapon>.	你巧妙地拨开了[PP_GEN:<attacker>]<attack_weapon>。
+urw_combat.txt	437	MELEE_PARRY	*	branch	<defender_defdesc> deftly parries [PP_GEN:<attacker>] <attack_weapon>.	<defender_defdesc>巧妙地拨开了[PP_GEN:<attacker>]<attack_weapon>。
+urw_combat.txt	442	MELEE_MISS	PC	branch	You completely miss [PP_OBJ:<defender>].	你完全没有打中[PP_OBJ:<defender>]。
+urw_combat.txt	443	MELEE_MISS	ANIMAL	branch	Its [ATTACK_HITS:<attack_aspect>] the thin air.	它的[ATTACK_HITS:<attack_aspect>]空处。
+urw_combat.txt	444	MELEE_MISS	*	branch	<attacker_defdesc> completely misses [PP_OBJ:<defender>].	<attacker_defdesc>完全没有打中[PP_OBJ:<defender>]。
+urw_combat.txt	448	DEFENDER_ADVANTAGE	PC	branch	=You gain tactical advantage to strike back immediately!	=你抢到了先机，能够立即反击！
+urw_combat.txt	449	DEFENDER_ADVANTAGE	*	branch	=<defender_defdesc> gains tactical advantage to strike back immediately!	=<defender_defdesc>抢到了先机，能够立即反击！
+urw_combat.txt	452	ATTACKER_ADVANTAGE	PC	branch	=You gain tactical advantage to immediately attack again!	=你抢到了先机，能够立即再次攻击！
+urw_combat.txt	453	ATTACKER_ADVANTAGE	*	branch	=<attacker_defdesc> gains tactical advantage to immediately attack again!	=<attacker_defdesc>抢到了先机，能够立即再次攻击！
+urw_combat.txt	457	MISSILE_STRIKE_LIGHT		plain	the <attack_weapon> scratches [PP_GEN:<defender>] <bodypart>.	<attack_weapon>擦伤了[PP_GEN:<defender>]<bodypart>。
+urw_combat.txt	460	MISSILE_STRIKE		plain	the <attack_weapon> hits [PP_GEN:<defender>] <bodypart>.	<attack_weapon>击中了[PP_GEN:<defender>]<bodypart>。
+urw_combat.txt	463	MISSILE_STRIKE_HARD		plain	the <attack_weapon> pierces [PP_GEN:<defender>] <bodypart>!	<attack_weapon>刺穿了[PP_GEN:<defender>]<bodypart>！
+urw_combat.txt	470	MISSILE_HITS_OBSTACLE		plain	+<the_item> hits %s.	+<the_item>击中了%s。
+urw_combat.txt	473	MISSILE_HITS_SHIELD	*	branch	+[PP_GEN:<attacker>] <attack_weapon> hits [PP_GEN:<defender>] shield.	+[PP_GEN:<attacker>]<attack_weapon>击中了[PP_GEN:<defender>]盾牌。
+urw_combat.txt	478	MISSILE_BREAKS		plain	+<the_item> hits %s and breaks!	+<the_item>击中%s后断裂了！
+urw_combat.txt	481	MISSILE_HITS_GROUND		plain	+<item> hits the ground.	+<item>落在地上。
+urw_combat.txt	486	MISSILE_MISS	PC	branch	you narrowly miss <defender_defdesc>.	你差一点就打中了<defender_defdesc>。
+urw_combat.txt	487	MISSILE_MISS	*	branch	[PP_SUBJ:<attacker>] narrowly misses <defender_defdesc>.	[PP_SUBJ:<attacker>]差一点就打中了<defender_defdesc>。
+urw_combat.txt	492	MISSILE_WILD	PC	branch	your <attack_weapon> flies past <defender_defdesc>.	你的<attack_weapon>从<defender_defdesc>身边飞过。
+urw_combat.txt	493	MISSILE_WILD	*	branch	[PP_GEN:<attacker>] <attack_weapon> flies past <defender_defdesc>.	[PP_GEN:<attacker>]<attack_weapon>从<defender_defdesc>身边飞过。
+urw_combat.txt	499	MISSILE_ATTACK_CANCELLED		plain	!You fail to complete your ranged attack!	!你没能完成这次远程攻击！
+urw_combat.txt	509	MISSILE_ACCIDENTAL_TARGET	PC	branch	!Your <attack_weapon> misses its mark and flies at <defender_defdesc> on its course!	!你的<attack_weapon>没有击中目标，转而飞向了途中的<defender_defdesc>！
+urw_combat.txt	510	MISSILE_ACCIDENTAL_TARGET	*	branch	![PP_GEN:<attacker>] <attack_weapon> misses its mark and flies at <defender_defdesc> on its course!	![PP_GEN:<attacker>]<attack_weapon>没有击中目标，转而飞向了途中的<defender_defdesc>！
+urw_combat.txt	515	MISSILE_ACCIDENTAL_TARGET_BEHIND	PC	branch	!Your <attack_weapon> narrowly misses its mark but flies at <defender_defdesc> behind!	!你的<attack_weapon>擦过目标，飞向了后面的<defender_defdesc>！
+urw_combat.txt	516	MISSILE_ACCIDENTAL_TARGET_BEHIND	*	branch	![PP_GEN:<attacker>] <attack_weapon> narrowly misses its mark but flies at <defender_defdesc> behind!	![PP_GEN:<attacker>]<attack_weapon>擦过目标，飞向了后面的<defender_defdesc>！
+urw_combat.txt	520	NOT_WIELDED		plain	!You have no weapon wielded in that hand!	!你那只手没有拿着武器！
+urw_combat.txt	525	BREAK_DO	PC	branch	!Your <item> breaks!	!你的<item>断裂了！
+urw_combat.txt	526	BREAK_DO	*	branch	![PP_GEN:<who>] <item> breaks!	![PP_GEN:<who>]<item>断裂了！
+urw_combat.txt	533	FUMBLE_CHECK	PC	branch	You have trouble holding onto your weapon.	你快握不住武器了。
+urw_combat.txt	534	FUMBLE_CHECK	*	branch	<npc_defdesc> has trouble holding onto [PP_GEN:<npc>] weapon.	<npc_defdesc>快握不住[PP_GEN:<npc>]武器了。
+urw_combat.txt	537	FUMBLE_DO	PC	branch	+The %s slips from your grasp.	+%s从你手中滑落。
+urw_combat.txt	538	FUMBLE_DO	*	branch	The %s slips from <npc_defdesc>'s grasp.	%s从<npc_defdesc>手中滑落。
+urw_combat.txt	539	FUMBLE_DO	HEAR	branch	You hear something dropping down in the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]有什么掉在地上。
+urw_combat.txt	545	FUMBLE_TOGETHER	PC	branch	You and <attacker_defdesc> engage in an awkward standoff which results in mere fumbling.	你与<attacker_defdesc>陷入笨拙的僵持，双方都手忙脚乱。
+urw_combat.txt	546	FUMBLE_TOGETHER	*	branch	<defender_descdesc> and <attacker_desc> engage in an awkward standoff which results in mere fumbling.	<defender_descdesc>与<attacker_desc>陷入笨拙的僵持，双方都手忙脚乱。
+urw_combat.txt	551	STUMBLE_CHECK	PC	branch	You stagger trying to maintain your balance.	你脚下踉跄，努力保持平衡。
+urw_combat.txt	552	STUMBLE_CHECK	*	branch	<npc_defdesc> staggers trying to maintain [PP_GEN:<npc>] balance.	<npc_defdesc>脚下踉跄，努力维持[PP_GEN:<npc>]平衡。
+urw_combat.txt	555	STUMBLE_DO	PC	branch	&You stumble and fall.	&你绊倒在地。
+urw_combat.txt	556	STUMBLE_DO	*	branch	<npc_defdesc> stumbles and falls.	<npc_defdesc>绊倒在地。
+urw_combat.txt	557	STUMBLE_DO	HEAR	branch	You hear some stumbling in the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]传来踉跄的脚步声。
+urw_combat.txt	562	STUMBLE_TOGETHER	PC	branch	You and <attacker_defdesc> collide against each other struggling not to trip over.	你与<attacker_defdesc>撞在一起，都竭力站稳脚跟。
+urw_combat.txt	563	STUMBLE_TOGETHER	*	branch	<defender_defdesc> and <attacker_desc> collide against each other struggling not to trip over.	<defender_defdesc>与<attacker_desc>撞在一起，都竭力站稳脚跟。
+urw_combat.txt	571	BLEEDING_LIGHT	PC	branch	!You start to bleed from the <wounded_bodypart>.	!你的<wounded_bodypart>开始流血。
+urw_combat.txt	572	BLEEDING_LIGHT	*	branch	![PP_SUBJ:<who>] starts to bleed from the <wounded_bodypart>.	![PP_SUBJ:<who>]的<wounded_bodypart>开始流血。
+urw_combat.txt	575	BLEEDING		plain	!The blood pours out of [PP_GEN:<who>] <wounded_bodypart>.	!鲜血从[PP_GEN:<who>]<wounded_bodypart>不断流出。
+urw_combat.txt	578	BLEEDING_HARD		plain	!The blood gushes out of [PP_GEN:<who>] <wounded_bodypart>!	!鲜血从[PP_GEN:<who>]<wounded_bodypart>喷涌而出！
+urw_combat.txt	588	NPC_ATTACKS	PC	branch	!<attacker_desc> rushes at you!	!<attacker_desc>向你冲来！
+urw_combat.txt	589	NPC_ATTACKS	*	branch	!<attacker_desc> attacks <defender_defdesc>!	!<attacker_desc>攻击了<defender_defdesc>！
+urw_combat.txt	595	NPC_CALMS_DOWN	*	branch	<npc_desc> calms down.	<npc_desc>平静下来了。
+urw_combat.txt	601	CANT_SEE_ATTACKER		plain	!You've been attacked from out of sight!	!你遭到了视野之外的攻击！
+urw_combat.txt	605	RISE	PC	branch	&You get back on your feet.	&你重新站了起来。
+urw_combat.txt	606	RISE	*	branch	<npc_desc> rises back on [PP_GEN:<who>] feet.	<npc_desc>重新用[PP_GEN:<who>]双脚站了起来。
+urw_combat.txt	609	RISE_FAILURE	PC	branch	&You try but fail to get back on your feet!	&你试着站起来，却没成功！
+urw_combat.txt	610	RISE_FAILURE	*	branch	<npc_desc> struggles to get back on [PP_GEN:<npc>] feet.	<npc_desc>挣扎着想用[PP_GEN:<npc>]双脚站起来。
+urw_combat.txt	614	LEG_INJURY	LOW	branch	walking lame	步履不稳
+urw_combat.txt	615	LEG_INJURY	MED	branch	limping	跛行
+urw_combat.txt	616	LEG_INJURY	HIGH	branch	crippled	腿脚残伤
+urw_combat.txt	617	LEG_INJURY	DISABLED	branch	unable to walk	无法行走
+urw_combat.txt	620	OVERALL_INJURY	LOW	branch	wounded	受伤
+urw_combat.txt	621	OVERALL_INJURY	MED	branch	seriously wounded	伤势严重
+urw_combat.txt	622	OVERALL_INJURY	HIGH	branch	grievously wounded	伤势危重
+urw_combat.txt	627	UNUSABLE_LEGS		plain	&Your serious leg injuries make it impossible to stay on your feet!	&你的腿伤太重，已经无法站立！
+urw_combat.txt	635	IMPACT_ABSORBED	PC	branch	+The impact doesn't penetrate your armour.	+这一击没能穿透你的护甲。
+urw_combat.txt	636	IMPACT_ABSORBED	ANIMAL	branch	The impact doesn't penetrate its skin.	这一击没能穿透它的皮肤。
+urw_combat.txt	637	IMPACT_ABSORBED	*	branch	+The impact doesn't penetrate [PP_GEN:<npc>] armour.	+这一击没能穿透[PP_GEN:<npc>]护甲。
+urw_combat.txt	640	IMPACT_UNHURT	PC	branch	+The impact doesn't hurt you.	+这一击没能伤到你。
+urw_combat.txt	641	IMPACT_UNHURT	*	branch	+The impact doesn't hurt [PP_OBJ:<npc>].	+这一击没能伤到[PP_OBJ:<npc>]。
+urw_combat.txt	644	ACTIVITY_PROFILE		plain	[FALLEN:fallen]	[FALLEN:倒地]
+urw_combat.txt	645	ACTIVITY_PROFILE		plain	[SLEEPING:sleeping]	[SLEEPING:睡眠中]
+urw_combat.txt	646	ACTIVITY_PROFILE		plain	[AGGRESSIVE:aggressive]	[AGGRESSIVE:充满敌意]
+urw_combat.txt	647	ACTIVITY_PROFILE		plain	[ESCAPING:escaping]	[ESCAPING:逃跑中]
+urw_combat.txt	648	ACTIVITY_PROFILE		plain	[IN_SHOCK:prone lying]	[IN_SHOCK:伏地不起]
+urw_combat.txt	649	ACTIVITY_PROFILE		plain	[UNCONSCIOUS:unconscious]	[UNCONSCIOUS:昏迷]
+urw_combat.txt	650	ACTIVITY_PROFILE	FLYING	branch	flying high	高飞中
+urw_combat.txt	651	ACTIVITY_PROFILE	IN_A_TREE	branch	in a tree	在树上
+urw_combat.txt	658	BODYPART	SKULL	branch	skull	头颅
+urw_combat.txt	659	BODYPART	EYE	branch	eye	眼睛
+urw_combat.txt	660	BODYPART	FACE	branch	face	面部
+urw_combat.txt	661	BODYPART	NECK	branch	neck	颈部
+urw_combat.txt	662	BODYPART	SHOULDER	branch	shoulder	肩部
+urw_combat.txt	663	BODYPART	UPPER ARM	branch	upper arm	上臂
+urw_combat.txt	664	BODYPART	ELBOW	branch	elbow	肘部
+urw_combat.txt	665	BODYPART	FOREARM	branch	forearm	前臂
+urw_combat.txt	666	BODYPART	FORELEG	branch	foreleg	前腿
+urw_combat.txt	667	BODYPART	HAND	branch	hand	手
+urw_combat.txt	668	BODYPART	PAW	branch	paw	爪掌
+urw_combat.txt	669	BODYPART	THORAX	branch	thorax	胸部
+urw_combat.txt	670	BODYPART	ABDOMEN	branch	abdomen	腹部
+urw_combat.txt	671	BODYPART	HIP	branch	hip	髋部
+urw_combat.txt	672	BODYPART	GROIN	branch	groin	腹股沟
+urw_combat.txt	673	BODYPART	THIGH	branch	thigh	大腿
+urw_combat.txt	674	BODYPART	KNEE	branch	knee	膝部
+urw_combat.txt	675	BODYPART	CALF	branch	calf	小腿
+urw_combat.txt	676	BODYPART	SHANK	branch	shank	胫部
+urw_combat.txt	677	BODYPART	FOOT	branch	foot	脚
+urw_combat.txt	678	BODYPART	HINDLEG	branch	hindleg	后腿
+urw_combat.txt	679	BODYPART	HOOF	branch	hoof	蹄子
+urw_combat.txt	680	BODYPART	TAIL	branch	tail	尾巴
+urw_combat.txt	681	BODYPART	WING	branch	wing	翅膀
+urw_combat.txt	685	BODYZONE	HEAD	branch	head	头部
+urw_combat.txt	686	BODYZONE	BODY	branch	body	躯干
+urw_combat.txt	687	BODYZONE	LEGS	branch	legs	双腿
+urw_combat.txt	688	BODYZONE	ARMS	branch	arms	双臂
+urw_combat.txt	689	BODYZONE	FORELEGS	branch	forelegs	前腿
+urw_combat.txt	690	BODYZONE	HINDLEGS	branch	hindlegs	后腿
+urw_combat.txt	697	WOUND_DESC_BLEEDING		plain	bleeding	流血
+urw_combat.txt	705	FALL_UNCONSCIOUS	PC	branch	:The world turns black and you fall unconscious.	:眼前一黑，你失去了知觉。
+urw_combat.txt	706	FALL_UNCONSCIOUS	*	branch	:<npc_defdesc> seems to have fallen unconscious.	:<npc_defdesc>似乎昏过去了。
+urw_combat.txt	710	REGAIN_CONSCIOUSNESS		plain	:You regain consciousness...	:你恢复了意识……
+urw_combat.txt	717	FATAL_WOUND	PC	branch	!The wound proves immediately fatal for you!	!这处伤口使你当场毙命！
+urw_combat.txt	718	FATAL_WOUND	*	branch	![PP_SUBJ:<npc>] drops dead in an instant!	![PP_SUBJ:<npc>]当场倒地身亡！
+urw_combat.txt	724	AMPUTATION_WOUND		plain	![PP_GEN:<npc>] <wounded_bodypart> is nearly cut in half!	![PP_GEN:<npc>]<wounded_bodypart>几乎被砍断！
+urw_combat.txt	733	EXAMINE_ITEM_SKILL		plain	+The applicable weapon skill for <the_item> is "%s".	+<the_item>适用的武器技能是“%s”。
+urw_combat.txt	740	EXAMINE_ITEM_CLASS		plain	+Weapon classification of <the_item> gives it [WEAPON_CLASS:<attack_class>] bonus to attack, and [WEAPON_CLASS:<defense_class>] bonus to defense.	+<the_item>的武器等级提供[WEAPON_CLASS:<attack_class>]攻击加成，以及[WEAPON_CLASS:<defense_class>]防御加成。
+urw_combat.txt	745	EXAMINE_TWO-HANDED_ITEM		plain	+<the_item> is two-handed weapon. Using it with one hand is [HANDMODE_PEN:<var>].	+<the_item>是双手武器。单手使用它会[HANDMODE_PEN:<var>]。
+urw_combat.txt	751	WEAPON_CLASS	0	branch	zero	零
+urw_combat.txt	752	WEAPON_CLASS	1	branch	a very little	极少的
+urw_combat.txt	753	WEAPON_CLASS	2	branch	a little	少量的
+urw_combat.txt	754	WEAPON_CLASS	3	branch	a decent	尚可的
+urw_combat.txt	755	WEAPON_CLASS	4	branch	a good	良好的
+urw_combat.txt	756	WEAPON_CLASS	5	branch	a remarkable	显著的
+urw_combat.txt	757	WEAPON_CLASS	*	branch	a superior	卓越的
+urw_combat.txt	763	WEAPON_CLASS_BONUS	5	branch	little	少量的
+urw_combat.txt	764	WEAPON_CLASS_BONUS	10	branch	slight	轻微的
+urw_combat.txt	765	WEAPON_CLASS_BONUS	15	branch	decent	尚可的
+urw_combat.txt	766	WEAPON_CLASS_BONUS	20	branch	good	良好的
+urw_combat.txt	767	WEAPON_CLASS_BONUS	25	branch	remarkable	显著的
+urw_combat.txt	768	WEAPON_CLASS_BONUS	*	branch	remarkable	显著的
+urw_combat.txt	776	WC_BONUS_ATTACKER		plain	#The attack properties of the <attack_weapon> add a [WEAPON_CLASS_BONUS:<wc_bonus>] bonus to the success of [PP_GEN:<attacker>] attack.	#<attack_weapon>的攻击性能为[PP_GEN:<attacker>]攻击成功率提供了[WEAPON_CLASS_BONUS:<wc_bonus>]加成。
+urw_combat.txt	782	WC_BONUS_DODGE		plain	#The short reach of [PP_GEN:<attacker>] <attack_weapon> gives [PP_OBJ:<defender>] a [WEAPON_CLASS_BONUS:<wc_bonus>] advantage to dodge.	#[PP_GEN:<attacker>]<attack_weapon>攻击距离短，让[PP_OBJ:<defender>]获得[WEAPON_CLASS_BONUS:<wc_bonus>]闪避优势。
+urw_combat.txt	789	WC_BONUS_ATTACKER_WINS		plain	#[PP_GEN:<attacker>] <attack_weapon> performs better on attack than [PP_GEN:<defender>] <defend_weapon> on defense giving [PP_OBJ:<attacker>] [WEAPON_CLASS_BONUS:<wc_bonus>] advantage.	#[PP_GEN:<attacker>]<attack_weapon>的攻击性能胜过[PP_GEN:<defender>]<defend_weapon>的防御性能，使[PP_OBJ:<attacker>]获得[WEAPON_CLASS_BONUS:<wc_bonus>]优势。
+urw_combat.txt	795	WC_BONUS_DEFENDER_WINS		plain	#Using a <defend_weapon> to defend against [PP_GEN:<attacker>] <attack_weapon> gains [PP_OBJ:<defender>] a [WEAPON_CLASS_BONUS:<wc_bonus>] advantage.	#使用<defend_weapon>抵挡[PP_GEN:<attacker>]<attack_weapon>，让[PP_OBJ:<defender>]获得[WEAPON_CLASS_BONUS:<wc_bonus>]优势。
+urw_combat.txt	800	HANDMODE_PEN	?	branch	a little clumsy	稍显笨拙
+urw_combat.txt	801	HANDMODE_PEN	10	branch	quite clumsy	相当笨拙
+urw_combat.txt	802	HANDMODE_PEN	11	branch	quite clumsy	相当笨拙
+urw_combat.txt	803	HANDMODE_PEN	12	branch	quite clumsy	相当笨拙
+urw_combat.txt	804	HANDMODE_PEN	13	branch	quite clumsy	相当笨拙
+urw_combat.txt	805	HANDMODE_PEN	14	branch	quite clumsy	相当笨拙
+urw_combat.txt	806	HANDMODE_PEN	1?	branch	clumsy	笨拙
+urw_combat.txt	807	HANDMODE_PEN	20	branch	not easy	不太容易
+urw_combat.txt	808	HANDMODE_PEN	21	branch	not easy	不太容易
+urw_combat.txt	809	HANDMODE_PEN	22	branch	not easy	不太容易
+urw_combat.txt	810	HANDMODE_PEN	23	branch	not easy	不太容易
+urw_combat.txt	811	HANDMODE_PEN	24	branch	not easy	不太容易
+urw_combat.txt	812	HANDMODE_PEN	2?	branch	difficult	困难
+urw_combat.txt	813	HANDMODE_PEN	*	branch	very difficult	十分困难
+urw_combat.txt	818	TWO-HANDED_PENALTY		plain	!It's [HANDMODE_PEN:<var>] to use your <item> with one hand.	!单手使用<item>会[HANDMODE_PEN:<var>]。
+urw_combat.txt	830	HITOPT_DEATHBLOW		plain	A deathblow is possible. You try to execute a carefully aimed strike to finish this unconscious victim.	可以施以致命一击。你仔细瞄准，试图一击了结这个昏迷的目标。
+urw_combat.txt	835	HITOPT_BUTCHERING		plain	Butchering is possible. You try to execute a carefully aimed butchering blow to quickly stun or kill this leashed creature.	可以进行宰杀。你仔细瞄准，试图以宰杀的一击迅速击昏或杀死这只拴住的生物。
+urw_defs.txt	8	COMP_CONTROL	PARTY	branch	party member	队伍成员
+urw_defs.txt	9	COMP_CONTROL	LEASHED	branch	leashed	牵绳拴着
+urw_defs.txt	10	COMP_CONTROL	TIED	branch	tied in place	拴在原地
+urw_defs.txt	11	COMP_CONTROL	PARTNER	branch	partner	伙伴
+urw_defs.txt	14	SLEEPING		plain	Sleeping	睡眠中
+urw_defs.txt	17	FALLEN		plain	Fallen	倒地
+urw_defs.txt	20	UNCONSCIOUS		plain	Unconscious	昏迷
+urw_defs.txt	23	IN_SHOCK		plain	Prone lying	伏地不起
+urw_defs.txt	26	ESCAPING		plain	Escaping	逃跑中
+urw_defs.txt	29	AGGRESSIVE		plain	Aggressive	充满敌意
+urw_defs.txt	32	FUZZY_NUM	1	branch	1	1
+urw_defs.txt	33	FUZZY_NUM	2	branch	2	2
+urw_defs.txt	34	FUZZY_NUM	3	branch	a few	几个
+urw_defs.txt	35	FUZZY_NUM	4	branch	some	一些
+urw_defs.txt	36	FUZZY_NUM	5	branch	some	一些
+urw_defs.txt	37	FUZZY_NUM	6	branch	half a dozen	半打
+urw_defs.txt	38	FUZZY_NUM	7	branch	half a dozen	半打
+urw_defs.txt	39	FUZZY_NUM	8	branch	half a dozen	半打
+urw_defs.txt	40	FUZZY_NUM	9	branch	several	好几个
+urw_defs.txt	41	FUZZY_NUM	10	branch	several	好几个
+urw_defs.txt	42	FUZZY_NUM	11	branch	a dozen	一打
+urw_defs.txt	43	FUZZY_NUM	12	branch	a dozen	一打
+urw_defs.txt	44	FUZZY_NUM	13	branch	a dozen	一打
+urw_defs.txt	50	IN_DIR	N	branch	north	北方
+urw_defs.txt	51	IN_DIR	NE	branch	north-east	东北方
+urw_defs.txt	52	IN_DIR	E	branch	east	东方
+urw_defs.txt	53	IN_DIR	SE	branch	south-east	东南方
+urw_defs.txt	54	IN_DIR	S	branch	south	南方
+urw_defs.txt	55	IN_DIR	SW	branch	south-west	西南方
+urw_defs.txt	56	IN_DIR	W	branch	west	西方
+urw_defs.txt	57	IN_DIR	NW	branch	north-west	西北方
+urw_defs.txt	58	IN_DIR	*	branch	unkown direction	未知方向
+urw_defs.txt	62	TIMESPAN_DAY	1	branch	a day	一天
+urw_defs.txt	63	TIMESPAN_DAY	2	branch	two days	两天
+urw_defs.txt	64	TIMESPAN_DAY	3	branch	few days	几天
+urw_defs.txt	65	TIMESPAN_DAY	4	branch	half a week	半周
+urw_defs.txt	66	TIMESPAN_DAY	5	branch	half a week	半周
+urw_defs.txt	67	TIMESPAN_DAY	?	branch	a week	一周
+urw_defs.txt	68	TIMESPAN_DAY	1?	branch	two weeks	两周
+urw_defs.txt	69	TIMESPAN_DAY	2?	branch	couple of weeks	两三周
+urw_defs.txt	70	TIMESPAN_DAY	3?	branch	a month	一个月
+urw_defs.txt	71	TIMESPAN_DAY	4?	branch	over a month	一个多月
+urw_defs.txt	72	TIMESPAN_DAY	5?	branch	nearly two months	将近两个月
+urw_defs.txt	73	TIMESPAN_DAY	6?	branch	few months	几个月
+urw_defs.txt	74	TIMESPAN_DAY	7?	branch	couple of months	两三个月
+urw_defs.txt	75	TIMESPAN_DAY	??	branch	several months	好几个月
+urw_defs.txt	76	TIMESPAN_DAY	1??	branch	many months	许多个月
+urw_defs.txt	77	TIMESPAN_DAY	2??	branch	half a year	半年
+urw_defs.txt	78	TIMESPAN_DAY	3??	branch	a year	一年
+urw_defs.txt	79	TIMESPAN_DAY	4??	branch	over a year	一年多
+urw_defs.txt	80	TIMESPAN_DAY	5??	branch	nearly two years	将近两年
+urw_defs.txt	81	TIMESPAN_DAY	6??	branch	few years	几年
+urw_defs.txt	82	TIMESPAN_DAY	*	branch	unknown time	未知时长
+urw_defs.txt	89	NPC_INFO_WIELDING		plain	[PP_SUBJ:<npc>] is wielding <item_verbose_ind>.	[PP_SUBJ:<npc>]正拿着<item_verbose_ind>。
+urw_defs.txt	93	NPC_INFO_SHIELD		plain	[PP_SUBJ:<npc>] is holding <item_verbose_ind> %s.	[PP_SUBJ:<npc>]正%s握持着<item_verbose_ind>。
+urw_defs.txt	102	FLORA_INFO_PATCH	1	branch	a <status> <item> patch	一片<status>的<item>
+urw_defs.txt	103	FLORA_INFO_PATCH	*	branch	a patch of <num> <status> <items_nonum>	一片共<num>株<status>的<items_nonum>
+urw_defs.txt	107	FLORA_INFO_SINGLE	1	branch	a <status> <item>	一株<status>的<item>
+urw_defs.txt	108	FLORA_INFO_SINGLE	*	branch	<num> <status> <items_nonum>	<num>株<status>的<items_nonum>
+urw_defs.txt	112	PET_PHRASE	EAT	branch	&"Eat now, <npc_desc>."	&“吃吧，<npc_desc>。”
+urw_defs.txt	113	PET_PHRASE	ATTACK	branch	&"Attack, <npc_desc>, attack!"	&“攻击，<npc_desc>，攻击！”
+urw_defs.txt	114	PET_PHRASE	STAY	branch	&"Stay there, <npc_desc>."	&“待在那里，<npc_desc>。”
+urw_defs.txt	115	PET_PHRASE	COME	branch	&"Come <npc_desc> come!"	&“过来，<npc_desc>，过来！”
+urw_defs.txt	121	CARCASS_DAMAGE	SLIGHT	branch	harmed	受损的
+urw_defs.txt	122	CARCASS_DAMAGE	LOW	branch	torn	撕裂的
+urw_defs.txt	123	CARCASS_DAMAGE	MED	branch	hacked	砍伤的
+urw_defs.txt	124	CARCASS_DAMAGE	HIGH	branch	mangled	残破的
+urw_defs.txt	125	CARCASS_DAMAGE	GREAT	branch	grisly	血肉模糊的
+urw_defs.txt	129	CARCASS_EATEN	LOW	branch	slightly eaten	略被啃食的
+urw_defs.txt	130	CARCASS_EATEN	MED	branch	partially eaten	被啃食了一部分的
+urw_defs.txt	131	CARCASS_EATEN	HIGH	branch	half-eaten	被啃食了一半的
+urw_defs.txt	132	CARCASS_EATEN	GREAT	branch	largely eaten	大半被啃食的
+urw_defs.txt	136	CARCASS_CUT	LOW	branch	slightly cut	割去少量肉的
+urw_defs.txt	137	CARCASS_CUT	MED	branch	partially cut	割去部分肉的
+urw_defs.txt	138	CARCASS_CUT	HIGH	branch	half-cut	割去一半肉的
+urw_defs.txt	139	CARCASS_CUT	GREAT	branch	largely cut	割去大半肉的
+urw_defs.txt	144	OVERALL_FATIGUE	LITTLE	branch	a little bit fatigued	有点疲倦
+urw_defs.txt	145	OVERALL_FATIGUE	LOW	branch	slightly fatigued	略感疲倦
+urw_defs.txt	146	OVERALL_FATIGUE	MED	branch	fatigued	疲倦
+urw_defs.txt	147	OVERALL_FATIGUE	HIGH	branch	very fatigued	十分疲倦
+urw_defs.txt	148	OVERALL_FATIGUE	GREAT	branch	breathless	喘不过气
+urw_defs.txt	152	MONTH_NAME	1	branch	Center month	中月
+urw_defs.txt	153	MONTH_NAME	2	branch	Pearl month	珠月
+urw_defs.txt	154	MONTH_NAME	3	branch	Soil month	土月
+urw_defs.txt	155	MONTH_NAME	4	branch	Swidden month	烧垦月
+urw_defs.txt	156	MONTH_NAME	5	branch	Seedtime month	播种月
+urw_defs.txt	157	MONTH_NAME	6	branch	Fallow month	休耕月
+urw_defs.txt	158	MONTH_NAME	7	branch	Hay month	干草月
+urw_defs.txt	159	MONTH_NAME	8	branch	Harvest month	收获月
+urw_defs.txt	160	MONTH_NAME	9	branch	Fall month	秋月
+urw_defs.txt	161	MONTH_NAME	10	branch	Dirt month	泥月
+urw_defs.txt	162	MONTH_NAME	11	branch	Dead month	死月
+urw_defs.txt	163	MONTH_NAME	12	branch	Winter month	冬月
+urw_defs.txt	164	MONTH_NAME	*	branch	Unknown month	未知月份
+urw_msg.txt	2	NPC_IS_CARRYING		plain	[PP_SUBJ:<npc>] is carrying	[PP_SUBJ:<npc>]携带着
+urw_msg.txt	5	NPC_IS_WEARING		plain	[PP_SUBJ:<npc>] is wearing	[PP_SUBJ:<npc>]穿戴着
+urw_msg.txt	10	NPC_LOOKS_LIKE		plain	[PP_SUBJ:<npc>] looks	[PP_SUBJ:<npc>]看起来
+urw_msg.txt	13	NPC_IS_INJURED		plain	[PP_SUBJ:<npc>] is suffering from	[PP_SUBJ:<npc>]正受以下伤病困扰：
+urw_msg.txt	21	MOVEMENT_OBSTACLE_AHEAD		plain	!There's %s blocking your way!	!%s挡住了你的去路！
+urw_msg.txt	26	MOVEMENT_NPC_AHEAD		plain	!There's <npc_desc> in your way!	!<npc_desc>挡住了你的去路！
+urw_msg.txt	36	WOUND_STATE_VERY_GOOD		plain	healing quickly and easily	能够迅速顺利地愈合
+urw_msg.txt	39	WOUND_STATE_GOOD		plain	healing just fine	愈合情况良好
+urw_msg.txt	42	WOUND_STATE_AVERAGE		plain	a wound with good chances to heal normally	很有希望正常愈合
+urw_msg.txt	45	WOUND_STATE_BAD		plain	a serious wound that may not heal easily	伤势较重，可能难以愈合
+urw_msg.txt	48	WOUND_STATE_SERIOUS		plain	a grievous wound with a risk of turning fatal	伤势严重，可能危及生命
+urw_msg.txt	51	WOUND_STATE_VERY_SERIOUS		plain	a deadly wound	足以致命
+urw_msg.txt	56	WOUND_TREATMENT_RESULT		plain	:After treating the %s you consider it %s.	:处理过%s后，你判断它%s。
+urw_msg.txt	59	ABOUT_TO_TREAT		plain	#You are about to treat %s...	#你准备处理%s……
+urw_msg.txt	63	WOUND_TREATMENT		plain	:You try to %s to the best of your ability.	:你尽力尝试%s。
+urw_msg.txt	66	NO_FURTHER_TREATMENT		plain	!You cannot treat this wound any further now. Try again tomorrow.	!现在无法进一步处理这处伤口。明天再试。
+urw_msg.txt	74	WAKE_UP	PC	branch	:You wake up.	:你醒来了。
+urw_msg.txt	75	WAKE_UP	*	branch	<npc_defdesc> wakes up.	<npc_defdesc>醒来了。
+urw_msg.txt	79	AWAKEN_BY	HUNGER	branch	&Hunger wakes you.	&饥饿把你唤醒。
+urw_msg.txt	80	AWAKEN_BY	THIRST	branch	&You are awakened by thirst.	&你被渴醒了。
+urw_msg.txt	81	AWAKEN_BY	FIGHT	branch	!You awake! You have been attacked.	!你惊醒了！你受到了攻击。
+urw_msg.txt	86	NOT_TIRED		plain	&You are not tired!	&你还不困！
+urw_msg.txt	94	SLEEPNOTE	RUG	branch	:You lay on the fur and fall asleep.	:你躺在毛皮上睡着了。
+urw_msg.txt	95	SLEEPNOTE	COVER	branch	:You wrap yourself in furs and fall asleep.	:你裹着毛皮睡着了。
+urw_msg.txt	96	SLEEPNOTE	TWIGS	branch	:You lay on the spruce twigs and fall asleep.	:你躺在云杉枝上睡着了。
+urw_msg.txt	97	SLEEPNOTE	*	branch	:You lay down and fall asleep.	:你躺下睡着了。
+urw_msg.txt	105	NOT_SUITABLE_ITEM		plain	!This item is not suitable for that!	!这件物品不适合这样用！
+urw_msg.txt	108	BOTH_HANDS_WIELDED		plain	!Your both hands are in use! Take off something to wield a new item.	!你的双手都占着！先放下一件，才能拿起新物品。
+urw_msg.txt	111	WIELDING_NOTHING		plain	!You aren't wielding anything!	!你手里什么也没拿！
+urw_msg.txt	114	HAFT_BREAKS_IN_USE	PC	branch	!Worn haft of your <item> breaks!	!你的<item>磨损的柄断了！
+urw_msg.txt	115	HAFT_BREAKS_IN_USE	*	branch	!Haft of the <npc_desc>'s <item> breaks!	!<npc_desc>的<item>柄断了！
+urw_msg.txt	118	ITEM_BREAKS_IN_USE	PC	branch	!Your worn out <item> breaks apart!	!你破旧的<item>碎裂了！
+urw_msg.txt	119	ITEM_BREAKS_IN_USE	*	branch	!Worn out <item> of <npc_desc> breaks apart!	!<npc_desc>破旧的<item>碎裂了！
+urw_msg.txt	122	HAFTING_CANT		plain	!Huh? It's not possible to haft <items_nonum>!	!咦？<items_nonum>没法装柄！
+urw_msg.txt	129	DOOR_NOT		plain	!That is not a door or gate.	!那不是门或栅门。
+urw_msg.txt	132	DOOR_ALR_OPEN		plain	!This door is already open.	!这扇门已经开着了。
+urw_msg.txt	135	DOOR_ALR_CLOSED		plain	!This door is already closed.	!这扇门已经关着了。
+urw_msg.txt	138	GATE_ALR_OPEN		plain	!This gate is already open.	!这扇栅门已经开着了。
+urw_msg.txt	141	GATE_ALR_CLOSED		plain	!This gate is already closed.	!这扇栅门已经关着了。
+urw_msg.txt	144	DO_OPEN_DOOR	PC	branch	{OPEN_DOOR}You open the door.	{OPEN_DOOR}你打开了门。
+urw_msg.txt	145	DO_OPEN_DOOR	*	branch	{OPEN_DOOR}<npc_desc> opens a door.	{OPEN_DOOR}<npc_desc>打开了一扇门。
+urw_msg.txt	146	DO_OPEN_DOOR	HEAR	branch	{OPEN_DOOR}You hear a door opening.	{OPEN_DOOR}你听到开门声。
+urw_msg.txt	149	DO_CLOSE_DOOR	PC	branch	{CLOSE_DOOR}You close the door.	{CLOSE_DOOR}你关上了门。
+urw_msg.txt	150	DO_CLOSE_DOOR	*	branch	{CLOSE_DOOR}<npc_desc> closes a door.	{CLOSE_DOOR}<npc_desc>关上了一扇门。
+urw_msg.txt	151	DO_CLOSE_DOOR	HEAR	branch	{CLOSES_DOOR}You hear a door closing.	{CLOSES_DOOR}你听到关门声。
+urw_msg.txt	154	DO_OPEN_GATE	PC	branch	You open the gate.	你打开了栅门。
+urw_msg.txt	155	DO_OPEN_GATE	*	branch	<npc_desc> opens a gate.	<npc_desc>打开了一扇栅门。
+urw_msg.txt	156	DO_OPEN_GATE	HEAR	branch	You hear a gate being opened.	你听到栅门被打开的声音。
+urw_msg.txt	159	DO_CLOSE_GATE	PC	branch	You close the gate.	你关上了栅门。
+urw_msg.txt	160	DO_CLOSE_GATE	*	branch	<npc_desc> closes a gate.	<npc_desc>关上了一扇栅门。
+urw_msg.txt	161	DO_CLOSE_GATE	HEAR	branch	You hear a gate being closed.	你听到栅门被关上的声音。
+urw_msg.txt	168	DO_ESCAPE	*	branch	<npc_desc> flees.	<npc_desc>逃走了。
+urw_msg.txt	169	DO_ESCAPE	HEAR	branch	You hear something running away in the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]有什么跑远了。
+urw_msg.txt	172	DO_TREECLIMB	*	branch	<npc_desc> climbs up into a tree.	<npc_desc>爬上了一棵树。
+urw_msg.txt	173	DO_TREECLIMB	HEAR	branch	You hear branches rustling in the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]传来树枝的沙沙声。
+urw_msg.txt	176	DO_LAND	*	branch	<npc_desc> lands down.	<npc_desc>落了下来。
+urw_msg.txt	177	DO_LAND	HEAR	branch	You hear rustle of wings from the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]传来翅膀扑动的声音。
+urw_msg.txt	180	DO_FLY	*	branch	<npc_desc> flies up into the air.	<npc_desc>飞上天空。
+urw_msg.txt	181	DO_FLY	HEAR	branch	You hear rustle of wings from the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]传来翅膀扑动的声音。
+urw_msg.txt	184	DO_DIVE	*	branch	{splash}<npc_desc> dives under the water.	{splash}<npc_desc>潜入水中。
+urw_msg.txt	185	DO_DIVE	HEAR	branch	{splash}You hear a splash from the [IN_DIR:<npc_direction>].	{splash}你听到[IN_DIR:<npc_direction>]传来扑通一声。
+urw_msg.txt	189	DO_DROP_DOWN	*	branch	<npc_defdesc> drops down on the ground.	<npc_defdesc>掉落在地。
+urw_msg.txt	190	DO_DROP_DOWN	HEAR	branch	You hear a thud from the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]传来一声闷响。
+urw_msg.txt	193	DO_FALL_PRONE	PC	branch	&You fall prone.	&你扑倒在地。
+urw_msg.txt	194	DO_FALL_PRONE	*	branch	<npc_defdesc> falls prone.	<npc_defdesc>扑倒在地。
+urw_msg.txt	197	DO_FELL_SMALL_TREE	PC	branch	{treefall_small}:The tree falls down.	{treefall_small}:树倒下了。
+urw_msg.txt	198	DO_FELL_SMALL_TREE	*	branch	{treefall_small}<npc_desc> fell a tree.	{treefall_small}<npc_desc>砍倒了一棵树。
+urw_msg.txt	199	DO_FELL_SMALL_TREE	HEAR	branch	{treefall_small}You hear the sound of a tree falling down in the [IN_DIR:<npc_direction>].	{treefall_small}你听到[IN_DIR:<npc_direction>]传来树木倒下的声音。
+urw_msg.txt	202	DO_FELL_BIG_TREE	PC	branch	{treefall_big}:The tree falls down.	{treefall_big}:树倒下了。
+urw_msg.txt	203	DO_FELL_BIG_TREE	*	branch	{treefall_big}<npc_desc> fell a tree.	{treefall_big}<npc_desc>砍倒了一棵树。
+urw_msg.txt	204	DO_FELL_BIG_TREE	HEAR	branch	{treefall_big}You hear the sound of a big tree falling down in the [IN_DIR:<npc_direction>].	{treefall_big}你听到[IN_DIR:<npc_direction>]传来大树倒下的声音。
+urw_msg.txt	211	PICK_UP	PC	branch	:You pick up the %s.	:你捡起了%s。
+urw_msg.txt	212	PICK_UP	*	branch	<npc_desc> picks up %s.	<npc_desc>捡起了%s。
+urw_msg.txt	215	CANT_PICK_UP		plain	!There is nothing here to pick up.	!这里没有东西可捡。
+urw_msg.txt	218	DROP_ITEM		plain	:You drop the %s.	:你放下了%s。
+urw_msg.txt	221	CANT_DROP_WORN		plain	!You cannot drop something you are wearing.	!你不能丢下正在穿戴的东西。
+urw_msg.txt	227	CANT_PICK_PREPARING		plain	_The <item> will be ready %s. You may not pick it up yet.	_<item>要%s才能备好。现在还不能拿走。
+urw_msg.txt	230	CANT_PICK_CRAFTING	1	branch	_The <item> here is not finished yet. You may not pick it up.	_这里的<item>还没做完，不能拿走。
+urw_msg.txt	231	CANT_PICK_CRAFTING	*	branch	_The <items_nonum> here aren't finished yet. You may not pick them up.	_这里的<items_nonum>还没做完，不能拿走。
+urw_msg.txt	239	ITEM_CANT_APPLY		plain	!There's no special way to apply <the_item>.	!<the_item>没有特别的用法。
+urw_msg.txt	244	ITEM_INVALID		plain	!You cannot %s <the_fullitem>!	!你不能%s<the_fullitem>！
+urw_msg.txt	249	ITEM_IN_USE		plain	!You cannot %s <the_fullitem> while it is in use.	!<the_fullitem>正在使用，不能%s它。
+urw_msg.txt	254	ITEM_BEING_WORN		plain	!You cannot %s <the_fullitem> while it is being worn.	!<the_fullitem>正穿戴着，不能%s它。
+urw_msg.txt	258	OUT_OF_ITEMS		plain	!You don't have anything to %s.	!你没有可以%s的东西。
+urw_msg.txt	262	CARRY_NOTHING	PC	branch	!You are not carrying anything!	!你身上什么也没带！
+urw_msg.txt	263	CARRY_NOTHING	*	branch	!<npc_defdesc> is not carrying anything!	!<npc_defdesc>身上什么也没带！
+urw_msg.txt	266	CARRY_TOO_MANY		plain	!You are carrying too much! Drop excess items to continue your extensive gathering.	!你携带的东西太多了！先放下多余物品，才能继续大量采集。
+urw_msg.txt	269	CARRY_TOO_HEAVY	PC	branch	!Nggggh! <items> is too heavy for you to lift.	!唔——！<items>太重了，你搬不动。
+urw_msg.txt	270	CARRY_TOO_HEAVY	*	branch	!Burden of <items> is too much for <npc_defdesc> to carry!	!<items>太重，<npc_defdesc>扛不动！
+urw_msg.txt	274	BURIED_IN_BOG		plain	+<the_item> is buried in the bog.	+<the_item>陷进沼泽了。
+urw_msg.txt	282	ICE_BREAKS	PC	branch	!The ice breaks and you fall in the freezing water!	!冰面破裂，你掉进了刺骨的水里！
+urw_msg.txt	283	ICE_BREAKS	*	branch	<npc_defdesc> falls through the ice.	<npc_defdesc>掉进了冰窟窿。
+urw_msg.txt	288	ICE_CLIMB_SUCCESS	PC	branch	=You manage to pull yourself up and onto the ice.	=你成功撑起身体，爬回冰面。
+urw_msg.txt	289	ICE_CLIMB_SUCCESS	*	branch	<npc_defdesc> manages to get back on the ice.	<npc_defdesc>成功爬回了冰面。
+urw_msg.txt	295	NPC_DEATH	*	branch	@<npc_defdesc> dies.	@<npc_defdesc>死了。
+urw_msg.txt	296	NPC_DEATH	HEAR	branch	You hear a rattle of death from the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]传来临死的喘息。
+urw_msg.txt	299	NPC_DEATH_PEACEFUL	*	branch	@<npc_defdesc> sighs once, then stays laying dead still.	@<npc_defdesc>叹了口气，随后躺着一动不动，死去了。
+urw_msg.txt	302	NPC_DEATH_DROWN	*	branch	<npc_defdesc> seems to have drowned.	<npc_defdesc>似乎溺死了。
+urw_msg.txt	312	NPC_WITHDRAWS		plain	<npc_defdesc> withdraws from your way.	<npc_defdesc>让开了你的去路。
+urw_msg.txt	316	NPC_AVOIDS		plain	<npc_defdesc> gets some distance.	<npc_defdesc>拉开了一些距离。
+urw_msg.txt	320	NPC_GETS_ALERT		plain	<npc_defdesc> seems alert.  	<npc_defdesc>显得很警觉。
+urw_msg.txt	327	SHOUT_INFO		plain	?You can shout to command pets out of sight.	?你可以大喊，向视野外的宠物下令。
+urw_msg.txt	330	TALK_FAR_AWAY		plain	_You get no response. Go closer.	_没有回应。走近一些。
+urw_msg.txt	335	NPC_DOESNT_RESPOND		plain	!<npc_desc> doesn't respond.	!<npc_desc>没有回应。
+urw_msg.txt	338	NPC_TALK_STARTLED		plain	!<npc_desc> is startled by your attempt to make a conversation.	!你想搭话，却惊动了<npc_desc>。
+urw_msg.txt	343	NPC_TALKS		plain	<npc_desc> starts talking to you...	<npc_desc>开始与你交谈……
+urw_msg.txt	349	NPC_SAYS	*	branch	=<npc_desc> says: "%s"	=<npc_desc>说：“%s”
+urw_msg.txt	350	NPC_SAYS	HEAR	branch	!You hear someone uttering: "%s"	!你听到有人说：“%s”
+urw_msg.txt	356	NPC_SHOUTS	*	branch	!<npc_desc> shouts: "%s"	!<npc_desc>大喊：“%s”
+urw_msg.txt	357	NPC_SHOUTS	HEAR	branch	!You hear someone shouting: "%s"	!你听到有人大喊：“%s”
+urw_msg.txt	363	TRAP_ENTER	PC	branch	!You walk into %s!	!你走进了%s！
+urw_msg.txt	364	TRAP_ENTER	*	branch	!<npc_desc> enters %s.	!<npc_desc>走进了%s。
+urw_msg.txt	365	TRAP_ENTER	HEAR	branch	You hear a trap being triggered in the [IN_DIR:<npc_direction>].	你听到[IN_DIR:<npc_direction>]有陷阱被触发。
+urw_msg.txt	370	TRAP_FREE	PC	branch	:You manage to free yourself from %s.	:你成功挣脱了%s。
+urw_msg.txt	371	TRAP_FREE	*	branch	<npc_desc> manages to get free from %s.	<npc_desc>成功挣脱了%s。
+urw_msg.txt	380	PET_LEASHED		plain	:<npc_defdesc> is now put on the leash.	:<npc_defdesc>已拴上牵绳。
+urw_msg.txt	383	PET_UNLEASHED		plain	:You unleash <npc_defdesc>.	:你解开了<npc_defdesc>的牵绳。
+urw_msg.txt	387	PET_TIED		plain	:<npc_defdesc> is now tied to the %s.	:<npc_defdesc>现在拴在%s上。
+urw_msg.txt	391	PET_UNTIED		plain	:You untie <npc_defdesc>.	:你解开了<npc_defdesc>的绳子。
+urw_msg.txt	395	PET_TIE_CANT		plain	!Nay, that won't do. Tie it to a tree instead.	!不行，这样拴不住。拴到树上吧。
+urw_msg.txt	404	CANT_THROW_THAT_FAR		plain	!The <item> doesn't fly quite that far.	!<item>飞不了那么远。
+urw_msg.txt	407	CANT_THROW_PAST_CONTOUR		plain	+The <item> hits the slope in between.	+<item>撞上了中间的斜坡。
+urw_msg.txt	412	CANT_THROW_IN_MELEE		plain	!You are in melee range! It's better to strike with your <item>, than to throw it.	!你正处于近战距离！用<item>直接攻击比扔出去更好。
+urw_msg.txt	417	PREPARE_TO_THROW		plain	+You swing your arm back preparing to throw <the_fullitem>.	+你将手臂向后摆，准备投掷<the_fullitem>。
+urw_msg.txt	420	PREPARE_TO_SHOOT		plain	+You draw your <fullitem> and prepare to shoot.	+你拉开<fullitem>，准备射击。
+urw_msg.txt	423	PREPARE_TO_FIRE		plain	+You prepare to fire your <fullitem>.	+你准备发射<fullitem>。
+urw_msg.txt	432	MOVE_DONE		plain	+You moved <the_fullitem(s)> to the chosen location.	+你把<the_fullitem(s)>移到了选定的位置。
+urw_msg.txt	436	MOVE_NOTHING		plain	!There are no items at your feet!	!你脚边没有物品！
+urw_msg.txt	440	PUSH_INFO		plain	?Items at your feet will be moved to an adjacent location or packed on an animal.	?脚边的物品将移到相邻位置，或装到动物身上。
+urw_msg.txt	443	PACK_ANIMAL_SELECTED		plain	#You start packing items on <npc_defdesc>.	#你开始把物品装到<npc_defdesc>身上。
+urw_msg.txt	446	PACK_DONE		plain	+You packed <the_fullitem(s)> on <npc_defdesc>.	+你把<the_fullitem(s)>装到了<npc_defdesc>身上。
+urw_msg.txt	451	UNPACK_SELECTED	ANIMAL	branch	#You start unpacking items from <npc_defdesc>.	#你开始从<npc_defdesc>身上卸下物品。
+urw_msg.txt	452	UNPACK_SELECTED	*	branch	#You start picking items from <npc_desc>.	#你开始从<npc_desc>那里拿取物品。
+urw_msg.txt	455	WATERCRAFT_LAUNCH		plain	:You push <the_item> into water and jump aboard.	:你将<the_item>推入水中，跳了上去。
+urw_msg.txt	458	WATERCRAFT_OVERLOADED		plain	#Your <item> is overloaded and won't move until you ease the load.	#你的<item>超载了，减轻负载后才能移动。
+urw_msg.txt	466	ANGLE_START		plain	&You sit down, spit in the water and start to angle, dreaming of a huge catch.	&你坐下来，朝水里吐了口唾沫，开始垂钓，盼着能大丰收。
+urw_msg.txt	470	LIPPOFISHING_START		plain	&You lower <the_item> into the water and start dragging it to find a fish to scoop in.	&你把<the_item>放入水中，开始拖动，寻找可以捞起的鱼。
+urw_msg.txt	474	SPEARFISHING_START		plain	&You prepare to strike your <item> at the fish that may approach here.	&你举好<item>，准备刺向游到这里的鱼。
+urw_msg.txt	478	SPEARFISHING_TOO_DEEP		plain	!This is shallow waters fishing method. It's too deep to fish with <item> here.	!这种捕鱼方式只适合浅水。这里太深，无法使用<item>捕鱼。
+urw_msg.txt	481	FISHING_NO_CATCH		plain	You didn't manage to catch any fish.	你没能捕到鱼。
+urw_msg.txt	485	FISHING_CATCH		plain	=@You caught %s!	=@你捕到了%s！
+urw_msg.txt	488	CATCH_PICK_INFO		plain	_The catch now awaits at your feet to be picked up.	_渔获已放在你脚边，等着你拾取。
+urw_msg.txt	491	GOOF_NO_NET		plain	!There are no nets beside you. Nothing to retrieve.	!你身边没有渔网，没什么可以收的。
+urw_msg.txt	494	NET_PULL		plain	&You start retrieving the net from the water...	&你开始从水里收网……
+urw_msg.txt	497	NET_NO_CATCH		plain	There are no fish in this net.	这张网里没有鱼。
+urw_msg.txt	500	NET_DESTROYED		plain	+That <fullitem> is damaged and worn out beyond usable condition.	+<fullitem>已经损坏磨破，无法再用了。
+urw_msg.txt	503	GOOF_NO_WATER		plain	!Huh? There's no water.	!咦？这里没有水。
+urw_msg.txt	506	FISH_SPLASH_SEE		plain	{splash}You notice a %s splashing in the water.	{splash}你发现一条%s在水中扑腾。
+urw_msg.txt	509	FISH_SPLASH_HEAR		plain	{splash}You hear a splash from the [IN_DIR:<direction>].	{splash}你听到[IN_DIR:<direction>]传来水花声。
+urw_msg.txt	519	EAT_COMPLETE		plain	:You finish eating <item_verbose_def>.	:你吃完了<item_verbose_def>。
+urw_msg.txt	523	EAT_PARTIAL		plain	:You finish eating some of that <item_raw>.	:你吃了一些<item_raw>，停了下来。
+urw_msg.txt	526	EAT_FULL		plain	{BURP}=Burp! Your stomach is full.	{BURP}=嗝！你已经吃饱了。
+urw_msg.txt	529	EAT_CANT		plain	&You are full and satiated and can't eat more right now!	&你已经饱了，现在吃不下更多东西！
+urw_msg.txt	532	EAT_UNEDIBLE		plain	!It's not possible to consume plain <item_raw>!	!不能直接食用<item_raw>！
+urw_msg.txt	538	EATMSG_TASTE	1	branch	This tastes terrible	这味道糟透了
+urw_msg.txt	539	EATMSG_TASTE	2	branch	That's bland	这味道很淡
+urw_msg.txt	540	EATMSG_TASTE	3	branch	It's plain good <item_raw>	这是挺不错的<item_raw>
+urw_msg.txt	541	EATMSG_TASTE	4	branch	It's very tasty	这很美味
+urw_msg.txt	542	EATMSG_TASTE	5	branch	This tastes great	这味道好极了
+urw_msg.txt	543	EATMSG_TASTE	*	branch	This is <item_raw>	这是<item_raw>
+urw_msg.txt	546	DO_EAT		plain	<the_npc> eats <item>.	<the_npc>吃着<item>。
+urw_msg.txt	550	DRINK	SIP	branch	:You take a sip of <item_raw>.	:你小口抿了一点<item_raw>。
+urw_msg.txt	551	DRINK	GULP	branch	:You gulp that <item_raw>.	:你大口喝下<item_raw>。
+urw_msg.txt	552	DRINK	*	branch	:You drink some <item_raw>.	:你喝了些<item_raw>。
+urw_msg.txt	559	HIDING_START		plain	:You begin sneaking, trying to stay hidden and move as quietly as possible.	:你开始潜行，尽量藏好自己，放轻脚步。
+urw_msg.txt	562	HIDING_STOP		plain	:You quit hiding and sneaking.	:你不再躲藏和潜行。
+urw_msg.txt	565	HIDING_CANT		plain	!You can't hide now as you are clearly seen at this location.	!这里一览无余，你现在无法躲藏。
+urw_msg.txt	568	HIDING_NOISE		plain	!You make some noise while trying to sneak.	!你潜行时弄出了声响。
+urw_msg.txt	578	HARVEST_NOT_YET		plain	!<item_defdesc> here isn't ripe for harvesting yet.	!这里的<item_defdesc>还没成熟，不能收获。
+urw_msg.txt	582	HARVEST_YOUNG_LEAVES		plain	!<item_defdesc> here isn't ripe yet, but there are young leaves already.	!这里的<item_defdesc>还没成熟，不过已经长出了嫩叶。
+urw_msg.txt	586	HARVEST_YOUNG_STALK		plain	!<item_defdesc> here isn't ripe yet, but can be harvested for fibre already.	!这里的<item_defdesc>还没成熟，不过已经可以收割取纤维。
+urw_msg.txt	589	HARVEST_NEED_WADE		plain	!You need to be wading to reach the lake bottom for harvesting <item_defdesc>!	!你得涉水才能够到湖底，采收<item_defdesc>！
+urw_msg.txt	592	HARVEST_NOTHING		plain	!You find nothing to harvest there.	!那里没什么可以收获。
+urw_msg.txt	596	HARVEST_NOPICKING		plain	!<item_def> needs to be gathered by harvesting! 	!<item_def>必须通过收割采集！
+urw_msg.txt	600	HARVEST_NONEED		plain	!<item> doesn't require harvesting, but is gathered by picking up.	!<item>不必收割，直接采摘即可。
+urw_msg.txt	603	HARVEST_SEEDINFO		plain	!To gather the seeds as well you need to harvest <item_def> by using your AGRICULTURE-skill.	!要同时收集种子，必须使用农业技能收割<item_def>。
+urw_msg.txt	607	HARVEST_SEEDS_COMING		plain	!To gather the seeds, harvest <item_def> after its flowering period.	!要收集种子，请等<item_def>花期过后再收割。
+urw_msg.txt	611	HARVEST_FLOWERED		plain	!<item_def> here is past its flowering period and will not yield flowers.	!这里的<item_def>已经过了花期，不会再开花。
+urw_msg.txt	615	HARVEST_UNPROVIDED		plain	!This <item> no longer provides any yield nor carries any usable parts.	!这株<item>已经没有产物，也没有可用的部分了。
+urw_msg.txt	619	HARVEST_YOUNG_UNPROVIDED		plain	!This early-harvested <item> doesn't provide any yield.	!这株提前收割的<item>没有产物。
+urw_msg.txt	623	HARVEST_FOR_YIELD		plain	!This <item> doesn't carry usable parts to pick, try to harvest and thresh it.	!这株<item>没有可采摘的部分，试着收割后脱粒。
+urw_msg.txt	627	HARVESTED_ALREADY		plain	!The <item> here has been picked already!	!这里的<item>已经采摘过了！
+urw_msg.txt	631	HARVEST_DONE		plain	Ok. You harvested down <items_ind>.	好了，你收割了<items_ind>。
+urw_msg.txt	635	HARVEST_TIME		plain	:It will be fully ripe after [TIMESPAN_DAY:<prepdays>].	:它将在[TIMESPAN_DAY:<prepdays>]后完全成熟。
+urw_msg.txt	639	HARVEST_FLOWERING_TIME		plain	:It will be flowering after [TIMESPAN_DAY:<prepdays>].	:它将在[TIMESPAN_DAY:<prepdays>]后开花。
+urw_msg.txt	643	WITHER_TIME		plain	:It's withering and will die in [TIMESPAN_DAY:<prepdays>].	:它正在枯萎，将在[TIMESPAN_DAY:<prepdays>]内死去。
+urw_msg.txt	647	PLANT_NOT_YET		plain	_It's too early for planting <item>. Try again after [TIMESPAN_DAY:<prepdays>].	_现在种<item>还太早。过[TIMESPAN_DAY:<prepdays>]再试。
+urw_msg.txt	651	PLANT_TOO_LATE		plain	!It's too late to plant <item> this year.	!今年种<item>已经太晚了。
+urw_msg.txt	655	PLANT_DONE		plain	=Ok. You planted a patch of <item> here. Time will tell how many will sprout.	=好了，你在这里种下了一片<item>。过些时候就知道能发芽多少了。
+urw_msg.txt	659	HARVEST_PICKED		plain	:You got <items_verbose>.	:你得到了<items_verbose>。
+urw_msg.txt	665	TRACKS_NOT_FOUND		plain	You don't notice any tracks around here.	你没有在附近发现足迹。
+urw_msg.txt	668	TRACKS_FOUND		plain	=You find some tracks here.	=你在这里找到了一些足迹。
+urw_msg.txt	671	TRACKS_FOUND_NEARBY		plain	=You spot some tracks close by.	=你在附近发现了一些足迹。
+urw_msg.txt	674	TRACKING_GOOF_SHALLOW		plain	You peer into the water. Your reflection peers back at you.	你凝视水中，水中的倒影也凝视着你。
+urw_msg.txt	677	TRACKING_GOOF_DEEP		plain	You think you see something moving in the depths but then it's gone.	你觉得深处有什么在动，但转眼又不见了。
+urw_msg.txt	686	POUR_INFO		plain	?Select an item stack or another container from where to pour.	?选择要从中倾倒的物品堆或另一个容器。
+urw_msg.txt	689	POUR_CANT		plain	!That is something you can't pour into a container!	!这东西不能倒进容器！
+urw_msg.txt	692	POUR_SOURCE_OK		plain	+Ok, <raw_item> will be poured in there.	+好，<raw_item>将倒进那里。
+urw_msg.txt	695	POUR_OK		plain	=You fill %s with %s.	=你在%s里装满了%s。
+urw_msg.txt	698	FILL_CANT		plain	!There's nothing to fill your <item> with.	!没有东西可用来装满你的<item>。
+urw_msg.txt	701	FILL_WATER		plain	=You fill <the_item_container> with water.	=你给<the_item_container>装满了水。
+urw_msg.txt	704	FILL_INFO		plain	?To fill that <item_container> you need water or an animal to milk.	?要装满<item_container>，需要水或能够挤奶的动物。
+urw_msg.txt	707	MILK_REFUSE		plain	!<npc_defdesc> makes it clear that you are not allowed to milk her.	!<npc_defdesc>明确表示不让你挤奶。
+urw_msg.txt	710	MILK_CANT		plain	!Milk <npc_defdesc>? Nay, think again.	!给<npc_defdesc>挤奶？不行，再想想吧。
+urw_msg.txt	713	MILK_GOT		plain	+Alright. Thank you for the milk, <npc_desc>.	+好啦，谢谢你的奶，<npc_desc>。
+urw_msg.txt	716	NO_MORE_MILK_TODAY		plain	!It seems <npc_defdesc> can't yield any more milk today.	!<npc_defdesc>今天似乎已经挤不出更多奶了。
+urw_msg.txt	719	MILK_DRY_PERIOD		plain	!<npc_defdesc> is having a dry period. No milk until the next spring.	!<npc_defdesc>正处于干奶期，要到明年春天才能产奶。
+urw_msg.txt	727	CONTAINER_EMPTIED		plain	+You empty <the_item> to have it filled again.	+你倒空了<the_item>，好重新装东西。
+urw_msg.txt	741	DIY_CONTINUE		plain	#You continue working on the %s %s.	#你继续制作%s%s。
+urw_msg.txt	744	RAWMAT_INVALID		plain	!<item> doesn't work as %s!	!<item>不能用作%s！
+urw_msg.txt	748	CRAFTQUALITY_LOWERED		plain	!You fail to maintain the quality of <item_def_verbose> during this step.	!这一步做得不好，<item_def_verbose>的品质下降了。
+urw_msg.txt	752	CRAFTING_DONE_GROUND		plain	=Ok, you made %s here.	=好了，你在这里做出了%s。
+urw_msg.txt	756	CRAFTING_DONE		plain	=Ok, you obtained %s.	=好了，你得到了%s。
+urw_msg.txt	760	CRAFTING_TO_PREPARE		plain	=Ok, you set and leave %s here to prepare.	=好了，你把%s留在这里加工。
+urw_msg.txt	764	TOOL_SELECTED		plain	Ok. <the_fullitem> you have will be used.	好，将使用你带着的<the_fullitem>。
+urw_msg.txt	769	REQ_MORE		plain	_That's not enough. Select some more.	_这些还不够，再选一些。
+urw_msg.txt	775	REQ_NEARBY		plain	+%s nearby will be used.	+将使用附近的%s。
+urw_msg.txt	780	REQ_INV		plain	+%s in your inventory will be used.	+将使用你物品栏中的%s。
+urw_msg.txt	785	REQ_WATER_OK		plain	There is plenty of water nearby.	附近有充足的水。
+urw_msg.txt	795	BIY_CONTINUE		plain	#You continue working on the %s.	#你继续制作%s。
+urw_msg.txt	803	CARCASS_NOT_FOUND		plain	!You should have the carcass nearby on the ground, one step away at the most.	!尸体必须放在身边的地上，最多只能隔一步。
+urw_msg.txt	806	CARCASS_ROTTEN		plain	!This %s is not fresh enough to be utilized.	!这具%s已经不够新鲜，无法利用。
+urw_msg.txt	815	HIDEWORK_CURE_START		plain	#You finalize cleaning the skin and set it properly in place for curing.	#你将皮最后清理干净，妥善摊好，准备晾干保存。
+urw_msg.txt	818	HIDEWORK_CURE_DONE		plain	+The skin is now left to dry completely, after which it will keep for future usage.	+现在让皮完全晾干，之后就能保存起来，供将来使用。
+urw_msg.txt	822	HIDEWORK_CLEAN_START		plain	#You start to scrape and rinse the skin clean from any remaining flesh and fat.	#你开始刮洗皮上残留的肉和脂肪。
+urw_msg.txt	825	HIDEWORK_CLEAN_DONE		plain	+You obtained %s which can be now processed further, or cured for preservation.	+你得到了%s，现在可以继续加工，也可以晾干保存。
+urw_msg.txt	829	HIDEWORK_TANNING_START		plain	#You start to rub the tanning material on the skin.	#你开始把鞣料揉进皮里。
+urw_msg.txt	833	HIDEWORK_TANNING_DONE		plain	#The skin is now left alone for the tanning material to get working.	#现在把皮静置，让鞣料起作用。
+urw_msg.txt	837	HIDEWORK_RINSE_START		plain	#You scrape off the tanning mixture and rinse the skin clean.	#你刮去鞣料，将皮冲洗干净。
+urw_msg.txt	840	HIDEWORK_RINSE_DONE		plain	#The skin is now left to hang until it's dry enough to continue tanning.	#现在将皮挂起来，待它晾到足够干时再继续鞣制。
+urw_msg.txt	844	HIDEWORK_SOFTEN_START		plain	#You start softening the skin by pounding, stretching, squeezing and cursing - the final and the most laborious stage of tanning.	#你开始捶打、拉伸、挤揉皮子，嘴里不住咒骂——这是鞣制的最后一步，也是最费力的一步。
+urw_msg.txt	849	HIDEWORK_SOFTEN_DONE		plain	+You finish the tanning process and obtained %s.	+你完成了鞣制，得到了%s。
+urw_msg.txt	852	SKIN_MUTILATED		plain	!Hide of this %s is mutilated beyond usage.	!这具%s的皮已经残破不堪，无法利用。
+urw_msg.txt	861	RETTING_TOO_COLD		plain	!The water is too cold for retting! It is not possible now.	!水太冷，无法沤麻！现在做不了。
+urw_msg.txt	864	RETTING_SET		plain	+You leave the %s to soak in the water, after which they are properly retted.	+你把%s留在水中浸泡，等它们充分沤制。
+urw_msg.txt	867	DRYING_SET		plain	+The %s are now set in loose bundles to dry out fully, after which you can proceed to extract the fibre.	+你把%s松松地捆好，待其彻底晾干后就可以提取纤维。
+urw_msg.txt	870	TENDON_DRYING_SET		plain	+The %s are now left to dry, after which you can proceed to separate the sinew fibre.	+你把%s留下晾干，之后就可以分离筋纤维。
+urw_msg.txt	873	SEPARATE_SINEW		plain	#You proceed to start pounding the tendon to separate the sinew fibres.	#你开始捶打肌腱，分离筋纤维。
+urw_msg.txt	876	EXTRACT_BY_HAND		plain	#You proceed to extract fibres from <the_item> simply by hand.	#你开始徒手从<the_item>中抽取纤维。
+urw_msg.txt	879	EXTRACT_TOO_FEW		plain	!That is too few! You need at least <items> to extract practical amount of fibre.	!太少了！至少需要<items>，才能提取出够用的纤维。
+urw_msg.txt	882	EXTRACT_BY_BREAKING		plain	#Now you need to break and clean away the stems to release and obtain the fibres.	#现在需要折断并清除茎秆，分离出纤维。
+urw_msg.txt	891	SAUNA_THROW_WATER		plain	+You throw some water on the sauna stove.	+你往桑拿炉上泼了些水。
+urw_msg.txt	894	SAUNA_NO_STOVE		plain	!You should be located near heated sauna stove in order to throw water on it for steam to rise.	!你要靠近烧热的桑拿炉，才能往上泼水，让蒸汽升起来。
+urw_msg.txt	897	SAUNA_NO_STEAM		plain	!You get no steam out of the sauna stove as the stones are not hot enough.	!石头不够热，桑拿炉上没有升起蒸汽。
+urw_msg.txt	900	SAUNA_MILD_STEAM		plain	:The stones aren't too hot but mild steam rises from the sauna stove.	:石头不太热，不过桑拿炉上仍升起了一点温和的蒸汽。
+urw_msg.txt	903	SAUNA_STEAM		plain	:The sauna oven hisses and hot steam rises and fills the room.	:桑拿炉发出嘶嘶声，热蒸汽升起，充满了房间。
+urw_msg.txt	909	CAN_WADE		plain	:The water here is shallow enough to wade.	:这里的水很浅，可以涉水通过。
+urw_msg.txt	912	DEEP_WATER		plain	!It's deep water there! You need to swim, or go by watercraft.	!那里水很深！你得游泳或乘船过去。
+urw_msg.txt	915	OUT_OF_THE_WATER		plain	:You get out of the water.	:你从水里出来了。
+urw_msg.txt	923	COOKING_DONE		plain	+Ok, you finished preparing %s.	+好了，你处理完了%s。
+urw_msg.txt	927	COOKING_TO_PREPARE		plain	=Ok, you leave %s to cook and prepare.	=好了，你让%s继续烹煮。
+urw_msg.txt	931	FOOD_READY		plain	:It smells like <the_item> is ready.	:闻起来<the_item>已经做好了。
+urw_msg.txt	935	FOOD_BURNING		plain	:It smells like <the_item> is burning soon.	:闻起来<the_item>就要烧焦了。
+urw_msg.txt	938	GRIND_INFO		plain	?Select the grains to grind, or use roots and seeds for wild flour.	?选择要磨的谷物，或用根茎和种子磨制野生面粉。
+urw_msg.txt	941	GRIND_CANT		plain	!It's not possible to grind <items_nonum> for flour.	!<items_nonum>无法磨成面粉。
+urw_msg.txt	949	HERBLORE_KNOWN		plain	You do know that's <item_ind>.	你知道那是<item_ind>。
+urw_msg.txt	954	HERBLORE_SUCCESS		plain	=You recognize that being <item_ind>.	=你认出了那是<item_ind>。
+urw_msg.txt	959	HERBLORE_RECKON		plain	=You reckon it must be <item_ind>.	=你判断那应该是<item_ind>。
+urw_msg.txt	963	HERBLORE_LEARN		plain	=You have learned something new about <the_item>.	=你对<the_item>有了新的认识。
+urw_msg.txt	967	HERBLORE_FAILURE		plain	You do not recognize what <the_item> might be.	你认不出<the_item>是什么。
+urw_msg.txt	976	REPAIR_CANT		plain	_It's impossible for you to repair <the_fullitem>.	_你无法修复<the_fullitem>。
+urw_msg.txt	983	WEAR_ALREADY		plain	!You are already wearing that.	!你已经穿戴着它了。
+urw_msg.txt	986	WEAR_DOUBLE		plain	!You cannot wear double <item>.	!你不能同时穿戴两件<item>。
+urw_msg.txt	991	WEAR_SIMILAR		plain	!You cannot wear <item> over %s already being worn.	!你已经穿戴着%s，不能再在外面穿戴<item>。
+urw_msg.txt	994	WEAR_OK	PC	branch	+You are now wearing <item_ind>.	+你现在穿戴着<item_ind>。
+urw_msg.txt	995	WEAR_OK	*	branch	<npc_desc> wears <fullitem>.	<npc_desc>穿戴着<fullitem>。
+urw_msg.txt	1002	PHYSREQ_CANT		plain	&With %s, you are in no condition to %s!	&你正%s，没法%s！
+urw_msg.txt	1006	PHYSREQ_STANCE		plain	&To %s, first you need to get on your feet.	&要%s，得先站起来。
+urw_msg.txt	1010	CANT_WIELD_INJURED	1	branch	&You can't wield anything with your badly injured right hand!	&你的右手伤势严重，拿不了任何东西！
+urw_msg.txt	1011	CANT_WIELD_INJURED	2	branch	&You can't wield anything with your badly injured left hand!	&你的左手伤势严重，拿不了任何东西！
+urw_msg.txt	1019	TAKEOFF_CANT		plain	!Nay, not that one! You are supposed to take off things you are wearing or items you are wielding.	!不对，不是这个！你要卸下的是正在穿戴或拿在手里的物品。
+urw_msg.txt	1022	TAKEOFF_OK		plain	+You take off your <fullitem>.	+你卸下了<fullitem>。
+urw_msg.txt	1028	WARNING_MAP_ITEM_LIMIT		plain	#Whoa, items all over the place! Hoard wisely and spread your stuff over a larger area.	#哇，东西堆得到处都是！合理囤积，把物品分散放到更大的区域。
+urw_msg.txt	1032	GOOF_NO_CREATURE		plain	!Huh? There's no creature there.	!咦？那里没有生物。
+urw_msg.txt	1035	TASK_PROMPT_CREATURE		plain	:Meanwhile, <npc_ind> enters your view...	:这时，<npc_ind>进入了你的视野……
+urw_msg.txt	1038	TASK_PROMPT_AGG_CREATURE		plain	!Meanwhile, an aggressive <npc_desc> enters your view...	!这时，充满敌意的<npc_desc>进入了你的视野……
+urw_msg.txt	1041	TASK_PROMPT_AGG_APPROACH		plain	!Meanwhile, an aggressive <npc_desc> approaches...	!这时，充满敌意的<npc_desc>正靠近……
+urw_msg.txt	1044	TASK_PROMPT_AGGRESSION		plain	!Meanwhile, <npc_desc> turns hostile on you...	!这时，<npc_desc>对你产生了敌意……
+urw_msg.txt	1050	RESPONSE_CONFUSED	ANIMAL	branch	<npc_desc> tilts its head in confusion.	<npc_desc>困惑地歪着头。
+urw_msg.txt	1051	RESPONSE_CONFUSED	*	branch	<npc_desc> gives a questioning expression.	<npc_desc>露出疑惑的神情。
+urw_msg.txt	1054	RESPONSE_HAPPY	ANIMAL	branch	<npc_desc> gives you a happy look.	<npc_desc>高兴地望着你。
+urw_msg.txt	1055	RESPONSE_HAPPY	*	branch	<npc_desc> smiles happily.	<npc_desc>高兴地笑了。
+urw_msg.txt	1062	FIRE_MADE		plain	{FIRE}You managed to make a fire.	{FIRE}你成功生起了火。
+urw_msg.txt	1065	FIRE_FAILED		plain	You did not succeed in making a fire.	你没能生起火。
+urw_msg.txt	1068	FIRE_NEEDS_FIREWOOD		plain	!More firewood is required there.	!那里需要更多柴火。
+urw_msg.txt	1071	FIRE_NEEDS_KINDLING		plain	!Some smaller kindling such as branches is required there.	!那里需要一些树枝之类的小块引火物。
+urw_msg.txt	1074	FIRE_NEEDS_MORE_KINDLING		plain	!More kindling such as branches is required there.	!那里需要更多树枝之类的引火物。
+urw_msg.txt	1077	LIGHT_ITEM		plain	+You light <item_ind>.	+你点燃了<item_ind>。
+urw_msg.txt	1080	PUT_OUT_ITEM		plain	+You put out <item_def>.	+你熄灭了<item_def>。
+urw_msg.txt	1083	SHINGLE_RENEW	PC	branch	_You set a new shingle burning.	_你点燃了一块新木片。
+urw_msg.txt	1084	SHINGLE_RENEW	*	branch	<npc_desc> sets a shingle burning.	<npc_desc>点燃了一块木片。
+urw_msg.txt	1091	SACRIFICE_ITEM		plain	+You gently set <the_item> on the ground as a sacrifice.	+你轻轻地把<the_item>放在地上，作为祭品。
+urw_pronouns.txt	7	PP_SUBJ	PC	branch	you	你
+urw_pronouns.txt	8	PP_SUBJ	MASC	branch	he	他
+urw_pronouns.txt	9	PP_SUBJ	FEM	branch	she	她
+urw_pronouns.txt	10	PP_SUBJ	*	branch	it	它
+urw_pronouns.txt	18	PP_OBJ	PC	branch	you	你
+urw_pronouns.txt	19	PP_OBJ	MASC	branch	him	他
+urw_pronouns.txt	20	PP_OBJ	FEM	branch	her	她
+urw_pronouns.txt	21	PP_OBJ	*	branch	it	它
+urw_pronouns.txt	27	PP_GEN	PC	branch	your	你的
+urw_pronouns.txt	28	PP_GEN	MASC	branch	his	他的
+urw_pronouns.txt	29	PP_GEN	FEM	branch	her	她的
+urw_pronouns.txt	30	PP_GEN	*	branch	its	它的
+urw_pronouns.txt	34	PP_PART	PC	branch	you	你
+urw_pronouns.txt	35	PP_PART	*	branch	<npc_definite_partitive>	<npc_definite_partitive>
+urw_pronouns.txt	43	SUBJ_PRES	PC	branch	You are	你是
+urw_pronouns.txt	44	SUBJ_PRES	*	branch	[PP_SUBJ:<who>] is	[PP_SUBJ:<who>]是
+urw_pronouns.txt	49	BUT		plain	but	但是
+urw_pronouns.txt	53	AND		plain	and	和
+urw_pronouns.txt	57	AS		plain	as	同时
+urw_pronouns.txt	62	ADJ	BIG	branch	big	大的
+urw_pronouns.txt	63	ADJ	SMALL	branch	small	小的
+urw_sounds.txt	10	SND_PRES	BAWL	branch	bawls	嚎叫
+urw_sounds.txt	11	SND_PRES	BARK	branch	barks	吠叫
+urw_sounds.txt	12	SND_PRES	BELLOW	branch	bellows	低吼
+urw_sounds.txt	13	SND_PRES	COO	branch	coos	咕咕叫
+urw_sounds.txt	14	SND_PRES	COUGH	branch	coughs	咳嗽
+urw_sounds.txt	15	SND_PRES	CROW	branch	crows	啼叫
+urw_sounds.txt	16	SND_PRES	BLEAT	branch	bleats	咩咩叫
+urw_sounds.txt	17	SND_PRES	SNARL	branch	snarls	龇牙咆哮
+urw_sounds.txt	18	SND_PRES	SNORT	branch	snorts	喷鼻息
+urw_sounds.txt	19	SND_PRES	SNUFFLE	branch	snuffles	抽动鼻子
+urw_sounds.txt	20	SND_PRES	SWEAR	branch	swears	咒骂
+urw_sounds.txt	21	SND_PRES	SQUEAK	branch	squeaks	吱吱叫
+urw_sounds.txt	22	SND_PRES	MEOW	branch	meows	喵喵叫
+urw_sounds.txt	23	SND_PRES	GNAW	branch	gnaws	啃咬
+urw_sounds.txt	24	SND_PRES	GRUNT	branch	grunts	哼叫
+urw_sounds.txt	25	SND_PRES	GROWL	branch	growls	咆哮
+urw_sounds.txt	26	SND_PRES	GUFFAW	branch	guffaws	大笑
+urw_sounds.txt	27	SND_PRES	HISS	branch	hisses	嘶叫
+urw_sounds.txt	28	SND_PRES	ROAR	branch	roars	怒吼
+urw_sounds.txt	29	SND_PRES	HOWL	branch	howls	长嚎
+urw_sounds.txt	30	SND_PRES	YELP	branch	yelps	尖叫
+urw_sounds.txt	31	SND_PRES	WHIMPER	branch	whimpers	呜咽
+urw_sounds.txt	32	SND_PRES	SING	branch	sings	鸣唱
+urw_sounds.txt	33	SND_PRES	CROAK	branch	croaks	呱呱叫
+urw_sounds.txt	34	SND_PRES	CALL	branch	calls	鸣叫
+urw_sounds.txt	35	SND_PRES	SQUAWK	branch	squawks	嘎嘎叫
+urw_sounds.txt	36	SND_PRES	WHISTLE	branch	whistles	啸叫
+urw_sounds.txt	37	SND_PRES	*	branch	cries	叫唤
+urw_sounds.txt	42	SND_CONT	BAWL	branch	bawling	嚎叫
+urw_sounds.txt	43	SND_CONT	BARK	branch	barking	吠叫
+urw_sounds.txt	44	SND_CONT	BELLOW	branch	bellowing	低吼
+urw_sounds.txt	45	SND_CONT	COO	branch	cooing	咕咕叫
+urw_sounds.txt	46	SND_CONT	COUGH	branch	coughing	咳嗽
+urw_sounds.txt	47	SND_CONT	CROW	branch	crowing	啼叫
+urw_sounds.txt	48	SND_CONT	BLEAT	branch	bleating	咩咩叫
+urw_sounds.txt	49	SND_CONT	SNARL	branch	snarling	龇牙咆哮
+urw_sounds.txt	50	SND_CONT	SNORT	branch	snorting	喷鼻息
+urw_sounds.txt	51	SND_CONT	SNUFFLE	branch	snuffling	抽动鼻子
+urw_sounds.txt	52	SND_CONT	SWEAR	branch	swearing	咒骂
+urw_sounds.txt	53	SND_CONT	SQUEAK	branch	squeaking	吱吱叫
+urw_sounds.txt	54	SND_CONT	MEOW	branch	meowing	喵喵叫
+urw_sounds.txt	55	SND_CONT	GNAW	branch	gnawing	啃咬
+urw_sounds.txt	56	SND_CONT	GRUNT	branch	grunting	哼叫
+urw_sounds.txt	57	SND_CONT	GROWL	branch	growling	咆哮
+urw_sounds.txt	58	SND_CONT	GUFFAW	branch	guffawing	大笑
+urw_sounds.txt	59	SND_CONT	HISS	branch	hissing	嘶叫
+urw_sounds.txt	60	SND_CONT	ROAR	branch	roaring	怒吼
+urw_sounds.txt	61	SND_CONT	HOWL	branch	howling	长嚎
+urw_sounds.txt	62	SND_CONT	YELP	branch	yelping	尖叫
+urw_sounds.txt	63	SND_CONT	WHIMPER	branch	whimpering	呜咽
+urw_sounds.txt	64	SND_CONT	SING	branch	singing	鸣唱
+urw_sounds.txt	65	SND_CONT	CROAK	branch	croaking	呱呱叫
+urw_sounds.txt	66	SND_CONT	CALL	branch	calling	鸣叫
+urw_sounds.txt	67	SND_CONT	SQUAWK	branch	squawking	嘎嘎叫
+urw_sounds.txt	68	SND_CONT	WHISTLE	branch	whistling	啸叫
+urw_sounds.txt	69	SND_CONT	*	branch	crying	叫唤
+urw_sounds.txt	74	SND_NOUN	BAWL	branch	bawl	嚎叫声
+urw_sounds.txt	75	SND_NOUN	BARK	branch	bark	吠叫声
+urw_sounds.txt	76	SND_NOUN	BELLOW	branch	bellow	低吼声
+urw_sounds.txt	77	SND_NOUN	COO	branch	coo	咕咕声
+urw_sounds.txt	78	SND_NOUN	COUGH	branch	cough	咳嗽声
+urw_sounds.txt	79	SND_NOUN	CROW	branch	crow	啼叫声
+urw_sounds.txt	80	SND_NOUN	CROAK	branch	croak	呱呱声
+urw_sounds.txt	81	SND_NOUN	BLEAT	branch	bleat	咩咩声
+urw_sounds.txt	82	SND_NOUN	SNARL	branch	snarl	咆哮声
+urw_sounds.txt	83	SND_NOUN	SNORT	branch	snort	喷鼻息声
+urw_sounds.txt	84	SND_NOUN	SNUFFLE	branch	snuffle	抽鼻子声
+urw_sounds.txt	85	SND_NOUN	SWEAR	branch	swear	咒骂声
+urw_sounds.txt	86	SND_NOUN	SQUEAK	branch	squeak	吱吱声
+urw_sounds.txt	87	SND_NOUN	MEOW	branch	meow	喵喵声
+urw_sounds.txt	88	SND_NOUN	GNAW	branch	gnaw	啃咬声
+urw_sounds.txt	89	SND_NOUN	GRUNT	branch	grunt	哼哼声
+urw_sounds.txt	90	SND_NOUN	GROWL	branch	growl	咆哮声
+urw_sounds.txt	91	SND_NOUN	GUFFAW	branch	guffaw	大笑声
+urw_sounds.txt	92	SND_NOUN	HISS	branch	hiss	嘶嘶声
+urw_sounds.txt	93	SND_NOUN	ROAR	branch	roar	怒吼声
+urw_sounds.txt	94	SND_NOUN	HOWL	branch	howl	长嚎声
+urw_sounds.txt	95	SND_NOUN	YELP	branch	yelp	尖叫声
+urw_sounds.txt	96	SND_NOUN	WHIMPER	branch	whimper	呜咽声
+urw_sounds.txt	97	SND_NOUN	SING	branch	song	鸣唱声
+urw_sounds.txt	98	SND_NOUN	CALL	branch	call	鸣叫声
+urw_sounds.txt	99	SND_NOUN	SQUAWK	branch	squawk	嘎嘎声
+urw_sounds.txt	100	SND_NOUN	WHISTLE	branch	whistle	啸叫声
+urw_sounds.txt	101	SND_NOUN	*	branch	cry	叫声
+urw_sounds.txt	107	SOUND_PAIN	*	branch	{<npc_aggsound>}!<npc_defdesc> [SND_PRES:<npc_aggsound>] in pain.	{<npc_aggsound>}!<npc_defdesc>痛苦地[SND_PRES:<npc_aggsound>]。
+urw_sounds.txt	108	SOUND_PAIN	HEAR	branch	{<npc_aggsound>}You hear a [SND_NOUN:<npc_aggsound>] of pain from the [IN_DIR:<npc_direction>].	{<npc_aggsound>}你听到[IN_DIR:<npc_direction>]传来痛苦的[SND_NOUN:<npc_aggsound>]。
+urw_sounds.txt	114	SOUND_THREATEN	*	branch	{<npc_aggsound>}<npc_defdesc> [SND_PRES:<npc_aggsound>] at <defender_desc>.	{<npc_aggsound>}<npc_defdesc>朝<defender_desc>[SND_PRES:<npc_aggsound>]。
+urw_sounds.txt	115	SOUND_THREATEN	HEAR	branch	{<npc_aggsound>}You hear a [SND_NOUN:<npc_aggsound>] from the [IN_DIR:<npc_direction>].	{<npc_aggsound>}你听到[IN_DIR:<npc_direction>]传来[SND_NOUN:<npc_aggsound>]。
+urw_sounds.txt	121	SOUND_NORMAL	*	branch	{<npc_sound>}<npc_defdesc> [SND_PRES:<npc_sound>].	{<npc_sound>}<npc_defdesc>[SND_PRES:<npc_sound>]。
+urw_sounds.txt	122	SOUND_NORMAL	HEAR	branch	{<npc_sound>}You hear a [SND_NOUN:<npc_sound>] from the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]传来[SND_NOUN:<npc_sound>]。
+urw_sounds.txt	128	BIRDSOUND_NORMAL	*	branch	{<npc_sound>}<npc_defdesc> [SND_PRES:<npc_sound>].	{<npc_sound>}<npc_defdesc>[SND_PRES:<npc_sound>]。
+urw_sounds.txt	129	BIRDSOUND_NORMAL	HEAR	branch	{<npc_sound>}You hear <npc_ind> [SND_CONT:<npc_sound>] in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到<npc_ind>在[IN_DIR:<npc_direction>][SND_CONT:<npc_sound>]。
+urw_sounds.txt	135	SOUND_HUNGRY	*	branch	{<npc_sound>}<npc_defdesc> [SND_PRES:<npc_sound>] in hunger.	{<npc_sound>}<npc_defdesc>饥饿地[SND_PRES:<npc_sound>]。
+urw_sounds.txt	136	SOUND_HUNGRY	HEAR	branch	{<npc_sound>}You hear a creature [SND_CONT:<npc_sound>] in hunger in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]有动物饥饿地[SND_CONT:<npc_sound>]。
+urw_sounds.txt	141	SOUND_ALARM	*	branch	{<npc_sound>}<npc_defdesc> [SND_PRES:<npc_sound>] in alarm.	{<npc_sound>}<npc_defdesc>惊恐地[SND_PRES:<npc_sound>]。
+urw_sounds.txt	142	SOUND_ALARM	HEAR	branch	{<npc_sound>}You hear a creature [SND_CONT:<npc_sound>] in alarm in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]有动物惊恐地[SND_CONT:<npc_sound>]。
+urw_sounds.txt	147	SOUND_DISAGREEMENT	*	branch	{<npc_sound>}!<npc_defdesc> [SND_PRES:<npc_sound>] in disagreement.	{<npc_sound>}!<npc_defdesc>不情愿地[SND_PRES:<npc_sound>]。
+urw_sounds.txt	148	SOUND_DISAGREEMENT	HEAR	branch	{<npc_sound>}You hear a creature [SND_CONT:<npc_sound>] in disagreement in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]有动物不情愿地[SND_CONT:<npc_sound>]。
+urw_sounds.txt	151	SOUND_AGREEMENT	*	branch	{<npc_sound>}<npc_defdesc> [SND_PRES:<npc_sound>] in agreement.	{<npc_sound>}<npc_defdesc>[SND_PRES:<npc_sound>]，表示顺从。
+urw_sounds.txt	152	SOUND_AGREEMENT	HEAR	branch	{<npc_sound>}You hear a creature [SND_CONT:<npc_sound>] in agreement in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]有动物顺从地[SND_CONT:<npc_sound>]。
+urw_sounds.txt	155	SOUND_WOUNDED_DISAGREEMENT	*	branch	{<npc_sound>}!<npc_defdesc> only [SND_PRES:<npc_sound>] miserably and refuses to obey.	{<npc_sound>}!<npc_defdesc>只是可怜地[SND_PRES:<npc_sound>]，不肯听从。
+urw_sounds.txt	156	SOUND_WOUNDED_DISAGREEMENT	HEAR	branch	{<npc_sound>}You hear a creature [SND_CONT:<npc_sound>] miserably in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]有动物可怜地[SND_CONT:<npc_sound>]。
+urw_sounds.txt	164	SOUND_IN_DISTANCE	*	branch	{<npc_sound>}You hear <npc_desc> [SND_CONT:<npc_sound>] nearby in the [IN_DIR:<direction>].	{<npc_sound>}你听到<npc_desc>在附近的[IN_DIR:<direction>][SND_CONT:<npc_sound>]。
+urw_sounds.txt	165	SOUND_IN_DISTANCE	HEAR	branch	{<npc_sound>}You hear <npc_desc> [SND_CONT:<npc_sound>] nearby in the [IN_DIR:<direction>].	{<npc_sound>}你听到<npc_desc>在附近的[IN_DIR:<direction>][SND_CONT:<npc_sound>]。
+urw_tags.txt	3	QUALITY	0	branch	Crude	粗制的
+urw_tags.txt	4	QUALITY	1	branch	Inferior	劣质的
+urw_tags.txt	5	QUALITY	2	branch	Decent	尚可的
+urw_tags.txt	6	QUALITY	3	branch	-	-
+urw_tags.txt	7	QUALITY	4	branch	Fine	精良的
+urw_uname_flora.txt	1	UNAME_FLORA		flora-name-atom	pretty	漂亮的
+urw_uname_flora.txt	2	UNAME_FLORA		flora-name-atom	interesting	有趣的
+urw_uname_flora.txt	3	UNAME_FLORA		flora-name-atom	odd	古怪的
+urw_uname_flora.txt	4	UNAME_FLORA		flora-name-atom	strange	奇异的
+urw_uname_flora.txt	5	UNAME_FLORA		flora-name-atom	beautiful	美丽的
+urw_uname_flora.txt	6	UNAME_FLORA		flora-name-atom	scaly	鳞片状的
+urw_uname_flora.txt	7	UNAME_FLORA		flora-name-atom	funny	滑稽的
+urw_uname_flora.txt	8	UNAME_FLORA		flora-name-atom	fuzzy	茸毛状的
+urw_uname_flora.txt	9	UNAME_FLORA		flora-name-atom	shiny	闪亮的
+urw_uname_flora.txt	10	UNAME_FLORA		flora-name-atom	chubby	圆胖的
+urw_uname_flora.txt	11	UNAME_FLORA		flora-name-atom	charming	迷人的
+urw_uname_flora.txt	12	UNAME_FLORA		flora-name-atom	fluffy	蓬松的
+urw_uname_flora.txt	13	UNAME_FLORA		flora-name-atom	slimy	黏滑的
+urw_uname_flora.txt	14	UNAME_FLORA		flora-name-atom	weird	怪异的
+urw_uname_flora.txt	15	UNAME_FLORA		flora-name-atom	coarse	粗糙的
+urw_uname_flora.txt	16	UNAME_FLORA		flora-name-atom	bald	光秃的
+urw_uname_flora.txt	17	UNAME_FLORA		flora-name-atom	unfamiliar	陌生的
+urw_uname_flora.txt	18	UNAME_FLORA		flora-name-atom	alien	异样的
+urw_uname_flora.txt	19	UNAME_FLORA		flora-name-atom	cool	清爽的
+urw_uname_flora.txt	20	UNAME_FLORA		flora-name-atom	wrinkly	皱巴巴的
+urw_uname_flora.txt	21	UNAME_FLORA		flora-name-atom	coarse	粗糙的
+urw_uname_flora.txt	22	UNAME_FLORA		flora-name-atom	slimy	黏滑的
+urw_uname_flora.txt	23	UNAME_FLORA		flora-name-atom	puffy	鼓胀的
+urw_uname_flora.txt	24	UNAME_FLORA		flora-name-atom	wavy	波浪状的
+urw_uname_flora.txt	25	UNAME_FLORA		flora-name-atom	curly	卷曲的
+urw_uname_flora.txt	26	UNAME_FLORA		flora-name-atom	fibrous	纤维状的
+urw_uname_flora.txt	27	UNAME_FLORA		flora-name-atom	sweet	甜美的
+urw_uname_flora.txt	28	UNAME_FLORA		flora-name-atom	nice	好看的
+urw_uname_flora.txt	29	UNAME_FLORA		flora-name-atom	pleasant	宜人的
+urw_uname_flora.txt	30	UNAME_FLORA		flora-name-atom	whimsical	奇特的
+urw_uname_flora.txt	31	UNAME_FLORA		flora-name-atom	unique	独特的
+urw_uname_flora.txt	32	UNAME_FLORA		flora-name-atom	fancy	花哨的
+urw_uname_flora.txt	33	UNAME_FLORA		flora-name-atom	novel	新奇的
+urw_uname_flora.txt	34	UNAME_FLORA		flora-name-atom	curious	稀奇的
+urw_uname_flora.txt	35	UNAME_FLORA		flora-name-atom	amusing	逗趣的
+urw_uname_flora.txt	36	UNAME_FLORA		flora-name-atom	dull	暗淡的
+urw_uname_flora.txt	37	UNAME_FLORA		flora-name-atom	peculiar	特别的
+urw_uname_flora.txt	38	UNAME_FLORA		flora-name-atom	intriguing	耐人寻味的
+urw_uname_flora.txt	39	UNAME_FLORA		flora-name-atom	bizarre	离奇的
+urw_uname_flora.txt	40	UNAME_FLORA		flora-name-atom	quirky	奇形怪状的
+urw_uname_flora.txt	41	UNAME_FLORA		flora-name-atom	unusual	不寻常的
+urw_uname_flora.txt	42	UNAME_FLORA		flora-name-atom	puzzling	令人困惑的
+urw_uname_flora.txt	43	UNAME_FLORA		flora-name-atom	quaint	古朴的
+urw_uname_flora.txt	44	UNAME_FLORA		flora-name-atom	conspicuous	显眼的
+urw_uname_flora.txt	45	UNAME_FLORA		flora-name-atom	startling	惊人的
+urw_uname_flora.txt	46	UNAME_FLORA		flora-name-atom	remarkable	引人注目的
+urw_uname_flora.txt	47	UNAME_FLORA		flora-name-atom	ugly	丑陋的
+urw_uname_flora.txt	48	UNAME_FLORA		flora-name-atom	different	与众不同的
+urw_uname_flora.txt	49	UNAME_FLORA		flora-name-atom	lovely	可爱的
+urw_uname_flora.txt	50	UNAME_FLORA		flora-name-atom	neat	整齐的
+urw_uname_flora.txt	51	UNAME_FLORA		flora-name-atom	nice	好看的
+urw_uname_flora.txt	52	UNAME_FLORA		flora-name-atom	delightful	讨人喜欢的
+urw_uname_flora.txt	53	UNAME_FLORA		flora-name-atom	notable	醒目的
+urw_uname_flora.txt	54	UNAME_FLORA		flora-name-atom	fascinating	引人入胜的
+urw_uname_flora.txt	55	UNAME_FLORA		flora-name-atom	memorable	令人难忘的
+urw_uname_flora.txt	56	UNAME_FLORA		flora-name-atom	unforgettable	难以忘怀的
+urw_uname_flora.txt	57	UNAME_FLORA		flora-name-atom	indifferent	平平无奇的

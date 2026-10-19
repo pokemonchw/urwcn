@@ -1,0 +1,50 @@
+PE 3.89 5008F0 item-option return message
+
+500CB0 is an interior address, not a separate entry. The native entry
+is 5008F0, with exactly three direct callers in this PE:
+44FF3A (CONTAINER OPTIONS), 45015A (LEASHING OPTIONS), and 4502F1
+(ITEM PART OPTIONS). They write selected echo text to 006F2C30,
+subsequently consumed in the actual 455060 message path.
+
+44FC40 first clears upper rows through 4FFAA0. Its 462E20 call is a
+pure container eligibility predicate; it creates no text or rows.
+The four actual row format sites are 44FD04, 44FDB2, 44FE44, 44FEF2.
+Their caption sources are two fixed literals plus 563190 activity
+codes 1C3 and 1CB, which return exactly 'Fill with water, or milk into'
+and 'Empty a container'. All these captions fit the native limit.
+44FFC0 creates only 'Unleash' and 'Tie to a tree' at 450084/450114.
+4501A0 copies the actual 451770 result at 45020E and formats
+'Remove the %s' at 450245, then its row at 4502A6.
+
+The Remove operand is descriptor+88's attached item. Root's static
+writer audit proves normal repair paths allow only item ID FA fishhooks
+and ID 79 bowstrings; CONSTANT.OBJ's default rod uses an iron fishhook,
+and default bows use a bowstring. This excludes 451770's flora/slash
+singular/plural branches. The observed quantity is 1 and flags are 4.
+Final lowercase changes only casing, so native source spans remain
+aligned with these bound item graphs. The seven real clipping branches
+are still observed; the existing exact visible-prefix mechanism is used
+for any actual selected clipped caption, without exposing hidden text.
+
+500D86 supplies the selected row+2 caption, fixed menu title and the
+same '#%s: %s' native format used by 5002B0. 500DA9 is the actual
+NO DISPLAY clearing call. 500DDB is the actual first-'|' truncation.
+500DE2 is observed on the first actual copy iteration (ECX=0); it
+binds 6F2C30 to the current local source. 500E06 is the actual
++1-control-marker copy branch and replaces that binding with the
+same native removal operation. NO DISPLAY clears all 100 local bytes;
+the native strchr also selects +1 for its terminating NUL, so the
+source operation supports deleting from the actual empty string.
+No menu action or branch condition is reimplemented.
+
+windows_message_menu_return.inc shares menu_echo's upper-row owner
+map and exact native caption-prefix utility, not the lower CF790 UI
+model. It observes completed sprintf calls and immediate native copies
+without additional mutable state or save-schema fields. Existing
+native row identity and source bindings carry the resulting graphs.
+No coordinates or translated row snapshots are retained. Labels are in values.menu-return.zh-CN.tsv.
+
+Evidence: settlement-menu-return-callers-ghidra.c,
+settlement-hearing-menu-ghidra.c, settlement-menu-return-disassembly.txt,
+settlement-menu-return-callers-disassembly.txt, and root's attachment
+writer audit. No tests, compilation or game execution were performed.

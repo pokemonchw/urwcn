@@ -86,7 +86,7 @@ enum class TextComponent : std::uint32_t {
     scenario_selection_text = 0xC20,
     scenario_confirmation_text = 0xC21,
     game_course_text = 0xC22,
-    culture_text = 0xD00,
+    culture_text = 0xD00, culture_back = 0xD01,
     farewell_title = 0xE00, farewell_tree = 0xE01, farewell_river = 0xE02,
     farewell_fish = 0xE03, farewell_money = 0xE04, farewell_source = 0xE05,
     farewell_dedication = 0xE06, farewell_earth = 0xE07,
@@ -94,6 +94,10 @@ enum class TextComponent : std::uint32_t {
     spells_text = 0xF00,
     skills_text = 0xF01,
     world_generation_text = 0xF02,
+    skills_limit_improve = 0xF03,
+    skills_limit_degrade = 0xF04,
+    skills_help_record = 0xF05,
+    spells_help_record = 0xF06,
     creation_complete_title = 0xF10, creation_complete_enter = 0xF11,
     creation_complete_proverb = 0xF12, creation_complete_source = 0xF13,
     creation_complete_press_key = 0xF14,
@@ -101,7 +105,9 @@ enum class TextComponent : std::uint32_t {
     hud_action = 0x10003, hud_direction = 0x10004, hud_speed = 0x10005,
     world_place_gloss = 0x10100, world_location = 0x10101, world_region = 0x10102,
     world_date = 0x10103, world_scale = 0x10104, world_map_kind = 0x10105,
-    world_season = 0x10106, world_month = 0x10107, world_time = 0x10108
+    world_season = 0x10106, world_month = 0x10107, world_time = 0x10108,
+    message_literal = 0x10200, message_template = 0x10201,
+    message_value = 0x10202, message_continue = 0x10203, message_more = 0x10204
 };
 namespace text_op { constexpr std::uint32_t translate = 1; }
 namespace catalog_op { constexpr std::uint32_t lookup = 1, repertoire = 2; }

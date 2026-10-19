@@ -41,6 +41,7 @@ culture.ui.help_1	高亮的主题包含更多信息。用方向键选择主题�
 culture.ui.help_2	按ENTER或用鼠标点击，即可查看对应条目。
 culture.ui.help_3	也可以自行输入英文关键词或主题进行搜索。
 culture.map.title	文化区域
+culture.map.known_areas_title	已知区域地图
 culture.map.indicators_title	文化区域图例
 culture.ui.no_info	抱歉，没有找到这个主题的相关信息。
 culture.ui.continue	按任意键继续

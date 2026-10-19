@@ -1,0 +1,34 @@
+PE 3.89: 4E9320 fixed incantation messages
+
+The complete decompiled function is in settlement-all-callers-ghidra.c
+under Caller VA 004E9320. Raw instruction evidence is in
+settlement-prayer-disassembly.txt.
+
+Actual nonempty prose branches:
+- param 200: introduction 5A8C08; four lines 5A8BAC, 5A8BC4,
+  5A8BE0, 5A8BF8.
+- param 192: introduction 5A8CC0; four lines 5A8D10, 5A8D28,
+  5A8D40, 5A8D6C. The unsuitable-condition branch calls F6510
+  at 4E9791 with literal 5A8C68, already in direct.zh-CN.tsv.
+- param 180: introduction 5A8DF8; five lines 5A8D84, 5A8DA0,
+  5A8DB4, 5A8DC4, 5A8DDC.
+The ten slots are initially cleared; the remaining slots are empty.
+Param 9 invokes 4E8D40 with no local prose insertion, and other params
+do not insert a prose line into this function's cleared local slots.
+
+4E98CE formats an existing introduction using exact '&%s' and copies
+it to 065A8CF8. 4E9900 is the actual F6510 call for that completed
+input. 4E995B starts each nonempty verse with ':'. The actual first
+line branch 4E997A adds ASCII quote 22. The actual final-line branch
+4E99FC appends bytes 2E 22 00. The native loop copies the completed
+line to 065A8CF8 and calls F6510 at 4E9A30.
+
+The source graph hook binds exactly the completed native input at
+these two call sites. The finite prayer.message inventory therefore
+contains only the 16 actual complete messages, including their
+native '&', ':' and quote bytes. It neither reselects the ritual nor
+recomputes first/last line predicates. The native sequence, conditions,
+buffer, waits, sound/game effects and UI ownership remain unchanged.
+There is no intermediate mutable state or extra state serialization.
+Both hooks cover the native five-byte E8 CALL instruction only.
+No tests, compilation or game execution were performed.

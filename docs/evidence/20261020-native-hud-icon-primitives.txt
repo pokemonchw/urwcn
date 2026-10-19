@@ -1,0 +1,83 @@
+Native HUD icon primitive extension, static evidence only
+
+Image: original Windows PE urw.exe e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9.
+Preferred base 00400000. Addresses below are RVAs. No game, artifact or test was run.
+
+The new source is native_hud_icons::IconSource: actual native target lifetime,
+source field/record, direction or accepted activity alpha. No rectangle,
+translated text, UI pixels, SDL call list, old frame or pointer to old stack
+storage belongs to the source. The source's original images remain the native
+61BBAD8 (software direction), 61BBAE8 (overlay direction), and 61BBAF8 (activity)
+pointer owners. Native renderer/container lifetimes supply TargetSource.
+
+The adapter extends these original instruction spans into explicit synchronous
+native icon constructors. Ordinary and locale construction consume the same
+source and the same original geometry instructions. It does not execute the
+whole FAA30, which contains real business writes: FAC79 clears a flag;
+FB115..FB133 compares elapsed activity age and can zero 61A8CC4[record];
+FB258..FB279 writes player/viewport fields.
+
+Direction ABI
+  void uwcn_hud_invoke_direction(void), adapter C ABI.
+  Preserves EBP, EBX, ESI, EDI. Allocates 96 bytes of fresh scratch.
+  Its nested body allocates another 24 bytes and jumps to original FAF04.
+  FAF04 A1 [619F97C] reads original logical width.
+  FAF09 ADD ESP,18 discards the new body's 24 bytes, not somebody else's frame.
+  The body's own return address remains at its scratch base.
+  FAF0C..FAFB3 writes only fresh local rectangle fields at ESP+1C..28.
+  FAF21 reads 619F980, FAF3B reads A384110. Native switch FAF48 computes the
+  native direction angle and rectangle from those original constructor inputs.
+  It has no EBP-relative or outer-frame inputs.
+  FAFB3 MOV EBX,[18C1D0] supplies the native RenderCopyEx API.
+  FAFBD..FAFE0 pushes exactly 32 bytes for native cdecl RenderCopyEx.
+  FAFE2 Hook is the complete software direction constructor exit. During this
+  synchronous constructor only, it resumes uwcn_hud_direction_return, which
+  removes these 32 bytes and returns to the fresh caller. Outer scratch and
+  saved callee registers are then removed/restored normally.
+  Ordinary execution continues original FAFE2 onward.
+
+Overlay direction ABI
+  Uses the same fresh direction body, current native owner dimensions and
+  source direction. At FAFB3 its explicit constructor transition supplies
+  EBX=[18C1D0] and EDI=[18C288], then resumes original FB01C. These are precisely
+  the API register inputs otherwise initialized by FAFB3 and FAFE8.
+  The owner has already rebuilt/selects actual target 61BBAF4.
+  FB01C..FB043 uses the same native rectangle/angle and native asset61BBAE8.
+  FB045..FB04F resets native main target and removes 40 bytes: the 32-byte
+  RenderCopyEx input followed by the 8-byte SetRenderTarget input.
+  FB052 is a constructor exit before the original activity loop; stack is
+  exactly the nested body return address. The exit simply RETs.
+  The caller restores its pre-construction SDL render target.
+  FB01C is shared with rendererBinding's overlay baseline exit. That explicit
+  background materialization scope is dispatched before icon construction.
+
+Activity ABI
+  void uwcn_hud_invoke_activity(u32 actual_native_record), adapter C ABI.
+  Preserves EBP, EBX, ESI, EDI. ESI receives the actual source record ID.
+  Allocates 1280 bytes of fresh scratch, which includes the original error
+  string's destination ESP+B8..; it does not borrow FAA30's frame.
+  Nested body enters original FB06F, after the original business record-presence
+  test. FB06F..FB115 reads native owner dimensions and computes rectangle/angle
+  from that record using the original switch. All local rectangle fields are
+  initialized there. EDI is explicitly initialized; other registers used by
+  this span are assigned by the original instructions before use.
+  Ordinary accepted alpha is captured at FB166, after the original business
+  age branch and alpha selection, and before the native alpha consumer.
+  The source alpha is the real u32 argument currently on this invocation's
+  stack. Only its value is owned; no argument pointer is retained.
+  During locale construction, FB115 supplies canonical accepted alpha in EAX
+  and transitions to original FB15E. That original instruction pushes EAX.
+  This excludes the business age computation/retirement and does not advance
+  time, rewrite an activity timestamp or select new gameplay state.
+  The constructor installs native blend mode1 before entering this span.
+  FB166..FB1B3 executes original SetTextureAlphaMod/SetRenderTarget/RenderCopyEx.
+  FB1B9 removes 32 copy arguments. Original error-string copy still has its
+  fresh scratch. FB1DD..FB1E5 resets image blend mode0; its 8 bytes of cdecl
+  arguments remain until the next original combined cleanup.
+  FB1EB is the complete activity constructor exit. Its exit removes those
+  8 bytes then RETs. The caller restores pre-construction SDL target and image
+  blend/alpha properties. The original record loop is not entered.
+
+The constructor's exit Hooks change control flow only under its explicit
+owned synchronous materialization scope. Ordinary native construction follows
+all original instructions/business after its pure component boundary.

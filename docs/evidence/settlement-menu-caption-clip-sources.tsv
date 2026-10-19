@@ -1,0 +1,187 @@
+caller_va	row_call_va	native_builder	source_class	clip_path	source_detail
+00405df0	00405e12	004ffcc0	bound	no clipping in this builder	CAST@00405e06(CALL@00405e06(0x563190))
+00405df0	00405e5a	004ffcc0	bound	no clipping in this builder	CAST@00405e4e(CALL@00405e4e(0x563190))
+00405df0	00405ea3	004ffcc0	bound	no clipping in this builder	CAST@00405e97(CALL@00405e97(0x563190))
+00405df0	00405ef3	004ffcc0	bound	no clipping in this builder	CAST@00405ee7(CALL@00405ee7(0x563190))
+00405df0	00405f43	004ffcc0	bound	no clipping in this builder	CAST@00405f37(CALL@00405f37(0x563190))
+00405df0	00405f93	004ffcc0	bound	no clipping in this builder	CAST@00405f87(CALL@00405f87(0x563190))
+00405df0	00405fd7	004ffcc0	empty	empty row never exceeds native limit	empty native row
+00405df0	00405ff7	004ffd60	bound	no clipping in this builder	CAST@00405feb(CALL@00405feb(0x46c8b0))
+00405df0	00406017	004ffd60	bound	no clipping in this builder	CAST@0040600b(CALL@0040600b(0x46c8b0))
+00405df0	0040605c	004ffcc0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Apply trap in your inventory
+00405df0	00406098	004ffcc0	empty	empty row never exceeds native limit	empty native row
+00405df0	004060b1	004ffd60	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Build trap-fence
+00405df0	004060f9	004ffcc0	bound	no clipping in this builder	CAST@004060ed(CALL@004060ed(0x563190))
+00405df0	00406143	004ffcc0	bound	no clipping in this builder	CAST@00406137(CALL@00406137(0x563190))
+00405df0	00406193	004ffcc0	bound	no clipping in this builder	CAST@00406187(CALL@00406187(0x563190))
+00405df0	004061d7	004ffcc0	empty	empty row never exceeds native limit	empty native row
+00405df0	00406236	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	General trapping information
+00432630	0043264b	004ffcc0	bound	no clipping in this builder	CAST@0043263f(CALL@0043263f(0x563190))
+00432630	00432669	004ffcc0	bound	no clipping in this builder	CAST@0043265d(CALL@0043265d(0x563190))
+00432630	00432687	004ffcc0	bound	no clipping in this builder	CAST@0043267b(CALL@0043267b(0x563190))
+00432630	004326a2	004ffcc0	bound	no clipping in this builder	CAST@00432696(CALL@00432696(0x563190))
+00438900	0043896e	004ffcc0	bound	no clipping in this builder	CAST@00438925(CALL@00438925(0x563190))
+00438900	00438982	004ffcc0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Boil / Herbal beverages
+00438900	004389e4	004010d0	empty	empty row never exceeds native limit	empty native row
+00438900	00438a74	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Baking recipes
+00438900	00438b04	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Porridge recipes
+00438900	00438b94	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Meat recipes
+00438900	00438c24	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Fish recipes
+00438900	00438cb4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Vegetable recipes
+00438900	00438d0f	004ffb30	section	4FFBFF after 34-byte native comparison	6F7AD8 native menu-section caption from menudef files; installed files have no active sections
+00438900	00438d76	004010d0	empty	empty row never exceeds native limit	empty native row
+00438900	00438dba	004ffcc0	bound	no clipping in this builder	CAST@00438935(CALL@00438935(0x563190))
+00438900	00438dcf	004ffcc0	bound	no clipping in this builder	CAST@00438940(CALL@00438940(0x563190))
+00438900	00438de4	004ffcc0	bound	no clipping in this builder	CAST@0043894e(CALL@0043894e(0x563190))
+00438900	00438f5c	004ffcc0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Ember-roasted turnips
+00442ad0	00443033	004ffd60	bound	no clipping in this builder	PTRSUB@0044302d((register, 0x10, 4),0xfffffc60)
+00442ad0	00443201	004fff30	bound	no clipping in this builder	PTRSUB@004431fb((register, 0x10, 4),0xfffffdf8)
+00442ad0	004432c0	004ffd60	bound	no clipping in this builder	PTRSUB@004432ba((register, 0x10, 4),0xfffffdf8)
+00442ad0	0044332f	004fff30	bound	no clipping in this builder	PTRSUB@00443329((register, 0x10, 4),0xfffffdf8)
+00442ad0	004433ec	004fff30	bound	no clipping in this builder	PTRSUB@004433e6((register, 0x10, 4),0xfffffdf8)
+00445bc0	00445c44	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Cloth garments
+00445bc0	00445cd4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Fur clothes
+00445bc0	00445d64	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Leather clothes
+00445bc0	00445df4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Miscellanous clothes
+00445bc0	00445e39	004ffcc0	empty	empty row never exceeds native limit	empty native row
+00445bc0	00445e4e	004ffcc0	bound	no clipping in this builder	CAST@00445bd9(CALL@00445bd9(0x563190))
+00446680	004466a2	004ffcc0	bound	no clipping in this builder	CAST@00446696(CALL@00446696(0x563190))
+00446680	004466ea	004ffcc0	bound	no clipping in this builder	CAST@004466de(CALL@004466de(0x563190))
+00446680	00446733	004ffcc0	bound	no clipping in this builder	CAST@00446727(CALL@00446727(0x563190))
+00446680	00446793	004ffcc0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Spin yarn
+00446680	00446824	004010d0	empty	empty row never exceeds native limit	empty native row
+00446680	00446875	004ffcc0	bound	no clipping in this builder	CAST@00446869(CALL@00446869(0x563190))
+00446680	004468c3	004ffcc0	bound	no clipping in this builder	CAST@004468b7(CALL@004468b7(0x563190))
+00446680	00446913	004ffcc0	bound	no clipping in this builder	CAST@00446907(CALL@00446907(0x563190))
+00446980	00446a24	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Wooden building
+00446980	00446ae4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Kota
+00446980	00446b4e	004ffcc0	bound	no clipping in this builder	CAST@0044699c(CALL@0044699c(0x563190))
+00446980	00446bf4	004010d0	empty	empty row never exceeds native limit	empty native row
+00446980	00446c3c	004ffcc0	bound	no clipping in this builder	CAST@004469a9(CALL@004469a9(0x563190))
+00446980	00446c51	004ffcc0	bound	no clipping in this builder	CAST@004469b6(CALL@004469b6(0x563190))
+00446980	00446cb4	004010d0	empty	empty row never exceeds native limit	empty native row
+00446980	00446d44	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	General building information
+00447b00	00447b94	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Arrows
+00447b00	00447c24	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Building
+00447b00	00447cb4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Clothes
+00447b00	00447d44	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Fishing
+00447b00	00447dd4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Hafting
+00447b00	00447e64	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Lumber
+00447b00	00447ef4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Trapping
+00447b00	00447f84	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Transport
+00447b00	00448014	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Containers
+00447b00	004480a4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Utility articles
+00447b00	00448134	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Tying equipment
+00447b00	004481c4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Weapons
+00447b00	00448254	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Textilecraft
+00447b00	004482af	004ffb30	section	4FFBFF after 34-byte native comparison	6F7AD8 native menu-section caption from menudef files; installed files have no active sections
+00447b00	00448324	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Modded handcraft options
+00447b00	004483c0	004ffcc0	bound	no clipping in this builder	CAST@004483af(CALL@004483af(0x563190))
+00447b00	0044843c	004ffcc0	bound	no clipping in this builder	CAST@0044842b(CALL@0044842b(0x563190))
+00447b00	004484f4	004010d0	empty	empty row never exceeds native limit	empty native row
+00447b00	00448545	004ffcc0	bound	no clipping in this builder	CAST@00448539(CALL@00448539(0x563190))
+00447b00	00448563	004ffcc0	bound	no clipping in this builder	CAST@00448557(CALL@00448557(0x563190))
+00447b00	00448634	004010d0	empty	empty row never exceeds native limit	empty native row
+00447b00	00448685	004ffcc0	bound	no clipping in this builder	CAST@00448679(CALL@00448679(0x563190))
+00447b00	004486a3	004ffcc0	bound	no clipping in this builder	CAST@00448697(CALL@00448697(0x563190))
+00447b00	004486f3	004ffcc0	bound	no clipping in this builder	CAST@004486e2(CALL@004486e2(0x563190))
+00447b00	0044870f	004ffcc0	empty	empty row never exceeds native limit	empty native row
+00447b00	0044872d	004ffcc0	bound	no clipping in this builder	CAST@00448721(CALL@00448721(0x563190))
+00448960	004489fc	004ffb30	section	4FFBFF after 34-byte native comparison	6F7AD8 native menu-section caption from menudef files; installed files have no active sections
+00453130	004531c7	004ffb30	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	finite category/command label selected by caller
+00453130	00453244	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Unpaid
+00453130	004532d4	004010d0	empty	empty row never exceeds native limit	empty native row
+00453130	00453319	004ffb30	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	All types
+004a3620	004a36c4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Get up (stand)
+004a3620	004a3774	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Walk (stop running)
+004a3620	004a3814	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Stop sneaking
+004a3620	004a38b4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Run
+004a3620	004a3954	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Hide and sneak
+004a3620	004a3a24	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Go prone (lay down)
+004a3620	004a3ab4	004010d0	empty	empty row never exceeds native limit	empty native row
+004a3620	004a3b44	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Stand still - wait and rest
+004a3620	004a3bf4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Rest until not fatigued
+004a3620	004a3c3e	004ffcc0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Sleep
+004d8b70	004d8ec7	004010d0	treatment	finite treatment names plus native key prefix do not exceed 34 bytes	4D8A10 finite treatment selection
+004d8b70	004d8fa4	004010d0	treatment	finite treatment names plus native key prefix do not exceed 34 bytes	4D8A10 finite treatment selection
+004d8b70	004d9074	004010d0	treatment	finite treatment names plus native key prefix do not exceed 34 bytes	4D8A10 finite treatment selection
+004d8b70	004d9124	004010d0	treatment	finite treatment names plus native key prefix do not exceed 34 bytes	4D8A10 finite treatment selection
+004d8b70	004d91d5	004010d0	treatment	finite treatment names plus native key prefix do not exceed 34 bytes	4D8A10 finite treatment selection
+004d8b70	004d92d4	004010d0	treatment	finite treatment names plus native key prefix do not exceed 34 bytes	4D8A10 finite treatment selection
+004f8c10	004f8d97	004ffb30	bound	dynamic name may clip; requires native text/token clipping boundary	4AD4F0 native NPC name, including species/culture/role/proper-name branches
+00508730	00508794	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Keyboard commands
+00508730	00508834	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Quit the game
+00508730	005088a4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Quit and optionally save
+00508730	00508944	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Setup options
+00508730	005089d7	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Game encyclopedia
+00508730	00508a87	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Save the game
+00518760	00518aa5	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Peel in long strips
+00518760	00518b44	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Harvest as sheets
+0051b310	0051b328	004ffcc0	bound	no clipping in this builder	CAST@0051b31c(CALL@0051b31c(0x563190))
+0051b310	0051b343	004ffcc0	bound	no clipping in this builder	CAST@0051b337(CALL@0051b337(0x563190))
+0051b310	0051b35e	004ffcc0	bound	no clipping in this builder	CAST@0051b352(CALL@0051b352(0x563190))
+0051b310	0051b379	004ffcc0	bound	no clipping in this builder	CAST@0051b36d(CALL@0051b36d(0x563190))
+0051b310	0051b394	004ffcc0	bound	no clipping in this builder	CAST@0051b388(CALL@0051b388(0x563190))
+0051b310	0051b3af	004ffcc0	bound	no clipping in this builder	CAST@0051b3a3(CALL@0051b3a3(0x563190))
+0051b310	0051b3ca	004ffcc0	bound	no clipping in this builder	CAST@0051b3be(CALL@0051b3be(0x563190))
+00521dd0	00521de8	004ffcc0	bound	no clipping in this builder	CAST@00521ddc(CALL@00521ddc(0x563190))
+00521dd0	00521e03	004ffcc0	bound	no clipping in this builder	CAST@00521df7(CALL@00521df7(0x563190))
+00521dd0	00521e1e	004ffcc0	bound	no clipping in this builder	CAST@00521e12(CALL@00521e12(0x563190))
+00521dd0	00521e39	004ffcc0	bound	no clipping in this builder	CAST@00521e2d(CALL@00521e2d(0x563190))
+00521dd0	00521e54	004ffcc0	bound	no clipping in this builder	CAST@00521e48(CALL@00521e48(0x563190))
+00521dd0	00521e6f	004ffcc0	bound	no clipping in this builder	CAST@00521e63(CALL@00521e63(0x563190))
+00521ea0	00521eb8	004ffcc0	bound	no clipping in this builder	CAST@00521eac(CALL@00521eac(0x563190))
+00521ea0	00521ed3	004ffcc0	bound	no clipping in this builder	CAST@00521ec7(CALL@00521ec7(0x563190))
+00521ea0	00521eee	004ffcc0	bound	no clipping in this builder	CAST@00521ee2(CALL@00521ee2(0x563190))
+00521ea0	00521f09	004ffcc0	bound	no clipping in this builder	CAST@00521efd(CALL@00521efd(0x563190))
+00521ea0	00521f24	004ffcc0	bound	no clipping in this builder	CAST@00521f18(CALL@00521f18(0x563190))
+0052c110	0052c676	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Blunt
+0052c110	0052c744	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Edge
+0052c110	0052c814	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Point
+0052c110	0052cea4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Body
+0052c110	0052cf58	004010d0	bound	finite combinations do not exceed 34 bytes; native 5008A2 removes pipe suffix	Head/Arms/Legs + 52C070 finite pipe-delimited aim suffix
+0052c110	0052d016	004010d0	bound	finite combinations do not exceed 34 bytes; native 5008A2 removes pipe suffix	Head/Arms/Legs + 52C070 finite pipe-delimited aim suffix
+0052c110	0052d0c9	004010d0	bound	finite combinations do not exceed 34 bytes; native 5008A2 removes pipe suffix	Head/Arms/Legs + 52C070 finite pipe-delimited aim suffix
+0052c110	0052d215	004ffb30	bodypart	key=0 4FFC32 rewrites complete caption after any earlier clip	561B00 BODYPART selected body copied through 635B330
+0052c110	0052d31f	004ffb30	bodypart	key=0 4FFC32 rewrites complete caption after any earlier clip	561B00 BODYPART selected body copied through 635B330
+0052c110	0052d41f	004ffb30	bodypart	key=0 4FFC32 rewrites complete caption after any earlier clip	561B00 BODYPART selected body copied through 635B330
+0052c110	0052d51f	004ffb30	bodypart	key=0 4FFC32 rewrites complete caption after any earlier clip	561B00 BODYPART selected body copied through 635B330
+0052e370	0052ec35	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Dodge
+0052e370	0052ed06	004010d0	bound	dynamic compound may clip; requires native text/token clipping boundary	Block/Counterstrike with + 4C0190 selected weapon descriptor+9
+0052e370	0052edd7	004010d0	bound	dynamic compound may clip; requires native text/token clipping boundary	Block/Counterstrike with + 4C0190 selected weapon descriptor+9
+0052e370	0052eea8	004010d0	bound	dynamic compound may clip; requires native text/token clipping boundary	Block/Counterstrike with + 4C0190 selected weapon descriptor+9
+0052e370	0052ef64	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Ignore
+0052e370	0052eff4	004010d0	empty	empty row never exceeds native limit	empty native row
+0052e370	0052f084	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Defense maneuvers
+0052f8a0	0052f924	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	None
+0052f8a0	0052f9b4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Center
+0052f8a0	0052fa44	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	High
+0052f8a0	0052fad4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Side
+00543340	005435a6	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	finite category/command label selected by caller
+00543340	005436c8	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	finite category/command label selected by caller
+00543340	005437b4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Follow
+00543340	00543864	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Stay
+00543340	00543916	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Come
+00543340	005439e4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	I shall name you...
+00543340	00543ac4	004010d0	empty	empty row never exceeds native limit	empty native row
+00543340	00543b64	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Group command
+00543340	00543c04	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Group command off
+005451a0	00545324	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Attack
+005451a0	005453b4	004010d0	empty	empty row never exceeds native limit	empty native row
+005451a0	00545444	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Light a fire
+005451a0	005454d4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Butcher and skin a carcass
+005451a0	00545564	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Roast some meat
+005451a0	005455f4	004010d0	empty	empty row never exceeds native limit	empty native row
+005451a0	00545684	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Fell some trees
+005451a0	00545714	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Carve trunks into logs
+005451a0	005457a4	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Split trunks into boards
+005451a0	00545834	004010d0	empty	empty row never exceeds native limit	empty native row
+005451a0	005458e5	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Start following again
+005451a0	00545954	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Stay here
+005451a0	005459f6	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Stop your tasks
+005451a0	00545a94	004010d0	empty	empty row never exceeds native limit	empty native row
+005451a0	00545b34	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Group command
+005451a0	00545c25	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Group command off
+00546200	00546820	004ffb30	bound	dynamic name may clip; requires native text/token clipping boundary	4AD4F0 native NPC name, including species/culture/role/proper-name branches
+00546200	00546894	004010d0	empty	empty row never exceeds native limit	empty native row
+00546200	00546924	004010d0	label	finite fixed label plus one-character key prefix does not exceed 34 bytes	Choose a target in sight

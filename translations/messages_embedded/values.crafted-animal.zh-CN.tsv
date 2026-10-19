@@ -1,0 +1,743 @@
+crafted-animal-format	%s-skin	%s生皮
+crafted-animal-format	clean %s-skin	刮净的%s生皮
+crafted-animal-format	De-haired %s-skin	脱毛的%s生皮
+crafted-animal-format	de-haired %s-skin	脱毛的%s生皮
+crafted-animal-format	%s fur	%s毛皮
+crafted-animal-format	%s leather	%s皮革
+material.animal	creature	生物
+material.animal	human	人
+material.animal	boar	公猪
+material.animal	 stag	雄鹿
+material.animal	female dog	母狗
+material.animal	 doe	雌鹿
+material.animal	calf	幼崽
+material.animal	lamb	羊羔
+material.animal	piglet	小猪
+material.animal	puppy	小狗
+material.animal	cub	幼崽
+material.animal	ram	公羊
+material.animal	sow	母猪
+material.animal	bull	公牛
+material.animal	cow	母牛
+material.animal	Dog	狗
+material.animal	Eagle owl	雕鸮
+material.animal	Elder tribesman	部落长者
+material.animal	elk	驼鹿
+material.animal	Ermine	白鼬
+material.animal	Foreign trader	外来商人
+material.animal	Forest reindeer	森林驯鹿
+material.animal	Fox	狐狸
+material.animal	Glutton	狼獾
+material.animal	Goshawk	苍鹰
+material.animal	Grey seal	灰海豹
+material.animal	Hare	野兔
+material.animal	Mallard	绿头鸭
+material.animal	Njerpez warrior	涅尔佩兹战士
+material.animal	pig	猪
+material.animal	Pine-marten	松貂
+material.animal	Polecat	艾鼬
+material.animal	Raven	渡鸦
+material.animal	Ringed seal	环斑海豹
+material.animal	sheep	绵羊
+material.animal	Squirrel	松鼠
+material.animal	Tufted duck	凤头潜鸭
+material.animal	Weasel	伶鼬
+material.animal	Wild boar	野公猪
+material.animal	Wild sow	野母猪
+material.animal	man	男子
+material.animal	woman	女子
+material.animal	Human	人
+material.animal	Boar	公猪
+material.animal	Female dog	母狗
+material.animal	Calf	幼崽
+material.animal	Lamb	羊羔
+material.animal	Piglet	小猪
+material.animal	Puppy	小狗
+material.animal	Cub	幼崽
+material.animal	Ram	公羊
+material.animal	Sow	母猪
+material.animal	Bull	公牛
+material.animal	Cow	母牛
+material.animal	dog	狗
+material.animal	eagle owl	雕鸮
+material.animal	elder tribesman	部落长者
+material.animal	Elk	驼鹿
+material.animal	ermine	白鼬
+material.animal	foreign trader	外来商人
+material.animal	forest reindeer	森林驯鹿
+material.animal	fox	狐狸
+material.animal	glutton	狼獾
+material.animal	goshawk	苍鹰
+material.animal	grey seal	灰海豹
+material.animal	hare	野兔
+material.animal	mallard	绿头鸭
+material.animal	njerpez warrior	涅尔佩兹战士
+material.animal	Pig	猪
+material.animal	pine-marten	松貂
+material.animal	polecat	艾鼬
+material.animal	raven	渡鸦
+material.animal	ringed seal	环斑海豹
+material.animal	Sheep	绵羊
+material.animal	squirrel	松鼠
+material.animal	tufted duck	凤头潜鸭
+material.animal	weasel	伶鼬
+material.animal	wild boar	野公猪
+material.animal	wild sow	野母猪
+material.animal	Man	男子
+material.animal	Woman	女子
+material.animal	Aquatic bird	水鸟
+material.animal	aquatic bird	水鸟
+material.animal	Arctic fox	北极狐
+material.animal	arctic fox	北极狐
+material.animal	Badger	獾
+material.animal	badger	獾
+material.animal	Bear	熊
+material.animal	bear	熊
+material.animal	Beaver	河狸
+material.animal	beaver	河狸
+material.animal	Black grouse	黑琴鸡
+material.animal	black grouse	黑琴鸡
+material.animal	Capercaillie	松鸡
+material.animal	capercaillie	松鸡
+material.animal	Goldeneye	鹊鸭
+material.animal	goldeneye	鹊鸭
+material.animal	Hazel grouse	花尾榛鸡
+material.animal	hazel grouse	花尾榛鸡
+material.animal	Horse	马
+material.animal	horse	马
+material.animal	Kuikka	潜鸟
+material.animal	kuikka	潜鸟
+material.animal	Lynx	猞猁
+material.animal	lynx	猞猁
+material.animal	reindeer	驯鹿
+material.animal	Reindeer	驯鹿
+material.animal	Snake	蛇
+material.animal	snake	蛇
+material.animal	Swan	天鹅
+material.animal	swan	天鹅
+material.animal	Willow grouse	柳雷鸟
+material.animal	willow grouse	柳雷鸟
+material.animal	Wolf	狼
+material.animal	wolf	狼
+material.animal	kaumolais Maiden	考莫少女
+material.animal	kaumolais maiden	考莫少女
+material.animal	Kaumolais Maiden	考莫少女
+material.animal	kaumolais Housewife	考莫主妇
+material.animal	kaumolais housewife	考莫主妇
+material.animal	Kaumolais Housewife	考莫主妇
+material.animal	kaumolais Woman	考莫女子
+material.animal	kaumolais woman	考莫女子
+material.animal	Kaumolais Woman	考莫女子
+material.animal	kaumolais blacksmith	考莫铁匠
+material.animal	Kaumolais blacksmith	考莫铁匠
+material.animal	kaumolais peasant	考莫农民
+material.animal	Kaumolais peasant	考莫农民
+material.animal	kaumolais girl	考莫女孩
+material.animal	Kaumolais girl	考莫女孩
+material.animal	kaumolais robber	考莫强盗
+material.animal	Kaumolais robber	考莫强盗
+material.animal	kaumolais woodsman	考莫林人
+material.animal	Kaumolais woodsman	考莫林人
+material.animal	kaumolais sage	考莫智者
+material.animal	Kaumolais sage	考莫智者
+material.animal	kaumolais boy	考莫男孩
+material.animal	Kaumolais boy	考莫男孩
+material.animal	kaumolais craftsman	考莫工匠
+material.animal	Kaumolais craftsman	考莫工匠
+material.animal	kaumolais tribesman	考莫部落男子
+material.animal	Kaumolais tribesman	考莫部落男子
+material.animal	kaumolais hunter	考莫猎人
+material.animal	Kaumolais hunter	考莫猎人
+material.animal	kaumolais adventurer	考莫冒险者
+material.animal	Kaumolais adventurer	考莫冒险者
+material.animal	kaumolais shaman	考莫萨满
+material.animal	Kaumolais shaman	考莫萨满
+material.animal	Old kaumolais man	考莫老人
+material.animal	old kaumolais man	考莫老人
+material.animal	driikiläis Maiden	德里基少女
+material.animal	driikiläis maiden	德里基少女
+material.animal	Driikiläis Maiden	德里基少女
+material.animal	driikiläis Housewife	德里基主妇
+material.animal	driikiläis housewife	德里基主妇
+material.animal	Driikiläis Housewife	德里基主妇
+material.animal	driikiläis Woman	德里基女子
+material.animal	driikiläis woman	德里基女子
+material.animal	Driikiläis Woman	德里基女子
+material.animal	driikiläis blacksmith	德里基铁匠
+material.animal	Driikiläis blacksmith	德里基铁匠
+material.animal	driikiläis peasant	德里基农民
+material.animal	Driikiläis peasant	德里基农民
+material.animal	driikiläis girl	德里基女孩
+material.animal	Driikiläis girl	德里基女孩
+material.animal	driikiläis robber	德里基强盗
+material.animal	Driikiläis robber	德里基强盗
+material.animal	driikiläis woodsman	德里基林人
+material.animal	Driikiläis woodsman	德里基林人
+material.animal	driikiläis sage	德里基智者
+material.animal	Driikiläis sage	德里基智者
+material.animal	driikiläis boy	德里基男孩
+material.animal	Driikiläis boy	德里基男孩
+material.animal	driikiläis craftsman	德里基工匠
+material.animal	Driikiläis craftsman	德里基工匠
+material.animal	driikiläis tribesman	德里基部落男子
+material.animal	Driikiläis tribesman	德里基部落男子
+material.animal	driikiläis hunter	德里基猎人
+material.animal	Driikiläis hunter	德里基猎人
+material.animal	driikiläis adventurer	德里基冒险者
+material.animal	Driikiläis adventurer	德里基冒险者
+material.animal	driikiläis shaman	德里基萨满
+material.animal	Driikiläis shaman	德里基萨满
+material.animal	Old driikiläis man	德里基老人
+material.animal	old driikiläis man	德里基老人
+material.animal	kiesseläis Maiden	基耶塞少女
+material.animal	kiesseläis maiden	基耶塞少女
+material.animal	Kiesseläis Maiden	基耶塞少女
+material.animal	kiesseläis Housewife	基耶塞主妇
+material.animal	kiesseläis housewife	基耶塞主妇
+material.animal	Kiesseläis Housewife	基耶塞主妇
+material.animal	kiesseläis Woman	基耶塞女子
+material.animal	kiesseläis woman	基耶塞女子
+material.animal	Kiesseläis Woman	基耶塞女子
+material.animal	kiesseläis blacksmith	基耶塞铁匠
+material.animal	Kiesseläis blacksmith	基耶塞铁匠
+material.animal	kiesseläis peasant	基耶塞农民
+material.animal	Kiesseläis peasant	基耶塞农民
+material.animal	kiesseläis girl	基耶塞女孩
+material.animal	Kiesseläis girl	基耶塞女孩
+material.animal	kiesseläis robber	基耶塞强盗
+material.animal	Kiesseläis robber	基耶塞强盗
+material.animal	kiesseläis woodsman	基耶塞林人
+material.animal	Kiesseläis woodsman	基耶塞林人
+material.animal	kiesseläis sage	基耶塞智者
+material.animal	Kiesseläis sage	基耶塞智者
+material.animal	kiesseläis boy	基耶塞男孩
+material.animal	Kiesseläis boy	基耶塞男孩
+material.animal	kiesseläis craftsman	基耶塞工匠
+material.animal	Kiesseläis craftsman	基耶塞工匠
+material.animal	kiesseläis tribesman	基耶塞部落男子
+material.animal	Kiesseläis tribesman	基耶塞部落男子
+material.animal	kiesseläis hunter	基耶塞猎人
+material.animal	Kiesseläis hunter	基耶塞猎人
+material.animal	kiesseläis adventurer	基耶塞冒险者
+material.animal	Kiesseläis adventurer	基耶塞冒险者
+material.animal	kiesseläis shaman	基耶塞萨满
+material.animal	Kiesseläis shaman	基耶塞萨满
+material.animal	Old kiesseläis man	基耶塞老人
+material.animal	old kiesseläis man	基耶塞老人
+material.animal	reemiläis Maiden	雷埃米少女
+material.animal	reemiläis maiden	雷埃米少女
+material.animal	Reemiläis Maiden	雷埃米少女
+material.animal	reemiläis Housewife	雷埃米主妇
+material.animal	reemiläis housewife	雷埃米主妇
+material.animal	Reemiläis Housewife	雷埃米主妇
+material.animal	reemiläis Woman	雷埃米女子
+material.animal	reemiläis woman	雷埃米女子
+material.animal	Reemiläis Woman	雷埃米女子
+material.animal	reemiläis blacksmith	雷埃米铁匠
+material.animal	Reemiläis blacksmith	雷埃米铁匠
+material.animal	reemiläis peasant	雷埃米农民
+material.animal	Reemiläis peasant	雷埃米农民
+material.animal	reemiläis girl	雷埃米女孩
+material.animal	Reemiläis girl	雷埃米女孩
+material.animal	reemiläis robber	雷埃米强盗
+material.animal	Reemiläis robber	雷埃米强盗
+material.animal	reemiläis woodsman	雷埃米林人
+material.animal	Reemiläis woodsman	雷埃米林人
+material.animal	reemiläis sage	雷埃米智者
+material.animal	Reemiläis sage	雷埃米智者
+material.animal	reemiläis boy	雷埃米男孩
+material.animal	Reemiläis boy	雷埃米男孩
+material.animal	reemiläis craftsman	雷埃米工匠
+material.animal	Reemiläis craftsman	雷埃米工匠
+material.animal	reemiläis tribesman	雷埃米部落男子
+material.animal	Reemiläis tribesman	雷埃米部落男子
+material.animal	reemiläis hunter	雷埃米猎人
+material.animal	Reemiläis hunter	雷埃米猎人
+material.animal	reemiläis adventurer	雷埃米冒险者
+material.animal	Reemiläis adventurer	雷埃米冒险者
+material.animal	reemiläis shaman	雷埃米萨满
+material.animal	Reemiläis shaman	雷埃米萨满
+material.animal	Old reemiläis man	雷埃米老人
+material.animal	old reemiläis man	雷埃米老人
+material.animal	sartolais Maiden	萨尔托少女
+material.animal	sartolais maiden	萨尔托少女
+material.animal	Sartolais Maiden	萨尔托少女
+material.animal	sartolais Housewife	萨尔托主妇
+material.animal	sartolais housewife	萨尔托主妇
+material.animal	Sartolais Housewife	萨尔托主妇
+material.animal	sartolais Woman	萨尔托女子
+material.animal	sartolais woman	萨尔托女子
+material.animal	Sartolais Woman	萨尔托女子
+material.animal	sartolais blacksmith	萨尔托铁匠
+material.animal	Sartolais blacksmith	萨尔托铁匠
+material.animal	sartolais peasant	萨尔托农民
+material.animal	Sartolais peasant	萨尔托农民
+material.animal	sartolais girl	萨尔托女孩
+material.animal	Sartolais girl	萨尔托女孩
+material.animal	sartolais robber	萨尔托强盗
+material.animal	Sartolais robber	萨尔托强盗
+material.animal	sartolais woodsman	萨尔托林人
+material.animal	Sartolais woodsman	萨尔托林人
+material.animal	sartolais sage	萨尔托智者
+material.animal	Sartolais sage	萨尔托智者
+material.animal	sartolais boy	萨尔托男孩
+material.animal	Sartolais boy	萨尔托男孩
+material.animal	sartolais craftsman	萨尔托工匠
+material.animal	Sartolais craftsman	萨尔托工匠
+material.animal	sartolais tribesman	萨尔托部落男子
+material.animal	Sartolais tribesman	萨尔托部落男子
+material.animal	sartolais hunter	萨尔托猎人
+material.animal	Sartolais hunter	萨尔托猎人
+material.animal	sartolais adventurer	萨尔托冒险者
+material.animal	Sartolais adventurer	萨尔托冒险者
+material.animal	sartolais shaman	萨尔托萨满
+material.animal	Sartolais shaman	萨尔托萨满
+material.animal	Old sartolais man	萨尔托老人
+material.animal	old sartolais man	萨尔托老人
+material.animal	islander Maiden	岛民少女
+material.animal	islander maiden	岛民少女
+material.animal	Islander Maiden	岛民少女
+material.animal	islander Housewife	岛民主妇
+material.animal	islander housewife	岛民主妇
+material.animal	Islander Housewife	岛民主妇
+material.animal	islander Woman	岛民女子
+material.animal	islander woman	岛民女子
+material.animal	Islander Woman	岛民女子
+material.animal	islander blacksmith	岛民铁匠
+material.animal	Islander blacksmith	岛民铁匠
+material.animal	islander peasant	岛民农民
+material.animal	Islander peasant	岛民农民
+material.animal	islander girl	岛民女孩
+material.animal	Islander girl	岛民女孩
+material.animal	islander robber	岛民强盗
+material.animal	Islander robber	岛民强盗
+material.animal	islander woodsman	岛民林人
+material.animal	Islander woodsman	岛民林人
+material.animal	islander sage	岛民智者
+material.animal	Islander sage	岛民智者
+material.animal	islander boy	岛民男孩
+material.animal	Islander boy	岛民男孩
+material.animal	islander craftsman	岛民工匠
+material.animal	Islander craftsman	岛民工匠
+material.animal	islander tribesman	岛民部落男子
+material.animal	Islander tribesman	岛民部落男子
+material.animal	islander hunter	岛民猎人
+material.animal	Islander hunter	岛民猎人
+material.animal	islander adventurer	岛民冒险者
+material.animal	Islander adventurer	岛民冒险者
+material.animal	islander shaman	岛民萨满
+material.animal	Islander shaman	岛民萨满
+material.animal	Old islander man	岛民老人
+material.animal	old islander man	岛民老人
+material.animal	koivulais Maiden	科伊武少女
+material.animal	koivulais maiden	科伊武少女
+material.animal	Koivulais Maiden	科伊武少女
+material.animal	koivulais Housewife	科伊武主妇
+material.animal	koivulais housewife	科伊武主妇
+material.animal	Koivulais Housewife	科伊武主妇
+material.animal	koivulais Woman	科伊武女子
+material.animal	koivulais woman	科伊武女子
+material.animal	Koivulais Woman	科伊武女子
+material.animal	koivulais blacksmith	科伊武铁匠
+material.animal	Koivulais blacksmith	科伊武铁匠
+material.animal	koivulais peasant	科伊武农民
+material.animal	Koivulais peasant	科伊武农民
+material.animal	koivulais girl	科伊武女孩
+material.animal	Koivulais girl	科伊武女孩
+material.animal	koivulais robber	科伊武强盗
+material.animal	Koivulais robber	科伊武强盗
+material.animal	koivulais woodsman	科伊武林人
+material.animal	Koivulais woodsman	科伊武林人
+material.animal	koivulais sage	科伊武智者
+material.animal	Koivulais sage	科伊武智者
+material.animal	koivulais boy	科伊武男孩
+material.animal	Koivulais boy	科伊武男孩
+material.animal	koivulais craftsman	科伊武工匠
+material.animal	Koivulais craftsman	科伊武工匠
+material.animal	koivulais tribesman	科伊武部落男子
+material.animal	Koivulais tribesman	科伊武部落男子
+material.animal	koivulais hunter	科伊武猎人
+material.animal	Koivulais hunter	科伊武猎人
+material.animal	koivulais adventurer	科伊武冒险者
+material.animal	Koivulais adventurer	科伊武冒险者
+material.animal	koivulais shaman	科伊武萨满
+material.animal	Koivulais shaman	科伊武萨满
+material.animal	Old koivulais man	科伊武老人
+material.animal	old koivulais man	科伊武老人
+material.animal	kuikka-tribe Maiden	潜鸟部落少女
+material.animal	kuikka-tribe maiden	潜鸟部落少女
+material.animal	Kuikka-tribe Maiden	潜鸟部落少女
+material.animal	kuikka-tribe Housewife	潜鸟部落主妇
+material.animal	kuikka-tribe housewife	潜鸟部落主妇
+material.animal	Kuikka-tribe Housewife	潜鸟部落主妇
+material.animal	kuikka-tribe Woman	潜鸟部落女子
+material.animal	kuikka-tribe woman	潜鸟部落女子
+material.animal	Kuikka-tribe Woman	潜鸟部落女子
+material.animal	kuikka-tribe blacksmith	潜鸟部落铁匠
+material.animal	Kuikka-tribe blacksmith	潜鸟部落铁匠
+material.animal	kuikka-tribe peasant	潜鸟部落农民
+material.animal	Kuikka-tribe peasant	潜鸟部落农民
+material.animal	kuikka-tribe girl	潜鸟部落女孩
+material.animal	Kuikka-tribe girl	潜鸟部落女孩
+material.animal	kuikka-tribe robber	潜鸟部落强盗
+material.animal	Kuikka-tribe robber	潜鸟部落强盗
+material.animal	kuikka-tribe woodsman	潜鸟部落林人
+material.animal	Kuikka-tribe woodsman	潜鸟部落林人
+material.animal	kuikka-tribe sage	潜鸟部落智者
+material.animal	Kuikka-tribe sage	潜鸟部落智者
+material.animal	kuikka-tribe boy	潜鸟部落男孩
+material.animal	Kuikka-tribe boy	潜鸟部落男孩
+material.animal	kuikka-tribe craftsman	潜鸟部落工匠
+material.animal	Kuikka-tribe craftsman	潜鸟部落工匠
+material.animal	kuikka-tribe tribesman	潜鸟部落部落男子
+material.animal	Kuikka-tribe tribesman	潜鸟部落部落男子
+material.animal	kuikka-tribe hunter	潜鸟部落猎人
+material.animal	Kuikka-tribe hunter	潜鸟部落猎人
+material.animal	kuikka-tribe adventurer	潜鸟部落冒险者
+material.animal	Kuikka-tribe adventurer	潜鸟部落冒险者
+material.animal	kuikka-tribe shaman	潜鸟部落萨满
+material.animal	Kuikka-tribe shaman	潜鸟部落萨满
+material.animal	Old kuikka-tribe man	潜鸟部落老人
+material.animal	old kuikka-tribe man	潜鸟部落老人
+material.animal	owl-tribe Maiden	猫头鹰部落少女
+material.animal	owl-tribe maiden	猫头鹰部落少女
+material.animal	Owl-tribe Maiden	猫头鹰部落少女
+material.animal	owl-tribe Housewife	猫头鹰部落主妇
+material.animal	owl-tribe housewife	猫头鹰部落主妇
+material.animal	Owl-tribe Housewife	猫头鹰部落主妇
+material.animal	owl-tribe Woman	猫头鹰部落女子
+material.animal	owl-tribe woman	猫头鹰部落女子
+material.animal	Owl-tribe Woman	猫头鹰部落女子
+material.animal	owl-tribe blacksmith	猫头鹰部落铁匠
+material.animal	Owl-tribe blacksmith	猫头鹰部落铁匠
+material.animal	owl-tribe peasant	猫头鹰部落农民
+material.animal	Owl-tribe peasant	猫头鹰部落农民
+material.animal	owl-tribe girl	猫头鹰部落女孩
+material.animal	Owl-tribe girl	猫头鹰部落女孩
+material.animal	owl-tribe robber	猫头鹰部落强盗
+material.animal	Owl-tribe robber	猫头鹰部落强盗
+material.animal	owl-tribe woodsman	猫头鹰部落林人
+material.animal	Owl-tribe woodsman	猫头鹰部落林人
+material.animal	owl-tribe sage	猫头鹰部落智者
+material.animal	Owl-tribe sage	猫头鹰部落智者
+material.animal	owl-tribe boy	猫头鹰部落男孩
+material.animal	Owl-tribe boy	猫头鹰部落男孩
+material.animal	owl-tribe craftsman	猫头鹰部落工匠
+material.animal	Owl-tribe craftsman	猫头鹰部落工匠
+material.animal	owl-tribe tribesman	猫头鹰部落部落男子
+material.animal	Owl-tribe tribesman	猫头鹰部落部落男子
+material.animal	owl-tribe hunter	猫头鹰部落猎人
+material.animal	Owl-tribe hunter	猫头鹰部落猎人
+material.animal	owl-tribe adventurer	猫头鹰部落冒险者
+material.animal	Owl-tribe adventurer	猫头鹰部落冒险者
+material.animal	owl-tribe shaman	猫头鹰部落萨满
+material.animal	Owl-tribe shaman	猫头鹰部落萨满
+material.animal	Old owl-tribe man	猫头鹰部落老人
+material.animal	old owl-tribe man	猫头鹰部落老人
+material.animal	seal-tribe Maiden	海豹部落少女
+material.animal	seal-tribe maiden	海豹部落少女
+material.animal	Seal-tribe Maiden	海豹部落少女
+material.animal	seal-tribe Housewife	海豹部落主妇
+material.animal	seal-tribe housewife	海豹部落主妇
+material.animal	Seal-tribe Housewife	海豹部落主妇
+material.animal	seal-tribe Woman	海豹部落女子
+material.animal	seal-tribe woman	海豹部落女子
+material.animal	Seal-tribe Woman	海豹部落女子
+material.animal	seal-tribe blacksmith	海豹部落铁匠
+material.animal	Seal-tribe blacksmith	海豹部落铁匠
+material.animal	seal-tribe peasant	海豹部落农民
+material.animal	Seal-tribe peasant	海豹部落农民
+material.animal	seal-tribe girl	海豹部落女孩
+material.animal	Seal-tribe girl	海豹部落女孩
+material.animal	seal-tribe robber	海豹部落强盗
+material.animal	Seal-tribe robber	海豹部落强盗
+material.animal	seal-tribe woodsman	海豹部落林人
+material.animal	Seal-tribe woodsman	海豹部落林人
+material.animal	seal-tribe sage	海豹部落智者
+material.animal	Seal-tribe sage	海豹部落智者
+material.animal	seal-tribe boy	海豹部落男孩
+material.animal	Seal-tribe boy	海豹部落男孩
+material.animal	seal-tribe craftsman	海豹部落工匠
+material.animal	Seal-tribe craftsman	海豹部落工匠
+material.animal	seal-tribe tribesman	海豹部落部落男子
+material.animal	Seal-tribe tribesman	海豹部落部落男子
+material.animal	seal-tribe hunter	海豹部落猎人
+material.animal	Seal-tribe hunter	海豹部落猎人
+material.animal	seal-tribe adventurer	海豹部落冒险者
+material.animal	Seal-tribe adventurer	海豹部落冒险者
+material.animal	seal-tribe shaman	海豹部落萨满
+material.animal	Seal-tribe shaman	海豹部落萨满
+material.animal	Old seal-tribe man	海豹部落老人
+material.animal	old seal-tribe man	海豹部落老人
+material.animal	vagabond Maiden	流浪者少女
+material.animal	vagabond maiden	流浪者少女
+material.animal	Vagabond Maiden	流浪者少女
+material.animal	vagabond Housewife	流浪者主妇
+material.animal	vagabond housewife	流浪者主妇
+material.animal	Vagabond Housewife	流浪者主妇
+material.animal	vagabond Woman	流浪者女子
+material.animal	vagabond woman	流浪者女子
+material.animal	Vagabond Woman	流浪者女子
+material.animal	vagabond blacksmith	流浪者铁匠
+material.animal	Vagabond blacksmith	流浪者铁匠
+material.animal	vagabond peasant	流浪者农民
+material.animal	Vagabond peasant	流浪者农民
+material.animal	vagabond girl	流浪者女孩
+material.animal	Vagabond girl	流浪者女孩
+material.animal	vagabond robber	流浪者强盗
+material.animal	Vagabond robber	流浪者强盗
+material.animal	vagabond woodsman	流浪者林人
+material.animal	Vagabond woodsman	流浪者林人
+material.animal	vagabond sage	流浪者智者
+material.animal	Vagabond sage	流浪者智者
+material.animal	vagabond boy	流浪者男孩
+material.animal	Vagabond boy	流浪者男孩
+material.animal	vagabond craftsman	流浪者工匠
+material.animal	Vagabond craftsman	流浪者工匠
+material.animal	vagabond tribesman	流浪者部落男子
+material.animal	Vagabond tribesman	流浪者部落男子
+material.animal	vagabond hunter	流浪者猎人
+material.animal	Vagabond hunter	流浪者猎人
+material.animal	vagabond adventurer	流浪者冒险者
+material.animal	Vagabond adventurer	流浪者冒险者
+material.animal	vagabond shaman	流浪者萨满
+material.animal	Vagabond shaman	流浪者萨满
+material.animal	Old vagabond man	流浪者老人
+material.animal	old vagabond man	流浪者老人
+material.animal	njerpez Maiden	涅尔佩兹少女
+material.animal	njerpez maiden	涅尔佩兹少女
+material.animal	Njerpez Maiden	涅尔佩兹少女
+material.animal	njerpez Housewife	涅尔佩兹主妇
+material.animal	njerpez housewife	涅尔佩兹主妇
+material.animal	Njerpez Housewife	涅尔佩兹主妇
+material.animal	njerpez Woman	涅尔佩兹女子
+material.animal	njerpez woman	涅尔佩兹女子
+material.animal	Njerpez Woman	涅尔佩兹女子
+material.animal	njerpez blacksmith	涅尔佩兹铁匠
+material.animal	Njerpez blacksmith	涅尔佩兹铁匠
+material.animal	njerpez peasant	涅尔佩兹农民
+material.animal	Njerpez peasant	涅尔佩兹农民
+material.animal	njerpez girl	涅尔佩兹女孩
+material.animal	Njerpez girl	涅尔佩兹女孩
+material.animal	njerpez robber	涅尔佩兹强盗
+material.animal	Njerpez robber	涅尔佩兹强盗
+material.animal	njerpez woodsman	涅尔佩兹林人
+material.animal	Njerpez woodsman	涅尔佩兹林人
+material.animal	njerpez sage	涅尔佩兹智者
+material.animal	Njerpez sage	涅尔佩兹智者
+material.animal	njerpez boy	涅尔佩兹男孩
+material.animal	Njerpez boy	涅尔佩兹男孩
+material.animal	njerpez craftsman	涅尔佩兹工匠
+material.animal	Njerpez craftsman	涅尔佩兹工匠
+material.animal	njerpez tribesman	涅尔佩兹部落男子
+material.animal	Njerpez tribesman	涅尔佩兹部落男子
+material.animal	njerpez hunter	涅尔佩兹猎人
+material.animal	Njerpez hunter	涅尔佩兹猎人
+material.animal	njerpez adventurer	涅尔佩兹冒险者
+material.animal	Njerpez adventurer	涅尔佩兹冒险者
+material.animal	njerpez shaman	涅尔佩兹萨满
+material.animal	Njerpez shaman	涅尔佩兹萨满
+material.animal	Old njerpez man	涅尔佩兹老人
+material.animal	old njerpez man	涅尔佩兹老人
+material.animal	foreign Maiden	异乡少女
+material.animal	foreign maiden	异乡少女
+material.animal	Foreign Maiden	异乡少女
+material.animal	foreign Housewife	异乡主妇
+material.animal	foreign housewife	异乡主妇
+material.animal	Foreign Housewife	异乡主妇
+material.animal	foreign Woman	异乡女子
+material.animal	foreign woman	异乡女子
+material.animal	Foreign Woman	异乡女子
+material.animal	foreign blacksmith	异乡铁匠
+material.animal	Foreign blacksmith	异乡铁匠
+material.animal	foreign peasant	异乡农民
+material.animal	Foreign peasant	异乡农民
+material.animal	foreign girl	异乡女孩
+material.animal	Foreign girl	异乡女孩
+material.animal	foreign robber	异乡强盗
+material.animal	Foreign robber	异乡强盗
+material.animal	foreign woodsman	异乡林人
+material.animal	Foreign woodsman	异乡林人
+material.animal	foreign sage	异乡智者
+material.animal	Foreign sage	异乡智者
+material.animal	foreign boy	异乡男孩
+material.animal	Foreign boy	异乡男孩
+material.animal	foreign craftsman	异乡工匠
+material.animal	Foreign craftsman	异乡工匠
+material.animal	foreign tribesman	异乡部落男子
+material.animal	Foreign tribesman	异乡部落男子
+material.animal	foreign hunter	异乡猎人
+material.animal	Foreign hunter	异乡猎人
+material.animal	foreign adventurer	异乡冒险者
+material.animal	Foreign adventurer	异乡冒险者
+material.animal	foreign shaman	异乡萨满
+material.animal	Foreign shaman	异乡萨满
+material.animal	Old foreign man	异乡老人
+material.animal	old foreign man	异乡老人
+material.animal	forester Maiden	林地居民少女
+material.animal	forester maiden	林地居民少女
+material.animal	Forester Maiden	林地居民少女
+material.animal	forester Housewife	林地居民主妇
+material.animal	forester housewife	林地居民主妇
+material.animal	Forester Housewife	林地居民主妇
+material.animal	forester Woman	林地居民女子
+material.animal	forester woman	林地居民女子
+material.animal	Forester Woman	林地居民女子
+material.animal	forester blacksmith	林地居民铁匠
+material.animal	Forester blacksmith	林地居民铁匠
+material.animal	forester peasant	林地居民农民
+material.animal	Forester peasant	林地居民农民
+material.animal	forester girl	林地居民女孩
+material.animal	Forester girl	林地居民女孩
+material.animal	forester robber	林地居民强盗
+material.animal	Forester robber	林地居民强盗
+material.animal	forester woodsman	林地居民林人
+material.animal	Forester woodsman	林地居民林人
+material.animal	forester sage	林地居民智者
+material.animal	Forester sage	林地居民智者
+material.animal	forester boy	林地居民男孩
+material.animal	Forester boy	林地居民男孩
+material.animal	forester craftsman	林地居民工匠
+material.animal	Forester craftsman	林地居民工匠
+material.animal	forester tribesman	林地居民部落男子
+material.animal	Forester tribesman	林地居民部落男子
+material.animal	forester hunter	林地居民猎人
+material.animal	Forester hunter	林地居民猎人
+material.animal	forester adventurer	林地居民冒险者
+material.animal	Forester adventurer	林地居民冒险者
+material.animal	forester shaman	林地居民萨满
+material.animal	Forester shaman	林地居民萨满
+material.animal	Old forester man	林地居民老人
+material.animal	old forester man	林地居民老人
+material.animal	wandering Maiden	流浪的少女
+material.animal	wandering maiden	流浪的少女
+material.animal	Wandering Maiden	流浪的少女
+material.animal	wandering Housewife	流浪的主妇
+material.animal	wandering housewife	流浪的主妇
+material.animal	Wandering Housewife	流浪的主妇
+material.animal	wandering Woman	流浪的女子
+material.animal	wandering woman	流浪的女子
+material.animal	Wandering Woman	流浪的女子
+material.animal	wandering blacksmith	流浪的铁匠
+material.animal	Wandering blacksmith	流浪的铁匠
+material.animal	wandering peasant	流浪的农民
+material.animal	Wandering peasant	流浪的农民
+material.animal	wandering girl	流浪的女孩
+material.animal	Wandering girl	流浪的女孩
+material.animal	wandering robber	流浪的强盗
+material.animal	Wandering robber	流浪的强盗
+material.animal	wandering woodsman	流浪的林人
+material.animal	Wandering woodsman	流浪的林人
+material.animal	wandering sage	流浪的智者
+material.animal	Wandering sage	流浪的智者
+material.animal	wandering boy	流浪的男孩
+material.animal	Wandering boy	流浪的男孩
+material.animal	wandering craftsman	流浪的工匠
+material.animal	Wandering craftsman	流浪的工匠
+material.animal	wandering tribesman	流浪的部落男子
+material.animal	Wandering tribesman	流浪的部落男子
+material.animal	wandering hunter	流浪的猎人
+material.animal	Wandering hunter	流浪的猎人
+material.animal	wandering adventurer	流浪的冒险者
+material.animal	Wandering adventurer	流浪的冒险者
+material.animal	wandering shaman	流浪的萨满
+material.animal	Wandering shaman	流浪的萨满
+material.animal	Old wandering man	流浪的老人
+material.animal	old wandering man	流浪的老人
+material.animal	Beautiful maid	美丽的少女
+material.animal	beautiful maid	美丽的少女
+material.animal	Man with long black hair	留着黑色长发的男子
+material.animal	man with long black hair	留着黑色长发的男子
+material.animal	Long-bearded old man	留着长胡子的老人
+material.animal	long-bearded old man	留着长胡子的老人
+material.animal	Old man with long grey be	留着灰色长胡子的老人
+material.animal	old man with long grey be	留着灰色长胡子的老人
+material.animal	Long grey bearded old man	留着灰色长胡子的老人
+material.animal	long grey bearded old man	留着灰色长胡子的老人
+material.animal	arctic fox cub	北极狐幼崽
+material.animal	Arctic fox cub	北极狐幼崽
+material.animal	badger cub	獾幼崽
+material.animal	Badger cub	獾幼崽
+material.animal	bear cub	熊幼崽
+material.animal	Bear cub	熊幼崽
+material.animal	beaver cub	河狸幼崽
+material.animal	Beaver cub	河狸幼崽
+material.animal	black grouse cub	黑琴鸡幼崽
+material.animal	Black grouse cub	黑琴鸡幼崽
+material.animal	bull cub	公牛幼崽
+material.animal	Bull cub	公牛幼崽
+material.animal	bull elk	雄性驼鹿
+material.animal	Bull elk	雄性驼鹿
+material.animal	capercaillie cub	松鸡幼崽
+material.animal	Capercaillie cub	松鸡幼崽
+material.animal	cow cub	母牛幼崽
+material.animal	Cow cub	母牛幼崽
+material.animal	dog puppy	狗幼犬
+material.animal	Dog puppy	狗幼犬
+material.animal	eagle owl cub	雕鸮幼崽
+material.animal	Eagle owl cub	雕鸮幼崽
+material.animal	elk calf	驼鹿幼崽
+material.animal	Elk calf	驼鹿幼崽
+material.animal	ermine cub	白鼬幼崽
+material.animal	Ermine cub	白鼬幼崽
+material.animal	female bear	雌性熊
+material.animal	Female bear	雌性熊
+material.animal	forest reindeer calf	森林驯鹿幼崽
+material.animal	Forest reindeer calf	森林驯鹿幼崽
+material.animal	forest reindeer doe	森林驯鹿（雌性）
+material.animal	Forest reindeer doe	森林驯鹿（雌性）
+material.animal	forest reindeer stag	森林驯鹿（雄性）
+material.animal	Forest reindeer stag	森林驯鹿（雄性）
+material.animal	fox cub	狐狸幼崽
+material.animal	Fox cub	狐狸幼崽
+material.animal	glutton cub	狼獾幼崽
+material.animal	Glutton cub	狼獾幼崽
+material.animal	goldeneye cub	鹊鸭幼崽
+material.animal	Goldeneye cub	鹊鸭幼崽
+material.animal	goshawk cub	苍鹰幼崽
+material.animal	Goshawk cub	苍鹰幼崽
+material.animal	grey seal cub	灰海豹幼崽
+material.animal	Grey seal cub	灰海豹幼崽
+material.animal	hare cub	野兔幼崽
+material.animal	Hare cub	野兔幼崽
+material.animal	hazel grouse cub	花尾榛鸡幼崽
+material.animal	Hazel grouse cub	花尾榛鸡幼崽
+material.animal	horse cub	马幼崽
+material.animal	Horse cub	马幼崽
+material.animal	kuikka cub	潜鸟幼崽
+material.animal	Kuikka cub	潜鸟幼崽
+material.animal	lynx cub	猞猁幼崽
+material.animal	Lynx cub	猞猁幼崽
+material.animal	mallard cub	绿头鸭幼崽
+material.animal	Mallard cub	绿头鸭幼崽
+material.animal	pine-marten cub	松貂幼崽
+material.animal	Pine-marten cub	松貂幼崽
+material.animal	polecat cub	艾鼬幼崽
+material.animal	Polecat cub	艾鼬幼崽
+material.animal	raven cub	渡鸦幼崽
+material.animal	Raven cub	渡鸦幼崽
+material.animal	reindeer calf	驯鹿幼崽
+material.animal	Reindeer calf	驯鹿幼崽
+material.animal	reindeer doe	驯鹿（雌性）
+material.animal	Reindeer doe	驯鹿（雌性）
+material.animal	reindeer stag	驯鹿（雄性）
+material.animal	Reindeer stag	驯鹿（雄性）
+material.animal	ringed seal cub	环斑海豹幼崽
+material.animal	Ringed seal cub	环斑海豹幼崽
+material.animal	snake cub	蛇幼崽
+material.animal	Snake cub	蛇幼崽
+material.animal	squirrel cub	松鼠幼崽
+material.animal	Squirrel cub	松鼠幼崽
+material.animal	swan cub	天鹅幼崽
+material.animal	Swan cub	天鹅幼崽
+material.animal	tufted duck cub	凤头潜鸭幼崽
+material.animal	Tufted duck cub	凤头潜鸭幼崽
+material.animal	weasel cub	伶鼬幼崽
+material.animal	Weasel cub	伶鼬幼崽
+material.animal	willow grouse cub	柳雷鸟幼崽
+material.animal	Willow grouse cub	柳雷鸟幼崽
+material.animal	wolf cub	狼幼崽
+material.animal	Wolf cub	狼幼崽
+crafted-animal-format	%s cut	%s肉块
+material.animal	Old man with long grey beard	留着灰色长胡子的老人
+material.animal	old man with long grey beard	留着灰色长胡子的老人

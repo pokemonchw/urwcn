@@ -1,0 +1,53 @@
+PE 3.89 shared-message late buffer audit
+
+Scope: the 183 buffer_or_expression callsites in the existing 1402-call
+ledger whose callsite is >=004D0000, excluding caller0056FE30. The
+companion TSV records each site, its actual consumer-owner class and
+the statically registered format sites sharing that local/global buffer.
+Same-buffer format candidates alone are not dominance evidence. The
+surrounding native branches were separately read from all-callers C;
+the context extraction and the three additional complete decompilations
+are retained alongside this report.
+
+New source transfers in windows_message_late_sources.inc (FA00..FA02):
+- 00508602 observes the actual 00494BC0 result and its unconditional
+  copy into EBP-40C. The original terrain producer is already observed
+  at CALL005085FD by geography; CALL00508627 consumes this copy.
+- CALL004D8CAB consumes the completed medical debug bit field. Native
+  004D8C3C/004D8C59 copy the 15-byte 'Yrttibitfield: ' label, then
+  004D8C66..004D8CA3 appends exactly 32 binary digits. The label has an
+  exact authored translation; those original digits are identity data.
+- CALL004D32BD echoes an unmatched bracketed external input. 00581520
+  receives UDP bytes into A7845C8, 004D1CA0's caller copies them into
+  06354DF8, and 004D2720 compares that buffer with protocol command
+  identifiers. Its remaining '[' branch displays the received input.
+  The semantic source therefore preserves those actual external bytes.
+
+Previously triaged 0052F523 is already closed: native formats0052F450
+and0052F4F9 write the displayed local buffer, selecting the two resource
+templates. Their actual 407730/lowercase/article values are bound by
+geography and values. No duplicate collector was added. 005289DB is
+also closed by registered formats0052899E and005289CE; its function
+was omitted from the first all-callers C export, so a complete new
+005286F0 decompilation was obtained.
+
+Non-format construction branches were checked separately: hunger's
+punctuation append and track descriptions belong to format_builders;
+healing/bedding/projectile copies to transfers; 4F6F70 to value_chains;
+prayers, hearing, menu echo and weather to their dedicated collectors.
+526F70 and52AFC0 are owned by the parallel combat/transfers review.
+Existing literal-only native copies retain exact fixed-literal lookup.
+
+Fourteen same-buffer format candidates are intentionally absent from
+message formatter hooks: 4FC22F/4FC324/4FC3D3 build quantity-dialog UI;
+500457/500652 are file-log diagnostics; 518E24 builds a native NAME
+business tag; 5662BC/566610/566790/56680C/5668BF/566921/566971 call
+500E50 file logging, and57CFE0 builds non-message numeric UI text.
+Their buffer is reused later, after a different actual message writer.
+None supplies the shared-message operand on the inspected path.
+
+The added inline hook at508602 is exactly the six-byte LEA instruction,
+ends at508608 before the native ESP adjustment, and has no incoming
+flow to its interior. The other two hooks are complete five-byte CALLs.
+All added collectors are stateless and add no hot-state schema fields.
+No game execution, tests or compilation were performed.

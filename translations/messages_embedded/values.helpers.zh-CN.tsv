@@ -1,0 +1,57 @@
+domain	source	target
+skill.penalty	is slightly lowered 	受到轻微影响
+skill.penalty	is prone to fail more easily 	更容易失败
+skill.penalty	is prone to succeed poorly 	容易发挥不佳
+skill.penalty	is significantly degraded 	明显下降
+skill.penalty	is severely impaired 	严重受损
+skill.penalty	is most likely to succeed poorly 	很可能发挥不佳
+skill.penalty	is determined to succeed poorly 	注定难以发挥
+skill.penalty	is just a little disturbed 	略受干扰
+skill.cause	being wounded	受伤
+skill.cause	being fatigued	疲劳
+skill.cause	being fatigued from carrying excess load	负重过多引起的疲劳
+skill.cause	suffering starvation	饥饿
+skill.cause	the load you are carrying	身上的负重
+action	grind	研磨
+action	plant or sow	种植或播种
+action	use as a bait	用作诱饵
+action	fish with	用于捕鱼
+action	eat	食用
+action	examine with herblore	运用草药学辨认
+action	repair	修理
+action	haft	安装柄部
+action	shorten	截短
+action	join	接长
+action	fill	装满
+action	throw nor shoot	投掷或射击
+action	empty	倒空
+action	drop	丢下
+action	wear	穿戴
+action	take off	脱下
+action	apply	使用
+action	use	使用
+action	sacrifice	献祭
+action	cure	初步处理
+action	de-hair	脱毛
+action	clean	清理
+action	tan	鞣制
+action	spin	纺线
+action	ret	沤制
+action	extract fibres from	提取纤维
+action	separate sinew fibres from	分离筋腱纤维
+action	dry	晾干
+action	sleep	睡觉
+action	swim	游泳
+action	climb	攀爬
+action	zoom out	切换至大地图
+action	run	奔跑
+action	wade with skis on	穿着滑雪板涉水
+action	swim with skis on	穿着滑雪板游泳
+posture	walking	步行中
+posture	swimming	游泳中
+posture	wading	涉水中
+posture	rowing	划船中
+posture	skiing	滑雪中
+posture	hauling	拖运中
+posture	not walking	没有步行
+posture	laying down	躺着

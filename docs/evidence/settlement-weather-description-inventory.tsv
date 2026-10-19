@@ -1,0 +1,71 @@
+temperature_va	precipitation_branch	type_va	source	target
+005DCE94	negative	005DCF3C	much colder than now. It will be raining	比现在冷得多。会下雨
+005DCE94	negative	005DCF44	much colder than now. It will be snowing	比现在冷得多。会下雪
+005DCE94	zero	005DCF3C	much colder than now. It won't be raining.	比现在冷得多。不会下雨。
+005DCE94	zero	005DCF44	much colder than now. It won't be snowing.	比现在冷得多。不会下雪。
+005DCE94	one_to_five	005DCF3C	much colder than now. It will be raining a little.	比现在冷得多。会下小雨。
+005DCE94	one_to_five	005DCF44	much colder than now. It will be snowing a little.	比现在冷得多。会下小雪。
+005DCE94	six_to_twelve	005DCF3C	much colder than now. It will be raining.	比现在冷得多。会下雨。
+005DCE94	six_to_twelve	005DCF44	much colder than now. It will be snowing.	比现在冷得多。会下雪。
+005DCE94	over_twelve	005DCF3C	much colder than now. It will be raining a lot.	比现在冷得多。会下大雨。
+005DCE94	over_twelve	005DCF44	much colder than now. It will be snowing a lot.	比现在冷得多。会下大雪。
+005DCEA8	negative	005DCF3C	colder than now. It will be raining	比现在冷。会下雨
+005DCEA8	negative	005DCF44	colder than now. It will be snowing	比现在冷。会下雪
+005DCEA8	zero	005DCF3C	colder than now. It won't be raining.	比现在冷。不会下雨。
+005DCEA8	zero	005DCF44	colder than now. It won't be snowing.	比现在冷。不会下雪。
+005DCEA8	one_to_five	005DCF3C	colder than now. It will be raining a little.	比现在冷。会下小雨。
+005DCEA8	one_to_five	005DCF44	colder than now. It will be snowing a little.	比现在冷。会下小雪。
+005DCEA8	six_to_twelve	005DCF3C	colder than now. It will be raining.	比现在冷。会下雨。
+005DCEA8	six_to_twelve	005DCF44	colder than now. It will be snowing.	比现在冷。会下雪。
+005DCEA8	over_twelve	005DCF3C	colder than now. It will be raining a lot.	比现在冷。会下大雨。
+005DCEA8	over_twelve	005DCF44	colder than now. It will be snowing a lot.	比现在冷。会下大雪。
+005DCEB4	negative	005DCF3C	slightly colder than now. It will be raining	比现在稍冷。会下雨
+005DCEB4	negative	005DCF44	slightly colder than now. It will be snowing	比现在稍冷。会下雪
+005DCEB4	zero	005DCF3C	slightly colder than now. It won't be raining.	比现在稍冷。不会下雨。
+005DCEB4	zero	005DCF44	slightly colder than now. It won't be snowing.	比现在稍冷。不会下雪。
+005DCEB4	one_to_five	005DCF3C	slightly colder than now. It will be raining a little.	比现在稍冷。会下小雨。
+005DCEB4	one_to_five	005DCF44	slightly colder than now. It will be snowing a little.	比现在稍冷。会下小雪。
+005DCEB4	six_to_twelve	005DCF3C	slightly colder than now. It will be raining.	比现在稍冷。会下雨。
+005DCEB4	six_to_twelve	005DCF44	slightly colder than now. It will be snowing.	比现在稍冷。会下雪。
+005DCEB4	over_twelve	005DCF3C	slightly colder than now. It will be raining a lot.	比现在稍冷。会下大雨。
+005DCEB4	over_twelve	005DCF44	slightly colder than now. It will be snowing a lot.	比现在稍冷。会下大雪。
+005DCECC	negative	005DCF3C	about the same as now. It will be raining	与现在差不多。会下雨
+005DCECC	negative	005DCF44	about the same as now. It will be snowing	与现在差不多。会下雪
+005DCECC	zero	005DCF3C	about the same as now. It won't be raining.	与现在差不多。不会下雨。
+005DCECC	zero	005DCF44	about the same as now. It won't be snowing.	与现在差不多。不会下雪。
+005DCECC	one_to_five	005DCF3C	about the same as now. It will be raining a little.	与现在差不多。会下小雨。
+005DCECC	one_to_five	005DCF44	about the same as now. It will be snowing a little.	与现在差不多。会下小雪。
+005DCECC	six_to_twelve	005DCF3C	about the same as now. It will be raining.	与现在差不多。会下雨。
+005DCECC	six_to_twelve	005DCF44	about the same as now. It will be snowing.	与现在差不多。会下雪。
+005DCECC	over_twelve	005DCF3C	about the same as now. It will be raining a lot.	与现在差不多。会下大雨。
+005DCECC	over_twelve	005DCF44	about the same as now. It will be snowing a lot.	与现在差不多。会下大雪。
+005DCEE0	negative	005DCF3C	slightly warmer than now. It will be raining	比现在稍暖。会下雨
+005DCEE0	negative	005DCF44	slightly warmer than now. It will be snowing	比现在稍暖。会下雪
+005DCEE0	zero	005DCF3C	slightly warmer than now. It won't be raining.	比现在稍暖。不会下雨。
+005DCEE0	zero	005DCF44	slightly warmer than now. It won't be snowing.	比现在稍暖。不会下雪。
+005DCEE0	one_to_five	005DCF3C	slightly warmer than now. It will be raining a little.	比现在稍暖。会下小雨。
+005DCEE0	one_to_five	005DCF44	slightly warmer than now. It will be snowing a little.	比现在稍暖。会下小雪。
+005DCEE0	six_to_twelve	005DCF3C	slightly warmer than now. It will be raining.	比现在稍暖。会下雨。
+005DCEE0	six_to_twelve	005DCF44	slightly warmer than now. It will be snowing.	比现在稍暖。会下雪。
+005DCEE0	over_twelve	005DCF3C	slightly warmer than now. It will be raining a lot.	比现在稍暖。会下大雨。
+005DCEE0	over_twelve	005DCF44	slightly warmer than now. It will be snowing a lot.	比现在稍暖。会下大雪。
+005DCEF8	negative	005DCF3C	warmer than now. It will be raining	比现在暖。会下雨
+005DCEF8	negative	005DCF44	warmer than now. It will be snowing	比现在暖。会下雪
+005DCEF8	zero	005DCF3C	warmer than now. It won't be raining.	比现在暖。不会下雨。
+005DCEF8	zero	005DCF44	warmer than now. It won't be snowing.	比现在暖。不会下雪。
+005DCEF8	one_to_five	005DCF3C	warmer than now. It will be raining a little.	比现在暖。会下小雨。
+005DCEF8	one_to_five	005DCF44	warmer than now. It will be snowing a little.	比现在暖。会下小雪。
+005DCEF8	six_to_twelve	005DCF3C	warmer than now. It will be raining.	比现在暖。会下雨。
+005DCEF8	six_to_twelve	005DCF44	warmer than now. It will be snowing.	比现在暖。会下雪。
+005DCEF8	over_twelve	005DCF3C	warmer than now. It will be raining a lot.	比现在暖。会下大雨。
+005DCEF8	over_twelve	005DCF44	warmer than now. It will be snowing a lot.	比现在暖。会下大雪。
+005DCF04	negative	005DCF3C	much warmer than now. It will be raining	比现在暖得多。会下雨
+005DCF04	negative	005DCF44	much warmer than now. It will be snowing	比现在暖得多。会下雪
+005DCF04	zero	005DCF3C	much warmer than now. It won't be raining.	比现在暖得多。不会下雨。
+005DCF04	zero	005DCF44	much warmer than now. It won't be snowing.	比现在暖得多。不会下雪。
+005DCF04	one_to_five	005DCF3C	much warmer than now. It will be raining a little.	比现在暖得多。会下小雨。
+005DCF04	one_to_five	005DCF44	much warmer than now. It will be snowing a little.	比现在暖得多。会下小雪。
+005DCF04	six_to_twelve	005DCF3C	much warmer than now. It will be raining.	比现在暖得多。会下雨。
+005DCF04	six_to_twelve	005DCF44	much warmer than now. It will be snowing.	比现在暖得多。会下雪。
+005DCF04	over_twelve	005DCF3C	much warmer than now. It will be raining a lot.	比现在暖得多。会下大雨。
+005DCF04	over_twelve	005DCF44	much warmer than now. It will be snowing a lot.	比现在暖得多。会下大雪。

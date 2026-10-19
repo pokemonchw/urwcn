@@ -1,0 +1,155 @@
+craft-requirement		
+craft-requirement	A specific item	指定物品
+craft-requirement	A heated room	温暖的房间
+craft-requirement	A place for drying meat/fish	晾晒肉或鱼的地方
+craft-requirement	Animal hide	动物毛皮
+craft-requirement	Antler	鹿角
+craft-requirement	Arrow shaft blank	箭杆坯料
+craft-requirement	Axe	斧头
+craft-requirement	Axe head	斧头刃部
+craft-requirement	Axe or carving knife	斧头或雕刻刀
+craft-requirement	Axe or sturdy carving knife	斧头或结实的雕刻刀
+craft-requirement	Bandage material	绷带材料
+craft-requirement	Bandages	绷带
+craft-requirement	Bark for floats	制作浮子的树皮
+craft-requirement	Beater	敲打工具
+craft-requirement	Berries	浆果
+craft-requirement	Birch-bark strip	桦树皮条
+craft-requirement	Boiling pot	煮锅
+craft-requirement	Bone	骨头
+craft-requirement	Carcass	动物尸体
+craft-requirement	Cloth	布料
+craft-requirement	Container	容器
+craft-requirement	Cooking pot	烹饪锅
+craft-requirement	Cover for kota	科塔帐篷的篷布
+craft-requirement	Cutting weapon	切割武器
+craft-requirement	Cutting weapon or by hand	切割武器或徒手
+craft-requirement	Dried fish	鱼干
+craft-requirement	Dried meat	肉干
+craft-requirement	Dry and cold weather	干燥寒冷的天气
+craft-requirement	Feather	羽毛
+craft-requirement	Fibre	纤维
+craft-requirement	Fire	火
+craft-requirement	Fishhook	鱼钩
+craft-requirement	Fistful of broad beans	一把蚕豆
+craft-requirement	Fistful of peas	一把豌豆
+craft-requirement	Flail	连枷
+craft-requirement	Flour	面粉
+craft-requirement	Flowers	花朵
+craft-requirement	Fresh animal skin	新鲜动物皮
+craft-requirement	Fur	毛皮
+craft-requirement	Glowing embers	灼热的余烬
+craft-requirement	Grains	谷粒
+craft-requirement	Grasses	草
+craft-requirement	Grinding stone	磨石
+craft-requirement	Hammering tool	锤击工具
+craft-requirement	Heated fireplace	烧热的炉灶
+craft-requirement	Heated fireplace or embers	烧热的炉灶或余烬
+craft-requirement	Herbs	草药
+craft-requirement	Leather	皮革
+craft-requirement	Mushrooms	蘑菇
+craft-requirement	Place for soaking	浸泡场所
+craft-requirement	Pods	豆荚
+craft-requirement	Raw fish	生鱼
+craft-requirement	Raw ingredients	生食材
+craft-requirement	Raw meat	生肉
+craft-requirement	Raw meat or fish	生肉或生鱼
+craft-requirement	Raw or salted fish	生鱼或咸鱼
+craft-requirement	Raw or salted meat	生肉或咸肉
+craft-requirement	Root vegetables	根茎蔬菜
+craft-requirement	Salted fish	咸鱼
+craft-requirement	Salted meat	咸肉
+craft-requirement	Sapling	树苗
+craft-requirement	Seasoning	调味料
+craft-requirement	Seeds	种子
+craft-requirement	Sewing needle	缝衣针
+craft-requirement	Skull	头骨
+craft-requirement	Slender trunk	细树干
+craft-requirement	Smoked fish	熏鱼
+craft-requirement	Smoked meat	熏肉
+craft-requirement	Spindle or by hand	纺锤或徒手
+craft-requirement	Spruce twigs	云杉嫩枝
+craft-requirement	Strong cordage	结实的绳索
+craft-requirement	Structure for weaving a net	编网用的支架
+craft-requirement	Tanning material	鞣皮材料
+craft-requirement	Thin cordage	细绳
+craft-requirement	Threshing tool	脱粒工具
+craft-requirement	Tooth	牙齿
+craft-requirement	Tying equipment	捆扎材料
+craft-requirement	Vegetables	蔬菜
+craft-requirement	Water-use yarn	可在水中使用的纱线
+craft-requirement	Weapon to break ice	破冰武器
+craft-requirement	Withe	柔韧枝条
+craft-requirement	Workbench or working surface	工作台或作业台面
+craft-requirement	Yarn	纱线
+craft-requirement	An axe for finishing the shape	用于精修形状的斧头
+craft-requirement	An axe for rough cutting	用于粗砍的斧头
+craft-requirement	Birch sapling	桦树苗
+craft-requirement	Birch withe	柔韧的桦树枝条
+craft-requirement	Block of pine wood	松木块
+craft-requirement	Spruce sapling	云杉树苗
+craft-requirement	Wool yarn	羊毛纱线
+craft-requirement	Sheet of birch-bark	桦树皮片
+craft-requirement	Knife for peeling bark	剥树皮用的刀
+craft-requirement-description		
+craft-requirement-description	A good deal of embers remain from burning a fire for several hours.	火堆燃烧数小时后会留下大量余烬。
+craft-requirement-description	A spear or an axe for example	例如矛或斧头。
+craft-requirement-description	Almost any big stone can be used as a primitive grinding stone.	几乎任何大石头都可以用作简易磨石。
+craft-requirement-description	Any unprepared meat, fish, mushrooms, berries, vegetables or herbs.	任何未加工的肉、鱼、蘑菇、浆果、蔬菜或草药。
+craft-requirement-description	Birch-bark can be harvested by using the TIMBERCRAFT skill.	可以使用木工技能采集桦树皮。
+craft-requirement-description	Drying rack or outer wall of a building is required	需要晾晒架或建筑外墙。
+craft-requirement-description	Fell down big trees for tree trunks	砍倒大树可以取得树干。
+craft-requirement-description	Fell small trees to get these.	砍倒小树可以取得这些材料。
+craft-requirement-description	Like any trees, saplings can be felled by using timbercraft skill.	树苗与其他树木一样，可以使用木工技能砍倒。
+craft-requirement-description	To do the this by hand just skip the item selection.	若要徒手完成，跳过物品选择即可。
+craft-requirement-description	Use textilecraft skill to extract fibres from certain plants.	使用纺织技能可以从某些植物中提取纤维。
+craft-requirement-description	Use TIMBERCRAFT skill to cut twigs from a spruce.	使用木工技能可以从云杉上砍取嫩枝。
+craft-requirement-description	Winter months, especially those of early spring, are suitable for the task.	冬季适合进行这项工作，尤其是临近初春的时候。
+craft-requirement-description	Wooden stakes can be made from slender tree trunks via [M]ake-menu.	可以通过制作 [M] 菜单将细树干制成木桩。
+craft-requirement-description	You can chop a trunk into blocks by using timbercraft skill.	可以使用木工技能将树干劈成木块。
+craft-requirement-description	You can craft simple fishhooks by yourself.	你可以自行制作简易鱼钩。
+craft-requirement-description	You can make yarn by youself using textilecraft skill.	你可以使用纺织技能自行制作纱线。
+craft-requirement-description	You can split boards from big trunks by using a timbercraft skill.	可以使用木工技能将粗树干劈成木板。
+craft-requirement-description	You make bandages out of your clothes by using [M]ake command	可以使用制作 [M] 命令将衣物制成绷带。
+craft-requirement-description	You need to be by open water for a proper soaking.	需要在未结冰的水域旁进行浸泡。
+craft-requirement-description	You need to be in a heated room or a building, preferably a sauna.	需要在温暖的房间或建筑内，最好是桑拿房。
+craft-requirement-description	A club is the most useful beater but stones or pieces of firewood will work as a beater as well.	木棒最适合用作敲打工具，石头或柴块也可以。
+craft-requirement-description	A fireplace can be used as an oven after burning proper amount of wood there, but not before the fire has completely burnt out.	炉灶烧过足量木柴后可以用作烤炉，但必须等火完全熄灭。
+craft-requirement-description	A solid structure to attach cordage and hang the net; building wall, table, bench, or even a tree.	需要牢固的支撑来固定绳索并悬挂渔网，例如墙壁、桌子、长凳，甚至一棵树。
+craft-requirement-description	A table, bench or even a big tree trunk will do as a workbench at which manual work is done.	桌子、长凳，甚至粗大的树干，都可以用作手工作业台。
+craft-requirement-description	Almost any stave or staff and even a club can be used as a primitive threshing tool if no proper flail is available.	没有合适的连枷时，几乎任何木棍、手杖，甚至木棒，都可以用作简易脱粒工具。
+craft-requirement-description	Axe is preferred, but a sturdy knife for chopping and carving wood can be used as a substitute. 	最好使用斧头，也可以用能劈砍和雕刻木材的结实刀具代替。
+craft-requirement-description	Either tree bark (harvested with timbercraft skill) or animal fat can be used as tanning material.	树皮（使用木工技能采集）或动物脂肪都可以用作鞣皮材料。
+craft-requirement-description	Flowers and leaves of various plants, which can be harvested by using the AGRICULTURE skill.	各种植物的花和叶，可以使用农耕技能采集。
+craft-requirement-description	Leather, fur or cured skin of a large animal - typically a reindeer leather.	大型动物的皮革、毛皮或处理过的皮，通常使用驯鹿皮革。
+craft-requirement-description	Turnips, beans, cabbages, peas or similar - excluding berries and mushrooms.	芜菁、豆类、卷心菜、豌豆等，不包括浆果和蘑菇。
+craft-requirement-description	Use your hideworking skill to tan a skin of a fur-bearing animal to get hide.	使用制皮技能鞣制有毛动物的皮，可以制成毛皮。
+craft-requirement-description	Use your hideworking skill to tan a skin of non fur-bearing animal to get leather.	使用制皮技能鞣制无毛动物的皮，可以制成皮革。
+craft-requirement-description	Various seeds and leaves can be used to bring extra flavour or nutritional value to food.	各种种子和叶子可以增加食物的风味或营养。
+craft-requirement-suffix	 (for boot bindings)	（用于靴子绑带）
+craft-requirement-suffix	 (for final sharpening)	（用于最后磨锐）
+craft-requirement-suffix	 (for grinding)	（用于打磨）
+craft-requirement-suffix	 (for hardening the head)	（用于硬化尖端）
+craft-requirement-suffix	 (for initial shaping)	（用于初步塑形）
+craft-requirement-suffix	 (for knapping)	（用于打制石器）
+craft-requirement-suffix	 (for rough shaping)	（用于粗加工）
+craft-requirement-suffix	 (for sharpening the hook)	（用于磨锐鱼钩）
+craft-requirement-suffix	 (for sharpening the needle)	（用于磨锐针尖）
+craft-requirement-suffix	 (for sharpening)	（用于磨锐）
+craft-requirement-suffix	 (for the handles)	（用于把手）
+craft-requirement-suffix	 (for the head)	（用于尖端）
+craft-requirement-suffix	 (for the hoop)	（用于箍圈）
+craft-requirement-suffix	 (for the lower end rim)	（用于底部边框）
+craft-requirement-suffix	 (for the pole)	（用于长杆）
+craft-requirement-suffix	 (for twisting)	（用于搓捻）
+craft-requirement-suffix	 (for tying the fur on the underside)	（用于将毛皮绑在底面）
+craft-requirement-suffix	 (the mesh)	（网眼部分）
+craft-requirement-suffix	 (to shape the pole)	（用于加工长杆）
+craft-requirement-suffix	 for blade	（用于刀刃）
+craft-requirement-suffix	 for carving the logs	（用于修整原木）
+craft-requirement-suffix	 for chopping and peeling	（用于劈砍和剥皮）
+craft-requirement-suffix	 for finishing the walls	（用于修整墙壁）
+craft-requirement-suffix	 for rough cutting	（用于粗砍）
+craft-requirement-suffix	 (for the lines)	（用于钓线）
+craft-requirement-suffix	 (for weights)	（用于坠子）
+craft-requirement-suffix	 (for wrapping the weights)	（用于包裹坠子）

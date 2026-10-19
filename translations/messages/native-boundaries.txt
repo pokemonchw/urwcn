@@ -1,0 +1,84 @@
+外置消息资源翻译与原生边界记录（2026-10-19）
+
+记录性质：以下未接入/未编译/未发布描述是资源翻译阶段的历史状态。
+最终共用消息接线、动态来源及正式发布以
+docs/evidence/20261020-shared-message-delivery.md 为准。
+
+范围
+从 D:/program/steam/steamapps/common/UnRealWorld/messages/ 读取安装版本的
+8 个 urw_*.txt，完整记录全部非空、非注释、非 .KEY. 行，共 987 条。
+guide_values.txt 是语法说明和示例，不是 urw_* 显示资源，未作为显示正文翻译。
+messages.zh-CN.json 与 messages.zh-CN.tsv 保存文件、原行号、正文序号、
+原始完整 KEY 声明、原始正文与中文正文；inventory.json 保存原文件 SHA-256。
+*.zh-CN.lines 是对应原文件非注释正文的顺序译稿，不是游戏运行资源副本。
+
+保留内容
+所有 .KEY.、括号参数、[条件:]、<> 标签、[] 宏、{} 声音键、% 格式占位符
+和行首显示控制符保留原值。为符合中文句法，句子内部可重排语义标签，
+不修改标签所指代的业务对象。重复的原始正文也按文件、行号独立记录。
+纯数字及 '-' 等无自然语言值保持不变。
+urw_combat.txt 的 MISSILE_WILD NPC 分支原本没有结尾 ']'，译文保留此结构。
+原文的 <defender_descdesc>、{CLOSES_DOOR} 等名称也保持原值，没有猜测更正。
+
+静态反编译依据
+docs/evidence/settlement-text-builders-ghidra.c：
+00560cb0：通过 messages/%s_*.txt 枚举资源；按 .KEY. 找到段落，通过原生
+004d4310 选择 [条件:]；单独提取 [HEAR:]；正文写入 0a6d0498，听觉正文
+写入 0a6248b8。正文读取 strncpy 长度为 300 字节。
+00561330：反复提取 <>，调用 005601c0 取得标签值，拼接回当前字符串。
+00561b00：先处理 KEY 参数中的 <>，调用 00560cb0 选中原生模板，再处理
+主正文与 HEAR 正文中的 <>；随后处理 [] 子查询，最后进行 %s 格式替换。
+该函数会消费并清空格式参数存储，不能为了翻译重新运行同一业务构建过程。
+
+docs/evidence/settlement-ghidra.c：
+004f6510 是共用消息显示入口；从已构建英文正文提取 {} 声音控制，保留原生
+重复判断；按字节长度和 8 像素字符单元处理分词及消息行。
+00562ac0 是旧式 * 两字符消息表展开，不是 urw_*.txt 资源查找入口。
+
+接入要求与未完成状态
+本目录完成翻译资料；新增 modules/adapter/windows_message_resources.inc 提供
+同步语义观察接口，仍需主适配器纳入 hook 和词库服务，未编译、未发布。
+适配应保留原生资源选择、分支、声音和业务字符串，利用同一次原生构建中
+已选模板及已展开标签生成显示副本；原生分支键和内部英文数据不得改写。
+<> 产生的人名、物品名、地形名等动态结果还需要对应已确认显示词库；
+本目录提供模板和资源中定义的词形，不把未翻译动态值宣称为已经覆盖。
+原生按字节计宽/断行/字形索引边界必须有独立静态适配；仅传入 UTF-8
+不等于完成中文显示，也不能另建坐标表、像素跟踪、延迟重放或独立 UI。
+
+执行约束
+没有修改安装目录中的任何原资源，没有启动或注入游戏，没有模拟输入，
+没有运行测试、写测试用例或断言，没有编译或发布文件。
+
+补充：原生已选模板清单与同步观察接口
+selected-templates.zh-CN.json/.tsv 共 987 条，按原生读入行为保存可匹配正文：
+851 条普通正文/方括号分支剥离外层 [条件:] 及末尾存在的 ']'；79 条对话
+剥离第一个 '-' 及其之前的情绪/主题控制内容；57 条无 KEY 的植物形容词
+归入 UNAME_FLORA，供动态命名显示值使用。原始源译记录仍保留不动。
+同一 source 在不同 KEY 下存在不同语义，例如 PP_OBJ 的 her 是“她”，
+PP_GEN 的 her 是“她的”，因此模板服务必须使用 KEY 与 source 共同索引。
+同一 KEY+source 的 ATTACK_VERB 同义译法已经统一。
+
+docs/evidence/settlement-dynamic-values-ghidra.c：
+00561480 单独读取 messages/%s_chat.txt，按主题、情绪等原生规则选出一句，
+0056168d 调用 00561330 展开该句。005616c4 是 KEY 已匹配的路径，
+EBP-0x3818 保存原始 KEY，EBP-0x3814 保存原生输出 buffer。
+005616b1 是统一返回路径；适配只观察已命中资源段且有正文的路径。
+游戏自己构造的文件/主题诊断保留各自原生 sprintf 路径，不补造 Mod 逻辑。
+004d4280 仅去除末尾 CR/LF，跳过行首 // 和 ## 注释，不去除尾空格。
+
+modules/adapter/windows_message_resources.inc：
+00561b9b 开始本次消息构建；00561ba7 after 读取已选主体和 HEAR 模板；
+005613d4 after 读取调用帧 EBP-0x68 的标签与 EAX 原生实际值；
+00561c79/00561d7a 以该次原生 [] 查找返回值替换同一中文宏；
+00561e42 仅按原生实际执行的 HEAR 单 %s 格式化处理参数；
+00561e74 交付同步语义绑定，清空临时构建内容。
+主体 %s 仍留给原调用者的 sprintf，观察器不自行消费参数。
+[] 选择器和 {} 声音字段内的标签值保持英文；直接显示的标签交给
+message_translate_value 依据已经反编译确认的标签类型生成中文。
+各原生英文 buffer、分支判断、声音和重复判断均不被本文件改写。
+
+2026-10-19 native resource result-origin classification
+560CB0 defaults to original .KEY.(selector) identifier output; 561056 and 56110E mark actual selected text; 56116A marks the native debug-selector copy loop; 5612E6 is the fopen-failure path to diagnostic sprintf 5612F7; 561281 marks a selected HEAR template. The semantic observer stores this actual origin in the current native Build frame. Only selected templates use the immutable key/source translation catalog. Missing-file diagnostics consume the native sprintf semantic companion. Key and debug-selector identifiers retain their original meaning through identity encoding. No catalog failure triggers another translation strategy.
+561480 initializes its native diagnostic at 5614E1. Actual selected text is observed only after the .KEY. match and before its 56168D tag expansion. After 56168D returns, the observer reads the same completed buffer whose length is tested at 56169E. Empty output selects the second native diagnostic at 5616A9, and the resource companion does not replace the formatter's result.
+Resource build/chat frames, lookup origins, selected HEAR flags and unfinished strings are serialized in native stack order for business module replacement. State contains semantic strings and native owners only, with no UI position, layout or pixel data.
+Dynamic value catalog values.zh-CN.tsv preserves leading/trailing source spaces. 345 base item display names exclude *unmatchablestring*, an internal sentinel. 57 flora source rows contain three repeated words with identical translations. Article comparison literals a-space/an-space and the aeiouAEIOU vowel predicate are excluded; only actual native article format outputs are represented. No original game resource is changed.

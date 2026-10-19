@@ -1,0 +1,448 @@
+string_va	text
+0058c9b0	!You can't prepare the soil here! There should be empty ground under your feet.
+0058ca00	!You can't prepare frozen soil.
+0058ca20	!The soil is not yet warm enough to be prepared.
+0058ca54	!The soil has gotten too frosty to be prepared.
+0058cac0	!You must first burn some wood on the ground here!
+0058caf4	After the fire has burned out then prepare the soil.
+0058cb4c	:The soil here is now prepared.
+0058cb70	:Now wait until the ground cools down. Then you can plant/sow something.
+0058cc2c	!You can't store different kinds of stuff in one container!
+0058ccf0	!There's is nothing to thresh at this very location!
+0058cd28	:You finish threshing having the harvest now lying on the ground here.
+0058cd70	!The ground is frozen and impossible to dig!
+0058cda0	!The ground is frosty and hard to dig.
+0058cdc8	!Nothing grows in frozen ground.
+0058cdec	!The ground is still too frosty to plant anything.
+0058ce20	!The ground is too frosty to plant anything.
+0058ce50	!The ground is still very warm. You can't plant/sow anything before it cools down.
+0058cea8	!You can't plant anything here! The soil under your feet is not prepared or clear of items.
+0058cf3c	!The chosen item is spoiled beyond usage!
+0058cf68	!You can't plant that!
+0058cffc	!There is no trap!
+0058d058	+Ok. The bait has been set.
+0058d074	(Simply throwing or pushing a bait on the trap works also)
+0058d0e0	!First you need to dig a pit over there! So apply your shovel first. Only then you can make it a trap pit.
+0058d168	!There's no trap construction! Only trap constructions that are fixed, not single items, can be re-triggered.
+0058d1d8	!The trap is in use, there's no need to trigger it again.
+0058d230	!There's a trap already! Disassemble the previous trap first if you want to set a new one to that location.
+0058d444	!There's no trap!
+00591394	&You gracefully hang the bear skull in the pine.
+005921c8	:You can zoom to the local terrain map and look for it.
+00592220	Ok, you continue on your way.
+00592240	:You think there is someone here.
+005923e4	Over the partystack!
+00592934	_You must get out of the cave before you can zoom out..
+00592970	_You can't zoom out directly right now. The area has activity going on.
+005929b8	_Please walk a little further from this location and press [ENTER] again.
+00592a04	#Zooming out ... 
+00592a18	#Zooming in ... 
+00592ad8	!Drawing the line out of the water you notice the hook has snapped off.
+00592b20	!You can't fish with this rod as there's no hook attached.
+00592b60	?If you have a spare fishhook use apply command to attach it to a fishing rod.
+00592bb0	!Huh? There's no open water in sight here!
+00592d28	!You should find a better spot! From this very location you can't expect to catch any fish
+00592dc0	!You can't fish with that!
+00592e18	!There's already a net. Can't set another one to same location.
+00592e58	!You can't set the net over there. The water is not deep enough.
+00592eac	:@You set your net into the water.
+00592ed0	_Return here after few days to retrieve the net and see if there's a catch.
+00592f80	:You may now use piece of a food item as a bait.
+00592fc8	!You try fishing without any bait.
+005930d8	!All the fish in the net appear to be dead and spoiled beyond edible.
+00593120	!You find some of the fish in the net dead and spoiled, but some are good and edible.
+00593178	_You should probably check your nets more often.
+00593234	:You feel very sick and like you are going to throw up...
+00593270	!Barf! You suddenly vomit!
+00593290	!Ouch! Sudden pain in your stomach drops you down on your knees.
+005932d4	:You suddenly feel like waking up from a dream.
+00593304	World around you stops moving and altering.
+00593330	:You feel like quickly diving into a dream-like world.
+00593368	!World around you starts to move and alter its form strangely.
+005933c0	Yrttivaikutukset asetetaan
+005933e4	:You are starting to feel slightly nauseous.
+00593430	:You feel burning sensation in your stomach.
+00593460	:You start to feel very sick.
+005934a0	:You start to feel nauseous and weak.
+005934c8	You feel poisoning growing in your body.
+005934f4	You feel feverish.
+00593798	=Your thirst is extinguished.
+00593830	!It tastes far too bad to be eaten just like that!
+00593864	!It's too chewy and tough for your teeth!
+00593890	!You aren't hungry enough yet to happily eat raw meat.
+00593ca8	Sailioitava esine jo sailio
+00593de8	!Error! Object header not found!
+00593fc0	+Something in your pack is smelling foul!
+005943c0	_To examine something in your inventory, move to a location where the are no plants.
+00594418	!No plants there.
+00594430	_No plants around. You can examine something in your inventory.
+005944b8	!That is something not to be examined by herblore.
+005955b8	!Huh? You tried to pour something in itself.
+00595688	!Bowstring can't be used as a weapon on its on. It's useless to wield it.
+00595714	!You didn't manage to load your crossbow!
+00595d34	!You have some items selected.
+00595dfc	_You stop hauling items.
+00595e54	_Try to [p]ush items to the shore if needed.
+00595e84	?You are about to start hauling items at your feet.
+00595ef0	!Canceled.
+00595f0c	:You start hauling. Use the command again when you are done.
+00595fac	!You are already wielding that!
+00596584	!OUT OF QUABUFS! REPORT!
+005965a0	!Bug found: [esinerunko] uninitialized. Report!
+005965e0	!Bug found: zero qualitylist items. Report!
+00596688	#Smoking requires continuous maintaining of fire, so remember to warm up the fireplace on daily basis.
+00596718	_This was the best you could do with the given tools and materials.
+0059675c	_Your tools are to blame, not your skills.
+00596788	_You could have done better, but can't make good out of bad.
+00596888	!PROPERTY FAIL! WRONG RAW: selected item has no properties to be derived into Tying Equipment.
+00596c98	!You can remove hafts only from axes, spears and shovels!
+00596cd4	!BUG! Default haft not found!
+00596d58	?Axe and spear heads and shovel blades can be hafted to assemble complete working weapons.
+00597018	!The framework may not be disassembled as long as it's supporting construction!
+005971ac	_You can shorten only tying equipment such as ropes and cords.
+0059730c	_You can join only tying equipment such as ropes and cords.
+005973ec	!Only the same kind of tying equipment can be joined together.
+0059742c	!Huh? You can't join it to itself.
+00597450	!Maximum tying equipment length is 255 feet. This combination would exceed it.
+005976a0	!Modded crafts menu is not available.
+005976c8	?There are no menu categories (mod_menudef_*.txt) or craftable items (mod_diy_*.*) properly defined.
+005978e0	_Only weapons, armours and clothes can be examined.
+005986a0	_The heavy items you couldn't pick up can be pulled to your location.
+00598710	+Use this command also to unpack your pack animal or pick items from your companion.
+005988d4	!The bow has no string! You can't shoot with it.
+00598908	?If you have a spare bowstring use apply command to string this bow with it.
+005989a0	!With both hands in use you can't thrown an unwielded weapon now!
+00598a24	!You can't select something that is being worn!
+00598a54	!Don't throw your nets - use your fishing skill to set them!
+00598a98	!Throwing a bow isn't a wise move! Keep it wielded and shoot arrows instead.
+00598ae8	!In order to shoot an arrow you also need to wield a bow!
+0059918c	!Bug in LoydettyTarvike() function. Report!
+005991b8	!Bug in IdkohtaTarvike() function. Report!
+0059940c	datastash
+0059a13c	Ok, you have all the necessary equipment!
+0059a3c4	Ok. There's a fire near you.
+0059a3e8	!There's no fire! You should stand next to an open fire or a burning fireplace.
+0059a438	Ok. There's decent amount of glowing embers.
+0059a468	!There's too little amount of embers. That won't keep hot for long enough.
+0059a4b8	!The fire is still burning briskly. You need to wait for the embers.
+0059a500	!There are no glowing embers around!
+0059a528	Ok. There's a burnt-out fire near you.
+0059a550	!You should be standing next to a heated, not burning fireplace or a burnt-out campfire with still warm remains!
+0059a5e8	!The weather doesn't suite the task. It's too warm and humid at the moment!
+0059a634	Ok. The weather now is suitable for the task.
+0059a664	!You should be outside of the building!
+0059a68c	Ok. There's a proper place for the dried meat/fish here.
+0059a6c8	!There's no proper place or rig here to where to set the meat/fish to dry!
+0059a720	Ok. This is a suitable workplace for weaving a net.
+0059a758	!There's no suitable solid structure for weaving the net at this location!
+0059a7c4	!That cooking vessel is in unusable condition!
+0059a7fc	!No. You can not select that.
+0059a81c	!The chosen item is currently in use!
+0059a88c	Ok. There's a carcass beside you.
+0059ab8c	Ok. You're at suitable terrain.
+0059abac	!The setting you are at now doesn't meet the requirements!
+0059abf0	Ok. You're standing on suitable location.
+0059ac28	Ok. You're at suitable location.
+0059ac50	!You should have the carcass nearby on the ground, one step away at the most.
+0059bbd4	Something happens...
+0059bbf0	&A-a-a-choo! You suddenly sneeze. Maybe you are about to catch a cold.
+0059bdec	news not reached yet
+0059be4c	no news delivery
+0059c364	!Your starvation grows lowering your physical performance!
+0059c3c4	&You have fully recovered from starvation.
+0059c3f0	&You recover from starvation a bit.
+0059c820	#UrW needs to perform map maintenance now. That will take a few moments.
+0059c950	!Index rename error! Report!
+0059c970	!Data rename error! Report!
+0059c98c	#Ok, map maintenance done.
+0059ca20	still got debt
+0059ca30	no debt no more
+0059cb0c	!That's something you can not do while swimming!
+0059cb40	!Get rid of the combat situation first!
+0059cb68	!It takes far too long to accomplish this task like that! It's practically impossible.
+0059ccb0	&You have rested away the fatigue.
+0059ccd4	#Your task is interrupted.
+0059cd78	!You have been attacked...
+0059cd94	!You're engaged with a hostile creature...
+0059cdc0	!You got injured!
+0059cdd4	&Too fatigued to continue! You need a break.
+0059ce04	&You are too tired to continue! You need to sleep.
+0059ce60	_Task paused, to be continued at will.
+0059ce88	!Task cancelled!
+0059d114	not found in crs
+0059d128	FOUND!
+0059d178	found in zooms
+0059d878	?With your character beside the burning shingle and stack of new shingles nearby on the ground a shingle will be lit automatically when necessary.
+0059d9b8	:As you explore the wilderness a settlement comes into view up ahead!
+0059de80	_You are wearing skis, but in order to ski you need to wield a ski pole too.
+0059ded0	:You are wearing skis, but there's no snow to ski on.
+0059df08	:You are wearing skis, but there's not enough snow for proper skiing.
+0059e110	!You can't trust the ice completely, and for now you can cross it only on the zoomed in map.
+0059e170	_Press [ENTER] to zoom in if you want to go on the ice there.
+0059e1b0	!The ice prevents you from rowing there.
+0059e1dc	!You try to climb on the ice but it breaks!
+0059e208	!You fail to lift yourself up onto the ice.
+0059e234	!You struggle to pull yourself onto the ice but fail.
+0059e26c	!You doubt the ice will hold your weight.
+0059e2b8	!The ice here can't be trusted completely and while on it you can travel only the on zoomed in map.
+0059e31c	_Press [ENTER] to zoom in now and find your way there.
+0059e354	!You spot a partially frozen hole in the ice over there.
+0059e3c8	!You can't walk through the fire!
+0059e478	:You sink under water not being able to struggle your way back to the surface.
+0059e580	!You can't use plain sesta to move there. The water is too deep.
+0059e788	_To land your watercraft on the ice first press [ENTER] to zoom in.
+0059e7d0	_There's land ahead of you. To go on shore first press [ENTER] to zoom in.
+0059e830	!There are some items on your way.
+0059e87c	!That's too steep to be climbed!
+0059e8a0	!That's quite steep. Use your CLIMBING skill to move on.
+0059e918	:You crawl.
+0059e9bc	&You run.
+0059e9c8	:You ski with ease on snow crust.
+0059e9f8	:You ski.
+0059ea38	!For some reason you dare not to go further.
+0059ea98	:You haul items along.
+0059ead8	!The ice makes a cracking sound.
+0059eafc	:You go on shore.
+0059ec48	&You walk.
+005a02c8	DEBUG: <npc_desc> piiloutuu
+005a4368	#UrW needs to perform object maintenance now. That will take a few moments.
+005a43b4	#Maintenancing - please wait ...
+005a43f8	#Reading NPC objs - please wait...
+005a4430	=Maintenance done - continue playing now.
+005a5238	!You need to sleep! You can't stay awake much longer.
+005a5270	:You are too tired to stay on your feet.
+005a52c8	&Being very weak from prolonged lack of water you find it impossible to stand on your shaky legs anymore!
+005a5384	:You come to your senses in unfamiliar surroundings...
+005a53d4	:You safely fall a few feet.
+005a55b4	&You feel warm for a moment, then lose your consciousness...
+005a55f8	&You've become drowsy and confused from the cold and can barely remain conscious!
+005a564c	&You are shivering all over from the cold and feel confused.
+005a5a44	&Tired as you are, you don't mind sleeping in the rain.
+005a5a7c	&Tired as you are, you don't mind sleeping in the snowfall.
+005a5ab8	!You can't sleep outside in the rain!
+005a5ae0	!You can't sleep outside when it's snowing this much!
+005a5b18	#Zzzz... [HOLD ON]
+005a5bb8	!You wake up covered in sweat! You've just had the worst nightmare you've ever experienced!
+005a5c18	You hear silent voices from the shadows and notice that your limbs are aching a lot.
+005a5c70	Something wakes you up.
+005a5c88	You think you heard some rustle.
+005a5cac	You think you saw something move in the distance.
+005a5ce0	Brr! You wake up shivering from the coldness.
+005a5d10	!You wake up to the rain.
+005a5d2c	!You wake up to the snowfall.
+005a5d4c	=You wake up to a strange feeling, as if being watched.
+005a5d84	&Your sleep is interrupted by strange noises.
+005a5ec4	_You should be standing to perform this properly.
+005a7324	!You have died...
+005a7338	#You are about to quit playing.
+005a7358	#You are about to quit playing and save your character.
+005a73a0	#Quit cancelled, the gameplay continues.
+005a73d0	!Your character can not be saved in this museum version of the game.
+005a744c	!Your character will die if you don't save now!
+005a89a4	!Sacrifices are not be performed on the wilderness map!
+005a89e0	_Press [ENTER] to zoom on the local terrain map if you want to sacrifice now.
+005a8b28	#You feel foolish.
+005a8b3c	#You feel a bit unsteady.
+005a8b58	#You feel comfortable.
+005a8b70	#You feel at ease.
+005a8c68	!Conditions to speak the verses of this incantation now are not quite right here.
+005a9278	&You feel strong presence of the spirits.
+005a9c90	TERRAIN KNOWN MISMATCH!
+005aa09c	!Please pick a direction where you can see!
+005aa0c8	!That won't do! You need to pick an open space location.
+005aa104	+There are multiple creatures.
+005aabf0	!There are no previous messages.
+005aafb0	!There's a built structure already!
+005ab01c	!There's nothing to continue, nothing under construction.
+005ab088	!That is something you can't deconstruct!
+005ab110	!You can build that only inside of a building, in a location that has a floor and ceiling present!
+005ab174	!The framework center here should be left open and intact.
+005ab208	!The location must be an open area and free of obstacles!
+005ab248	!You can't build a ceiling there yet! There needs to be more solid structures, walls or surrounding ceiling around first.
+005ab2c8	!You can build a door only to a location in between two solid walls or structures!
+005ab320	!The chosen location being the framework center there should also be open area all around it!
+005ab380	!The chosen location must be clear of any objects.
+005ab3b4	You start building...
+005ab3d0	Ok. Kota may be now built around the framework in a free form with maximum diameter of six meters from wall to wall.
+005ab448	+Ok. You finish the current building job.
+005ac638	There are some tracks over there.
+005acf64	!There's no ice!
+005acf78	You made a hole in the ice.
+005acfac	!There's no proper tree to work with!
+005ad008	!The bark has already been harvested from that tree.
+005ad040	!Bark can be harvested only from birch, alder, aspen, rowan or pine trees.
+005ad0d8	_The best season for harvesting bark is early summer.
+005ad148	?Birch-bark can be harvested either as long, narrow strips or as sheets.
+005ad250	?Now fell a young spruce to lean against another spruce on its' east or west side.
+005ad2bc	!There's no proper tree for that spruce to lean against!
+005ad2f8	_Find a young spruce that has another spruce standing either on its' east or west side.
+005ad350	:The spruce is now felled leaning against another spruce.
+005ad390	_This post spruce with cut twigs laid on the ground now forms a temporary shelter to rest at.
+005ad4d4	?Big tree trunks can be chopped into blocks of wood.
+005ad51c	!There is no big tree trunk to chop!
+005ad560	!There is no big tree trunk to split into boards!
+005ad594	?Blocks of wood can be split into firewood.
+005ad5d8	!There is no block of wood to work with!
+005ad620	!There is no big tree trunk for carving into a log!
+005ad654	!BUG! timbercraft->chop->Luo_PuulajiEsine!
+005ad6e0	&You end the task confused, and seem to have misplaced something.
+005ad89c	!You are swimming now! Just move normally to swim ahead.
+005ad900	!There is no water in front of you! Make sure you are facing towards the water and try again.
+005ad960	&You are too fatigued to swim right now!
+005ad98c	:You enter the water.
+005ad9c8	!It's of no use to climb that small tree. To observe your surroundings climb up a tall, grown tree instead.
+005ada38	:That requires no special climbing skills. Just walk over there.
+005ada7c	!You can't climb over there!
+005adae4	&You fall back on the ground.
+005adb18	:You climbed successfully.
+005adb34	#Now observe the terrain and press [ESC] to climb down.
+005adb8c	:You climb down from the tree.
+005adbac	!You aren't desperate enough to cut that flesh.
+005adc48	#If you cut the carcass completely now it can't be skinned afterwards.
+005add2c	!The carcass is already skinned!
+005add50	!You don't skin people!
+005add8c	!You are left empty handed as somebody got the skin already.
+005ade20	!There's really no need to perform this task once again!
+005adf38	:The skin is now left to soak in the water to make the hair loosen and fall off easily.
+005ae200	?Branches and twigs are cut and gathered from standing trees.
+005ae298	_The birch is leafless, so mere branches can be collected.
+005ae2d8	_Leaves of the birch aren't big enough to collect leafy birch twigs just yet.
+005ae328	_Leaves of the birch are too old for collecting leafy birch twigs anymore.
+005ae3f8	!Trying to build a fire on such a thin ice is not a good idea.
+005ae438	!You can't build a fire over there.
+005ae45c	_There should be an open space or a fireplace.
+005ae48c	!There's nothing to set on fire.
+005ae4b0	_Place some firewood over there first and then try to build a fire.
+005ae538	!Fireplace needs to be filled with more firewood in order to get it heated up properly.
+005ae5ac	_The nearby fire helps to start this one.
+005ae5d8	_Embers from the nearby burnt-out fire helps to start this one.
+005ae6bc	_To spin yarn you feed fibres extracted from certain plants.
+005ae700	_To make sinew yarn you need sinew fibres extracted from dried animal tendons.
+005ae750	!This bundle of fibre is too small for any practical use.
+005ae838	?How many meters you want to produce now?
+005ae864	?How many feet you want to produce now?
+005ae8b0	!Textilecraft options can't be used for unknown plants!
+005ae8e8	_Retting is for fibre plants such as nettle and hemp.
+005ae920	_Retting is used for unprocessed plants and their straws.
+005ae960	!It's already retted and dried. Just proceed with extracting the fibre.
+005ae9a8	_These are already retted, now you need to dry them.
+005aea60	_For extracting fibre you need retted and dried fibre plants, or alternatively plain nettles.
+005aeb90	_The sinew fibre is separated from animal tendons, which must first be dried before the process can be carried out.
+005aec50	!Those are not retted fibre plants!
+005aec78	_Drying is a used for fibre plants that have been retted first.
+005aecb8	!It's already dried. Just proceed with separating the sinew fibre.
+005aecfc	!That's not an animal tendon!
+005aed1c	_Tendons can be harvested from decent sized butchered animals.
+005aed5c	!That tendon is spoiled beyond usage!
+005aed88	_You should dry the harvested tendons soon enough so that they won't spoil.
+005aee24	:You attempt to predict the weather...
+005aee64	_That's how you think the weather will be like.
+005aef5c	!This skill is automatically used when necessary!
+005af058	!Can't use skills in the heat of the combat!
+005b0d68	#Select how to hold the shield to cover yourself against missile attacks.
+005b0dd8	_You move normally and don't cover behind the shield.
+005b0e10	_Holding the shield carefully in front of your center slows your movement.
+005b0e60	_Holding the shield high restricts your field of vision and slows your movement.
+005b0eb8	_Holding the shield raised by your side it's slightly slower to move.
+005b1258	!Arrowheads aren't proper melee weapons, but used in arrowmaking instead.
+005b12a8	!You need to shaft the axe before you can use it as proper melee weapon.
+005b12f8	!Don't strike with an arrow, but use [t]hrow command to shoot it.
+005b1340	!Don't strike with a bow, but use [t]hrow command and select an arrow to shoot.
+005b13bc	!You have no free fist to punch with.
+005b144c	!There's nothing to attack at!
+005b146c	!You see no creature there.
+005b15a8	!You are about to bleed to death unless physician skills are applied!
+005b15f0	:You are bleeding...
+005b62c4	#Type a name: 
+005b63c0	?It's too far to respond, but you can still shout these commands.
+005b6810	You wake up to someone talking to you...
+005b684c	!There's no one to command! No pets or companions around.
+005b6888	!There are no pets or companions in sight which you could command!
+005b6908	?To command pets out of sight use ! key command.
+005b6988	?Since version 3.63 commanding pets and companions should be now done with ! key command.
+005b6a64	?If you want to command your companion use ! key command.
+005b6aa0	=You have gotten involved in a quest.
+005b6ac8	_Press [F2] to view quest journal.
+005d7010	#A game-course event is coming up...
+005d7038	+You got a fishing rod!
+005d7050	+There are Njerpez camps in this region!
+005d707c	+There are some foreign traders in this region!
+005d70ac	+You got a fresh pike!
+005d70c4	+You got an axe!
+005d70d8	+You have improved in tracking!
+005d70f8	+You got equipment for agriculture!
+005d7588	:Live freely now and see the game-course information screen again when you are willing to take your next task.
+005d8868	!That's not allowed on the wilderness map! Press [ENTER] to zoom to the local terrain map.
+005d88f0	_Press [ENTER] to zoom on the local terrain map.
+005d8ef8	!You should be in a heated sauna to use vasta.
+005d8f28	_The sauna stove here is not hot.
+005d8f4c	!Remove your clothes first. You should be naked in the sauna.
+005d8f8c	!You don't feel comfortably warm yet to use vasta.
+005d8fc0	:You start gently beating your body with vasta.
+005d9008	#You feel relaxed.
+005d901c	!That fishing rod has no hook.
+005d9078	!That bow has no string.
+005d90c4	?You can use fishhooks to repair a fishing rod with no hook.
+005d9150	!That is not a fishing rod.
+005d916c	!That fishing rod already has a hook.
+005d9198	_Should you want to remove the hook [a]pply the fishing rod on dry land.
+005d920c	?You can use bowstrings to repair a bow with no string.
+005d9290	!That is not a bow.
+005d92a4	!That bow is already strung.
+005d92c8	_Should you want to remove a bowstring use [a]pply command to a strung bow.
+005d946c	:@You filled up the pit.
+005d949c	:@You managed to dig a pit.
+005d953c	+You find some buried items at the bottom of the pit!
+005d95f8	!It's already leashed.
+005d961c	You are wearing skis now.
+005d9638	You take off your skis.
+005d96a8	?Instead of carrying the burning shingle you can also drop and leave it at a location you want to light up.
+005d9728	Some hair falls off from it.
+005d9758	!Since version 3.63 water is thrown on the sauna stove by applying a water container. Sauna scoop isn't needed anymore.
+005d97d0	+This item has no use on its own. It is used to bind things together.
+005d9818	:You produce a fancy sound.
+005d9838	_If you were standing on a raft or punt now you could go by waterways.
+005d9880	_To travel by the watercraft here just keep moving normally towards water.
+005d9a34	You walk around a little looking for tracks...
+005d9a78	:As roaming ahead something suddenly captures your attention.
+005d9b08	!You carry too much! Excess items are now put on the ground.
+005d9d70	The fire is about to burn out soon.
+005d9d94	#You are about discard some items for ever.
+005d9dc0	These items here can be discarded:
+005d9e10	!There are no items to discard here!
+005d9e38	_First drop the items you wish to discard and use this command as you are standing on them.
+005d9e98	_Notice that you can only discard items that are considered to be yours.
+005d9ee4	No items were discarded.
+005d9f00	#As you couldn't recycle these items they are now discarded forever.
+005d9f5c	#Weapons exchanged:
+005d9f80	!No primary weapon.
+005d9fa4	!No secondary weapon.
+005da218	!CHARACTER DATA CHECKSUM FAILURE! MESSED UP vALUES, CORRUPT ENTRIES.
+005da260	#Saving your character...
+005da27c	!URS name blank. Report!
+005da298	!Write error with .URS file. Report!
+005da2c0	=Your character has been saved.
+005dc2cc	The game is controlled mainly by keyboard commands.
+005dc300	=Press [ESC] or [?] to see list of commands.
+005dc358	!It's not possible to zoom out this close to the shore.
+005dc390	_Move further away from the water region and try again.
+005dc3c8	!It's not possible to zoom out by this ice covered water region.
+005dc488	!Character log is no longer in use since version 3.63.
+005dc504	#DEBUG LOGS DISABLED
+005dc51c	#Debug logs toggle.
+005dc544	DEBUG LOGS ENABLED
+005dc558	#Your game may appear slower than normally. Press [&] again to disable debug logs.
+005dc5c4	Re-loading tiles...
+005dc5d8	Tiles re-loaded...
+005dc5ec	load bigs
+005dc5f8	no bigs
+005dc600	scale bigs
+005dc60c	no-scale bigs
+005dcd10	:It starts to rain.
+005dcd24	:It starts to snow.
+005dcd38	:The rain ceases.
+005dcd4c	:The snowing ceases.
+005dcd64	:The rain increases.
+005dcd7c	:It starts to snow harder.
+005dcd98	:The rain decreases.
+005dcdb0	:The snowing eases a bit.

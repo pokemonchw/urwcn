@@ -79,37 +79,25 @@ constexpr const char* creation_story_titles[]{
     "Scenario: ABANDONED CAMP","Scenario: AGRICULTURE","Scenario: THERE BE ROBBERS!",
     "Scenario: NOT ALL WHO WANDER ARE LOST"
 };
-struct CreationStory { u32 id,record; };
-bool creation_select_pending=true,creation_confirmation_pending=true,creation_course_pending=true;
-bool creation_select_redrawing{},creation_confirmation_redrawing{},creation_course_redrawing{};
-bool creation_world_pending=true,creation_world_redrawing{};
-u32 creation_world_legend{};
-bool creation_complete_pending=true,creation_complete_redrawing{};
-
-// Transport delimiters feed the existing 5000 x 130-byte native word table.
-// These are character tokens, not display lines; 10EB40 decides every wrap.
-void creation_words(std::vector<char>& encoded) {
-    std::vector<char> words;
-    for(auto* p=reinterpret_cast<const unsigned char*>(encoded.data());*p;) {
-        if(*p>=0x80) {
-            if(!words.empty() && words.back()!=' ' && words.back()!='>') words.push_back(' ');
-            words.push_back(static_cast<char>(*p++));words.push_back(static_cast<char>(*p++));
-            words.push_back(' ');
-        } else words.push_back(static_cast<char>(*p++));
-    }
-    words.push_back(0);encoded=std::move(words);
-}
+struct CreationStory { u32 id,record,current_record; };
 Status creation_lend(const NativeEvent& e,TextComponent component,const char* key,
                      u32& destination,CreationKind kind) {
     const auto* original=ptr<char>(destination);
+    const char* display=original;
+    if(kind==CreationKind::button) {
+        const auto* separator=std::strchr(original,'.');
+        display=separator ? separator+1 : original+3;
+    }
     std::vector<char> encoded;
-    auto status=translate(component,original,key,encoded);
+    auto status=translate(component,display,key,encoded);
     if(status!=Status::ok) return status;
-    if(kind==CreationKind::words && chinese_enabled) creation_words(encoded);
-    if(kind==CreationKind::button && chinese_enabled) {
-        const auto* suffix=std::strchr(original,'.');
-        if(suffix) encoded.insert(encoded.begin(),original,suffix+1);
-        else encoded.insert(encoded.begin(),original,original+3); // confirmed <Y>/<N>
+    if(kind==CreationKind::words && chinese_enabled) {
+        const auto words=native_paragraph_words(encoded.data());
+        encoded.assign(words.begin(),words.end());encoded.push_back(0);
+    }
+    if(kind==CreationKind::button) {
+        native_component_binding::note_prefix(e,std::string(original,display).c_str());
+        encoded.insert(encoded.begin(),original,display);
     }
     const auto scope=kind==CreationKind::panel ? Scope::scenario_panel :
         (kind==CreationKind::words || kind==CreationKind::format) ? Scope::allocation : kind==CreationKind::center ? Scope::hud_centered :
@@ -118,86 +106,20 @@ Status creation_lend(const NativeEvent& e,TextComponent component,const char* ke
         kind==CreationKind::button ? *at<u32>(0x5F54A9C) : 0;
     return lend_text(e,encoded,destination,scope,outline);
 }
-void invalidate_windows_creation() {
-    creation_select_pending=creation_confirmation_pending=creation_course_pending=creation_world_pending=true;
-    creation_complete_pending=true;
-}
-Status creation_complete_rebuild() {
-    auto status=native_targets::promote();
-    if(status!=Status::ok) return status;
-    creation_complete_redrawing=true;
-    // Keep 12F80's native stack frame; enter only its completed-page drawing.
-    // D3CDC returns before input, and 13341 goes straight to the epilogue.
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x12F80)();
-    creation_complete_redrawing=false;
-    creation_complete_pending=false;
-    return Status::ok;
-}
 Status creation_complete_identity(const NativeEvent& e) {
+    // The native producer formats the original identity for this display.
+    // The semantic value keeps its real culture ID and unchanged Unicode name.
+    std::string original,name;
+    auto status=decode_parser_original(ptr<char>(e.arguments[1]),original);
+    if(status!=Status::ok) return status;
+    status=decode_parser_original(at<char>(0xA32A6E8),name);
+    if(status!=Status::ok) return status;
+    const auto value=std::to_string(*at<unsigned char>(0xA32A6F5))+"|"+name;
     std::vector<char> encoded;
-    if(!chinese_enabled) {
-        const auto status=native_name_input::display(ptr<char>(e.arguments[1]),encoded);
-        if(status!=Status::ok) return status;
-    } else {
-        // 1321E builds Plr.name + Plr.inhabitant only for this display line.
-        // Use the same name and the confirmed Plr.culture ID, without writing
-        // either the native English identity or its formatted scratch buffer.
-        auto status=native_name_input::display(at<char>(0xA32A6E8),encoded);
-        if(status!=Status::ok) return status;
-        std::vector<char> name,culture,culture_utf8;
-        status=codec(layout_op::decode_native,encoded.data(),name);
-        if(status!=Status::ok) return status;
-        const auto component=static_cast<TextComponent>(static_cast<u32>(TextComponent::profile_culture_0)+
-            *at<unsigned char>(0xA32A6F5));
-        status=translate(component,at<char>(0xA32A6F6),nullptr,culture);
-        if(status!=Status::ok) return status;
-        status=codec(layout_op::decode_native,culture.data(),culture_utf8);
-        if(status!=Status::ok) return status;
-        const auto identity=std::string(name.data())+" "+culture_utf8.data();
-        status=translate(TextComponent::creation_complete_enter,ptr<char>(e.arguments[1]),identity.c_str(),encoded);
-        if(status!=Status::ok) return status;
-    }
+    status=translate(TextComponent::creation_complete_enter,original.c_str(),value.c_str(),encoded);
+    if(status!=Status::ok) return status;
     return lend_text(e,encoded,e.arguments[1],Scope::hud_centered,e.arguments[3]);
 }
-Status creation_rebuild(u32 page) {
-    auto status=native_targets::promote();
-    if(status!=Status::ok) return status;
-    const auto selection=*at<u32>(0x5F54AB0);
-    if(page==0) {
-        creation_select_redrawing=true;
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x108A0)();
-        creation_select_redrawing=false;creation_select_pending=false;
-    } else if(page==1) {
-        creation_confirmation_redrawing=true;
-        reinterpret_cast<void (__fastcall *)(u32)>(host->image_base+0x105C0)(0);
-        creation_confirmation_redrawing=false;creation_confirmation_pending=false;
-    } else if(page==2) {
-        creation_course_redrawing=true;
-        reinterpret_cast<void (__fastcall *)(u32)>(host->image_base+0x10D40)(0);
-        creation_course_redrawing=false;creation_course_pending=false;
-    } else {
-        creation_world_redrawing=true;
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x60B60)();
-        creation_world_redrawing=false;creation_world_pending=false;
-    }
-    *at<u32>(0x5F54AB0)=selection;
-    return refresh_menu_cache();
-}
-Status windows_creation_input(const NativeEvent& e) {
-    if(creation_complete_pending && e.id==about_input_tick && e.phase==NativePhase::before &&
-        *ptr<u32>(e.frame->ebp+4)==host->image_base+0x13341) return creation_complete_rebuild();
-    if(creation_select_pending && native_language_redraw::menu_input(e,0x10B89)) return creation_rebuild(0);
-    if(creation_confirmation_pending && native_language_redraw::menu_input(e,0x1077E)) return creation_rebuild(1);
-    if(creation_course_pending && native_language_redraw::menu_input(e,0x110C5)) return creation_rebuild(2);
-    if(creation_world_pending && native_language_redraw::menu_input(e,0x60EA8)) {
-        // D1120 saves its caller's EDI after SUB ESP,434h and PUSH EBX/ESI.
-        // This is the world's current legend switch, not D1120's live EDI.
-        creation_world_legend=*ptr<u32>(e.frame->ebp-0x440);
-        return creation_rebuild(3);
-    }
-    return Status::ok;
-}
-
 Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
     if(e.phase==NativePhase::after) {
@@ -206,7 +128,7 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
     }
     if(e.id>=creation_text_first && e.id<creation_text_first+std::size(creation_text_calls)) {
         const auto& field=creation_text_calls[e.id-creation_text_first];
-        if(field.component==TextComponent::creation_complete_title) creation_complete_pending=false;
+
         auto& destination=field.kind==CreationKind::words ? e.frame->edx : e.arguments[field.argument];
         return creation_lend(e,field.component,field.key,destination,field.kind);
     }
@@ -219,17 +141,8 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
     }
     switch(e.id) {
     case creation_complete_enter:return creation_complete_identity(e);
-    case creation_complete_entry:
-        if(creation_complete_redrawing) result.resume_rva=0x13187;
-        return Status::ok;
-    case creation_complete_exit:
-        if(creation_complete_redrawing) result.resume_rva=0x133C1;
-        return Status::ok;
-    case scenario_redraw_wait:
-        if(creation_complete_redrawing) {result.resume_rva=0xD3D0F;return Status::ok;}
-        break;
     case scenario_story_scope: case creation_preview: {
-        scenario_refresh_pending=false;
+
         auto* story=static_cast<CreationStory*>(host->allocate(sizeof(CreationStory)));
         *story={};active.push_back({e.token,Scope::scenario_story,address(story),0,0,0,0});return Status::ok;
     }
@@ -246,11 +159,23 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
     }
     case scenario_body_format: {
         const auto* original=ptr<char>(e.arguments[2]);
-        if(!*original) return Status::ok; // confirmed empty records and terminal EOF
         const auto story=std::find_if(active.rbegin(),active.rend(),[](const Active& item){return item.kind==Scope::scenario_story;});
         auto* source=ptr<CreationStory>(story->allocation);
+        source->current_record=*original ? 1u : 0u;
+        if(!source->current_record) return Status::ok; // original empty record and terminal EOF
         const auto key="story."+std::to_string(source->id)+"."+std::to_string(source->record++);
-        return creation_lend(e,TextComponent::scenario_confirmation_text,key.c_str(),e.arguments[2],CreationKind::words);
+        const auto status=creation_lend(e,TextComponent::scenario_confirmation_text,key.c_str(),e.arguments[2],CreationKind::words);
+        if(status!=Status::ok) return status;
+        const auto* pattern=ptr<char>(e.arguments[1]);
+        native_component_binding::note_prefix(e,std::string(pattern,
+            static_cast<std::size_t>(std::strstr(pattern,"%s")-pattern)).c_str());
+        return Status::ok;
+    }
+    case scenario_body_append: {
+        const auto story=std::find_if(active.rbegin(),active.rend(),[](const Active& item){return item.kind==Scope::scenario_story;});
+        if(ptr<CreationStory>(story->allocation)->current_record)
+            native_component_binding::note_source_for_consumer(e,TextComponent::scenario_confirmation_text);
+        return Status::ok;
     }
     case scenario_body_paragraph:
         begin(e,Scope::paragraph,e.arguments[3]);begin(e,Scope::creation_paragraph,e.arguments[3]);return Status::ok;
@@ -258,6 +183,7 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
         return creation_lend(e,e.id==creation_select_title ? TextComponent::scenario_selection_text : TextComponent::game_course_text,
             "title",e.frame->ecx,CreationKind::panel);
     case creation_select_name: {
+        native_component_binding::note_native_record(e,e.frame->ebx);
         const auto key="name."+std::to_string(e.frame->ebx);
         return creation_lend(e,TextComponent::scenario_selection_text,key.c_str(),e.arguments[0],CreationKind::text);
     }
@@ -305,42 +231,6 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
     case about_button_text: case setup_exit_text: case creation_button_highlight_1: case creation_button_highlight_2:
         if(in(Scope::creation_button)) {begin(e,Scope::text,e.arguments[2]);return Status::ok;}
         break;
-    case creation_select_exit:
-        creation_select_pending=false;
-        if(creation_select_redrawing) result.resume_rva=0x10BAF;
-        return Status::ok;
-    case creation_confirmation_entry:
-        if(creation_confirmation_redrawing) result.resume_rva=0x10707;
-        return Status::ok;
-    case creation_confirmation_exit:
-        creation_confirmation_pending=false;
-        if(creation_confirmation_redrawing) result.resume_rva=0x10797;
-        return Status::ok;
-    case creation_course_entry:
-        if(creation_course_redrawing) result.resume_rva=0x10D60;
-        return Status::ok;
-    case creation_course_exit:
-        creation_course_pending=false;
-        if(creation_course_redrawing) result.resume_rva=0x11135;
-        return Status::ok;
-    case creation_footer_rng:
-        if(creation_select_redrawing || creation_course_redrawing) {
-            e.frame->esi=*at<u32>(0x18C1F8);result.resume_rva=0xF293;
-        }
-        return Status::ok;
-    case creation_world_entry:
-        if(creation_world_redrawing) {e.frame->edi=creation_world_legend;result.resume_rva=0x60BB8;}
-        return Status::ok;
-    case creation_world_after_title:
-        if(creation_world_redrawing) {*at<u32>(0x61BBAC8)=0;result.resume_rva=0x6109F;}
-        return Status::ok;
-    case creation_world_after_map:
-        if(creation_world_redrawing) {e.frame->ebx=0;result.resume_rva=0x60CC2;}
-        return Status::ok;
-    case creation_world_exit:
-        creation_world_pending=false;
-        if(creation_world_redrawing) result.resume_rva=0x6113D;
-        return Status::ok;
     default:
         if(e.id>=creation_world_format_first && e.id<creation_world_format_first+2) {
             const auto* key=e.id==creation_world_format_first ? "zoom_format" : "distance_format";

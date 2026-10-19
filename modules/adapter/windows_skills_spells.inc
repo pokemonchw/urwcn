@@ -9,6 +9,61 @@ enum WindowsSkillsHook : u32 {
     wm_heading_text,wm_paragraph_first=0x7720,
     wm_footer_scope=0x7730,wm_footer_title,wm_footer_summary,wm_footer_button
 };
+struct WindowsSkillHelpSource {
+    u64 token;
+    TextComponent component;
+    std::string key;
+    native_component_model::ParagraphSource records;
+};
+std::vector<WindowsSkillHelpSource> windows_skill_help_sources;
+std::vector<std::uint8_t> save_windows_skill_help_sources() {
+    std::vector<std::uint8_t> output;
+    const auto scalar=[&output](const auto& value) {
+        const auto* data=reinterpret_cast<const std::uint8_t*>(&value);output.insert(output.end(),data,data+sizeof(value));
+    };
+    const auto string=[&output,&scalar](const std::string& value) {
+        scalar(static_cast<u32>(value.size()));output.insert(output.end(),value.begin(),value.end());
+    };
+    scalar(static_cast<u32>(windows_skill_help_sources.size()));
+    for(const auto& help:windows_skill_help_sources) {
+        scalar(help.token);scalar(static_cast<u32>(help.component));string(help.key);
+        scalar(static_cast<u32>(help.records.fragments.size()));
+        for(const auto& record:help.records.fragments) { string(record.original);string(record.value); }
+    }
+    return output;
+}
+void restore_windows_skill_help_sources(const void* bytes) {
+    auto* cursor=static_cast<const std::uint8_t*>(bytes);
+    const auto scalar=[&cursor](auto& value) { std::memcpy(&value,cursor,sizeof(value));cursor+=sizeof(value); };
+    const auto string=[&cursor,&scalar]() {
+        u32 count;scalar(count);std::string value(reinterpret_cast<const char*>(cursor),count);cursor+=count;return value;
+    };
+    u32 count;scalar(count);windows_skill_help_sources.clear();
+    for(u32 i=0;i<count;++i) {
+        u64 token;u32 component,records;scalar(token);scalar(component);auto key=string();scalar(records);
+        WindowsSkillHelpSource help{token,static_cast<TextComponent>(component),std::move(key),{}};
+        for(u32 record=0;record<records;++record) {
+            auto original=string(),value=string();
+            help.records.fragments.push_back(native_text_resource::from_request({help.component,original.c_str(),value.c_str()}));
+        }
+        windows_skill_help_sources.push_back(std::move(help));
+    }
+}
+void windows_skill_help_begin(const NativeEvent& e,TextComponent component,const char* key) {
+    windows_skill_help_sources.push_back({e.token,component,key,{}});
+}
+Status windows_skill_help_record(const NativeEvent& e) {
+    auto& help=windows_skill_help_sources.back();
+    std::string original;
+    const auto status=decode_parser_original(ptr<char>(e.frame->edx),original);
+    if(status!=Status::ok) return status;
+    // One identity per actual HELP-file body record accepted at 162627. It is
+    // unrelated to native output lines, wrapping or glyph draw invocations.
+    const auto key=help.key+"#"+std::to_string(help.records.fragments.size());
+    help.records.fragments.push_back(native_text_resource::from_request({
+        help.component,original.c_str(),key.c_str()}));
+    return Status::ok;
+}
 Status windows_skill_lend(const NativeEvent& e,TextComponent component,const std::string& key,
                          u32& destination,Scope kind,bool prefix=false,bool words=false,u32 outline=0) {
     const auto* original=ptr<char>(destination);
@@ -17,6 +72,7 @@ Status windows_skill_lend(const NativeEvent& e,TextComponent component,const std
     const auto status=translate(component,suffix,key.c_str(),encoded);
     if(status!=Status::ok) return status;
     if(prefix) {
+        native_component_binding::note_prefix(e,std::string(original,suffix).c_str());
         encoded.insert(encoded.begin(),original,suffix);
     }
     if(words) {
@@ -25,25 +81,19 @@ Status windows_skill_lend(const NativeEvent& e,TextComponent component,const std
     }
     return lend_text(e,encoded,destination,kind,outline);
 }
-Status windows_skill_help(TextComponent component,const char* key) {
-    if(!chinese_enabled) return Status::ok;
-    std::vector<char> encoded;
-    const auto status=translate(component,"",key,encoded);
-    if(status!=Status::ok) return status;
-    const auto words=native_paragraph_words(encoded.data());
-    using Parse=void (__fastcall *)(u32,const char*);
-    reinterpret_cast<Parse>(host->image_base+0x162300)(1,words.c_str());
-    return Status::ok;
+Status windows_skill_help(const NativeEvent& e) {
+    const auto builder=std::find_if(windows_skill_help_sources.begin(),windows_skill_help_sources.end(),
+        [&e](const WindowsSkillHelpSource& source){return source.token==e.token;});
+    auto source=std::move(builder->records);windows_skill_help_sources.erase(builder);
+    // The loader's native direct-clear and record reads have completed. The
+    // shared canonical parser now consumes the exact neutral input records;
+    // ordinary display and later locale paint use this identical source.
+    return native_component_binding::replace_paragraph_builder(source);
 }
 Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
     if(e.phase==NativePhase::after) {
-        if(e.id==ws_help)
-            return windows_skill_help(TextComponent::skills_text,e.frame->ebx==1 ? "help.initial" : "help.general");
-        if(e.id>=wm_help_first && e.id<wm_help_first+3) {
-            constexpr const char* keys[]{"help.general","help.instant","help.initial"};
-            return windows_skill_help(TextComponent::spells_text,keys[e.id-wm_help_first]);
-        }
+        if(e.id==ws_help || (e.id>=wm_help_first && e.id<wm_help_first+3)) return windows_skill_help(e);
         handled=false;return Status::ok;
     }
     if(e.id>=ws_heading_first && e.id<ws_heading_first+2)
@@ -67,14 +117,16 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
         return windows_skill_lend(e,TextComponent::skills_text,e.id==ws_improve ? "improve" : "degrade",
             e.arguments[0],Scope::setup_exit,true,false,*at<u32>(0x61BBA54)&1u);
     case ws_limit_improve:case ws_limit_degrade: {
-        if(!chinese_enabled) return Status::ok;
         const bool improve=e.id==ws_limit_improve;
-        std::vector<char> encoded;
-        auto status=translate(TextComponent::skills_text,"",improve ? "limit.improve" : "limit.degrade",encoded);
+        std::string original;
+        auto status=decode_parser_original(ptr<char>(e.frame->edx),original);
         if(status!=Status::ok) return status;
-        std::string display(encoded.data());
-        display.replace(display.find("{value}"),7,std::to_string(*at<unsigned char>(improve ? 0x1D7F451 : 0x1D7F452)));
-        const auto words=native_paragraph_words(display.c_str());
+        const auto value=std::to_string(*at<unsigned char>(improve ? 0x1D7F451 : 0x1D7F452));
+        std::vector<char> encoded;
+        status=translate(improve ? TextComponent::skills_limit_improve : TextComponent::skills_limit_degrade,
+            original.c_str(),value.c_str(),encoded);
+        if(status!=Status::ok) return status;
+        const auto words=native_paragraph_words(encoded.data());
         encoded.assign(words.begin(),words.end());encoded.push_back(0);
         return lend_text(e,encoded,e.frame->edx,Scope::allocation);
     }
@@ -89,7 +141,7 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
         return windows_skill_lend(e,TextComponent::skills_text,std::string("level.")+ptr<char>(e.arguments[2]),
             e.arguments[2],Scope::allocation);
     case ws_heading_width:
-        if(native_name_input::contains_display(ptr<char>(e.frame->edi))) {
+        if(in(Scope::titled_panel) || native_name_input::contains_display(ptr<char>(e.frame->edi))) {
             render::Metrics measured{};
             const auto status=metrics(ptr<char>(e.frame->edi),measured);
             if(status!=Status::ok) return status;
@@ -99,7 +151,7 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
         }
         return Status::ok;
     case ws_heading_text:
-        if(native_name_input::contains_display(ptr<char>(e.arguments[0]))) return centered_text(e);
+        if(in(Scope::titled_panel) || native_name_input::contains_display(ptr<char>(e.arguments[0]))) return centered_text(e);
         return Status::ok;
     case wm_heading:
         return windows_skill_lend(e,TextComponent::spells_text,"title",e.frame->edx,Scope::allocation);
@@ -130,9 +182,14 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
                 e.arguments[2],Scope::allocation,true);
         return Status::ok;
     case ws_help:
+        windows_skill_help_begin(e,TextComponent::skills_help_record,e.frame->ebx==1 ? "help.initial" : "help.general");
         return Status::ok;
     default:
-        if(e.id>=wm_help_first && e.id<wm_help_first+3) return Status::ok;
+        if(e.id>=wm_help_first && e.id<wm_help_first+3) {
+            constexpr const char* keys[]{"help.general","help.instant","help.initial"};
+            windows_skill_help_begin(e,TextComponent::spells_help_record,keys[e.id-wm_help_first]);
+            return Status::ok;
+        }
         break;
     }
     handled=false;return Status::ok;

@@ -1,0 +1,4 @@
+Storage observation only; not a text inventory.
+The terrain descriptor table starts at PE VA 0x005EC798 and visible names at +9.
+Its records are populated by native function 0x00408080; these PE BSS bytes do not contain names before initialization.
+Use settlement-terrain-name-atoms.tsv for statically proven initializer sources.

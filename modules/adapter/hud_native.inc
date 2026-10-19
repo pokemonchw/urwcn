@@ -71,8 +71,7 @@ Status hud_scale_metrics(const char* encoded,render::Metrics& measured) {
     u32 bytes=sizeof(measured);
     return host->invoke(ModuleId::render,render::op::measure,&request,sizeof(request),&measured,&bytes);
 }
-Status hud_identity_display(const char* original,std::vector<char>& encoded) {
-    if(!chinese_enabled) return native_name_input::display(original,encoded);
+Status hud_identity_display(const NativeEvent& e,const char* original,std::vector<char>& encoded) {
     // FA3F2 formats "%s %s" from Plr.name and Plr.inhabitant. Choose_Name
     // excludes spaces in names; tribe suffixes themselves include "of ".
     // choose_culture stores the culture ID at Plr+0xD. Borrow display text only.
@@ -80,9 +79,15 @@ Status hud_identity_display(const char* original,std::vector<char>& encoded) {
     const std::string name(original,separator);
     const auto component=static_cast<TextComponent>(static_cast<u32>(TextComponent::profile_culture_0)+
         *at<unsigned char>(0xA32A6F5));
-    std::vector<char> culture;
-    auto status=translate(component,separator+1,nullptr,culture);
+    std::string original_culture,original_name;
+    auto status=decode_parser_original(separator+1,original_culture);
     if(status!=Status::ok) return status;
+    status=decode_parser_original(name.c_str(),original_name);
+    if(status!=Status::ok) return status;
+    std::vector<char> culture;
+    status=translate(component,original_culture.c_str(),nullptr,culture);
+    if(status!=Status::ok) return status;
+    native_component_binding::note_prefix(e,(original_name+" ").c_str());
     status=native_name_input::display(name.c_str(),encoded);
     if(status!=Status::ok) return status;
     encoded.back()=' ';
@@ -92,6 +97,9 @@ Status hud_identity_display(const char* original,std::vector<char>& encoded) {
 Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
     if(e.id>=hud_surface_first && e.id<hud_surface_first+std::size(hud_surface_calls)) {
+        // F8E20 owns the complete native cell, including its label, number,
+        // bar and native cache record. Its prepared source is already current.
+        if(e.id==hud_surface_first && native_component_binding::consuming_component()) return Status::ok;
         // The native arithmetic '+' separator uses the same label primitive.
         // Its statically identified literal remains native punctuation.
         if(e.id==hud_surface_first && e.arguments[0]==address(at<char>(0x1AA240))) return Status::ok;
@@ -124,7 +132,7 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     case hud_penalty_width:
         if(in(Scope::hud_penalty)) {
             render::Metrics width{};
-            const auto status=metrics(ptr<char>(e.frame->edx),width);
+            const auto status=metrics_at_outline(ptr<char>(e.frame->edx),0,width);
             if(status!=Status::ok) return status;
             e.frame->eax=static_cast<u32>(width.logical_width);
             e.frame->ecx-=e.frame->eax;
@@ -173,13 +181,14 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
         return Status::ok;
     }
     case hud_scale_call:
+        native_component_binding::note_source_for_consumer(e,TextComponent::world_scale);
         begin(e,Scope::hud_scale,1); return Status::ok;
     case hud_scale_text:
         if(in(Scope::hud_scale)) begin(e,Scope::text,e.arguments[2]);
         return Status::ok;
     case hud_identity_width: {
         std::vector<char> encoded;
-        auto status=hud_identity_display(ptr<char>(e.frame->ebp-0x408),encoded);
+        auto status=hud_identity_display(e,ptr<char>(e.frame->ebp-0x408),encoded);
         if(status!=Status::ok) return status;
         render::Metrics measured{};
         status=metrics_at_outline(encoded.data(),1,measured);
@@ -192,22 +201,24 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     }
     case hud_identity_draw_first: case hud_identity_draw_second: {
         std::vector<char> encoded;
-        const auto status=hud_identity_display(ptr<char>(e.arguments[0]),encoded);
+        auto status=hud_identity_display(e,ptr<char>(e.arguments[0]),encoded);
         if(status!=Status::ok) return status;
+        render::Metrics measured{};
+        status=metrics_at_outline(encoded.data(),e.arguments[2]&1u,measured);
+        if(status!=Status::ok) return status;
+        native_component_binding::note_center(e,static_cast<std::int32_t>(e.frame->ecx)+measured.logical_width/2);
         return lend_text(e,encoded,e.arguments[0],Scope::text);
     }
     case hud_target_entry:
         return native_targets::promote_hud();
-    case hud_speed:
-        if(!chinese_enabled) {
-            const std::string original=ptr<char>(e.arguments[2]);
-            const auto heading=original.substr(0,original.find(':')+1);
-            std::vector<char> encoded;
-            const auto status=codec(layout_op::encode_native,heading.c_str(),encoded);
-            if(status!=Status::ok) return status;
-            return lend_text(e,encoded,e.arguments[2],Scope::hud_renderer);
-        }
-        return hud_lend(e,TextComponent::hud_speed,2,Scope::hud_renderer);
+    case hud_speed: {
+        const std::string original=ptr<char>(e.arguments[2]);
+        const auto heading=original.substr(0,original.find(':')+1);
+        std::vector<char> encoded;
+        const auto status=hud_translate(TextComponent::hud_speed,heading.c_str(),nullptr,encoded);
+        if(status!=Status::ok) return status;
+        return lend_text(e,encoded,e.arguments[2],Scope::hud_renderer);
+    }
     case hud_action: case hud_direction:
         return hud_lend(e,e.id==hud_action ? TextComponent::hud_action :
             TextComponent::hud_direction,
@@ -221,6 +232,7 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
         // the same value with its unit. Its coordinates and native color stay.
         std::string value=ptr<char>(e.arguments[1]);
         value+=*at<u32>(0xA2D0AF4) ? " km/h" : " mi/h";
+        native_component_binding::note_original_for_consumer(e,value.c_str());
         std::vector<char> encoded;
         const auto status=codec(layout_op::encode_native,value.c_str(),encoded);
         if(status!=Status::ok) return status;
@@ -228,7 +240,8 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     }
     case hud_renderer_top: case hud_renderer_bottom: case hud_renderer_left:
     case hud_renderer_right: case hud_renderer_foreground:
-        if(in(Scope::hud_renderer_text) || native_name_input::contains_display(ptr<char>(e.arguments[1]))) {
+        if(in(Scope::hud_renderer_text) || in(Scope::native_renderer_resource) ||
+            native_name_input::contains_display(ptr<char>(e.arguments[1]))) {
             const auto status=hud_draw_renderer(e);
             if(status!=Status::ok) return status;
             result.skip_original=1;
