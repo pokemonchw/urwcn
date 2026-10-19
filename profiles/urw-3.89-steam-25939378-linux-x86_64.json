@@ -49,7 +49,7 @@
     "list_entry_stride": "0xe8",
     "list_entry_action": "0xc8"
   },
-  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 17 culture encyclopedia topics, culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers.",
+  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 17 culture encyclopedia topics, culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers. All eleven farewell fields at endgame's native panel, showtext, centext and button calls.",
   "ownership": "Native UI retains layout, wrapping, centering, controls, input, hit testing, background, caching and animation. Chinese glyphs draw synchronously inside native text leaves; no pixel tracking or text replay.",
   "native_density": {
     "screen_creation": "0x148c60",
@@ -66,14 +66,26 @@
     "Linux showtext preserves its four native shadow calls, but the shadow budget is not yet propagated into font calibration and external width calls. This style envelope remains pending.",
     "Pure refresh of setup body, already-dimmed profile panels, saved-character windows, ancestor pages and current Village page remains tied to native reconstruction.",
     "Linux in-process module retirement/publication protocol is not implemented; Windows Reload is rejected for Linux.",
-    "Culture encyclopedia immediate language refresh remains unimplemented; its persistent heading and navigation retain the entry language. Map culture legends consume the current language at native map reconstruction."
+    "Culture encyclopedia immediate language refresh remains unimplemented; its persistent heading and navigation retain the entry language. Map culture legends consume the current language at native map reconstruction.",
+    "Farewell consumes the selected language at its native construction calls. Its wait loop has no confirmed pure redraw entry; Shift+F10 does not reconstruct already drawn farewell pixels. endgame is never re-entered for refresh because it owns music, fades, input waiting and process exit."
   ],
   "runtime_verification": "Not performed; launching the game, running artifacts and tests are prohibited.",
   "evidence": [
     "docs/evidence/20261019-linux-native-port.md",
     "docs/evidence/20261019-linux-font-density.md",
-    "docs/evidence/20261019-culture-info-native.md"
+    "docs/evidence/20261019-culture-info-native.md",
+    "docs/evidence/20261019-farewell-native.md"
   ],
+  "farewell": {
+    "page": "endgame at 0x10e790, called from main at 0xa8f0",
+    "fields": 11,
+    "panel": "0x10e81e -> winbox(0x1471a0), text in R8; seventh argument remains on the original native stack",
+    "quote": ["0x10e960", "0x10e977", "0x10e98e", "0x10e9a5", "0x10e9bc"],
+    "dedication": "0x10e9f5 -> centext(0x13ea90), text in RCX; native word flow and centering consume extended width",
+    "closing": ["0x10ea27", "0x10ea59", "0x10ea8b"],
+    "button": "0x10eaa1 -> Piirra_Nappain(0x144fb0), text in RDX; native tile count and cursor advance consume extended width",
+    "drawing": "Synchronous glyphs into native screen at its actual output density, using the established software target path. Native colors, shadow calls, frame, image, caches, fades, input wait and shutdown remain owned by the game."
+  },
   "culture_information": {
     "source": "GAME.NFO (CP437), SHA-256 071f384ad992d0a688833693f207a5cf8a969b4811e5e6603597d189087a4d5d",
     "topics": 17,

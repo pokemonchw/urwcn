@@ -30,6 +30,8 @@ Linux 正式入口是根目录无扩展名的 **`uwcn_launcher`**，由 C++ 编�
 
 Linux 启动闪退的两次用户 core 分别确认了音频显示名重复扩展名处理、后续音频显示键缺失；另经静态审查修正了七参数原生调用误读临时栈的问题。源码及正式发布状态分别见 [首轮修复记录](docs/evidence/20261019-linux-startup-crash-fix.md) 和 [启动词库修复记录](docs/evidence/20261019-linux-startup-catalog-crash-fix.md)。未自行启动或测试，不以发布成功代替运行结果。
 
+Linux 退出告别页的标题、克里族谚语、献辞、底部寄语和继续按钮共 11 项已接入原生中文文本路径，完成统一队列编译和正式发布，旧文件已移入 `回收/`；游戏继续管理居中、按钮、背景及淡入淡出。下次正常启动加载，未运行游戏或测试。静态依据、语言刷新限制和发布回执见 [退出告别页记录](docs/evidence/20261019-farewell-native.md)。
+
 ## 项目命名与构建
 
 项目名已由 `uwcn` 更名为 `urwcn`，从本仓库克隆时使用 `urwcn` 目录。Linux 启动器为 `uwcn_launcher`，Windows 启动器为 `uwcn_launcher.exe`；`package/uwcn_loader.dll`、`package/modules/uwcn_*.dll` 及内部 ABI、导出名和控制协议保留原名。Linux 库虽然保留 `.dll` 文件名，实际格式为 ELF64。历史证据中的旧项目名及绝对路径保留其记录时的含义。

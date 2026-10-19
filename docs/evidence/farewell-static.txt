@@ -1,3 +1,16 @@
+HISTORICAL DESIGN CORRECTION — 2026-10-19
+This file records Windows PE evidence, not Linux call addresses. The passages
+below that propose glyph suppression, Mod-owned Chinese line slots and text
+composition at Present conflict with current AGENTS.md and are NOT an approved
+implementation design. In particular, see "Original display ABI and geometry"
+("Chinese line slots are Mod-owned") and "Present and wait-for-key boundaries"
+("composition boundary", "bridges can compose"). These would transfer layout
+and final composition out of native UI; do not implement them. The conflict is
+now marked; cleanup of the historical proposal text remains pending. Native
+addresses/ABI observations are retained as historical evidence only.
+Current Linux translation and independently decompiled native boundaries:
+docs/evidence/20261019-farewell-native.md.
+
 UnReal World 3.89 / Steam Build 25939378: exit farewell screen
 Date: 2026-10-18
 Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
