@@ -42,3 +42,23 @@ uwcn_linux_redraw_world_fragment:
 uwcn_linux_redraw_world_return:
     ret
 .size uwcn_linux_redraw_world_return,.-uwcn_linux_redraw_world_return
+
+.globl uwcn_linux_redraw_scenario_fragment
+.hidden uwcn_linux_redraw_scenario_fragment
+.type uwcn_linux_redraw_scenario_fragment,@function
+uwcn_linux_redraw_scenario_fragment:
+    # 1CEFC..1CF7E expects RSP aligned before its native CALLs. Its temporary
+    # seventh LIST_Reset argument is balanced by the original two POPs.
+    pushq %rbx
+    subq $8,%rsp
+    call *%rdi
+    addq $8,%rsp
+    popq %rbx
+    ret
+.size uwcn_linux_redraw_scenario_fragment,.-uwcn_linux_redraw_scenario_fragment
+.globl uwcn_linux_redraw_scenario_return
+.hidden uwcn_linux_redraw_scenario_return
+.type uwcn_linux_redraw_scenario_return,@function
+uwcn_linux_redraw_scenario_return:
+    ret
+.size uwcn_linux_redraw_scenario_return,.-uwcn_linux_redraw_scenario_return

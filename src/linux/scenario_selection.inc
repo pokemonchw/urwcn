@@ -59,6 +59,7 @@ void scenario_selection_input_return(Frame& frame) {
     // caller at [RSP+0x458] also identifies a page opened before this reload.
     // Keep 1D360 -> LIST_Go unhooked so that native return identity is stable.
     const auto caller=*reinterpret_cast<const std::uintptr_t*>(frame.stack()+0x458);
+    scenario_confirmation_input_return(caller);
     if(caller==host->image_base+0x1d365 &&
        (scenario_selection_refresh || scenario_selection_chinese!=chinese)) {
         const auto selection=native<int (*)()>(0xf6100)();

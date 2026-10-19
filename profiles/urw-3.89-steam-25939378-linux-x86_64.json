@@ -58,7 +58,7 @@
     "about_and_credits": "Rebuild the main menu, replace the owner's SCREENSAVE through save_page at 0x13d590, then rebuild the active native view with its input wait skipped. The original restore_page at view exit consumes the updated background.",
     "ownership": "The same native reconstruction is used for main-menu resize. No UI coordinates, page snapshots, pixel tracking or deferred glyph operations are stored by this refresh path."
   },
-  "font_redraw": "A render-module or adapter-module change invalidates glyph widths and requests native reconstruction at the next input-poll return for the main menu or About/Credits. Scenario selection uses its confirmed LIST_Go input-return reconstruction. Other owners consume the new metrics on native reconstruction; no page is replayed or input synthesized.",
+  "font_redraw": "A render-module or adapter-module change invalidates glyph widths and requests native reconstruction at the next input-poll return for the main menu or About/Credits. Scenario selection and confirmation use their confirmed LIST_Go input-return reconstruction. Other owners consume the new metrics on native reconstruction; no page is replayed or input synthesized.",
   "native_density": {
     "screen_creation": "0x148c60",
     "upload_texture_creation": "0x148c2d",
@@ -113,7 +113,9 @@
     "docs/evidence/20261019-spells-native.md",
     "docs/evidence/20261019-skills-native.md",
     "docs/evidence/20261019-skills-confirmation-native.md",
-    "docs/evidence/20261019-scenario-selection-native.md"
+    "docs/evidence/20261019-scenario-selection-native.md",
+    "docs/evidence/20261019-scenario-confirmation-native.md",
+    "docs/evidence/20261019-all-scenarios-native.md"
   ],
   "spells": {
     "owner": "MagicProfile 0x106b40; CompileMagicSubscreen 0x106710 and CompileInfoboxRitualList 0x106a00 own their target textures and reconstruction.",
@@ -204,5 +206,37 @@
     "refresh": "At 0xf871f after LIST_Go getkey returns naturally, the original caller at native RSP+0x458 identifies 0x1d365, including pages opened before publication. Rebuild SelectCampaign only through 0x1d30a, then resume its balanced epilogue 0x1d332. During this redraw only, crtplr_info(0) skips unused random(20) at 0x1bbfc. No input wait, scenario assignment or get_camp/story write is re-entered.",
     "cache_and_selection": "Native LIST_Position/Set_LIST_Position preserve the current selection; original background, title, rows and footer rebuild first, followed by save_menubuf, LIST_Highlight and Flip. The actual getkey result is preserved. Refresh consumes adapter reload, dependency invalidation or language change at the next natural input-return boundary; it does not synthesize an event or claim immediate visual completion from Applied.",
     "density": "Existing native screen output-density target; glyphs draw synchronously inside native component calls. No page coordinates, text snapshots, pixel tracking or deferred replay. Existing non-main-menu resize and shadow-budget limitations remain pending."
+  },
+  "scenario_confirmation": {
+    "owner": "get_camp 0x1cdc0 writes the original English story.txt, then show_scenario 0x124190 reads it for display. Native scenario IDs, source files, image selection, Y/N keys and confirmation results remain unchanged.",
+    "title": "0x1244b8 -> winbox translates all thirteen RNDCAMP.0..12 titles, preserving the seven native arguments. Exact Scenario: source-title identities select semantic file IDs; the selected ID and nonblank source-record ordinal reset here for get_camp confirmation, startup_screen and native reconstruction. No page layout is stored.",
+    "story": "0x124565 -> SANATAULUKKO_Lisaa borrows all 199 nonblank story record translations across RNDCAMP.0..12, including the complete narratives and scenario notes. Keys are scenario.confirm.story.<source-file-id>.<nonblank-record-ordinal>. Native <br> prefixes, blank reads, EOF handling, reset/append flags, wrapping, line spacing and color remain native. Every scenario, including Village, uses complete Chinese scalar tokens and existing paragraph width, spacing and glyph extensions.",
+    "controls": "0x1cf17 -> showtext translates the question. 0x1cf5e/0x1cf79 -> LIST_ButtonSpotEntry retain <Y>/<N> highlight markup and original EDI actions, translating es/o to Chinese labels. The complete borrowed label feeds native drawing and textwidth-based selection/hit dimensions; no new coordinates or geometry are provided.",
+    "refresh": "At existing LIST_Go input-return hook 0xf871f, caller 0x1cfd5 at original RSP+0x458 identifies this confirmation page. Re-enter only native fragment 0x1cefc..0x1cf7e, returning through the last button hook; no get_camp file writes, input wait, random values or selection result handling run during redraw. The assembly helper preserves native mid-function stack alignment and the original balanced seventh-argument stack use.",
+    "cache_and_selection": "The native background, image, title, word table and controls rebuild; LIST_Position/Set_LIST_Position preserve selection, followed by native save_menubuf, LIST_Highlight and Flip. Actual input RAX is retained. Hot reload, dependency changes and language switching request redraw at the next natural getkey return; Applied is not a visual completion receipt.",
+    "density": "Glyphs draw synchronously into the existing density-aware native screen. No UI position tables, page snapshots, pixel tracking or text replay. Existing non-main-menu resize and native shadow-budget limitations remain pending.",
+    "coverage": {
+      "source_files": 13,
+      "titles": 13,
+      "story_records": 199,
+      "shared_controls": 3,
+      "catalog_records": 215,
+      "story_records_per_file": [
+        15,
+        13,
+        21,
+        20,
+        21,
+        14,
+        19,
+        19,
+        21,
+        7,
+        5,
+        11,
+        13
+      ]
+    },
+    "state": "Existing state-v1 scenario_record/village fields and Host ABI 2 remain unchanged. The current thirteen-way story ID is reconstructed from the native title inside each synchronous show_scenario call; it is not a saved page snapshot. The old single-scenario keys are replaced together with Adapter through one catalog/adapter publication transaction."
   }
 }

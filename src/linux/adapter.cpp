@@ -640,7 +640,29 @@ void spot_draw(Frame& frame) {
     frame.rax=call(arguments,0x144fb0);
 }
 unsigned scenario_record;
-bool village;
+bool village; // Retain the existing state-v1 field for compatible hot reload.
+int scenario_story=-1;
+// Exact RNDCAMP source identities, in native file-index order. These are
+// semantic records, not UI rows; no layout or page text is retained here.
+const char* const scenario_story_titles[]{
+    "Scenario: THE UNREAL WORLD",
+    "Scenario: THE VILLAGE",
+    "Scenario: RUNAWAY SLAVE",
+    "Scenario: UNFORTUNATE HUNTING TRIP",
+    "Scenario: LONELY SETTLER",
+    "Scenario: HURT, HELPLESS, AND AFRAID",
+    "Scenario: TRAPS AND TRAPPING",
+    "Scenario: I WANT TO BE A FISHERMAN",
+    "Scenario: ABANDONED TRAP-FENCE",
+    "Scenario: ABANDONED CAMP",
+    "Scenario: AGRICULTURE",
+    "Scenario: THERE BE ROBBERS!",
+    "Scenario: NOT ALL WHO WANDER ARE LOST",
+};
+std::string native_paragraph_words(const std::string& text);
+std::string scenario_confirmation_text(const std::string& key) {
+    return translated(C::scenario_confirmation_text,"",key.c_str());
+}
 void scenario_scope(Frame&,Phase phase,CallState& state) {
     if(phase==Phase::before) { scenario_record=0; state.target=0x124190; }
 }
@@ -648,9 +670,19 @@ void scenario_title(Frame& frame) {
     Frame arguments=frame;
     std::string encoded;
     const auto* original=reinterpret_cast<const char*>(frame.r8);
-    village=std::strcmp(original,"THE VILLAGE")==0;
-    if(chinese && village) {
-        encoded=translated(C::scenario_village_title,original);
+    // get_camp writes this prefix into story.txt. Reset at the display
+    // boundary shared by confirmation, startup and native reconstruction.
+    scenario_record=0;
+    scenario_story=-1;
+    for(unsigned i=0;i<std::size(scenario_story_titles);++i) {
+        if(std::strcmp(original,scenario_story_titles[i])==0) {
+            scenario_story=static_cast<int>(i);
+            break;
+        }
+    }
+    village=scenario_story==1;
+    if(chinese && scenario_story>=0) {
+        encoded=scenario_confirmation_text("title."+std::to_string(scenario_story));
         arguments.r8=reinterpret_cast<std::uintptr_t>(encoded.c_str());
     }
     frame.rax=call(arguments,0x1471a0,7,frame);
@@ -659,13 +691,14 @@ void scenario_append(Frame& frame) {
     Frame arguments=frame;
     std::string encoded;
     const auto* original=reinterpret_cast<const char*>(frame.rsi);
-    // The native reader appends fourteen source lines (one blank separator)
-    // plus its terminal empty EOF read. Ordinals name semantic source records.
-    if(village && original[0] && std::strcmp(original,"<br>")!=0) {
-        const auto component=static_cast<C>(static_cast<u32>(C::scenario_village_departure_1)+scenario_record++);
+    // Each ordinal names one nonblank source record in RNDCAMP.0..12.
+    // Original paragraph breaks, blank reads and the EOF read stay native.
+    if(scenario_story>=0 && original[0] && std::strcmp(original,"<br>")!=0) {
+        const auto record=scenario_record++;
         if(chinese) {
-            encoded=translated(component,original);
+            encoded=scenario_confirmation_text("story."+std::to_string(scenario_story)+"."+std::to_string(record));
             if(std::strncmp(original,"<br>",4)==0) encoded="<br>"+encoded;
+            encoded=native_paragraph_words(encoded);
             arguments.rsi=reinterpret_cast<std::uintptr_t>(encoded.c_str());
         }
     }
@@ -725,6 +758,7 @@ void ancestor_summary(Frame& frame) {
 #include "spells.inc"
 #include "skills.inc"
 #include "world_generation.inc"
+#include "scenario_confirmation.inc"
 #include "scenario_selection.inc"
 
 struct MenuInput { u32 site; Scope scope; };
@@ -832,6 +866,7 @@ Status initialize(const HostApi* api) {
     install_spells();
     install_skills();
     install_world_generation();
+    install_scenario_confirmation();
     install_scenario_selection();
     linux_targets::install(*hooks);
     hooks->instruction(0x15cf21,5,main_background);
@@ -887,6 +922,7 @@ Status invoke(u32 operation,const void* input,u32 bytes,void*,u32* capacity) {
     invalidate_glyph_widths();
     refresh_culture_words();
     scenario_selection_refresh=true;
+    scenario_confirmation_refresh=true;
     if(*static_cast<const u32*>(input)&(4u|32u)) font_redraw_pending=true;
     if(capacity) *capacity=0;
     return Status::ok;
