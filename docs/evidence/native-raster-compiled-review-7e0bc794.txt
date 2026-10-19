@@ -1,0 +1,85 @@
+2026-10-19: linked native raster static instruction review
+
+Build request: 467214b0b1e04abdaf9682382bcc6b4a
+Build batch:   7e0bc794bb724f2f93e2ffa4e5867bf4
+Queue result: success=true, PublishRequested=false, ReloadRequested=false.
+Reviewed DLL: build/mingw-x86/out/uwcn_adapter.dll
+SHA256: 9266C55EDB1ED8832995150B64688C2AF96F7AB7666D54D20CC8D97D28FB6753
+Preferred image base: 69E00000. Linked .text starts at 69E01000.
+
+Method: local bundled objdump symbol-table, object-file and linked-DLL
+disassembly inspection. No DLL loading, game launch, injection, simulation,
+test or product execution. No source file was changed during this inspection.
+The queue result JSON and batch log were read; compilation did not publish.
+
+Saved linked disassembly:
+docs/evidence/native-raster-disassembly-7e0bc794.txt
+SHA256: 247C572FE8A345071B3E56BB32EE3EA07E95E91AD7854199CBD704CDBFAA98AC
+
+Complete instruction ranges examined, with end addresses exclusive:
+  69E05C00..69E06300  pixel/read_pixel/line/glyph kernels
+  69E06300..69E06460  all 11 naked native entries
+  69E065E0..69E06D70  all 11 native helper bodies
+  69E18CD0..69E18E70  __divdi3
+  69E18E70..69E18F90  __udivdi3
+
+Result in this scope: no x87, SSE, MMX, AVX, FXSAVE or FXRSTOR instruction.
+The finite mnemonic inventory consists of general-register integer arithmetic,
+loads/stores, stack and flags operations, integer condition codes, branches,
+calls, returns, padding and compiler-emitted UD2 after terminal naked transfers.
+Those UD2 instructions follow unconditional RET/JMP and are not source asserts.
+
+The linked call graph is closed for each inline path:
+  native entry -> corresponding uwcn_nr_* helper -> pixel/read_pixel
+  pixel -> __divdi3 (four edge divisions)
+  read_pixel -> __udivdi3 (two exact center divisions)
+Both division implementations are integer leaf routines with no further calls.
+The line and glyph kernels call pixel; they allocate no heap, use no Host
+dispatch, and do not read or update a pixel/text history.
+
+Whole primitive helpers retain the original conditional SDL lock/unlock
+boundary. Their only external calls are through bindings.lock, with tail jumps
+through bindings.unlock after restoring their cdecl nonvolatile registers.
+Those bindings are SDL_LockSurface/SDL_UnlockSurface; this review does not
+claim SDL's own implementation is FP/SIMD-free. Inline helpers do not call SDL.
+
+ABI findings:
+- Every naked entry begins PUSHFD/PUSHAD, stores the raw frame in EBX, aligns
+  ESP down to 16 bytes, reserves 12 bytes and pushes the cdecl frame argument.
+  The instruction immediately before CALL therefore has 16-byte-aligned ESP.
+- The compiler generated no entry prologue before PUSHFD. Every return/resume
+  restores ESP from EBX, then POPAD/POPFD. Caller cleanup remains in native code.
+- Raw saved_esp is native ESP minus 4. The compiled pixel/glyph helpers load
+  their first native stack argument at saved_esp+8. Line loads x2/y2/color at
+  saved_esp+8/+12/+16, preserving the original ECX/EDX coordinate convention.
+- Read results are written to raw-frame EAX at +1C, and fixed inline reads to
+  raw-frame EDI at +00. Nonvolatile GPR saves/restores match the cdecl contract.
+- F68D5 resumes only after MOV [native ESP+18],EAX, after POPFD, preserving the
+  original prior TEST flags. 11454F reissues TEST BYTE [ESI],2 after POPFD.
+- D7AA9/FC98F restore the prior TEST flags unchanged, with result EDI. Their
+  compiled coordinate constants are x=29C, y=64/5B, i.e. (668,100)/(668,91).
+- 607E4/F69C7 write the reloaded native owner to raw-frame ECX at +18, exactly
+  replacing their covered MOV ECX,[image+61BBB10]. No extra flag change follows.
+- 606C3 reads native y from saved EBP-8, x from saved EDI, and surface from ESI.
+
+The linked patch table at 69E39020..69E39204 contains the verified complete
+instruction spans (RVA, byte count, expected original bytes):
+  10BAB0  6  55 8B EC 53 8B D9
+  10BC90  5  53 8B D9 33 C9
+  114340  6  55 8B EC 83 EC 20
+  10BD90  6  55 8B EC 83 EC 18
+  0606C3  7  C7 04 81 00 00 00 00
+  0607E4  9  89 0C 82 8B 0D 10 BB 5B 06
+  0F69C7  9  89 0C 82 8B 0D 10 BB 5B 06
+  11454F  6  89 14 81 F6 06 02
+  0D7AA9  7  8B BC 01 70 0A 00 00
+  0FC98F  7  8B BC 01 70 0A 00 00
+  0F68D5  7  8B 04 82 89 44 24 18
+The two absolute-owner operands have relocation offset 5 in their records.
+Full-function prologues are replaced, not replayed; inline continuation
+addresses and overwritten non-draw instructions match the source table.
+
+Conclusion: this compiled raster bridge/kernel scope has no identified static
+release blocker. This conclusion is limited to the named DLL hash and these
+instruction/ABI paths; it does not establish runtime behavior, measured
+performance, UI target lifecycle completeness or formal publication status.

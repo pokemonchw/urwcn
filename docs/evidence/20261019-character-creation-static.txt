@@ -1,0 +1,103 @@
+CHARACTER CREATION native boundary evidence
+Date: 2026-10-19 (Asia/Shanghai)
+Target: UnReal World 3.89 / Steam Build 25939378
+Original EXE SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Preferred image base: 0x400000. Addresses in this note are RVAs.
+
+Method
+Read-only static EXE inspection and existing Ghidra output. No game, delivery
+artifact, test, injection, simulated input or assertion was run or created.
+Raw bytes/instructions: 20261019-character-creation-disassembly.txt.
+Actual existing decompiler C: credits-ghidra.c:43-218, particularly 119-172;
+ancestors-ghidra.c:1490 onward contains the same main-menu branch.
+Do not interpret generated Ghidra function prototypes as confirmed ABIs.
+
+Page ownership and exact calls
+The screenshot is an inline branch of main-menu function 125A90, beginning
+125C5B, rather than a separate character-creation menu function. The branch
+saves the current native surface to the existing native A1C2014 surface at
+125C77, then builds menu mode 8. It does not create a Mod page snapshot.
+
+125C90 E8 FB 9A FA FF -> CF790. ECX=0; EDX=original CHARACTER CREATION;
+stack args 0x262,0x50,0xB4,0x7D,8. CF790 preserves the native title and menu
+geometry; menu actions and layout stay game-owned.
+
+Row calls -> CF990 (ECX key/action, EDX English prefixed display string):
+125CA2 E8 E9 9C FA FF  Q=0x51  RVA 1B00A8  Q.Quick and easy
+125CB1 E8 DA 9C FA FF  C=0x43  RVA 1B00BC  C.Custom
+125CBD E8 CE 9C FA FF  0       empty row
+125CCC E8 BF 9C FA FF  E=0x45  RVA 1B00C8  E.Custom - easy
+125CDB E8 B0 9C FA FF  T=0x54  RVA 1B00D8  T.Custom - too easy
+125CE7 E8 A4 9C FA FF  0       empty row
+125CF6 E8 95 9C FA FF  ESC=27  RVA 1950C8  ESC.Exit
+125CFB E8 B0 A2 FA FF -> CFFB0 native draw
+125D00 E8 1B B4 FA FF -> D1120 native input; original return 125D05.
+
+CF990 copies English text into native row records, not glyphs. Record stride
+0xE8: base VA 0x634EF10; label offset 0, optional | secondary text +0x64,
+action +0xC8; current count VA 0x6354A34. It performs no text-width estimate.
+Do not translate these permanent records: borrow Chinese only during the
+native component draw calls below.
+
+Title
+Mode 8 selects D01B7 -> D0188 -> D01A5 -> 115E70, flags=4. D01A5 has
+E8 C6 5C 04 00, stack args width,height,title,flags. The title pointer is
+stack argument 2. 115E70 copies the title to its local buffer and owns the
+panel texture and border. Flags 4 select title mode 2 at 116240, then
+116253 E8 58 F5 FF FF -> 1157B0. Mode 2 selects 1158E4 -> 1158B0 ->
+115A81 -> 115A94 E8 07 8B FF FF -> 10E5A0. This is left aligned;
+115849/1159C9 strlen*8 center branches do not run for this mode.
+The shared 116270 About/settings panel hook is NOT this page's panel path.
+D027F direct text is explicitly excluded for modes 4,6,7,8,9.
+
+Rows and true native layout
+CFFB0 owns row spacing/positions at D02B9..D02D1 (row base+0xD4 and +0xD0),
+then D031F E8 5C 43 04 00 -> 114680 parses each keyed row. Its sole stack
+argument is the complete prefixed string. The native key-cap prefix Q/C/E/T/
+ESC and dot delimiter must remain unchanged; borrow a translated suffix at
+this call only, scoped to 125CFB. 114680's 1149F9 -> 10E5A0 consumes the
+complete suffix. Existing complete-string encoding, metrics, cursor and
+immediate glyph interfaces can apply to that exact call. No CFAF0 call is
+made here, so its CFC5D width instruction is irrelevant to this page.
+
+Mouse hit D0570, mode!=100, uses panel width minus ten (D0601..D063D),
+not strlen(label). Selection D0650, mode 8, uses D0782 onward: unchanged
+English prefix and '.' calculate the native key-cap offset; remaining width
+uses native panel-right minus start at D07C5..D07DB. CF790 clears 5F54AAC,
+so the optional D07FB strlen*8 width branch is NOT used by this page.
+D03BB strlen(first)*8+15 concerns optional | secondary text only; none of
+this page's five keyed English source strings contain |. Do not invent
+pixel widths or rewrite native selection/hit rectangles for this page.
+
+Native redraw / hot publication / language toggle
+125CFB..125D00 is a balanced native fragment consisting of the complete
+CFFB0 call, ending before the new D1120 input wait. It consumes the existing
+English menu table and draws the complete native background/title/rows.
+It needs no outer EBP locals or saved ESI, unlike 125C5B..125D00. Re-entering
+CF790 is unnecessary and would reset native menu metadata/selection.
+
+After the fragment, the existing native D1189 current->A1C1CE0 logical
+rectangle copy, D0650(current native selection,0), and 10B720 presentation
+are the same safe synchronous redraw tail as the main menu. The source
+rectangle is the existing native object at RVA 1DDAB0, not Mod row slots.
+The menu's cached pixels remain native-owned; no text replay record is used.
+
+The existing D12B4 post-input boundary can identify already-open pre-hook
+instances with [EBP+4]==image_base+125D05. A pending refresh can perform
+this synchronous redraw and continue the same D1120 invocation. The input
+result and native frame remain intact; no action or synthetic input is
+required. A scoped hook at 125CFB handles new-entry draws. Do not run
+125C5B as a standalone native fragment: it refers to the outer EBP/ESI and
+saves background. Do not begin at 125C79: its later ADD ESP,24h also removes
+16 bytes belonging to the preceding blit and would unbalance a fragment.
+
+Actions remain English/native
+125D14 tests the selected row's original action for ESC. Other keys map
+through 125D40/125D47 to 12F80 with existing mode values C=0, Q=1, E=2,
+T=3. The Mod must not alter these action records, dispatch branches,
+character generation, or the original return/cleanup sequence.
+
+Status
+Static evidence and implementation guidance only. No runtime acceptance or
+visual verification is claimed. Parent agent owns code integration, build
+queue submission and formal publication status.

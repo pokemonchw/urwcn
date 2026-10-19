@@ -1,0 +1,314 @@
+UnReal World 3.89 / Steam 25939378: complete startup progress text
+Date: 2026-10-18
+Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Method: read-only PE bytes, import names, selected objdump disassembly, Ghidra
+12.1.4 PUBLIC headless decompilation and the installed audio directory.
+No launch, injection, input simulation, tests,
+test scripts or assertions. All code/data addresses below are RVAs; VA operands
+in the actual instructions use the preferred image base 400000.
+
+Correction, 2026-10-19: former fixed progress slots, Present composition and
+retained display-plan instructions are withdrawn. The original is preserved
+at 回收/20261019-startup-loading-docs/docs/evidence/startup-audio-static.txt.
+Current implementation and original violation locations are recorded in
+20261019-startup-loading-native.md. The native addresses, source identities,
+ABI and control-flow evidence remain applicable; old publication alone does
+not establish compliance or the current runtime result.
+
+Coverage of the progress display consumer
+-----------------------------------------
+The .text section contains exactly these seven direct CALL rel32 instructions
+whose decoded target is 123DF0. Each has been read in its containing function;
+the list is not inferred from English matching or a generic SDL interception.
+
+Call RVA  Exact bytes       Original display/source                     Parameter
+00B016    E8 D5 8D 11 00    "FAILED TO LOAD: %s" (18DE58)                 [EBP-808]
+00B0E0    E8 0B 8D 11 00    "Loading audio: %s" (18DE84)                  EDI
+00B331    E8 BA 8A 11 00    "FAILED TO LOAD: %s" (18DE58)                 [EBP-870]
+00B3A6    E8 45 8A 11 00    "Loading audio: %s" (18DE84)                  [EBP-70]
+00C2B5    E8 36 7B 11 00    "Loading intro ..." (18E2F4)                 none
+180905    E8 E6 34 FA FF    "Sound init ... " (1DC8CC)                   none
+180941    E8 AA 34 FA FF    "Could not open audio! -- Press a key to continue --"
+                           (18DED8)                                     none
+
+All seven calls pass the original NUL-terminated display buffer/string in ECX
+and have no stack arguments. The success/failure parameter column records the
+underlying resource argument at that exact call, before ordinary C++ code can
+clobber volatile registers. The offsets are local variables of those existing
+functions, not newly inferred game object fields.
+
+The startup heading is the separate already-recorded call 180894 -> 10E5A0:
+"Entering into UnReal World - please wait ... " (1DC89C), x10/y10, white,
+outline0. Its evidence remains in startup-loading-static.txt.
+
+Confirmed startup-only outer scopes and control flow
+-----------------------------------------------------
+1808E7 checks the existing audio configuration. Its enabled branch does:
+  1808FA ECX = image+1DC8CC (Sound init ...)
+  180905 -> 123DF0
+  Mix_Init / Mix_OpenAudioDevice (IAT 18C2CC / 18C2A8)
+  if the original Mix_OpenAudioDevice result is -1:
+      18093C ECX = image+18DED8 (Could not open audio ...)
+      180941 -> 123DF0
+      180946 -> D3C80 (the game's existing wait-for-key path)
+      18094B disables audio and joins 180955
+  otherwise the native branch enters 180B1F:
+      Mix_AllocateChannels(8), clear the existing sample-key table
+      180B4B ECX = 0
+      180B4D E8 7E A8 E8 FF -> B3D0
+      180B52 E8 69 B6 E8 FF -> C1C0
+      180B57 ECX = ESI, whose startup value is 1
+      180B59 E8 72 A8 E8 FF -> B3D0
+      180B5E jumps to 180955
+180955 continues initialization; 1809E4 -> 125A90 is the main-menu entry.
+
+Thus two StartupAudio scopes can be restricted to the exact 180B4D and
+180B59 calls, and one StartupIntro scope to 180B52. They do not identify audio
+loads from other interfaces. Sound-init and audio-device-failure use their
+own exact startup calls. The existing failure branches are localized; no new
+error/recovery branch, alternate load operation or wait is added.
+
+Reduced native control-flow reconstruction (original English retained):
+
+  B3D0(mode):
+      if samples_already_loaded: return
+      if mode == 0:
+          for each _findfirst64i32/_findnext64i32("audio/*.ogg") filename:
+              B100(filename)
+          return
+      for each of the 42 fixed (key, filename) pairs at B4C1..B732:
+          AE30(key, filename)
+      for each _findfirst64i32/_findnext64i32("audio/*.wav") filename:
+          B100(filename)
+      mark samples loaded
+
+  AE30(ECX=key, EDX=filename):
+      if strstr(filename, "smear.wav") != null: return
+      path at [EBP-808] = format("audio/%s", filename)
+      locate the existing free 100-byte sample-key-table slot
+      chunk = Mix_LoadWAV(path)                         // IAT 18C2F0
+      if chunk == null:
+          display = format("FAILED TO LOAD: %s", path)
+          B016 -> 123DF0(display)
+          wait for key using the original D3C80 call
+          return
+      Mix_VolumeChunk(chunk, 64)
+      copy key into the internal sample-key slot and _strupr that slot
+      display = format("Loading audio: %s", key)
+      B0E0 -> 123DF0(display)                           // EDI = original key
+
+  B100(ECX=filename):
+      if strstr(filename, "smear.wav") != null: return
+      path at [EBP-870] = format("audio/%s", filename)
+      copy filename to the native 100-byte local key at [EBP-70]
+      truncate that local key at the first '.'
+      truncate that local key at the first '-'
+      locate the existing free 100-byte sample-key-table slot
+      chunk = Mix_LoadWAV(path)
+      if chunk == null:
+          display = format("FAILED TO LOAD: %s", path)
+          B331 -> 123DF0(display)
+          return
+      Mix_VolumeChunk(chunk, 64)
+      uppercase a separate temporary copy and store it as the internal key
+      display = format("Loading audio: %s", local key at [EBP-70])
+      B3A6 -> 123DF0(display)                           // original case intact
+
+  C1C0():
+      if the original audio-enabled condition selects this branch:
+          log SDL_mixer compiled/linked versions
+          C2B0 ECX = image+18E2F4
+          C2B5 -> 123DF0("Loading intro ...")
+          C2BF -> C000("intro.ogg")                    // existing music load/play
+          the game's existing 1000ms delay
+
+The strstr import is IAT 18C350; it is not strcmp. The two delimiter searches
+are strchr at IAT 18C348. The game's skip/full-table/enable behavior above is
+descriptive evidence, not a request to recreate its business logic in UWCn.
+
+Progress display ABI, color and final presentation
+--------------------------------------------------
+123DF0 saves the incoming display pointer in ESI and calls SDL_FillRect through
+IAT 18C1E8. Its rectangle constant at 1DD8A0 is four int32 values:
+    {5, 30, 396, 11}
+It computes the native byte-string length and, for length > 80, writes NUL at
+display[70]. This is the game's existing mutation; translating the input
+buffer would also change native log content and is unnecessary.
+
+123E46 PUSH 0 is the outline argument, retained below the RGB call arguments.
+123E48, 123E4D and 123E52 each PUSH AB.
+123E57 PUSH [surface+4] supplies SDL_PixelFormat*, then
+123E5A calls SDL_MapRGB through IAT 18C1F8. Therefore the resulting text color
+is RGB ABABAB (171,171,171), not a palette-index guess.
+123E63 EDX = 30
+123E68 PUSH EAX (mapped color)
+123E69 PUSH ESI (original display text)
+123E6A ECX = EDX-20 = 10
+123E6D E8 2E A7 FE FF -> 10E5A0
+123E72 ADD ESP,0C
+The established native text ABI is ECX=x, EDX=y and three stack arguments:
+text pointer, mapped color, outline. The caller removes 12 bytes.
+
+The existing software-frame branch then uses 123E7E ->10AF90, conditional
+native drawing work, and 123EA3 ->10B3C0. If the original present condition
+selects it, 123EB1 pushes the renderer from A2110CC, and:
+123EB7 FF 15 7C C2 58 00 83 C4 04
+calls SDL_RenderPresent via IAT 18C27C and removes its single argument.
+The Present call and ADD ESP,4 remain original. The adapter uses the exact
+outer scope and progress call site to generate the current display text from
+its semantic identity and original resource parameter. The temporary encoded
+string belongs only to that 123DF0 invocation; 123E6D borrows it as the text
+argument to the original 10E5A0. ECX/EDX, color and outline remain native.
+123DF0 itself still receives its original English input and retains its clear,
+byte-length mutation, conditionals, log output and return effects. No decision
+is made from a generic SDL call or the final formatted English sentence.
+
+Within the 10E5A0 call, existing complete-string 10DDB0 hooks immediately
+draw Chinese onto the native RVA61BBB10 surface at its actual physical
+density; the 10E700 width extension returns the real logical advance. The
+native title and progress pixels survive later native uploads because they
+are already in that surface. No Mod-owned slot, page snapshot, DisplayPlan,
+Present overlay or text replay is used. The temporary text allocation is
+released when its own 123DF0 invocation returns.
+
+Resource identity inventory for this installed build
+----------------------------------------------------
+The directory has 110 files: 26 .ogg and 84 .wav. Removing extension and the
+first '-' suffix (the exact B100 algorithm) gives 99 distinct tokens. "smear"
+is excluded by both functions' existing strstr("smear.wav") branch, leaving
+98 directory tokens that can reach these success/failure display boundaries.
+The 42 fixed calls use 29 distinct display keys. Eleven keys are additional
+to the directory set. The resulting finite success-display set has 109 keys;
+no numeric suffix is discarded other than the native first '-' truncation.
+The longest current display token is birdcall_hazel_grouse (21 ASCII bytes).
+The longest installed filename is birdcall_hazel_grouse.wav (25 bytes); the
+native failure parameter is audio/ plus the actual filename (31 bytes max).
+
+Fixed keys (29):
+  howl, owl, swing, snarl, growl, roar, treechop, fall, bawl, snuffle, grunt,
+  whimper, snort, varis, kapytikka, harakka, keltasirkku, leppalintu, peippo,
+  satakieli, water, harr, escape, burp, run, crawl, thump, crack, death
+
+Complete visible success-key union (109):
+  ambience, arrow, axework, bark, bawl, bellow, bird_harakka, bird_harakka2,
+  bird_kapytikka, bird_keltasirkku, bird_leppalintu, bird_leppalintu2,
+  bird_peippo, bird_peippo2, bird_satakieli, bird_satakieli2, bird_varis,
+  bird_varis2, birdcall_eagle_owl, birdcall_goshawk, birdcall_hazel_grouse,
+  birdcall_kuikka, birdcall_raven, birdcall_swan, bleat, block, breeze, burp,
+  close_door, cough, crack, crawl, death, dig, eat, escape, faderun, fall, fire,
+  fleshwork, growl, growl2, growl3, grunt, grunt2, grunt3, guffaw1, guffaw2,
+  harakka, harr, hit_grievous, hit_minor, hit_npc, hit_serious, hitplr, howl,
+  intro, kapytikka, keltasirkku, kling, lake, leppalintu, miss, music_birth,
+  music_chant, music_chantbeat, music_munni, music_ritual, open_door, owl,
+  owl2, peippo, rain, roar, roar2, run, satakieli, sauna_loyly,
+  sauna_small_loyly, sauna_vasta, ski, ski_crust, smash, snarl, snort,
+  snort2, snuffle, splash, swing, throw, thump, treechop, treefall_big,
+  treefall_small, varis, wade, walk, walk_deepsnow, walk_snowcrust,
+  walk_soggy, walkinside, water, watersound, whimper, wind, windfly, wolf,
+  wolf2, yelp
+
+Resource words belong to a display-only catalog keyed by these proven tokens.
+The game still receives its original keys, filenames, load paths and logs.
+The failure display must retain the identity of its actual resource argument;
+its parameter must not be replaced by an anonymous generic failure label.
+
+Visible text versus log-only strings
+-------------------------------------
+123DB0 is log-only: fopen/fputs/fclose, no native text consumer or present.
+The calls at B358 and B39B write "mix ok" and the preformatted Loading audio
+sentence to that logger. They are not additional display events.
+Other strings such as "load_samples()", "SAMPLESLOADED", "Lataa_Sample",
+"Searching sample pos ... ", "sampledata[%d]=Mix_LoadWAV(%s)",
+"loaded ok", "loaded - ok", "Mix_VolumeChunk - ok" and mixer versions go to
+the same direct file-output family in the inspected functions. Their English
+bytes remain diagnostics. The seven 123DF0 calls above do display as well as
+log; 123DF0's 123EC0..123EE5 tail writes the original English to init_log.txt.
+
+Existing failure waits and their redraw boundaries
+---------------------------------------------------
+The native named-resource failure and device-open failure already wait for a
+key after their 123DF0 display call:
+    00B01B E8 60 8C 0C 00 -> D3C80
+    180946 E8 35 33 F5 FF -> D3C80
+The first call remains inside the startup-only 180B59 sample-loading scope;
+the second is directly in the startup audio-device branch. The native
+file-enumeration failure at B331 returns without calling this wait function.
+Do not introduce an extra wait for that branch.
+
+D3C80 takes no stack arguments. In the native software-frame branch it calls:
+    D3C9A E8 F1 72 03 00 -> 10AF90     // upload/copy retained software frame
+    D3CBF E8 FC 76 03 00 -> 10B3C0
+    D3CCD PUSH [image+A2110CC]
+    D3CD3 FF 15 7C C2 58 00           // native SDL_RenderPresent
+    D3CD9 83 C4 04                    // original cdecl caller cleanup
+The current 123E6D path draws Chinese into the native frame itself. This
+second native upload/present inside D3C80 therefore consumes the existing
+Chinese pixels through the original path. The former requirement to retain
+and recompose the error text during this wait was a consequence of the
+withdrawn Present overlay implementation, not a native UI requirement.
+
+Its existing input loop is:
+    D3D05 E8 E6 FE FF FF -> D3BF0
+    D3BFC E8 FF DF FF FF -> D1C00
+D1C00 processes SDL_PollEvent / SDL_WaitEvent. Its 200h SDL_WINDOWEVENT branch
+can redraw through the already-recorded menu window-event paths:
+    D1E41 -> 10B480 -> D1E70 SDL_RenderPresent
+    D1E7B -> 10B720 -> 10B763 SDL_RenderPresent
+    D1F19 -> 10B480 -> D1F48 SDL_RenderPresent
+    D1F56 -> 10B720 -> 10B763 SDL_RenderPresent
+The software helper itself calls 10AF90 at 10B72A and 10B3C0 at 10B74F before
+the 10B763 present. The exact native branches and expected bytes are recorded
+in main-menu-focus-redraw.txt. Their reachability here follows from the two
+wait-loop calls above, not from an assumption that SDL events identify a UI.
+
+No loading-failure wait hook or display-plan scope is added at B01B or 180946,
+and no text is composed at D3CD3, D1E70, D1F48 or 10B763. The native wait,
+event, return, cleanup, redraw and cache behavior remains in charge of the
+already-drawn surface. The temporary progress string is no longer needed
+after its 123DF0 call returns; no new present, forced redraw or alternate wait
+is introduced.
+
+Correction to the earlier startup-loading-static.txt interpretation
+-------------------------------------------------------------------
+The earlier note excluded "Loading intro ..." because its C2B5 call targeted
+123DF0 rather than the initial 10E5A0 call. Disassembly of 123DF0 now proves
+that it contains the dedicated x10/y30 text consumer and the native present.
+Its outer C1C0 invocation at 180B52 is also confirmed before the main menu.
+Thus "Loading intro ..." is a visible startup progress field and is included.
+The later "Loading %s ..." at 17E6CE/17E71C remains a distinct post-main-menu
+game-loading path and is outside this startup progress implementation.
+
+Reproducible Ghidra decompilation archive
+-----------------------------------------
+Tool:
+ C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
+JAVA_HOME:
+ C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
+Independent project: build/startup-ghidra/uwcn-startup-audio, imported from the
+original urw.exe disk image. This project does not open or modify the setup
+analysis project's database. Both Ghidra settings and cache are private to
+build/startup-ghidra.
+
+Headless options: -analysisTimeoutPerFile 300 -max-cpu 4
+ -scriptPath D:\workspace\uwcn\docs\evidence
+ -postScript startup_audio_Decompile.java
+             D:\workspace\uwcn\docs\evidence\startup-audio-ghidra.c
+ -log D:\workspace\uwcn\docs\evidence\startup-audio-ghidra.log
+ -scriptlog D:\workspace\uwcn\docs\evidence\startup-audio-ghidra-script.log
+
+startup_audio_Decompile.java is a static extraction script adapted from the
+existing setup_options_Decompile.java. It requests actual Ghidra C output for
+AE30, B100, B3D0, C1C0, 123DF0, D3C80, D3BF0, D1C00, 10B720, 1800E0 and
+123DB0. The C output retains the decompiler's inferred names and prototypes;
+the raw instructions and register/stack evidence above remain the bridge ABI
+contract. The extraction script does not compile or execute those C listings.
+The archived headless log reports automatic analysis succeeded (118 seconds),
+all eleven extraction messages, post-analysis succeeded and import/project
+save succeeded. The extraction process exited with code 0. Some automatic
+caller prototypes omit register arguments; the exact original parameters in
+the call-site inventory above were therefore read from the actual machine
+instructions rather than accepted from inferred C alone.
+
+This document records static coverage only. No runtime result or visual
+acceptance is claimed.

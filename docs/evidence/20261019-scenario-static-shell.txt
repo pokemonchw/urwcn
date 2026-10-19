@@ -1,0 +1,48 @@
+
+D:/program/steam/steamapps/common/UnRealWorld/urw.exe:     file format pei-i386
+
+
+Disassembly of section .text:
+
+004fb7d0 <.text+0xfa7d0>:
+  4fb7d0:	56                   	push   esi
+  4fb7d1:	8b 35 c8 b0 72 0a    	mov    esi,DWORD PTR ds:0xa72b0c8
+  4fb7d7:	83 fe 64             	cmp    esi,0x64
+  4fb7da:	7c 21                	jl     0x4fb7fd
+  4fb7dc:	83 3d c4 b1 72 0a 02 	cmp    DWORD PTR ds:0xa72b1c4,0x2
+  4fb7e3:	77 05                	ja     0x4fb7ea
+  4fb7e5:	e8 86 12 07 00       	call   0x56ca70
+  4fb7ea:	83 ee 64             	sub    esi,0x64
+  4fb7ed:	b9 fc 50 59 00       	mov    ecx,0x5950fc
+  4fb7f2:	89 35 c8 b0 72 0a    	mov    DWORD PTR ds:0xa72b0c8,esi
+  4fb7f8:	e8 b3 3f fe ff       	call   0x4df7b0
+  4fb7fd:	e8 8e fb ff ff       	call   0x4fb390
+  4fb802:	ba e8 a4 5a 00       	mov    edx,0x5aa4e8
+  4fb807:	b9 01 00 00 00       	mov    ecx,0x1
+  4fb80c:	e8 ef 6a 06 00       	call   0x562300
+  4fb811:	ba 50 a5 5a 00       	mov    edx,0x5aa550
+  4fb816:	33 c9                	xor    ecx,ecx
+  4fb818:	e8 e3 6a 06 00       	call   0x562300
+  4fb81d:	ba b0 a5 5a 00       	mov    edx,0x5aa5b0
+  4fb822:	33 c9                	xor    ecx,ecx
+  4fb824:	e8 d7 6a 06 00       	call   0x562300
+  4fb829:	ba 20 a6 5a 00       	mov    edx,0x5aa620
+  4fb82e:	33 c9                	xor    ecx,ecx
+  4fb830:	e8 cb 6a 06 00       	call   0x562300
+  4fb835:	6a 00                	push   0x0
+  4fb837:	ba 1e 00 00 00       	mov    edx,0x1e
+  4fb83c:	6a 00                	push   0x0
+  4fb83e:	68 c8 00 00 00       	push   0xc8
+  4fb843:	68 72 01 00 00       	push   0x172
+  4fb848:	8d 4a ec             	lea    ecx,[edx-0x14]
+  4fb84b:	e8 f0 32 01 00       	call   0x50eb40
+  4fb850:	68 84 a6 5a 00       	push   0x5aa684
+  4fb855:	ba 44 02 00 00       	mov    edx,0x244
+  4fb85a:	b9 c8 00 00 00       	mov    ecx,0xc8
+  4fb85f:	e8 1c 8e 01 00       	call   0x514680
+  4fb864:	83 c4 14             	add    esp,0x14
+  4fb867:	5e                   	pop    esi
+  4fb868:	e9 13 84 fd ff       	jmp    0x4d3c80
+  4fb86d:	cc                   	int3
+  4fb86e:	cc                   	int3
+  4fb86f:	cc                   	int3

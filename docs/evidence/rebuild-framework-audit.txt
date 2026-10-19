@@ -1,0 +1,91 @@
+UWCn 重建框架：静态审查与实现说明
+日期：2026-10-19
+
+本轮开始时的实际文件状态
+========================
+根目录只有 AGENTS.md、README.md、docs/、.toolchains/ 和空的 回收/。
+旧 README 所称 回收/20261019-001737-mod-code-cleanup-e9eade84/ 不存在，
+未发现可恢复的 launcher、loader、SDK、构建或发布脚本。本轮通用基础设施
+为新写实现，不声称恢复了旧交付，不使用旧二进制 ABI 3 的兼容结论。
+
+历史文档冲突及处理
+==================
+- framework-design.md 的旧模块表、数据流图、第5节及第8节仍有独立
+  DisplayPlan、布局反写和 Footer 才交接的历史设计；hot-reload.md 旧操作表
+  与核心交接段落有同样限定。影响：按旧正文复制会违反 AGENTS.md 原生 UI
+  所有权与任意界面业务交接要求。处理：本轮不采用，当前规则以新增
+  rebuild-design.md 及两文档头部历史标记为准；旧证据不表示现有程序存在。
+- framework-design.md 的旧伪代码与历史 Host ABI 2/3 不能当新公共头。
+  本轮采用 sdk/host_abi.h 的重建 ABI 1，与被删除的旧驻留层不兼容。
+
+源码职责
+========
+src/launcher/main.cpp：检查已确认 EXE SHA-256；从启动器自身目录定位
+package/uwcn_loader.dll；创建挂起的新游戏进程、注入驻留层并显式初始化；
+初始化成功后恢复其主线程，失败结束的只会是本次新建且游戏入口尚未放行的进程。
+游戏工作目录仍为游戏安装目录。模块初始化失败不启动无效 Mod。
+
+启动顺序静态整改：初稿直接枚举CREATE_SUSPENDED进程的模块列表不成立。
+Microsoft的Toolhelp文档明确该列表未初始化时可能失败；官方Initial
+Breakpoint说明系统初始断点还早于DLL初始化。因此最终使用全公开Win32
+调试事件在实际ImageBase+PE入口放置一个临时INT3，继续系统加载直至这个
+精确入口（不把更早的系统断点当完成标记），还原字节/EIP并显式挂起主线程，
+随后ContinueDebugEvent/DebugActiveProcessStop。此后才从完整模块列表解析
+LoadLibraryW真实所属系统DLL地址、装载并初始化Mod，最后恢复游戏入口。
+这条实现只针对本启动器新建进程，不提供已有进程附加或运行验收入口。
+采用的官方依据（只读浏览，未执行游戏）：
+https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-createtoolhelp32snapshot
+https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/initial-breakpoint
+https://learn.microsoft.com/en-us/windows/win32/debug/debugging-events
+https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-create_process_debug_info
+https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocessstop
+https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createremotethread
+
+src/loader/host.cpp：六个独立模块按依赖顺序初始化。候选映像先按 PE32/I386
+导出数据检查描述符，再执行 LoadLibrary。正式模块与release.json通过只读
+文件句柄固定，按清单SHA-256检查。服务同步调用经统一租约保护，跨DLL只有
+带长度字节、显式结构与宿主分配内存，不互导业务DLL，不保留旧模块函数表。
+
+src/loader/hook_host.cpp：驻留 thunk 和 slot 处理 CALL、IAT、已证实完整指令
+inline replay。Before 完成后释放业务帧，原生函数在驻留返回路径中执行，
+After再调用当前代adapter。保存寄存器、flags及FXSAVE/FXRSTOR状态；原参数
+栈位置不复制、不改变cdecl清栈。inline回放使用原生真实ESP。代码块不含
+可卸载业务DLL地址。native_fragment仅执行已证实平衡栈、无外层局部依赖且
+不进入等待的绘制片段，结束点是已登记CALL的原返回地址。
+
+src/loader/control_bridge.cpp：按SDL导入名接入事件与等待服务泵；内部
+WaitEventTimeout超时不返回游戏，不伪造输入。只有启动器标明的游戏主线程
+且全部业务租约为空才处理事务。驻留层不识别菜单、中文字段或排版。
+
+业务热发布
+==========
+PREPARE固定candidate-files.tsv内的完整候选文件身份与只读句柄，检查选中
+模块描述符，保存状态后按反向顺序shutdown/FreeLibrary。ReadyToPublish
+之前不归档正式文件。发布端先整批检查全部现有目标独占可写，再按批次归档
+到根回收/并保留原相对路径，写入新文件，最后写release.json。COMMIT核对
+正式文件与候选身份，恢复新代状态，再广播kModuleDependenciesChanged。
+依赖刷新及adapter已接入原生界面重绘完成后才回执Applied与模块哈希/代数。
+ABORT结束停驻服务循环并保留状态，已退役业务保持Disabled，不自动回滚。
+2026-10-19纠正：Disabled只停用业务入口，不会继续停驻游戏；退役后失败
+和ABORT返回游戏后，会经host.cpp:52、56及hook_host.cpp:39、73继续原生
+路径。没有静态依据证明此时文本及缓存已恢复可用，此行为待整改。
+
+原“未添加假设性业务回退链”的结论撤回：Status未被传播到桥的控制决定，
+业务不可用或失败后仍可能继续原函数，不能仅凭显式Status返回认定合规。
+详见20261019-implementation-correction.md。本次只读检索未发现框架源码、
+SDK及构建脚本中的断言；未添加测试。内存与绘制资源由所属模块负责释放。异常不是跨DLL
+服务协议，宿主租约采用RAII以保持其入口计数的结构性配对。
+
+构建与正式发布
+==============
+入口为根build.ps1/build-queue.ps1（PowerShell 7），MinGW x86。队列冻结
+每批请求集合，运行期间请求留作下一批；模块取并集，任一全图请求使该批
+全图；配置参数冲突拒绝入队；每批一次配置、一次增量构建，不清理构建树。
+cmake/build-once.ps1只受队列调用。每请求独立JSON结果，以临时文件同目录
+Move完成提交；批次日志路径为build/.compile-queue/batches/<batch>.log。
+正式启动器只写根uwcn_launcher.exe，驻留DLL只写package/，业务DLL只写
+package/modules/。没有独立修复包、运行shadow目录或构建目录启动入口。
+增量release.json继承未变化文件身份。无Publish请求只生成构建目录产物。
+
+本记录只说明源码与静态审查；编译和正式交付状态由根代理另记真实队列回执。
+本代理未运行编译、测试、游戏、启动器、DLL或热发布事务；未进行输入模拟。

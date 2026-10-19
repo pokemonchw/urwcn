@@ -1,0 +1,100 @@
+启动未响应后退出：缓存深链栈溢出修复
+2026-10-19说明：本文件仅保留此前崩溃及发布历史。下文迭代工作栈、
+合并像素节点和内容重放属于现已撤销的代理方案，不是当前修复方向。
+禁止以优化这些节点或贡献记录继续实施；现行要求见docs/font-rendering.md，
+出处与正文纠正见20261019-document-render-policy.md。
+日期：2026-10-18
+项目：D:\workspace\uwcn
+
+用户反馈与既有证据
+==================
+用户反馈：启动后未响应，再过一会儿直接闪退。
+本次只读取用户此次启动留下的日志、Windows 事件与转储；代理没有启动游戏、
+调试运行中的进程、模拟输入、运行交付产物或测试。
+
+package/uwcn.log 在 23:47:14、23:47:37 已记录 Loader initialized，说明
+前次修复后已通过初始模块生命周期。本次退出发生在随后原生绘制期间。
+Windows Application 1000/1001 两组事件（23:47:31/34、23:47:54/58）均为：
+  application: urw.exe
+  module: D:\workspace\uwcn\package\modules\uwcn_render.dll
+  exception: 0xC00000FD (stack overflow)
+  module offset: 0xA01A
+  failed render SHA256:
+  7365db6612ffa835f876738d465eb42a5eb865ecb8cc0f5da9dab0b6bae99de4
+
+系统已有转储为：
+  C:\Users\WIN11\AppData\Local\CrashDumps\urw.exe.57100.dmp
+  C:\Users\WIN11\AppData\Local\CrashDumps\urw.exe.31984.dmp
+对 57100 转储只读解析异常流、模块表、内存表与 x86 EBP 链。
+未把 dump 放入交付包或项目副本；原系统转储保持原处。
+
+57100 转储：异常线程 79520，EIP=57D4A01A，ESP=0AE02FB8，EBP=0AE032A0；
+render 实际加载基址 57D40000。对应正式 DLL 的 0xA01A 位于 apply() 栈帧
+建立过程中；0xA092 为 apply(node->previous,output) 递归调用后的返回位置。
+EBP 链包含 1342 个连续返回 render+0xA092 的帧，单帧跨度 0x2F8。
+外层依次为：
+  render+0xB850  materialize 返回
+  render+0xE608  write_surface 内 materialize 返回
+  render+0x14619 native_cache::line 软件 renderer 分支
+  adapter glyph renderer → urw+0x10E3C2 → urw+0xE39E9
+  → urw+0x117C01 → urw+0x1807DD
+以上是实际已有崩溃栈，不是代理执行的运行测试。
+
+静态原因
+========
+旧 native_cache::apply 在处理每个内容节点前递归 previous。原生缓存中大量
+点写被逐点追加成历史节点，在后续文字提交的 write_surface 中递归物化，
+超过线程栈容量。扩大线程栈或只跳过绘制都没有消除该实现问题。
+同一内容结构的 clipped、erase_covered、erase_same_text、collect 及默认
+shared_ptr 析构也沿前史递归。当时处理了深链栈依赖，但未消除这套
+全局内容跟踪与重放方案本身；不能把当时的局部修复当作当前设计要求。
+
+只读反汇编确认，外层 urw+E3020 原生离屏构建先画标题，再经 109260 等
+绘制图形，最后在 E39E4 调用 10E260 画文字。109260 内有多处经 IAT
+18C1C0 调 SDL_RenderDrawPoint 的循环（1095CB、109632 等）。每像素新增
+节点和遍历旧前史既增长调用深度，也增加同步启动工作量。
+转储没有提供完整节点堆供逐项分类，未声称已从堆中统计每种节点数。
+
+当时实施、现已撤销的局部修改
+============================
+当时仅修改 src/modules/render/native_cache.cpp，下面记录历史事实，
+不要求保留这些节点、工作栈或迁移结构：
+- apply 使用显式工作栈，保持 previous 先画、当前操作后画；嵌套 Blit 源
+  使用独立堆 Canvas，保留源裁剪、混合次序与实际字形密度。
+- clipped 与状态 collect 使用显式后序，历史清理按 previous 自底向上
+  重建。序列化仍保证子节点 ID 先于引用它的节点。
+- 全部 Node 使用无分配的迭代释放队列；最后引用释放时先移出两条子引用，
+  再逐项释放，避免绘制修复后又在缓存销毁时栈溢出。
+- 连续替换式 Point 合并到 Pixels 尾层，保存颜色与独立有效位。仅合并
+  无 key/mod 的 blend0，或颜色 alpha 与 Paint.alpha 均为255的 blend1。
+  半透明混合继续保留原操作语义，不用最后一次颜色替代累积结果。
+- 尾层只在唯一持有时原地更新；源纹理、背景副本等共享时仅复制该尾层。
+  透明原始像素写入仍有效；未写过的洞保留前史。映射继续采用原 Point 的
+  output.rect 整数 round 边界，保留非整数倍率下的覆盖语义。
+- 文本节点与背景前史保持独立，未把文字烘焙成低清位图；仍在最终输出
+  密度重新光栅化。没有深度阈值、丢弃内容或另建 Present 叠字方案。
+- NodeRecord 仍为纯值内容；Pixels 使用新增 kind 8 和已有 pixels 字段的
+  color/valid 对，恢复时校验完整成对尺寸。旧 kind1..7 内容仍可恢复。
+  Host ABI、loader、启动器、adapter 均未改。
+
+交付状态
+========
+统一入口：build.ps1，MinGW，build/mingw-x86，-Module render -Publish。
+请求：f911c3d2e70b4a08b06bb2efc514ce96
+批次：d985626afd164b9fb8185b74bb30138c
+一次配置、一次增量构建成功，无编译警告；对应结果 JSON 与完整日志已读取。
+正式发布事务：bb9ed8afa7244b38bf04a46b932d1123
+旧 render DLL 与旧 release.json 先移入：
+  回收/20261018-235810-bb9ed8afa7244b38bf04a46b932d1123/package/
+再替换 package/modules/uwcn_render.dll 与清单。
+正式 render、构建产物、发布清单 SHA256 相同：
+4bb2adcc01ebcfbeee62dc1fde1444928ccad293adbcbeb6b8fb7b9966131e69
+adapter SHA256 保持：
+95e488409a21c2bbff2fbb00d82f2047812fd3534da388edd1e056d40849b257
+loader SHA256 保持：
+cd2e5bee332da354e605c029fbfd7818bdeb9dd1bbec447a4f3bd89baa4bb677
+根目录启动器 SHA256 保持：
+0b9ef0b28dba6e41465f3a549311eff7df5a80ab620a311bd2a10dd47c07ae69
+
+本次没有运行时 Applied 回执；源码修复、编译与正式发布已完成，不声称已
+运行验证启动成功、卡顿耗时或画面。没有编写测试、测试脚本或代码断言。

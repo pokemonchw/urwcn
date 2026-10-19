@@ -1,0 +1,43 @@
+UWCn 热重载静态修订，2026-10-18
+
+范围：静态阅读与源码实现；禁止启动游戏、注入、模拟操作、测试、测试脚本和断言。编译只生成交付物。未执行运行时热重载。
+
+已确认的发布阻断：
+publish.ps1 原先指定 -Module 仍比较 out/uwcn_launcher.exe、out/uwcn_loader.dll 和 profile。
+当前 build/mingw-x86/out 的启动器与根目录正式启动器不同，且缺少驻留 DLL；即使只编译 layout，未选择的驻留输出仍会导致发布要求关闭游戏或读取缺失文件。
+修正：Module 为数组；Module/Reload 是业务发布范围，仅比较和发布所选业务 DLL，沿用正式词库。完整离线交付才处理启动器、驻留和 profile。
+
+已确认的事务拆分：
+cmake/build-once.ps1 原先 foreach Module 逐次调用 publish.ps1；共享契约的模块组被分成多个退役/激活窗口。
+修正：整个数组一次传入，一个 transaction、PREPARE mask、ReadyToPublish 和 COMMIT。
+Applied 回执须恰好包含五个模块，逐项验证 ID、有效代数和预期 SHA256；不把编译或正式文件更新当作运行时应用。
+
+已确认的布局所有权问题：
+src/modules/layout/module.cpp 生成主菜单 logical_slot，驻留 native_hooks.cpp 却重复硬编码 18 行距、165 行宽、选择框和鼠标范围，导致普通布局调整也要更新驻留。
+修正：Host 将主菜单 DisplayPlan 交给驻留私有接口 set_main_menu_plan；驻留只复制七个已确认菜单 FieldId 的行框。标签使用行框 +3/+4，选择和命中使用各行矩形；菜单文字 x 同样由 logical_slot.x+3 得到。
+面板包围矩形保留静态记录基线留白：原中文行框范围 (620,105)..(785,231)，panel=(615,80,180,170)，outer=(605,5,190,255)。恢复时恢复原 panel 四项与七行标签坐标。
+地址、原生调用和几何基线依据：docs/evidence/main-menu-static.txt、main-menu-layout-fix.txt、main-menu-focus-redraw.txt。没有增加新 Hook RVA、补丁或运行时交接边界，没有修改 Host ABI 2 或 SDK 记录。
+
+已确认的快捷键差异：
+Shift+F10 只改 enabled，gate 仍开放；旧 Shift+F5 根据 gate 决定卸载，导致关闭显示后再次按 F5 仍停在关闭状态。
+修正：根据 enabled 选择 Suspend 或 Reload；Reload 在原边界完成退役后继续既有 Resume 流程。已卸载状态仍使用 Resume。
+
+已确认的归档遗漏：
+Host REFRESH 原先用 MOVEFILE_REPLACE_EXISTING 覆盖正式 TSV 和 release.json。
+修正：候选解析、字体/布局准备和临时文件写入完成后，旧 TSV/清单先移到 回收/catalog-<PID>-<tick>/package/ 下的原相对位置，再提交候选。原发布失败恢复仍恢复正式文件与内存快照，归档保留。
+
+构建修订：
+MSVC 原先每次 configure file(WRITE) 导出 .def。改用固定 cmake/loader-exports-msvc.def 的 configure_file(COPYONLY)，内容不变不改生成文件时间。
+
+交付边界：
+本次驻留桥修正必须更新 package/uwcn_loader.dll 才能被后续进程使用；不把它伪装成兼容业务模块。后续兼容 layout、render、semantic、catalog、main_menu 实现变更走模块热发布，TSV 走数据刷新。
+实际编译与正式发布结果由 README 交付记录和编译队列回执说明；本记录不构成运行验证结果。
+
+本轮实际交付记录：
+统一入口 build.ps1，MinGW，.toolchains/x86/w64devkit/bin/cmake.exe 与 g++.exe，既有 build/mingw-x86 构建树，全图增量；无 Publish/Reload/TargetPid 参数。
+请求 4311d451df2a4c8398aadcd018ee16a4；批次 fbb516a144ae4d1d9619d87d70c427f5；回执 succeeded=true，已读取对应 results JSON 与 batches 日志。
+首次离线发布检测到驻留进程，未修改正式文件；用户明确告知已完全退出后继续。
+publish.ps1 -BuildDirectory build/mingw-x86 正式发布成功，事务 89a4ae11102441c9873c8af8f518a202。
+根目录 uwcn_launcher.exe、package/uwcn_loader.dll、五个 modules DLL 及 release.json 已更新。词库与 profile 内容未变。
+旧文件目录：回收/20261018-191332-89a4ae11102441c9873c8af8f518a202/，保留全部旧文件原相对路径。
+未启动游戏、运行交付产物或测试；没有操作运行中的游戏、发送 PREPARE/COMMIT/REFRESH 或声称运行时 Applied。

@@ -1,0 +1,57 @@
+字体与原生绘制边界：静态审查纠正
+日期：2026-10-19
+
+本记录曾把全局资源内容记录与 RenderCopy 重放误判为符合原生 UI 所有权，
+现撤回该结论并改正正文。它是代理编写的实现审查，不是用户授权。
+修改前全文保存在：
+回收/20261019-document-render-policy-5e1fcbfd/docs/evidence/rebuild-font-audit.txt
+其中旧第62-98行描述像素与UTF-8贡献、完整源重物化、坐标和样式交接；
+旧第102-109行描述用通用像素写入Hook维护覆盖关系。以上不是现行要求。
+出处及引用链见20261019-document-render-policy.md。
+
+保留的字体质量要求
+==================
+- 字体使用系统msyhbd.ttc、face 0、regular style与normal hinting，
+  由游戏的SDL2 2.30.0及同一SDL实例对应的SDL2_ttf 2.20.2提供Blended。
+  不复制系统字体，不扫描替代字体，不建立字体回退链。
+- 固定参考字集、ASCII、标点及当前完整词库字集共同校准统一字号。
+  使用真实alpha墨迹、稳定包络与描边预算，不按当前词条临时缩字。
+- 同一字体、字号与目标密度用于完整串自然宽度和字形光栅化。
+  编码字节数不作为中文宽度；度量通过已确认接口交给原生UI。
+- 保留真实baseline、负bearing补偿与crop_offset，只裁透明边，
+  不裁非零alpha、描边或英文降部，不虚构TTF私有布局接口。
+- 原调用的四次阴影和前景分别即时提交，原顺序、颜色、裁剪由游戏决定。
+  不保存五份文字位置供以后重放，不额外绘制一组描边。
+- 字体、字形自身的度量和光栅缓存不含UI位置、页面字段或资源操作历史。
+
+替换后的绘制边界
+================
+中文从已确认的UI对象、字段及文本消费边界生成，返回原生UI。游戏执行
+排版、居中、换行、光标推进、控件、选择和鼠标命中。Mod只在已确认的
+组件文字绘制调用中，按该原生目标真实密度即时生成并提交高清字形。
+已经写入目标的像素由游戏原生缓存、复制、覆盖、上传和销毁流程管理。
+
+禁止全局读取或差分原生表面像素，禁止通用逐像素写入跟踪，禁止保存
+像素/UTF-8/坐标/裁剪/样式贡献序列，禁止在RenderCopy或Present遍历
+旧文字记录或重建完整画面。不能以没有DisplayPlan、没有Present叠字、
+绑定原生资源身份或采用平面序列为由认定这种方案合规。
+
+现有主菜单目标是800x600软件面；高清原生目标扩展及背景保存、恢复、
+子窗口和淡变尚未形成完整静态实现依据。不能将1倍文字放大冒充高清，
+也不能用保护、回退、断言或补造路径填补证据缺口。
+
+代码状态与依据
+==============
+当前modules/render/native_cache.h/.cpp仍含Paint、observed、synchronize、
+materialize、final_copy；adapter仍登记通用像素写入Hook。它们待整改，
+本文档更新没有改变源码或正式DLL，不能声称卡顿已修复。
+具体代码位置见20261019-implementation-correction.md。
+
+原生文字入口、度量和对象依据见rebuild-ui-boundaries.txt；原生绘制
+操作的反汇编事实不能自动成为全局镜像这些操作的授权。
+公共字体后端依据（此前已读取，不表示本次运行验证）：
+https://github.com/libsdl-org/SDL_ttf/blob/release-2.20.2/SDL_ttf.c
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/include/SDL_surface.h
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/include/SDL_pixels.h
+
+本次只修改文档，未编译、未运行游戏或交付产物、未测试、未添加断言。

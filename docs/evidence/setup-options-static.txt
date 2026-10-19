@@ -1,0 +1,239 @@
+UnReal World 3.89 / Steam Build 25939378: SETUP OPTIONS static reverse engineering
+Date: 2026-10-18 (Asia/Shanghai)
+
+2026-10-19 correction: the addresses, disassembly and source literals below
+remain static evidence. The old layout advice at original lines 144-145 and
+the entire "Implemented boundary ownership" section at original lines 168-212
+describe a retired, noncompliant implementation, NOT current code. In
+particular, page snapshots, title_only/complete views, fixed Exit slots and
+Present composition must not be reused. Current native-call translation and
+ownership are documented in 20261019-setup-options-native.md. The unchanged
+historical text is archived at
+回收/20261019-setup-options-source-docs/docs/evidence/setup-options-static.txt.
+Status: current source replaces that design; the historical section is retained
+only to identify the superseded claims, not as an implementation instruction.
+
+Method and scope
+===============
+Read the installed PE from D:\program\steam\steamapps\common\UnRealWorld\urw.exe.
+SHA256 e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9.
+PE32 I386, preferred image base 0x400000. All addresses in this narrative are RVAs
+unless explicitly prefixed VA. objdump and Ghidra output use preferred-image VAs.
+No game or delivery product was executed; no injection, input simulation, tests,
+test cases or assertions were created. Latest user instruction explicitly adds
+the complete settings screen to the previously restricted project scope.
+
+Actual decompilation was performed with local Ghidra 12.1.4 PUBLIC and JDK
+25.0.4.1+1. The original compiler names/types were unavailable: Ghidra-generated
+FUN_/DAT_ names and guessed calling conventions are analysis output, not an ABI
+contract. See setup-options-ghidra.c (complete setup function plus helpers),
+setup-options-ghidra.log (offline analysis), setup_options_Decompile.java
+(reproducible extraction script) and setup-options-disassembly.txt (raw bytes).
+setup-options-ghidra-target.c/.log are a separate no-autoanalysis extraction;
+setup-options-ghidra.c is the primary, fully analyzed result.
+
+Entry, lifetime, redraw, exit
+============================
+Complete settings function: 0x105700..0x1070c9, return at 0x1070c9.
+Its direct callers are:
+  main menu 0x125dcc: e8 2f f9 fd ff -> 0x105700
+  in-game O action 0x108b1e: e8 dd cb ff ff -> 0x105700
+This evidence identifies both existing ways of opening this same settings page.
+It does not authorize translation of any other in-game screen.
+
+0x105752 -> 0x116270 creates 800x600 panel, title SETUP OPTIONS, flags 0x30,
+ECX=0/EDX=0, caller pops 20 bytes. Initial page drawing precedes the native
+background save 0x1058a0 -> 0x10c540 (ECX="setupscr", EDX=0).
+Redraw loop starts at 0x1058b0 and restores that background with
+0x1058bf -> 0x10c690. It then creates menu rows, draws values/descriptions,
+registers Exit, calls 0x106b14 -> 0xcffb0, and waits for input at
+0x106b20 -> 0xd1120. Input -1 returns to the same native input wait; other
+actions perform existing config writes then jump back to 0x1058b0.
+The Escape action has row key code 0x1b and branches at 0x106b3d -> 0x107093.
+Exit closes the setups screen at 0x107098 -> 0x10c4c0, rereads config at
+0x10709d -> 0x16d110, performs existing conditional native cleanup and returns.
+
+An exact caller scope around each existing setup entry can identify the complete
+page lifetime. Retain native menu construction, selection, hit rectangles,
+input, ini write operations, audio effects, resource cleanup and returns.
+Translate only the confirmed display calls below. Do not replace read_ini_text
+globally or write translated tokens into urw_ini.txt.
+
+Title, bottom panel and Escape
+==============================
+SETUP title flags 0x30 include bit 0x20. In 0x116270 this takes
+0x116587 -> 0x11658b -> 0x116686 -> 0x116698 -> 0x1157b0.
+Title text geometry: x=4,y=4,width=792, paragraph mode=1.
+0x116698 bytes e8 13 f1 ff ff. This path is shared; suppress only within the
+confirmed setup-title scope. 0x11665c is the alternate flags branch and is NOT
+the branch used by this setup call.
+
+Bottom controls/config paragraphs are parsed at 0x105817 and 0x105823,
+both -> 0x162300; ECX=1 clears tokens for controls, ECX=0 appends config.
+0x10582a bytes e8 e1 99 f0 ff -> 0xf210, ECX=0 draws the bottom panel.
+Its paragraph consumer is 0xf2e5 -> 0x10eb40, x=10,y=550,width=785,height=45,
+white, outline=1. Word drawing is the previously documented 0x10ef87.
+Native pitch is 10, giving controls y550 and advanced-config y560.
+Actual installation path is obtained by _getcwd at 0x105839 and copied from
+global RVA0x5f4e5e0 to shared display buffer RVA0xa40eb70.
+0x105891 bytes e8 0a 8d 00 00 -> 0x10e5a0 draws that unchanged path x10,y570.
+The path is user/environment content; preserve its characters.
+
+0x106afc bytes e8 ef 8f fc ff -> 0xcfaf0 creates ESC.Exit. Inputs:
+ECX=27 (ESC action), EDX=10 (x), stack(y=520,text VA0x5950c8).
+0xcfaf0 also registers hit rectangle and key action: it must run.
+Its exact text consumer is 0xcfb95 bytes e8 e6 4a 04 00 -> 0x114680.
+The latter parses ESC before '.' as a key cap and Exit after '.' as label.
+Retain this complete parser. ESC's three glyphs use 0x114956, which must remain
+native in this scope. Only Exit after the dot uses 0x1149f9 bytes e8 a2 9b ff ff
+-> 0x10e5a0. That call has x50,y525: original button x10 + initial8 + ESC3*8 +8;
+button y520 +5. The mouse/key row starts y520, while text ink starts y525.
+Suppress only the label call inside the exact setup Exit scope, preserving the
+ESC cap, native key letters, registration, parser and cursor-state effects.
+The parser returns EAX=pen+4 and writes native cursor RVA0xa1c1cb4; bypassing the
+whole parser would remove those effects. Source: setup-options-key-text-disassembly.txt.
+
+The title paragraph's unique final draw is 0x115a94 bytes e8 07 8b ff ff
+-> 0x10e5a0. Let the original 0x1157b0 calculate its layout and then suppress
+only that call inside the setup-title scope. This preserves native geometry,
+state effects and the draw_text return/cursor contract. Source:
+setup-options-title-text-disassembly.txt.
+
+All setting labels, values and confirmed sources (14 options)
+===========================================================
+Defaults below are those passed by THIS UI, not inferred startup defaults.
+read_ini_text = 0x123f00, ECX=ASCII key, EDX=ASCII default, no stack args,
+EAX=ring-buffer copy. It reads urw_ini.txt on each call (opens/scans/closes file),
+so restart-only values may differ from cached startup globals after a click.
+read_ini_yes = 0x124030, ECX=ASCII key, calls read_ini_text(default NO), then
+returns AL=(value == "YES"). No Chinese enters these business functions.
+
+Option                  Display source / values
+FULLSCREEN              read_ini_text("FULLSCREEN","NO"). Native action
+                        cycles NO -> YES -> MAXIMIZED -> NO. MAXIMIZED is a
+                        confirmed third value, although absent from screenshot.
+LOGICAL RESIZE          read_ini_text("LOGICAL_RESIZE","YES"), YES/NO.
+AUDIO                   int at RVA0x217424 (VA0x617424), nonzero YES.
+VOLUME                  int at RVA0x1e2098 (VA0x5e2098). Native draw rounds
+                        toward zero to a multiple of 10 and replaces 0 with 10;
+                        native action increments by10, over100 wraps to10.
+BACKGROUND MUSICS       int at RVA0x2173b8 (VA0x6173b8), nonzero YES.
+TRADITIONAL MOVEMENT    byte at RVA0x5f5ae67 (VA0x635ae67), nonzero YES.
+AUTO ENTER HOMESTEAD    read_ini_yes("AUTO_ENTER_HOMESTEAD"), AL true YES.
+MAP LIGHTING EFFECTS    byte at RVA0x1e669b (VA0x5e669b), nonzero YES.
+NIGHT BRIGHTNESS        int at RVA0x2385450 (VA0x2785450). Display is a bucket:
+                        n>55:60 (maximum); n>50:55; n>45:50; n>40:45;
+                        n>35:40; n>30:35; n>25:30; n>20:25; n>15:20;
+                        n>10:15; n>5:10; n>0:5; otherwise 0 (default).
+                        There is NO percent sign anywhere in these UI values.
+UNITS                   read_ini_text("UNITS","IMPERIAL"); IMPERIAL/METRIC.
+RIGHT ALT HOTKEYS       read_ini_text("RIGHT_ALT_HOTKEYS","YES"), YES/NO.
+MAP GRID                read_ini_text("MAP_GRID","NO"), YES/NO.
+OLD HARDWARE MODE       read_ini_text("OLD_HARDWARE_MODE","NO"), YES/NO.
+MOBILE CONTROLLER       read_ini_text("URW_CONTROLLER","NO"), YES/NO.
+
+Conditional display and original geometry
+========================================
+All label calls: x15, color RGB(252,252,84), outline0. Description calls:
+x15 with two leading ASCII spaces in each literal (effective ink x31),
+RGB(176,196,222), outline1. Coordinates refer to native 800x600 logical canvas.
+
+Audio ON and map-lighting ON baseline (label y / description y):
+  fullscreen40; logical_resize55; widescreen help70; video restart help80;
+  audio105; volume120; background_music135;
+  traditional160/help175; homestead200/help215; lighting240/help255;
+  night275/help290; units315/help330; right_alt355/help370;
+  map_grid395/help410; old_hardware435/help450,460,470;
+  mobile495/help510; Escape row520; footer550,560,path570.
+
+If audio is zero, volume and music are omitted and all rows beginning with
+traditional move up30. If lighting is zero, night and its help are omitted and
+all rows beginning with units move up35. These are independent offsets.
+Traditional movement help is drawn only when traditional is zero; the row
+positions after it are unchanged when its help is hidden.
+
+Native option hit rectangles are x10,width310,height18,y(label_y-5). Keeping
+these rows preserves selection and mouse interaction. Text fitting should use
+the same established coordinates or a measured plan that preserves these rows.
+
+Complete UI-owned strings
+=========================
+See setup-options-strings.txt for all continuous source literals with exact
+RVA. This range includes all14 labels, every description, title and footer.
+Shared value strings additionally used by this function:
+  RVA0x19cae0 YES; RVA0x19cb08 NO; RVA0x1ac198 MAXIMIZED;
+  RVA0x1abea8 IMPERIAL; RVA0x1ac20c METRIC; RVA0x1950c8 ESC.Exit;
+  RVA0x1abe10 "60 (maximum)"; RVA0x1abe3c "0 (default)".
+Numerals5..55 are plain shared/static ASCII number strings. No hidden localized
+sentence or percent suffix occurs in this function. Config keys and setupscr
+are internal identifiers and remain English.
+
+Exact CALL replacement inventory
+================================
+setup-options-patches.tsv contains all28 direct draw_text calls (27body plus
+1installation path), all7display read_ini_text calls and1homestead read_ini_yes
+call. Each row gives field role, call RVA, original target RVA and5original bytes.
+The ini reads in the action section after0x106b20 are intentionally not display
+capture points and remain original. Title, paragraph and Exit call boundaries
+are separately enumerated above; none requires a global text-content hook.
+
+Implemented boundary ownership
+==============================
+src/loader/native_setup.cpp owns the independent resident setup bridge IDs:
+  256 SetupScope; 257 SetupPanel; 258 unused; 259 SetupFooter;
+  260 SetupText; 261 SetupFullscreenValue; 262 SetupLogicalValue;
+  263 SetupUnitsValue; 264 SetupRightAltValue; 265 SetupGridValue;
+  266 SetupHardwareValue; 267 SetupControllerValue; 268 SetupHomesteadValue;
+  269 SetupExitScope; 270 SetupExitText; 271 SetupRender.
+The independent range does not renumber the startup, About or farewell bridges.
+native_hooks.cpp install appends setup's patch list to the common patch
+transaction. The shared title glyph CALL at RVA0x115a94 has one installed hook:
+FarewellTitleDraw dispatch suppresses it only when either farewell's exact title
+scope or setup's exact title scope is active. Setup does not install a second
+patch at that RVA and ID258 is intentionally unused.
+
+At either original setup entry, the resident scope requests a title_only view
+before the original function runs. RVA0x1057d9 is the initial SDL_RenderPresent
+IAT CALL (6bytes ff157cc25800); the cdecl renderer bridge retains native
+ADD ESP,4 at0x1057df. Body composition also uses the existing shared menu
+present span0xd1298 and repaint spans0xd1e70,0xd1f48,0x10b763, inside setup scope.
+
+The seven read_ini_text hooks run the original getter then synchronously copy
+its EAX token to the corresponding SetupRequest char[16]. The homestead hook
+runs the original read_ini_yes and copies AL only. No extra ini read is added.
+At0x106b14, SetupRender snapshots the six display globals documented above,
+after the original volume display has already performed its normalization,
+requests the complete view and retains the original native menu renderer.
+This preserves the displayed values for restart-dependent settings as well as
+the exact current audio and lighting visibility branches.
+
+Host native_setup copies the process current directory using GetCurrentDirectoryW
+and converts its exact characters through WideCharToMultiByte(CP_UTF8). This is
+the same current-directory source used by the original _getcwd call at0x105839;
+the directory is retained as content, rather than translated or substituted by
+another installation path. The host supplies it only for the complete page.
+
+Footer drawing keeps the original paragraph parser and bottom-panel consumer;
+the existing0x10ef87 word draw hook checks the precise setup footer scope.
+Exit drawing keeps the native parser, ESC cap/glyphs and interaction, replacing
+only the0x1149f9 suffix text. The Chinese Exit layout slot starts at(50,520) and
+is15high; this is a layout box centered by font metrics, distinct from the
+original bitmap ink origin(50,525).
+
+The build profile's setup_options object records these boundaries and original
+bytes. It is appended locally to profiles/urw-3.89-steam-25939378.json, preserving
+the concurrently maintained startup, About and farewell sections. This evidence
+addition does not compile or publish artifacts and makes no runtime claim.
+
+Reproducible offline extraction
+==============================
+objdump.exe -d -Mintel --start-address=0x505700 --stop-address=0x5070ca urw.exe
+Ghidra executable:
+ C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
+JAVA_HOME:
+ C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
+Use project directory build/setup-ghidra, project uwcn-setup; import original
+urw.exe and use -scriptPath docs/evidence -postScript setup_options_Decompile.java
+with absolute output setup-options-ghidra.c. The separate analysis settings/cache
+are inside build/setup-ghidra. This analyzes disk bytes only; it executes no code
+from urw.exe or any generated delivery artifact.

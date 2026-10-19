@@ -1,0 +1,280 @@
+# UWCn native UI component catalog. UTF-8, key TAB text. Native <br> is preserved.
+menu.load_character	载入角色
+menu.create_character	创建角色
+menu.setup	设置
+menu.ancestors	先祖
+menu.about	关于
+menu.credits	鸣谢
+menu.quit	退出
+menu.bonus_material	额外内容
+main.version	版本 {value}
+main.translation_credit	Byayoi同人社区
+main.translation_version	汉化版本：{value}
+main.production	Enormous Elk<br>出品
+main.copyright	版权所有 (c) {value}<br>    Sami Maaranen
+main.authors	创作与编程：Sami Maaranen。<br>追加编程与共同设计：Erkka Lehmus。<br>Linux 与 MacOSX 移植主要由 Tuukka Pasanen 完成。<br><br>www.unrealworld.fi
+about.title	关于
+about.version	UnReal World — 版本 {value}
+about.copyright	(c) {value} 作者：Sami Maaranen
+about.publisher	Enormous Elk 发行 · 2021
+about.release_notes	新功能、更新日志及发行说明，请查看安装目录中的 news.txt。
+about.install_label	UnReal World 安装目录：
+about.press_key	 按任意键继续 
+credits.title	致谢与贡献者
+credits.introduction_1	多年来，无数人提出创意、反馈与问题报告， 贡献自己的力量，
+credits.introduction_2	共同帮助并塑造了这款游戏。 以下列出部分特别鸣谢的贡献者：<br>
+credits.alexander	Alexander A. Tchernychov：提出想法并参与测试。<br>
+credits.andrew	Andrew Nicoll：协助游戏过渡到 Steam。<br>
+credits.artemis	Artemis Prose：收集人物肖像并生存下来。<br>
+credits.artemiy	Artemiy Mikhailov：给予大力支持与关注。<br>
+credits.brian	Brian Shapiro：研究植物并贡献图块。<br>
+credits.flap	Flap：参与文化交流与百科编纂。<br>
+credits.hamsolovski	Hamsolovski / Antoine Delalande：贡献图块。<br>
+credits.jeremy	Jeremy Osborne：消灭程序错误并发现新词。<br>
+credits.kerri	Kerri Barnard：贡献文字作品与任务对话。<br>
+credits.kuu	Kuu Otava：建立 Wiki 并推动其运作。<br>
+credits.lani	Lani K. Thompson：在主题曲中演奏坎特勒琴。<br>
+credits.paulo	Paulo Marcelo Spinola：编辑图像并创作图块。<br>
+credits.plotinus	Plotinus：参与试玩测试并坚持查找程序错误。<br>
+credits.rain	Rain：开创性的 Mod 制作。<br>
+credits.scott	Scott Dickerson：投身冒险。<br>
+credits.shawn	Shawn Sloan：积极参与各项活动。<br>
+credits.tommy	Tommy Laukkanen：在两个世界里砍柴。<br>
+credits.wickerman	Wickerman / Simon S. Nilsson：贡献图块。<br>
+credits.countrymen_1	Aapo Alasuutari, Jani Jalkala, Jarmo Mäenpää, Johannes Leino, Jussi Kantola, Metalli, Tuukka Pasanen 和 Vili Salonen，
+credits.countrymen_2	感谢你们作为同胞， 在一路走来的不同阶段发挥重要作用。<br>
+credits.photo_contributors	照片贡献者、游戏实况作者与 Mod 作者，感谢你们的作品。<br>
+credits.veterans	老玩家、捐助者、支持者、关注者与粉丝，感谢你们所做的一切。<br>
+credits.press_key	 按任意键继续 
+character_creation.title	角色创建
+character_creation.quick	快速简易
+character_creation.custom	自定义
+character_creation.easy	自定义 - 简单
+character_creation.too_easy	自定义 - 极易
+character_creation.exit	退出
+load_saved.title	载入已保存角色
+load_saved.empty	没有找到存档！
+load_saved.press_key	按任意键继续……
+scenario.village_title	开局情境：村庄
+scenario.introduction_1	下文讲述 你的开局情境， 并简要介绍 角色的身世。
+scenario.introduction_2	你可以 将它当作旅途的指引， 也可以 全然不理会。
+scenario.introduction_3	它只告诉你， 角色为何来到这里； 此后的故事， 由你书写。 世间有 无数道路 等待踏足，
+scenario.introduction_4	无数风景 等待欣赏， 无数清风 等待感受， 还有无数秘密 藏在四周， 也藏在你的内心……
+scenario.press_key	 按任意键继续 — UnReal World 正等待着你 
+scenario.village_departure_1	十六岁那年， 你离开了 家园和村庄。 在童年和少年时代，
+scenario.village_departure_2	你学会了 族人的技能 和生活方式。 直到有一天， 你决定 踏上旅途，
+scenario.village_departure_3	去寻找 属于自己的道路， 无论它 通向何方。
+scenario.village_traders_1	   一天， 村里一小队男人 正准备远行， 前往遥远的部落 做买卖。
+scenario.village_traders_2	他们答应， 如果你愿意， 就带你去 途经的一个村庄，
+scenario.village_traders_3	以那里为起点， 你独自生活 也会更安全。
+scenario.village_arrival_1	   于是，你随他们上了路。 一行人 将你留在村外， 继续赶路。
+scenario.village_arrival_2	漫长的旅途过后， 村里的房屋 显得格外温馨， 但你对这里的人 还拿不准。
+scenario.village_arrival_3	你知道， 自己来到这里， 并不是为了 再次安顿下来； 不过， 在匆忙启程前，
+scenario.village_arrival_4	先看看 这个村庄 能为你提供什么， 或许是个 好主意。
+scenario.village_advice_1	（在村庄开始冒险， 是一种 较为安全的开局方式。 你可以先 备齐装备，
+scenario.village_advice_2	 再踏入荒野； 旅途中 若遭遇挫折或危险，
+scenario.village_advice_3	 也有一处 安全的归所。）
+profile.heading	新角色即将踏入 UnReal World……
+profile.culture_title	选择文化
+profile.sex_title	选择性别
+profile.name_title	角色姓名
+profile.random	随机
+profile.cultures	文化介绍
+profile.back	返回
+profile.male	男性
+profile.female	女性
+profile.name_help	为角色取名，或按 TAB 或 * 随机生成姓名。<br>姓名须为 3–12 个字母，不能包含空格或特殊字符。
+profile.name_help_repeat	<br>请换一个姓名，或按 TAB 或 * 随机生成姓名。<br>姓名须为 3–12 个字母，不能包含空格或特殊字符。
+profile.sex_help	请选择角色的性别。
+profile.name_too_short	姓名太短。
+profile.name_invalid	姓名不能包含空格或特殊字符。
+profile.name_exists	同名角色的文件夹已存在。
+profile.culture_0	考莫人
+profile.culture_1	德里基人
+profile.culture_2	基耶塞人
+profile.culture_3	雷埃米人
+profile.culture_4	萨尔托人
+profile.culture_5	岛民
+profile.culture_6	科伊武人
+profile.culture_7	潜鸟部落
+profile.culture_8	猫头鹰部落
+profile.culture_9	海豹部落
+setup.title	设置选项
+setup.fullscreen	全屏：{value}
+setup.logical_resize	逻辑缩放：{value}
+setup.audio	音频：{value}
+setup.volume	音量：{value}
+setup.background_music	背景音乐：{value}
+setup.traditional_movement	传统移动：{value}
+setup.auto_enter_homestead	自动进入家园：{value}
+setup.map_lighting	地图光照效果：{value}
+setup.night_brightness	夜间亮度：{value}
+setup.units	度量单位：{value}
+setup.right_alt_hotkeys	右 Alt 快捷键：{value}
+setup.map_grid	地图网格：{value}
+setup.old_hardware_mode	旧硬件模式：{value}
+setup.mobile_controller	手机控制器：{value}
+setup.logical_resize_help	  宽屏显示器可关闭逻辑缩放，让画面铺满屏幕，但会被拉伸。
+setup.video_restart_help	  修改上述显示设置后，需要重启游戏才会生效。
+setup.traditional_movement_help	  若不习惯按角色朝向移动，可在此改用传统 Roguelike 的移动方式。
+setup.auto_enter_homestead_help	  在世界地图上移动到自己的家园时，是否自动进入本地地图。
+setup.map_lighting_help	  昼夜色调与火光效果。若影响游玩，或偏好复古画面，可关闭此项。
+setup.night_brightness_help	  若显示器上的夜间画面过暗，可在此提高亮度。
+setup.units_help	  使用英制（磅、英尺等）或公制（千克、米等）度量单位。
+setup.right_alt_hotkeys_help	  若需使用 AltGr 键输入当前键盘布局的特殊字符，请关闭此项。
+setup.map_grid_help	  若难以辨认自己所在的地图格，可在此开启地图网格。
+setup.old_hardware_mode_help	  若旧电脑无法正常渲染画面，可尝试开启旧硬件模式。
+setup.old_hardware_software_help	  此模式使用软件渲染，仅在确有必要时开启。
+setup.old_hardware_restart_help	  修改此项后，需要重启游戏才会生效。
+setup.mobile_controller_help	  开启后可使用 UrW 手机控制器应用。
+setup.controls_help	点击选项，或用方向键选择并按 [ENTER] 修改设置。<br>
+setup.config_help	高级设置请编辑安装目录中的 urw_ini.txt 文件：<br>
+setup.exit	退出
+ancestors.title	已故角色列表——值得铭记的先祖：
+ancestors.empty	暂无已故角色。
+ancestors.order_label	排序：
+ancestors.order_played	游玩时间：由近到远
+ancestors.order_lived	存活时间
+ancestors.order_journeyed	行走距离
+ancestors.exit	退出
+ancestors.previous_page	上一页
+ancestors.next_page	下一页
+ancestors.select_hint	用鼠标点击，或用方向键选择先祖并按 [ENTER] 查看纪念页。
+ancestors.page	页码：{value}
+ancestors.lived	逝者享年 {value}。
+ancestors.journeyed	逝者累计行走 {value} 千米。
+setup.value.YES	是
+setup.value.NO	否
+setup.value.MAXIMIZED	最大化
+setup.value.IMPERIAL	英制
+setup.value.METRIC	公制
+setup.value.0 (default)	0（默认）
+setup.value.60 (maximum)	60（最大）
+intro.north	……我们将带你走进遥远的北方。
+intro.roleplaying	借助电脑角色扮演之力，尽我们所能……
+intro.myth_1	关于最初之冬，有数不尽的故事、传说与神话。
+intro.myth_2	在最初之冬，伊涅赫莫人繁衍生息。
+intro.myth_3	男人、妻子、孩童，英雄与智者，行走于大地之上。
+intro.myth_4	英雄们生起火，制成弓箭，出外狩猎。
+intro.myth_5	他们缝制衣裳，打造工具，搭起居所，制成滑雪板，
+intro.myth_6	也造出了鼓与坎特勒琴。
+intro.myth_7	当最初之冬落幕，
+intro.myth_8	伊涅赫莫人再听不懂风的歌唱，
+intro.myth_9	也听不懂熊与森林的低吟。
+intro.myth_10	族中的智者说，世界已不再真实。
+intro.myth_11	世界，已成虚幻。
+startup.loading	正在进入 UnReal World，请稍候……
+startup.sound_init	正在初始化音频……
+startup.audio_device_failed	无法打开音频设备！—— 按任意键继续 ——
+startup.intro	正在载入开场音乐……
+startup.audio	正在载入音频：{value}
+startup.audio_failed	载入失败：{value}
+startup.resource.ambience	环境音
+startup.resource.arrow	箭矢声
+startup.resource.axework	斧砍声
+startup.resource.bark	吠叫声
+startup.resource.bawl	哞叫声
+startup.resource.bellow	吼叫声
+startup.resource.bird_harakka	喜鹊鸣声
+startup.resource.bird_harakka2	喜鹊鸣声 2
+startup.resource.bird_kapytikka	啄木鸟鸣声
+startup.resource.bird_keltasirkku	黄鹀鸣声
+startup.resource.bird_leppalintu	红尾鸲鸣声
+startup.resource.bird_leppalintu2	红尾鸲鸣声 2
+startup.resource.bird_peippo	苍头燕雀鸣声
+startup.resource.bird_peippo2	苍头燕雀鸣声 2
+startup.resource.bird_satakieli	夜莺鸣声
+startup.resource.bird_satakieli2	夜莺鸣声 2
+startup.resource.bird_varis	乌鸦鸣声
+startup.resource.bird_varis2	乌鸦鸣声 2
+startup.resource.birdcall_eagle_owl	雕鸮鸣声
+startup.resource.birdcall_goshawk	苍鹰鸣声
+startup.resource.birdcall_hazel_grouse	榛鸡鸣声
+startup.resource.birdcall_kuikka	潜鸟鸣声
+startup.resource.birdcall_raven	渡鸦鸣声
+startup.resource.birdcall_swan	天鹅鸣声
+startup.resource.bleat	咩叫声
+startup.resource.block	格挡声
+startup.resource.breeze	微风声
+startup.resource.burp	打嗝声
+startup.resource.close_door	关门声
+startup.resource.cough	咳嗽声
+startup.resource.crack	碎裂声
+startup.resource.crawl	爬行声
+startup.resource.death	死亡惨叫
+startup.resource.dig	挖掘声
+startup.resource.eat	进食声
+startup.resource.escape	逃跑声
+startup.resource.faderun	渐远的跑步声
+startup.resource.fall	摔倒声
+startup.resource.fire	火焰声
+startup.resource.fleshwork	剥皮切肉声
+startup.resource.growl	低吼声
+startup.resource.growl2	低吼声 2
+startup.resource.growl3	低吼声 3
+startup.resource.grunt	哼叫声
+startup.resource.grunt2	哼叫声 2
+startup.resource.grunt3	哼叫声 3
+startup.resource.guffaw1	嘶鸣声 1
+startup.resource.guffaw2	嘶鸣声 2
+startup.resource.harakka	喜鹊鸣声
+startup.resource.harr	遭遇提示音
+startup.resource.hit_grievous	重创声
+startup.resource.hit_minor	轻伤击中声
+startup.resource.hit_npc	角色受击声
+startup.resource.hit_serious	重伤击中声
+startup.resource.hitplr	玩家受击声
+startup.resource.howl	嚎叫声
+startup.resource.intro	开场音乐
+startup.resource.kapytikka	啄木鸟鸣声
+startup.resource.keltasirkku	黄鹀鸣声
+startup.resource.kling	叮当声
+startup.resource.lake	湖水声
+startup.resource.leppalintu	红尾鸲鸣声
+startup.resource.miss	挥空声
+startup.resource.music_birth	诞生乐曲
+startup.resource.music_chant	吟唱乐曲
+startup.resource.music_chantbeat	吟唱鼓乐
+startup.resource.music_munni	口弦乐曲
+startup.resource.music_ritual	仪式乐曲
+startup.resource.open_door	开门声
+startup.resource.owl	猫头鹰鸣声
+startup.resource.owl2	猫头鹰鸣声 2
+startup.resource.peippo	苍头燕雀鸣声
+startup.resource.rain	雨声
+startup.resource.roar	咆哮声
+startup.resource.roar2	咆哮声 2
+startup.resource.run	跑步声
+startup.resource.satakieli	夜莺鸣声
+startup.resource.sauna_loyly	桑拿蒸汽声
+startup.resource.sauna_small_loyly	轻微桑拿蒸汽声
+startup.resource.sauna_vasta	桑拿枝束拍打声
+startup.resource.ski	滑雪声
+startup.resource.ski_crust	硬雪滑行声
+startup.resource.smash	砸击声
+startup.resource.snarl	咆哮威吓声
+startup.resource.snort	喷鼻声
+startup.resource.snort2	喷鼻声 2
+startup.resource.snuffle	嗅闻声
+startup.resource.splash	溅水声
+startup.resource.swing	挥动声
+startup.resource.throw	投掷声
+startup.resource.thump	重击声
+startup.resource.treechop	伐木声
+startup.resource.treefall_big	大树倒下声
+startup.resource.treefall_small	小树倒下声
+startup.resource.varis	乌鸦鸣声
+startup.resource.wade	涉水声
+startup.resource.walk	脚步声
+startup.resource.walk_deepsnow	深雪脚步声
+startup.resource.walk_snowcrust	硬雪脚步声
+startup.resource.walk_soggy	湿地脚步声
+startup.resource.walkinside	室内脚步声
+startup.resource.water	水声
+startup.resource.watersound	流水声
+startup.resource.whimper	呜咽声
+startup.resource.wind	风声
+startup.resource.windfly	风掠声
+startup.resource.wolf	狼嚎声
+startup.resource.wolf2	狼嚎声 2
+startup.resource.yelp	尖叫声

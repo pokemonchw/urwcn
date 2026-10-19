@@ -1,0 +1,279 @@
+UnReal World 3.89 / Steam Build 25939378: Thanks and Credits static evidence
+Date: 2026-10-18
+Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Preferred image base: 0x400000. Instruction/string addresses below are RVAs
+unless prefixed VA. Logical canvas: 800x600.
+
+Method and scope
+----------------
+This record extracts the complete pictured THANKS AND CREDITS window from
+the disk PE, its native callers, token builder, text consumers and key wait.
+Ghidra 12.1.4 PUBLIC generated credits-ghidra.c from the existing offline
+intro analysis database in read-only mode. credits-extract.ps1 reads PE bytes
+and invokes objdump for instruction/string evidence; its -Decompile option
+invokes the Ghidra script. These tools do not execute the target executable.
+No game launch, injection, live-process interaction, simulated input, product
+execution, tests, test cases, assertions or project compilation were used.
+
+This window consists of its title, an introductory paragraph, 21 named/group
+acknowledgements, and a press-key button. The implementation presents them in
+28 semantic display fields: one title, three introduction rows, 18 individual
+acknowledgement rows, three countrymen rows, photo contributors, veteran
+players, and the press-key label. This row split derives from the established
+text and pictured geometry; it does not add any new acknowledgement content.
+Names retain their original spelling. Jarmo Mäenpää uses PE Latin-1 byte E4
+for each ä; credits-strings.tsv decodes those bytes explicitly as ISO-8859-1.
+
+Main-menu business entry and native lifetime
+--------------------------------------------
+125920 builds the original main-menu entries. At 1259C8 EDX=base+1B0074
+("CREDITS"), 1259CD sets ECX=0, and 1259CF calls CF990 to append row index 5.
+The index-5 DWORD at 125EE8 is VA 525E4D (4D 5E 52 00), in the dispatch table
+beginning at 125ED4. The branch at 125E4D copies the native background through
+SDL_UpperBlit and cleans those 16 bytes before invoking the complete window:
+
+125E6E  E8 7D E6 FF FF  call 1244F0   ; Thanks and Credits window
+125E73  E8 E8 7B FE FF  call 10DA60   ; original native cleanup
+125E78  E8 A3 FA FF FF  call 125920   ; rebuild original menu rows
+125E7D  E9 FE FC FF FF  jmp 125B80   ; existing outer menu boundary
+
+1244F0..12468B takes no stack arguments and requires no caller ECX/EDX input.
+The initial PUSH ECX at 1244F0 reserves one local DWORD; POP ECX at 12468A
+releases that same slot. Its final RET is RET0. Raw Ghidra output incorrectly
+infers a param_1 and a sixth panel parameter from this reservation. The exact
+instructions establish zero window parameters and five panel parameters.
+Use that ABI, not the uncorrected inferred C prototype.
+
+The main-menu render/input scopes have exited before 125E6E. A resident
+credits lifetime scope must span the original window and its native key wait;
+short calls into replaceable business modules may prepare and present Chinese,
+but no business DLL lease/frame may remain across the native wait. Returning
+from the window naturally reaches the existing outer reload boundary.
+
+All original strings, bytes and construction order
+--------------------------------------------------
+The table below is the literal data used by 1244F0; all strings are NUL-ended.
+Angle-bracket markup is native paragraph markup, not user-visible prose.
+The two INTRO literals and the two COUNTRYMEN literals are consecutive
+append calls within their respective paragraph/acknowledgement.
+
+RVA       Role          Exact original text
+1AF448    TITLE         THANKS AND CREDITS
+19416C    BREAK         <br>
+1AF460    INTRO1        Countless number of people have provided ideas, feedback, reports and contributions
+1AF4B8    INTRO2        which have helped and shaped the game over the years.  In addition, here's an incomplete list of some specific credits:<br>
+1AF534    ALEXANDER     Alexander A. Tchernychov, for thoughts and tests.<br>
+1AF56C    ANDREW        Andrew Nicoll, for watching over the transition to Steam.<br>
+1AF5AC    ARTEMIS       Artemis Prose, for acquiring portraits and surviving.<br>
+1AF5E8    ARTEMIY       Artemiy Mikhailov, for strong support and awareness.<br>
+1AF624    BRIAN         Brian Shapiro, for plant research and tile contributions.<br>
+1AF664    FLAP          Flap, for cultural exchange and encyclopedia endeavours.<br>
+1AF6A4    HAMSOLOVSKI   Hamsolovski / Antoine Delalande, for tile contributions.<br>
+1AF6E4    JEREMY        Jeremy Osborne, for squashed bugs and discovered words.<br>
+1AF720    KERRI         Kerri Barnard, for written works and quest dialogue contributions.<br>
+1AF768    KUU           Kuu Otava, for setting and getting the wiki going.<br>
+1AF7A0    LANI          Lani K. Thompson, for playing Kantele in the title song.<br>
+1AF7E0    PAULO         Paulo Marcelo Spinola, for image editing and tile creations.<br>
+1AF824    PLOTINUS      Plotinus, for playtesting and persistent bughunting.<br>
+1AF860    RAIN          Rain, for groundbreaking modding.<br>
+1AF888    SCOTT         Scott Dickerson, for adventuring.<br>
+1AF8B0    SHAWN         Shawn Sloan, for overall activity.<br>
+1AF8D8    TOMMY         Tommy Laukkanen, for chopping the wood in both worlds.<br>
+1AF914    WICKERMAN     Wickerman / Simon S. Nilsson, for tile contributions.<br>
+1AF950    COUNTRYMEN1   Aapo Alasuutari, Jani Jalkala, Jarmo Mäenpää, Johannes Leino, Jussi Kantola, Metalli, Tuukka Pasanen and Vili Salonen, for
+1AF9D0    COUNTRYMEN2   being important fellow countrymen at different times along the way.<br>
+1AFA18    PHOTO         Photo contributors, Let's play makers and modders, for your works.<br>
+1AFA60    VETERANS      Veteran players, donors, supporters, followers and fans, for everything.<br>
+1AF438    BUTTON        " Press a key " (leading and trailing space are part of the literal)
+
+Native paragraph append calls all target 162300 with EDX=literal and no stack
+arguments. ECX=1 on the first BREAK append clears previous token storage;
+all later calls use ECX=0 and append to the existing token stream:
+
+CALL RVA  Source RVA   CALL RVA  Source RVA   CALL RVA  Source RVA
+124523    19416C       12452F    1AF460       12453B    1AF4B8
+124547    19416C       124553    1AF534       12455F    1AF56C
+12456B    1AF5AC       124577    1AF5E8       124583    1AF624
+12458F    1AF664       12459B    1AF6A4       1245A7    1AF6E4
+1245B3    1AF720       1245BF    1AF768       1245CB    1AF7A0
+1245D7    1AF7E0       1245E3    1AF824       1245EF    1AF860
+1245FB    1AF888       124607    1AF8B0       124613    1AF8D8
+12461F    1AF914       12462B    1AF950       124637    1AF9D0
+124643    1AFA18       12464F    1AFA60
+
+162300 calls 1620C0 when its ECX clear argument is nonzero; 1620C0 empties
+word slots at RVA A225318 with stride 0x82, resets token index A225314, and
+clears scratch text at RVA 61BB650. Appending splits words and separates
+<br> into its own tokens while preserving consecutive append word order.
+Neither builder nor original literal storage needs patching for localization.
+
+Panel/title, paragraph and button call contracts
+------------------------------------------------
+124511  E8 5A 1D FF FF  call 116270
+ECX=50, EDX=220, stack(width=700,height=320,title=base+1AF448,flags=0x82,extra=0).
+Caller ADD ESP,0x14 is at 124516. The native panel remains x50,y220,w700,h320.
+The flags select the native dark title strip x55,y224,w692,h16. Title drawing
+uses the established shared CALL 11665C: E8 3F 7F FF FF ->10E5A0 with three
+stack arguments (title,mapped white,outline=1) and native y228. Its x is 334
+for the 18-byte title (the native formula centers at x406); Chinese layout
+uses its existing panel-centered x400. The title consumer's ADD ESP,0x34 at
+116661 also releases earlier native drawing pushes; retain that instruction.
+Only suppress that consumer within the specific Credits panel/title scope.
+
+124669  E8 D2 A4 FE FF  call 10EB40
+ECX=55, EDX=235, stack(width=690,second_argument=70,color=0,outline=0).
+The second argument is not used as a vertical clipping limit: the code tests
+it only against -1 to select measurement-only handling at 10EF46/10EF9A.
+Let the original tokenizer walk and paragraph routine execute unchanged.
+Its first token is <br>, so 10EC39 advances y235 to245 before the first glyph.
+Both explicit breaks and word wrap increase y by10 (10EC39 and 10EE79).
+Word wrap compares cursor_x+word_length*8 against start_x+width at 10EE5D..72.
+The paragraph's word glyph consumer is shared CALL:
+
+10EF87  E8 14 F6 FF FF  call 10E5A0
+
+It has ECX=current x, EDX=current y, stack(word,color=0,outline=0) and
+ADD ESP,0xC at 10EF92. Suppression must preserve each original word's cursor,
+color and EAX effects so that native word wrapping and token iteration retain
+their semantics. Suppress only while the 124669 Credits paragraph scope runs.
+Its original token-index/scratch processing and EAX line-height return remain
+unchanged. No English matching, SDL text recognition, or global token rewrite
+is needed to identify the Credits display.
+
+12467D  E8 FE FF FE FF  call 114680
+ECX=55, EDX=515, one stack argument base+1AF438 (" Press a key "). This plain
+13-byte label draws original button background x55,y515,w118,h32. Its 7-pixel
+caps and 13 8-pixel middle slots are retained. Individual characters pass:
+
+114956  E8 45 9C FF FF  call 10E5A0
+
+Those calls have ECX=63+8*i, EDX=520, stack(character,color=0,outline=0),
+followed by ADD ESP,0xC at 11495B. The plain string does not use its markup
+branches. Only this glyph consumer is suppressed within the Credits button
+scope; the original button function retains its native blits, advances ESI
+by8 per character and finally sets cursor_x/EAX=171 (114A04/114A0B).
+
+Important shared caller cleanup: 124669 has four stack arguments left pending;
+12466E pushes the button text as a fifth. 124682 ADD ESP,0x14 releases all five
+after 12467D returns. Do not add a cleanup between the two original CALLs or
+replace that final instruction with a guessed per-call argument count.
+
+10E5A0 side effects at all selected nonnegative x/y calls
+---------------------------------------------------------
+10E63E stores mapped text color to RVA A211068.
+10E6C1/10E6C7 store x/y to cursor_x A1C1CB4 and cursor_y 61BBB3C.
+10E700 stores cursor_y=y; 10E706 computes x+strlen(original_text)*8 and
+10E70E stores it to cursor_x. EAX returns that same final native cursor_x.
+The routine's CP850 glyph-byte conversions do not change byte length.
+Preserve those original effects and leave caller stack cleanup in place when
+suppressing only original glyphs. Chinese layout width does not replace the
+native ASCII word advance or button flow.
+
+Original logical line positions and Chinese display slots
+-----------------------------------------------------------
+Native body starts x55 and has width690. The first <br> and the extra <br>
+after INTRO2 account for both initial top spacing and the blank before names.
+The pictured original is three intro lines at y245,255,265; Alexander starts
+y285. The 18 individual acknowledgement lines occupy y285..455 with pitch10.
+The long countrymen entry wraps over y465,475,485. Photo and veterans occupy
+y495 and505. The three countrymen rows are one native acknowledgement; their
+semantic split preserves all eight names and the single shared explanation.
+
+The Chinese layout follows the already-established optical top offset of -2
+for body text: introduction slots {55,243/253/263,690,10}, individual names
+start {55,283,690,10} at pitch10; countrymen slots463/473/483; photo493 and
+veterans503. Title slot {55,226,690,12}, center400; button slot
+{55,518,118,14}, center114. Original title/body/button colors are white/black/
+black; only the title has outline=1. The panel, title strip, native button,
+background image and UnReal World logo remain native drawing operations.
+These positions are static layout derivations and do not claim visual testing.
+
+Initial native presentation, key wait and event repaint
+------------------------------------------------------
+124685 E8 F6 F5 FA FF calls D3C80, with no parameters, then the window returns.
+D3C80 first uses its existing renderer-state conditions to upload and present:
+
+D3C90..D3C98  skip upload/present block when [VA65BBA5C] is nonzero
+D3C9A         call 10AF90               ; native upload/frame copy
+D3CBF         call 10B3C0               ; existing drawing records
+D3CC4..D3CCB  skip present when [VAA5C1C54] is nonzero
+D3CCD         push [VAA6110CC]          ; renderer
+D3CD3         FF 15 7C C2 58 00         ; SDL_RenderPresent IAT18C27C
+D3CD9         ADD ESP,4                 ; retain caller cleanup
+
+The existing resident present bridge can compose the Credits plan at D3CD3,
+after native frame upload and before original SDL_RenderPresent. Its cdecl
+renderer parameter and original IAT call remain unchanged. D3C80 then drains
+queued events, starts text input and flushes its existing event range. Its
+loop calls D3BF0 until the original positive-key condition succeeds. D3BF0
+calls D1C00 at D3BFC and retains the native key interpretation and return.
+No new control polling, reload boundary or replacement key wait is required.
+
+D1C00 processes window events and can recopy/present the native frame during
+this same wait. Reuse the existing scoped repaint bridges:
+
+RVA     Expected six-byte CALL   Native frame source      Existing cleanup
+D1E70   FF 15 7C C2 58 00       D1E41 ->10B480           D1E76 ADD ESP,4
+D1F48   FF 15 7C C2 58 00       D1F19 ->10B480           D1F4E ADD ESP,4
+10B763  FF 15 7C C2 58 00       10B72A->10AF90           10B769 ADD ESP,4
+
+Compose the same Credits Chinese plan when its resident lifetime scope and
+localized state are active. The presentation CALL replacement is already
+CALL rel32 + NOP for each six-byte IAT CALL; preserve its ADD ESP,4. For byte
+matching in a relocated image the expected absolute IAT operand is
+image_base+18C27C. Existing non-Credits screen scopes retain their behavior.
+The complete window event path is also recorded in main-menu-focus-redraw.txt.
+
+Credits patch/semantic contract
+-------------------------------
+New resident scope bridges use IDs1024..1027, outside the separately reserved
+ancestors bridge range. Their exact CALL replacements are:
+
+ID    RVA      Size Original bytes     Native target  Stack count Scope
+1024  125E6E   5    E8 7D E6 FF FF     1244F0        0           whole Credits
+1025  124511   5    E8 5A 1D FF FF     116270        5           panel/title
+1026  124669   5    E8 D2 A4 FE FF     10EB40        4           paragraph
+1027  12467D   5    E8 FE FF FE FF     114680        1           button
+
+Shared consumer bridges at11665C,10EF87,114956 and shared presentation bridges
+atD3CD3,D1E70,D1F48,10B763 already exist; extend their exact-scope selection.
+No additional patch of those same sites is installed for Credits. The native
+menu dispatch and builder remain unchanged. menu_op::credits=8 and the
+Credits FieldId block starts explicitly at0x200 to avoid changing previously
+assigned values or colliding with concurrent ancestors additions. These enum
+choices do not change structure size or Host ABI2. New resident scope code
+must be delivered together with its business modules/fields and catalog.
+
+Reproduction and evidence files
+--------------------------------
+Run from project root for PE string/instruction extraction only:
+  & .\docs\evidence\credits-extract.ps1
+Include offline Ghidra decompilation of the existing read-only intro database:
+  & .\docs\evidence\credits-extract.ps1 -Decompile
+
+Ghidra tool:
+C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
+JAVA_HOME:
+C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
+Options: build/intro-ghidra uwcn-intro -process urw.exe -readOnly -noanalysis
+ -scriptPath docs/evidence -postScript credits_Decompile.java credits-ghidra.c
+Settings/cache use build/intro-ghidra/settings and build/intro-ghidra/cache
+through GHIDRA_HEADLESS_JAVA_OPTIONS application.settingsdir/java.io.tmpdir.
+The first launch without those existing per-project settings failed inside
+Ghidra's OSGi cache initialization. The subsequent corrected extraction
+completed with exit0 and exported all13 requested functions. No target was
+executed by either launch. The script logs retain both tool outcomes.
+
+credits-ghidra.c preserves the actual decompiler output, including its inferred
+register/stack prototypes; the instruction contracts in this record correct
+their ambiguity. credits-strings.tsv has all27 raw entries (including <br>),
+and credits-string-bytes.txt preserves the source bytes for the full window.
+credits-menu-table.txt preserves its data jump table without disassembling
+table DWORDs as instructions. credits-*-disassembly.txt covers the complete
+window, complete main-menu builder/dispatch, paragraph/tokenizer/reset, text,
+title, button, wait, events and software repaint consumers.
+
+This record documents extraction and implementation evidence only. It makes
+no claim that source changes were compiled, formal files were published, or
+the game was started or visually verified.

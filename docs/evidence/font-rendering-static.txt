@@ -1,0 +1,180 @@
+UnReal World 3.89 / Steam 25939378: font output mapping and DPI metadata
+Date: 2026-10-18
+Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Method: read-only PE resource inspection and selected instruction disassembly.
+No game launch, process injection, input simulation, binary execution or tests.
+All instruction addresses below are RVAs; absolute operands are labelled VA.
+
+Software-frame path
+-------------------
+D1225 calls 10AF90. In 10AF90:
+
+10AFA3  mov eax,[VA 65BBB10]   ; logical_surface, global RVA 61BBB10
+10AFA8  push [eax+10]         ; SDL_Surface.pitch (hex offset 0x10)
+10AFAB  push [eax+14]         ; SDL_Surface.pixels (hex offset 0x14)
+10AFAE  push 0               ; rect=NULL
+10AFB0  push [VA A5C2020]     ; texture, global RVA A1C2020
+10AFB6  call [VA 58C21C]      ; SDL_UpdateTexture
+
+10AFD9..10AFEA sets the renderer draw color to black with alpha 255.
+10AFF0 pushes the renderer; 10AFF6 calls SDL_RenderClear.
+
+10AFFC  push 0               ; dstrect=NULL
+10AFFE  push 0               ; srcrect=NULL
+10B000  push [VA A5C2020]     ; same texture
+10B006  push [VA A6110CC]     ; renderer, global RVA A2110CC
+10B00C  call [VA 58C228]      ; SDL_RenderCopy
+
+Thus the base frame uses:
+  SDL_UpdateTexture(texture,NULL,surface->pixels,surface->pitch)
+  SDL_RenderCopy(renderer,texture,NULL,NULL)
+
+10AF90 does not set render target, viewport or scale; it inherits SDL state.
+D124A subsequently calls 10B3C0. The latter traverses records starting at
+VA A78521C with stride C48 and calls 113200 / 10E3E0. Its inspected body
+10B3C0..10B479 contains no SDL_UpdateTexture or SDL_RenderCopy. No additional
+business meaning is assigned to these records.
+
+This corrects the former description in main-menu-layout-fix.txt that named
+D124A ->10B3C0 as the software-frame upload.
+
+Native renderer branch and present
+----------------------------------
+D125A calls 10B480. That routine reads the render target at 10B499..10B4B8
+and selects NULL when needed, then copies the complete native frame:
+
+10B4EA  push 0               ; dstrect=NULL
+10B4EC  push 0               ; srcrect=NULL
+10B4EE  push [VA A5C1CBC]     ; texture, global RVA A1C1CBC
+10B4F4  push [VA A6110CC]     ; renderer
+10B4FA  call ebx             ; SDL_RenderCopy
+
+The present continuation includes:
+D126E  push [VA A6110CC]
+D1274  call [VA 58C26C]       ; SDL_GetRenderTarget
+D127D  test eax,eax
+D127F  je D1292
+D1281  push 0
+D1283  push [VA A6110CC]
+D1289  call [VA 58C288]       ; SDL_SetRenderTarget(renderer,NULL)
+D1292  push [VA A6110CC]
+D1298  call esi              ; SDL_RenderPresent
+D129A  add esp,4
+
+Mapping interpretation
+-----------------------
+Both frame copies pass NULL source and destination rectangles. In SDL 2.30.0,
+SDL_RenderCopyF takes the whole texture and RenderGetViewportSize when these
+rectangles are NULL. RenderGetViewportSize divides stored physical viewport
+width/height by the current renderer scale, and the copy applies that scale.
+The resulting frame destination spans the physical viewport. This SDL source
+contract, together with the native arguments above, supports mapping the
+800x600 main-menu canvas to the actual content viewport. The viewport must be
+read from SDL rather than inferred from desktop aspect ratio or window size.
+
+Source:
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/render/SDL_render.c#L2290
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/render/SDL_render.c#L3149
+
+This describes pixels inside the SDL output buffer, not physical display pixels
+after Windows composition. It does not establish process DPI awareness.
+
+DPI manifest and import metadata
+--------------------------------
+The fixed-fingerprint urw.exe has RT_MANIFEST(24), ID 1, language 1033.
+The resource data RVA is A656908, length 381 bytes. It declares
+requestedExecutionLevel level='asInvoker' uiAccess='false' in trustInfo.
+It contains neither dpiAware nor dpiAwareness.
+
+The ordinary imports recorded in local-inspection.json for urw.exe, SDL2.dll
+and SDL2_ttf.dll contain no named Dpi/Aware API. SDL2.dll imports dynamic loading
+APIs, including GetProcAddress and LoadLibrary variants. The manifest and named
+imports therefore do not determine actual process DPI awareness: dynamic SDL
+initialization and external Windows compatibility settings are not established
+by these records. No runtime DPI conclusion is made.
+
+Font-size correction, 2026-10-18
+-------------------------------
+The user reports that Chinese text is substantially larger than the English.
+Existing local-inspection.json records URW.FNT as 20480 bytes (256*8*10), with
+the complete 8x10 samples for A, a, 0 and z. The nonempty row counts in those
+recorded samples are 7, 5, 7 and 5 respectively. static-disassembly.txt records
+10BD90..10BE72: the character loop spans x..x+8 and y..y+10, reads 80 bytes per
+character, and writes only entries equal to 1. The 10-pixel cell height must
+therefore not be treated as the visible height of those English letters.
+
+Before this correction, layout supplied logical ink budgets 14 for Menu,
+Version and Loading, 12 for Footer, 11 for SetupOption and 9 for
+SetupDescription. render::calibrate selects the largest size within the ink
+and slot bounds. Its final texture copy uses the raster's own dimensions;
+this correction does not add bitmap scaling or alter viewport mapping.
+
+The new Chinese ink budget is 9 logical pixels for Menu, Version, Footer,
+Loading and SetupOption, and 8 for SetupDescription. These are display-size
+targets selected for this correction, not newly inferred native font metrics
+or SDL_ttf point sizes. SetupDescription retains its existing 10-pixel slot
+including outline; the previous slot constraint already limited its ink size.
+The existing role assignments also apply these budgets to About and Farewell.
+Native input, click regions, row slots, baseline placement and calibration
+remain as before. No game or generated artifact was run; no tests were added
+or executed. This record does not claim a visually verified result.
+
+Follow-up based on the user's comparison screenshots, 2026-10-18
+---------------------------------------------------------------
+The user supplied codex-clipboard-5693165f-064b-4664-9992-5177fdc37832.png
+(Chinese) and codex-clipboard-75c0eae9-7485-40ca-a89d-42268d0f0852.png
+(English). These are user-provided images, not screenshots taken by the agent.
+The Chinese view retains the enlarged row spacing and lowered footer from the
+earlier 14/12-pixel design, while the reduced regular-weight text looks thin.
+The last copyright line and website sit against the bottom edge. Reducing
+only the ink budgets did not restore the native text layout.
+
+The follow-up keeps the 9/8 ink budgets and changes the fixed font file to
+Windows Fonts/msyhbd.ttc, face 0 with TTF_STYLE_NORMAL (the file's own bold
+face, without additional synthetic emboldening). Final-output rasterization,
+calibration, baseline union metrics and 1:1 texture composition remain.
+
+Main-menu rows now use {620,105+12*i,165,14}. The existing resident geometry
+consumer sets native row x/y to slot.x+3,slot.y+4, restoring 623,109+12*i.
+The row union has height 86. Native main-menu-static.txt records panel height
+125 and CALL 125BC5 with outer-frame width 190, height 210, x605,y5.
+The resident panel-height increment is now 39 (86+39=125), and the outer-frame
+increment is 124 (86+124=210). Original horizontal and top insets remain.
+The selection rectangle is 14 high at 12 pitch as in the native fill; only
+the selected row is drawn. The existing first-match mouse dispatch remains.
+
+Version slot is {620,63,166,12}, replacing {620,65,166,18}.
+Footer slots have height 12 and tops two logical pixels above the original
+field y values: authors 528/538/548; website 568; production 528/538;
+copyright 568/578. This restores the 10-pixel paragraph pitch, allows up to
+9 pixels of ink plus outline, and ends the last slot at 590 rather than 600.
+Exact visible glyph tops still depend on the shared role metrics; no claim of
+runtime pixel equality with the English bitmap is made.
+
+This follow-up changes the resident DLL as well as layout/render and needs
+offline publication after the user exits. No game launch, injection, input
+simulation, product execution or tests were performed.
+
+Follow-up delivery record
+-------------------------
+The font/layout source first compiled successfully through request
+f3b0762d85a04f469de2da77d6ce765e, batch b5fa8f5212e34971b09d234096a88e36.
+The later publication request c18d6c9dea9a4e069a7369cec875309e, batch
+cab27fe8328f4078ab7771f6f939eb98, failed compilation while another active
+task had added Ancestors callbacks before its shared request type was saved.
+No formal publication occurred in that failed batch.
+
+The following project queue request 693dcb54c0c04913be3e7766994cbadc, batch
+2832d11c191d4fe4abedc2188de996ba, compiled the combined saved source and
+published transaction dc82e937168d4cd4a192573982f2a776. Both its JSON receipt
+and complete batch log were read. The current layout source retains the
+12-pitch rows, the render source retains msyhbd.ttc, and the resident source
+retains +39/+124 panel/frame increments. Formal profile records these values.
+Formal and compiled file hashes were compared as delivery metadata:
+layout 50cd675d09f01439fe5375d571040877ab26614f32a3b32bf65f9c251b418fd0
+render 946855aeaa8f80f9b2dbec5b79fbaac2a2681b79fd0f4f549e1471476d5c7fc2
+loader 69fd58f11db0dfdc62b39c7d1c6e55c58fcd1b62896c8dae3b0e2dc00ee12475
+Old formal files were archived under
+回收/20261018-193635-dc82e937168d4cd4a192573982f2a776/ with original paths.
+No game or artifact was executed and no tests or runtime reload were run.

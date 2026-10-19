@@ -1,0 +1,157 @@
+CHARACTER PROFILE (culture / sex / name) native static boundaries
+Date: 2026-10-19, Asia/Shanghai
+Target: UnReal World 3.89 / Steam Build 25939378
+Original EXE SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Preferred image base: 0x400000. Addresses here are RVAs.
+
+Method and scope
+Read AGENTS.md; inspected installed EXE as data with objdump and existing
+Ghidra project in read-only/noanalysis mode. Did not run game, inject,
+simulate input, run tests, build, publish, or write tests/assertions.
+Raw instructions: 20261019-character-profile-disassembly.txt (VAs).
+Fresh decompiler: character-profile-ghidra.c; script and logs use the
+character_profile_Decompile / character-profile-ghidra names.
+Decompiler prototypes are not ABI authority; use instructions below.
+
+The screenshot is the third stage of native function 12CA0: stage 0 calls
+F4F0 (culture), stage 1 F300 (sex), stage 2 11870 (name). Completed culture
+and sex panels remain as already drawn and dimmed native pixels. No Mod
+page snapshot or layout table is required for normal entry translation.
+
+Confirmed build / display calls
+RVA     target  bytes             ABI / ownership
+12F0D   116270  E8 5E 33 10 00    ECX=0 EDX=0; stack width,height,title,flags,color
+                                 title stack index 2; flags=0x30
+F51C    CF790   E8 6F 02 0C 00    ECX=0, EDX=culture title; stack 5 native values
+F678    CFFB0   E8 33 09 0C 00    no stack args; complete culture menu draw
+F336    CF790   E8 55 04 0C 00    ECX=0, EDX=sex title; stack 5 native values
+F377    CFFB0   E8 34 0C 0C 00    no stack args; complete sex menu draw
+11939   116270  E8 32 49 10 00    stack width,height,title,4,0; title index 2
+118CA   162300  E8 31 0A 15 00    ECX=1, EDX=initial name help
+118EE   162300  E8 0D 0A 15 00    ECX=1, EDX=native error string local
+118FA   162300  E8 01 0A 15 00    ECX=0, EDX=repeat-name help
+11904   F210    E8 07 D9 FF FF    ECX=0 normally, 2 when error text exists
+F313    162300  E8 E8 2F 15 00    ECX=1, EDX=sex help
+F31A    F210    E8 F1 FE FF FF    ECX=0
+F2E5    10EB40  E8 56 F8 0F 00    native footer paragraph; 4 stack args
+
+F210 includes native random color calculation for error footer before its
+panel calls at F289/F2AD. Do not call this whole function solely as a
+redraw helper without accounting for the random-number side effect.
+
+Menu native data and text ownership
+Both menus use mode 8, same confirmed D01A5 -> 115E70 title and D031F ->
+114680 keyed-row calls as the preceding CHARACTER CREATION menu.
+Scope only F678/F377 draw calls, borrow translated title at D01A5 and row
+suffix at D031F, and keep original ASCII key plus '.' delimiter.
+Action lives at current native ESI+0xC8 at D031F. Culture actions are
+'0'..'9','R','?',27; sex actions 'M','F',27. Empty separator rows remain.
+CF990 records and the 0xE8 stride remain English/internal native data.
+
+Culture F637..F664 writes the native English metadata (400 bytes from
+5F54A20) and menu rows (0x5AA0 bytes from 5F4EF10) into MENULIST.SAV.
+F978..F9B8 reads them back after the Cultures information subpage.
+The filename and these data are game-owned. Translating stored row text
+would change persisted native records and is unnecessary.
+
+Title, hit geometry and encoding
+Mode 8 uses D01A5 -> 115E70 flags 4, which selects 1157B0 mode 2 and
+115A94 -> 10E5A0. The 116270 calls use their corresponding native title
+mode. Full suffix goes through 1149F9 -> 10E5A0. Do not send UTF-8 into
+the original ASCII byte loop; use the existing complete-string codec,
+native width extension, cursor advance, and immediate glyph interface.
+
+None of these culture/sex row sources contains '|'. CF790 clears the
+native text-width selection flag, so mode-8 selection and hit rectangles
+remain panel-width based, with the original key-prefix width. No CFC5D
+patch or Mod-owned row width is warranted. Existing mode-8 evidence:
+20261019-character-creation-static.txt, D03BB/D0570/D0650/D07FB analysis.
+
+Exact original strings (Latin-1 in game)
+18F48C Choose your characters sex.
+18F4A8 Choose sex
+18F4B4 M.Male
+18F4BC F.Female
+18F4C8 ESC.Back
+18F4D4 Choose a culture
+18F4E8 0.Kaumolainen
+18F4F8 1.Driikiläinen
+18F508 2.Kiesseläinen
+18F518 3.Reemiläinen
+18F528 4.Sartolainen
+18F538 5.Islander
+18F544 6.Koivulainen
+18F554 7.Kuikka-tribe
+18F564 8.Owl-tribe
+18F570 9.Seal-tribe
+18F580 R.Random
+18F58C ?.Cultures
+190318 CHARACTER NAME
+19065C A NEW CHARACTER WILL BE BROUGHT INTO THE UNREAL WORLD ... [space]
+1901C8 Choose a name for your character, or press TAB or * to randomize a name.<br>The name may not contain spaces or special characters, and should be 3-12 letters long.
+190270 <br>Please choose a different name, or press TAB or * to randomize a name.<br>The name may not contain spaces or special characters, and should be 3-12 letters long.
+
+Name native error strings at 118EE
+190328 Too short character name.
+190344 Character name can't contain spaces or special characters.
+190380 File folder for a character with that name already exists!
+These originals are copied to EBP-0x408 (capacity 0x400) by existing
+business branches. Exact branch-specific final copy instructions:
+11A53 66 0F D6 85 08 FC FF FF  movq [ebp-0x3F8],xmm0 (too short)
+11B27 66 0F D6 85 28 FC FF FF  movq [ebp-0x3D8],xmm0 (invalid characters)
+11CC7 66 0F D6 85 28 FC FF FF  movq [ebp-0x3D8],xmm0 (existing folder)
+An inline-before display-copy replacement can write the complete encoded
+field into that native local and resume at 11A5B/11B2F/11CCF respectively,
+skipping only the final original 8-byte copy. Branch-specific ESI=0 and
+all checks have already happened. 11A5B and 11B2F themselves are shared
+continuations also reached without the corresponding error; do not use
+them as unconditional error identities. 11CCF is E9 EC FB FF FF (relative
+jump to 118C0), not a position-independent instruction for inline replay.
+Alternatively translate at 118EE using the exact known original strings.
+Do not change validation or fabricate error cases. Repeat help at 118FA
+has a leading <br> and different-name semantic; it is not initial help.
+
+Names, culture data and input remain original
+F9D9 onward stores selected culture byte and copies the internal culture
+name from native table 18E31C to native character data. Do not translate.
+11870 delegates name input to 10F5B0 at 119AB; ECX=color, EDX=12. Original
+input buffer is A49B9A8; initial/random supplied name is 61BBA60.
+10F5B0 measures these original entered bytes with strlen*8 and manages
+erase/cursor rectangles. This request localizes labels/help; it does not
+authorize changing accepted name bytes, 3-12 rules, directory handling,
+random generation, sex values, culture values or input actions.
+
+Native redraw / language-switch boundary findings
+Culture active input: F8CF -> D1120, original caller return F8D4.
+Sex active input: F435 -> D1120, original caller return F43A.
+At the existing D12B4 post-input hook, D1120's EBP+4 identifies these.
+F678..F67D / F377..F37C are balanced single-CFFB0 draw fragments, with
+no parent EBP-local or saved-register dependence. They redraw only the
+currently resident native menu. Existing D1120 native working-cache copy
+and selection/presentation tail can follow as for mode-8 creation menu.
+They do not rebuild heading/footer or an already completed prior stage.
+
+Name input: 10F719 -> D3BF0, returns 10F71E. EBP+4 of this 10F5B0 frame
+is 119B0 when called by this exact name page. Native input loop starts
+10F6A0, drawing existing input then underscore and native presentation;
+it does not reconstruct culture/sex/title/footer. Re-entering 11870
+would clear/edit native input state and is not a pure redraw path.
+
+12CA0 is a stateful stage/business driver, not a redraw routine. F4F0 and
+F300 also handle random choices, file I/O, selection and cultural names.
+Do not re-run those functions as a generic refresh or synthesize their
+input results. At name stage the shared menu table contains sex rows;
+simply calling CFFB0 cannot rebuild the completed culture panel.
+
+Unconfirmed boundary, explicitly pending
+No existing native callable pure redraw path for the already-completed,
+dimmed culture and sex panels while remaining in name input has yet been
+confirmed. Preserve native pixels/cache lifetime. Do not claim that a hot
+module Applied receipt refreshes all three panels immediately, and do not
+add fixed positions, pixel tracking, stored draw contributions, delayed
+glyph replay, or a Mod page snapshot to obscure this boundary.
+Normal future native creation of each component uses the confirmed calls.
+
+Status
+Static evidence only. Integration/build/publication belong to parent.
+No runtime acceptance or visual verification is claimed.

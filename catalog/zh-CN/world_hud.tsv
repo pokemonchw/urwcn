@@ -1,0 +1,378 @@
+# World HUD display vocabulary; native values and generated proper names stay in the game.
+world.culture.Kaumo	考莫
+world.culture.Driik	德里基
+world.culture.Kiesse	基耶塞
+world.culture.Reemi	雷埃米
+world.culture.Sartola	萨尔托
+world.culture.archipelago	群岛
+world.culture.Archipelago	群岛
+world.culture.Koivula	科伊武
+world.culture.Kuikka-tribe lands	潜鸟部落领地
+world.culture.Owl-tribe lands	猫头鹰部落领地
+world.culture.Seal-tribe lands	海豹部落领地
+world.culture.Njerpez territory	涅尔佩兹领地
+world.culture.	
+world.region.unclaimed	无人之地
+world.region.near	{name}附近
+world.region.north	{name}北部
+world.region.south	{name}南部
+world.region.west	{name}西部
+world.region.east	{name}东部
+world.region.north_east	{name}东北部
+world.region.north_west	{name}西北部
+world.region.south_east	{name}东南部
+world.region.south_west	{name}西南部
+world.region.outside_north	{name}以北
+world.region.outside_south	{name}以南
+world.region.outside_east	{name}以东
+world.region.outside_west	{name}以西
+world.location.at	，位于
+world.landmark.midwinter point	隆冬时节
+world.landmark.midsummer point	仲夏时节
+world.landmark.summer season	夏季
+world.landmark.winter season	冬季
+world.date.number	{landmark}前第{week}周，第{day}天
+world.date.last	{landmark}前最后一周，第{day}天
+world.scale.=100 meters	=100米
+world.scale.=100 yards	=100码
+world.scale.=2 meters	=2米
+world.scale.=6 feet	=6英尺
+world.map.Wilderness map	荒野地图
+world.map.Zoom map	局部地图
+world.season.winter season	冬季
+world.season.midwinter	隆冬
+world.season.latter winter	晚冬
+world.season.summer season	夏季
+world.season.midsummer	仲夏
+world.season.latter summer	晚夏
+world.month.Center month	中月
+world.month.Pearl month	珠月
+world.month.Soil month	土月
+world.month.Swidden month	烧垦月
+world.month.Seedtime month	播种月
+world.month.Fallow month	休耕月
+world.month.Hay month	干草月
+world.month.Harvest month	收获月
+world.month.Fall month	秋月
+world.month.Dirt month	泥月
+world.month.Dead month	亡月
+world.month.Winter month	冬月
+world.month.Unknown month	未知月份
+world.month_phase.beginning	{month}初
+world.month_phase.early	{month}上旬
+world.month_phase.late	{month}下旬
+world.month_phase.end	{month}末
+world.time.After midnight	午夜过后
+world.time.Small hours	凌晨
+world.time.Early morning	清晨
+world.time.Morning	早晨
+world.time.Late morning	上午
+world.time.Noon	正午
+world.time.Early afternoon	午后
+world.time.Afternoon	下午
+world.time.Late afternoon	傍晚
+world.time.Early evening	入夜
+world.time.Evening	晚间
+world.time.Late evening	深夜
+world.time.Night	夜晚
+world.time.Late night	夜深
+world.time.Midnight	午夜
+# Prefixes from native 0A3E70; underscores encode the original join grammar.
+world.place.prefix.Open_	开阔
+world.place.prefix.Whitefish_	白鲑
+world.place.prefix.Pike_	狗鱼
+world.place.prefix.Burbot_	江鳕
+world.place.prefix.Perch_	鲈鱼
+world.place.prefix.Salmon_	鲑鱼
+world.place.prefix.Ahti's_	阿赫蒂
+world.place.prefix.Ice pick_	冰镐
+world.place.prefix.Näkki's_	纳基
+world.place.prefix.Rowing_	划桨
+world.place.prefix.Sesta	塞斯塔
+world.place.prefix.Mussel_	河蚌
+world.place.prefix.Deep_	深
+world.place.prefix.Shallow_	浅
+world.place.prefix.Foam_	泡沫
+world.place.prefix.Fall_	瀑落
+world.place.prefix.Net_	渔网
+world.place.prefix.Trappin'_	设阱
+world.place.prefix.Catching_	捕获
+world.place.prefix.Punt_	平底船
+world.place.prefix.Iron	铁
+world.place.prefix.Bronze	青铜
+world.place.prefix.Rust	锈
+world.place.prefix.Black	黑
+world.place.prefix.White	白
+world.place.prefix.Point	尖
+world.place.prefix.Sword	剑
+world.place.prefix.Ore	矿
+world.place.prefix.Kiln	窑
+world.place.prefix.Tar	木焦油
+world.place.prefix.Pitch	树脂
+world.place.prefix.Woody	多木
+world.place.prefix.Fallen	倒木
+world.place.prefix.Stump	树桩
+world.place.prefix.Turning_	转弯
+world.place.prefix.Passage	通路
+world.place.prefix.Rest	休憩
+world.place.prefix.Sleeping	沉睡
+world.place.prefix.Lulling	安眠
+world.place.prefix.Dream	梦
+world.place.prefix.Night	夜
+world.place.prefix.Munch	嚼食
+world.place.prefix.Gruel	粥
+world.place.prefix.Half	半
+world.place.prefix.Piece	碎片
+world.place.prefix.Nod	点头
+world.place.prefix.Spawning_	产卵
+world.place.prefix.Marry	婚姻
+world.place.prefix.Juupa	尤帕
+world.place.prefix.Äijö's_	艾约
+world.place.prefix.Big_	大
+world.place.prefix.Huge_	巨
+world.place.prefix.Great_	宏大
+world.place.prefix.Old man's_	老人
+world.place.prefix.Wive's_	妻子
+world.place.prefix.Far	远
+world.place.prefix.Hard	坚
+world.place.prefix.Pain	痛
+world.place.prefix.Slaughter_	屠宰
+world.place.prefix.Murder_	谋杀
+world.place.prefix.Killing_	杀戮
+world.place.prefix.Blood_	血
+world.place.prefix.Gore_	血污
+world.place.prefix.War	战
+world.place.prefix.Beating_	击打
+world.place.prefix.Fist	拳
+world.place.prefix.Quarrel_	争吵
+world.place.prefix.Striped_	条纹
+world.place.prefix.Windy	多风
+world.place.prefix.Draught	穿堂风
+world.place.prefix.Calm	平静
+world.place.prefix.Pacific_	安宁
+world.place.prefix.Safe	安全
+world.place.prefix.Fog	雾
+world.place.prefix.Misty	朦胧
+world.place.prefix.Sunny	晴
+world.place.prefix.Day	日
+world.place.prefix.Summer	夏
+world.place.prefix.Sun	太阳
+world.place.prefix.Blizzard	暴雪
+world.place.prefix.Drizzle	细雨
+world.place.prefix.Drizzly	微雨
+world.place.prefix.Storm	风暴
+world.place.prefix.Storm's	风暴
+world.place.prefix.Whirl	旋流
+world.place.prefix.Cloud	云
+world.place.prefix.Noisy	喧闹
+world.place.prefix.Luru's_	卢鲁
+world.place.prefix.Gaping	裂口
+world.place.prefix.Still	静
+world.place.prefix.Flake	薄片
+world.place.prefix.Middle_	中
+world.place.prefix.Cliffen	岩崖
+world.place.prefix.Quilt	被褥
+world.place.prefix.Holler	呼喊
+world.place.prefix.Packing	堆积
+world.place.prefix.Upright_	直立
+world.place.prefix.Boulder	巨石
+world.place.prefix.Bouldery	多石
+world.place.prefix.Pot	锅
+world.place.prefix.Wife's_	妻子
+world.place.prefix.Scutch	打麻
+world.place.prefix.Moron	愚人
+world.place.prefix.Block	石块
+world.place.prefix.Slopen	坡地
+world.place.prefix.Ugly	丑
+world.place.prefix.Sweet	甜
+world.place.prefix.Hiisi	希伊西
+world.place.prefix.Louhi	娄希
+world.place.prefix.Hiisi's_	希伊西
+world.place.prefix.Louhi's_	娄希
+world.place.prefix.Sacred_	神圣
+world.place.prefix.Hiito	希伊托
+world.place.prefix.Darn	诅咒
+world.place.prefix.Holy_	圣
+world.place.prefix.Troll	山怪
+world.place.prefix.Hallowin'_	祭圣
+world.place.prefix.Boulder_	巨石
+world.place.prefix.Spell	咒语
+world.place.prefix.Crop	庄稼
+world.place.prefix.Damn	咒怨
+world.place.prefix.Bad	恶
+world.place.prefix.Fear	恐惧
+world.place.prefix.Jumi's_	尤米
+world.place.prefix.Spellin'_	施咒
+world.place.prefix.Cruel	残酷
+world.place.prefix.Force	力量
+world.place.prefix.Stone	石
+world.place.prefix.Pisa's_	皮萨
+world.place.prefix.Shelter	庇护
+world.place.prefix.Robber	强盗
+world.place.prefix.Good	善
+world.place.prefix.Goodish	尚好
+world.place.prefix.Bast	韧皮
+world.place.prefix.Hintta's_	欣塔
+world.place.prefix.Sand	沙
+world.place.prefix.Heimo's_	海莫
+world.place.prefix.Ulmi's_	乌尔米
+world.place.prefix.Stonish_	石质
+world.place.prefix.Grey	灰
+world.place.prefix.Rear	后
+world.place.prefix.Rump	臀
+world.place.prefix.Hissing_	嘶鸣
+world.place.prefix.Break	断
+world.place.prefix.Paw	爪
+world.place.prefix.Button	纽扣
+world.place.prefix.Lark	云雀
+world.place.prefix.Rasi	拉西
+world.place.prefix.Gorge	峡
+world.place.prefix.Slashed_	劈斩
+world.place.prefix.Hound's_	猎犬
+world.place.prefix.Kirri's_	基里
+world.place.prefix.Maiden's_	少女
+world.place.prefix.Neck	颈
+world.place.prefix.Hair	发
+world.place.prefix.Beard	须
+world.place.prefix.Hole	洞
+world.place.prefix.Bow	弓
+world.place.prefix.Horsehair_	马鬃
+world.place.prefix.Horse's_	马
+world.place.prefix.Stallion_	公马
+world.place.prefix.Mares_	母马
+world.place.prefix.Horsie	小马
+world.place.prefix.Horses_	群马
+world.place.prefix.Art	技艺
+world.place.prefix.True	真
+world.place.prefix.Barley_	大麦
+world.place.prefix.Barley's_	大麦
+world.place.prefix.Oat_	燕麦
+world.place.prefix.Oats_	燕麦
+world.place.prefix.Straw	秸秆
+world.place.prefix.Daft_	愚钝
+world.place.prefix.Hand_	手
+world.place.prefix.Trouble_	困厄
+world.place.prefix.Linen	亚麻
+world.place.prefix.Loss	遗失
+world.place.prefix.Grain	谷物
+world.place.prefix.Sausage_	香肠
+world.place.prefix.Kaisa's_	凯萨
+world.place.prefix.Border	边界
+world.place.prefix.Carcass_	兽尸
+world.place.prefix.Death	死亡
+world.place.prefix.Snout	兽吻
+world.place.prefix.Palm	掌
+world.place.prefix.Curve	曲
+world.place.prefix.Oiva's_	奥伊瓦
+world.place.prefix.Thread_	线
+world.place.prefix.Mixed	混杂
+world.place.prefix.Club	棍棒
+world.place.prefix.Tervo's_	泰尔沃
+world.place.prefix.Old one's_	老者
+world.place.prefix.Oblivion_	遗忘
+world.place.prefix.Perttu's_	佩尔图
+world.place.prefix.Uncle's_	叔父
+world.place.prefix.Post	柱
+world.place.prefix.Pine	松
+world.place.prefix.Bullock's_	公牛
+world.place.prefix.Cow	母牛
+world.place.prefix.Sheep	羊
+world.place.prefix.Shitty_	粪
+world.place.prefix.Litter	杂物
+world.place.prefix.Spring	春
+world.place.prefix.Conifer_	针叶树
+world.place.prefix.Pasture_	牧场
+world.place.prefix.Flee_	逃亡
+world.place.prefix.Men	人
+world.place.prefix.Birch	桦
+world.place.prefix.Whisk	拂枝
+world.place.prefix.Sprout	萌芽
+world.place.prefix.Honey	蜂蜜
+world.place.prefix.Mead	蜜酒
+world.place.prefix.Skull	颅骨
+world.place.prefix.Hanging	悬挂
+world.place.prefix.Hopsu's_	霍普苏
+world.place.prefix.Loru's_	洛鲁
+world.place.prefix.Kolu's_	科鲁
+world.place.prefix.Hyhky's_	许赫居
+world.place.prefix.Stag	雄鹿
+world.place.prefix.Game	猎物
+world.place.prefix.Gain	收获
+world.place.prefix.Tapio's_	塔皮奥
+world.place.prefix.Blue_	蓝
+world.place.prefix.Knocken	敲击
+world.place.prefix.Axe	斧
+world.place.prefix.Spruce	云杉
+world.place.prefix.Alder	桤木
+world.place.prefix.Juniper	杜松
+world.place.prefix.Rowan	花楸
+world.place.prefix.Aspen	山杨
+world.place.prefix.Fir	冷杉
+world.place.prefix.Dead-tree_	枯树
+world.place.prefix.Pole	长杆
+world.place.prefix.Twig	枝
+world.place.prefix.Willow	柳
+world.place.prefix.Flower	花
+world.place.prefix.Conifer	针叶树
+world.place.prefix.Elk	驼鹿
+world.place.prefix.Bear	熊
+world.place.prefix.Fox	狐
+world.place.prefix.Lynx	猞猁
+world.place.prefix.Badger	獾
+world.place.prefix.Wolf's_	狼
+world.place.prefix.Squirrel	松鼠
+world.place.prefix.Bruin	棕熊
+world.place.prefix.Deer	鹿
+# Suffixes from the same initializer.
+world.place.suffix._sea	海
+world.place.suffix._water	水
+world.place.suffix.wide	阔地
+world.place.suffix._lake	湖
+world.place.suffix._rapid	急流
+world.place.suffix._rapids	湍流
+world.place.suffix._stream	溪
+world.place.suffix._flow	河流
+world.place.suffix.shore	岸
+world.place.suffix.rear	后地
+world.place.suffix.bottom	底地
+world.place.suffix.cove	湾
+world.place.suffix.strait	水道
+world.place.suffix.islands	群岛
+world.place.suffix.cliff	崖
+world.place.suffix._peninsula	半岛
+world.place.suffix.open	旷野
+world.place.suffix.bog	泥沼
+world.place.suffix.fen	低沼
+world.place.suffix.swamp	沼泽
+world.place.suffix.peat	泥炭地
+world.place.suffix.marsh	湿地
+world.place.suffix._forest	森林
+world.place.suffix.wood	林
+world.place.suffix.land	地
+world.place.suffix.mire	泥潭
+world.place.suffix._corner	角
+world.place.suffix._heath	荒原
+world.place.suffix._wild	荒野
+world.place.suffix._trail	小径
+world.place.suffix._passage	通道
+world.place.suffix._wilds	荒境
+world.place.suffix.hill	丘
+world.place.suffix.head	山头
+world.place.suffix.fjeld	高原
+world.place.suffix.fell	高地
+world.place.suffix.steep	陡坡
+world.place.suffix.mound	土丘
+world.place.suffix.hillock	小丘
+world.place.suffix.summits	群峰
+world.place.suffix.climb	登坡
+world.place.suffix.neck	隘口
+world.place.suffix.slope	坡
+world.place.suffix._mountain	山
+world.place.suffix.top	顶
+world.place.suffix._mountains	山脉
+world.place.suffix.front	前地
+world.place.suffix._summit	峰
+world.place.suffix.point	尖角
+world.place.suffix.tip	尖端
+world.place.suffix.nail	钉
+

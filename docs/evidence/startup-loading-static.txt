@@ -1,0 +1,64 @@
+UnReal World 3.89 / Steam 25939378: startup loading display
+Date: 2026-10-18
+Source: read-only EXE byte/string references and objdump selected disassembly.
+Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+No game launch, injection, simulated input, tests, test scripts or assertions.
+All addresses below are RVAs. Absolute operands in disassembly use base 400000.
+
+Correction, 2026-10-19: the former Mod-owned line slot and Present composition
+described in this file are withdrawn. The original is preserved at
+回收/20261019-startup-loading-docs/docs/evidence/startup-loading-static.txt.
+Current implementation and original violation locations are recorded in
+20261019-startup-loading-native.md. Native coordinates, ABI and control-flow
+facts below remain evidence; former compilation does not validate the old UI
+ownership design or establish the current delivery/runtime result.
+
+Confirmed startup display chain
+18083D calls F6180.
+18084B calls 112980 with ECX=string RVA1DC88C (image resource).
+18085D calls 10D5B0 before the white loading text.
+180887 sets EDX=10, 18088C copies EDX to ECX.
+18088E pushes mapped white color; 18088F pushes string VA5DC89C.
+180894 E8 07 DD F8 FF calls 10E5A0; caller cleanup at 180899 is 12 bytes.
+The earlier 18086A PUSH 0 is the outline argument. Therefore this call is
+x=10, y=10, original text, mapped white, outline=0 with the documented text ABI.
+String RVA1DC89C: "Entering into UnReal World - please wait ... "
+Chinese semantic identity: startup.loading; internal source stays English.
+The adapter borrows native-safe encoded Chinese only for the text argument
+at 180894. The game's original x/y, color and outline arguments remain in
+control. No Mod-owned line rectangle or layout table is created.
+
+The following native software-frame path is:
+1808A5 ->10AF90 uploads/copies the frame when the native branch selects it.
+1808CA ->10B3C0 consumes existing drawing records.
+1808D8 pushes renderer at RVA A2110CC.
+1808DE FF 15 7C C2 58 00 calls SDL_RenderPresent via IAT RVA18C27C.
+1808E4 83 C4 04 removes the renderer argument.
+This Present call and its caller cleanup remain original. Chinese is drawn
+immediately inside the confirmed 10E5A0 -> 10DDB0 complete-string boundary,
+onto the native surface at RVA61BBB10 at its actual physical density.
+The existing native 10E700 width extension supplies real text advance.
+1808E7 starts subsequent audio configuration, and 1809E4 calls the known
+main-menu entry 125A90. The game's subsequent uploads and cache operations
+own the already-drawn pixels; no startup fields are retained for replay.
+
+Scope exclusions established from nearby references
+17E6CE references "Loading %s ..." and 17E71C draws its paragraph.
+1809F4 calls that containing function 17E4C0 after 1809E4 main-menu return.
+It belongs to the subsequent game-loading path, so these call sites are not
+patched as the startup display. "Loading intro ..." at C2B0 passes to
+123DF0 rather than this initial title consumer. The complete startup-audio
+analysis now proves its startup caller and all seven progress call sites;
+it is translated in that exact startup scope. See startup-audio-static.txt.
+
+Implementation timing
+The launcher creates a new process with a temporary debug startup boundary.
+After Windows resolves imports, a PE-entry breakpoint suspends the primary
+thread; the launcher restores that byte and EIP and detaches the debugger.
+It then loads and explicitly initializes the resident module, and resumes
+the primary thread. This places the fixed startup patches before game entry.
+This is the existing launcher timing, not an instruction to launch or inject
+the game during implementation. Current source, build and publication status
+are recorded separately in 20261019-startup-loading-native.md. No runtime
+startup result is claimed.

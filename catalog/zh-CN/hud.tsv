@@ -1,0 +1,67 @@
+hud.label.Carrying	负重
+hud.label.Penalty:	惩罚：
+hud.label.Fatigue	疲劳
+hud.label.Injury	伤势
+hud.label.Starvation	饥饿
+hud.label.Total:	合计：
+hud.label.Bloodloss	失血
+hud.label.Hunger:	饥饿：
+hud.label.Thirst:	口渴：
+hud.label.Nutrition:	营养：
+hud.label.Warmth:	体温：
+hud.label.Vigour:	精力：
+hud.label.Nutrition/Warmth/Vigour	营养／体温／精力
+hud.label.Command: 	指令：
+hud.label.Repeat:	重复：
+hud.label.Help and game options	帮助与游戏选项
+hud.label.Wielded weapons/tools	手持武器／工具
+hud.none	无
+hud.condition.Abundant	营养充足
+hud.condition.Starving	饥饿难耐
+hud.condition.Malnourished	营养不良
+hud.condition.Insufficient	营养不足
+hud.condition.Scarce	营养匮乏
+hud.condition.Temperate	营养适中
+hud.condition.Good	营养良好
+hud.condition.Nourished	营养良好
+hud.condition.Well-fed	饮食充足
+hud.condition.Freezing to death	濒临冻死
+hud.condition.Freezing	冻僵
+hud.condition.Numbingly cold	冷得麻木
+hud.condition.Bitterly cold	刺骨寒冷
+hud.condition.Cold	寒冷
+hud.condition.Chilly	有些冷
+hud.condition.Cool	凉爽
+hud.condition.Comfortably warm	温暖舒适
+hud.condition.Rather warm	颇为暖和
+hud.condition.Warm	暖和
+hud.condition.Hot	炎热
+hud.condition.Sweaty	出汗
+hud.condition.Sweating a lot	大汗淋漓
+hud.condition.Vigorous	精力充沛
+hud.condition.Lively	精神饱满
+hud.condition.A bit tired	略感疲倦
+hud.condition.Tired	疲倦
+hud.condition.Weary	疲惫
+hud.condition.Extremely tired	极度疲惫
+hud.condition.Ready to drop	筋疲力尽
+hud.action.Walking	步行
+hud.action.Running	奔跑
+hud.action.Fallen	倒地
+hud.action.Sleeping	睡眠
+hud.action.Fainted	昏迷
+hud.action.Hauling	拖运
+hud.action.Wading	涉水
+hud.action.Skiing	滑雪
+hud.action.Watercraft	乘船
+hud.action.Swimming	游泳
+hud.action.Hiding	潜行
+hud.direction.EAST	东
+hud.direction.NORTH-EAST	东北
+hud.direction.NORTH	北
+hud.direction.NORTH-WEST	西北
+hud.direction.WEST	西
+hud.direction.SOUTH-WEST	西南
+hud.direction.SOUTH	南
+hud.direction.SOUTH-EAST	东南
+hud.speed	速度：

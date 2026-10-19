@@ -1,0 +1,94 @@
+历史记录：本版内嵌 Fusion Pixel 固定字格与缩放方案已撤除，不符合
+docs/font-rendering.md。现行字体规范见该文件，当前交付状态见README.md。
+font-design-compliance-static.txt中的内容跟踪与重放方案已撤销，不能作为规范；
+下文仅保留上一阶段实现和交付依据。
+
+UnReal World 3.89：Mod 自有字体与最终字形 Hook
+日期：2026-10-18
+项目：D:\workspace\uwcn
+
+用户最新要求
+============
+“最后要把渲染hook掉，自己接管渲染，用自己的字体和方案”。该要求已写入
+AGENTS.md，更新字形渲染所有权。游戏仍管理整行排版、文本推进、控件、
+背景缓存及显示时序；Mod 接管已确认的字形输出，不恢复独立 DisplayPlan、
+固定页面行槽、Present 前叠字或几何反写。上一版临时覆盖原字库表的实现废止。
+
+静态接入
+========
+依据 static-disassembly.txt 的原 font8x10 路径，并只读核对同一 EXE 的
+全部 .text 直接 CALL：10DE4D→10BD90，10DF36→10BF20→10BE80，
+10E216→10DF80。该结论仅覆盖这四个字形函数的已确认直接调用链，不推断
+其他字体、图像、地图绘制或未确认的间接入口。
+
+1. 10DE4D：软件字形由 Render 直接输出到游戏当前 SDL_Surface。
+   使用原 ECX/EDX 坐标及原 packed 颜色，按目标像素格式解色；字形 coverage
+   混合 RGB 并保留目的像素 alpha，原值为 0 的黑字不会因其 alpha 被丢弃。
+2. 10DF36：保留 10BF20 外壳，只保存按值 codepoint/half/width 上下文。
+   内部 10BFE0 的 CALL 10BE80 被替代，Mod 向原 scratch surface 的 (0,0)
+   输出自己的 8×10 半字形。原清理、ColorKey、建纹理、复制及销毁继续执行。
+3. 10E216：保留 10DF80 外壳。10E0C7 的完整六字节
+   8D 04 80 C1 E0 04 通过稳定 gateway 接管字形像素段；Mod 向原 renderer
+   当时的 8×10 目标绘字后续接 10E12E。原 10DC50 矩形缩放、目标纹理创建、
+   清理以及后壳 SetRenderTarget(NULL)/RenderCopy 保留。
+   有墨迹的半格保留原 draw blend=0、RGB/alpha255 副作用；空半格保留透明
+   清理后的状态。10DC50 是矩形缩放，不是登记脏矩形。
+
+原生 ASCII 0x20–0x7E 也使用 Mod 字体，8×10 单格；已确认原字节映射的
+Ä/ä/ö保留单格。中文使用 16×10 双格，每次接入原生 8×10 半格。姓名、
+网站、安装路径和原文数据不变，只替换其字体。未确认的原生特殊字节保持
+原原生路径，不盲目按 Latin-1 推断。
+
+渲染与热更新
+============
+Render 仅从自身 RCDATA 字体资源创建 SDL_RWops/TTF_Font，不读取 Windows
+字体目录。固定像素字号、统一基线、字形 advance 居中，不按单字墨迹包围盒
+裁切后放大；保留原 coverage。缓存键为 (codepoint,width)。软件目标写入与
+renderer 纹理输出均在原生当前目标内完成，不调用 Present 或切换目标。
+字体、字形表面、临时纹理及 RWops 归 Render 生命周期，在退役时释放。
+
+唯一字体为 Fusion Pixel 12px Monospaced 简中版，固定上游 2026.09.01。
+官方来源：https://github.com/TakWolf/fusion-pixel-font/releases/tag/2026.09.01
+字体及原始 OFL/三个依赖许可证嵌入 RCDATA 101–105；完整来源和 SHA-256
+见 assets/fonts/fusion-pixel/SOURCE.md。曾检查的同版 10px 源文件确实缺少
+当前词库 U+9E32/U+9E40，故整包改选包含它们的 12px 源，不在运行时回退。
+12px cmap 覆盖词库全部可见字符；原 head unitsPerEm=1200，hhea
+ascent=1000/descent=-200。Render 固定按 12px 光栅化，再按整字体高度统一
+面积采样到 10px；字宽/advance 使用同一比例，保留透明覆盖率，不截掉基线
+以下部分。CJK 12→10 墨迹宽居中于原生双格，ASCII 6→5 居中于原生单格。
+
+Adapter 文本状态写入 state 5，兼容已正式发布的 state 3/4。旧 state 4 的
+临时字库副本只用于迁移归还，不再用于新绘字。新增六字节 gateway 位于
+原进程稳定 replay page+160；保留原 +128 返回桩，登记的短 CALL 仍由驻留
+通用 thunk 管理。稳定页不包含可重载 DLL 的函数地址，渲染上下文只保存值。
+Host ABI 3、adapter 服务/状态 2/2、驻留桥和启动器不变。
+
+范围与交付状态
+==============
+源码、产物编译和正式文件发布均已完成。统一入口 build.ps1 的请求
+c68549f2537d44b18a73e32dc7c56e98、批次 63a521794a5446d7a1b5eefcd05defd4
+成功；请求 JSON 和完整批次日志均已读取。配置一次、增量构建一次，目标仅
+adapter/render，包含字体和许可证的 RC 编译；日志无编译警告。
+
+正式事务：d411f48fb4ae495aa47781fe57456c20。
+旧 adapter/render DLL 和 release.json 先移至
+回收/20261018-223756-d411f48fb4ae495aa47781fe57456c20/package/，
+再替换 package/modules/ 两个正式 DLL 和 package/release.json。
+
+正式文件与编译输出、发布清单 SHA-256 一致：
+adapter f1832b44548a24c789bdb5d9609c2110b42d49c1f98c2b0d5bc980a8b8625390
+render  65f24feb052903bde1ffe395a7e154ca62ef24a406186815f1f391cf5f5b0100
+loader  cd2e5bee332da354e605c029fbfd7818bdeb9dd1bbec447a4f3bd89baa4bb677
+launcher 0b9ef0b28dba6e41465f3a549311eff7df5a80ab620a311bd2a10dd47c07ae69
+后两者沿用原正式文件，哈希未变。其他四业务 DLL、词库与 profile 未改。
+
+gateway 失败重试复核还修正了一个已确认生命周期问题：初始化 +160 新块
+时检查不被 Host 改写的尾部 JMP/回放指令/C3，已初始化则保留 Host 管理的
+首 CALL；不能按从 state3/4 恢复的业务布尔值重写该入口。否则某次激活后续
+失败再 COMMIT 时会破坏 Host 已安装字节校验。本项仅改 adapter。
+
+本次发布日志为 Runtime Applied was not requested；没有取得运行时 Applied，
+不声称实际游戏已加载本批或完成视觉验收。源码支持既有兼容业务热发布机制，
+本批不改变通用驻留桥，也不要求为字体或字形 Hook 再次退出游戏。
+此次只做源码、静态反编译和字体文件数据审阅；不启动或操作游戏、不注入、
+不运行交付产物或测试，不添加测试脚本、测试用例、断言或假设性回退链。

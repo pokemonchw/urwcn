@@ -1,0 +1,78 @@
+UnReal World 3.89 / Steam 25939378: main-menu text clarity and row geometry
+Source: the existing fixed-fingerprint EXE, read-only static instruction analysis,
+the user's supplied screenshots, and the loaded game's SDL 2.30.0 API contract.
+No game launch, execution of produced binaries, tests, test cases or assertions.
+
+Observed issue
+The prior Chinese glyphs were rasterized at the 800x600 software surface size
+and enlarged together with that surface. The native menu still used its fixed
+12-pixel row pitch and 14-pixel selection rectangle. The screenshots show soft
+glyphs, crowded rows and selection borders crossing the Chinese text.
+
+Native geometry
+Panel globals x/y/w/h: RVA 5F54A20/24/28/2C.
+Rows: RVA 5F4EF10, stride E8; x/y at +D0/+D4. Count: RVA 5F54A34.
+CFFB0 at D02B0 checks row.x and D02B7 skips only automatic coordinate setup
+when x != 0. The label still reaches D0367. Native label y is row.y-1.
+D0650 keeps EDI=index*E8 on the ordinary action-key-zero main-menu path.
+At D0813 the original fill uses row.y-4..row.y+9, independent of font height.
+D0570 reads mouse and row geometry, writes no global state and calls no helper.
+Logical mouse x/y: RVA 5F54DE8 / 5F549B4.
+D1207 and D1522 restore the menu surface rectangle using the panel globals.
+
+Localized geometry
+Only the main-menu render scope establishes x=623 and y=109+18*index in rows.
+Panel height=170, outer frame height=255. Shared row bounds are
+{x=620,y=105+18*index,w=165,h=18}. Text has a 14-logical-pixel font-height budget
+and is vertically centered using its actual raster height. The fill, outline
+and native mouse-index adapters use the same row bounds. Direction-key logic
+and selected row identity remain native.
+
+Additional verified instruction spans
+RVA 125BC5: E8 A6 06 FF FF ->116270; ECX=x,EDX=y,
+ stack(width,height,title,flags,extra), caller cleanup20; change height only.
+RVA D0813: E8 E8 D0 03 00 ->10D900; ECX=x,EDX=y,
+ stack(width,height,color,flags); caller cleanup is preserved.
+RVA D0832: E8 09 DD 03 00 ->10E540; ECX=x,EDX=y,stack(xmax,ymax).
+RVA D13F4: E8 77 F1 FF FF ->D0570; no arguments, EAX=index/-1.
+RVA D1561: E8 0A F0 FF FF ->D0570; same ABI.
+
+Final renderer composition
+D1225 ->10AF90 uploads and copies the native software frame; D124A ->10B3C0
+then processes additional drawing records. The native renderer branch also
+converges at D1292: PUSH [VA A6110CC], the renderer (RVA A2110CC).
+Both base-frame copies use SDL_RenderCopy(renderer,texture,NULL,NULL).
+The corrected call roles and mapping evidence are in font-rendering-static.txt.
+D1298 has complete bytes FF D6 83 C4 04, CALL ESI followed by ADD ESP,4.
+ESI is the original SDL_RenderPresent pointer. Replace the whole five-byte
+span with CALL to the resident stdcall present bridge; its RET4 preserves the
+removed caller cleanup. D129D is XOR EAX,EAX, so prior ADD flags are not consumed.
+The bridge composes text only inside the main-menu input scope, then invokes
+the original SDL_RenderPresent. Other interfaces keep the original presentation.
+
+The core retains only its own UTF-8 semantic lines and logical row bounds.
+It suppresses the old menu/footer/version glyphs before their software draw.
+At final presentation, it rasterizes the installed Microsoft YaHei at the actual
+output pixel size and draws the resulting texture at its original pixel size.
+Background images and selection rectangles retain the game's rendering path.
+
+SDL_RenderSetScale in SDL 2.30 changes only scale, keeping the physical viewport
+and clip intact. The bridge saves scale, selects scale1 to read the physical
+viewport/clip, temporarily disables clip, renders pixel-aligned glyph textures,
+restores clip while scale is still1, then restores scale. It never changes render
+target, viewport, logical size or mouse event conversion.
+Source: https://raw.githubusercontent.com/libsdl-org/SDL/release-2.30.0/src/render/SDL_render.c
+
+Core ABI is now2; resident and core must be updated together and the game restarted.
+
+2026-10-18 follow-up to user-provided Chinese/English screenshots
+The enlarged 18-pitch menu and 16-pitch footer above are historical. Current
+layout restores rows {620,105+12*i,165,14}, panel {615,80,180,125}, and outer
+frame {605,5,190,210}. The resident consumer uses row-union height +39/+124
+for those panel/frame heights. Font ink remains at the later 9/8 budgets,
+using the installed Microsoft YaHei Bold file msyhbd.ttc. Version uses the
+12-high slot at y63. Footer uses 12-high slots at authors528/538/548,
+website568, production528/538, copyright568/578, with 10-pixel pitch.
+Rationale and user screenshot identifiers are in font-rendering-static.txt.
+No game was run or tested by the agent. This follow-up requires offline
+publication of the changed resident DLL together with the changed modules.

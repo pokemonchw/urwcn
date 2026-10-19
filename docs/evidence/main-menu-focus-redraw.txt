@@ -1,0 +1,90 @@
+UnReal World 3.89 / Steam 25939378: main-menu window-event repaint
+Date: 2026-10-18
+Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Method: read-only objdump disassembly of the fixed-fingerprint EXE, existing
+instruction records, source inspection, and the user's supplied screenshot.
+No game launch, process injection, input simulation, product execution or tests.
+Instruction addresses below are RVAs; absolute data operands are labelled VA.
+
+Reported behavior and composition boundary
+-----------------------------------------
+The user reports that Chinese text disappears after switching away from the
+window and focusing it again; hovering a menu row restores the text. The supplied
+screenshot shows the main-menu background and selection fill without its text.
+The existing native bridges suppress the original menu/footer/version glyphs.
+Chinese is composed after the base-frame copy, at D1298 before SDL_RenderPresent;
+it is not stored in the game's retained software surface or frame texture.
+
+The main-menu input scope wraps 125BE1 -> D1120. Its ordinary input path calls:
+
+D12AF  call D3BF0
+D3BFC  call D1C00
+
+D1C00 consumes SDL events. D1C74 loads SDL_WaitEvent from IAT RVA 18C254 into ESI;
+D1C8E calls SDL_PollEvent through IAT RVA 18C24C, and D1CF8 calls ESI. Both receive
+the event buffer at VA 63555F8. D1D9B compares its type to 200h (SDL_WINDOWEVENT).
+The window-event branch reads its event byte at VA 6355604 (+0Ch); D1EA9/D1EAE
+compare it with 0Ch/0Dh (focus gained/lost). This handler processes window events
+without returning to the menu's ordinary D1298 presentation first.
+
+Verified window-event presentation paths
+----------------------------------------
+The handler's first redraw block contains:
+
+D1E26..D1E3F checks native menu/renderer globals
+D1E41  call 10B480           ; native frame copy
+D1E4C  call [VA 58C26C]      ; SDL_GetRenderTarget
+D1E61  call [VA 58C288]      ; SDL_SetRenderTarget(renderer,NULL), if needed
+D1E6A  push [VA A6110CC]     ; current renderer
+D1E70  FF 15 7C C2 58 00     ; SDL_RenderPresent, via IAT RVA 18C27C
+D1E76  83 C4 04             ; caller cleanup
+D1E7B  call 10B720           ; software-frame alternative
+
+The later window-event redraw block contains:
+
+D1ED1..D1EEA checks the corresponding native menu/renderer globals
+D1EEC..D1F13 branches around this block for event values 6,5,8,9,4
+D1F19  call 10B480           ; native frame copy
+D1F24  call [VA 58C26C]      ; SDL_GetRenderTarget
+D1F39  call [VA 58C288]      ; SDL_SetRenderTarget(renderer,NULL), if needed
+D1F42  push [VA A6110CC]     ; current renderer
+D1F48  FF 15 7C C2 58 00     ; SDL_RenderPresent
+D1F4E  83 C4 04             ; caller cleanup
+D1F56  call 10B720           ; software-frame alternative
+
+The confirmed software helper contains:
+
+10B72A call 10AF90           ; upload/copy the native software surface
+10B74F call 10B3C0           ; process additional drawing records
+10B75D push [VA A6110CC]     ; current renderer
+10B763 FF 15 7C C2 58 00     ; SDL_RenderPresent
+10B769 83 C4 04             ; caller cleanup
+10B76C pop ecx
+10B76D ret
+
+These calls submit a newly copied native frame without visiting D1298. Since
+the native retained frame contains no suppressed labels, these presentation
+paths omit Chinese. A later menu-row refresh reaches D1298 and composes it again.
+This establishes the missing composition boundary from static code and matches
+the reported behavior; no runtime reproduction is claimed.
+
+Resident patch and ABI
+----------------------
+Add only the three confirmed presentation sites D1E70, D1F48 and 10B763. Replace
+each six-byte CALL [IAT] (FF 15 7C C2 58 00 at the preferred image base) with a
+five-byte CALL to resident __cdecl menu_repaint_present(renderer) and one NOP.
+Relocate the expected IAT operand to actual image base +18C27C during identity
+checking. Keep the original ADD ESP,4 at D1E76/D1F4E/10B769 intact, preserving
+both caller cleanup and its flags, including every caller of shared 10B720.
+
+The new bridge composes the current Chinese display only when
+input_scope && localized, then calls the original SDL_RenderPresent. Other
+uses of shared 10B720 keep their native presentation. D1298 retains its existing
+five-byte FF D6 83 C4 04 span and stdcall bridge whose RET4 replaces that span's
+cleanup. The startup-loading bridge is unchanged.
+
+No focus-state tracking, texture-reset handling, additional UI fields or other
+presentation sites are introduced. This is a resident-loader patch change and
+requires offline publication and a normal game restart; business-module hot
+reload cannot replace an already loaded resident bridge.

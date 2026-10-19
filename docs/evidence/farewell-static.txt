@@ -1,0 +1,159 @@
+UnReal World 3.89 / Steam Build 25939378: exit farewell screen
+Date: 2026-10-18
+Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Method: read-only PE string/rel32 reference extraction and selected objdump
+disassembly from the fixed EXE. No game launch, process injection, simulated
+input, product execution, tests, test cases, test scripts or assertions.
+All code/string addresses below are RVAs. Absolute operands shown in selected
+instructions use the preferred image base 00400000.
+
+Confirmed page and lifetime
+---------------------------
+The supplied screenshot is the exit farewell page, distinct from the seven-row
+main menu and startup loading page. The user explicitly added this page to the
+translation scope. Its page function is E6E90; its unique direct caller is:
+
+180DF5  cmp dword ptr [VA A6D0BC4],1
+180DFC  jne 1809D0
+180E02  E8 89 60 F6 FF  call E6E90
+
+E6E90 has no register or stack input contract: it initializes the registers it
+uses and reads only its own local stack storage. It starts music_birth.ogg at
+E6EA9 -> C000, draws the background at E6EC3 -> 1127C0, then constructs the page.
+E6EEC -> 116270 draws its outer frame and title. After drawing the text and the
+native Press a key button, the function presents, waits for input, and follows
+the original shutdown calls. E71EF calls E6D20 with the empty original string;
+that routine ends in original cleanup and exit. A resident page scope can wrap
+180E02 -> E6E90 and stay active throughout the native wait. No reloadable module
+call frame is needed around the wait, and no menu action or exit action changes.
+
+Original visible fields
+-----------------------
+The screen uses the established logical 800x600 canvas. The following strings
+are all the visible text constructed by this specific page function:
+
+RVA 1A7090: YOU ARE LEAVING UNREAL WORLD - A FINAL REMINDER...
+RVA 1A70C4: "Only when the last tree is cut;
+RVA 1A70E8:  only when the last river is polluted;
+RVA 1A7110:  only when the last fish is caught;
+RVA 1A7134:  only then will they realise that you cannot eat money."
+RVA 1A7170:  - Cree Indian Proverb
+RVA 1A7188: UrW is dedicated to all indigenous peoples and groups around the world.
+RVA 1A71D0: Love the earth. It's under your feet every day - not too far away.
+RVA 1A7218: Something very ageless breathes within you, within us - do not let it suffocate.
+RVA 1A7270: Dare to hear your voice, dare to follow your spirit, dare to see and dare to feel... now.
+RVA 190788: Press a key
+
+The quotation's five strings are copied into stack buffers at E6F0D..E7019 with
+SSE and scalar copies, then passed to their five explicit draw calls. Translation
+identity follows those confirmed call sites, not the contents of a stack buffer.
+
+Original display ABI and geometry
+---------------------------------
+Text function 10E5A0: ECX=x, EDX=y, stack(text,mapped_color,outline), with caller
+cleanup of 12 bytes. The existing main-menu evidence records its original cursor,
+color and EAX side effects. Suppression at the farewell sites must preserve the
+same original text effects even when Chinese is later composed elsewhere.
+
+Field             Call RVA  Native target  Original x/y       RGB          Outline
+quote.tree        E7020     10E5A0         250/27             0,0,0        0
+quote.river       E703A     10E5A0         250/37             0,0,0        0
+quote.fish        E7057     10E5A0         250/47             0,0,0        0
+quote.money       E7074     10E5A0         250/57             0,0,0        0
+quote.source      E7091     10E5A0         250/70             0,0,0        0
+bottom.earth      E70FC     10E5A0          10/540            252,252,84   1
+bottom.spirit     E712F     10E5A0          10/550            252,252,84   1
+bottom.courage    E7162     10E5A0          10/560            252,252,84   1
+
+Title call E6EEC -> 116270 has ECX=0,EDX=0 and stack(width=800,height=600,
+text=VA5A7090,mode=32,color=0), with caller cleanup 20 bytes. Keep the original
+frame draw and argument data. Its mode-32 title branch at 116679..116698 calls
+1157B0 with ECX=4,EDX=4 and stack(width=792,original_text,mode=1). The native
+title helper draws its bar/frame and then reaches 115A94 -> 10E5A0 with x=9,y=8,
+mapped RGB=(252,252,84),outline=1. Scope this glyph call to the farewell title;
+the same helper outside the exact title scope stays original.
+
+Dedication call E70C9 -> 10E910 has ECX=0,EDX=180 and stack(width=800,
+text=VA5A7188,mapped RGB=(100,149,237),outline=1), with caller cleanup 16 bytes.
+The paragraph-centering routine tokenizes the original text via D4430 and
+maintains its normal tokenizer globals and row flow. It draws assembled lines
+through 10EA95 and 10EB19 -> 10E5A0. The 71-byte original fits in 800 pixels at
+8 pixels per byte and is centered at x=116,y=180. Keep the original helper and
+scope only these two glyph calls for the farewell dedication.
+
+Prompt call E7179 -> 114680 has ECX=350,EDX=575 and stack(text=VA590788), with
+caller cleanup 4 bytes. Its original string is 11 bytes and contains no dot or
+angle-bracket control markers. It blits the original button with left/right
+pieces of width 7 and 11 middle pieces of width 8, keeping width 102 at x=350.
+The SDL blit rectangles have height 32; resource transparency/clipping determine
+the visible button shape. Ordinary per-character text reaches 114956 -> 10E5A0
+at x=358+8*index,y=580,mapped color=0,outline=0. This call can suppress the prompt
+glyphs while keeping button geometry, parser advancement, native cursor values
+and the final cursor write at 114A0B. Other marker-specific glyph calls at
+11492D/1149D2/1149F9 are not on this literal prompt path and need no adaptation.
+
+Chinese line slots are Mod-owned within these confirmed regions; the original
+ten-pixel line pitch is not a requirement for Chinese font height. The title,
+quotation, dedication, bottom three lines and button prompt have explicit field
+identities. Native English strings, coordinates used by native input, button
+resources, background image, music, wait and shutdown behavior remain original.
+
+Present and wait-for-key boundaries
+----------------------------------
+The page's first native frame submission is:
+
+E718A  E8 01 3E 02 00        call 10AF90
+E71AF  E8 0C 42 02 00        call 10B3C0
+E71BD  FF 35 CC 10 61 0A     push [VA A6110CC] ; renderer
+E71C3  FF 15 7C C2 58 00     call [VA 58C27C] ; SDL_RenderPresent
+E71C9  83 C4 04              add esp,4
+E71CC  E8 AF CA FE FF        call D3C80
+
+D3C80 is the original wait-for-key routine. Before its input loop it uploads
+and submits the frame again, so this second present is also an actual required
+composition boundary for the farewell page:
+
+D3C9A  E8 F1 72 03 00        call 10AF90
+D3CBF  E8 FC 76 03 00        call 10B3C0
+D3CCD  FF 35 CC 10 61 0A     push [VA A6110CC]
+D3CD3  FF 15 7C C2 58 00     call [VA 58C27C]
+D3CD9  83 C4 04              add esp,4
+
+After its original SDL event draining calls, D3D05 -> D3BF0 -> D1C00 is repeated
+until a positive input code is returned. This is the same SDL event consumer
+used by the main-menu input path. Thus native window-event repaints can reach
+the already confirmed D1E70, D1F48 and 10B763 presentation sites while the
+farewell page waits. Their existing resident bridges can compose when the
+explicit farewell scope is active. Other pages using those shared sites stay
+original. This conclusion is static; no focus/input operation was performed.
+
+The six-byte IAT presents at E71C3 and D3CD3 can use a resident cdecl(renderer)
+call plus one NOP while retaining the ADD ESP,4. Alternatively, replacing all
+nine bytes with CALL rel32 plus four NOPs requires stdcall(renderer) RET4, as
+documented for the startup present. The relocated expected IAT operand is the
+actual image base +18C27C, not a fixed preferred-base VA.
+
+Exact rel32 CALL patch bytes
+---------------------------
+farewell_scope:       180E02 E88960F6FF -> E6E90   args=0
+farewell_title:       E6EEC  E87FF30200 -> 116270  args=5
+farewell_title_draw:  115A94 E8078BFFFF -> 10E5A0  args=3
+farewell_quote_tree:  E7020  E87B750200 -> 10E5A0  args=3
+farewell_quote_river: E703A  E861750200 -> 10E5A0  args=3
+farewell_quote_fish:  E7057  E844750200 -> 10E5A0  args=3
+farewell_quote_money: E7074  E827750200 -> 10E5A0  args=3
+farewell_quote_from:  E7091  E80A750200 -> 10E5A0  args=3
+farewell_dedication:  E70C9  E842780200 -> 10E910  args=4
+centered_line:        10EA95 E806FBFFFF -> 10E5A0  args=3
+centered_final_line:  10EB19 E882FAFFFF -> 10E5A0  args=3
+farewell_earth:       E70FC  E89F740200 -> 10E5A0  args=3
+farewell_spirit:      E712F  E86C740200 -> 10E5A0  args=3
+farewell_courage:     E7162  E839740200 -> 10E5A0  args=3
+farewell_prompt:      E7179  E802D50200 -> 114680  args=1
+button_regular_char:  114956 E8459CFFFF -> 10E5A0  args=3
+
+Here args means the number of original stack arguments copied by the existing
+resident bridge; ECX/EDX and original register/return effects are also retained.
+This evidence establishes only the requested farewell page. It provides no
+translation identity for any other exit prompt, popup or gameplay screen.

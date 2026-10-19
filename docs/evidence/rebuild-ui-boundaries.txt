@@ -1,0 +1,278 @@
+UWCn 主界面重建：文本读取、度量、绘制边界
+日期：2026-10-19
+范围：UnReal World 3.89 / Steam Build 25939378，主菜单八个已确认动作槽
+（其中 BONUS MATERIAL 条件显示）、原生版本、出品、版权、作者及网站。
+目标：D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+既有静态指纹：e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+指令地址均为 RVA；objdump 的地址/绝对操作数为首选基址 0x400000 下 VA。
+
+文档纠正（2026-10-19）：本文旧版把原生资源内容跟踪、UTF-8/坐标贡献记录
+及最终 RenderCopy 重放写成了接入方案；这些是代理新增的违规实现，不是
+用户规范，现明确撤回。原件位于
+回收/20261019-document-render-policy-5e1fcbfd/docs/evidence/rebuild-ui-boundaries.txt，
+旧出处为该原件第 106-110、143-145、154-184、209-212 行。
+问题与待移除状态见 docs/evidence/20261019-implementation-correction.md。
+本次仅纠正文档，保留下面的原生函数、对象、ABI 与反汇编事实；不表示
+源码已经移除该机制、卡顿已经修复或已经编译发布。
+
+本次方法
+========
+阅读 AGENTS.md、已有反汇编和证据文档；用项目 .toolchains 内 objdump
+只读反汇编 CF790..CF990、D0430..D0FC0、D1120..D1A00。
+没有启动、注入或操作游戏；没有运行产物、测试命令、测试脚本或断言。
+本文记录静态事实和本次源码接口，不以旧编译/发布记录证明新实现正确。
+
+明确的文本读取及语义身份
+======================
+1. 菜单：125BDC -> CFFB0 的 Before/After 作用域；D0367 -> 10E5A0。
+   D0367 的 ECX=x、EDX=y；栈参数 (text, mapped_color, outline)，caller
+   cleanup=12。ESI 指向当前原生行，EBX 是从 0 开始的行索引。
+   索引 0..7 分别对应 load/create/setup/ancestors/about/credits/quit/bonus。
+   125986/5992/59AB/59B7/59C3/59CF/59E4/5A20 的原 CF990 调用及其
+   英文行数据保持原样；本次只在 D0367 的完整字符串消费处借入译文。
+   行位置、菜单尺寸、选择值、键和鼠标行为均不写回。
+
+2. 版本：125BD7 -> 124710 的作用域。12473A -> 124690 原 getter 返回
+   实际原生版本值；12474C -> 10D0 为原 sprintf，栈 (dest, format, value)。
+   在这个 sprintf 的 After 使用原 value 参数翻译并写入其原 0x400 字节
+   局部输出缓冲 [EBP-408]，不重新读取 verno.urw，不使用默认版本常量。
+   原 getter 的值最多 79 字节；该上限由 D4280/fgets(slot,80,FILE*) 确认。
+   124793 的 7 字节 LEA EAX,[ECX*8] 是显示宽度扩展点。此处只把 EAX
+   改为 Render 返回的真实逻辑宽度；原 CDQ、除 2、减宽和锚点计算继续执行。
+   1247A7 -> 10E5A0 使用上述原生计算出的坐标。Mod 保存的 center_x 由该
+   原生 x 加同一宽度的一半得到，没有复制固定的 x=703 坐标。
+
+3. 页脚：125AF5 与 125BA3 -> 1250E0 确定主界面页脚作用域。
+   125137 -> 162300 的 EDX 是 production 完整文本，ECX=1 清理词槽；
+   1251E4 -> 162300 同理，为 authors 完整文本。仅借入对应译文参数。
+   125189 -> 10D0 的栈参数为 (dest, copyright_format, years)，After
+   保留 years 原参数并在原 [EBP-408] 0x400 字节缓冲中生成译文。
+   后续 12519C -> 162300 正常解析这个原缓冲。
+   125173/1251D2/12521C -> 10EB40 分别是三次原生段落显示，ECX=x、
+   EDX=y；栈 (width,height,mapped_color,outline)，caller cleanup=16。
+   保留原 <br>、空格分词、作者姓名、年份、网站及原 10 像素换行代码。
+   段落每个 token 原存储跨度 0x82，UTF8安全传输编码后的token必须含NUL
+   可容纳；并非按整段另建行槽或重新布局。
+
+编码与完整串度量
+================
+10E5A0 把传入字符串复制到 [EBP-130]，随后逐字节把 C4/E4/F6 改为
+8E/84/94。因此直接把 UTF8 送入该函数会损坏含这些前导字节的中文。
+layout::encode_native 仅用于传输：ASCII 原样，非 ASCII 标量映射成两个
+非控制字节，避开 C4/E4/F6；映射表作为模块纯值状态保存。此编码不定义
+中文宽度，不使用 16x10 字格，也不把两个字节画成两个半字形。
+所有宽度和绘制服务先 decode_native，还原整串 UTF8，再调用同一 Render。
+
+已实现的内联接口均覆盖完整指令，原被替换指令不修改 EFLAGS：
+- 10E700，9 字节：MOV [cursor_y],EBX；LEA EAX,[EAX+ECX*8]。
+  活动文字上下文中保留原 MOV 副作用，用真实宽度替换 ECX*8 的加数。
+  下一条原生 10E70E 自行写回 cursor_x，原 cookie/返回代码正常执行。
+  MOV 的绝对操作数 10E702 有 HIGHLOW 重定位；校验和回放均填实际
+  image_base+61BBB3C，不能把首选 VA 065BBB3C 固定在运行时补丁中。
+- 124793，7 字节：LEA EAX,[ECX*8]。按版本完整译文测量赋给 EAX；
+  其后的原生居中代码原样保留。
+- 10EE68，6 字节：LEA ECX,[EAX+ESI*8]；MOV EAX,[EBP+8]。
+  对 [EBP-404] 原 token 测量，ECX=当前光标+真实宽度；仍加载原 width。
+  10EE70 原 CMP、JLE 及换行/行距/光标重置决定是否换行。
+- 10EF57，9 字节：LEA EAX,[EAX+EBX*8]；MOV EBX,[EBP-C08]。
+  10EB40 height=-1 的原测量分支使用同一完整 [EBP-804] 字符串真实宽度。
+  主界面三次调用的原 height=1000，但完整段落接口仍不保留字节计宽分支。
+
+10EB40 其余 strlen 是原缓存长度/空白标记/字符串拷贝的字节容量或语法判断，
+不是用作像素宽度；这些操作继续消费原生安全编码。未修改原 parser 的
+<br> 处理、10 像素行距、标记颜色分支、token 索引或边界比较。
+
+空格与词槽容量的逐指令复核：
+- credits-paragraph-disassembly.txt:292-307（10EEA6..10EEE0）判断下一
+  token 是否是句点/空串，再将原单空格字面附加到 [EBP-804]。10EF87
+  送往 10E5A0 的完整字符串已经包含该空格；10E700 的真实度量包含它，
+  无须也不得另外手动固定推进 8。全文仅两处像素 *8 位于 10EE68 和
+  10EF57，均已接入真实度量；其他字节长度仍承担拷贝和缓存容量语义。
+- credits-append-disassembly.txt:207-226（162323..162350）把单个前导
+  空格写成独立 token；连续前导空格走原逐字节逻辑。
+- 同文件:265-318（1623CF..162486）以 '<' 开始一个包含 '<' 的标记
+  token，以 '>' 结束且把 '>' 写入该 token。这是字符级语法分隔，
+  不只针对 <br>。本次容量检查计入两个尖括号本身。
+- 同文件:319-350（162488..1624D4）普通空格在下字节不是空格时结束
+  token；连续空格的非末字节写入原 token。容量检查沿用这个确切规则。
+- 三个 paragraph append（包括 12519C 的已格式化版权）均在进入原
+  162300 前验证各 native token 最多 129 字节加 NUL，共 0x82 字节。
+  该校验仅拒绝违反已确认存储契约的词库数据，不拆词、不截短或补造译文。
+
+最终绘字入口
+============
+10E5A0 原生颜色、轮廓调用顺序、负坐标恢复及光标更新全部继续运行。
+原完整串最终输出入口是下列五个 CALL -> 10DDB0：
+  10E67C E8 2F F7 FF FF    outline top
+  10E68D E8 1E F7 FF FF    outline bottom
+  10E69E E8 0D F7 FF FF    outline left
+  10E6AF E8 FC F6 FF FF    outline right
+  10E6D8 E8 D3 F6 FF FF    foreground
+其 ABI 为 ECX=x、EDX=y、栈(text)，caller cleanup=4。只在上面已确认
+完整文字调用的活动上下文里 Hook 原输出，向 Render 交还完整 UTF8。
+当前 SDL_Surface* 从游戏 RVA 61BBB10 取得，mapped color 从 A211068
+取得并按当前 surface->format 用 SDL_GetRGB 解释；不把 packed pixel 当 RGBA。
+旧实现把文本及坐标保存为贡献记录，在原生 RenderCopy 内重建高清源。
+该方案违规且待移除；没有 Present 叠字或固定坐标表不能证明它合规。
+Render 的 outline 参数仅参与统一字号/包络预算，值来自原 10E5A0 栈
+outline 或原段落栈 outline。上列五个偏移调用及其先后顺序是原生事实，
+不能据此推导 Mod 必须保存五份文字/坐标记录并在随后复制时重放。
+
+原 10DDB0 的正常实现为逐字节调用 10DE4D -> 10BD90，最后者写 surface。
+本次主界面接管其完整字符串出口，故不会执行按字节 glyph 索引或 +8 推进。
+另两条已记录 glyph 链 10DF36->10BF20->10BFE0->10BE80 和
+10E216->10DF80 是其他文字 renderer 路径，本次主界面消费者没有使用它们，
+不声称本次已完成所有游戏界面或这些其他文字族的汉化。
+
+选择、鼠标与原生缓存复核
+======================
+D0650..D0840 已重新静态反汇编。主菜单行的 action key=0、普通面板：
+- D0650 无 10E5A0 或其他文字绘制调用，只调用 10D900 绘选择底和
+  10E540 绘边框。标签不会因高亮切换重新从英文行读出并绘字。
+- 可选 D07FB 的 strlen(label)*8 几何分支受 RVA 5F54AAC 控制；
+  CF7EB 用字符串终止的 AL=0 初始化该标志，主菜单构建未开启它。
+  主菜单选择宽度来自原面板，不因中文自然宽度改变点击区。
+- D1120 在 D1189 用 SDL_UpperBlit 将当前 logical surface 保存到原
+  surface RVA A1C1CE0。此调用发生在 125BDC 菜单文字绘制之后。
+- D1207/D1522 -> 10DBB0 恢复原缓存，D1217/D1953 -> D0650 画选择。
+  D1120 未调用 CFFB0 或 10E5A0 重绘标签，使用的是原生缓存像素。
+- D0570 继续使用游戏行记录和原面板做鼠标判断。本次没有 Hook 或重写它。
+
+热应用时的原生重绘
+==================
+125BE1 -> D1120 的 Before 仅按值记录 menu_input token，After 删除；
+没有保存 NativeEvent/frame/栈地址，也没有业务 DLL 调用帧跨越原生等待。
+此活动 scope 随 adapter 状态迁移；它在原输入返回、子窗口分派前结束。
+kNativeInvalidate 在该 scope 中同步执行：
+1. Host::native_fragment(125BA3,125BE1)。新反汇编见
+   rebuild-native-call-disassembly.txt:735-750：片段只调用原 Footer、
+   原面板、版本和菜单，5 次 PUSH 与 ADD ESP,14h 平衡，不访问外层 EBP。
+   最后已登记 125BDC CALL 的返回边界由驻留 RET 桩截回 Host，绝不执行
+   125BE1 的输入等待。片段中的坐标常量仍在原游戏代码，不抄入 Mod。
+2. 当前 adapter 经游戏 IAT RVA 18C204 将 61BBB10 surface 复制至
+   A1C1CE0，传入两个 NULL 矩形。旧文称其与 D1189 参数相同并不准确：
+   D1167 读取 RVA 1DDAB0 的 {0,0,800,600}，D1189 的源/目标矩形均指向
+   这份局部矩形。旧 Render 还随复制搬运中文字记录；这部分是待移除的
+   违规实现，不是原生缓存接口所要求的行为。
+3. D0650(ECX=[5F54AB0],EDX=0)，与原 D1217 相同，保留当前选择。
+4. 原 10B720 完成上传与呈现。
+整个失效调用仅持有短同步模块租约，没有输入等待、伪造按键或退出游戏。
+当前即时重绘只覆盖主菜单输入 scope；子窗口内容并未接入本轮汉化或即时
+重建，不能用这一实现声称所有窗口热失效刷新完成。
+
+原生直接写像素事实与违规跟踪实现
+================================
+旧实现为维护 Mod 自己的文字贡献与 observed 像素镜像，在以下通用写点
+逐像素传递 surface/x/y/packed pixel。写点及 ABI 有静态依据，不等于
+全局像素跟踪获得授权。此跟踪及贡献覆盖逻辑随重放机制待移除；下列
+仅保留原指令事实，不是继续安装或扩展逐像素 Hook 的实现指导。
+- 10BB04，89 0C 82 F6 06 02：MOV [EDX+EAX*4],ECX；TEST [ESI],2。
+  surface=ESI，x=EBX，y=EDI，pixel=ECX。10BAB0 已做原范围检查。
+  证据 rebuild-native-call-disassembly.txt:759-790。
+- 11454F，89 14 81 F6 06 02：MOV [ECX+EAX*4],EDX；TEST [ESI],2。
+  surface=ESI，x=EBX，y=EDI，pixel=EDX；这是原 flood-fill 内联写点。
+  证据同文件:880-937。
+- 10BB7D，8B 45 FC 48 83 F8 03：MOV EAX,[EBP-4]；DEC EAX；
+  CMP EAX,3。原 switch 只写 1..4 BPP；surface=EDI，像素指针=ESI，
+  y=[EBP-8]，BPP=[EBP-4]。x 由原目标地址减 surface.pixels 与 y*pitch
+  后除 BPP 还原。pixel=[EBP+8] 按原写入字节数保留低 8/16/24/32 位。
+  证据同文件:803-872。该入口也覆盖 10BE80 的原 glyph 临时表面写入。
+- 10BE33，89 14 81 F6 07 02：MOV [ECX+EAX*4],EDX；TEST [EDI],2。
+  surface=EDI，x=ESI，y=EBX，pixel=EDX；这是原 glyph 的直接写入。
+  旧实现据此跟踪子窗口英文像素覆盖，超出了本次组件文本调用的处理范围。
+  证据同文件:952-1005。
+以上原指令不修改 ESP、不含相对控制转移；原 TEST/DEC/CMP 产生 EFLAGS。
+这些指令特征不构成保留逐像素跟踪机制的依据。
+
+10D900 选择底没有直接像素写入：10D921 为 SDL_FillRect，10D947 设置
+BLEND，10D958 设置 alpha，10D96B 是同 rect 的 SDL_UpperBlit，随后恢复
+原 blend/alpha。证据同文件:1035-1085。旧文所谓“现有 IAT 跟踪已记录
+精确半透明覆盖”属于 Mod 贡献记录方案，现撤回其合规结论；这套 IAT 内容
+跟踪与贡献裁切待移除。10E540 边框的原生链为 114340 -> 10BAB0，
+其中 10BB04 是上面记录的实际像素写入位置。
+
+本轮 TextDraw 只接软件 surface 的 10DDB0 全串路径，x/y 是原软件面逻辑
+坐标，未进入 10DC50 的 renderer 缩放，也没有先乘输出 density。
+旧 Render 对记录内容按输出密度物化的实现待移除；这些坐标事实本身
+不证明已经确认符合用户要求的原生高清目标接入。
+
+驻留桥静态复核（非运行验证）
+============================
+- src/loader/hook_host.cpp:34 的 CALL 入口布局为 push slot、PUSHFD、
+  PUSHAD。raw[9]=slot，raw[10]=原返回地址，raw+11=原栈参数；Before
+  只更换返回地址为驻留 After，不保留业务调用帧。原目标全部为本轮已确认
+  caller-cleanup 原函数或 SDL cdecl，After 不自行移除参数；原 caller
+  继续自己的 ADD ESP。skip_original 仍同步通知 After 并保留相同清栈。
+- 同文件:56 的 After 使用原 Pending.arguments，原参数地址仍在 caller
+  栈上；sprintf 原函数只读取参数，没有改写参数槽，故格式化值/目的地仍
+  可用于 adapter After。活跃 token、借出文字和作用域都在 Host 堆或值
+  状态中，不指向已卸载模块的栈或静态文字存储。
+- 同文件:68 的 inline frame.esp=raw+10，恢复现场后在原真实 ESP 下
+  回放，符合本轮 8 个完整内联片段；没有截断原指令或回放相对分支。
+  汇编桥 FXSAVE/FXRSTOR 与 PUSHFD/POPFD 保留 x87/XMM/原 flags。
+- 同文件:83、166 的 native_fragment 保存 EBP/EBX/ESI/EDI 后调用入口，
+  驻留 TLS 中的结束返回地址仅把最后一个 CALL 的 After 续接改为 RET；
+  RET 取出 uwcn_enter_fragment 的调用返回地址，callee-save 随后恢复。
+  此片段不用外层 EBP，且没有等待；不会留下指向 adapter 的跨等待帧。
+- src/loader/host.cpp:53、249 用短 invoke lease 和递归门阻止模块代码
+  仍在执行时交接；:207-218 在退役前保存状态并逆序卸载；:240 向全部
+  provider 依次广播依赖变化，adapter 最后按原 scope 使当前主菜单失效。
+  Render 先处理词库字集变化，随后原生重绘消费新服务。此结论只来自源码
+  与反汇编阅读，不是已运行热更或桥接栈验证的声明。
+- 旧 modules/render/native_cache.cpp::native_write 使用 observed 保存
+  像素镜像，并预先记录原 MOV 即将写入的值。此处原先只核对了记录时机，
+  遗漏了镜像及贡献重放本身违规的问题；该机制待移除，不能据此继续
+  优化同色覆盖记录。此项只纠正旧审查结论，没有修改源码。
+
+文档冲突与待整改状态
+====================
+1. main-menu-static.txt:19-21、35-38：整字段固定位置绘制、抑制原文后
+   保留 original strlen*8 的旧建议已废止；不能据此实现当前需求。
+2. main-menu-static.txt:25：把版本来源概括为默认常量不完整；同文件的
+   12473A 反汇编及 about-static.txt 原 getter 证据证明它是原生实际选择值。
+3. main-menu-static.txt:12：把条件 BONUS MATERIAL 排除是旧截图范围，
+   本轮“主界面所有 UI”已包括该原条件槽，不扩造新的显示条件。
+4. docs/font-rendering.md 旧正文曾混入 DisplayPlan、Present 合成、固定
+   菜单/页脚行槽、反写几何、旧 ABI 和主菜单重载白名单。本次文档纠正
+   由其他代理统一处理，已不再将这些旧段落列为实现指导；此处仅确认
+   文档状态变更，不表示对应代码或正式产物已经完成整改。
+5. native-ui-text-static.txt、mod-glyph-renderer-static.txt 已在顶部标记
+   8x10 字库借位/Fusion固定字号历史方案撤除，本次不复用其绘字实现。
+6. native-ui-ownership-audit.txt 的旧文件/行号和后续发布状态是历史记录；
+   当前维护源码已经清空重建，不能因历史“已发布”认定本次源码已完成。
+
+本文件对应源码
+==============
+modules/adapter/module.cpp；sdk/host_abi.h；sdk/text_services.h；
+modules/render/render_api.h。源码修改、产物编译和正式发布须分别记录。
+此子任务未提交编译、未发布正式文件、未声称已运行或视觉验收。
+
+用户启动闪退后的现有转储关联（2026-10-19）
+=========================================
+本次使用用户已有崩溃转储与磁盘反汇编，没有重新运行游戏。主代理读取的
+实际事件为 Before / id=4000h（SDL_UpperBlit），四参为
+{src=NULL, srcrect=NULL, dst=0CE3C8A0, dstrect=NULL}；原返回地址
+urw+10D6FE，上层返回 urw+1257BB。fault 位于 SDL_LockSurface 首次
+读取 surface->locked；Render 在原 UpperBlit 之前同步空源导致解引用。
+
+空源来自原游戏显式清零，不是图像读取失败的推测：
+- rebuild-native-call-disassembly.txt:1306-1310：1257B0 PUSH 1，
+  1257B2 PUSH 2，1257B4 XOR EDX,EDX，1257B6 CALL 10D5B0。
+- 同文件:1153：10D5C1 把 EDX 保存到 [EBP-4]，因此保存值明确为 NULL。
+  原 ESI 为当前 logical_surface。10D634..10D637 判断 ESI 与该源不同，
+  跳过“源就是当前 logical_surface”时才进行的备份分支。
+- 同文件:1254-1259：10D6F0 PUSH NULL，PUSH ESI，PUSH NULL，
+  PUSH [EBP-4]；10D6F8 通过 IAT 18C204 调用 UpperBlit，返回10D6FE。
+  这与转储中的参数与返回地址完全相符。
+- 10D5E2 创建临时表面 EDI，10D621/10D62B 将它清为黑色；10D6FE 后
+  设置其 blend 与 alpha，再在10D71D把它复制到 logical_surface。
+  原调用没有检查前一 UpperBlit 的 EAX；该空源错误不会写目标，后续
+  过渡仍按原代码继续。后面的1257D7图像函数调用尚未发生。
+
+SDL 2.30.0 的 UpperBlit 在任何 src 字段访问前检查 NULL，返回
+SDL_InvalidParamError("src")；因此 Mod 必须让此原调用进入 SDL 的
+既有参数错误路径，不得提前 LockSurface(NULL)，也不应替它补造图像。
+原生函数来源：
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/video/SDL_surface.c#L660-L672
+本次 adapter 参数与原调用一致，无须改动捕获 scope 或 Hook ABI；修正
+属于 Render 的 IAT Before 参数处理顺序，由负责 render 的代理实施。

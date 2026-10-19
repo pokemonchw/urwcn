@@ -1,0 +1,142 @@
+HUD refresh and speed-line static evidence, 2026-10-19
+Target: UnReal World 3.89 Steam Build 25939378; PE image base 0x400000.
+RVA is used unless an address is explicitly prefixed VA.
+Source: saved read-only Ghidra database and offline PE objdump. No game execution,
+input simulation, injection, test, assertion, build or publication was performed.
+
+DELIVERY STATUS
+No native_hud_redraw.h/.cpp was created and no business source was changed.
+The parent stopped optional immediate-refresh work after finding no running game.
+This evidence does not claim that language switching refreshes an existing HUD.
+Normal new native HUD construction remains the localization boundary.
+
+SPEED LINE: TWO DISTINCT NATIVE TEXT CALLS
+FAE38 calls 111560 (VA 511560), returns FAE3D. Earlier notes calling this 115560
+were incorrect and have been corrected in hud-right-static.txt.
+111560: ECX renderer, EDX x; stack y, width, text, packed color.
+Its native rectangle uses width. At 111676 text x becomes x+3, and 111682 calls
+10E260. There is no text measurement, centering or numeric-field positioning here.
+FAEFF calls 10E260, returns FAF04. ECX renderer, EDX native number x; stack y,
+already formatted number, packed color, outline. This is an independent native
+field, not a suffix positioned by the preceding static label's width.
+
+Original static strings are 'Speed:   mi/h' (RVA 1AA398) and 'Speed:   km/h'
+(1AA3A8). The label text begins at native x=8; number begins at native x=58.
+These are evidence about the original executable, not coordinates to copy into Mod.
+Replacing the whole label with proportionally measured Chinese plus spaces cannot
+by itself establish a safe unit position: native numeric x remains independent.
+
+Supported semantic replacement: FAE38 supplies the translated heading only;
+FAEFF supplies the entire original formatted numeric string plus a separating
+space and its native-selected unit. Neither native x nor y nor field width changes.
+This keeps native digit formatting, original numeric color and native rendering
+calls. Unit inherits the numeric call's color. It does not relocate the number.
+The unit can come from the native selected label at FAE38, or from the confirmed
+native setting branch VA A6D0AF4 (RVA A2D0AF4): zero means mi/h; nonzero means km/h.
+
+Numeric construction is complete before FAE38:
+- FACFD calls DB960 with ECX=-1.
+- FAD02..FAD36 applies the game's integer /10, ceil, integer conversion.
+- FAD47 compares with 10. FAD59 formats ' %d' (1AA394) for <10 or '%d' (1903BC).
+- FAD61 checks VA A6D0AF4. Zero applies the game's factor VA 5DD2A8 and ceil,
+  then FADB6 overwrites the same number buffer with the same native format choice.
+- FAE3D..FAEC1 computes color; it does not overwrite the formatted number.
+- FAEFF consumes that original buffer. Do not parse/recalculate its value or trim
+  its native leading space. Do not rerun DB960 just to redraw a language change.
+
+NATIVE -2 WAKE DOES NOT REFRESH THE COMPLETE HUD
+17D0A6 calls D3BF0. At 17D0BD, EAX=-2 (held in EBX) leads to 17D0C2->99BE0,
+then 17D0C7 clears EBX to zero. Input handling reaches 17D5CF->17DC78->17E096
+and returns 1; no gameplay key action is selected by that path.
+99BE0 rebuilds visibility/map arrays and map drawing. Tail calls:
+99E88->10B6C0, 99E8D->956D0, 99E97->97180, 99E9E/99EA8->95800,
+99EAF->95210, 99EB4->99B60, 99EBB->97180, 99EC0->8C160,
+99ECC->95210 conditionally, 99ED1->95520, 99EEA->1136F0, 99EF2->10B720.
+It has no direct FA2A0 / FAA30 / 103290 call. It can also produce an existing
+native message in its VA 338844C branch; it is not a general pure-redraw routine.
+
+Caller 180D56->17CC80 receives the return, 180DC0 returns to 180AE3.
+Normal no-action wake keeps VA 458CCE3 zero, as initialized at 17CCE3.
+180B6C tests that byte and jumps to 180C74 when zero, bypassing 180B95->103290.
+Therefore a no-action -2 wake cannot be relied on to redraw even dynamic right
+HUD values. Next input iteration calls 103640 (season/time), F9600(1) (repeat
+content), and F90D0(empty) (command content), not all right HUD static labels.
+Setting a gameplay activity flag to force 103290 would change business semantics.
+
+FA2A0 IS NOT A PURE-REDRAW ENTRY
+Relevant side effects / native construction boundaries:
+- FA2E7 and FA2F1 clear VA A7840E8 and VA A7840C4.
+- FA2FB->112980 consumes 'bg-rpanel.png' (VA 5AA134) and invokes the native
+  image/background path through 112260. This is a background image loader,
+  not a text-only/message initializer. Redrawing it can overwrite existing UI.
+- FA33F->116270 fills the message panel from its existing native dimensions.
+- FA347 clears VA 4B8E0E9.
+- FA353->F90D0 receives the native 'INIT' sentinel, draws the Command heading
+  and clears its native line. F90D0 does not preserve arbitrary existing command
+  display content when that sentinel is used.
+- FA35A->F9600(0) draws Repeat heading plus current repeated-command description.
+  Native description selectors 163190 / 76C0 / 6C8B0 were extracted separately;
+  their text construction is not an input action.
+- FA35F..FA3B6 draws help using native button style globals.
+- FA3C4 onward formats the existing character name in native rotating buffers.
+- FA50F..FA738 draws the penalty panel, labels and initial blank values and
+  initializes native per-field positions. These would erase current None/values.
+- FA73D->F9200(0) draws wielded panel but also changes shield flags (below).
+- FA744->F9910(0) constructs body labels, bars and selected condition descriptions.
+- FA749..FA791 performs native uploads/presentation, with normal UI cache flags.
+No attempted isolated continuation or hook skipping these operations was shipped.
+Any future refresh must preserve a genuine balanced native frame and original
+stack cleanup; HostApi native_fragment cannot read this function's enclosing EBP
+locals or manufacture a copy of its layout.
+
+PENALTY VALUE DISPLAY BOUNDARIES
+102D10 reads existing player weight/fatigue/injury/bloodloss values and formats
+the native number/percent/None choices. It updates only native display cursor
+globals plus native rotating text buffers through 4B2F0.
+Its total loop 1031A0..1031B7 calls DB530 with ECX=-1 and EDX=1..4:
+  1 -> existing player injury VA A72B18C;
+  2 -> DB1F0(-1), ceil of existing fatigue VA A72B188;
+  3 -> ceil of existing starvation VA A72B1A8;
+  4 -> DB060(-1), existing carrying data arithmetic without DAC90.
+The NPC branch in DB060 does call DAC90, but this player HUD explicitly passes -1.
+FF040 reads existing starvation VA A72B1A8, formats its native percent/None,
+and paints the field through FEF00/FEE50. No business write was found in that path.
+These are usable future display boundaries; the preceding 1032C0->84DF0 business
+update is not required to display the current values and must not be rerun merely
+to translate existing text.
+
+WIELDED TITLE / CONTENT CANNOT BE REDRAWN AS A NAIVE TITLE-ONLY CALL
+F9290->115E70 fills the whole wielded panel. F92A5->1157B0 uses original mode=3.
+Mode 3 takes the native default path: 10D900 uses alpha 0x20 for its title fill,
+then draws borders and text. Repeating only this title over old pixels does not
+establish opaque erasure of the previous English glyphs and may accumulate tint.
+Skipping the whole-panel fill while repainting just the title is not confirmed.
+Clearing the panel without rebuilding items would lose the original '-' / item rows.
+F9200 side effects: F92D0 clears bit 0 in VA A72BA95; F9422, F9459 and F94BA
+write shield stance bit 0 while constructing displayed suffixes.
+43F440(-1,hand) reads held item ids and C0190 copies item records. 52640 and
+51770 format item names into native string buffers, but 51770 also writes
+VA 61F9E1F in its special-record branch. Its full nested behavior has not been
+approved as a pure language-refresh boundary. Do not label all F9200 pure UI.
+
+FAA30 PORTRAIT HAS INDIRECT BUSINESS/PRNG EFFECTS
+FAC79 explicitly clears VA 65A9DAF in the hiding branch.
+More importantly, FACFD and FAE71 call DB960(-1). Its snow path reaches
+927E0, which may consume rand() while determining snow-crust support, and debug
+branches may emit messages. Merely skipping FAC79 does not make FAA30 a pure
+redraw routine. New native game actions may call it normally; localization hooks
+can translate those existing display calls without introducing another call.
+Reentering FAA30 on a language refresh is not implemented or approved by this
+evidence. A future action/direction-only native fragment would also need to
+preserve the speed row and portrait's original background/cache lifecycle.
+
+EVIDENCE FILES
+hud-right-static-rebuild-disassembly.txt : full FA2A0 disassembly
+hud-right-update-disassembly.txt        : 103290 and top HUD construction
+hud-right-native-wake-disassembly.txt   : 99BE0 (tail appended)
+hud-right-speed-disassembly.txt         : FACFA..FAF04
+hud-right-input-return-disassembly.txt  : main input return and no-action path
+hud-refresh-sideeffects.c               : value displays, speed, formatters
+hud-refresh-queries.c                   : held items / speed / snow nested paths
+hud-refresh-leaf-queries.c              : player penalties / item formatting
+hud-right-ghidra.c                      : main panel / fields / native text paths

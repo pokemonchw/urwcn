@@ -1,0 +1,58 @@
+2026-10-19: native integer raster sampling and font API scope
+
+Scope: source inspection and arithmetic derivation only. No game execution,
+test, assertion or compiled-product execution was performed for this record.
+
+SDL reference version: release-2.30.0, official sources:
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/video/SDL_stretch.c#L764-L779
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/video/SDL_blit_slow.c#L66-L77
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/video/SDL_surface.c#L901-L923
+
+SDL nearest uses an unsigned 16.16 source increment and starts at half of that
+increment in both the simple stretch and complex blit paths. That fact does
+not make a rounded cell-edge read, or a reverse 16.16 read, the correct partner
+of the native direct-write cell boundaries. native_raster::read_pixel instead
+samples the exact center of the game's logical pixel cell:
+
+  sample = ((2 * uint64(logical_coordinate) + 1) * physical_extent)
+           / (2 * uint64(logical_extent))
+
+The original native logical-bounds rejection remains. Target dimensions are
+positive and physical extents are at least their logical extents, as required
+by the integration contract. No fallback scale or empty-cell policy is added.
+
+A rounded left-edge sample can read the preceding original image pixel:
+an original 800-wide image scaled to 1001 uses forward step 52376, start 26188.
+Logical x=599 has rounded physical left edge 749. At physical 749, SDL selects
+(26188 + 749*52376) >> 16 = 598, the preceding original pixel. The reverse
+16.16 and exact center formulas both select physical 750 in this example.
+
+However, the reverse 16.16 formula is not used in the implementation. With
+physical width 801, logical width 800 and x=400, the direct write cell is
+[round(400.5),round(401.50125)) = [401,402). Reverse SDL scaling has step 65617
+and selects (32808 + 400*65617) >> 16 = 400, outside that write cell. The exact
+integer center selects 401 and preserves the native write-then-read relation.
+These are arithmetic derivations, not executed test cases.
+
+For density d >= 1, floor(x*d + d/2) is at least floor(x*d + 1/2), the left
+write edge. The right edge exceeds that center by at least one integer pixel,
+because (d + 1/2) - d/2 >= 1. Thus the exact center is always inside the cell.
+The implementation does not claim bit-identical SDL reverse 16.16 sampling.
+
+Writes remain immediate full logical-cell fills between rounded physical
+edges. They do not retain pixels, positions, text or draw order. The center
+sample serves the game's existing current-color reads, including flood fill
+and gradient logic; it does not add a readback or comparison tracking system.
+
+The render font backend now binds only the SDL surface operations it uses.
+Renderer, texture, RenderCopy and RenderReadPixels function pointers and symbol
+lookups were removed from render::Sdl. Renderer/Texture forward declarations
+remain because adapter-owned native resource bindings use those ABI types.
+read_glyph_surface is private to font_engine.cpp; its single caller passes the
+temporary surface just returned by TTF_RenderUTF8_Blended. Its RGBA extraction
+builds bounded font-local alpha coverage, with no native UI coordinates.
+
+Build-stage verification still required: inspect the compiled native integer
+kernels, direct entry wrappers, and referenced integer division implementations
+for FP/SIMD instructions. This source record does not claim that examination
+has already completed, or that the new files have been published.

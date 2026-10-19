@@ -1,0 +1,176 @@
+UnReal World 3.89 main HUD world information — static evidence
+2026-10-19
+
+Scope and provenance
+====================
+Read-only examination of the installed original urw.exe, SHA256
+e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9.
+Preferred PE image base is 0x400000. Addresses below are RVAs unless VA is
+explicit. No game process was started, injected, inspected, or operated; no
+test/fixture/assertion was created or run. The Java file is an offline Ghidra
+decompiler extraction script, not a test. No deliverable was compiled here.
+
+Original evidence:
+ world-hud-disassembly.txt — objdump range VA 48E4F0..490A80.
+ world-hud-ghidra.c — original PE functions extracted by Ghidra 12.1.4.
+ world_hud_Decompile.java — extraction recipe, read-only existing project.
+ world-hud-ghidra.log / world-hud-ghidra-script.log — extraction logs.
+ hud-right-ghidra.c — shared extraction of 08FF70, 08A310, 08A600,
+                      15E910, 15F8E0, and 10E910.
+ world-place-lexemes.tsv — original initializer assignments in order;
+                          VA zero means Ghidra emitted a string literal.
+
+The initial Ghidra invocation with default user preferences failed in Felix
+initialization. The successful invocation used JAVA_HOME at the local
+jdk-25.0.4.1+1 and GHIDRA_HEADLESS_JAVA_OPTIONS pointing application.settingsdir
+and java.io.tmpdir to build/load-saved-ghidra/settings and /cache. It processed
+the existing uwcn-load-saved project with -process urw.exe -readOnly -noanalysis.
+No executable code from the target was run.
+
+Native location component and exact displayed text consumers
+===========================================================
+08FF70 builds the native top location panel and the bottom world-information
+panel. Its existing comparison against VA 005E2C20 determines whether to
+rebuild. It calls the native background/title/scale/paragraph/text routines;
+this ownership is not transferred to the Mod.
+
+Call RVA  Target RVA  Return RVA  Meaning / argument
+0901EA    10E910      0901EF      Original proper place name, argument[1].
+090270    10E910      090275      Quoted English place gloss, argument[1].
+0902C8    10E910      0902CD      Cultural region (flag 2), argument[1].
+09031A    10E910      09031F      Supplementary region (flag 4), argument[1].
+090588    10E910      09058D      Full location name + quoted gloss, argument[1].
+09076B    10E910      090770      Capitalized day/week/date line, argument[1].
+09083D    10E910      090842      Wilderness map / Zoom map, argument[1].
+08FF44    10E5A0      08FF49      Scale label (inside 08FE90), argument[0].
+
+10E910 ABI: ECX is native x, EDX is native y; stack arguments are
+width, text, color, outline/style. Caller owns four DWORD stack arguments.
+10E5A0 ABI: ECX is x, EDX is y; stack arguments text, color, outline/style.
+The 090270 caller retains the original native name at [EBP-278]; the quoted
+gloss is [EBP-D8]. Passing the original native name as semantic request.value
+preserves the explicit named-place case described below.
+
+Native width/line behavior that must accompany Chinese strings
+=============================================================
+10E910 is centered wrapping, not just a centered leaf. It calls 0D4430 to
+tokenize the native text by spaces. It owns lines, cursor/row increments,
+centering, and calls the original 10E5A0 leaf for completed lines.
+
+10E9FB bytes 8D 04 0A C1 E0 03:
+  EAX = (ECX + EDX) * 8, where ECX is strlen([EBP-404]) for accumulated line,
+  EDX is strlen([EBP-804]) for candidate word. Replace only this measured
+  width with the sum of the two measured native-encoded strings. The following
+  CMP EAX,EDI remains native and decides wrapping against the supplied width.
+10EA74 and 10EAF8 bytes 8D 04 CD 00 00 00 00:
+  EAX = ECX*8 for [EBP-404]. Replace this width by the actual string width;
+  native CDQ/SUB/SAR calculations still center the line.
+10EA95 -> 10E5A0, return 10EA9A: completed-line leaf.
+10EB19 -> 10E5A0, return 10EB1E: last-line leaf.
+Native [EBP-404] and [EBP-804] each have 0x400 bytes.
+
+Scale label is measured in the parent before 08FE90 draws the native bar:
+090770..090785 scans [EBP-70] to its NUL; 090798 obtains byte length ECX.
+0907B3 bytes 8D 04 CA 99 2B C2:
+  LEA EAX,[EDX+ECX*8]; CDQ; SUB EAX,EDX.
+At entry EDX is the native bar length, and [EBP-70] contains the original
+scale label. Translate this display buffer and measure it at this boundary,
+then calculate EAX=native_bar_length+measured_text_width, and preserve the
+following native CDQ/SUB effect. Native subsequent arithmetic positions the
+combined bar + label. The 08FF44 text call must consume those already encoded
+bytes without attempting another English lookup.
+0907DB calls native 08FE90; no bar coordinates need to be copied into Mod code.
+
+Calendar panel
+==============
+103640 is the native season/month/time panel. It builds the panel, selects
+colors, owns redraw flags, and eventually calls the native upload/present.
+10367A -> 15F8E0: ECX=hour, EDX=output buffer [EBP-808].
+1036AB -> 08A600: ECX=day, EDX=month, stack output seasonal structure.
+10376C -> 10E5A0 (return 103771), argument[0]=capitalized season string.
+103782 -> 15E910: ECX=day, EDX=month, returns English month-phase string.
+1037BF -> 162300 (return 1037C4): ECX=1, EDX=capitalized month string.
+103816 -> 10EB40 (return 10381B): original paragraph lays out the appended
+  month string in the original panel. Its existing paragraph-width and glyph
+  adaptation must remain active for this scope.
+10385B -> 10E5A0 (return 103860), argument[0]=time-of-day string.
+
+08A600 seasonal structure confirmed fields:
+ +0 seasonal index; +2 day within week; +3 weeks before boundary;
+ +5 season display string (100 bytes); +69 boundary display string (100 bytes);
+ +CD calendar day; +CE calendar month. No game field is changed by semantic code.
+Season strings are winter season, midwinter, latter winter, summer season,
+midsummer, latter summer. Boundary strings are midwinter point, midsummer point,
+summer season, winter season.
+08A310 formats "day %d of %s week before %s" into a 1024-byte local. It uses
+last for the last week and 2nd/3rd/.../13th otherwise. The HUD capitalizes the
+first byte at 090705 then passes the entire displayed result to 10E910.
+The debug alternate format is preceded by an unconditional zero store to its
+flag in this function; no guessed alternate business date parser was added.
+
+15E910 month-phase grammar:
+ day <4: "beginning of "; days 4..10: "early "; days 21..27: "late ";
+ day >27: "end of "; days 11..20: just the month name.
+The month name is read from VA 005EA3A0 + month*100, populated from
+messages/urw_defs.txt .MONTH_NAME. entries (lines 151..165). Actual names:
+Center, Pearl, Soil, Swidden, Seedtime, Fallow, Hay, Harvest, Fall, Dirt,
+Dead, Winter month; the file also declares Unknown month.
+
+15F8E0 hour grammar: 1 After midnight; 2..3 Small hours; 4..6 Early morning;
+7..8 Morning; 9..10 Late morning; 11..12 Noon; 13 Early afternoon;
+14 Afternoon; 15..16 Late afternoon; 17..18 Early evening; 19 Evening;
+20..21 Late evening; 22 Night; 23 Late night; native default Midnight.
+
+Place-name generation and exact vocabulary
+=========================================
+08E3D0 wraps 0A8F50; ECX=x, EDX=y, stack language flag and output buffer.
+Flag 0 obtains Finnish/native name; flag 1 obtains English gloss.
+08E420 combines the two native outputs with "%s \"%s\"" (VA 0059D360).
+08E4F0 can precede this with the existing area/object name plus " at ".
+These are original output formats, not Mod-created page snapshots.
+
+0A8F50 reads the saved 16-bit name selector. If bit 0x8000 is set, both
+language flags return the same existing proper name from the native named
+place table. Otherwise, low 8 bits select a prefix and high 8 bits a suffix.
+0A3E70 initializes 256 English prefix slots (VA 058F0200 + index*16) and
+55 explicitly populated suffix slots (VA 058F5200 + index*16).
+There is a real duplicate write to prefix slot VA 058F0390: Blade is first
+written and then replaced by Point. The generated include retains Point.
+
+Joining rules in 0A8F50 are preserved verbatim in the semantic grammar:
+ - A prefix-ending underscore becomes a space.
+ - If that prefix was separated and suffix begins with underscore, remove
+   that leading underscore; otherwise suffix-leading underscore becomes space.
+ - Concatenate remaining strings.
+Stag is prefix VA 058F0FE0, source string VA 0059F238; _heath is suffix
+VA 058F5460, source VA 0059F59C. Their displayed gloss is Stag heath.
+The Mod translates this confirmed composition to 雄鹿荒原 and preserves the
+original Hirvaskangas proper name. It does not mutate either native lexicon.
+The three Finnish source bytes C4/E4/F6 are the exact letters remapped by
+native 10E5A0. Display-name copies map those same letters to UTF-8.
+
+Region grammar
+==============
+09AD00 prefixes the culture/region name with northern, southern, western,
+eastern, north-eastern, north-western, south-eastern, or south-western, or no
+direction for its central area. 09B040 returns no man's land, near + region,
+or north/south/east/west of + culture in the corresponding native branches.
+Its flag 4 can produce an empty supplementary line; semantic keeps it empty.
+The culture table VA 0058E3C4 contains Kaumo, Driik, Kiesse, Reemi, Sartola,
+archipelago, Koivula, Kuikka-tribe lands, Owl-tribe lands, Seal-tribe lands,
+empty, Njerpez territory, empty, empty. The HUD uppercases the first byte.
+
+Implementation handoff and limits
+================================
+New source: modules/semantic/world_hud_text.h/.cpp and world_place_lexemes.inc.
+New vocabulary: catalog/zh-CN/world_hud.tsv. Parent integration owns sdk enums,
+semantic dispatcher, adapter hooks, catalog inclusion, build and publication.
+The semantic entry accepts original per-call text and optional native proper
+name; it has no coordinates, display slots, surfaces, clips, caches, or redraw
+logic. The only stored static data is confirmed vocabulary. Native names and
+game/business state are not changed. The original-native-name equality branch
+corresponds to the decompiled 0x8000 name-selector case, not an unknown-text
+fallback. Unknown catalog/lexicon values report the existing service status.
+
+This file documents static evidence and source work only. It does not claim
+compilation, formal delivery, runtime correctness, visual QA, or game testing.

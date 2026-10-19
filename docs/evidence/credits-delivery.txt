@@ -1,0 +1,82 @@
+UnReal World 3.89 / Credits localization delivery record
+Date: 2026-10-18 (Asia/Shanghai)
+
+Source implementation
+---------------------
+Complete static extraction: credits-static.txt, credits-ghidra.c and
+credits-strings.tsv. The original window contains its title, introduction,
+21 acknowledgement entries and press-key label. Three explicit introduction
+rows and three countrymen rows produce 28 display fields. All original names,
+including Hamsolovski and Jarmo Mäenpää, are retained in UTF-8 display text.
+
+The native bridge source is src/loader/native_credits.cpp/.h. Four call scopes
+use IDs1024..1027. Existing scoped title, paragraph-word, button and present
+consumers are reused. Host callback, menu_op::credits=8, CreditsTitle=0x200,
+the main_menu/semantic/catalog/layout pipeline, source catalog and build
+profile are saved. Existing structure sizes and Host ABI2 remain unchanged.
+The original parser, background, button, input wait and return path remain.
+
+Compilation
+-----------
+The sole request for this Credits source revision used the project queue:
+  .\build.ps1 -Toolchain MinGW
+    -CMakePath .\.toolchains\x86\w64devkit\bin\cmake.exe
+    -CompilerPath .\.toolchains\x86\w64devkit\bin\g++.exe
+    -BuildDirectory build/mingw-x86 -PackageDirectory package -Publish
+
+Request ID: 693dcb54c0c04913be3e7766994cbadc
+Batch ID: 2832d11c191d4fe4abedc2188de996ba
+Receipt: build/.compile-queue/results/693dcb54c0c04913be3e7766994cbadc.json
+Log: build/.compile-queue/batches/2832d11c191d4fe4abedc2188de996ba.log
+Started UTC: 2026-10-18T11:36:34.0271985Z
+Finished UTC: 2026-10-18T11:36:36.0400416Z
+Result: succeeded=true; full_build=true; error="".
+One configuration and one incremental build completed without cleaning the
+existing build tree. Both the receipt and entire batch log were read.
+No source in this request was modified while its batch was running.
+
+Formal offline publication
+--------------------------
+The user explicitly replied that the game was fully closed before submission.
+The same batch completed publication transaction:
+  dc82e937168d4cd4a192573982f2a776
+
+The log reports "Formal package published: D:\workspace\uwcn\package".
+Updated formal files: package/uwcn_loader.dll, all five package/modules DLLs,
+package/catalog/zh-CN/main_menu.tsv,
+package/profiles/urw-3.89-steam-25939378.json and package/release.json.
+The identical root uwcn_launcher.exe required no replacement.
+
+Old replaced files were moved before replacement, retaining relative paths:
+  回收/20261018-193635-dc82e937168d4cd4a192573982f2a776/
+The archived files were enumerated after publication. They include the old
+resident DLL, five modules, catalog, build profile and release manifest.
+No parallel repair package or alternate launch directory was created.
+
+Read-back formal identities (SHA256)
+-----------------------------------
+package/uwcn_loader.dll
+  69fd58f11db0dfdc62b39c7d1c6e55c58fcd1b62896c8dae3b0e2dc00ee12475
+package/modules/uwcn_layout.dll
+  50cd675d09f01439fe5375d571040877ab26614f32a3b32bf65f9c251b418fd0
+package/modules/uwcn_semantic.dll
+  de59add723826f55513970905d14375c750f8db01a85a0ba57cb582bc229b4c9
+package/modules/uwcn_main_menu.dll
+  2fa78a2a0c1b15cface5e47efe656b8ed0dea6dc79d23168105b6dcf3f275af2
+package/catalog/zh-CN/main_menu.tsv
+  10ac82b9ca68d17cb3fe1ad639a12d7f347b04e0ac096f6e27511317261c2edb
+package/profiles/urw-3.89-steam-25939378.json
+  5cf1284db8a0dea29b6308f8849e76bc49b9b3877e10eb295be5ff5cc988e754
+The listed business module and catalog identities match the published
+release.json read after this transaction. Concurrent later publications can
+replace these formal files; this record identifies this completed batch.
+
+Execution boundary
+------------------
+No game launch, injection, live-game operation, simulated input, artifact
+execution, tests, test cases or code assertions were performed/created.
+No -Reload or runtime control message was sent. The publication log explicitly
+states "Runtime Applied was not requested." This record claims completed
+source changes, compilation and formal offline publication; it does not claim
+visual acceptance or execution of the delivered code. The user can launch the
+normal root uwcn_launcher.exe to load the updated resident and package.

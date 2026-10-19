@@ -1,0 +1,323 @@
+历史记录：本文原字体表供字和后续 Fusion Pixel 固定字格方案均已撤除。
+现行字体规范见docs/font-rendering.md，当前交付状态见README.md。
+font-design-compliance-static.txt中的内容跟踪与重放方案已撤销，不能作为规范。
+下文保留初次审查和分阶段整改依据，不代表当前字体实现或运行验收。
+
+UnReal World 3.89 汉化实现：原生 UI 所有权与兼容发布静态审查
+日期：2026-10-18
+项目：D:\workspace\uwcn
+
+当前整改状态（后续补记）
+========================
+本记录下方发现与“剩余六组待整改”结论是初次审查快照。本次用户再次指出
+截图问题后，已实际整改发现 1/2/3/5/6/7：撤除独立页面计划与固定几何，
+改为完整文字构建点、原生计宽与字体表供字，保留原生控件和缓存链；主菜单
+及 About 有原生缓存重建。源码、统一队列编译和正式发布均已完成，未运行
+验收，未取得本批运行时 Applied。完整接口、证据、回执和实际边界见
+native-ui-text-static.txt。以下历史行号及旧状态不得视为当前实现。
+
+判定依据与审查方式
+==================
+用户最新要求：排版和绘制由游戏 UI 自己管理，不能由汉化 Mod 自建界面；
+兼容汉化、字体和原生显示适配必须使用业务模块热更新，不得反复要求重启。
+这些要求已写入 AGENTS.md，优先于旧设计和现有实现。
+
+本记录依据源码、构建/发布脚本、既有反编译证据及用户截图作静态审查。
+没有启动或操作游戏、发送运行中控制命令、运行产物、测试或断言。
+初次检查覆盖全部 60 个项目维护的代码文件，并补充查看两个构建/适配 JSON。
+任意位置重载整改新增 control_bridge.cpp/.h、adapter/state.h 后，维护
+代码文件共 63 个，新增代码及阶段式改动另作静态复核。本文原发现中的行号
+为初次审查时位置；后续源码改造可能改变行号，不能当作现行代码逐字快照。
+build/、回收/、package/ 下的产物、第三方 .toolchains/ 和反编译生成的
+游戏 C 文本不是本项目维护的源码，不计入上述 60 个；相关既有反编译记录
+只用于确认原生调用及数据来源。
+
+结论
+====
+当前实现仍存在系统性的原生 UI 所有权违规，不能称为已经符合要求。
+布局、显示计划、最终画面叠字和部分交互几何仍由 Mod 管理。
+原发布脚本另有“驻留管道存在即拒绝兼容业务发布”的阻断及错误退出提示；
+这两组问题已完成源码修正，并按用户授权完成一次真实自动退役、归档替换
+与加载。剩余六组 UI 实现问题仍待整改。用户进一步纠正“任意位置重载”
+要求后，原 Footer 限制也已确认为框架缺陷并进行源码整改，见发现 9。
+
+发现 1 [P1，待整改]：Mod 自建完整布局和显示协议
+=================================================
+位置：
+  src/modules/layout/module.cpp:11   setup_slot
+  src/modules/layout/module.cpp:57   logical_slot
+  src/modules/layout/module.cpp:149  build
+  src/modules/layout/module.cpp:185  DisplayPlan
+  src/modules/layout/module.cpp:209  居中计算
+  src/modules/layout/module.cpp:237  基线计算
+  sdk/display_plan.h:7              LayoutRequest/LinePlacement/DisplayPlan
+  sdk/metrics_service.h:4           整屏字体预算与行槽输入
+  sdk/main_menu_fields.h:43         FontRole/Field/FieldSet
+  src/modules/main_menu/module.cpp:92、136、157、199、222、241
+  src/modules/semantic/module.cpp:87、258
+
+证据与影响：layout 为主菜单、设置、关于、鸣谢、先祖、开场和告别页
+维护固定坐标、行距、居中、槽高、基线与裁剪；main_menu 重新构建整屏字段
+及显隐顺序，semantic 同时指定字体角色、颜色和描边。它们经业务 SDK
+形成另一套界面布局，而非向原生 UI 的中文字符串/测量接口提供结果。
+复制原版坐标或从原生状态复制显隐条件不会改变所有权已经转移的事实。
+新增汉化组标识也由 render/module.cpp:491 的中心 x540、底部 y562 等
+常量独立排布，仍需接入对应原生 UI 构建与绘制生命周期；素材本身无违规。
+
+方向：让已确认的原生文本构建、控件、段落、测量与居中函数消费中文；
+拆除独立槽位和整屏显示计划。保留词库/语义格式化与必要的中文字体资源，
+不把普通词库缓存或字形缓存本身认定为违规。业务内部协议整改不自动等于
+Host ABI 不兼容，不应据此要求修改驻留层或重启。
+
+发现 2 [P1，待整改]：抑制原文字形，再于 present 前叠加整页中文
+================================================================
+位置：
+  src/modules/adapter/display.cpp:11、24、133、158
+  src/modules/adapter/native_hooks.cpp:134、173、186、192
+  src/modules/adapter/native_setup.cpp:28、50
+  src/modules/adapter/native_ancestors.cpp:31、52
+  src/modules/adapter/native_intro.cpp:26、45、120
+  src/modules/adapter/native_credits.cpp:29、48
+  src/modules/render/module.cpp:61、69、255、404、465、488、508
+
+证据与影响：adapter 保存独立 FieldSet/DisplayPlan，在原生消费者处
+仅模拟原英文 strlen*8 的光标、颜色和返回值，跳过原字形；present 时
+重新布局并调用 render_op::compose。render 持有 current/candidate
+场景资源，切 scale=1、清除裁剪，按 Mod 位置复制文字纹理。恢复 SDL
+状态不等于把 UI 管理权交还游戏。开场还另行复制原生淡出 alpha 并重建
+中文颜色，中文没有进入游戏自身表面的淡出链。
+
+截图根因：原菜单文字已经被抑制，中文又仅存在于最终画面叠加；About
+复制的原生背景没有这些中文字形。随后唯一的活动字段集换成 About，
+因此后方版本、菜单和底部署名消失。该根因适用于共用这条链的全部界面，
+不是每个窗口各自独立的布局缺陷。
+
+方向：中文进入已确认的原生文字和缓存链，随原生表面/纹理复制、上传、
+重绘与呈现，不再维护额外整页合成入口。不能用缓存后方菜单并追加 About
+字段的方法补洞。也不能仅向仍按字节计宽和索引 256 字形的原函数传 UTF-8；
+必要的中文编码、字形和度量扩展必须有静态依据并由原生 UI 使用。
+既有静态证据确认 10E5A0→10DDB0→10BD90 写软件表面 RVA61BBB10；
+这不表示中文控件测量、折行和绘制适配已经实现。
+
+发现 3 [P1，待整改]：原生面板、选区和鼠标命中反向依赖 Mod 布局
+================================================================
+位置：src/modules/adapter/native_hooks.cpp:142、158、166、232、241、336
+
+证据与影响：apply_geometry 把 Mod 的 menu_panel/menu_rows 回写游戏
+全局面板和行记录；selection 改选区调用参数；mouse_index 自行计算命中；
+set_main_menu_plan 从 DisplayPlan.logical_slot 反推几何。游戏交互布局
+已经依赖独立中文布局，即使常量暂时接近原版也不符合原生 UI 所有权要求。
+
+方向：恢复游戏自己的行记录、控件尺寸、选区和命中函数，由原生布局查询
+必要的中文度量；不能继续让输入逻辑消费 Mod 的整屏行框。
+
+发现 4 [P1，已修正]：将驻留管道等同于业务 DLL 仍被占用
+================================================================
+原位置：publish.ps1:154-165，核心为 157-160（以下均为修改前行号）。
+
+证据与影响：非 Reload 发布只要发现任何 uwcn-* 管道且 TargetPid=0
+就拒绝。业务模块通过用户 Shift+F5 卸载后，驻留桥和管道本来就应保留；
+因此该条件阻断了不操作运行中游戏的兼容业务原位发布。
+现有 Suspend 实现并非空壳：loader/host.cpp:429-434 进入六模块退役；
+298-320 关闭模块、FreeLibrary 并 close_image。再次由用户 Shift+F5
+请求 Resume 会从正式包装载；当时的交接仅在 Footer 外层。这是旧实现
+缺陷，不是用户要求，现已按发现 9 改造。
+这是静态机制结论，不声称已经运行验证或取得 Applied。
+
+修正要求：兼容业务发布不应仅因驻留管道存在而拒绝；保留身份核对、实际
+变化文件集、归档前整批独占检查、旧文件回收及正式位置发布。用户随后已
+明确要求不等待其手动卸载，故应使用现有 PREPARE/ReadyToPublish/COMMIT
+事务自动退役与加载。选择进程须精确核对其已加载 uwcn_loader.dll 的
+完整路径和同 PID 管道，不能仅凭“唯一管道”或相同包哈希猜测项目归属。
+未释放的 DLL 仍由实际占用检查阻止替换；完整启动器/通用驻留桥实际更新
+的离线约束继续保留。仅使用全图发布模式不等于实际修改了驻留文件。
+
+发现 5 [P2，待整改]：先祖提示跳过了原生 ENTER 键帽
+====================================================
+位置：src/modules/adapter/native_ancestors.cpp:39、131
+依据：docs/evidence/ancestors-static.txt 的 Select helper ABI 段。
+
+证据与影响：汉化分支不执行整个 10E720，而由 suppress_selection_hint
+硬写原英文最终光标。该函数本应绘制前缀、114680 ENTER 键帽、后缀；
+整个函数被跳过时，键帽背景也不再绘制。词库里的字面 [ENTER] 不能保留
+这个原生控件，违反此前明确保留键帽的范围要求。
+方向：保留原 markup helper 和键帽控件，在已确认输入边界提供中文前后缀。
+
+发现 6 [P2，待整改]：设置安装路径没有继续使用原生显示字段
+============================================================
+位置：src/modules/adapter/display.cpp:54-64
+      src/modules/adapter/native_setup.cpp:105
+依据：docs/evidence/setup-options-static.txt:64-68
+
+证据与影响：原生已通过 _getcwd 将实际路径放入显示缓冲并在 105891
+绘制；adapter 抑制这次调用，另用 GetCurrentDirectoryW 转 UTF-8 生成
+替代字段，没有保留该已确认环境字段的原始内容和显示来源。
+方向：保留原生字段与绘制路径，不另外重取和重构安装路径。
+
+发现 7 [P2，待整改]：主菜单版本没有采用原生实际版本来源
+==========================================================
+位置：src/modules/adapter/display.cpp:39
+      src/modules/adapter/native_hooks.cpp:366
+依据：docs/evidence/about-static.txt 中原生 124690 版本读取路径；
+      src/modules/adapter/native_intro.cpp:98-112 的原 getter 调用。
+
+证据与影响：中文主菜单取固定默认常量 RVA1AFAB0；原版 124710 会通过
+124690 取得实际版本值。About/开场已复制 getter 返回结果，主菜单却仍
+绕过这个已确认字段来源。
+方向：在原生 getter 返回/显示构建边界取得对应版本，不重新读取文件，
+不解析英文句子，不用默认常量替代原版已选择的结果。
+
+发现 8 [P2，已修正]：文件受阻时一律提示完全退出游戏
+============================================================
+原位置：publish.ps1:49-51、73-76（修改前行号）。
+
+证据与影响：归档和独占打开失败均直接要求“请完全退出游戏”，未区分
+日常业务模块加载占用与真正需要离线更新的启动器/驻留桥/不兼容 ABI。
+方向：兼容业务路径按用户最新授权自动交接；正式退役后仍占用时报告具体
+文件阻断。真正的驻留更新才提示退出。本次代码审查本身没有发送控制命令；
+后续正式发布可在已明确授权的范围使用既有发布事务，不得扩展为测试或
+其他游戏操作。
+
+发现 9 [P1，源码已改并正式发布，未运行验收]：重载被限制在主菜单 Footer
+================================================================
+原位置：src/loader/host.cpp:487-516、adapter/native_hooks.cpp:376-387，
+以及 About/Setup/Credits/Ancestors/Intro 等调用原生窗口并跨等待持有
+adapter 调用帧的分支。这里记录的是限制的代码来源，不能再称为用户约束。
+
+用户明确要求任何游戏界面都能发起并完成重载，不退主菜单、不关闭窗口。
+旧桥包住整个 adapter dispatch 持有租约，业务又同步调用原生窗口；
+等待期间旧 DLL 返回地址留在栈上。只删租约检查或增加几个 UI 边界不能
+安全卸载这段旧代码。
+
+整改：Before 短调用先返回并释放业务租约，再由驻留桥执行原函数；原生
+返回后按稳定 token 调用当前代 adapter 的 After。adapter 保存按值
+作用域、快照和进度参数；当前显示重建使用原活动请求，空请求不生成菜单。
+通用 SDL IAT 服务覆盖 Poll/Wait/Peep/Pump/Delay/Present；Wait 内部
+轮询只处理真实事件和发布控制，不把内部超时或假按键交给游戏。PREPARE
+至 COMMIT 在驻留服务循环停住原线程，保留当前原生调用和模块纯数据。
+Shift+F5 改为直接在原位置 Reload，不再先卸载等待用户第二次按键。
+
+HostApi ABI 仍为 3；adapter service/state 明确为 2/2，旧桥只接受
+1/1，会在卸载旧模块前拒绝新版 adapter。该整改真实改变了通用驻留桥，
+不是普通 ABI3 旧桥业务更新。当前进程没有驻留自升级接口，磁盘上的新
+loader 不会替换它已经执行的旧代码。用户已明确退出该旧进程，代理随后
+通过统一队列完成新桥正式发布；正式文件与编译产物哈希一致，旧文件先
+移入根目录回收。未启动游戏或运行验收，不声称取得运行时 Applied。
+发布回执、批次、事务及归档位置见 anywhere-reload-static.txt。
+
+其他约束的审查结果
+==================
+- 未发现本项目维护的源码中存在 assert/static_assert、测试用例、测试
+  工程或测试执行步骤。静态反汇编中的处理器 test 指令不属于测试。
+- 未发现基于“未知字段未覆盖要怎么办”补造业务分支或缺词兜底；词库
+  缺键和格式/ABI/长度错误返回状态不属于假设性业务逻辑。
+- catalog 只解析词库和查键；语义数值格式化没有写回游戏业务或配置。
+- loader 未依赖 main_menu_fields.h/display_plan.h，也未解释中文
+  FieldId、布局或窗口几何；其显示事务缓冲仍不透明。业务显示架构违规
+  不应被误判为需要再次迁移驻留桥或 Host ABI。
+- 初次审查发现 Boundary 仅有两个 Footer 外层调用，之后错误地把它
+  当作应保留约束；用户纠正后已撤回该判断，并按发现 9 移除该限制。
+  当前源码不再按界面筛选交接，也不强写菜单退出 return_address。
+- 构建入口、参数冲突拒绝、请求冻结与合并、一次配置和增量构建、回执
+  与日志、正式文件原位发布和先回收规则未发现明确违规。
+- launcher 中创建并初始化用户启动的新游戏进程是产品功能，存在这段
+  代码本身不等于代理运行游戏；本轮没有执行启动器。
+- 五个 Java 提取脚本及 credits-extract.ps1 是离线静态提取工具，未
+  运行目标游戏。反编译失败输出错误和在已确认地址创建函数不构成游戏
+  业务兜底分支。
+- README、docs/design.md、docs/hot-reload.md、docs/font-rendering.md
+  以及 profile 中仍描述独立 DisplayPlan/固定槽/最终叠字的段落属于
+  待更新的实现说明；其存在不能推翻新版 AGENTS.md 的要求。
+
+覆盖清单（60 个代码文件）
+========================
+src/launcher/main.cpp
+src/loader/{host.cpp,host.h,hook_host.cpp,hook_host.h,exports.def}
+src/modules/adapter/{display.cpp,display.h,module.cpp,native_hooks.cpp,
+  native_hooks.h,native_frame.h,native_setup.cpp,native_setup.h,
+  native_intro.cpp,native_intro.h,native_credits.cpp,native_credits.h,
+  native_ancestors.cpp,native_ancestors.h,CMakeLists.txt,exports.def}
+src/modules/render/{module.cpp,sdl_backend.h,byayoi_sprite.h,CMakeLists.txt,
+  exports.def}
+src/modules/{catalog,semantic,layout,main_menu}/各 module.cpp、CMakeLists.txt、
+  exports.def（共 12 个）
+sdk/{host_abi.h,native_bridge.h,main_menu_fields.h,display_plan.h,
+  metrics_service.h,render_control.h,semantic_service.h,catalog_service.h}
+根目录：build.ps1、build-queue.ps1、publish.ps1、CMakeLists.txt
+cmake/{build-once.ps1,compile-only.cmake,loader-exports-msvc.def}
+docs/evidence/{startup_audio_Decompile.java,setup_options_Decompile.java,
+  intro_Decompile.java,credits_Decompile.java,ancestors_Decompile.java,
+  credits-extract.ps1}
+补充配置：CMakePresets.json、profiles/urw-3.89-steam-25939378.json。
+
+修改与交付状态
+==============
+1. AGENTS.md 已写入原生 UI 所有权和兼容业务热更新，并根据用户后续
+   明确要求将“等待用户手动卸载”修订为代理自动热发布的授权范围；旧
+   “占用即完全退出”条款已修订，测试和其他游戏操作仍禁止。
+2. 此前提出的“缓存主菜单字段并合入 About 显示计划”源码修补及对应
+   设计/证据说明已撤回；该方案不符合用户要求，未发布。
+3. 此前请求 d0e42a2a98cd44da8197bf37a866d410、批次
+   c58005ebe9d848a8868b1bec205e5b7c 编译了该已撤回方案，随后发布因
+   驻留检查停止。回执与批次日志均已读取，正式文件没有因此更新。
+   当时 build/mingw-x86/out/uwcn_adapter.dll 是撤回前的产物，不能
+   继续发布；该产物随后已在第 7 项重新编译覆盖。
+4. publish.ps1 已按用户后续授权改为自动确认本项目 Host 并使用既有热
+   发布事务；候选进程必须有同 PID 管道且已加载的 uwcn_loader.dll
+   完整路径与本项目正式 package 相同。显式 PID 同样核对，不能只凭
+   管道存在或相同内容哈希选择另一个安装目录。
+5. 日常业务更新只按实际 launcher/loader 变化决定是否需要离线；原有
+   正式身份核对、事务回执、归档前占用检查、回收和正式路径均保留。
+   默认全图自动切为模块事务时，源词库或 profile 若另有变化会明确
+   拒绝并说明需独立发布，不能无声漏发或把源词库并入模块热更。
+6. 显式 -Module 是实际替换请求，即使新旧 DLL 哈希一致也纳入该模块
+   的退役/归档/复制/加载事务。整图增量发布仍只选择发生变化的模块。
+   发布脚本不再要求用户手动卸载或加载。
+7. 发布脚本修正阶段的源码曾重新编译：请求 1bf0fc79cf94415da8b15c01c464ecd3，
+   批次 a8cd615cdfcd4640b276d61eb014de9c。回执和日志已读取；编译
+   产物与现有正式 adapter 完全一致，原发布逻辑跳过了替换。因此这次
+   编译已覆盖撤回方案的旧产物，但该批没有归档或替换正式 DLL。
+8. 用户明确要求替换后，显式模块替换规则已保存并提交新批次：请求
+   5ccb6366425e4bf9b83091b6804a3d7e，批次
+   a42ab10e86c140618fa5e5d9afa8cfd6，目标为已确认的本项目 PID71652。
+   编译完成；用户返回主菜单后，事务在既有安全边界自动完成，取得
+   Applied 12730e11b8f347c2a71abde60f6895a6。该请求的 JSON 回执
+   和完整批次日志均已读取，succeeded=true。
+   package/modules/uwcn_adapter.dll 已实际先归档再写入；旧清单也已
+   回收，新 release.json 已提交该事务。回收位置为：
+   回收/20261018-200723-12730e11b8f347c2a71abde60f6895a6/
+     package/modules/uwcn_adapter.dll
+     package/release.json
+   归档 DLL 和归档清单的 SHA-256 与发布前记录一致；正式 DLL 与本次
+   编译产物及 release.json 一致。DLL 内容未改变，adapter 运行时代次
+   从 1 升至 2，其余模块代次仍为 1；这是同内容文件的真实原位替换和
+   加载，不是 UI 违规已经修复的证据。无需用户手动卸载、加载或重启。
+9. 没有运行游戏测试、输入模拟或交付产物；本次新允许的控制仅用于真实
+   发布事务。以上发布脚本修正不等于已修复发现 1/2/3/5/6/7 的 UI
+   实现问题；后续阶段式桥改造仅处理发现 9，并未修复独立 UI 排版/叠字。
+10. 用户退出旧进程后，任意界面桥已通过统一队列编译并正式发布，旧
+    loader、adapter、profile 和清单先进入根目录回收。源码、正式产物
+    及发布回执已对照；没有启动游戏或运行验收。请求、批次、两次正式
+    事务和哈希见 anywhere-reload-static.txt。用户要求这是本轮整改
+    最后一次退出，后续原生 UI 整改须在可重载业务层完成。
+
+后续原生 UI 静态复核
+====================
+本节仅记录实施切分与证据充分性，不代表发现 1/2/3/5/6/7 已整改。
+- 设置路径已有充分依据：移除 105891 消费者抑制和另取当前目录的替代
+  字段，保留原 _getcwd 缓冲及原生绘制。不能把等价字符串当原来源。
+- 主菜单版本已有 12473A→124690 getter 与原生最多 79 字节依据；须
+  同步处理当前 MainMenuRequest.version[32] 及跨代状态，不能沿用
+  默认 3.89 或静默截短。
+- 软件表面绘制链 10E5A0→10DDB0→10BD90 与 61BBB10 已确认；
+  中文必须在原文字调用时进入该原生表面，参加其缓存和淡入淡出。
+- 段落 10EE5D..72、标题 115840..849、按钮 114680 含内联字节计宽
+  或逐字节迭代。现有 CALL 桥本身不提供任意内联指令继续执行接口。
+  这些事实足以定位问题，尚不能据此宣称完整中文编码、度量、迭代与
+  控件尺寸的接入方案已经实现。不得仅传 UTF-8 或在绘制叶子自行重新
+  居中规避原生 UI 所有权；下一阶段须依据实际原生接口确定业务方案。
+- ENTER 键帽应由 10E720 正常执行，中文前后缀进入 10E862/10E8F2
+  的文字边界，保留 10E890→114680 键帽与真实文字 advance 链。
+- 共用原生文字基础完成后，按函数族移除 DisplayPlan、固定槽位、
+  Present 叠字、apply_geometry、selection 参数改写和 mouse_index，
+  不能用逐窗缓存补丁继续掩盖原始背景副本缺少中文。

@@ -1,0 +1,54 @@
+启动过渡空源 Blit 崩溃：静态定位与修复
+日期：2026-10-19
+
+实际用户崩溃证据
+================
+主代理读取用户已有 WER 与 urw.exe.85736.dmp：2026-10-19 01:03:50，
+SDL2.dll 2.30.0，异常 c0000005，RVA 000F7578，读取地址 0000001C。
+异常指令位于 SDL_LockSurface，surface 为 NULL；本函数直接读取
+surface->locked（x86 公共 SDL_Surface 偏移 1C）。调用返回地址是
+render+256B，对应 read_surface；上层经过 NativeCache::synchronize
+与 NativeCache::event。
+
+主代理从 dump 读取 NativeEvent 0AEFEEB0：phase=0（Before），
+id=4000（Io::blit），arguments=0AEFF168，四参数为
+{00000000,00000000,0CE3C8A0,00000000}。
+这就是 SDL_UpperBlit(NULL,NULL,dst,NULL)，原调用返回地址为
+0058D6FE，即 urw+10D6FE。
+
+adapter 静态复核证明 NULL 来自原游戏显式参数：
+1257B4 XOR EDX,EDX；1257B6 CALL 10D5B0；10D5C1 保存 EDX 到
+[EBP-4]。当前 logical_surface 非零，10D634..10D637 跳过源备份。
+10D6F5 PUSH [EBP-4] 传入空源，10D6F8 调用 SDL_UpperBlit。
+后续原代码将临时黑色 surface 设置 blend/alpha，再复制到当前
+logical_surface 完成过渡。这不是图像加载失败的推测。
+
+锁定版本的公共 SDL 行为
+======================
+官方 SDL release-2.30.0 源码：
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/video/SDL_surface.c#L660-L672
+SDL_UpperBlit 先检查 src/dst 是否为空；为空时由 SDL_InvalidParamError
+返回参数错误，在检查 locked、读取表面内容和复制像素之前退出。
+
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/video/SDL_surface.c#L739-L759
+SDL_UpperBlitScaled 委托 SDL_PrivateUpperBlitScaled；其同样先检查
+src/dst 为空并返回参数错误，然后才读取表面字段。
+
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/video/SDL_surface.c#L1001-L1017
+SDL_LockSurface 直接访问 surface->locked。因此在原 UpperBlit 的
+参数检查之前，Mod 不得把空表面传给 read_surface/LockSurface。
+
+修复与范围
+==========
+modules/render/native_cache.cpp 的 Io::blit / Io::render_copy_scaled
+Before 分支在 synchronize 前识别空 src/dst，并直接返回 Status::ok。
+DispatchResult 保持函数入口的零值，原 SDL 调用继续执行，其错误信息
+和返回值仍由 SDL 生成。此分支不登记 pending，After 因无对应记录
+不会改变缓存或原返回值。原游戏的后续黑色 alpha 过渡按原逻辑继续。
+有效表面的缓存同步、高清文字物化和原生资源生命周期均未改变。
+
+交付状态
+========
+本次子代理仅修改源码并静态阅读现有证据和官方源码；未编译，未启动
+游戏，未注入，未运行产物，未编写或执行测试/断言。源码已冻结供主代理
+统一编译队列使用。编译和正式发布结果须由主代理另行记录。

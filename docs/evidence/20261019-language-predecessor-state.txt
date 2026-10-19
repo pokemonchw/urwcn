@@ -1,0 +1,104 @@
+
+package\modules\uwcn_adapter.dll:     file format pei-i386
+
+
+Disassembly of section .text:
+
+69e01ff0 <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj>:
+69e01ff0:	8d 4c 24 04          	lea    ecx,[esp+0x4]
+69e01ff4:	83 e4 f8             	and    esp,0xfffffff8
+69e01ff7:	ff 71 fc             	push   DWORD PTR [ecx-0x4]
+69e01ffa:	55                   	push   ebp
+69e01ffb:	89 e5                	mov    ebp,esp
+69e01ffd:	53                   	push   ebx
+69e01ffe:	51                   	push   ecx
+69e01fff:	8d 55 a8             	lea    edx,[ebp-0x58]
+69e02002:	81 ec 90 00 00 00    	sub    esp,0x90
+69e02008:	8b 59 04             	mov    ebx,DWORD PTR [ecx+0x4]
+69e0200b:	8b 01                	mov    eax,DWORD PTR [ecx]
+69e0200d:	89 6d c8             	mov    DWORD PTR [ebp-0x38],ebp
+69e02010:	c7 45 c0 a0 d7 e3 69 	mov    DWORD PTR [ebp-0x40],0x69e3d7a0
+69e02017:	89 5d a4             	mov    DWORD PTR [ebp-0x5c],ebx
+69e0201a:	89 45 a0             	mov    DWORD PTR [ebp-0x60],eax
+69e0201d:	c7 45 c4 ca ee e3 69 	mov    DWORD PTR [ebp-0x3c],0x69e3eeca
+69e02024:	c7 45 cc 2f 25 e0 69 	mov    DWORD PTR [ebp-0x34],0x69e0252f
+69e0202b:	89 65 d0             	mov    DWORD PTR [ebp-0x30],esp
+69e0202e:	89 14 24             	mov    DWORD PTR [esp],edx
+69e02031:	e8 3a db 01 00       	call   69e1fb70 <__Unwind_SjLj_Register>
+69e02036:	8b 5d a4             	mov    ebx,DWORD PTR [ebp-0x5c]
+69e02039:	85 db                	test   ebx,ebx
+69e0203b:	0f 84 7f 04 00 00    	je     69e024c0 <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x4d0>
+69e02041:	8d 45 ec             	lea    eax,[ebp-0x14]
+69e02044:	89 04 24             	mov    DWORD PTR [esp],eax
+69e02047:	c7 45 ac ff ff ff ff 	mov    DWORD PTR [ebp-0x54],0xffffffff
+69e0204e:	e8 1d db 00 00       	call   69e0fb70 <__ZN4uwcn7adapter14native_targets4saveEv>
+69e02053:	a1 24 70 e4 69       	mov    eax,ds:0x69e47024
+69e02058:	8b 4d f0             	mov    ecx,DWORD PTR [ebp-0x10]
+69e0205b:	2b 05 20 70 e4 69    	sub    eax,DWORD PTR ds:0x69e47020
+69e02061:	8d 50 04             	lea    edx,[eax+0x4]
+69e02064:	89 55 94             	mov    DWORD PTR [ebp-0x6c],edx
+69e02067:	8b 55 ec             	mov    edx,DWORD PTR [ebp-0x14]
+69e0206a:	29 d1                	sub    ecx,edx
+69e0206c:	89 55 9c             	mov    DWORD PTR [ebp-0x64],edx
+69e0206f:	89 4d 88             	mov    DWORD PTR [ebp-0x78],ecx
+69e02072:	8d 94 08 ac 00 00 00 	lea    edx,[eax+ecx*1+0xac]
+69e02079:	8b 4d a0             	mov    ecx,DWORD PTR [ebp-0x60]
+69e0207c:	89 55 98             	mov    DWORD PTR [ebp-0x68],edx
+69e0207f:	85 c9                	test   ecx,ecx
+69e02081:	0f 84 19 03 00 00    	je     69e023a0 <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x3b0>
+69e02087:	8b 5d a4             	mov    ebx,DWORD PTR [ebp-0x5c]
+69e0208a:	39 13                	cmp    DWORD PTR [ebx],edx
+69e0208c:	0f 82 0e 03 00 00    	jb     69e023a0 <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x3b0>
+69e02092:	8b 5d a0             	mov    ebx,DWORD PTR [ebp-0x60]
+69e02095:	89 c2                	mov    edx,eax
+69e02097:	c1 fa 05             	sar    edx,0x5
+69e0209a:	89 13                	mov    DWORD PTR [ebx],edx
+69e0209c:	85 c0                	test   eax,eax
+69e0209e:	0f 85 28 04 00 00    	jne    69e024cc <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x4dc>
+69e020a4:	8b 45 a0             	mov    eax,DWORD PTR [ebp-0x60]
+69e020a7:	03 45 94             	add    eax,DWORD PTR [ebp-0x6c]
+69e020aa:	c7 00 48 44 41 32    	mov    DWORD PTR [eax],0x32414448
+69e020b0:	8b 5d 88             	mov    ebx,DWORD PTR [ebp-0x78]
+69e020b3:	05 a8 00 00 00       	add    eax,0xa8
+69e020b8:	66 0f 6f 05 40 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e47040
+69e020bf:	69 
+69e020c0:	0f 11 80 5c ff ff ff 	movups XMMWORD PTR [eax-0xa4],xmm0
+69e020c7:	66 0f 6f 05 50 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e47050
+69e020ce:	69 
+69e020cf:	0f 11 80 6c ff ff ff 	movups XMMWORD PTR [eax-0x94],xmm0
+69e020d6:	66 0f 6f 05 60 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e47060
+69e020dd:	69 
+69e020de:	0f 11 80 7c ff ff ff 	movups XMMWORD PTR [eax-0x84],xmm0
+69e020e5:	66 0f 6f 05 70 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e47070
+69e020ec:	69 
+69e020ed:	0f 11 40 8c          	movups XMMWORD PTR [eax-0x74],xmm0
+69e020f1:	66 0f 6f 05 80 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e47080
+69e020f8:	69 
+69e020f9:	0f 11 40 9c          	movups XMMWORD PTR [eax-0x64],xmm0
+69e020fd:	66 0f 6f 05 90 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e47090
+69e02104:	69 
+69e02105:	0f 11 40 ac          	movups XMMWORD PTR [eax-0x54],xmm0
+69e02109:	66 0f 6f 05 a0 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e470a0
+69e02110:	69 
+69e02111:	0f 11 40 bc          	movups XMMWORD PTR [eax-0x44],xmm0
+69e02115:	66 0f 6f 05 b0 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e470b0
+69e0211c:	69 
+69e0211d:	0f 11 40 cc          	movups XMMWORD PTR [eax-0x34],xmm0
+69e02121:	66 0f 6f 05 c0 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e470c0
+69e02128:	69 
+69e02129:	0f 11 40 dc          	movups XMMWORD PTR [eax-0x24],xmm0
+69e0212d:	66 0f 6f 05 d0 70 e4 	movdqa xmm0,XMMWORD PTR ds:0x69e470d0
+69e02134:	69 
+69e02135:	89 58 fc             	mov    DWORD PTR [eax-0x4],ebx
+69e02138:	0f 11 40 ec          	movups XMMWORD PTR [eax-0x14],xmm0
+69e0213c:	89 5c 24 08          	mov    DWORD PTR [esp+0x8],ebx
+69e02140:	8b 5d 9c             	mov    ebx,DWORD PTR [ebp-0x64]
+69e02143:	89 04 24             	mov    DWORD PTR [esp],eax
+69e02146:	89 5c 24 04          	mov    DWORD PTR [esp+0x4],ebx
+69e0214a:	e8 61 44 02 00       	call   69e265b0 <_memcpy>
+69e0214f:	8b 45 a4             	mov    eax,DWORD PTR [ebp-0x5c]
+69e02152:	8b 5d 98             	mov    ebx,DWORD PTR [ebp-0x68]
+69e02155:	89 18                	mov    DWORD PTR [eax],ebx
+69e02157:	a1 40 70 e4 69       	mov    eax,ds:0x69e47040
+69e0215c:	89 45 94             	mov    DWORD PTR [ebp-0x6c],eax
+69e0215f:	85                   	.byte 0x85

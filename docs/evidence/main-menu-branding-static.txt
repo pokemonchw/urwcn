@@ -1,0 +1,80 @@
+2026-10-18 / UnReal World 3.89 Steam 25939378
+Main-menu Byayoi branding — static implementation record
+
+Authorization and sources
+The user requested a translation-team logo beside the original developer logo
+when Chinese is enabled, followed by "Byayoi同人社区汉化" and an automatically
+generated version on separate lines, referring to the local dfcn project.
+The supplied full-menu and cropped developer-footer screenshots establish the
+requested visual boundary. The existing native footer evidence is recorded in
+main-menu-static.txt; its 0x1250E0 routine retains its own panel and logo image.
+No original game image, developer credit, copyright or input action is changed.
+
+Reference asset
+D:/workspace/dfcn/src/byayoi_sprite.inc contains the original 34-by-34 sprite,
+five RGBA palette entries and transparent index 0. The same pixels are copied
+into src/modules/render/byayoi_sprite.h. No image generation or replacement
+artwork is used. dfcn/src/credits.inc:382 draws its adjacent community logo;
+dfcn/tools/build.py:621 defines the five-character fingerprint convention.
+
+Semantic and layout boundaries
+FieldId::TranslationCredit=0x300 and TranslationVersion extend only the enum;
+this addition preserves all prior numeric IDs and public structure sizes.
+The concurrent adapter migration separately changes Host ABI to 3; this
+branding implementation follows that completed six-module framework.
+The menu now contains 18 text fields. menu_op::build appends the community
+credit and calls MainMenu's translation_version. That function reads the
+complete metadata/package-identity string from the resident Host, hashes its
+raw bytes using BCrypt SHA-256 and encodes five uppercase Base36 characters
+with DFCN's mixed-letter/digit adjustment. The Host returns the identity, not
+the five-byte display version. MainMenu then uses the existing semantic and
+layout modules for both text lines. The exact metadata identity and encoding
+rules are recorded in main-menu-branding-version-static.txt.
+catalog/zh-CN/main_menu.tsv owns the exact visible credit and version template.
+
+Logical coordinates on the native 800-by-600 canvas:
+credit slot  {480,566,120,12}, centered at x540
+version slot {480,578,120,12}, centered at x540
+sprite center x540, bottom y562
+The original production/copyright slots start at x650/x620 respectively.
+Author and website fields remain in their original left-hand slots.
+Both new lines retain the existing Footer font role, 9-pixel ink budget,
+12-pixel slot and outline. Text is rasterized at the actual viewport size.
+
+SDL ownership
+The Render plan has a separate logo surface/texture; text rows still match
+the DisplayPlan text-field count. Palette alpha is copied into ARGB8888 pixels.
+The integer sprite cell is max(1,floor((36*viewport.h/600)/34)); the image is
+centered at round(540*viewport.w/800) and ends at round(562*viewport.h/600).
+At 800-by-600 this is {523,528,34,34}, above the first text slot.
+The same RenderState scale/clip scope used by the text composes the logo.
+Plan replacement, candidate discard, invalidation and module shutdown release
+the logo through the plan's own resource lifetime.
+
+Enable scope
+The adapter's native_build requires host->display_enabled() && !display_failed;
+the Host display gate supplies the current enabled/module-ready state. The new
+fields exist only in the Chinese main-menu plan; its TranslationCredit field
+selects the logo. Loading, intro, settings, About, Credits, Ancestors and
+farewell plans do not contain that field. Existing present and focus redraw
+boundaries draw the same plan. No SDL hook is used to identify UI text.
+
+Delivery
+The resident Host's fixed metadata/package-identity service returns generic
+raw bytes headed by UWCN_PACKAGE_IDENTITY_V1, followed by all six current
+module hashes and the current catalog hash. MainMenu owns the display-version
+business rule, so later compatible changes to that rule reload with MainMenu.
+The six-module ABI 3 migration requires one full offline publication of the
+loader, business DLLs and catalog followed by one normal user restart. Formal
+files remain under the root launcher/package hierarchy; replaced files first
+move into root 回收/.
+This document records source reasoning only. No game, produced binary,
+test command, test case, assertion or simulated input was run or written.
+
+ABI 3 architecture boundary — 2026-10-18
+Display fields and plans belong to adapter/business modules, not loader.
+Adapter may retain a lease across original native waits; the other five
+modules use short calls. Reload waits for the existing main-menu Footer
+outer boundary before adapter dispatch with all module leases zero.
+Later compatible branding or font changes use business-module reload.
+Static reading and source documentation only.

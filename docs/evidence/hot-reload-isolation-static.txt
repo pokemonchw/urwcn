@@ -1,0 +1,60 @@
+2026-10-18 热重载与汉化隔离静态记录
+
+约束：只阅读和修改源码、静态资料，编译只生成交付产物；没有启动游戏、
+注入已有进程、模拟输入、运行产物、运行或编写测试、添加代码断言。
+
+原耦合原因
+- 根 CMake 将 src/loader 下所有 cpp 链入驻留 DLL。
+- native_hooks/native_setup/native_intro/native_credits/native_ancestors 包含
+  界面作用域、字段读取、英文抑制、几何与固定补丁集合，新增汉化因此改驻留。
+- host.cpp 直接依赖 FieldId、请求结构和 DisplayPlan，并持有显示业务流水线。
+
+本轮源码结构
+- loader 明确只编入 host.cpp 与 hook_host.cpp。
+- native_* 全部迁至 src/modules/adapter；原 host 的显示业务迁至 display.cpp。
+- adapter 为第六个普通业务 DLL，模块 ID 6，掩码 32，全图业务掩码 63。
+- ABI 3 增加通用 begin_display/display_enabled/image_base/replace_hooks/
+  native_call 服务。loader 不包含 main_menu_fields.h 或 display_plan.h。
+- render_control.h 仅声明通用绘制事务操作编号，不引入界面字段或显示记录。
+- 包管理仅提供 metadata/package-identity 原字节；汉化版本的 SHA256、base36
+  和字母数字格式算法归属可热重载 main_menu。loader 不决定中文内容或字号。
+
+驻留桥生命周期
+- adapter 提交无函数指针的 Patch/ByteCheck 数组；loader 复制其纯值。
+- 驻留生成 push slot / jmp entry 的固定 x86 thunk，槽号与代码进程期不释放。
+- CALL rel32、CALL [IAT]、CALL ESI/EDI 均按原字节描述原调用。
+- 覆盖 CALL+ADD ESP,4 的位置使用独立 ret 4 入口；六字节 CALL 保留原清栈。
+- present 由 adapter 决定是否中文合成，原 SDL 调用通过 native_call 执行一次，
+  保留原函数 EAX/ECX/EDX/flags 写回。
+- adapter dispatch 的租约覆盖原生调用及其返回，允许跨窗口等待。
+- Footer 边界在进入 adapter 前检查全部租约；交接后重新读取当前稳定槽。
+- 关闭 gate 与再次核对租约在同一同步协议下完成。
+- adapter 退役前作废显示计划、恢复几何；驻留保有纯值原函数路由和控制 Hook。
+- adapter 缺席时 Footer/Tick 继续处理恢复请求，原生调用走原文路径。
+- 新代激活时整体核对原字节和控制描述、恢复旧业务跨度并登记新集合。
+- 只改其他五模块或词库不会重新安装补丁。
+
+交接及发布边界
+- 不增加任何窗口内交接点；请求等待已有主菜单 Footer 外层。
+- 第一次 ABI 2 到 3、五模块到六模块需完整离线发布及用户正常重启一次。
+- 此后兼容汉化/原生显示适配/字体/布局使用业务发布与既有热重载事务。
+- 构建与发布接入统一 build.ps1/build-queue.ps1；不运行 Reload。
+- 正式文件发布前统一核对本批替换目标占用，旧文件先移入 回收/批次/原相对路径。
+
+本记录的代码审阅不代表已经取得运行时 Applied 或视觉验收。
+交付结果
+- 统一入口 build.ps1，MinGW/i686，build/mingw-x86，全图，Publish=true，
+  Reload=false，TargetPid=0，PackageDirectory=package。
+- 请求 9c7033003a634aa4a5b92501202d067c。
+- 批次 387f3ea42e944d629906fa0135528b2a，配置一次、增量构建一次，成功。
+- 已读取 build/.compile-queue/results/9c7033003a634aa4a5b92501202d067c.json
+  和 batches/387f3ea42e944d629906fa0135528b2a.log。
+- 正式事务 8202fc9077a04c8084ee389bba6b1046，已发布驻留 DLL、六业务 DLL、
+  词库、profile、完整 release.json。根目录启动器内容未变，沿用正式文件。
+- 替换前旧文件已归档至 回收/20261018-194415-8202fc9077a04c8084ee389bba6b1046/，
+  保留 package 下原相对路径。
+- 正式六模块与编译输出、release.files 的 SHA256 一致；正式驻留与编译输出一致。
+- 本批同时包含共享工作区已保存的先祖列表、汉化组标识及版本业务改动，
+  不将其他请求先前的配置失败描述为本批失败。
+- 未运行产物、游戏或测试，未请求 Runtime Applied。此次驻留架构迁移由用户
+  从根目录 uwcn_launcher.exe 正常重启一次生效；后续兼容业务更新在主菜单交接。

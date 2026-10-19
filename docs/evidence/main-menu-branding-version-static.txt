@@ -1,0 +1,80 @@
+UWCN main-menu translation version: static implementation record
+Date: 2026-10-18
+
+Scope and reference
+-------------------
+The main-menu branding request adds the Byayoi logo, the exact credit
+"Byayoi同人社区汉化", and a separately displayed automatic translation version.
+DFCN's source reference is D:\workspace\dfcn\tools\build.py,
+stamp_core_version (line 621 in the inspected reference), with the five-byte
+version reader in src\credits.inc (lines 4-12). DFCN hashes its normalized
+linked core and encodes that SHA-256 as five uppercase Base36 characters.
+Its final adjustment ensures that the version contains letters and digits.
+
+UWCN package identity
+---------------------
+UWCN uses the six-module ABI 3 framework: Catalog, Semantic, Render, Layout,
+MainMenu and Adapter, plus the current translation catalog. Its loader holds
+each loaded module's validated source SHA-256 and the catalog bytes. This
+version service adds no file reads, embedded mutable version slots, ABI
+structures, build-time stamping, dates, counters or random values.
+
+HostApi.read_package now additionally accepts exactly:
+  metadata/package-identity
+The existing catalog/zh-CN/main_menu.tsv request retains its existing result;
+all other names still return Status::Invalid. The metadata result is the
+complete identity string below, including its final LF and without a
+terminating NUL, allocated by copy_bytes. The loader does not hash that
+identity or calculate the five-character display version.
+
+The identity input is UTF-8/ASCII text with LF delimiters and a final LF:
+  UWCN_PACKAGE_IDENTITY_V1
+  module/1:<Catalog source SHA-256>
+  module/2:<Semantic source SHA-256>
+  module/3:<Render source SHA-256>
+  module/4:<Layout source SHA-256>
+  module/5:<MainMenu source SHA-256>
+  module/6:<Adapter source SHA-256>
+  catalog/zh-CN/main_menu.tsv:<SHA-256 of the current catalog_bytes>
+
+Module numbering follows the fixed ModuleId order in sdk/host_abi.h.
+src/modules/main_menu/module.cpp::translation_version synchronously reads
+this metadata and hashes its complete raw bytes using BCrypt SHA-256. It
+owns and releases the metadata Buffer and the BCrypt algorithm/hash handles.
+Its digest is interpreted as one unsigned big-endian integer modulo
+36^5 (60466176), then written as five zero-padded Base36 digits using
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ. As in DFCN, an all-digit result changes
+position digest[0] % 5 to 'A' + digest[1] % 26; an all-letter result changes
+that position to '0' + digest[1] % 10. Other results remain unchanged.
+MainMenu returns its generated version as exactly five ASCII bytes without
+a terminating NUL, allocated by copy_bytes, then passes those bytes through
+FieldId::TranslationVersion to the existing semantic formatter. A SHA-256
+provider failure returns Status::Failed.
+
+Synchronization and lifecycle
+-----------------------------
+The metadata service follows the existing synchronous main-menu build and
+native game-thread package-handover boundary. The loader holds dispatch_mutex
+while reading the module hashes and catalog bytes, calculating the catalog
+hash, and copying the complete identity string. This is the existing
+recursive mutex, so synchronous module calls may re-enter the host. MainMenu
+hashes that copied identity after read_package returns. No new worker-thread
+package-reading contract is introduced. A changed business DLL or catalog
+changes the identity input without requiring a rebuild of the module that
+displays the version. The five-character format is a short content
+fingerprint and is not a unique release identifier. The display-version
+algorithm belongs to the reloadable MainMenu business module.
+
+Display fields and DisplayPlan are owned by Adapter and the other business
+modules, not interpreted by loader. Only Adapter may retain its lease across
+native input/animation waits; the other five modules make synchronous short
+calls. Handoff waits for the existing main-menu Footer outer boundary before
+Adapter dispatch, with every module lease zero. ABI 2 to ABI 3 requires one
+complete offline publication and normal user restart; later compatible
+translation-version rules reload with MainMenu.
+
+Work performed
+--------------
+Source implementation and static source reading only. No game launch,
+injection, live-process operation, simulated input, product execution,
+compilation, tests, test cases or assertions were performed for this change.

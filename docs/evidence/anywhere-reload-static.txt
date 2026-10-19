@@ -1,0 +1,113 @@
+UnReal World 3.89：任意界面业务重载的通用桥整改
+日期：2026-10-18
+
+要求
+====
+用户明确要求在任何游戏界面发起并完成重载，不退主菜单、不关闭当前
+窗口、不手动卸载，不将旧框架的 Footer 限制作为用户约束。
+AGENTS.md 已撤除该限制，且要求原生等待不保留阻止退役的业务调用帧。
+本记录只说明源码、编译和实际交付状态，不声称已运行验证。
+
+静态依据
+========
+原 Frame、寄存器保存及原函数清栈来自 src/loader/hook_host.cpp 与
+既有调用点证据。原 About/Setup/Credits/Ancestors/Intro 入口中，
+adapter 的同步 original 调用使旧 DLL 返回地址跨输入等待留在栈上，
+所以仅减少租约或多设几个 UI 边界不安全。
+
+本机 EXE 的 SDL2 导入见 local-inspection.json：PollEvent、WaitEvent、
+PeepEvents、PumpEvents、Delay、RenderPresent 均已确认。新桥按导入名
+定位指针，不使用各界面 RVA 来决定何处能重载。
+目标 SDL2.dll SHA256：
+3078a42c9b672a970a30a9bf070617a2dd676a94798ec6d5bd221caadc28a397
+只读 objdump 导出记录确认 SDL_WaitEventTimeout、SDL_GetError、
+SDL_ClearError；检查导出不是执行 SDL 或游戏。
+
+调用与事务
+==========
+- native_bridge.h 定义 Phase Before/After、借用 Frame 指针、稳定 token
+  与 DispatchResult.call_original。adapter Before 返回后先释放租约，
+  驻留桥才执行登记的原函数；返回后重新取得当前代 adapter 作 After。
+- adapter 不再调用 native_call/original；原生阻塞时只有游戏和驻留
+  调用帧。native_* 按值保存作用域、选项、进度参数及 token 续接状态，
+  不保存旧业务模块函数指针、局部栈地址或旧 SDL resource_id。
+- control_bridge.cpp 统一包装 SDL 事件、等待、延迟与呈现。Wait 用
+  内部 16ms 超时服务控制请求，超时不返回游戏；只返回真实事件或原
+  SDL 错误。不伪造按键、不跳出窗口、不改菜单 return_address。
+- Host 在无业务租约时处理事务，PREPARE 先保存状态，再失效和退役。
+  ReadyToPublish 到 COMMIT 期间原线程留在驻留服务循环，原生等待和
+  续接状态不前进；收到提交后激活当前代并恢复原调用。
+- Shift+F5 直接原位 Reload。Footer/Poll 标记与菜单退出分支已移除。
+  adapter_op::rebuild 使用已保存的当前显示请求；没有活动请求时成功
+  返回，不凭空创建主菜单。显示排版/叠字的其他审查项仍待整改。
+
+协议与迁移
+==========
+HostApi 内存布局和 Host ABI 仍为 3。adapter 服务版本、状态模式为
+2/2；旧桥只接受 1/1，新旧调度语义不能混用。新版驻留桥严格核对该
+版本，其余五模块仍为 1/1。
+
+本次迁移前进程中已装载的旧 uwcn_loader.dll 没有升级自身的接口。磁盘上的
+新版 loader 不会替换旧进程正在执行的驻留代码，单独热更新新版 adapter
+也无法补上旧桥缺失的协议。这是本次真实通用桥迁移的实际限制，不是
+“以后只能回主菜单重载”的规则。不得伪称当前旧进程已取得新版能力。
+
+编译记录
+========
+全部源码保存后通过项目根 build.ps1 进入统一队列；没有直接调用 CMake
+或编译后运行程序，没有测试用例、测试命令或断言。
+
+首批请求：6fcad992849d4de9840534bef4f9afdc
+批次：da7da539ef0d4a67b3028bc087ed1b7b
+全图编译成功，有五处误导缩进警告。随后只调整这些语句的 break 换行，
+并将旧 reload_boundary/native_poll 名称改为通用控制含义。
+
+最终请求：7b0eb6cdb6ef45d6b47ecf83eb936b7a
+批次：54c431013e684b5196416fc04e2b20cf
+配置一次、增量构建一次，成功且无警告。两个 JSON 回执和完整批次日志
+均已读取；没有请求该批正式发布，没有运行这些产物。
+
+最终构建产物 SHA256：
+uwcn_loader.dll
+cd2e5bee332da354e605c029fbfd7818bdeb9dd1bbec447a4f3bd89baa4bb677
+uwcn_adapter.dll
+90d7eec503be7d345785e4bed9550570cdf64571426b0e6da4f4edc2d212e70e
+
+正式交付状态
+============
+用户已明确完全退出旧游戏，并要求这是本轮整改最后一次退出。
+已将这个要求加入 AGENTS.md：后续原生 UI 所有权整改、汉化、字体、
+度量与显示适配必须在可重载业务层完成，不得再为这些修改要求退出。
+
+二进制正式迁移请求：2ccb1ea480004be79099314b9b92cae7
+批次：4bacb7dd53c84f8eafad8242286013ea
+事务：a653b60ab66a42fda5b447565b6d95f2
+成功完成统一队列全图增量编译及正式发布，回执与完整批次日志已读取。
+旧 loader、adapter、profile、release.json 先移入：
+回收/20261018-203606-a653b60ab66a42fda5b447565b6d95f2/package/
+新 loader 与 adapter 放入正式 package；正式 SHA256 与上方编译产物一致。
+旧 loader SHA256：
+b0a6476e69811bf66b7b8e7f69c9c7bc7eefe00a39248ec038f7901ce4dba270
+旧 adapter SHA256：
+8064319af0ffd64f5370f7b31c1bc766c401babdf14f64297cc811704be4f011
+归档文件 SHA256 与迁移前正式文件一致。根目录启动器内容未变，沿用正式文件。
+
+随后补齐 profile 的 resident_sources，记录 control_bridge.cpp，并将旧桥
+迁移文字改成历史事实；没有再次改动 DLL 源码或二进制。
+元数据正式发布请求：7cb8960442124f2fb550218fddf70963
+批次：32a071cc4842478bb2e078d8a8c526b1
+事务：49f9ff48d46146f093bdf3e94ffe4b7a
+回执与完整批次日志已读取；旧 profile 与清单先移入：
+回收/20261018-203651-49f9ff48d46146f093bdf3e94ffe4b7a/package/
+正式 profile 与源码 profile SHA256 同为：
+93257f7391551d43c765d5d2148ba9601f205c7b2bddceba54833ef76004183c
+
+源码、产物编译和正式发布均已完成。没有启动游戏、执行产物、模拟输入或
+运行测试，未请求运行时 Applied，不声称已运行验收。原生 UI 所有权审查
+中其余显示排版违规仍待整改；本次重载桥交付不等于这些问题已经修复。
+独立最终只读复核未发现新的确认缺陷，检查覆盖 Before/After token、
+保存状态与退役顺序、全部租约归零、PREPARE/COMMIT 驻留等待、真实 SDL
+事件语义、IAT 页保护恢复和 adapter 2/2 校验；未作运行验证。
+
+此前事务 12730e11b8f347c2a71abde60f6895a6 已对旧协议 adapter 作真实
+原位归档替换并取得 Applied；该回执不能用作本次新桥已启用的证明。

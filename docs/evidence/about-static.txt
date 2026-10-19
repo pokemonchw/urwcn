@@ -1,0 +1,247 @@
+UnReal World 3.89 / Steam Build 25939378: About window static evidence
+Date: 2026-10-18
+Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Method: read-only objdump disassembly and .rdata bytes of the fixed-fingerprint
+EXE, existing import records and resident/module source inspection, and the
+user-supplied About screenshot. No game launch, injection, input simulation,
+product execution, tests, test cases, assertions, or compilation were used.
+All instruction and string addresses below are RVAs unless explicitly marked VA.
+Preferred image base is 0x400000. Logical canvas is 800x600.
+
+Authorized display and original business path
+---------------------------------------------
+The user explicitly added the pictured About content window to localization.
+The seven fields are title, version, copyright, publisher, release notes,
+installation-directory label, and the press-key button. Preserve the website,
+installation path, names, native window/button backgrounds, and input behavior.
+The museum-edition and network-information branches are outside this screenshot
+adaptation. This record does not add other screens or their fields.
+
+The main-menu ABOUT row is index 4. Its dispatch table at 125ED4 has the index-4
+entry VA 525E18 (bytes 18 5E 52 00 at RVA 125EE4). That branch copies the native
+background, then executes:
+
+125E39  E8 82 E9 FF FF   call 1247C0     ; About function
+125E3E  E8 1D 7C FE FF   call 10DA60
+125E43  E8 D8 FA FF FF   call 125920     ; rebuild main-menu rows
+125E48  E9 33 FD FF FF   jmp 125B80
+
+The About function spans 1247C0..124C5B, takes no stack parameters, and its main
+menu caller sets no ECX/EDX input contract. It obtains its own path, builds and
+draws all content, and waits for input at 124C46 before returning. The existing
+125BDC menu-render and 125BE1 menu-input scopes have both exited before 125E39.
+Hold the About scope in the resident bridge across this original call; invoke
+reloadable business modules only for short formatting/presentation operations.
+No business-module call frame should remain across the native input wait.
+
+Original strings and field construction
+---------------------------------------
+RVA       Original bytes/text and role
+1AFAE0    "ABOUT"                         panel title
+1AFAE8    "UnReal World - version %s"      version format
+1AFAB0    "3.89"                          default version source
+1AFAB8    "verno.urw"                     native version-override filename
+1AFB04    "1992-2026"                     copyright-years argument
+1AFB10    "(c) %s by Sami Maaranen"        copyright format
+1AFB28    "Published by Enormous Elk 2021" publisher literal
+1A7058    "www.unrealworld.fi"             preserved website
+1AFB48    "For new features changelog and release notes view news.txt in your installation folder."
+1AFBA0    "Your UnReal World installation folder is:"
+1AF438    " Press a key "                 native button, including both spaces
+
+The publisher year 2021 is part of the constant at 1AFB28. At 124907 the original
+pushes only that format and the output buffer, then calls sprintf at 12490D.
+There is no publisher-year parameter. Copyright instead pushes 1AFB04 and the
+format 1AFB10 before sprintf at 1248BA, so its years are a separate parameter.
+
+At 124850 the About function calls 124690 for the version string. In 124690,
+1246C1..1246D7 copy the default at 1AFAB0 into a native shared 0x400-byte text
+slot, then the original routine attempts fopen("verno.urw",...) and, when open,
+reads through 0xD4280 with EDX=0x50 at 1246F1 before closing it. Its EAX return is
+the selected native text slot. About passes that result to sprintf at 124862.
+This describes existing native behavior; it is not a new fallback or a new
+filesystem lookup by the localization code. The supplied screenshot is 3.89.
+
+The exact version-read CALL and return boundary are:
+
+124850  E8 3B FE FF FF   call 124690
+124855  50               push eax         ; original sprintf version argument
+
+The getter consumes no stack arguments and has no ECX/EDX input dependency.
+It preserves ESI/EDI; EAX returns the native slot pointer. Its ring index is at
+RVA A44B7A8, incremented and masked by 0x3FF at 124690..1246A6, then shifted
+left by 10 at 1246AB. Slots begin at RVA A541EB0 (preferred VA A941EB0), each
+0x400 bytes. At 1246AE..1246BC the selected slot is cleared with memset of size
+0x400; 1246C1..1246D7 then copy the default version. For the file-backed native
+path, 1246EA sets EDX=0x50, 1246EF sets ECX=slot, and 1246F1 calls D4280 with
+FILE* as its one stack parameter. D42A5 invokes fgets(slot,80,FILE*), and
+D42B2..D42CD strip carriage-return and line-feed bytes. Thus that returned line
+has at most 79 text bytes plus NUL. The return buffer is a shared native text
+slot, not owned immutable memory; copy its bytes synchronously at the original
+getter return, before later native text-pool use, and retain no raw slot pointer
+across display plans. Do not call the getter twice or parse the formatted
+English sentence. A localized About version should use this returned value,
+not unconditionally the default constant at 1AFAB0. The original EAX pointer
+and its following PUSH EAX remain unchanged for native sprintf.
+
+All About body fields use direct 10E5A0 text calls, not the paragraph tokenizer.
+Original stack parameters at those calls are (text, mapped_color, outline=0),
+with ECX=x and EDX=y. Native x is 400 - strlen(original_text)*4. Each direct body
+call is followed by caller cleanup of 12 bytes, including 124A59 whose cleanup
+appears at 124A6B after intervening loads. The original nonnegative-coordinate
+10E5A0 side effects are text_color RVA A211068=mapped_color; cursor_y RVA
+61BBB3C=y; cursor_x RVA A1C1CB4=x+strlen(original_text)*8; EAX=that cursor_x.
+Suppress glyphs only at the established field consumer and preserve these
+text-flow side effects and caller stack cleanup. Do not modify source strings.
+
+Consumer  Text/semantic role     y    RGB             Expected CALL bytes
+1248A1    version               250  0,0,0           E8 FA 9C FE FF
+1248F9    copyright             270  0,0,0           E8 A2 9C FE FF
+124949    publisher             280  0,0,0           E8 52 9C FE FF
+1249B8    website               290  60,90,152        E8 E3 9B FE FF
+124A59    release notes         310  0,0,0           E8 42 9B FE FF
+124AE0    installation label    330  87,87,87         E8 BB 9A FE FF
+124B2E    installation path     340  87,87,87         E8 6D 9A FE FF
+
+The website and path CALLs are recorded for provenance and remain unpatched.
+
+Installation path and native truncation
+----------------------------------------
+1247D6 pushes buffer size 0x400, 1247DB pushes VA 634E5E0 (RVA 5F4E5E0), and
+1247E0 calls IAT 18C484. local-inspection.json identifies that import as _getcwd.
+1247F0..124802 copy the resulting zero-terminated bytes into [ebp-0x808].
+124819 compares its length with 0x5A (90). If greater, 12481E writes the DWORD
+0x002E2E2E to [ebp-0x7B1], which is path-buffer offset 87: three dots plus NUL.
+Thus the original display becomes the first 87 bytes followed by "..." when
+the original length exceeds 90. At 124B2E the text argument is this local copy,
+not the untruncated global buffer. Keeping that original CALL preserves its
+path bytes, centering, and truncation exactly; the path is not translated.
+
+Panel/title geometry and local suppression
+-------------------------------------------
+124848 calls 116270 with ECX=10, EDX=220, and stack parameters
+(width=780, height=170, title=base+1AFAE0, flags=0x82, extra=0).
+The caller cleans 20 bytes at 12484D. Retain the native panel call and scope
+only its title consumer. The panel covers x=10,y=220,w=780,h=170.
+
+The selected flags follow the native title-bar branch. In that branch the dark
+title strip is drawn at x=15,y=224,w=772,h=16. Original title consumption is:
+
+11665C  E8 3F 7F FF FF   call 10E5A0
+
+For the five-byte ASCII title ABOUT, the native ECX is 386, EDX=228, with stack
+(text, mapped white, outline=1). This call occurs amid delayed caller cleanup:
+116661 ADD ESP,0x34 also cleans earlier native drawing arguments. Replace only
+the five-byte CALL, copy only its three text arguments through the bridge,
+and leave the existing ADD ESP,0x34 intact. The Chinese layout may use the
+panel's center x=400 while retaining the original background geometry.
+
+Press-key button geometry and local suppression
+------------------------------------------------
+124C31 sets EDX=365; 124C36 pushes base+1AF438; 124C3B sets ECX=335.
+124C3E calls 114680 with that one stack text argument; 124C43 cleans 4 bytes.
+The 13-byte literal " Press a key " yields a native button background at
+x=335,y=365,w=118,h=32. Its left cap is 7 pixels, each of the 13 text slots is
+8 pixels, and the right cap is 7 pixels. Retain its background/blit operations.
+
+For this plain string, 114680 emits one-character calls through:
+
+114956  E8 45 9C FF FF   call 10E5A0
+
+Those calls use ECX=343+8*i, EDX=370, stack (single_character,0,outline=0),
+and caller cleanup of 12 bytes at 11495B. Other markup branches in 114680 are
+not used by the pictured plain button and are not patched for this adaptation.
+The function also advances native cursor state and returns EAX=451 for this
+button; leave the original 114680 control flow and its final writes intact.
+Suppress individual glyphs only while the 124C3E About-button scope is active.
+
+Initial presentation and native input wait
+-------------------------------------------
+124C46  E8 35 F0 FA FF   call D3C80
+
+The wait function first follows its existing renderer-state conditions. Its
+software-frame branch uploads and presents as follows:
+
+D3C90..D3C98  skip this upload/present block when [VA 65BBA5C] is nonzero
+D3C9A         call 10AF90                 ; native surface upload/frame copy
+D3CBF         call 10B3C0                 ; additional original drawing records
+D3CC4..D3CCB  skip present when [VA A5C1C54] is nonzero
+D3CCD         push [VA A6110CC]           ; renderer
+D3CD3         FF 15 7C C2 58 00            ; SDL_RenderPresent
+D3CD9         83 C4 04                    ; caller cleanup, preserve it
+
+The resident About bridge composes the seven-field Chinese plan immediately
+before that established SDL_RenderPresent call, after native frame copying.
+The six-byte CALL [IAT] is replaced by CALL rel32 plus one NOP; the original
+ADD ESP,4 remains. The bridge has __cdecl signature (renderer) and calls the
+game's original SDL_RenderPresent through IAT RVA 18C27C.
+
+D3CDC..D3CED drains queued events through SDL_PollEvent, then native text-input
+and event-flush operations remain in place. D3D05 calls D3BF0 repeatedly until
+its original key condition succeeds. D3BF0 calls D1C00 at D3BFC, reaching the
+same native event consumer as the main menu. No reload/control polling is
+added to the About input loop, and no native input result is changed.
+
+Window-event redraw presentation
+---------------------------------
+D1C00 reads window events and can present a recopied native frame while still
+inside the About wait. The existing main-menu repaint patches are reused:
+
+RVA       Expected six-byte CALL   Native frame source       Caller cleanup
+D1E70    FF 15 7C C2 58 00        D1E41 -> 10B480            D1E76 ADD ESP,4
+D1F48    FF 15 7C C2 58 00        D1F19 -> 10B480            D1F4E ADD ESP,4
+10B763   FF 15 7C C2 58 00        10B72A -> 10AF90           10B769 ADD ESP,4
+
+The third site is shared 10B720, called from D1E7B or D1F56 for the software
+alternative. All three bridges replace only CALL [IAT], preserve its cleanup,
+and compose Chinese when (input_scope && localized) or
+(about_scope && about_localized). Other calls keep native presentation.
+The old main-menu D1298 presentation is not the initial About present.
+Further event-chain details are in main-menu-focus-redraw.txt.
+
+Complete new About patch inventory
+-----------------------------------
+ID  RVA      Size  Original bytes      Original target / resident purpose
+29  125E39     5  E8 82 E9 FF FF       1247C0 / About lifetime scope
+30  124848     5  E8 23 1A FF FF       116270 / About title-panel scope
+31  11665C     5  E8 3F 7F FF FF       10E5A0 / scoped title glyph consumer
+32  1248A1     5  E8 FA 9C FE FF       10E5A0 / About version
+33  1248F9     5  E8 A2 9C FE FF       10E5A0 / About copyright
+34  124949     5  E8 52 9C FE FF       10E5A0 / About publisher
+35  124A59     5  E8 42 9B FE FF       10E5A0 / About release notes
+36  124AE0     5  E8 BB 9A FE FF       10E5A0 / About installation label
+37  124C3E     5  E8 3D FA FE FF       114680 / About button scope
+38  114956     5  E8 45 9C FF FF       10E5A0 / scoped button glyph consumer
+46  124850     5  E8 3B FE FF FF       124690 / copy actual version after getter
+--  D3CD3      6  FF 15 7C C2 58 00    [IAT18C27C] / initial present
+
+For absolute IAT operands, relocate expected VA 58C27C to image_base+18C27C
+when checking the loaded image, as for the three existing repaint sites.
+The eleven numbered CALLs become five-byte resident CALL rel32 instructions.
+Their native argument counts are respectively 0,5,3,3,3,3,3,3,1,3,0.
+Resident scope booleans only gate the exact consumers; translation identity
+does not depend on comparing English strings or identifying text through SDL.
+
+Unchanged alternate text and source-level scope review
+------------------------------------------------------
+The original About function has a branch at 1249C0 on [VA A784098]. The pictured
+normal branch draws release notes, directory label, and path. Its other branch
+uses literal 1AFBE4 ("Edition for The Finnish Museum of Games / Suomen Pelimuseo")
+and reaches shared text CALL 124C29. The normal branch can also reach 124C29 for
+the formatted literal 1AFBCC ("Local IP: %s | Port: %d") when the original
+[VA 640C0EB] condition permits it. Neither branch nor CALL 124C29 is patched.
+
+At this source inspection, IDs 29..38 suppress only the seven established
+fields: the five direct body consumers require about_scope && about_localized;
+the shared title and button consumers require their specific local call scope
+and about_localized. No website, path, museum-edition, or network-information
+glyph consumer is suppressed. The About FieldSet contains only the seven
+listed fields. AboutRequest.show_installation follows the existing DWORD
+comparison at 1249C0 (83 3D 98 40 78 0A 00): RVA A384098 == 0 selects the normal
+branch; the following JNE 124BA4 selects the museum branch. Only the normal
+branch includes AboutReleaseNotes and AboutInstallLabel in its Chinese plan,
+so normal-branch labels are not drawn over the unchanged museum text.
+No claim of runtime verification, installed-game behavior, or successful
+delivery publication is made by this static evidence record.
+

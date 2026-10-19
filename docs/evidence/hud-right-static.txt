@@ -1,0 +1,182 @@
+2026-10-19 right main HUD static evidence
+Target: UnReal World 3.89 Steam build 25939378
+Image: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+All addresses below are RVA unless explicitly VA. Image preferred base 0x400000.
+Only offline PE byte reading, objdump and read-only Ghidra decompilation were used.
+No tests, game execution, input simulation, injection, compilation or publication.
+
+Sources:
+  hud-right-ghidra.c (readOnly/noanalysis extraction, actual containing functions)
+  hud-right-disassembly.txt (F9000..FB2D0; opening bytes before F9030 begin mid-instruction)
+  hud-right-penalties-disassembly.txt (102B20..103150; before 102D10 is prior switch data)
+  hud-right-penalties-tail-disassembly.txt (102F00..103610; opening bytes begin mid-instruction)
+  hud-right-button-disassembly.txt (114680..114A60)
+  build/hud-right-all-disassembly.txt (whole PE .text, static objdump)
+
+OWNERSHIP / DRAW ABI
+10E5A0: ECX=x, EDX=y, stack[0]=text, stack[1]=color, stack[2]=outline.
+The existing adapter extends this full semantic draw into transport text / real glyph metrics.
+Only borrow native display text; do not change native state, coordinates, native background or caches.
+The native flags/global cursor and all status color choices remain native.
+
+RIGHT MAIN HUD CALL MAP (call -> callee ; return ; content)
+F8E84 -> 10E5A0 ; F8E89 ; native static penalty label (below)
+F91E7 -> 10E5A0 ; F91EC ; Command: initial heading OR current command description
+F92A5 -> 1157B0 ; F92AA ; Wielded weapons/tools, stack[1]=title, stack[2]=mode 3
+F9660 -> 114680 ; F9665 ; r.Repeat: (ASCII cap + dot + complete text suffix)
+FA394 -> 114680 ; FA399 ; ESC.Help and game options (ASCII cap + dot + text suffix)
+F99B0 -> 10E5A0 ; F99B5 ; Hunger:
+F99E6 -> 10E5A0 ; F99EB ; Thirst:
+F9A1C -> 10E5A0 ; F9A21 ; Nutrition:
+F9A52 -> 10E5A0 ; F9A57 ; Warmth:
+F9BEE -> 10E5A0 ; F9BF3 ; Vigour: for modern layout; Hunger: for old layout
+F9BA1 -> 10E5A0 ; F9BA6 ; Nutrition/Warmth/Vigour old-layout title
+F9DB6 -> 10E5A0 ; F9DBB ; Thirst: old layout
+F9EDA -> 10E5A0 ; F9EDF ; Nutrition: old layout
+F9F70 -> 10E5A0 ; F9F75 ; selected nutrition description
+FA074 -> 10E5A0 ; FA079 ; selected warmth description
+FA27E -> 10E5A0 ; FA283 ; selected vigour description
+
+F8E84 label values and native construction callers into F8E20:
+  FA5AF ; Carrying ; 1AA220
+  FA5D3 ; Penalty: ; 1AA22C
+  FA60D ; Fatigue ; 1AA238
+  FA665 ; Injury ; 1AA248
+  FA6BD ; Starvation ; 1AA250
+  FA6F9 ; Total: ; 1AA25C
+  FA733 ; Bloodloss ; 1AA264
+F8E20 is ECX/EDX native cell positions, stack label/value/color/unused/native cache index.
+F8E70..F8E7A only checks label nonempty, does not measure it.
+F8F59->10E5A0 handles initial unit/blank value, not a second label.
+The native F8E20 function writes its own native cached geometry at VA A80EB30/A7FF21C.
+No Mod coordinate table is needed or permitted.
+
+TITLE / BUTTON SUFFIX
+1157B0 mode 3 uses native left alignment, reaches shared 115A94->10E5A0.
+It never reaches strlen center paths for modes 5 or 10.
+114680 parses ASCII prefix before '.', then 1149F9->10E5A0 draws the WHOLE suffix.
+1149F9 return=1149FE, args[0]=suffix. Limit translation by outer F9660 or FA394 scope.
+Do not alter the ASCII key cap, dot separator, its size/width or hotkey identity.
+The suffix does not enter the button per-character loop and needs no button-tile metric change.
+
+DYNAMIC PENALTIES / NONE
+Native selected display strings enter FEE50 at:
+  FF131   ; starvation penalty, return FF136
+  102F84  ; carrying penalty, return 102F89
+  103080  ; fatigue penalty, return 103085
+  103154  ; injury penalty, return 103159
+  10326B  ; total penalty, return 103270
+FEE50 ABI: ECX=x, EDX=y, stack[0]=text, stack[1]=color.
+None source VA 5AACB4; native nonzero penalty format VA 5AACBC is -%d%%.
+Only the native-selected None value requires a translated word. Percentages remain native.
+102DCD->FEE50 is the carrying WEIGHT number, from 102D4B->44B2F0(mode 0x12); preserve it.
+The independent FEF00 bar renderer handles the native proportional bars; do not alter it.
+
+FEE50 native center width extension:
+  FEE9F..FEEAB: count current argument string bytes into EAX; EDX retains text.
+  FEEAD: B9 32 00 00 00 (MOV ECX,50)
+  FEEB2: C1 E0 03 2B C8 (SHL EAX,3 ; SUB ECX,EAX), 5-byte replaceable span
+  FEEB7 onward native divide-by-two / original coordinate addition stays untouched.
+At FEEB2 under translated field scope, use actual text metrics:
+  EAX = measured logical width; ECX -= EAX; skip original 5 bytes.
+This replaces the native width calculation only. Native center/rectangle remain owners.
+  FEEC9 -> 10E5A0 ; return FEECE ; draws the same borrowed string.
+
+SELECTED NUTRITION DESCRIPTION
+F9EF1/F9F2D call 15FF80 with ECX=[VA A72B17C].
+15FF80 writes its native global 100-byte description buffer at VA A624E48;
+F9F70 consumes returned text. Translate only there, leaving native globals English.
+Native exact values:
+  1D7E5C Starving
+  1D7E68 Malnourished
+  1D7E78 Insufficient
+  1D7E88 Scarce
+  1D7E90 Temperate
+  19FF64 Good
+  1D7E9C Nourished
+  1D7EA8 Well-fed
+  1D7E50 Abundant
+
+SELECTED WARMTH DESCRIPTION
+F9F7E calls 15F450 with CL=0, EDX=pointer to native chosen color.
+The game selects its label from its own float at VA A72BD14, copies to native local,
+and FA074 consumes it. Do not duplicate thresholds, status color or state logic.
+Native exact CL=0 values:
+  1D7B84 Freezing to death
+  1D7B04 Freezing
+  1D7BC8 Numbingly cold
+  1D7B10 Bitterly cold
+  1D7B20 Cold
+  1D7B28 Chilly
+  1D7C2C Cool
+  1D7B30 Comfortably warm
+  1D7B44 Rather warm
+  1D7B50 Warm
+  1D7B58 Hot
+  1D7B5C Sweaty
+  1D7B64 Sweating a lot
+Function's initial display buffer is 'You feel warm.' (1D7B74) before its actual branches;
+there is no reason to create speculative fallback logic around that initializer.
+
+SELECTED VIGOUR DESCRIPTION
+FA0A2/FA190 read VA A72B0D8; native threshold selection loads pointer table VA 58E938..58E950.
+FA27E consumes one selected value. Exact table:
+  1A5190 Vigorous
+  1A519C Lively
+  1A51A4 A bit tired
+  1A51B0 Tired
+  1A51B8 Weary
+  1A51C0 Extremely tired
+  1A51D0 Ready to drop
+
+PORTRAIT ACTION, DIRECTION, SPEED: DISTINCT NATIVE TARGET PATH
+FAA30 constructs these native fields and calls 111560 with ECX=portrait renderer,
+EDX=x, stack[0]=y, stack[1]=width, stack[2]=text, stack[3]=packed color.
+FAC9C -> 111560 ; FACA1 ; selected action text
+FACF2 -> 111560 ; FACF7 ; selected direction text
+FAE38 -> 111560 ; FAE3D ; speed heading/units with spaces for native numeric overlay
+111560 draws its original field rectangle then calls 10E260 (see renderer agent).
+10E260 -> 10DE90, distinct from 10E5A0 -> 10DDB0.
+Do not feed transport/UTF8 into the unextended renderer glyph path.
+Do not draw these strings at SDL_RenderPresent or enlarge a low-resolution text raster.
+Portrait rendering / real density target interface must be confirmed and extended first.
+
+Action strings retain native literal leading ASCII spaces (shown in quotes):
+  1AA30C '   Walking'
+  1AA318 '   Running'
+  1AA324 '   Fallen'
+  1AA330 '   Sleeping'
+  1AA33C '   Fainted'
+  1AA348 '   Hauling'
+  1AA354 '   Wading'
+  1AA360 '   Skiing'
+  1AA36C '  Watercraft'
+  1AA37C '   Swimming'
+  1AA388 '   Hiding'
+Actions are selected by game VA A72B054,65A9DAF,57908FB,A72BCE6,A7840E4.
+FAA30 also writes VA 65A9DAF=0 for hiding, so it is NOT pure redraw to run arbitrarily.
+Its nested DB960->927E0 snow path can also consume rand(); skipping only that
+hiding write does not make it pure. See hud-refresh-static.txt for full refresh limits.
+Directions selected via [VA 58EA40 + [VA A784110]*4]:
+  1AA284 '     EAST'
+  1AA290 '  NORTH-EAST'
+  1AA29C '     NORTH'
+  1AA2A8 '  NORTH-WEST'
+  1AA2B8 '     WEST'
+  1AA2C8 '  SOUTH-WEST'
+  1AA2D8 '     SOUTH'
+  1AA2E4 '  SOUTH-EAST'
+Speed strings: 1AA398 'Speed:   mi/h', 1AA3A8 'Speed:   km/h'.
+FAA30 computes number first and FAEFF->10E260 overlays it at its own native position;
+111560 has no text-width-driven numeric positioning. Supported semantic display
+replacement is heading-only at FAE38 and original formatted number plus its selected
+unit at FAEFF, preserving both native call positions and the numeric color. See
+hud-refresh-static.txt for number/unit provenance and static layout constraints.
+
+WIELDED ITEMS / COMMAND CONTENT NOT IN SCREENSHOT
+F95C3 draws '-' or native item description copied from 452640 then native shield stance suffix.
+F98F1 draws native repeated command assembled from 163190/4076C0/46C8B0 or native custom text.
+F91E7 also draws truncated native command content. This evidence confirms display paths,
+but does not establish semantic translations for arbitrary inventory descriptions or commands.
+No claim of universal command/item localization is supported by the screenshot or this scope.

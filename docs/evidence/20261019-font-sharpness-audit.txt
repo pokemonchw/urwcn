@@ -1,0 +1,101 @@
+2026-10-19 字体清晰度复核（未解决，未发布）
+
+后续更正：本文件保留初步审查过程。用户补充未经放大的原始截图后，
+已确认1.5倍线性重采样；重新枚举唯一显示器取得150%（S_OK）。下文
+单次100%读数不能再用于排除Windows位图缩放，相关初步结论撤回。
+已接入启动前DPI修正，准确证据和交付状态见20261019-font-dpi-startup.md。
+
+用户反馈：所有界面一直都糊，要求严格按现行设计高清绘制。
+本次仅检查源码、正式 DLL、既有转储、字体文件结构与 Windows 窗口元数据。
+没有启动游戏、注入、输入模拟、运行产物或测试；没有测试用例、断言。
+没有修改实现、提交编译或发布正式文件。
+
+核对基线
+--------
+正式 package/release.json 事务 d4ba5b9975644057b0e1c1000c695719。
+Adapter SHA256: 4779d2b868646dac57e6bc7b4cfceca6d91289a7f428bd225e849e4f28c7e189
+Render SHA256: 894366d203897346df382886ae896dd8cd46fe5dc8cf690c6bb33f988527a050
+审查期间工作区存在其他修改（HUD renderer 等）；它们不属于本次实现或交付。
+下列位置同时给出函数/表达式，避免并行修改使行号被误当作固定接口。
+
+已确认链路
+----------
+1. modules/render/font_engine.cpp::FontEngine::font 将 native_line_height、
+   ink_height 按传入密度换成物理预算；以完整参考字集的非零 alpha 包络
+   选择最大合格字号。使用 msyhbd.ttc face 0、regular、NORMAL hinting、
+   TTF_RenderUTF8_Blended。未发现字体内部先生成高清再缩回 1x 的路径。
+2. modules/render/immediate_text.cpp:34..40 使用光栅自身 w/h，普通 UpperBlit
+   即时写入原生 surface。modules/render/module.cpp 的 sx/sy 来自实际
+   surface w/h 与原生逻辑宽高之比，不是仅按窗口大小推测字体密度。
+3. 原生 117973 上传纹理创建返回点、1179BF 主面创建返回点与 adapter
+   识别一致。10AF90 从主面实际 pixels/pitch 上传，随后 RenderCopy 的
+   source/destination 均为 NULL；不含另一张固定 800x600 中间纹理。
+4. SDL 2.30.0 RenderGetViewport 在 scale=1 时取得输出像素范围；完整
+   NULL destination Copy 覆盖该 viewport。正常主面、上传纹理和 viewport
+   尺寸相同时，该链没有将小字形扩大。这一条件不能只凭源码替代现场尺寸。
+5. 本机 msyhbd.ttc face 0 的 SFNT 目录具有 glyf/loca，不含 EBLC/EBDT/
+   EBSC/CBLC/CBDT；没有该字体使用内嵌低分辨率位图的静态证据。
+
+既有转储的证据和限制
+--------------------
+文件：C:/Users/WIN11/AppData/Local/CrashDumps/urw.exe.97408.dmp。
+只读解析 MINIDUMP ModuleList 与 MemoryList；未读取或比较 UI 像素。
+
+Adapter 基址 0x57AD0000，canvas RVA 0x47220（对应正式 PE 符号）。
+其值为 logical 800x600，physical 1825x1369。这是目标配置记录，不等于
+所有原生资源已成功迁移或所有文字已经以该密度重画：promote() 先更新
+canvas，再逐个迁移 owner，转储发生于其中。
+
+主面指针为 0x24AA90F0，但转储没有该 surface header，故实际主面 w/h
+不能从这份转储读取。Render fonts 全局在 0x586F0040，TTF 初始化标志为1；
+fonts_ vector 为 0x100217C0..0x100217D0，含4个字体指针。该堆区不在
+转储内，不能确定实际 point、density 和参考包络，不推测其数值。
+
+异常为 adapter RVA 0x1755B 的 C0000005，位于 replace_surface：旧 owner
+是 A1C2014 子窗口背景，旧 surface=0x0E282EE8；其 format 被读为
+0xFFFFFFFF，取 format->amask 时访问0x17。正式 DLL 与转储捕获的该
+.text 区段在重定位后256/256字节一致；不是完整模块逐字节比对。
+旧 surface header 不在转储内，释放/破坏来源未确认。这是独立的目标
+生命周期异常，待整改，不能当成“所有字一直糊”的已确认根因。
+
+Windows 元数据
+--------------
+进程仍存在时，仅通过公开 getter 查询 HWND 28774120：DPI awareness=0，
+GetDpiForWindow=96，client=2560x1369；所在显示器缩放为100%。
+没有改变进程/线程 DPI、窗口、显示器或游戏状态。
+这些值不能支持“当前 Windows 二次放大导致模糊”的结论。
+原生 EXE manifest 无 DPI 声明；SDL_WINDOWS_DPI_AWARENESS 仅在已设置时
+由 WIN_VideoInit 消费，DPI_SCALING 默认关闭。未在已创建窗口中修改策略。
+
+明确的设计缺口及待整改状态
+------------------------
+A. modules/adapter/native_targets.cpp::output_scale，审查初始行84，当前
+   位于101附近：std::max(800,window.w)/std::max(600,window.h) 强制最小
+   光栅域。小窗口会在最终输出缩小文字，不符合实际密度1:1要求。
+   待整改：小于1倍密度时，现有原生逻辑像素读写如何保持其算法语义仍需
+   静态依据；不能只删除max并假定边界已经处理。当前窗口尺寸未触发此条件。
+B. native_targets.cpp::replace_surface，原行204、当前221附近，使用
+   UpperBlitScaled 搬运旧缓存。它不会重新生成文字轮廓。仅在原生后续
+   完整重画覆盖相应区域后，才能称为新密度文字；未重画区域仍是旧像素。
+   待整改：各 owner 的构建、覆盖、恢复边界须分别确认，不增设文字重放。
+C. modules/adapter/module.cpp::invalidate，原行458：立即重画范围有限。
+   未覆盖页面在输出密度变化后可能保留旧密度。不能把主菜单接入外推为
+   当前全部界面随时完成高清迁移。待按各组件的原生生命周期扩展。
+D. modules/render/font_engine.cpp::density_changed 未见活动调用者。
+   旧密度字体依赖容量淘汰；字体键包含密度，未发现直接错用旧密度光栅。
+   待统一失效语义，不将此项单独描述为模糊根因。
+
+结论与待补证据
+--------------
+上述代码缺口真实存在，但尚无证据将其中一项确认为本次“所有界面一直
+都糊”的完整根因。已存在高清创建与即时绘字代码，不等于当前效果合格；
+也不能用采样切成Nearest、擅改字体/字号/抗锯齿、放大1x字形来宣布修复。
+需要用户所见模糊画面的原始分辨率图像，以区分字形灰度边缘、缓存缩放
+和完整画面缩放。代理不自行截图或操作游戏作视觉测试。
+
+官方源码依据（锁定版本）
+-----------------------
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/render/SDL_render.c
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/render/direct3d/SDL_render_d3d.c
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/video/windows/SDL_windowsvideo.c
+https://github.com/libsdl-org/SDL_ttf/blob/release-2.20.2/SDL_ttf.c

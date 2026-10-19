@@ -1,0 +1,265 @@
+UnReal World 3.89 / Steam 25939378: complete introductory sequence text
+Date: 2026-10-18
+Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Method: read-only PE bytes, import names, selected objdump disassembly,
+Ghidra 12.1.4 PUBLIC headless C decompilation and source bitmap inspection.
+No game launch, injection, input simulation, tests, test scripts or assertions.
+All code/data addresses in this document are RVAs. Preferred image base 400000.
+The C and assembly archives use the corresponding VAs.
+
+2026-10-19 correction: the former snapshot/Present-composition implementation
+is withdrawn. Its unedited record is retained under
+回收/20261019-intro-poem-source-docs/docs/evidence/intro-static.txt.
+The native addresses and original flow below remain static evidence. Current
+native text/width integration and delivery are recorded in
+20261019-intro-poem-native.md; historical compilation is not compliance proof.
+
+Confirmed scope and complete string inventory
+--------------------------------------------
+The user-supplied screenshot is the first caption of the actual opening
+sequence, not the startup-audio progress function. The only direct caller of
+RVA1254C0 is the normal startup CALL at RVA18097D:
+  18097D E8 3E 4B FA FF -> 1254C0
+The startup code writes its existing intro_screen log before this CALL and
+continues its existing init log/setup/menu path after return at 180982.
+No new entry, input action or loading operation is needed.
+
+The complete text-producing paths reached by 1254C0 are:
+  1255EC ->10E5A0, first north caption
+  1256C2 ->10E5A0, second computer-roleplaying caption
+  12582F ->124710 ->1247A7 ->10E5A0, dynamic version line
+  1258B5 ->125370 ->125445 ->125240 ->125285/12530E ->10E5A0,
+      eleven First Winter story lines
+That is 14 textual fields. intro-strings.tsv preserves every original string,
+its exact RVA, byte length and display identity; the original data stays English.
+The dynamic version value is obtained by the existing 124690 version reader.
+
+RVA     Original complete display text (NUL is not part of the visible text)
+1AFFE0  ...into the far North we shall take you.
+1B000C  As far as we can by the means of computer roleplaying...
+1AFAD4  Version %s
+1AFD80  There are countless stories, legends and myths about The First Winter.
+1AFDC8  During The First Winter, the Inehmo became many.
+1AFE00  Men, wives, children, the heroes and the wise ones walked the Earth.
+1AFE48  The heroes made the fire, they made the bow and the arrow and they hunted.
+1AFE98  They made clothes, they made tools and shelters, they made skis,
+1AFEDC  and they made drums and the kantele.
+1AFF04  When The First Winter was over,
+1AFF24  Inehmoes could not understand The Wind singing,
+1AFF54  nor The Bear and The Forest humming.
+1AFF80  The wise ones among the people said that The World was no longer real.
+1AFFC8  The World was Unreal.
+
+No other branch within 1254C0 or its text-producing helper adds a heading,
+keyboard hint, error message, credits paragraph or hidden caption. The pending
+key/event branches return from this original sequence; they do not draw text.
+The existing final wait is a wait for a key without a displayed prompt.
+
+Do not infer text from adjacent data
+---------------------------------
+The nearby strings at 1AFC90 (Enormous Elk production), 1AFCAC ((c) %s / Sami
+Maaranen) and 1AFCC8 (Created and programmed / Additional programming /
+Ported to Linux & MacOSX / website) are referenced by function 1250E0, a
+separate main-menu footer. 1254C0 does not call 1250E0. They are not additional
+opening-sequence text merely because their bytes precede the story table.
+The ABOUT strings around 1AFAE0 are likewise a separate documented window.
+
+The actual bitmap consumers reached here are:
+  1257D7 ->1127C0, image name RVA1B0048: bg-urwstart.png
+  124732 ->112980, image name RVA1AFAC4: logotext.png
+Read-only inspection of installed truegfx/bg-urwstart.png shows a person in
+bear fur with a forest background and no words. truegfx/logotext.png contains
+only the brand name 'UnReal World'. That bitmap remains the original brand;
+there are no extra bitmap captions to invent or replace. hirvilogo.png is
+used in the separate 1250E0 footer and is an emblem without words.
+The operating-system window title is not an output of these in-game consumers.
+
+Exact display ABI and patch bytes
+--------------------------------
+10E5A0 receives ECX=x, EDX=y, stack[0]=NUL-terminated text,
+stack[1]=SDL-mapped native color, stack[2]=outline flag. It is caller cleanup;
+all five relevant CALL instructions are followed by ADD ESP,0C.
+The source string identity in the 11-line helper is its loop table index;
+it is copied into the original local buffer before any display. Its display
+consumer alone is shared; it is not valid to use arbitrary English text or a
+common SDL call to infer the interface.
+
+Call RVA  Original bytes       Role                 Native position/color
+1255EC    E8 AF 8F FE FF        north caption        250,400; RGB4*BL; outline1
+1256C2    E8 D9 8E FE FF        roleplaying caption  180,420; RGB4*BL; outline1
+1247A7    E8 F4 9D FE FF        Version %s           centered 398,250;
+                                                  RGB238,232,170; outline1
+125285    E8 16 93 FE FF        story fade           original x/y; RGB4*BL;
+                                                  outline1
+12530E    E8 8D 92 FE FF        story settled        original x/y;
+                                                  RGB252,252,84; outline1
+
+The version position follows its exact caller and native strlen layout:
+12582F sets ECX=300, EDX=200. 124710 draws the logo at (300,200), formats the
+existing version into [EBP-408], and sets version y=250 and
+x=300-4*strlen(formatted_version)+98. Original computed centering and version
+contents remain readable at that draw boundary; no version string is invented.
+
+125370 builds exactly eleven pointer slots on its own stack, then loops EDI
+from 0 through 10. Its 125445 CALL to125240 supplies stack[0]=the copied line,
+ECX=400-4*strlen(line), EDX=400+10*line_index. The helper is ordinary caller
+cleanup and returns without changing the argument cleanup in 125370.
+
+The full five-byte patch inventory is also archived in intro-patches.tsv.
+This includes the direct business calls and the explicit present sites below;
+it does not claim every listed instruction must be patched by implementation.
+
+Original sequence timing and control flow
+----------------------------------------
+1254C0 preserves all original existing branches:
+1. ESI=0..31: SDL_FillRect on the existing working surface, blend an existing
+   rect at alpha32 over the native target, upload/consume drawing records,
+   conditional SDL_RenderPresent, SDL_Delay(1), then1255A2 ->D25E0 input poll.
+   Any nonzero input result leaves via12590A. This stage has no text.
+2. EBX=0..62: draw the first caption with RGB=(4*BL,4*BL,4*BL), upload/consume,
+   present, SDL_Delay(1), poll. The outline flag is1, not a fourth MapRGB arg.
+   Existing north text continues underneath the next caption.
+3. Wait using SDL_GetTicks for elapsed >3000ms, polling D25E0. A key/event can
+   leave at the local125684 epilogue or common12590A epilogue.
+4. EBX=0..62: draw the second caption on its lower line with the same grayscale
+   fade and SDL_Delay(1); poll. Then wait >2000ms, polling D25E0.
+5. Present the two captions once more at1257AB. Call1257B6 ->10D5B0 for the
+   existing two-second native surface fade-out (EDX=0, stack[0]=2, stack[1]=1).
+   Call1257BB ->10B9F0 for the native black clear and internal present.
+6.1257D7 ->1127C0 draws bg-urwstart.png at the existing800x600 dimensions.
+   1257E9 ->10D5B0 fades in that existing background, stack[0]=2, stack[1]=0,
+   EDX=native surface. Wait >3000ms with D25E0 polling.
+7.12582F ->124710 draws original logo plus dynamic version line, then present
+   at125876; wait >3000ms with D25E0 polling.
+8.1258B5 ->125370 runs all eleven First Winter story lines. Each helper call
+   runs63 grayscale steps with SDL_Delay(2), then draws the line once in
+   RGB252,252,84. Previously completed lines remain. After each line the
+   caller waits >3000ms using GetTicks and input poll. Input returns0 from
+   125370; completing all11 lines returns1.
+9. If that result is0, jump12590A and return to normal startup. If1, upload /
+   drawing-record present at125900 then125905 ->D3C80 original wait-for-key.
+   The final12590A epilogue also returns normally to startup.
+No input, delay, wait, return value, file/resource load or game state is added.
+
+Native presents and display lifetime
+-----------------------------------
+The explicit software-frame branches first call10AF90 (upload), optionally
+110040, then10B3C0 (consume existing drawing records), then present only when
+original globals permit it. Renderer is the existing pointer at RVA A2110CC.
+ESI/EDI already holds IAT18C27C = SDL_RenderPresent.
+
+Present RVA  Five-byte span       Stage
+125596       FF D7 83 C4 04       initial background overlay
+125636       FF D7 83 C4 04       first caption grayscale frame
+12570C       FF D7 83 C4 04       second caption grayscale frame
+1257AB       FF D7 83 C4 04       final two-caption frame
+125876       FF D7 83 C4 04       logo/version
+125900       FF D7 83 C4 04       final11-line story
+1252CF       FF D6 83 C4 04       current story line grayscale frame
+125358       FF D6 83 C4 04       current story line settled yellow frame
+
+These native Present sites are evidence of the game's frame lifetime, not
+text insertion points. Current integration leaves all of them unchanged.
+Each confirmed native text call immediately writes Chinese glyphs into the
+actual native surface. Earlier lines remain as native-owned pixels; no field
+snapshot or text replay is required at Present or on sequence exit.
+
+The exact transition boundary before the source pixels are cleared is:
+  1257B6 E8 F5 7D FE FF ->10D5B0 (native surface fade-out)
+  1257BB E8 30 62 FE FF ->10B9F0 (black clear plus internal present)
+  1257D7 E8 E4 CF FE FF ->1127C0 (new background)
+  1257E9 E8 C2 7D FE FF ->10D5B0 (new background fade-in)
+
+10D5B0 is not a text consumer. It creates temporary SDL surfaces, blends
+native source pixels against a black surface according to GetTicks timing,
+updates/copies the native texture and internally presents (including10D77C /
+10D88C paths). Those internal presents do not carry any additional text.
+The confirmed fade-out branch (stack[1]=1) is 10D6F0..10D7CE. It starts the
+black surface alpha at0.0f and increases it according to original GetTicks.
+10D707 CVTTSS2SI EAX,[EBP-8] truncates the current float;10D70C MOVZX EAX,AL
+retains its uint8 value;10D711 sets that black surface alpha, and10D71D blits
+it over the original source before update/clear/copy/present. The conditional
+present itself is exactly10D77C FF157CC25800; the following ADD ESP4 remains
+outside that six-byte instruction span. The current float is updated only
+after this present at10D7B7. Constants at1DD638(float) and1DD500(double) are255.
+The Chinese pixels already belong to that source surface, so the original
+blit/alpha/upload path fades them with the rest of the image. No RGB multiplier
+or caption composition is added at the internal present. The existing native
+10B9F0 clear and following background load own the transition. The fade-in
+branch with stack[1]=0 retains its separate present at10D88C unchanged.
+
+Important stack detail: the original compiler shares pending pushes across
+these adjacent calls.10D5B0 is RET0, not stdcall. Do not rewrite or 'balance'
+the existing caller ADD instructions based on a guessed C prototype.
+
+Reproducible decompilation archive
+---------------------------------
+Tool: C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
+JAVA_HOME: C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
+Independent project: build/intro-ghidra/uwcn-intro, imported from the original
+urw.exe. It does not open or modify setup/startup-audio project databases.
+Settings/temp paths: build/intro-ghidra/settings and build/intro-ghidra/cache.
+Headless options: -analysisTimeoutPerFile300 -max-cpu4
+ -scriptPath D:\workspace\uwcn\docs\evidence
+ -postScript intro_Decompile.java D:\workspace\uwcn\docs\evidence\intro-ghidra.c
+ -log D:\workspace\uwcn\docs\evidence\intro-ghidra.log
+ -scriptlog D:\workspace\uwcn\docs\evidence\intro-ghidra-script.log
+
+intro_Decompile.java requests actual Ghidra C output for the entire sequence,
+all11-line story control, fade/text helper, version/logo, both image consumers,
+the text consumer, input poll, native transition, black clear, drawing-record
+consumer, frame uploader, full startup caller, actual version getter, image
+leaf and both diagnostic consumers. The C file preserves
+Ghidra's inferred prototypes; the machine instructions above supply the ABI.
+The extraction script does not compile or execute those C listings.
+
+This document is a static extraction record. It makes no runtime or visual
+acceptance claim. Bitmap inspection is a read of the installed resources,
+not a game launch or an execution of delivery artifacts.
+Actual display keys used by the implementation are intro.north,
+intro.roleplaying, intro.version and intro.myth_1 through intro.myth_11.
+The initial import/extraction exited0; the log reports Analysis succeeded
+(120s), Post-analysis succeeded, Save succeeded and Import succeeded. A
+subsequent -process urw.exe -noanalysis extraction of the same independent
+project added the actual version getter, image leaf and both diagnostic
+consumers; it also exited0 and saved successfully. The final C archive has
+all17 requested functions, and the appended logs retain both extraction runs.
+
+Confirmed non-screen strings and dynamic version source
+------------------------------------------------------
+The complete lower image/fade branches contain these diagnostic-only formats:
+  IMG_Load: %s\n
+  fade: could not create the black Surface. (%s)\n
+  fade: could not create a copy of the Screen Surface. (%s)\n
+They do not feed10E5A0 or another screen text path. Both image helpers112260 /
+1127C0 feed40E380, which selects __acrt_iob_func(1) (stdout), then IAT18C4B0
+__stdio_common_vfprintf. The fade helper selects __acrt_iob_func(2) (stderr)
+and feeds10AC30, which calls the same vfprintf import. They remain native
+resource diagnostics; treating them as hidden opening-frame text would be
+incorrect. Original diagnostic paths and SDL errors are retained.
+
+12473A E8 51 FF FF FF calls124690 with no stack arguments. The existing native
+getter zeroes one0x400-byte shared ring slot, copies default '3.89' from1AFAB0,
+opens 'verno.urw' in text mode when present and uses the originalD4280 input
+reader before fclose. The returned EAX is immediately pushed as the native
+Version %s argument; a display-only hook copies that value at this return
+boundary and preserves EAX. As already documented in about-static.txt,
+D4280 invokes fgets(slot,80,FILE*) and strips CR/LF, so its file-backed value
+contains at most79 visible bytes. The default and real override retain their
+original semantics; no second getter call or hardcoded replacement value is
+required for Chinese '版本%s'.
+Raw instruction archives: intro-disassembly.txt (whole125240..12591A),
+intro-story-fade-disassembly.txt (125240 helper),
+intro-credits-disassembly.txt (124710 version/logo), and
+intro-transition-disassembly.txt (native10D5B0 fade including exactalpha).
+
+Current implementation and delivery (2026-10-19)
+----------------------------------------------
+The old native_intro.cpp / IntroRequest / ABI2 scheme and its October 18
+delivery record are retained only in the archive named above. They do not
+describe current code or establish compliance with native UI ownership.
+Current ABI1 integration uses two caption consumers, the existing version
+scope, the native 125430 width boundary and two story text consumers. It
+contains no page snapshots, Present hooks or per-frame text replay. See
+20261019-intro-poem-native.md for exact changes, limits and delivery receipts.

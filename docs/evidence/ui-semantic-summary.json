@@ -1,0 +1,97 @@
+{
+  "analysis": "Static UI and entity data-flow candidates; no game launched, no runtime memory inspected",
+  "exe_sha256": "e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9",
+  "instruction_addresses": "RVA; absolute operands in disassembly retain preferred-base VA",
+  "category_index_table_rva": "0x48d2c",
+  "category_handler_table_rva": "0x48cf0",
+  "category_cases": [
+    {
+      "category_code": 1,
+      "table_index": 0,
+      "handler_rva": "0x48b00",
+      "static_label": "Weapons"
+    },
+    {
+      "category_code": 2,
+      "table_index": 1,
+      "handler_rva": "0x48b1a",
+      "static_label": "Armours & Clothes"
+    },
+    {
+      "category_code": 3,
+      "table_index": 2,
+      "handler_rva": "0x48b3a",
+      "static_label": "Containers"
+    },
+    {
+      "category_code": 5,
+      "table_index": 3,
+      "handler_rva": "0x48b66",
+      "static_label": "Hides & Skins"
+    },
+    {
+      "category_code": 6,
+      "table_index": 4,
+      "handler_rva": "0x48ba6",
+      "static_label": "Tools"
+    },
+    {
+      "category_code": 7,
+      "table_index": 5,
+      "handler_rva": "0x48bc2",
+      "static_label": "Foods"
+    },
+    {
+      "category_code": 8,
+      "table_index": 6,
+      "handler_rva": "0x48bde",
+      "static_label": "Timber"
+    },
+    {
+      "category_code": 9,
+      "table_index": 7,
+      "handler_rva": "0x48c04",
+      "static_label": "Vehicles"
+    },
+    {
+      "category_code": 10,
+      "table_index": 8,
+      "handler_rva": "0x48c24",
+      "static_label": "Valuables"
+    },
+    {
+      "category_code": 11,
+      "table_index": 9,
+      "handler_rva": "0x48c46",
+      "static_label": "Plants"
+    },
+    {
+      "category_code": 12,
+      "table_index": 10,
+      "handler_rva": "0x48c6c",
+      "static_label": "Carcasses"
+    },
+    {
+      "category_code": 13,
+      "table_index": 11,
+      "handler_rva": "0x48c8e",
+      "static_label": "Miscellaneous"
+    },
+    {
+      "category_code": 14,
+      "table_index": 12,
+      "handler_rva": "0x48b92",
+      "static_label": "Textiles & Yarn"
+    },
+    {
+      "category_code": 27,
+      "table_index": 13,
+      "handler_rva": "0x48cba",
+      "static_label": "Unpaid"
+    }
+  ],
+  "notes": [
+    "Static category names originate in the original title cases; not a complete item type enumeration",
+    "Descriptor offsets are documented in game-analysis.md; material, quality, knowledge state and prototype identity remain unconfirmed"
+  ]
+}

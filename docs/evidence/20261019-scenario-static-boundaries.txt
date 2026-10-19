@@ -1,0 +1,140 @@
+SCENARIO: THE VILLAGE - confirmed native text boundaries
+2026-10-19, Asia/Shanghai. Static inspection only.
+Target: UnReal World 3.89, Steam Build 25939378.
+EXE SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Image base 0x400000. All addresses below are RVAs unless marked VA.
+
+Method
+Read AGENTS.md and installed game files; disassembled the original PE with
+bundled objdump. No game execution, injection, input simulation, tests,
+assertions, build or publication. No runtime memory was read. Only these
+scenario-static-*.txt evidence files were created by this analysis subtask.
+Raw instructions: 20261019-scenario-static-disassembly.txt (VA labels).
+Source data/hashes: 20261019-scenario-static-records.txt.
+
+Game-owned source identity and file records
+RNDCAMP.1 is the installed THE VILLAGE source. Its records (zero based):
+  0 title; 1 scenario-selection summary; 2 picture filename;
+  3..16 fourteen body records, including empty record 13.
+105C0 takes selected native scenario row in ECX/EBX. At 1062F it formats
+RNDCAMP.%d with that index (format literal 18F808). It opens the character
+story file built from %s/story.txt (18F7F8); writes "Scenario: " (18F83C),
+the title, and newline. It reads/skips the summary record, then copies
+picture plus remaining body records through native file I/O. It closes
+both files before 10707 calls FB390 for preview.
+10B8E/10B94 save the selected row+100 into native global A32B0C8.
+FB7D0 reads that global; when >=100 it can call 16CA70, subtracts 100,
+writes it back at FB7F2, and calls DF7B0. Hence full FB7D0 is NOT a pure
+redraw function and must not simply be rerun as a refresh.
+For the requested post-creation page, village identity is native value 1
+at FB7FD, whereas the earlier scenario preview uses 101. Do not change
+this business field or infer an additional story identifier. The global
+is later consumed by native scenario generation 16F0C0 and reset there.
+
+FB390 file/display lifecycle
+FB390 has locals [EBP-808] title/line 0x400 bytes, [EBP-408] picture 0x400,
+and [EBP-C08] formatted paragraph input 0x400. It opens %s/story.txt
+using existing character-directory text A32B061; no file is rewritten.
+FB3E9 reads the title and FB3FD reads the picture. D4280 is the game's
+fgets wrapper: ECX=destination, EDX=maximum 0x12C, one FILE* stack arg;
+it strips CR/LF and skips its existing comment prefixes.
+The native title's own strstr selection at FB452 locates VILLAGE and
+sets picture to terrain-village.jpg (1AA3F8), preserving native choice.
+FB666 -> 1127C0 paints native background.
+FB691 -> 116270 draws full-screen panel/title. ECX/EDX=0; five stack
+arguments width,height,title,flags,color; title index 2, flags 0x30.
+FB6BA -> 112980 draws the chosen picture using native image lifecycle.
+FB6D6 -> 162300 resets native paragraph tokens with ECX=1, empty EDX.
+FB712 reads successive body records (after zeroing the whole 0x400 local).
+FB71A/FB723 inspect two leading spaces; only those records get the
+format <br>%s (1AA4DC), otherwise %s. This is semantic paragraph markup,
+not a rendered screen row. FB74D formats the record, FB75D -> 162300
+appends it with ECX=0, EDX=[EBP-C08]. FILE* remains native ESI.
+FB7A3 -> 10EB40 draws the resulting native paragraph. Stack arguments
+are native width,height,pixel,outline, with outline=1. The game chooses
+all placement, wrapping, height, colors and clipping.
+FB7A9 closes FILE*, followed by ordinary cookie/register epilogue.
+The function calls are file read/string/display APIs; no character
+creation, random-number, story generation or input wait occurs in FB390.
+
+Village body records at FB75D (zero based)
+ 0..2: leaving home at sixteen, childhood learning, finding own path.
+ 3..5: traders' journey and accompanying them to a safe village.
+ 6..9: being left outside, cosy houses, uncertain people, exploring first.
+ 10: empty file record.
+ 11..13: parenthetical safer-start gameplay explanation.
+Records 3 and 6 receive native <br>; retain that markup in translations.
+Source indexes 3..16 map to body indexes 0..13. The generated story.txt
+has title/picture at 0/1 and body at 2..15, matching installed source.
+Both source and generated story end in CRLF. The native loop checks
+feof before a subsequent fgets. Therefore after the final nonempty line,
+a last fgets returns NULL against the cleared line buffer and FB75D
+receives one additional empty EOF record (body index 14); feof then ends
+the loop. This is observed static control flow, not an invented fallback.
+A synchronous source-record counter can live only for FB390 invocation;
+it must not be a layout row index or store UI positions/page content.
+
+Screen shell and introduction
+FB7FD -> FB390 completes body/title/picture, then:
+ FB80C -> 162300, ECX=1, literal 1AA4E8
+ FB818 -> 162300, ECX=0, literal 1AA550
+ FB824 -> 162300, ECX=0, literal 1AA5B0
+ FB830 -> 162300, ECX=0, literal 1AA620
+These four original text fragments are the entire upper-left description.
+FB84B -> 10EB40 draws it with four stack args; outline=0 and pixel=0.
+FB85F -> 114680 draws one stack-argument continuation label, literal
+1AA684: "Press a key to continue - The UnReal World awaits ".
+FB864 ADD ESP,14h releases both paragraph and button arguments together.
+FB867 POP ESI balances FB7D0; FB868 tail-jumps D3C80 for normal input.
+17E865 -> FB7D0 is its single direct caller; normal D3C80 frame therefore
+has original return 17E86A, not FB86D (because tail JMP adds no return).
+
+Existing text mechanisms applicable here
+Title 116270 flags 0x30 selects native left-aligned mode 1, then shared
+115A94 -> 10E5A0; borrow translated title only at FB691. Native original
+English title already decided image selection before this call.
+Use existing transport codec, 162300 tokenizer, 10EB40 paragraph scope,
+10EE68 actual word width, 10EF57 advance, 10EF87 whole token draw and
+10E700 cursor metrics. Tokenizer owns 0x82-byte tokens; UTF-8 must not be
+sent into the original ASCII glyph/strlen path without this extension.
+Borrow continuation label using existing plain_button scope and shared
+1146DD width / 1148E9 character / 114956 text / 11498A advance hooks.
+Title/paragraph/buttons consume the current native target. They require
+no fixed coordinates, rendered-row table, content snapshot, pixel scan,
+Present overlay or deferred text replay.
+
+Confirmed refresh boundaries without scene business or input
+A direct synchronous FB7D0 call can use an inline hook at FB7D1:
+  8B 35 C8 B0 72 0A   MOV ESI,[image_base+A32B0C8]
+During the synchronous redraw only, resume FB7FD. FB7D0's PUSH ESI has
+already executed; FB867 restores it. Original normal-entry semantics
+remain the replayed MOV + original >=100 branch. The absolute operand
+must be built for the actual image base, as for existing relocated hooks.
+Do NOT native_fragment(FB7FD,FB864): the final call still leaves 0x14 of
+native arguments on the stack before the game's cleanup.
+Do NOT replay FB868 as an unrelocated copied relative JMP.
+D3C80 builds its own frame/cookie at D3C80..D3C8D, then pushes ESI at
+D3C97. At D3CDC a clean six-byte position-independent operation exists:
+  8B 35 4C C2 58 00   MOV ESI,[image_base+18C24C] (SDL_PollEvent)
+During synchronous redraw, resume D3D0F, which checks the original cookie,
+pops the saved ESI and executes the original complete epilogue. This
+exits before D3CE6 SDL_PollEvent, D3CEF PumpEvents and D3CFC FlushEvents;
+there is no native wait or consumed input in this synchronous invocation.
+Normal calls replay the MOV and retain all original input semantics.
+Before D3CDC, D3C80 may run its native presentation chain:
+ 10AF90 = UpdateTexture/current native pixels+pitch, RenderClear/RenderCopy;
+ 110040 = native view/color-overlay/texture composition;
+ 10B3C0 = native UI objects, 113200 pictures and 10E3E0 object text;
+ D3CD3 = SDL_RenderPresent when the game's conditions permit it.
+These are existing UI drawing paths. 110040 can call 10FC30 texture
+composition (which reads native map visibility for existing display).
+D3CAD/D3CBA preserve original UI mode transition 61BBCD8 == 2 -> 0.
+
+For a page already open before hooks existed, the existing D3D05 -> D3BF0
+call hook can recognize [D3C80 EBP+4] == image_base+17E86A. This avoids
+adding a long-lived FB7D0-call hook solely for old-page recognition.
+If the native thread is waiting, only its naturally reached hook boundary
+may initiate refresh; do not synthesize input or claim hot publication
+Applied proves that the page visibly refreshed. The current instruction
+stack and any target-promotion limitation remain subject to existing
+native-target evidence, not inferred support for arbitrary UI states.

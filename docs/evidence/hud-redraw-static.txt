@@ -1,0 +1,118 @@
+HUD renderer target and redraw boundary audit, 2026-10-19
+
+Static material only. No game start, process injection, simulated input,
+tests, test scripts, assertions or artifact execution were performed.
+Game: D:/program/steam/steamapps/common/UnRealWorld/urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Preferred image base: 00400000. Addresses below are RVAs unless marked VA.
+Supporting extraction: hud-right-ghidra.c, hud-right-disassembly.txt,
+build/hud-right-all-disassembly.txt, and read-only objdump regions.
+
+Confirmed portrait text path
+
+FAA30 draws the portrait/action/direction/speed component. FAC9C, FACF2 and
+FAE38 call 111560 (VA 00511560), whose 111682 calls 10E260 after adding the
+native x+3/y+3 inset. This is NOT RVA 115560. FAEFF calls 10E260 directly
+for the native speed number. ECX is renderer owner [61BBB0C].
+
+10E260: ECX renderer, EDX x, stack y/text/color/outline, caller pops 16.
+The outline-bit-1 branch calls 10DE90 at 10E33B/10E357/10E371/10E38D;
+10E3BD calls the foreground. 10DE90: ECX renderer, EDX x, stack y/text/color,
+caller pops 12. Native leaf copies text and terminates at first LF, then
+advances x by 8 for each byte. The authorized HUD translations are single
+line; the new renderer operation receives one complete translated string.
+
+Color is R in low byte, G in second byte, B in third byte, as confirmed by
+10DF13/10DF1E/10DF28. The fourth byte is not consumed by native 10BF20;
+adapter must OR 0xFF000000 into TextRequest color to preserve opacity.
+
+10BF20 owns a native 8x10 scratch surface, builds a texture in the supplied
+renderer at 10C00C, RenderCopy at 10C01C, DestroyTexture at 10C023. This proves
+the current renderer target is the actual glyph destination. It does not
+write the main surface used by the existing surface_text operation.
+
+10E3E0 is different: it saves global renderer A2110CC's target, selects NULL,
+calls 10E170, and restores the prior target. 10E170 -> 10DF80 -> 10DC50 uses
+native window/logical-coordinate transformation. The new renderer operation
+alone does not replace that coordinate transform; it is not registered as a
+generic substitute for this path by this change.
+
+Confirmed native owner lifecycle and density
+
+10C3AF CreateRGBSurface gets native logical width [619F97C] and height
+[619F980], returning at 10C3B1. ConvertSurface at 10C3DC preserves this owner
+and stores the result in 61BBB04 at 10C3E1. The native function enables RLE,
+then creates SDL_CreateSoftwareRenderer(61BBB04) at 10C3FA, storing 61BBB0C
+at 10C400. FB239 blits 61BBB04 into main owner 61BBB10 using the native
+component rectangle from 619F974/978/97C/980. Leaving the small surface at
+logical dimensions would enlarge low-resolution text; renderer support by
+itself is insufficient for high-resolution glyphs.
+
+The full disassembly has direct 61BBB0C reads only in FAA30 and two native
+image texture constructions (111560 receives its renderer in ECX):
+115515 -> 61BBAD8 from original filename pointer 1ACAB8;
+115572 -> 61BBB38 from original filename pointer 1ACAD0.
+Both constructions call original IMG_Load (IAT 18C294), native 10BBE0(0,0)
+to choose the image color key, SetColorKey, CreateTextureFromSurface, and
+FreeSurface. They also create distinct textures for main renderer A2110CC;
+those main-renderer textures are not replaced by promote_hud.
+
+FAA4B is before FAA67 first borrows 61BBB0C. FAA7A RenderFillRect(renderer,
+NULL) covers the whole portrait target; FAA9E DrawRect(NULL) draws its border.
+No native target bitmap needs to be copied when reconstruction occurs at
+FAA4B. The native function itself continues filling/drawing the replacement.
+
+Implementation in native_targets.cpp:
+- Add 10C3B1 to the existing confirmed native surface creation owners.
+- ConvertSurface propagates the existing identity/density record.
+- promote_hud must be called at FAA4B. For an already enlarged target it
+  sets renderer scale from the actual native canvas density. For an older
+  logical target it builds a new surface with the same format/properties,
+  creates its software renderer, reconstructs both native image textures,
+  then replaces the four native owner fields and releases the old renderer
+  and surface. The renderer owns destruction of its old textures.
+- New-image color-key selection reads only the original asset's one native
+  key pixel through the existing native helper; it does not inspect, compare
+  or record UI surface/texture pixels.
+- The 10 import gateways and NGT1 state format stay unchanged. No added UI
+  positions, text histories or delayed render contributions are retained.
+
+Normal new launch expands this target during its original allocation and
+sets the software renderer density before the first portrait render.
+For a currently running game loaded with the earlier adapter, the existing
+NGT1 target registry restores normally, then the next native FAA4B visit
+reconstructs the portrait owner. This is a synchronous operation inside that
+native drawing boundary, not a call to advance gameplay or an injected redraw.
+An idle HUD still needs its ordinary native portrait redraw to reach FAA4B;
+this audit does not claim the loader itself forces that redraw immediately.
+
+Immediate renderer text implementation
+
+render::op::measure_renderer = 4 and draw_renderer = 5 reuse TextRequest.
+They consume request.renderer's current SDL scale, generate a complete TTF
+string at that output density, and create/copy/destroy its transient texture
+within the same confirmed native leaf call. Target, viewport, clip and scale
+are not modified by the text draw. Native dimensions/origin remain native.
+The raster rectangle is converted back to logical float coordinates for
+SDL_RenderCopyF so its current renderer scale produces the physical raster
+size. Font metrics/raster data have no UI positions or page contents.
+
+SDL 2.30.0 source confirms RenderGetScale reads current renderer scale,
+RenderCopyF applies that scale to its destination, and DestroyTexture flushes
+queued commands that reference the texture before releasing it:
+https://github.com/libsdl-org/SDL/blob/release-2.30.0/src/render/SDL_render.c
+
+HUD refresh limits
+
+native_language_input consumes Shift+F10 at D1CD4/D26AB and native_language_redraw
+currently requests only setup and ancestor reconstruction. The native main
+command loop sees input result -2 at 17D0BD and calls 99BE0 at 17D0C2. That
+function includes map/visibility cache computation and is not established as
+a pure text redraw. Do not synthesize input or directly call it as a refresh.
+
+FA2A0 is not a pure HUD redraw either: it resets A3840E8/A3840C4, reconstructs
+the message panel, command and repeat controls and related cursor state.
+Calling all of FA2A0 only to change language would alter native UI state.
+F9910(0), F9200(0), F9600(0) and individual native label calls are separate
+boundaries, but blanket calling them as a safe full HUD refresh was not
+established by this audit. No independent HUD redraw module was implemented.

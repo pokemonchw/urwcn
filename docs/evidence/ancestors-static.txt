@@ -1,0 +1,359 @@
+HISTORICAL DESIGN WARNING (2026-10-19): The display-plan, fixed-row,
+snapshot and Present-composition suggestions in this file violate current
+AGENTS.md and are not implementation guidance. Raw static addresses and
+instruction facts are retained; conflicting prose remains pending cleanup.
+Current implementation: docs/evidence/20261019-ancestors-native.md and
+docs/evidence/20261019-ancestors-redraw-native.md.
+
+UnReal World 3.89 / Steam Build 25939378: main-menu ancestor list
+Date: 2026-10-18
+Target: D:\program\steam\steamapps\common\UnRealWorld\urw.exe
+SHA256: e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+Method: read-only original PE bytes, objdump instruction/string inspection,
+and Ghidra 12.1.4 PUBLIC headless C decompilation. No game/artifact launch,
+injection, simulated input, tests, test scripts, assertions, or compilation.
+Instruction/string addresses below are RVAs unless explicitly prefixed VA.
+Preferred image base: 0x400000. Native logical canvas: 800x600.
+
+Scope and call lifetime
+-----------------------
+The supplied image is the ANCESTORS entry from the main menu, with no records.
+The complete same-page empty/nonempty, sorting, and pagination branches are
+statically present in DE990..DF461. Opening a record's Memorial Page is a
+separate display branch and is outside this screenshot adaptation.
+
+Main-menu row 3 selects its native branch and executes:
+125E01  83 C9 FF          or ecx,-1
+125E04  E8 87 8B FB FF    call DE990
+125E09  E8 52 7C FE FF    call 10DA60
+125E0E  E8 0D FB FF FF    call 125920
+125E13  E9 68 FD FF FF    jmp 125B80
+
+DE990 takes its one input in ECX, no stack arguments, and preserves EBX/ESI/EDI.
+ECX=-1 is the list shown by the screenshot. The distinct ECX!= -1 branch is
+entered by the death path (other caller E754D), displays You are dead and
+additional death/memorial text, and is outside this adaptation. Scope only
+125E04 to avoid adding that other entry to the localized page.
+
+The list builds its original background/title/footer, loads native ancestor
+index data, and redraws at DEC40. DED1D calls CFFB0 once per list rebuilding
+pass before the row loop. This is a suitable original boundary to clear and
+rebuild a short Chinese display plan.
+DEDA0 invokes DD400 for each visible list record, with EDX=row_y and stack
+(record_directory_number_string, detail_flag=0). DD400's ECX has no live input
+contract. Its EBP+8/Ebp+0xC parameters are caller-cleaned (ADD ESP,8 at DEDC1).
+
+The list presents at DF160 and then calls D1120 at DF182, waiting until the
+native result differs from -1. Hold only resident scope state over this wait;
+reloadable business-module calls can finish before native input is entered.
+Do not keep a business-module frame around DE990 or D1120.
+
+When a row is activated, DF36F calls DD400 with detail_flag=1. The native code
+then uploads/presents the distinct memorial view at DF3BA and waits at DF3FA.
+Suspend list composition before DF36F. DED1D is reached again after the user
+returns and can restore list composition. Do not translate or suppress the
+detail-only consumers, Press a key to continue, or the ECX!= -1 death branch.
+
+All fixed list-page strings
+--------------------------
+RVA       Original source text
+1A6568    List of late characters - The ancestors to remember:
+1A6640    Select an ancestor by mouse click or cursor keys and [ENTER] to display a memorial page.
+1A669C    There are no deceased characters.
+1A66C0    List order:
+1A66CC    P.Played, from latest to earliest
+1A66F0    L.Longest living
+1A6704    J.Journeyed distance
+1A671C    PgUp.Previous page
+195CB8    PgDn.Next page
+1A6730    Page %d of %d
+1950C8    ESC.Exit
+
+The dot in each native key-control string separates keycap and label. Retain
+ESC/P/L/J/PgUp/PgDn and native keycap drawing; translate only the corresponding
+label consumer. The native action numbers are unchanged: ESC=0x1B, P=0x50,
+L=0x4C, J=0x4A, PgUp=0x431, PgDn=0x439. Native click, cursor and Enter handling
+continues through D1120. No new hotkey or list mutation is needed.
+
+Title and footer geometry
+-------------------------
+DEA14 calls 1157B0 with ECX=5, EDX=5, stack(width=790,text=1A6568,style=1).
+It retains its 12-byte caller cleanup. Style 1 draws the original bar, then
+consumes the title at shared call 115A94 -> 10E5A0, with x=10,y=9,
+RGB=(252,252,84), outline=1. That consumer is already used by the farewell
+adapter: share its existing patch owner and extend only the scoped predicate.
+Do not install two detours over 115A94.
+
+DD380 constructs the native footer panel: x=0,y=500,w=800,h=100, RGB=(56,88,120).
+The native font/grid height F is 10: the initial .data DWORD at 1E6ABC is 10;
+its only directly referenced write at F5839 is C7 05 BC 6A 5E 00 0A 00 00 00,
+also setting 10. The PE has 62 direct references to VA 5E6ABC. The row/page
+formulas below are retained from machine instructions rather than inferred
+from screenshot scaling.
+
+Role             Consumer/call   Native logical glyph geometry / color
+Empty             DEEE6           x10,y4F=40; white, outline1
+Select hint       DEEB0           x10,y510; white, its helper uses outline1
+Order label       DEF72           x362,y535; RGB171,171,171, outline1
+Exit control      DEF21           x10,y530; label x50,y535
+Played control    DEF91           x450,y530; label x474,y535
+Living control    DEFC8           x450,y545; label x474,y550
+Distance control  DEFFF           x450,y560; label x474,y565
+Previous control  DF03A           x10,y545; label x58,y550
+Next control      DF081           x10,y560; label x58,y565
+Page count        DF115           x10,y585; RGB171,171,171, outline1
+
+The six controls invoke CFAF0 with ECX=action, EDX=x and stack(y,text). CFAF0
+copies the native marked-up label, passes it to 114680, and records original
+click bounds. Within 114680 the label leaf is shared call 1149F9 -> 10E5A0.
+At that leaf x=control_x+16+8*keycap_length, y=control_y+5. Its mapped color and
+outline are native globals passed as stack arguments; this page initializes
+yellow labels with outline1. Preserve those supplied values and native
+geometry. The existing SetupExitText patch owns 1149F9: extend its scoped
+predicate rather than patching it twice. Keycap character calls such as
+114956 remain native for these controls.
+
+The input/selection record is not a second copy of an English label. CFAF0
+tests for the literal separator dot at CFC92; CFCD0..CFCE1 writes constant
+1A4DF0 "TEXTSPOT" into the input row for all six dot-bearing controls. Its
+alternative writes 1A4DE4 "NOTEXTSPOT". The native action/geometry is stored,
+but the English label itself is not copied into that input row. D0650 draws
+selection geometry with 10D900 and 10E540 and has no text-consumer call.
+Consequently the native input selection pass has no hidden full English
+label to redraw through the main-menu D0367 text leaf. See the archived
+ancestors-key-disassembly.txt, ancestors-row-repaint-disassembly.txt and
+ancestors-selection-disassembly.txt. The latter traces native input drawing
+only; it is not a runtime input simulation.
+
+Select helper ABI and exact native text-flow state
+--------------------------------------------------
+10E720 is a single-line [KEY] markup helper, not a paragraph wrapper. It takes
+ECX=x, EDX=y, stack(text,mapped_color), exactly TWO stack parameters. The
+ADD ESP,0xC after DEEB0 also removes a delayed argument from SDL_MapRGB; leave
+the original cleanup intact. Passing the third residual DWORD through as a
+semantic parameter is unnecessary. See ancestors-ghidra.c and
+ancestors-select-disassembly.txt for this helper's exact code.
+
+For the established source it builds prefix length53, key text ENTER length5,
+and suffix length28. At 10E862 it draws the prefix via 10E5A0 with outline1;
+10E890 draws the ENTER keycap via 114680 at cursor_x,y-5; 10E8F2 draws the
+suffix through 10E5A0 with outline1. The keycap advances cursor_x by52.
+With x=10,y=510, final native cursor_x=10+53*8+52+28*8=710, cursor_y=510,
+text_color=mapped white, and EAX=710. A display-only replacement at DEEB0 can
+preserve those final text-flow writes for this exact established field and
+emit one translated Chinese hint at the presentation boundary. No generic
+markup parser, unknown-field branch, or English-sentence parsing is needed.
+The ENTER background is presentation made by this helper, not an input action.
+
+Each ordinary 10E5A0 leaf takes ECX=x, EDX=y, stack(text,mapped_color,outline)
+and is caller-cleaned. At the nonnegative positions recorded here its final
+state is text_color=the supplied mapped color, cursor_y=y,
+cursor_x=x+8*strlen(original bytes), EAX=cursor_x. When suppressing only original
+glyphs preserve these native side effects and the original caller cleanup.
+
+Nonempty rows: data, four fields, and two translated statistics
+---------------------------------------------------------------
+Native capacity is floor((600-100-4F)/(6F))=7 rows per page. Slot i starts at
+row_y=4F+i*6F=40+i*60, for i=0..6. DD400 draws the original portrait x10..60,
+then all four text fields at x=7F=70:
+
+Consumer   y             RGB            Original field / source
+DD7AF      row_y         252,252,84      Two-part saved character name
+DD82B      row_y+F        255,255,255     Saved death-message text plus '.'
+DDA0A      row_y+3F       255,255,255     Lifespan/adventuring-days template
+DDA30      row_y+4F       255,255,255     Total-distance template
+
+All four pass outline1. Their native text consumers do not change these
+colors based on selection; pointer/selection drawing remains in native input.
+The first two fields are serialized character/death data, not additional
+fixed UI labels. They remain native data/display in this adaptation.
+
+DD400 originally reads ANCESTORS/<id>/charfile.txt using D4280 into a local
+buffer, then opens ANCESTORS/<id>/<that_line>.ANC and fread's 0x5658 bytes into
+VA 6355648. It backs up current character state VA A72A6E8 for 0x1654 bytes,
+copies record state from VA 635964C into it, and restores that backup before
+returning. Capture needed display inputs synchronously during the list-row
+scope; a retained pointer into this temporary state is invalid after return.
+
+The two existing fopen failure branches (DD498 and DD4FB) return through
+DDA52 before any of the four text consumers is reached. A visible-row flag
+set only at the established statistics consumers therefore follows actual
+native display reachability. Keeping a structurally enumerated row invisible
+when its native display did not run does not create a missing-record handler
+or a replacement filesystem/read branch.
+
+The first line is exactly 15DFC0 -> sprintf(slot,"%s %s",VA A72A6E8,
+VA A72A6F6), not a culture/tribe description. Preserve both name fields and
+their native bytes. The second line uses 1A6354 "%s." with the serialized
+string at VA 6355648, then uppercases its initial byte. It is not generated
+from a death-cause enum by this page. Do not invent new data mappings or
+translate/mutate the serialized record as if it were a fixed UI literal.
+
+The two fixed row templates are:
+1A62D0    %s died at %d winters old, having spent %d days of adventuring life.
+1A6318    %s journeyed a total distance of %d kilometers.
+
+Their pronoun is looked up through 161B00 using PP_SUBJ:MASC or PP_SUBJ:FEM;
+byte VA A72B1A9==2 selects the feminine keys. Chinese can use the common
+subject "逝者" without changing that internal English lookup or its branch.
+Age is unsigned byte VA 635A11D. Adventuring days is DWORD VA 635A128.
+Distance is float VA A72B0DC (record character-state offset0x9F4). The original
+DD6A9 invokes the floor thunk at18B5E2 on the double-converted float, converts
+the result back through float and CVTTSS2SI, then passes that int as kilometers.
+No independent locale-specific rounding is needed. Capture the native integer
+at its already-established sprintf call when exact native arithmetic is
+required; a display bridge need not evaluate or assume float validity/range.
+
+Exact original formatting call contracts:
+DD670  E8 5B 3A F2 FF  -> 10D0
+       __cdecl sprintf(dest,1A62D0,pronoun,unsigned_age,days); 5 stack args
+DD6D6  E8 F5 39 F2 FF  -> 10D0
+       __cdecl sprintf(dest,1A6318,pronoun,native_integer_kilometers); 4 args
+DF0BB  E8 10 20 F2 FF  -> 10D0
+       __cdecl sprintf(dest,1A6730,current_page,total_pages); 4 args
+
+The lifespan and distance display calls are after those native formatting
+calls, so captured numeric arguments can be copied into a structured request
+without parsing the English sentence. Their resident suppression requires
+the exact DEDA0/detail_flag0 row scope; DD400/detail_flag1 uses the same leaf
+calls but remains outside this localized list plan.
+
+Sorting and paging remain native
+---------------------------------
+The original retains up to50 indexed records, builds latest-first circular
+order using native index VA 635ACA0 and existing-record bytes VA 635AE34, and
+keeps an original-order local copy for P. L compares native days at
+VA 635B398+4*record_id; J compares native distance at VA 635AE68+4*record_id.
+Those arrays, swaps, page offsets, and P/L/J business choices stay original.
+Previous exists only when page offset!=0; Next only when offset+capacity<count;
+page count only when count>capacity. Its original current_page=offset/capacity+1,
+total_pages=ceil(count/capacity). Capture those real integers at DF0BB; do not
+fabricate a page count for the empty list or single-page branch.
+
+Patch-site inventory, five-byte CALLs unless size6 is shown
+-----------------------------------------------------------
+RVA      Original bytes        Native target / scope or semantic consumer
+125E04   E8 87 8B FB FF         DE990 / whole main-menu list lifetime
+DEA14    E8 97 6D 03 00         1157B0 / title helper scope
+DED1D    E8 8E 12 FF FF         CFFB0 / next native list draw pass
+DEDA0    E8 5B E6 FF FF         DD400 / one detail_flag0 summary row
+DF36F    E8 8C E0 FF FF         DD400 / suspend plan for native detail view
+DEEB0    E8 6B F8 02 00         10E720 / nonempty Select hint, stack2
+DEEE6    E8 B5 F6 02 00         10E5A0 / empty list message
+DEF72    E8 29 F6 02 00         10E5A0 / List order heading
+DEF21    E8 CA 0B FF FF         CFAF0 / ESC control scope
+DEF91    E8 5A 0B FF FF         CFAF0 / P control scope
+DEFC8    E8 23 0B FF FF         CFAF0 / L control scope
+DEFFF    E8 EC 0A FF FF         CFAF0 / J control scope
+DF03A    E8 B1 0A FF FF         CFAF0 / Previous control scope
+DF081    E8 6A 0A FF FF         CFAF0 / Next control scope
+DF0BB    E8 10 20 F2 FF         10D0 / page integer capture
+DF115    E8 86 F4 02 00         10E5A0 / page count consumer
+DD670    E8 5B 3A F2 FF         10D0 / age/days capture, scoped list only
+DD6D6    E8 F5 39 F2 FF         10D0 / native kilometers capture, list only
+DDA0A    E8 91 0B 03 00         10E5A0 / lifespan consumer, list only
+DDA30    E8 6B 0B 03 00         10E5A0 / distance consumer, list only
+DF127    E8 64 BE 02 00         10AF90 / complete plan before native upload
+DF160    FF 15 7C C2 58 00      SDL_RenderPresent [IAT18C27C], size6
+115A94   E8 07 8B FF FF         existing shared title glyph owner
+1149F9   E8 A2 9B FF FF         existing shared key-label glyph owner
+
+The DF160 CALL [IAT] may be replaced by a five-byte CALL rel32 plus one NOP;
+its native ADD ESP,4 at DF166 stays in place. The original input helper also
+presents at existing D1298, and window-event redraws at D1E70/D1F48/10B763
+are shared with the existing menu adapter. Extend those already-owned
+presentation predicates to the active list plan. No independent renderer or
+input loop is required. Expected absolute IAT VA58C27C relocates to
+image_base+18C27C when checking the loaded image.
+
+Reproducible static archive
+---------------------------
+Ghidra: C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
+JDK: C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
+Independent project: build/ancestors-ghidra/uwcn-ancestors, import urw.exe.
+Java properties application.settingsdir, application.cachedir, java.io.tmpdir
+point to build/ancestors-ghidra/settings and build/ancestors-ghidra/cache.
+Initial analysis options: -analysisTimeoutPerFile300 -max-cpu4.
+Final extraction: -process urw.exe -noanalysis
+ -scriptPath D:\workspace\uwcn\docs\evidence
+ -postScript ancestors_Decompile.java D:\workspace\uwcn\docs\evidence\ancestors-ghidra.c
+ -log D:\workspace\uwcn\docs\evidence\ancestors-ghidra.log
+ -scriptlog D:\workspace\uwcn\docs\evidence\ancestors-ghidra-script.log
+
+The final extraction reports all 12 requested functions and Save succeeded;
+it exited0. The logs retain earlier tooling errors followed by the corrected
+successful extraction. ancestors-ghidra.c contains actual decompiler C for
+the whole list/death function, whole summary/memorial helper, index loader,
+footer, title, key control, markup/text, name pair, font constant, input and
+main menu. Ghidra's inferred prototypes are evidence, not bridge ABI promises;
+the machine-code contracts above resolve register and delayed-stack cleanup.
+ancestors-*-disassembly.txt archives the supporting original instructions.
+No extracted C is built or executed. This record makes no runtime or visual
+acceptance claim and does not claim compilation or formal publication.
+
+Saved source correspondence review (static only)
+------------------------------------------------
+src/loader/native_ancestors.cpp uses 20 resident IDs 768..787 at 22 distinct new
+patch sites. Both statistics consumers share ID 785; the initial present has
+its own ordinary cdecl bridge. The shared 115A94 and 1149F9 remain owned once
+by the preexisting title/key consumers.
+
+DD670/DD6D6/DF0BB forward 5/4/4 stack arguments to original 10D0 and copy only
+the established native integer fields. Select forwards 2 parameters on its
+original path, and its suppressed path restores the exact final color,
+cursor_x/cursor_y and EAX described above. It does not mutate native source
+bytes or add speculative markup branches.
+
+At DEDA0 the native ESI is the per-page slot counter: it is zeroed at DED46,
+incremented at DEE49, compared with native capacity 7 at DEE59, and survives
+DD400 because that callee preserves ESI. Thus Frame::esi indexes exactly the
+seven saved entries, independently of sort order and current page offset.
+The statistics visible flag is written only when DD400 reaches its real
+DDA0A/DDA30 consumers, matching the two original file-read branches above.
+
+DF127 takes no native register/stack input parameters and calls 10AF90, after
+all list rows/footer/conditional paging fields were constructed and after
+DF11D restores native software-frame state. Building the complete Chinese
+plan immediately before forwarding that 0-argument call is before upload,
+drawing-record consumption at DF14C and first present at DF160. The present
+bridge then composes over the native uploaded frame, as in existing screens.
+
+DF36F clears list_active before the original detail_flag=1 helper. That flag
+stays false across DF3BA and the detail input wait; DED1D clears the snapshot
+and reactivates it on the original return-to-list rebuilding path. These
+saved-source branches match the scoped native control flow above. This is a
+source/disassembly comparison only, with no product execution or testing.
+
+ABI 3 source migration correspondence (2026-10-18; static only)
+------------------------------------------------------------
+The current source is src/modules/adapter/native_ancestors.cpp, with the
+associated header in the same directory. The earlier src/loader path above
+records the source location at the first review; the original PE evidence,
+function RVAs, bytes, fields and native calling conventions remain unchanged.
+The SDK now declares host_abi=3 and the shared Frame/Patch definitions live
+in sdk/native_bridge.h. Frame retains the native saved-register ordering
+and args[5], so ESI row indexing and the captured formatting arguments keep
+the same meaning.
+
+Read-only comparison of the moved adapter confirms all 22 patch sites and
+original bytes remain present. Semantic dispatch IDs 768..787 retain their
+same cases; DDA0A and DDA30 still share ID 785. The former direct DF160 present
+bridge is now routed as ID 2054 with one stack argument. Its dispatch calls
+the same scoped composition and then the original SDL_RenderPresent. Patch
+metadata now explicitly records each native argument count: 0,3,0,2,2,3,3,
+2,2,2,2,2,2,4,3,5,4,3,3,0,2,1 in the saved table's source ordering.
+
+The main-menu lifetime scope, title/key scopes, DED1D snapshot clearing and
+list reactivation, ESI slot capture, the 5/4/4 formatting forwards, exact
+Select cursor/color/EAX writes and statistics visible flag match the earlier
+review. DF127 still builds the complete plan before forwarding the native
+zero-argument 10AF90 upload; DF36F disables list composition for the detail
+view until the original DED1D list rebuilding path. Shared title/key leaves
+and shared presentation predicates still include the ancestor scopes.
+
+The ancestors callback now resides in src/modules/adapter/display.cpp and
+continues to invoke the same MainMenu ancestors operation with the structured
+request. No ancestor business-branch change was found in these saved sources.
+This records only migration correspondence while the parallel framework work
+continues; it is not a whole-framework approval, build result or runtime
+acceptance. Only this evidence file was edited for this migration review.

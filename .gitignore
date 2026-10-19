@@ -1,0 +1,40 @@
+# Local toolchains, build output and retired deliveries
+/.toolchains/
+/build/
+/回收/
+/package/
+/*_launcher.exe
+*.o
+*.obj
+*.dll
+*.pdb
+*.dmp
+*.log
+*.tmp
+*.old
+*.zip
+*.7z
+
+# Raw game extraction retained locally; publish authored analysis instead
+/docs/evidence/*.c
+/docs/evidence/*disassembly*.txt
+/docs/evidence/*strings*.txt
+/docs/evidence/*strings*.tsv
+/docs/evidence/local-inspection.json
+/docs/evidence/ui-semantic-analysis.txt
+/docs/evidence/credits-string-bytes.txt
+/docs/evidence/credits-menu-table.txt
+/docs/evidence/20261019-scenario-static-records.txt
+/docs/evidence/world-place-lexemes.tsv
+/docs/evidence/*crash-dump*.json
+
+# Local credentials and editor/cache files
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+__pycache__/
+*.py[cod]
+Thumbs.db
+.DS_Store
