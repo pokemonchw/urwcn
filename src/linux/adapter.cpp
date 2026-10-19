@@ -24,7 +24,7 @@ using linux_host::Frame;
 const HostApi* host;
 const linux_host::Hooks* hooks;
 bool chinese=true;
-enum class Scope { none,main_menu,creation,culture,sex,load_saved,ancestors,setup };
+enum class Scope { none,main_menu,creation,culture,sex,load_saved,ancestors,setup,encyclopedia };
 Scope scope=Scope::none;
 bool intro_active;
 bool intro_chinese;
@@ -614,6 +614,9 @@ void ancestor_summary(Frame& frame) {
     }
     frame.rax=call(arguments,0x13e8b0);
 }
+#include "culture_info.inc"
+#include "culture_map.inc"
+
 struct MenuInput { u32 site; Scope scope; };
 const MenuInput menu_inputs[]{
     {0x15cf85,Scope::main_menu},{0x15d0e6,Scope::creation},
@@ -684,6 +687,8 @@ Status initialize(const HostApi* api) {
     host=api;
     const auto get=reinterpret_cast<const linux_host::Hooks* (*)()>(dlsym(RTLD_DEFAULT,"uwcn_linux_hooks"));
     hooks=get();
+    install_culture_info();
+    install_culture_map();
     linux_targets::install(*hooks);
     hooks->instruction(0x15cf21,5,main_background);
     hooks->instruction(0x15cf44,7,main_background_end);

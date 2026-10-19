@@ -49,7 +49,7 @@
     "list_entry_stride": "0xe8",
     "list_entry_action": "0xc8"
   },
-  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls.",
+  "scope": "Startup/loading, introduction/poem, main menu/footer, About, Credits, setup display fields, saved-character empty messages/title, character-creation menu/culture/sex/name, ancestor controls, Village source records, main-game HUD/calendar/world labels at individually recorded native calls. All 17 culture encyclopedia topics, culture-selection previews, encyclopedia heading/navigation/help and both map culture legends at native display consumers.",
   "ownership": "Native UI retains layout, wrapping, centering, controls, input, hit testing, background, caching and animation. Chinese glyphs draw synchronously inside native text leaves; no pixel tracking or text replay.",
   "native_density": {
     "screen_creation": "0x148c60",
@@ -62,11 +62,27 @@
     "local_sdl": "sdl2-compat 2.32.72 / SDL 3.4.16"
   },
   "pending_boundaries": [
-    "Resize-driven complete native reconstruction is established for the main menu only. Other active pages keep the last established canvas density until the next main-menu boundary; old bitmap caches are not text-replayed.",
+    "Resize-driven complete screen reconstruction is established for the main menu only. The map culture legend and MapviewMainTex obtain current output density at native map rebuild. Other active pages keep the last established screen density until the next main-menu boundary; old bitmap caches are not text-replayed.",
     "Linux showtext preserves its four native shadow calls, but the shadow budget is not yet propagated into font calibration and external width calls. This style envelope remains pending.",
     "Pure refresh of setup body, already-dimmed profile panels, saved-character windows, ancestor pages and current Village page remains tied to native reconstruction.",
-    "Linux in-process module retirement/publication protocol is not implemented; Windows Reload is rejected for Linux."
+    "Linux in-process module retirement/publication protocol is not implemented; Windows Reload is rejected for Linux.",
+    "Culture encyclopedia immediate language refresh remains unimplemented; its persistent heading and navigation retain the entry language. Map culture legends consume the current language at native map reconstruction."
   ],
   "runtime_verification": "Not performed; launching the game, running artifacts and tests are prohibited.",
-  "evidence": ["docs/evidence/20261019-linux-native-port.md", "docs/evidence/20261019-linux-font-density.md"]
+  "evidence": [
+    "docs/evidence/20261019-linux-native-port.md",
+    "docs/evidence/20261019-linux-font-density.md",
+    "docs/evidence/20261019-culture-info-native.md"
+  ],
+  "culture_information": {
+    "source": "GAME.NFO (CP437), SHA-256 071f384ad992d0a688833693f207a5cf8a969b4811e5e6603597d189087a4d5d",
+    "topics": 17,
+    "body_records": 158,
+    "selection_previews": 10,
+    "body_consumer": "0x514c8 -> link_show; source identity is the native FILE byte offset before fgetstr(150)",
+    "links": "Native English topic keys and ASCII aliases retained; matched display words use the same translation at native width and showtext calls.",
+    "drawing": "Native screen output-density path for encyclopedia/previews/legacy map. Modern map legend uses the native surface at return 0x10ac3b, CultureDialogTexture, MapviewMainTex and window at matching output density; synchronous glyph rendering only.",
+    "map_legends": "Eleven culture names and both titles at kulttuuri_info(0x108940) and compile_CultureDialogTexture(0x10ac10). Native map reconstruction at 0x10b0c6 rebuilds the legend and its full-resolution target; native layout, colors and resource ownership remain unchanged.",
+    "language": "The encyclopedia keeps the language selected when opened; Shift+F10 takes effect when the browser is next opened."
+  }
 }

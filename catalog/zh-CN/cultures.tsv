@@ -1,0 +1,423 @@
+# Culture information from Linux GAME.NFO (CP437). UTF-8, key TAB text; native <br> is preserved.
+# Records use the decimal byte offset before native fgets(150); comments give 1-based physical lines.
+# ASCII topic aliases remain in native link matching; culture.word values replace display words only.
+culture.topic.cultures.title	文化
+culture.topic.eastern_peoples.title	东方民族
+culture.topic.western_peoples.title	西方民族
+culture.topic.kaumo.title	考莫人
+culture.topic.kiesse.title	基耶塞人
+culture.topic.driik.title	德里基人
+culture.topic.reemi.title	雷埃米人
+culture.topic.sartola.title	萨尔托人
+culture.topic.islanders.title	岛民
+culture.topic.koivula.title	科伊武人
+culture.topic.northern_peoples.title	北方民族
+culture.topic.kuikka_tribe.title	潜鸟部落
+culture.topic.owl_tribe.title	猫头鹰部落
+culture.topic.seal_tribe.title	海豹部落
+culture.topic.njerpez.title	涅尔佩兹人
+culture.topic.language.title	语言
+culture.topic.language_inflexions.title	语言词形变化
+culture.topic.kaumo.summary	居于广袤森林的强健猎人，善用长矛，珍视自由。
+culture.topic.kiesse.summary	生活在湖河附近，以捕鱼、狩猎和刀耕火种维生。
+culture.topic.driik.summary	西南沿海的商贸民族，职业分工明确，装备丰富。
+culture.topic.reemi.summary	东南部的富足农耕民族，崇敬灵界与祖先。
+culture.topic.sartola.summary	西部沿海的农耕民族，善于设陷、猎海豹与锻造。
+culture.topic.islanders.summary	西南群岛上的渔猎居民，木工娴熟，自力更生。
+culture.topic.koivula.summary	中西部的农耕民族，拥有大片田地和成群牲畜。
+culture.topic.kuikka_tribe.summary	以潜鸟为图腾，靠捕鱼、狩猎和饲养驯鹿为生。
+culture.topic.owl_tribe.summary	游牧饲养驯鹿，在极北夏营与南方冬营间迁徙。
+culture.topic.seal_tribe.summary	北部海岸的居民，以海为生，将海豹奉为图腾。
+culture.ui.title	虚幻世界百科
+culture.ui.home	首页
+culture.ui.exit	退出
+culture.ui.keyword	输入关键词
+culture.ui.back	返回“{value}”
+culture.ui.keyword_title	输入关键词
+culture.ui.launch	查看文化介绍
+culture.ui.help_1	高亮主题 有更多信息。 要查看相应页面，
+culture.ui.help_2	请用方向键选择主题 并按 ENTER， 或用鼠标点击。
+culture.ui.help_3	你也可以 自行输入关键词或主题， 搜索指定页面。
+culture.map.title	文化区域
+culture.map.indicators_title	文化区域图例
+culture.word.CULTURES	文化
+culture.word.CULTURE	文化
+culture.word.EASTERN	东方
+culture.word.WESTERN	西方
+culture.word.NORTHERN	北方
+culture.word.PEOPLES	民族
+culture.word.TRIBES	部落
+culture.word.KAUMOLAISET	考莫人
+culture.word.KAUMO	考莫
+culture.word.KIESSE	基耶塞
+culture.word.DRIIK	德里基
+culture.word.REEMI	雷埃米
+culture.word.SARTOLAISET	萨尔托人
+culture.word.SARTOLA	萨尔托
+culture.word.ISLANDERS	岛民
+culture.word.KOIVULAISET	科伊武人
+culture.word.KOIVULA	科伊武
+culture.word.KUIKKA-TRIBE	潜鸟部落
+culture.word.OWL-TRIBE	猫头鹰部落
+culture.word.SEAL-TRIBE	海豹部落
+culture.word.NJERPEZIT	涅尔佩兹人
+culture.word.NJERPEZ	涅尔佩兹
+culture.word.LANGUAGE	语言
+culture.word.INFLEXIONS	词形变化
+culture.word.THE	
+culture.word.INEHMO	伊涅赫莫人
+culture.word.UNREAL	UnReal
+culture.word.WORLD	World
+culture.word.YEAR	年
+culture.word.VILLAGES	村庄
+culture.word.BLACKSMITH	铁匠
+culture.word.BLACKSMITHS	铁匠
+culture.word.BLACKSMITHING	锻造
+culture.word.SKILLS	技能
+culture.word.HUNTING	狩猎
+culture.word.FISHING	捕鱼
+culture.word.TRACKING	追踪
+culture.word.KAUMOLAIS	考莫
+culture.word.SPEAR	长矛
+culture.word.KNIFE	刀
+culture.word.ANIMALS	动物
+culture.word.AGRICULTURE	农业
+culture.word.BUILDINGS	建筑
+culture.word.TRADING	贸易
+culture.word.TOOLS	工具
+culture.word.WEAPONS	武器
+culture.word.CROSSBOWS	弩
+culture.word.BATTLEAXES	战斧
+culture.word.ARMOUR	护甲
+culture.word.SWORDS	刀剑
+culture.word.PASSIVE	被动
+culture.word.TRAPPING	设陷捕猎
+culture.word.SALT	盐
+culture.word.ANGO	安戈钩矛
+culture.word.BUILDING	建造
+culture.word.BIRDS	鸟类
+culture.word.WEATHER	天气
+culture.word.KUIKKA	潜鸟
+culture.word.REINDEER	驯鹿
+culture.word.MELEE	近战
+culture.word.ARMOURS	护甲
+culture.word.LAMELLAR	札甲
+culture.word.HELMS	头盔
+culture.word.MAIL	锁子甲
+culture.word.FUR	毛皮
+# GAME.NFO:119
+culture.record.5476	当 THE INEHMO 散布到 大地各处时， 有些人 心中涌起
+# GAME.NFO:120
+culture.record.5543	远赴北方的 渴望， 有些人则 在大湖与河流
+# GAME.NFO:121
+culture.record.5608	附近定居， 还有些人 始终没有离开
+# GAME.NFO:122
+culture.record.5671	生养自己的 森林。 他们定居的环境
+# GAME.NFO:123
+culture.record.5737	深深影响着他们， 塑造了 他们的思想、
+# GAME.NFO:124
+culture.record.5806	外貌、体格、习俗 和谋生
+# GAME.NFO:125
+culture.record.5868	方式。 不同的部落与 CULTURES 就这样诞生了。<br>
+# GAME.NFO:126
+culture.record.5943	<br>
+# GAME.NFO:127
+culture.record.5949	CULTURES 可分为 NORTHERN PEOPLES 、 EASTERN PEOPLES
+# GAME.NFO:128
+culture.record.6013	和 WESTERN PEOPLES 。
+# GAME.NFO:286
+culture.record.13379	EASTERN PEOPLES 包括：
+# GAME.NFO:287
+culture.record.13405	KAUMOLAISET 、 KIESSE 人 和 REEMI 人。
+# GAME.NFO:291
+culture.record.13474	WESTERN PEOPLES 包括：
+# GAME.NFO:292
+culture.record.13500	DRIIK 人、 SARTOLAISET 、 ISLANDERS 和 KOIVULAISET 。
+# GAME.NFO:298
+culture.record.13609	KAUMOLAISET ， 也就是 居住在 KAUMO 地区的人， 生活在
+# GAME.NFO:299
+culture.record.13680	广袤的森林中。 各家相距甚远，
+# GAME.NFO:300
+culture.record.13750	房屋零星散落， 难以形成 真正的 VILLAGES 。 他们
+# GAME.NFO:301
+culture.record.13819	大多坚韧、 高大而强壮， 以自由为荣。
+# GAME.NFO:302
+culture.record.13894	许多人掌握 BLACKSMITH 的 SKILLS 。<br>
+# GAME.NFO:303
+culture.record.13936	<br>
+# GAME.NFO:304
+culture.record.13942	他们主要靠 主动 HUNTING 和 FISHING 为生。 外出狩猎时，
+# GAME.NFO:305
+culture.record.14011	KAUMO 男子可以 独自在荒野中 待上数周， TRACKING 猎物，
+# GAME.NFO:306
+culture.record.14082	伺机接近。 他们以 KAUMOLAIS SPEAR 闻名， 这种长矛
+# GAME.NFO:307
+culture.record.14155	专为 HUNTING 大型 ANIMALS 而设计。<br>
+# GAME.NFO:308
+culture.record.14207	<br>
+# GAME.NFO:309
+culture.record.14213	KAUMO 地区猎物丰富， 出产优质毛皮。 因此，
+# GAME.NFO:310
+culture.record.14287	KAUMOLAISET 不得不 保卫家园和 HUNTING 场， 抵御
+# GAME.NFO:311
+culture.record.14355	NJERPEZ 人的劫掠。 战斗中的 KAUMOLAISET 无所畏惧，
+# GAME.NFO:312
+culture.record.14427	凶猛顽强， 无论使用 SPEAR 、 KNIFE ， 还是
+# GAME.NFO:313
+culture.record.14500	赤手空拳， 都会奋力抵抗。<br>
+# GAME.NFO:319
+culture.record.14580	KIESSE 人， 也就是 居住在基耶塞地区的人， 聚居在 小而疏散的 VILLAGES ，
+# GAME.NFO:320
+culture.record.14653	这些村庄 通常位于 湖泊或河流附近。 他们主要
+# GAME.NFO:321
+culture.record.14729	靠 FISHING 、 HUNTING 和刀耕火种的 AGRICULTURE 维生。
+# GAME.NFO:322
+culture.record.14803	每 YEAR ， 他们通常会 砍倒一小片森林， 再将树木烧掉，
+# GAME.NFO:323
+culture.record.14881	由此得到 新的肥沃耕地。 这种田地
+# GAME.NFO:324
+culture.record.14955	耕作五六年后 便会耗尽地力， 随后改作
+# GAME.NFO:325
+culture.record.15032	家养 ANIMALS 的牧场。 当一家基耶塞人 发现家园附近
+# GAME.NFO:326
+culture.record.15111	再没有 可供砍烧的成熟森林时， 往往就会 拆掉 BUILDINGS ，
+# GAME.NFO:327
+culture.record.15191	迁往另一处 森林茂密的地方， 重新开垦。<br>
+# GAME.NFO:328
+culture.record.15262	<br>
+# GAME.NFO:329
+culture.record.15268	KIESSE 人性情温和， 喜欢拿各种事情 开玩笑，
+# GAME.NFO:330
+culture.record.15345	爱讲故事， 也尽量避免争斗。 他们以善于交易著称，
+# GAME.NFO:331
+culture.record.15425	却不愿依赖 TRADING 。 几乎每个村庄 都有 BLACKSMITH ， 制作日用器具与 TOOLS 。
+# GAME.NFO:337
+culture.record.15599	DRIIK 人， 也就是 居住在德里基地区的人， 生活在西南
+# GAME.NFO:338
+culture.record.15666	沿海。 他们聚居于 VILLAGES 和城镇， 其中一些聚落
+# GAME.NFO:339
+culture.record.15732	筑有围墙防卫。 德里基人拥有 四通八达的
+# GAME.NFO:340
+culture.record.15802	TRADING 路线网络， 派船远赴异国， 也与内陆
+# GAME.NFO:341
+culture.record.15872	部落及群岛上的渔民 往来贸易。 他们不时
+# GAME.NFO:342
+culture.record.15941	遭到外来匪徒的袭击； 这些人 有时会
+# GAME.NFO:343
+culture.record.15995	从很远的地方 渡海而来， 劫掠 DRIIK 海岸。<br>
+# GAME.NFO:344
+culture.record.16060	<br>
+# GAME.NFO:345
+culture.record.16066	与其他民族相比， DRIIK 人
+# GAME.NFO:346
+culture.record.16135	在 THE UNREAL WORLD 中的 社会组织更为完善。 他们已有明确的
+# GAME.NFO:347
+culture.record.16194	职业分工： 商人、猎人、农民、工匠 和 BLACKSMITHS 。
+# GAME.NFO:348
+culture.record.16265	在 DRIIK ， 你能找到 CROSSBOWS 、 BATTLEAXES 等 各种进口的 稀有 WEAPONS ，
+# GAME.NFO:349
+culture.record.16358	以及金属 ARMOUR 和异国 SWORDS 。
+# GAME.NFO:350
+culture.record.16414	他们的一些 本地 BLACKSMITHS 也能打造 SWORDS 和头盔。
+# GAME.NFO:356
+culture.record.16538	REEMI 人， 也就是 居住在雷埃米地区的人， 生活在
+# GAME.NFO:357
+culture.record.16593	THE UNREAL WORLD 的东南部。 他们拥有富足的
+# GAME.NFO:358
+culture.record.16652	VILLAGES ， 主要以
+# GAME.NFO:359
+culture.record.16711	AGRICULTURE 谋生。 经常 FISHING 、 PASSIVE HUNTING 和 TRADING
+# GAME.NFO:360
+culture.record.16773	为他们带来 稳定的财富。 一些 REEMI 族人 专门从事 BLACKSMITHING 。<br>
+# GAME.NFO:361
+culture.record.16875	<br>
+# GAME.NFO:362
+culture.record.16881	REEMI 人 喜欢建造 宽大、戒备严密的房屋。
+# GAME.NFO:363
+culture.record.16938	他们深深敬畏灵界， 也崇敬 自己的祖先。
+# GAME.NFO:369
+culture.record.17057	SARTOLAISET ， 也就是 居住在 SARTOLA 地区的人，
+# GAME.NFO:370
+culture.record.17113	以 THE UNREAL WORLD 西部沿海 为家。
+# GAME.NFO:371
+culture.record.17169	他们定居在 小型农业 VILLAGES ， 耕田获取食物， TRAPPING 获取毛皮。
+# GAME.NFO:372
+culture.record.17268	大海也为他们 提供了充足的 捕鱼和猎捕海豹的机会。<br>
+# GAME.NFO:373
+culture.record.17356	<br>
+# GAME.NFO:374
+culture.record.17362	SARTOLAISET 主要与 DRIIK 人交易， 用毛皮
+# GAME.NFO:375
+culture.record.17420	换取 SALT 和进口物品。 他们力求 在本地制作 日常 TOOLS ，
+# GAME.NFO:376
+culture.record.17505	因此几乎家家 都有 BLACKSMITH 。 有些 BLACKSMITHS 技艺精湛，
+# GAME.NFO:377
+culture.record.17603	能够打造 ANGO 等特殊 WEAPONS 。<br>
+# GAME.NFO:378
+culture.record.17654	<br>
+# GAME.NFO:379
+culture.record.17660	他们以自己的财富为傲， 以 BUILDING 大房子 来炫耀家财。
+# GAME.NFO:380
+culture.record.17741	他们喜欢 摔跤取乐。 而一旦 事态变得严肃，
+# GAME.NFO:381
+culture.record.17801	便会拔刀相向。
+# GAME.NFO:387
+culture.record.17875	ISLANDERS 居住在
+# GAME.NFO:388
+culture.record.17936	THE UNREAL WORLD 最西南端的群岛， 靠 FISHING 以及 HUNTING
+# GAME.NFO:389
+culture.record.17996	海豹和 BIRDS 为生。 他们都是 熟练的木匠。
+# GAME.NFO:390
+culture.record.18043	一 YEAR 中的大部分时间， 他们在孤立的小岛上 忍受恶劣 WEATHER ，
+# GAME.NFO:391
+culture.record.18129	因此必须 自力更生。 他们每年会 出海数次， 前往 DRIIK 贸易。
+# GAME.NFO:397
+culture.record.18286	KOIVULAISET ， 也就是 居住在 KOIVULA 地区的人， 以农耕为业。
+# GAME.NFO:398
+culture.record.18344	他们拥有 大片田地， 饲养牛、羊和
+# GAME.NFO:399
+culture.record.18400	马， 家园坐落在 湖泊与河流附近，
+# GAME.NFO:400
+culture.record.18457	位于 THE UNREAL WORLD 的中西部。<br>
+# GAME.NFO:401
+culture.record.18504	他们每 YEAR 可能有两次， 各用几周时间
+# GAME.NFO:402
+culture.record.18558	进入荒野， HUNTING 、 TRAPPING 和 FISHING ， 回家时
+# GAME.NFO:403
+culture.record.18617	带回鱼干、熏肉 和毛皮。 除此以外，
+# GAME.NFO:404
+culture.record.18678	他们很少远行， 而是与 定期来到
+# GAME.NFO:405
+culture.record.18734	KOIVULA 的行商 交易。
+# GAME.NFO:406
+culture.record.18757	他们的 BLACKSMITHS 以制作 优质器具闻名。
+# GAME.NFO:411
+culture.record.18861	NORTHERN PEOPLES 生活在 THE UNREAL
+# GAME.NFO:412
+culture.record.18915	WORLD 最北部， 讲自己的 LANGUAGE 。
+# GAME.NFO:413
+culture.record.18969	虽然他们 与其他民族
+# GAME.NFO:414
+culture.record.19022	拥有共同的祖先， 却有一些 鲜明的特征，
+# GAME.NFO:415
+culture.record.19075	使他们 与南方民族 稍有不同
+# GAME.NFO:416
+culture.record.19131	（南方民族 即其他所有民族）。 他们的
+# GAME.NFO:417
+culture.record.19188	体格略小， 肤色通常更深， 人们认为他们
+# GAME.NFO:418
+culture.record.19246	拥有某些 超自然能力。 所有 NORTHERN PEOPLES
+# GAME.NFO:419
+culture.record.19296	都不喜欢 SWORDS 与争斗。<br>
+# GAME.NFO:420
+culture.record.19330	<br>
+# GAME.NFO:421
+culture.record.19336	NORTHERN PEOPLES 的部落包括 KUIKKA-TRIBE 、
+# GAME.NFO:422
+culture.record.19390	OWL-TRIBE 和 SEAL-TRIBE 。
+# GAME.NFO:428
+culture.record.19467	KUIKKA-TRIBE 是 NORTHERN PEOPLES 的一支， 他们以
+# GAME.NFO:429
+culture.record.19527	KUIKKA （黑喉潜鸟） 作为图腾动物。
+# GAME.NFO:430
+culture.record.19586	他们住在 小屋里， 依靠
+# GAME.NFO:431
+culture.record.19645	FISHING 、 HUNTING 和少量饲养 REINDEER 维生。
+# GAME.NFO:432
+culture.record.19700	其中一些人 是熟练的 BLACKSMITHS ， 制作 NORTHERN KNIFE 等 当地特有的器具。
+# GAME.NFO:436
+culture.record.19816	OWL-TRIBE 流传着一个故事： 他们诞生于
+# GAME.NFO:437
+culture.record.19879	猫头鹰尖啸的回声。 而直到今天，
+# GAME.NFO:438
+culture.record.19938	他们仍像回声一样， 穿行在 北方的森林、
+# GAME.NFO:439
+culture.record.19993	荒山和沼泽之间。 他们主要
+# GAME.NFO:440
+culture.record.20047	以游牧方式 饲养 REINDEER 为生， 每 YEAR 迁徙两次：
+# GAME.NFO:441
+culture.record.20100	夏季营地 位于极北之地，
+# GAME.NFO:442
+culture.record.20154	冬季营地 则位于南方的 广袤森林中。
+# GAME.NFO:446
+culture.record.20230	SEAL-TRIBE 生活在 极北之地，
+# GAME.NFO:447
+culture.record.20286	也就是 THE UNREAL WORLD 的北部海岸。 他们饲养
+# GAME.NFO:448
+culture.record.20342	小群 REINDEER ， 不过日常食物 主要
+# GAME.NFO:449
+culture.record.20395	来自大海。 海豹既是 他们的图腾动物，
+# GAME.NFO:450
+culture.record.20448	也是他们 最重要的猎物。 为此， 他们形成了
+# GAME.NFO:451
+culture.record.20506	各种仪式， 以维持与
+# GAME.NFO:452
+culture.record.20560	海豹的 良好关系。
+# GAME.NFO:457
+culture.record.20619	NJERPEZIT 来自东方。 黑发的 NJERPEZ 男子 被视为 臭名昭著的匪徒。
+# GAME.NFO:458
+culture.record.20711	NJERPEZ 人会袭击其他人， 杀戮、抢劫和掠夺。
+# GAME.NFO:459
+culture.record.20779	他们的 MELEE WEAPONS 通常是 长矛和弯刀， 并配圆盾。
+# GAME.NFO:460
+culture.record.20856	首领的 ARMOURS 可能是 LAMELLAR ， 并戴着 HELMS ； 较少见的 还穿 MAIL 。
+# GAME.NFO:461
+culture.record.20934	NJERPEZ 人看重毛皮， 尤其是松鼠、熊、狼、河狸 和猞猁的毛皮。
+# GAME.NFO:462
+culture.record.21023	KAUMO 出产 最上等的动物 FUR ， 而南方领地的商人
+# GAME.NFO:463
+culture.record.21111	愿意为 优质的北方毛皮 付出高价。 因此， NJERPEZIT 力图
+# GAME.NFO:464
+culture.record.21197	夺取 KAUMOLAISET 的 HUNTING 场， 并且数十年来 一直如此。
+# GAME.NFO:468
+culture.record.21315	大多数名称 都保留了 原来的形式。 像 Kaumo （考莫）
+# GAME.NFO:469
+culture.record.21379	或 Kiesse （基耶塞） 这样的词 历史久远， 已无人知道
+# GAME.NFO:470
+culture.record.21437	它们最初的含义， 因此无法翻译。 Kaumo 仅仅指
+# GAME.NFO:471
+culture.record.21502	THE UNREAL WORLD 中的 一个地区。<br>
+# GAME.NFO:472
+culture.record.21545	有些词 虽然可以翻译， 但为了保留 原本的韵味，
+# GAME.NFO:473
+culture.record.21610	仍然沿用了原文。<br>
+# GAME.NFO:474
+culture.record.21635	<br>
+# GAME.NFO:475
+culture.record.21641	更多说明 请参阅 LANGUAGE INFLEXIONS 表。
+# GAME.NFO:479
+culture.record.21727	<br>
+# GAME.NFO:480
+culture.record.21733	地区　单个居民　多个居民　形容词形式<br>
+# GAME.NFO:481
+culture.record.21796	----------------------------------------------------------<br>
+# GAME.NFO:482
+culture.record.21860	Kaumo （考莫） kaumolainen kaumolaiset kaumolais<br>
+# GAME.NFO:483
+culture.record.21922	Kiesse （基耶塞） kiesseläinen kiesseläiset kiesseläis<br>
+# GAME.NFO:484
+culture.record.21985	Driik （德里基） driikiläinen driikiläiset driikiläis<br>
+# GAME.NFO:485
+culture.record.22048	Reemi （雷埃米） reemiläinen reemiläiset reemiläis<br>
+# GAME.NFO:486
+culture.record.22110	Sartola （萨尔托） sartolainen sartolaiset sartolais<br>
+# GAME.NFO:487
+culture.record.22172	Koivula （科伊武） koivulainen koivulaiset koivulais<br>
+# GAME.NFO:488
+culture.record.22234	<br>
+# GAME.NFO:489
+culture.record.22240	例句：<br>
+# GAME.NFO:490
+culture.record.22255	<br>
+# GAME.NFO:491
+culture.record.22261	他是 kaumolainen ， 意为 他来自 Kaumo （考莫）。<br>
+# GAME.NFO:492
+culture.record.22309	他是 driikiläinen ， 意为 他来自 Driik （德里基）。<br>
+# GAME.NFO:493
+culture.record.22358	他们是 driikiläiset ， 意为 他们来自 Driik （德里基）。<br>
+# GAME.NFO:494
+culture.record.22409	这是一支 kaumolais SPEAR ， 意为 这支矛由 kaumolaiset （考莫人） 制作。<br>
+# GAME.NFO:495
+culture.record.22478	这些是 kiesseläis 平底船， 意为 这些船在 Kiesse （基耶塞） 制作。<br>
+# GAME.NFO:496
+culture.record.22544	这是一座 driikiläis 城镇， 意为 driikiläiset （德里基人） 居住在这里。<br>

@@ -69,6 +69,7 @@ enum class TextComponent : std::uint32_t {
     scenario_village_arrival_3 = 0xC18, scenario_village_arrival_4 = 0xC19,
     scenario_village_advice_1 = 0xC1A, scenario_village_advice_2 = 0xC1B,
     scenario_village_advice_3 = 0xC1C,
+    culture_text = 0xD00,
     hud_label = 0x10000, hud_condition = 0x10001, hud_penalty = 0x10002,
     hud_action = 0x10003, hud_direction = 0x10004, hud_speed = 0x10005,
     world_place_gloss = 0x10100, world_location = 0x10101, world_region = 0x10102,

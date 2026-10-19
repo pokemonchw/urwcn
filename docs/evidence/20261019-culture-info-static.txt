@@ -1,0 +1,424 @@
+2026-10-19 Linux culture encyclopedia: native static evidence
+===========================================================
+
+Scope and method
+----------------
+Inspected only the ELF, its existing disassembly and source text assets.
+No game/process/product was started, attached to or injected. No input was
+simulated. No tests, test cases, assertions or compilation were performed
+for this evidence task. Addresses below are Linux ELF RVAs, not Windows RVAs.
+
+ELF: /home/lulika/.local/share/Steam/steamapps/common/UnRealWorld/urw3-bin
+Primary disassembly: build/analysis/linux-x86_64.asm
+Focused extracts: build/analysis/culture-infobrowser.asm,
+                  build/analysis/culture-links.asm
+Text: game root GAME.NFO (CP437 bytes, CRLF), and
+      gameinfo/urw_scrinfo.txt [.ENCYCLOPEDIA.] for the browser help panel.
+
+The native encyclopedia owns topic lookup, history, document flow, pictures,
+link detection, link hit boxes, selection, input, background save/restore and
+presentation. Source-line identifiers are semantic asset identifiers; they
+are not rows, line slots, coordinates or independently laid-out page records.
+
+Entry and return lifecycle
+--------------------------
+1BE60 choose_culture()
+  1BEC1 -> F4AF0 LIST_Reset creates the culture selection list.
+  1BFF5 -> F6040 LIST_Save saves the selection list.
+  1C000 -> F5570 LIST_Draw draws it.
+  1C03C -> 4FE10 GameInfo_Hotspot(char *topic, char *hint, int compact)
+             RDI = current original English culture topic, RSI = empty,
+             EDX = 0. This is the selection screen's preview/encyclopedia link.
+  1C07C -> F8630 LIST_Go keeps native actions and selection.
+  1C2B3 -> 105F50 game_info(char*) opens the selected English culture key
+             when the native action is 0x423 (F1).
+  1C2D7 -> 105F50 game_info(char*) opens literal CULTURES for action '?'.
+  1C2B8 / 1C2DC -> F60A0 LIST_Restore; 1C2C0 / 1C2E4 restore position.
+  1C0BF..1C0DF retain Plr culture index and CULTURE_INHABITANT English data.
+
+105F50 game_info(char*)
+  Copies topic locally, leaving the caller's source and internal key intact.
+  The GFX special key reads GFX.NFO, written by GameInfo_Hotspot.
+  105FEE -> 13C060 grabscr(named background).
+  105FFD -> 13A510 uniqSlaveSaveDisable.
+  106005 -> 51A70 infobrowser(topic).
+  10604A -> 13A560 uniqSlaveRestoreEnable.
+  106074 / 1060BF -> 140010 restorescr; optional native map restore branch
+  runs FLIP_map_ON and Flip. These lifecycles must remain game-owned.
+
+Two other direct infobrowser callers are inside MagicProfile(int), 106B40:
+  106DAD -> 51A70, immediately preceded by 106DA6 loading RDI with the
+     original SPELLS key at 1F7FB8. 106DA1 SlaveSaveDisable surrounds it,
+     106DB2 SlaveRestoreEnable follows; the owner then rebuilds its screen.
+  106EFD -> 51A70, immediately preceded by 106EF6 loading the same RDI key.
+     106EF1 SlaveSaveDisable and 106F02 SlaveRestoreEnable surround it.
+Both paths set native INFO_MAPRESTORE=1 before entry. They bypass game_info
+but can navigate from SPELLS to culture topics using native HOME/search/link
+actions. They therefore need the same browser scope/language snapshot as
+106005; no caller-owned rendering state or input action should be changed.
+The complete direct CALL enumeration in the inspected ELF contains these
+three infobrowser sites: 106005, 106DAD, 106EFD.
+
+51A70 infobrowser(char*)
+  Clears native link history at 32F980 (30 * 200 bytes).
+  51ABA starts native background music; 51ABF disables map presentation.
+  51AF3 bestfitPic draws the native encyclopedia background.
+  51B16 -> 146ED0 TekstiPalkki(int,int,int,char*,int), RCX = title.
+     Original title at 1E42CB: UNREAL WORLD ENCYCLOPEDIA.
+  Clears native topic link list at 331100 (100 * 200 bytes).
+  Uppercases the English lookup key and normalizes '*'.
+  51BDC / 51C2F -> 51720 cruise(topic).
+
+51720 cruise(char*)
+  5176D -> 511D0 show_topic(topic).
+  517B5 -> 1471A0 winbox draws help panel.
+  517C3 -> 1B0130 SANATAULUKKO_finfo("ENCYCLOPEDIA").
+  517F9 -> 13ECE0 showtext_sanataulukko draws help with native wrapping.
+  51808 -> 13FE50 Flip.
+  5180D -> 51580 link_select, obtains ORIGINAL English key or native action.
+  51858 / 51868 / 518BB / 518C8 -> show_topic after back/new-topic decisions.
+  5193F -> 1402B0 getst for original keyword input. Input semantics unchanged.
+  Escape/QUIT terminates cruise; HOME enters the original encyclopedia home.
+  No separate culture-page pagination function was found: navigation is the
+  native topic-link/history mechanism, not Mod pages or slots.
+
+Topic loader and source record boundaries
+-----------------------------------------
+511D0 show_topic(char*)
+  51291 resets native list; 512A3/512A8 set original link-list interaction.
+  512B0 StrUpr processes lookup key; R14 retains original uppercased topic.
+  5132D fopen("GAME.NFO", "r"); filename string at 1E41F8.
+  5134E formats ".%s." lookup marker, original English topic untouched.
+  5137B -> F9680 fgetstr reads/searches header (200-byte read limit).
+  51383 StrUpr is for source header lookup, not translated display text.
+  513CD -> 4FB90 add_link(original topic) advances native history.
+  513F5 -> 1471A0 winbox: R8 = original topic title, 7th argument on stack.
+  51403 sets lpos=2 at 32F968; clears native list[] at 331100.
+  51467 -> F9680 fgetstr reads body source record (150-byte read limit).
+  514C8 -> 50CD0 link_show(char *sourceLine, char *topicHeader)
+     RDI = current original body line; RSI = complete original dotted header.
+     This is the complete semantic body-line translation boundary BEFORE
+     native tokenization, text measurement, flow and link construction.
+  514FB reads native picture filename after a '%' directive.
+  5152F calls image with that original asset filename; 5154E reads next body.
+  51495 closes file; 514A9 stores original current topic to topsnes 32F6E0.
+
+F9680 fgetstr strips CR and LF and internally skips // and ## comment lines.
+Therefore counting its CALLs does NOT give physical GAME.NFO line numbers.
+Physical line keys require source-string/asset-offset mapping, or another
+explicit source identity. A simple increment per fgetstr is incorrect.
+The source record passed to link_show is distinct from eventual UI wrap rows.
+Translation must not include original '%' picture directives or replace
+English dotted topic lookup headers with Chinese.
+
+Native tokenizer, flow and encoding boundaries
+----------------------------------------------
+50CD0 link_show(char *line,char *header)
+  Original local source copies are 200 bytes; text accumulator is 1024 bytes.
+  50D3C -> F9140 StrUpr on its matching copy.
+  50D92 -> 1AFE00 SANATAULUKKO_Lisaa(1,sourceLine) makes native word slots.
+  50D9F -> 1B00A0 resets native word-reading position.
+  50DF0 -> 1B00E0 consumes word; 50E79 -> 1B00B0 peeks next word.
+  50E1D and 50EB5 -> 13B460 textwidth BEFORE the native wrap comparisons.
+  50EE5 -> 13E8B0 showtext, RDX = native current word.
+  50F5E -> showtext of a literal ASCII space when the word lacks trailing
+     space; 50F72 appends the same native space to its link matching buffer.
+  50E3B / 50FA5 / 51023 / 51042 -> 50730 Lisaa_Linkit(...).
+  50E40 / 51047 -> 50700 link_show_br, native cursor and line advance (+12).
+  Native HYPER_X/HYPER_Y are 264600/2645FC; yie is 32F890.
+  Their coordinates and wrapping decisions must not be copied into Mod tables.
+
+1AFE00 SANATAULUKKO_Lisaa(int reset,char *source)
+  Native word array SanaTaulukko=AA74B60, 130 bytes per word.
+  Native entry index=AB13670. Splits only spaces and '<' / '>' markup.
+  1AFE7D formats one byte; EBP advances source byte index.
+  1AFF10..1AFF2D handles spaces; 1AFF78 '<', 1AFF38 '>'.
+  Entire unspaced Chinese paragraphs therefore cannot simply be passed here:
+  they would form one native word, neither wrap nor fit the word slot.
+  A justified Chinese-token extension belongs at this tokenizer boundary;
+  native words, peek/consume, wrap conditions and cursor remain native-owned.
+
+F9140 StrUpr is NOT binary-safe for native Chinese two-byte tokens:
+  F91F5 calls toupper per byte; F921B/F9228 explicitly remap bytes
+  84/8E/E4 to C4 and 94/99/F6 to D6. Link-display copies at 50D3C/507A6
+  require token-aware casing that preserves each encoded Chinese pair while
+  retaining the game's original uppercase transformation for its legacy bytes.
+  Internal English lookup paths (512B0/51383 etc.) are a different semantic
+  boundary and must not be replaced by translated labels.
+
+Native hyperlinks: identity separated from display
+-------------------------------------------------
+50730 Lisaa_Linkit(int x,int y,char *line,char *header,int measureOnly)
+  RDI/RSI native text origin; RDX native mixed-text line; RCX original header;
+  R8D selects original measurement-only/link-creation path.
+  Native topics table=34E5C0, step 200; native current-page list=331100,
+  history=32F980. Original English topic strings remain those structures'
+  lookup, duplicate-detection, history and returned input values.
+  507A6 -> StrUpr(line copy).
+  50805 / 509B6 strstr match an original topic in the current line.
+  508B6 strcmp checks already-present topic; 508E9 excludes current header.
+  50963 / 50988 check original ASCII delimiter strings; '[' is special.
+  Consequently an English topic token retained inside Chinese source needs
+  native ASCII separation/markup. Chinese immediately touching its bytes is
+  not accepted as the original delimiter by these checks.
+  Original topic terms are matched case-insensitively. The scan is not limited
+  to culture names: hunting, fishing, blacksmith and other GAME.NFO topics
+  appearing in the culture descriptions also have original hyperlink meaning.
+
+  Width call sites (all -> 13B460, RDI=complete string):
+     509EE preceding text; 509FD topic; 50A19 preceding text; 50A28 topic;
+     50A92 preceding text; 50B15 label; 50B7B label/underline extent.
+  50A8A copies original English topic into native list using original length.
+  50AB1 copies display label into native scratch, then normalizes '.' to space.
+  50B43 -> F4E40 LIST_SpotEntry(int action,int x,int y,int width,int height)
+     computes original mouse/selection hit box from the preceding text and
+     label widths. This must consume the SAME Chinese display measurement.
+  50BAC -> 143DA0 line draws native link underline using the same extent.
+  50C39 -> 13E8B0 showtext, RDX=matched original display substring.
+  50C71 stores original topic key in list and 50C76 advances lpos.
+
+Confirmed implementation design available to the main task:
+  Translate body source at 514C8 while retaining actual original linked-topic
+  tokens. Convert those tokens to Chinese only for the above width/showtext
+  calls, using identical conversion in both paths. Keep all native key storage
+  and byte indices unchanged. For multiword labels, the selected display
+  segmentation must be identical when measuring a whole prefix and drawing
+  its individual words. Native spaces stay native spaces unless the explicit
+  tokenizer extension proves and handles the corresponding boundary.
+  This is display text conversion at confirmed native calls; it is not a
+  second layout, pixel contribution log, overlay or delayed text replay.
+
+Navigation and common browser copy
+----------------------------------
+51580 link_select()
+  515D3 -> F4F50 LIST_ButtonSpotEntry; action 0x42F, HOME.Start page.
+  5160C -> F4F50; action 27, ESC.Exit.
+  51627 -> F4F50; action 32, SPACE.Type a keyword.
+  5170A -> F4F50; action 8, formatted previous-topic label (contains native
+     escape byte, '-.', and original topic from history at 330F60).
+  5162C -> F8630 LIST_Go; native actual input/selection lifecycle.
+  51650 LIST_PosKey, 516AE..516C3 select original list[row+2] key to return.
+  5167B is the native return epilogue; R8 is its returned char*.
+  Native strings: 1E4244 QUIT; 1E425B HOME.Start page;
+     1E426B "%c-.Back to \"%s\""; 1E427C ESC.Exit;
+     1E4285 SPACE.Type a keyword.
+  F4F50 -> F502D drawTEXT-button (144FB0), native widths and hit regions.
+  Preserve prefix/hotkey bytes; translate label only.
+
+Browser help:
+  gameinfo/urw_scrinfo.txt [.ENCYCLOPEDIA.] has 3 source lines describing
+  highlighted topics, cursor/ENTER or mouse selection, and keyword search.
+  517C3 passes original ENCYCLOPEDIA to 1B0130 SANATAULUKKO_finfo.
+  1B01EF reads source lines; 1B021D appends the matched section via
+  SANATAULUKKO_Lisaa(0,line). 517F9 does native wrapped display.
+
+Culture selection quick preview
+-------------------------------
+4FE10 GameInfo_Hotspot(topic,hint,compact)
+  Writes ORIGINAL topic to GFX.NFO (4FE5B/4FE68); do not translate that file.
+  4FEBC istopic(original topic) decides native F1 availability.
+  4FEFE -> showtext, RDX=uppercase original topic; complete display title.
+  4FF13 -> 4FD00 keyword_firstline(original topic).
+  4FF23 copies first line to local scratch.
+  compact=0 (culture caller) truncates original source to 92 bytes at 4FF75;
+  compact=1 other callers use 53-byte truncation at 5009A.
+  4FFFB -> showtext, RDX=complete native preview summary.
+  500D6 -> LIST_ButtonSpotEntry(action 0x423), original string at 1E42E8:
+     F1.Launch UnReal World encyclopedia and learn more.
+  A Chinese preview must be provided as a semantic native preview, keeping
+  the English firstline/keyword and native input/storage unchanged. Feeding
+  encoded text into the old byte truncation would need token-aware evidence.
+
+Language redraw boundary and restrictions
+-----------------------------------------
+Existing adapter scopes cover culture selection separately from encyclopedia
+topic input. The encyclopedia must have its own active native scope; treating
+its LIST_Go as the outer culture selection would redraw the wrong native list.
+topsnes at 32F6E0 identifies the native current topic. show_topic(topsnes)
+rebuilds the topic and links, but also calls add_link and does not draw footer
+buttons/help by itself. Repeating it unconditionally would change history.
+
+One statically justified native rebuild sequence is cruise(current native
+topic), with the redraw-only add_link call at 513CD suppressed. At the redraw
+call at 5180D, invoke native link_select to build its navigation buttons but
+return at its 5162C wait boundary through the native 5167B epilogue. The outer
+5180D hook then resumes directly at cruise's native 51878 success epilogue,
+without consuming the returned action. This is a native draw-only invocation;
+it must not inject a QUIT/input action, execute real input, alter the saved
+topic key or advance history.
+
+The top encyclopedia header is drawn by infobrowser's 51B16, outside cruise.
+Redrawing cruise alone does not update that header. To redraw it immediately,
+the main implementation must reuse the confirmed original header-building
+fragment, rather than copy the native title coordinates into a new Mod UI.
+Current selection/cache restoration must follow F8630's native path after a
+rebuild; the Mod must not retain pixel/text/position contributions for replay.
+
+Implementation decision after static review: this delivery does not invoke
+the redraw sequence described above. culture_browser keeps the language
+selected at browser entry for the whole native encyclopedia session, restores
+the outer scope/active_view on exit, and lets the next native browser entry
+consume any newly selected global language. Immediate in-place language
+refresh of the heading/body/help/list-cache combination remains unconfirmed;
+no native history or input loop is replayed to simulate that capability.
+
+Map culture legend is a separate component, not encyclopedia body
+---------------------------------------------------------------
+108940 kulttuuri_info(int x,int y,int shadeFlag) draws the older world-map
+legend. Its sole direct caller here is 7EFEF in kartta_main at 7EB60.
+It draws an original title and eleven culture labels with native colors and
+optional native alpha_box. There is no GAME.NFO body or topic navigation.
+
+10AC10 compile_CultureDialogTexture() is the modern map legend builder:
+  10AC36 SDL_CreateRGBSurface(0,200,160,32,0,0,0,0), return site 10AC3B.
+  10AC43 SDL_CreateSoftwareRenderer for that native temporary surface.
+  10AC6D renderwinbox (R9 title, 8 arguments total).
+  renshowtext(13E2E0), RCX string, at 10AC94/10ACB9/10ACDE/10AD1D/
+    10AD42/10AD67/10AD8C/10ADCB/10ADF0/10AE2F/10AE54.
+  10AE65 destroys prior CultureDialogTexture if the native owner has one.
+  10AE7F creates new native texture from the completed surface;
+  10AE87 stores CultureDialogTexture at 665F690.
+  10AE8E frees the temporary surface, 10AE9D destroys software renderer.
+  initgr(148920) calls this builder at 148E07.
+  MapView_Draw_CultMarkerBoxes(10B1B0) copies this texture into
+  MapviewMainTex (665F680) via native TextureToTexture at 10B213.
+
+Native legend label and title boundaries
+  Old title: 108972 -> winbox(1471A0), R8 text, seven arguments.
+  CULTURAL REGION INDICATORS is the original title at 1F8280.
+  Modern title: 10AC6D -> renderwinbox(147610), R9 text, eight arguments:
+  the original flags and SDL_Color occupy the first two caller stack words.
+  CULTURAL REGIONS is the original title at 1F834F.
+  Its flags 0x28 take 147AD4 -> 147AAB -> 147ACA, calling
+  renderTekstiPalkki(type=1). The jump-table entry at 1FF3B4 selects 147C80;
+  this renderer branch draws its native box/rectangle, follows 147CF4 to
+  147C50, and tail-calls renshowtext at 147C74 with left alignment.
+  The strlen*8 centering branches at 147D89/147EA2 are not taken by this
+  title. Old software title/text consumers use the existing native Chinese
+  width/cursor extensions; neither legend has a separate text-width call.
+
+  Old showtext site / modern renshowtext site / original culture label:
+    108995 / 10AC94 / Kaumo
+    1089B9 / 10ACB9 / Kiesse
+    1089DD / 10ACDE / Reemi
+    108A01 / 10AD1D / Koivula
+    108A25 / 10AD42 / Sartola
+    108A49 / 10AD67 / Driik
+    108A6D / 10AD8C / Islanders
+    108A91 / 10ADCB / Kuikka-tribe
+    108AB5 / 10ADF0 / Owl-tribe
+    108AD9 / 10AE2F / Seal-tribe
+    108B00 / 10AE54 / Njerpezit
+  The original software color IDs are 0,2,3,6,4,1,5,7,8,9,11. They remain
+  native. The binding table contains call identities, not coordinates or
+  rows; coordinates and color arguments are passed back without translation.
+
+Confirmed modern legend density chain and native rebuild boundary
+  10AC3B's temporary surface is now a registered logical native target.
+  Its original CreateSoftwareRenderer receives that expanded surface and
+  the recorded actual output scale. rentextput -> renderer_text rasterizes
+  each Chinese glyph synchronously at that renderer scale; it does not
+  record text positions for deferred reconstruction or replay.
+  10AE7F produces a registered CultureDialogTexture with the same density.
+
+  Expanding the legend alone is insufficient: TextureToTexture(1428B0)
+  copies it at 10B213 into MapviewMainTex. CompileMapviewSubscreen(10B0B0)
+  owns this final UI target, destroys the old instance at 10B0C1, and calls
+  CreateGamesizeTex at 10B0C6. That helper at 13C3B0 sets the original
+  format/access and logical 800x600 size, then TAIL-JUMPS at 13C3D0 to
+  SDL_CreateTexture. It has no inner CALL return site at 13C3EB.
+  The owner stores the result at 10B0CB into global 665F680. Its background,
+  help and controls are built by the original UI and retain logical units.
+
+  The sole direct caller of CompileMapviewSubscreen is MapView's 10C8A6,
+  immediately after 10C8A1 selects SDL_SetRenderTarget(NULL). The hook at
+  10B0C6 therefore observes the native window renderer, after retirement of
+  the previous MapviewMainTex and before any new legend copy is borrowed.
+  It samples the actual window output density into separate mapview metadata,
+  invokes native compile_CultureDialogTexture to rebuild its complete pixels
+  using the current language/density, then invokes native CreateGamesizeTex.
+  That creation scope registers the new MapviewMainTex at the same density.
+  Native old/new legend ownership, surface release and renderer destruction
+  remain inside compile_CultureDialogTexture itself. No independent layout
+  or drawing history is retained. The ordinary screen canvas is not changed
+  by this map-specific density sample.
+
+  initgr's 148E07 is the only original direct legend-builder caller.
+  CreateMapMainTexture(13A040) only rebuilds MapMainTexture and
+  MapMainFinalTexture (native map-image textures); it does not rebuild this
+  legend. Thus merely calling that resize function or updating screen canvas
+  density would leave a previously compiled legend at its old density.
+  Re-entering the complete native legend builder during MapView's confirmed
+  target reconstruction supplies current-language glyphs at current density.
+  This refresh occurs at native MapView reconstruction, not as an invented
+  immediate language/input-loop refresh.
+
+  TextureToTexture selects its original target at 1428ED, queries source
+  dimensions at 142951 if native width/height are zero, and renders at 142909.
+  Registered QueryTexture returns logical dimensions so native placement
+  remains unchanged; the source still owns its full-density texture pixels.
+  The new SetRenderTarget adapter applies the registered target's density
+  after the original target selection. Original clipping/viewport resets
+  and target lifetime remain SDL-owned.
+
+  SDL2-compat release-2.32.72 src/sdl2_compat.c 5780..5805 confirms that
+  SDL_SetRenderTarget first calls SDL3_SetRenderTarget, then resets a non-null
+  target's viewport/clip, scale to (1,1), and logical presentation. Therefore
+  density must be reapplied on each selection of a registered target.
+  SDL3 release-3.4.16 src/render/SDL_render.c 2565..2598 confirms selecting
+  NULL switches back to renderer->main_view, preserving the window view.
+  The adapter does not rewrite the window scale with RenderGetScale's
+  combined logical-presentation value.
+  https://github.com/libsdl-org/sdl2-compat/blob/release-2.32.72/src/sdl2_compat.c#L5780
+  https://github.com/libsdl-org/SDL/blob/release-3.4.16/src/render/SDL_render.c#L2565
+
+  MapView chooses MapviewMainTex for SetFlipperMode at 10C8C7/10CBF5.
+  MasterRender(146390) restores the window target if needed at 1463B2 and
+  renders that whole texture at 1463ED with source/destination NULL, then
+  Flipper presents through the native flow. This is the full-density final
+  UI target; no low-resolution intermediate consumes the Chinese legend.
+  MapView loads the final target at 10CE69, destroys it at 10CE70, and clears its native owner
+  at 10CE79. The existing destroy hook retires only its density metadata.
+
+Implementation status
+  src/linux/culture_map.inc implements both map legends' native text calls.
+  src/linux/native_targets.cpp implements the above confirmed density chain
+  and native reconstruction boundary. The initial HD gap recorded during
+  this audit is addressed by these source changes, subject to the parent's
+  separate compilation/publication record. No game/product execution, tests
+  or assertions were used. Windows implementation is outside this Linux task.
+
+Existing code integration observations
+--------------------------------------
+src/linux/adapter.cpp already replaces textwidth, textput, rentextput and
+extends showtext's cursor advance using native Chinese token metrics. Those
+generic glyph primitives do not alone solve the newly identified StrUpr,
+SANATAULUKKO word boundary, native hyperlink or encyclopedia redraw boundaries.
+No new fixed coordinates, page snapshots, DisplayPlan, pixel tracking or
+delayed replay was introduced by this evidence task.
+
+Post-implementation static ABI review
+-------------------------------------
+Reviewed src/linux/culture_info.inc and its adapter/catalog/semantic wiring
+without compiling or running them. The reviewed native interfaces match:
+  * culture_preview_scope at 1C03C receives RDI=RBP (the culture key constructed
+    in choose_culture's original local buffer), RSI=empty and EDX=0.
+  * 4FEFE and 4FFFB are complete showtext calls with display text in RDX.
+  * Browser wrappers at 106005/106DAD/106EFD receive their original topic in
+    RDI and synchronously call infobrowser while isolating the outer scope
+    and active_view. Their caller-owned save/restore paths remain outside.
+  * At 51467/514FB/5154E, RDX is the original FILE*. ftell before the body
+    reader gives the original CRLF record offset. Picture filename reads
+    are followed by 5154E updating the next body-record offset.
+  * 513F5 uses winbox's seventh original stack argument; 51B16 and 51910
+    are five-argument TekstiPalkki calls with text in RCX.
+  * All four navigation call sites use LIST_ButtonSpotEntry with text RCX;
+    the dynamic original target at 330F60 is link[28] (32F980 + 28 * 200).
+  * The language-spelling source boundary restores original CP437 byte 84
+    for a taught lowercase ä character before the native tokenizer.
+    Native StrUpr maps that byte to C4 for topic matching. Chinese token pairs
+    remain intact at the two scoped uppercase calls, and the original word
+    forms remain literal at both native measurement and drawing boundaries.
+No blocking native ABI/lifecycle mismatch was found in those reviewed sites.
+This is a static conclusion about the inspected boundaries, not a claim of
+runtime results, completed target-density coverage or an executed test.

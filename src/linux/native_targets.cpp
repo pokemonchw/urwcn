@@ -14,6 +14,8 @@ namespace raster=adapter::native_raster;
 using Scale=scoped::SurfaceScale;
 std::uintptr_t base;
 Scale canvas;
+Scale mapview_canvas;
+bool building_mapview;
 // Resource metadata only. Native owners retain their surfaces, pixels and
 // cache lifetimes. No text, UI positions or paint operations are retained.
 std::unordered_map<Surface*,Scale> surfaces;
@@ -30,6 +32,7 @@ struct Api : scoped::NativeSdl {
     void (*DestroyTexture)(Texture*);
     int (*QueryTexture)(Texture*,u32*,int*,int*,int*);
     int (*RenderCopy)(Renderer*,Texture*,const Rect*,const Rect*);
+    int (*SetRenderTarget)(Renderer*,Texture*);
     void (*RenderGetScale)(Renderer*,float*,float*);
     int (*RenderSetScale)(Renderer*,float,float);
     void (*RenderGetLogicalSize)(Renderer*,int*,int*);
@@ -59,7 +62,7 @@ const Scale* scale(Texture* resource) {
     return entry==textures.end() ? nullptr : &entry->second.ratio;
 }
 
-void output_scale(Renderer* renderer) {
+Scale output_scale(Renderer* renderer) {
     // initgr: 148C2D runs after renderer creation and optional logical-size
     // setup, before screen/caches exist. Its target is the window. Native
     // initgr leaves the user scale at 1. SDL2-compat 2.32.72 GetScale includes
@@ -79,7 +82,7 @@ void output_scale(Renderer* renderer) {
     // Preserve initgr's original raster domain when the window is smaller.
     // Larger output gets actual-density glyphs; smaller output downsamples
     // the same native canvas, as it did before this extension.
-    canvas={native_w,native_h,std::max(native_w,w),std::max(native_h,h)};
+    return {native_w,native_h,std::max(native_w,w),std::max(native_h,h)};
 }
 Surface* create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 b,u32 a) {
     const auto site=reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base;
@@ -88,15 +91,16 @@ Surface* create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 b,u32 a)
     // in their native image-pixel domains.
     const bool logical=site==0x148c65 || site==0x13bacf || site==0x13bb81 ||
         site==0x13bbd8 || site==0x13bc2f || site==0x13beca ||
-        site==0x13c114 || site==0x13bdba;
+        site==0x13c114 || site==0x13bdba || site==0x10ac3b;
     // fade constructs its two temporary surfaces from screen->w/h already.
     const bool physical=site==0x13cf53 || site==0x13d165;
+    const auto& ratio=building_mapview?mapview_canvas:canvas;
     if(logical) {
-        const auto extent=scoped::physical_rect({0,0,w,h},&canvas);
+        const auto extent=scoped::physical_rect({0,0,w,h},&ratio);
         w=extent.w; h=extent.h;
     }
     auto* result=api.CreateRGBSurface(flags,w,h,depth,r,g,b,a);
-    if(result && (logical || physical)) surfaces.emplace(result,canvas);
+    if(result && (logical || physical)) surfaces.emplace(result,ratio);
     return result;
 }
 Surface* convert_surface(Surface* source,const PixelFormat* format,u32 flags) {
@@ -134,12 +138,30 @@ Texture* create_texture(Renderer* renderer,u32 format,int access,int w,int h) {
     const auto site=reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-base;
     const bool upload=site==0x148c32;
     if(upload) {
-        output_scale(renderer);
+        canvas=output_scale(renderer);
         w=canvas.physical_width; h=canvas.physical_height;
+    } else if(building_mapview) {
+        // CreateGamesizeTex tail-calls SDL_CreateTexture. This scope is its
+        // inspected MapviewMainTex owner, not every gamesize texture caller.
+        const auto extent=scoped::physical_rect({0,0,w,h},&mapview_canvas);
+        w=extent.w; h=extent.h;
     }
     auto* texture=api.CreateTexture(renderer,format,access,w,h);
     if(texture && upload) textures.emplace(texture,TextureOwner{canvas,renderer});
+    else if(texture && building_mapview) textures.emplace(texture,TextureOwner{mapview_canvas,renderer});
     return texture;
+}
+void mapview_target(linux_host::Frame& frame) {
+    // MapView 10C8A1 selects the window before CompileMapviewSubscreen.
+    // That owner has destroyed its old target at 10B0C1, and no legend copy
+    // is borrowed here. Re-enter the game's full legend builder to consume
+    // the current language and window density before its native target is
+    // created. The builder owns replacing CultureDialogTexture itself.
+    mapview_canvas=output_scale(global<Renderer*>(0xa916ed0));
+    building_mapview=true;
+    reinterpret_cast<void (*)()>(base+0x10ac10)();
+    frame.rax=reinterpret_cast<std::uintptr_t>(reinterpret_cast<Texture* (*)()>(base+0x13c3b0)());
+    building_mapview=false;
 }
 Texture* texture_from_surface(Renderer* renderer,Surface* surface) {
     auto* texture=api.CreateTextureFromSurface(renderer,surface);
@@ -166,6 +188,17 @@ int copy_texture(Renderer* renderer,Texture* texture,const Rect* src,const Rect*
     if(!src || !ratio) return api.RenderCopy(renderer,texture,src,dst);
     const auto physical=scoped::physical_rect(*src,ratio);
     return api.RenderCopy(renderer,texture,&physical,dst);
+}
+int set_render_target(Renderer* renderer,Texture* texture) {
+    const int result=api.SetRenderTarget(renderer,texture);
+    // SDL2-compat resets a texture target's scale to 1 on each selection.
+    // Reapply only this native resource's recorded output density. Switching
+    // to NULL restores SDL3's main_view, including its window presentation;
+    // no GetScale value is written back as an additional window scale.
+    if(const auto* ratio=scale(texture))
+        api.RenderSetScale(renderer,float(ratio->physical_width)/ratio->logical_width,
+                           float(ratio->physical_height)/ratio->logical_height);
+    return result;
 }
 raster::Target lock_screen() {
     auto* screen=global<Surface*>(0xa916ea0);
@@ -251,7 +284,7 @@ Texture* heading_image(Renderer* renderer,u32 filename) {
 bool synchronize_main_menu() {
     const auto previous=canvas;
     auto* renderer=global<Renderer*>(0xa916ed0);
-    output_scale(renderer);
+    canvas=output_scale(renderer);
     if(previous.physical_width==canvas.physical_width &&
        previous.physical_height==canvas.physical_height) return false;
 
@@ -289,7 +322,7 @@ void install(const linux_host::Hooks& hooks) {
     BIND(UpperBlit); BIND(UpperBlitScaled); BIND(FillRect);
     BIND(CreateRGBSurface); BIND(ConvertSurface); BIND(FreeSurface);
     BIND(CreateSoftwareRenderer); BIND(DestroyRenderer); BIND(CreateTexture); BIND(CreateTextureFromSurface);
-    BIND(DestroyTexture); BIND(QueryTexture); BIND(RenderCopy);
+    BIND(DestroyTexture); BIND(QueryTexture); BIND(RenderCopy); BIND(SetRenderTarget);
     BIND(RenderGetScale); BIND(RenderSetScale); BIND(RenderGetLogicalSize); BIND(GetRendererOutputSize);
     BIND(GetSurfaceBlendMode); BIND(SetSurfaceBlendMode); BIND(GetSurfaceAlphaMod); BIND(SetSurfaceAlphaMod);
     BIND(GetSurfaceColorMod); BIND(SetSurfaceColorMod); BIND(HasColorKey); BIND(GetColorKey); BIND(SetColorKey);
@@ -307,10 +340,12 @@ void install(const linux_host::Hooks& hooks) {
     IMPORT(0x8760,destroy_renderer);
     IMPORT(0x88f0,texture_from_surface); IMPORT(0x8970,destroy_texture);
     IMPORT(0x88d0,query_texture); IMPORT(0x8100,copy_texture);
+    IMPORT(0x8e10,set_render_target);
 #undef IMPORT
     hooks.replace(0x13af40,10,reinterpret_cast<void*>(putpixel));
     hooks.replace(0x13b190,6,reinterpret_cast<void*>(getpixel));
     hooks.replace(0x13b6c0,6,reinterpret_cast<void*>(putasc));
     hooks.replace(0x143c20,10,reinterpret_cast<void*>(draw_line));
+    hooks.instruction(0x10b0c6,5,mapview_target);
 }
 }

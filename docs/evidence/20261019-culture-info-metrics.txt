@@ -1,0 +1,165 @@
+Culture information: native text metrics, tokenization, and link boundaries
+Static inspection date: 2026-10-19
+
+Evidence source
+---------------
+build/analysis/linux-x86_64.asm, generated from the installed symbol-bearing
+Linux x86-64 urw3-bin. Addresses below are ELF-relative virtual addresses.
+Read-only source comparison used src/linux/adapter.cpp and
+modules/layout/layout.cpp. No game, injected module, compiled artifact, test,
+input simulation, or validation script was run for this inspection.
+
+This records the adapter BEFORE the current culture-information patch. The
+gaps listed below are implementation requirements, not claims that the final
+patch still contains them. Final remediation belongs in the delivery record.
+
+Existing coverage
+-----------------
+src/linux/adapter.cpp:98 width() consumes registered two-byte native glyph
+tokens and asks Render for glyph advances. The initialize() hooks at the
+inspection snapshot were lines 691-703:
+  textwidth 13b460 -> width()
+  textput 13b760 -> token-aware glyph submission
+  rentextput 13de10 / 13e1b0 -> token-aware glyph submission
+  showtext cursor 13ea00
+  centered text 13eb6f / 13ec9c
+  paragraph measurement 13eec3 / 13f00f
+  title measurement 14709b
+  button measurement/character/advance 1452e3 / 145264 / 145286.
+These hooks already provide a common native metric interface. They do not,
+on their own, translate culture text or make its parser Unicode-aware.
+
+link_show 50cd0 owns the native paragraph flow. Its word width calls are
+50e1d and 50eb5. It compares the result against its native right boundary,
+calls link_show_br 50700, and advances HYPER_X/HYPER_Y itself. Native calls
+showtext at 50ee5 and 50f5e advance the existing cursor. No separate Mod
+line layout or replay is required or appropriate.
+
+Lisaa_Linkit 50730 measures the native prefix/topic at 509ee, 509fd, 50a19,
+50a28, 50a92, 50b15, and 50b7b. It then owns LIST_SpotEntry 50b43 and the
+underline at 50bac; the link label uses showtext 50c39. All these metric
+calls reach the existing textwidth hook. Translation must be identical at
+all metric and paint boundaries, including strings containing more than
+one retained native topic key.
+
+Native capacities and byte operations
+-------------------------------------
+show_topic 511d0 searches GAME.NFO using the unchanged uppercase topic key.
+Its initial topic-search fgetstr at 5137b requests 200 bytes. The body
+fgetstr at 51467 requests 150 bytes. show_topic calls link_show at 514c8.
+The display translation can be supplied at this call without changing the
+file, topic table, selection history, image directives, or topic search.
+
+link_show copies its input into TWO 200-byte local buffers at 50d1d and
+50d34. Thus a translated native-encoded input string passed to link_show
+must fit 199 bytes plus NUL. It later uses 1024-byte word/line buffers,
+but those do not increase the capacity of the initial copies.
+
+SANATAULUKKO_Lisaa 1afe00 uses SanaTaulukko (aa74b60), an array with 130-byte
+entries; the entry index is ab13670. Address arithmetic is index*65*2 at
+1afea5-1afeaf. The parser reads one byte at 1afe6c, appends it, and breaks
+words only for ASCII space and <...> tags. Each word therefore has at most
+129 payload bytes. Unseparated Chinese is one native word: glyph-aware
+textwidth does not make it breakable, and a long encoded sentence exceeds
+the word slot. The translation must expose deliberate native word breaks
+or extend this confirmed tokenizer boundary. Rebuilding line coordinates
+in the Mod is unnecessary and violates the UI ownership constraint.
+
+link_show inserts a literal space after a word not already ending with
+one: draw at 50f5e, line accumulation at 50f72. A tokenizer extension that
+emits individual CJK scalars must account for these native operations; it
+must not accidentally add visible spaces between every Chinese character.
+
+Lisaa_Linkit copies the original display line into a 1024-byte local at
+50794 and an uppercased line into a 500-byte local at 507bc. Its prefix
+copy 509d3 has a 200-byte destination, using the original line length as
+the copy size before truncating at the matched topic offset (509df).
+The native line passed into Lisaa_Linkit must consequently remain within
+that 200-byte buffer. Expansion of displayed alias words can reduce the
+native bytes needed per line, but must not be assumed to remove this limit.
+
+Lisaa_Linkit uses byte offsets/strlen to slice the unchanged topic key and
+its prefix; these are storage offsets, not pixel widths. They should remain
+byte offsets. The actual pixel widths already call textwidth.
+
+Uppercase conversion gap (pending at audit snapshot)
+----------------------------------------------------
+link_show calls StrUpr at 50d3c; Lisaa_Linkit calls it at 507a6.
+StrUpr f9140 copies into a 500-byte static buffer and processes each byte:
+  f91f5: toupper(byte)
+  f9180/f9198/f920b/f9228: 8E, 84, E4 -> C4
+  f918c/f91fd/f9213/f921b: 94, 99, F6 -> D6.
+modules/layout/layout.cpp only excludes C4, E4, F6 in its token alphabet.
+Its lead bytes are 80..BF and tail bytes may contain 84, 8E, 94, 99. Passing
+encoded Chinese into these original StrUpr calls corrupts valid glyph
+tokens. Raw UTF-8 is not a solution either. A token-aware adaptation at
+the confirmed uppercase calls is required; preserve original conversion
+for the native topic-key bytes and preserve complete registered glyph
+tokens. Do not globally change topic storage to Chinese.
+
+Link identity and native word boundaries
+---------------------------------------
+Lisaa_Linkit scans original topics at 50805 (strstr), checks duplicates
+against list at 508b6, excludes the active topic via header matching, then
+checks predecessor/successor membership at 50963/50988 (and 50a49).
+The latter checks accept the game's punctuation/ASCII boundaries, not
+arbitrary CJK bytes. Retained original keys must retain a recognized
+delimiter before/after them in the mixed display source. Chinese directly
+abutting an English key can prevent native link creation.
+
+Original topic keys/history must remain English/game-encoded. The local
+display source may retain keys as semantic markers while measurement and
+paint convert their display representation consistently. Multiword keys
+such as NORTHERN PEOPLES / EASTERN PEOPLES / WESTERN PEOPLES require equal
+width semantics whether supplied as individual native words, a combined
+lookahead, a complete line prefix, or the highlighted full label. A full
+phrase-only converter is insufficient if the native tokenizer splits it.
+
+Native list entries store the topic key at 50a8a and 50c71. link_select
+516c3 returns that original list value. No translation belongs at these
+storage/selection boundaries.
+
+Hotspot summary truncation
+--------------------------
+GameInfo_Hotspot 4fe10 keeps the original topic identity for its info file
+and istopic lookup. Its title is drawn at 4fefe after native StrUpr.
+Its summary is copied into a 200-byte local (4ff23 / 5006e), then cut at
+byte 92 (4ff75) or byte 53 for its narrow variant (5009a), before drawing
+at 4fffb. This is an ASCII-era truncation, NOT glyph-aware wrapping.
+Passing encoded Chinese before that cut can split a token and preserves
+the wrong visual limit. Supplying the complete translated summary at the
+final native showtext call leaves that internal English operation intact;
+the translated summary must be authored to fit the native single-line
+panel, or the native truncation metric boundary must be extended.
+
+toTex_GameInfo_Hotspot 50110 has a 1024-byte summary local but still cuts
+at byte 92 (5023c). Title and summary draw through toTex_showtext at 501cb
+and 502b9. Do not infer that its larger local makes truncation Unicode-safe.
+The user-visible creation-culture path calls the software hotspot; the
+texture variant's target density/lifecycle must be confirmed for any
+additional coverage claims.
+
+Footer buttons and hit boxes
+---------------------------
+link_select calls LIST_ButtonSpotEntry at:
+  515d3 topic list; 5160c escape/exit; 51627 search; 5170a dynamic back.
+The dynamic back text is formatted into 100 bytes at 516f3 from the
+original link-history value. Translation should occur after formatting
+and before the complete LIST_ButtonSpotEntry call; keep the action key.
+
+LIST_ButtonSpotEntry f4f50 draws Piirra_Nappain at f502d (or f51dc for
+its first-item branch), then separately measures text at f50a8/f50c8 to
+set button/mouse dimensions. Translating only the f502d paint call leaves
+the native hit box measured from English. Translate the complete input
+to LIST_ButtonSpotEntry so native drawing and native hit testing consume
+the same encoded string. Existing button width/glyph hooks then apply.
+
+Rendering ownership
+-------------------
+The software browser and culture hotspot call native showtext -> textput.
+The existing Mod glyph routine submits immediately to the native screen;
+native UI still owns paragraphs, link hit boxes, title positions, cached
+pixels, background, image commands, redraw and Flip. No coordinate table,
+page snapshot, global pixel tracking, delayed text replay, or overlay is
+needed to handle this path. The present metrics audit does not certify
+uninspected texture targets as high-density capable.

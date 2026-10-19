@@ -16,7 +16,7 @@ Status UWCN_CALL initialize(const HostApi* host) {
     std::map<std::string,std::string> parsed;
     std::set<std::uint32_t> scalars;
     std::string line;
-    for(const auto* file:{L"catalog/zh-CN/main_menu.tsv",L"catalog/zh-CN/hud.tsv",L"catalog/zh-CN/world_hud.tsv"}) {
+    for(const auto* file:{L"catalog/zh-CN/main_menu.tsv",L"catalog/zh-CN/hud.tsv",L"catalog/zh-CN/world_hud.tsv",L"catalog/zh-CN/cultures.tsv"}) {
     std::ifstream stream(std::filesystem::path(host->package_path)/file,std::ios::binary);
     if (!stream) return Status::unavailable;
     while(std::getline(stream,line)) {

@@ -172,6 +172,7 @@ const char* key(TextComponent component) {
     case TextComponent::intro_story_8:return "intro.myth_9";
     case TextComponent::intro_story_9:return "intro.myth_10";
     case TextComponent::intro_story_10:return "intro.myth_11";
+    case TextComponent::culture_text:return nullptr; // Source-keyed culture consumer is dispatched by invoke.
     }
     return nullptr;
 }
@@ -279,6 +280,11 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
     }
     if(op!=text_op::translate || !input || bytes!=sizeof(TextRequest)) return Status::invalid;
     const auto& request=*static_cast<const TextRequest*>(input);
+    if(request.component==TextComponent::culture_text) {
+        const std::string name=std::string("culture.")+request.value;
+        const CatalogRequest lookup{name.c_str()};
+        return host_api->invoke(ModuleId::catalog,catalog_op::lookup,&lookup,sizeof(lookup),output,capacity);
+    }
     if(request.component>=TextComponent::hud_label && request.component<=TextComponent::hud_speed)
         return translate_hud(host_api,request,output,capacity);
     if(request.component>=TextComponent::world_place_gloss && request.component<=TextComponent::world_time)
