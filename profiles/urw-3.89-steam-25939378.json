@@ -223,7 +223,9 @@
       "docs/evidence/world-hud-static.txt",
       "docs/evidence/hud-redraw-static.txt",
       "docs/evidence/hud-refresh-static.txt",
-      "docs/evidence/20261019-main-game-hud-native.md"
+      "docs/evidence/20261019-main-game-hud-native.md",
+      "docs/evidence/20261022-hud-label-consumption-fix.txt",
+      "docs/evidence/20261022-hot-reload-ui-loss.txt"
     ]
   },
   "runtime_verification": "not performed; prohibited by project instructions",

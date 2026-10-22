@@ -171,13 +171,8 @@ try {
             $target.ready=$true
         }
     }
-    # Every existing destination is checked before the first old file is moved.
-    $locks=[Collections.Generic.List[IDisposable]]::new()
-    try {
-        foreach ($file in @($changes) + @($retirements)) {
-            if (Test-Path -LiteralPath $file.Formal) { $locks.Add([IO.File]::Open($file.Formal,[IO.FileMode]::Open,[IO.FileAccess]::ReadWrite,[IO.FileShare]::None)) }
-        }
-    } finally { foreach ($fileLock in $locks) { $fileLock.Dispose() } }
+    # Archive the old file itself before writing its replacement. Publication
+    # does not overwrite the old image and does not require a write handle to it.
     New-Item -ItemType Directory -Path $archive -Force | Out-Null
     foreach ($file in @($changes) + @($retirements)) {
         if (Test-Path -LiteralPath $file.Formal) {

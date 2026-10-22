@@ -1,0 +1,119 @@
+2026-10-22 热加载后 UI 消失（Windows x86）
+
+当前状态
+
+用户提供的后续截图确认，上批热加载后姓名、角色状态和头像周围
+文字消失。旧组件源未完整保留，当前框架不能无损恢复全部历史显示。
+本次只修正业务依赖通知错误清屏，不将其宣称为画面恢复完成。
+源码、编译、正式替换及 PID 250356 的热加载均完成，详见末节。
+原 PID 171644 在工作期间已结束；未由代理关闭或重启。下述历史缺源
+迁移限制不等同于已确认新进程仍显示同一空白画面。
+
+根因
+
+1. 旧 native_menu_component.cpp 的模式 100 提前返回遗留
+   native_consuming。native_component_binding.cpp:construct 和
+   native_renderer_component_binding.cpp:finish_event 因此跳过
+   后续构造源登记；即时原生显示仍可绘入像素，所以更新前有画面。
+2. 上批只清除了消费标记，没有补回之前漏掉的完整组件来源。
+3. src/loader/host.cpp:commit_transaction 发送依赖变化通知。
+   modules/adapter/module.cpp:invoke 的 kModuleDependenciesChanged
+   随后无条件调用 invalidate()，但本次并没有改变显示语言。
+4. native_ui_scene.cpp:language_changed 增加 language_revision，
+   paint 先重绘根背景，再只遍历已登记 children。漏源字段原有像素
+   被擦掉；头像、图标和消息有独立源，因此仍有部分内容可见。
+5. native_renderer_component_binding.cpp:paint_hud 重建原生头像
+   目标，只画已登记文字与图标，然后退役旧目标。缺失文字因此不能
+   从旧头像目标继续读取。Applied 仅报告宿主事务完成，不证明完整
+   显示源迁移，更不证明画面正常。先前据其报告修复交付不足。
+
+本次源码修正
+
+module.cpp 的 kModuleDependenciesChanged 仅返回
+initialize_windows_encyclopedia()，重新绑定依赖翻译服务的词映射；
+删除该分支中的 invalidate()。热替换业务代码不改变原生语言或缓存
+生命周期，不触发全屏清底、language_revision 递增、重绘和呈现。
+
+catalog、semantic、render、layout、main_menu 自身已有各自的词表、
+字体或编码依赖处理。本次没有新增模块掩码推测分支、保护、回退、
+兜底、断言、测试脚本或像素跟踪。原有显式语言切换和目标重建入口
+未修改；这些入口在当前缺源状态下仍存在下述未解决问题。
+
+仍未恢复的实际边界
+
+- 旧组件记录里不存在的源不会因取消清屏而补回；已经擦除的画面
+  也不会随此项热加载恢复。
+- 上批已推进 language_revision，已有缓存版本差异随状态保存恢复。
+  native_ui_scene.cpp:prepare_cache 仍可能重建这些旧缓存，旧源缺失
+  问题继续存在。本次没有擅自篡改版本来冒充完整缓存来源。
+- native_component_model.cpp:update_hud_status_text/bar 通过
+  current_sources.at(source) 要求完整 F8E20 构造已经登记。历史缺源
+  格子不能通过普通数值更新补建；不能把等待用户动作当成完整迁移。
+- 本次审查还确认 FA444/FA547 的原生父面板未登记为对应组件源；
+  旧布局 FA474/FA568 的原父面板也未纳入当前 model。现有独立子项
+  不代表完整原生背景和缓存生命周期，后续需整改，不能以曾经发布
+  为由宣称符合原生 UI 所有权要求。
+
+完整原位恢复尚不具备的静态依据
+
+FA2A0 包含业务标志清零、INIT 清空指令、装备分支修改状态及展示。
+FA35F..FA738 可以沿真实原生帧构造帮助、姓名与状态格，F9910(0)、
+102D10、FF040 可显示现值，但这些片段并不是完整界面重建协议。
+F9200 的装备格式器还进入 51770 的特殊记录分支及 AE750，副作用
+尚未完整确认。没有调用这些不完整组合来假称恢复成功。
+
+F90D0 当前指令由调用入参进入栈上的文本缓冲，未发现保存该次显示
+文字的持久原生字段；旧组件源漏记后不能用 INIT 猜造原内容。
+FAA30 的速度由 DB960 产生，格式化值与颜色暂存在当前调用局部；
+DB960 的雪地分支会进入 927E0 并可能消耗 rand。不能为了重画文字
+重新执行这些业务调用。依据：hud-refresh-static.txt、
+hud-refresh-sideeffects.c、hud-refresh-queries.c、
+hud-right-static-rebuild-disassembly.txt。
+
+没有关闭或重启游戏、模拟输入、调用上述原生业务函数或注入新驻留
+桥。只对兼容业务使用用户已授权的发布协议，不把清屏原因修正当成
+完整旧状态迁移能力。
+
+编译与发布回执
+
+编译只使用根 build.ps1 队列，模块 adapter、Toolchain MinGW；
+CMakePath 为 .toolchains/x86/w64devkit/bin/cmake.exe，CompilerPath
+为同目录 g++.exe，BuildDirectory 为 build/mingw-x86，正式包目录
+为根 package，参数 -Publish -Reload。没有另建运行副本。
+
+第一请求：75d36e5241964688bfcbee62c93b46b8
+批次：269cf9f58ef14b21b9e779475d64f399
+事务：95061dea26904b6b99f9e4fc46d0a7f9
+目标沿用旧 PID 171644。编译及链接成功，但连接旧热发布管道超时，
+PREPARE 尚未获得 ReadyToPublish，未移动或替换正式文件。
+只读进程清单已显示新 PID 250356，开始时间 22:22:48。首次命令仍
+使用了过时 PID，后续已改正。首批结束时间 22:30:50（Asia/Shanghai）。
+
+第二请求：405f9d1065e54df8a89eef751a44033f
+批次：116d71db33ed4e60905d5882bf6f9e69
+事务：900b9f2cdd0146b9ad84614f39cecb00
+目标：PID 250356
+完成：2026-10-22 22:31:14（Asia/Shanghai）
+一次配置及增量构建完成，队列 Success=true、发布 success=true，
+PublishRequested=true、ReloadRequested=true、runtime_requested=true。
+
+PREPARE：ReadyToPublish 900b9f2cdd0146b9ad84614f39cecb00
+COMMIT：Applied 900b9f2cdd0146b9ad84614f39cecb00 adapter:a87c8269a5fbe5af4c6b731af81ba5931d6fb3762bb0053cf55b01eff0f4677f:2
+ready、commit_submitted、applied 均为 true，无 abort。
+
+旧三件先移动至：
+回收/20261022-223114-900b9f2cdd0146b9ad84614f39cecb00/
+  package/modules/uwcn_adapter.dll
+  package/profiles/urw-3.89-steam-25939378.json
+  package/release.json
+再向正式位置发布新件，未覆盖或删除归档旧件。
+
+正式 Adapter 与构建产物 SHA-256 一致：
+a87c8269a5fbe5af4c6b731af81ba5931d6fb3762bb0053cf55b01eff0f4677f
+归档旧 Adapter：
+f0ce00404812028499558e0838e859dce32200a33630385b3c1309c4f3adfdf4
+
+已分别读取两批 results JSON、完整 batches 日志及 stage 中
+publication-result.json，并核对旧文件已归档及新产物摘要。
+编译仍有既有函数指针转换、extern 初始化、缩进和未使用项警告。
+本次没有测试、模拟输入或查看新进程画面；Applied 只确认模块应用。

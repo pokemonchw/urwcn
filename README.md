@@ -8,6 +8,8 @@ Windows 2026-10-20 的启动修正已正式发布：消息 Hook `C70C` 改到完
 
 社区官网：[byayoi.org](https://byayoi.org/)
 
+2026-10-22 热加载回归：用户截图确认状态栏、姓名及头像文字消失。旧菜单消费标记使部分组件源漏记，依赖通知又按不完整源清底重绘；之前的 Adapter 第 2 代 `Applied` 只表示模块加载完成，不能证明界面修复。现已删除业务依赖通知中的全屏失效，保留派生词映射重绑定；编译、旧文件回收、正式替换及当前 PID `250356` 的热加载已完成，事务 `900b9f2cdd0146b9ad84614f39cecb00` 返回第 2 代 `Applied`。原 PID `171644` 已结束，代理没有关闭或重启游戏。旧进程缺失的历史组件源及缓存版本差异没有实现完整原位迁移，也未验收新进程画面。静态依据、待整改边界及回执见 [热加载清屏回归记录](docs/evidence/20261022-hot-reload-ui-loss.txt)，前序记录见 [状态标签修正记录](docs/evidence/20261022-hud-label-consumption-fix.txt)。未自行测试。
+
 项目仓库：[pokemonchw/urwcn](https://github.com/pokemonchw/urwcn)。适配目标为 **UnReal World 3.89 / Steam Build 25939378**，包含 Windows x86 与 Linux x86-64 原生分支。Linux 的接入范围及尚待确认的高清边界见 [Linux 移植记录](docs/evidence/20261019-linux-native-port.md)，下文既有热发布回执属于 Windows。中文在已确认的原生文本构建、格式化和显示边界生成，游戏继续管理布局、控件、输入和缓存，Mod 负责字形绘制；游戏业务、内部英文数据和设置动作保持原有语义。
 
 共用消息区已接入中性文本来源与原生分页，当前 Windows 源码、业务库及生成词库已编译和正式发布。动态来源及已知历史数据边界见 [消息区交付记录](docs/evidence/20261020-shared-message-delivery.md)；词库项数不代表所有任意历史消息都可恢复其语义来源。

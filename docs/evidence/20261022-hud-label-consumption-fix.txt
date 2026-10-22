@@ -1,0 +1,193 @@
+2026-10-22 角色状态标签漏译修正（Windows x86）
+
+后续用户截图已确认热加载导致多处 UI 消失。以下源码、编译和 Applied
+回执均不代表修复完成；热更新清底重绘与历史缺源的具体问题、当前
+待整改边界见 20261022-hot-reload-ui-loss.txt。下文交付状态为该批历史。
+
+当前交付状态：源码、编译、正式文件替换和兼容业务热加载均已完成。
+第二批先回收旧文件再发布新文件；第三批 PID 171644 返回 Adapter
+第 2 代 Applied。回执确认模块加载完成，不代表画面验收。详见末节。
+
+范围与证据
+
+用户截图中的 Carrying、Penalty:、Fatigue、Injury、Starvation、Total:、
+Bloodloss 均为原生文字，正式 hud.tsv 已有负重、惩罚：、疲劳、伤势、
+饥饿、合计：、失血七项译文。本次不改词库、数值、单位或游戏动作。
+
+适配目标：UnReal World 3.89 / Steam Build 25939378。
+原始 urw.exe SHA-256：
+e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9
+下列地址均为 RVA，原映像基址为 00400000。
+
+现存静态证据：
+- hud-right-static.txt：FA5AF/FA5D3/FA60D/FA665/FA6BD/FA6F9/FA733
+  调用完整状态格 F8E20；F8E84 再调用 10E5A0 绘制标签。
+- hud-right-label-disassembly.txt：F8E70..F8E7A 只检查标签是否为空，
+  不按字节决定标签宽度；位置、框和状态缓存仍由 F8E20 原代码生成。
+- ancestors-row-repaint-disassembly.txt：CFFF4 读取模式 5F54AA4，与
+  100 比较。模式 100 只检查 BORDERS 并通过 114340 绘制四条边线。
+  D001E / D0032 可直接跳到 D03FD；绘线完成在 D00E3 返回。三路均
+  绕过 D03F3 的正常文字绘制提交点。
+- load-saved-character-ghidra.c 的原生 CFFB0 反编译与上述分支一致。
+- 20261020-native-hud-status-parser-sources.txt：完整状态格及更新源。
+
+根因与修改
+
+1. modules/adapter/native_menu_component.cpp 的 paint_begin 原先在
+   CFFB6 无条件设置 native_consuming=true，只在 D03F3 清除。
+   模式 100 的提前返回会遗留标记。随后 native_component_binding.cpp
+   construct() 的 consuming_component() 跳过完整 F8E20 构造，旧
+   hud_native.inc 又按同一泛化标记跳过 F8E84 标签翻译。这样会继续
+   走原英文位图路径；词条存在也不能生效。
+   现按原生模式判断是否进入文字消费，模式 100 不进入；热恢复时也
+   将保存的消费位限定在原生非 100 模式。其他模式沿用原状态和提交。
+
+2. modules/adapter/module.cpp 的 enter_component_paint 为完整状态格
+   增加专属 hud_status_cell 作用域，普通构造及模型重绘共用，退出
+   继续按同一组件 token 清理。hud_native.inc 只在此作用域内认定
+   当前标签已准备，其他组件消费不再冒充状态格源。
+   模型 paint 原先没有 binding::calls 项，泛化检查也可能为 false，
+   将已编码译文当成西文再次查词；专属作用域一并消除此错误路径。
+
+没有新增坐标、行槽、页面文字快照、像素追踪或延后文字重放。译文、
+完整编码、度量与即时高清字形继续使用已有原生文字接口和真实目标。
+没有新保护、回退、兜底或断言；没有更换驻留桥、Hook 位置、Hook ID、
+Host ABI 或状态序列化格式。新作用域仅标记该次完整原生组件消费。
+
+刷新与既有待整改边界
+
+旧缺陷路径可跳过 F8E20 的完整构造源。热更新只保存并恢复已有源，
+invalidate 只遍历已有组件。native_component_model.cpp 的
+update_hud_status_text/bar 通过 current(source) ->
+current_sources.at(source) 取状态格；缺源时会抛出 out_of_range。
+以上是静态代码边界，没有检查当前进程保存的状态来确认其实际缺源，
+不能据此认定当前进程无法迁移。前两批以此拒绝自动热发布的判断依据
+不足，未遵循 AGENTS.md 已有授权，现撤回该阻断结论。
+第三批已通过现有 PREPARE/COMMIT 协议完成热加载，收到 Applied。
+没有增加缺源补造、回退或兜底逻辑，没有自行调用 FA2A0、F9200、
+FAA30 或模拟游戏输入。相关原生缓存边界仍见 hud-refresh-static.txt；
+没有通过运行测试或观察游戏画面核验后续原生重绘。
+
+既有未整改问题：src/loader/hook_host.cpp 的 uwcn_before_route 与
+uwcn_inline_dispatch 调用 dispatch 后仍按 decision 继续，宿主只
+记录错误，不完整传播失败；src/loader/host.cpp 的事务取消与失败
+语义仍见 20261019-implementation-correction.md。本次未改这些
+边界，不以本批编译或发布宣称它们已符合项目约束。
+
+操作限制
+
+静态分析使用现有源码、反汇编、用户截图和既存日志；另按用户已有
+授权执行兼容业务自动热发布。没有启动游戏、注入新驻留桥、模拟
+输入或运行测试，没有测试用例和测试脚本。
+编译仅使用根 build.ps1 队列生成正式交付候选；正式发布先将旧文件
+移入回收，再写入新文件。发布回执在批次完成后追加，源码完成不
+等同于编译或正式发布完成。
+
+编译与发布回执（首批失败，第二批完成见末节）
+
+调用入口（源码保存后只提交一次，批次完成前不再修改本批源码）：
+build.ps1 -Module adapter -Toolchain MinGW
+  -CMakePath D:\workspace\uwcn\.toolchains\x86\w64devkit\bin\cmake.exe
+  -CompilerPath D:\workspace\uwcn\.toolchains\x86\w64devkit\bin\g++.exe
+  -BuildDirectory D:\workspace\uwcn\build\mingw-x86
+  -ModuleSourceDirectory D:\workspace\uwcn
+  -PackageDirectory D:\workspace\uwcn\package -Publish -TargetPid 0
+
+请求：d797d83a73a74fa08043ce9cc20a7480
+批次：96d71db6d5ed401981007091bba8983f
+发布事务：e46bf47164bb453e87843b5fd5407240
+完成时间：2026-10-22 22:11:37（Asia/Shanghai）。
+
+已读取对应 results JSON、完整 batches 日志、stage 中 publication-result。
+一次配置、一次增量构建完成，日志含 Linking 和 Built target uwcn_adapter。
+保留既有函数指针转换、缩进、未使用项和缺失尾字段初始化编译警告；
+没有编译错误。批次 Success=false，原因是随后正式发布失败，不是
+编译失败。
+
+发布在移动旧文件前的独占文件检查处失败：
+D:\workspace\uwcn\package\modules\uwcn_adapter.dll 被其他进程使用。
+只读进程模块清单确认 urw.exe PID 171644 加载的就是该正式路径。
+没有 PREPARE/COMMIT 或 Applied；runtime_requested=false，回执为空。
+没有要求用户卸载模块、返回特定界面，没有关闭或重启游戏。
+
+候选 Adapter SHA-256：
+f0ce00404812028499558e0838e859dce32200a33630385b3c1309c4f3adfdf4
+首批结束时仍在正式位置的旧 Adapter SHA-256：
+1de3989a321e392eb691af3230ec136ae36e043bfbc8bf9ee246f5cf8db5abbf
+首批结束时正式 release.json 仍记录上一事务 8d4dbcf41648470293973173108cb41b、
+上一批次 a11412b99bc243d29671db386a746225。未替换任何正式文件。
+
+发布事务预定的回收路径为
+回收/20261022-221137-e46bf47164bb453e87843b5fd5407240/，
+但失败发生在建目录和移动旧件之前，该目录未创建。根回收/继续保留。
+新 DLL 与发布暂存仅为本批编译候选，不是独立修复包或平行运行副本，
+不让用户改用构建目录启动器。首批据独占写入失败推断正式文件不能
+移动的结论不成立：当时尚未执行 Move-Item，第二批已实际移动成功。
+第二批只完成磁盘替换；进程内模块更新由第三批热发布完成。
+
+本次开始前已有的 src/launcher/main.cpp 修改及未跟踪调查文件未改动。
+本批只编译 Adapter，没有编译或替换启动器、驻留桥及其他业务模块。
+
+第二批：按用户要求完成回收与正式替换
+
+publish.ps1 删除对旧文件使用 ReadWrite + FileShare.None 的预检。
+发布流程不覆盖旧映像，本来只需把旧文件 Move-Item 到回收目录，
+再向空出的正式路径复制候选；独占写入失败不能证明这种移动失败。
+保留既有队列、发布暂存、旧件先归档、清单最后提交的顺序。没有
+新增保护、回退或兜底逻辑，也没有绕过队列直接发布。
+
+请求：f41f06576d9c42ec939e86498128a56e
+批次：35a26b4e94e34fa9af808c0953b928fc
+事务：e2eea8458b854105b98e18cc7f329b1f
+完成时间：2026-10-22 22:14:12（Asia/Shanghai）。
+入口与首批相同，修正发布脚本后重新提交一次；一次配置、一次增量
+构建完成，无需重编 Adapter 源码。已读取本批 results JSON、完整
+batches 日志及 publication-result.json，队列与发布 success 均为 true。
+
+以下三件旧文件已先移动到：
+回收/20261022-221412-e2eea8458b854105b98e18cc7f329b1f/
+  package/modules/uwcn_adapter.dll
+  package/profiles/urw-3.89-steam-25939378.json
+  package/release.json
+随后将三件新文件写入对应正式位置，没有覆盖或删除归档旧件。
+
+正式 Adapter 与编译产物 SHA-256 相同：
+f0ce00404812028499558e0838e859dce32200a33630385b3c1309c4f3adfdf4
+回收中的旧 Adapter SHA-256 保持为：
+1de3989a321e392eb691af3230ec136ae36e043bfbc8bf9ee246f5cf8db5abbf
+正式 release.json 已记录本批事务、批次及新 Adapter 摘要。
+根 uwcn_launcher.exe 的正常文件路径现在指向已更新的正式包。
+
+本批 ReloadRequested=false、runtime_requested=false、runtime_receipts
+为空，没有 PREPARE/COMMIT/Applied。第二批结束时进程仍保留此前已加载的旧
+模块；没有将磁盘文件替换宣称为进程内修复已生效。没有关闭或重启
+游戏、没有新驻留桥注入、没有运行产物或测试。
+
+第三批：按 AGENTS.md 已有授权完成自动热发布
+
+沿用同一 build.ps1 入口、工具链、构建目录、模块和正式包目录，改用
+-Publish -Reload -TargetPid 171644；没有绕过队列或直接操作游戏。
+请求：919b8357af7449a1a01ec25022fe089d
+批次：f384cdfebddf4478a220b2e270e07419
+事务：6f97e597f6294b169395f5a1a1e33262
+完成时间：2026-10-22 22:18:36（Asia/Shanghai）。
+
+已读取对应 results JSON、完整 batches 日志和 stage 中的
+publication-result.json。一次配置、一次增量构建完成；队列与发布
+success 均为 true，ReloadRequested=true、runtime_requested=true。
+
+PID 171644 的 PREPARE 回执：
+ReadyToPublish 6f97e597f6294b169395f5a1a1e33262
+COMMIT 回执：
+Applied 6f97e597f6294b169395f5a1a1e33262 adapter:f0ce00404812028499558e0838e859dce32200a33630385b3c1309c4f3adfdf4:2
+ready、commit_submitted、applied 均为 true，无 abort。
+
+Adapter 与适配文件在第二批已经正式替换，本批候选内容相同；显式
+-Reload 仍将 Adapter 纳入模块退役、加载和状态恢复事务。本批变化
+仅为 release.json，旧清单先移动到：
+回收/20261022-221835-6f97e597f6294b169395f5a1a1e33262/package/release.json
+随后写入新的正式清单。第二批回收中的旧 Adapter 等文件继续保留。
+
+新 Adapter 已在原有进程加载为第 2 代，回执摘要与正式 DLL 一致。
+未关闭或重启游戏、未注入新驻留桥、未模拟输入、未自行测试或验收
+画面。源码修正、产物编译、正式文件替换与进程模块热加载分别完成。

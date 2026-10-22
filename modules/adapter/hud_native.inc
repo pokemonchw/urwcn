@@ -97,9 +97,10 @@ Status hud_identity_display(const NativeEvent& e,const char* original,std::vecto
 Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
     if(e.id>=hud_surface_first && e.id<hud_surface_first+std::size(hud_surface_calls)) {
-        // F8E20 owns the complete native cell, including its label, number,
-        // bar and native cache record. Its prepared source is already current.
-        if(e.id==hud_surface_first && native_component_binding::consuming_component()) return Status::ok;
+        // Only this complete F8E20 cell owns the prepared label. The same
+        // scope covers ordinary construction and native component repaint;
+        // another component's consumption does not prepare this label.
+        if(e.id==hud_surface_first && in(Scope::hud_status_cell)) return Status::ok;
         // The native arithmetic '+' separator uses the same label primitive.
         // Its statically identified literal remains native punctuation.
         if(e.id==hud_surface_first && e.arguments[0]==address(at<char>(0x1AA240))) return Status::ok;

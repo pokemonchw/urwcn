@@ -104,7 +104,7 @@ enum class Scope : u32 {
     ancestors_title=50, ancestors_select=51, ancestors_row=52,
     hud_centered=0x100, hud_penalty=0x101, hud_button=0x102,
     hud_title=0x103, hud_renderer=0x104, hud_renderer_text=0x105, hud_scale=0x106,
-    native_renderer_resource=0x107,
+    native_renderer_resource=0x107, hud_status_cell=0x108,
     message_pending=0x200, message_body=0x201
 };
 struct Active {
@@ -412,8 +412,10 @@ void enter_component_paint(native_component_model::Handle handle,native_componen
         kind==Kind::centered_text ? Scope::hud_centered : kind==Kind::action_button ? Scope::creation_button :
         kind==Kind::compound_hint ? Scope::ancestors_select : Scope::text;
     Active context{component_paint_token(handle),scope,0,0,0,0,outline};
-    if(kind==Kind::hud_status_cell)
+    if(kind==Kind::hud_status_cell) {
+        active.push_back({component_paint_token(handle),Scope::hud_status_cell,0,0,0,0,outline});
         active.push_back({component_paint_token(handle),Scope::hud_penalty,0,0,0,0,outline});
+    }
     if(kind==Kind::text_block) {
         const auto& x=std::get<native_component_model::TextBlockInputs>(model.inputs).anchor.x;
         using Source=native_component_model::LayoutSource;
@@ -1582,9 +1584,10 @@ Status UWCN_CALL invoke(u32 operation,const void* input,u32 bytes,void* output,u
     if(operation==kModuleDependenciesChanged) {
         if(!input || bytes!=sizeof(u32)) return Status::invalid;
         if(output_bytes) *output_bytes=0;
-        const auto status=initialize_windows_encyclopedia();
-        if(status!=Status::ok) return status;
-        return invalidate();
+        // Rebind derived text resources without changing the native UI's
+        // language or cache lifecycle. Replacing business code is not a
+        // language change and must not clear/reconstruct the current scene.
+        return initialize_windows_encyclopedia();
     }
     if(operation!=kNativeDispatch || !input || bytes!=sizeof(NativeEvent) || !output_bytes) return Status::invalid;
     if(!output || *output_bytes<sizeof(DispatchResult)) {

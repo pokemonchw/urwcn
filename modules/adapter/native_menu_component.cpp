@@ -223,7 +223,9 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         result.resume_rva=0xCFAD1;
         return Status::ok;
     case paint_begin:
-        native_consuming=true;
+        // CFFB0 mode 100 only paints borders, then returns through D03FD or
+        // D00DD without the text-path commit at D03F3.
+        native_consuming=*reinterpret_cast<const u32*>(base+0x5F54AA4)!=100;
         native_menu_model::activate(native_menu_model::active());
         if(!painting) native_menu_model::capture_style(native_menu_model::active());
         return Status::ok;
@@ -369,7 +371,9 @@ void restore(const void* payload) {
         std::memcpy(&borrowed.allocation,cursor,sizeof(borrowed.allocation));cursor+=sizeof(borrowed.allocation);
         borrows.push_back(borrowed);
     }
-    native_consuming=read<u32>(cursor)!=0;read_sources(cursor,title_sources);read_sources(cursor,row_sources);
+    native_consuming=read<u32>(cursor)!=0 &&
+        *reinterpret_cast<const u32*>(base+0x5F54AA4)!=100;
+    read_sources(cursor,title_sources);read_sources(cursor,row_sources);
 }
 void shutdown() {
     // Outstanding native text calls retain resident allocations through state
