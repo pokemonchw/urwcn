@@ -20,6 +20,11 @@ struct Target {
 void pixel(Target,int x,int y,u32 packed) noexcept;
 u32 read_pixel(Target,int x,int y) noexcept;
 
+// F6972..F69DC: apply the native old-message color predicate separately to
+// every physical pixel in this in-bounds logical cell. The native caller
+// supplies its already mapped background/row colors and owns the row loop.
+void message_shade_cell(Target,int x,int y,u32 background,u32 shade) noexcept;
+
 // 114340: reject the entire line if either logical endpoint is out of range;
 // retain its original inclusive endpoint, modulo and integer stepping rules.
 void line(Target,int x1,int y1,int x2,int y2,u32 packed) noexcept;

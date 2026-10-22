@@ -50,6 +50,22 @@ UWCN_INTEGER_RASTER u32 read_pixel(Target target,int x,int y) noexcept {
     return row(target.surface,py)[px];
 }
 
+UWCN_INTEGER_RASTER void message_shade_cell(Target target,int x,int y,u32 background,u32 shade) noexcept {
+    const int left=edge(x,target.surface->w,target.logical_width);
+    const int right=edge(x+1,target.surface->w,target.logical_width);
+    const int top=edge(y,target.surface->h,target.logical_height);
+    const int bottom=edge(y+1,target.surface->h,target.logical_height);
+    for(int py=top;py<bottom;++py) {
+        auto* destination=row(target.surface,py);
+        for(int px=left;px<right;++px) {
+            // Preserve F6972/F6976 for each actual pixel, not one sampled
+            // color expanded over the cell's already rendered glyph pixels.
+            const auto packed=destination[px];
+            if(packed!=background && packed!=shade) destination[px]=shade;
+        }
+    }
+}
+
 UWCN_INTEGER_RASTER void line(Target target,int x1,int y1,int x2,int y2,u32 packed) noexcept {
     // 11434C..11439C rejects endpoints; it does not clip the supplied line.
     if(!in_bounds(target,x1,y1) || !in_bounds(target,x2,y2)) return;

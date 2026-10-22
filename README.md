@@ -8,6 +8,8 @@ Windows 2026-10-20 的启动修正已正式发布：消息 Hook `C70C` 改到完
 
 社区官网：[byayoi.org](https://byayoi.org/)
 
+2026-10-22 Windows 旧消息块状重影修正已完成源码修改、统一队列编译和正式发布。原生旧消息变色处理改为逐实际像素执行，修正中心采样后整格覆盖造成的高清笔画损坏；原生行色、滚动与排版保持。旧件已先移入 `回收/`，正式业务库已更新，继续使用根 `uwcn_launcher.exe`。发布前未见游戏进程，本次未热加载、启动游戏或测试。依据和交付回执见 [旧消息渐变修正记录](docs/evidence/20261022-message-gradient-physical-pixels.txt)。
+
 2026-10-22 热加载回归：用户截图确认状态栏、姓名及头像文字消失。旧菜单消费标记使部分组件源漏记，依赖通知又按不完整源清底重绘；之前的 Adapter 第 2 代 `Applied` 只表示模块加载完成，不能证明界面修复。现已删除业务依赖通知中的全屏失效，保留派生词映射重绑定；编译、旧文件回收、正式替换及当前 PID `250356` 的热加载已完成，事务 `900b9f2cdd0146b9ad84614f39cecb00` 返回第 2 代 `Applied`。原 PID `171644` 已结束，代理没有关闭或重启游戏。旧进程缺失的历史组件源及缓存版本差异没有实现完整原位迁移，也未验收新进程画面。静态依据、待整改边界及回执见 [热加载清屏回归记录](docs/evidence/20261022-hot-reload-ui-loss.txt)，前序记录见 [状态标签修正记录](docs/evidence/20261022-hud-label-consumption-fix.txt)。未自行测试。
 
 项目仓库：[pokemonchw/urwcn](https://github.com/pokemonchw/urwcn)。适配目标为 **UnReal World 3.89 / Steam Build 25939378**，包含 Windows x86 与 Linux x86-64 原生分支。Linux 的接入范围及尚待确认的高清边界见 [Linux 移植记录](docs/evidence/20261019-linux-native-port.md)，下文既有热发布回执属于 Windows。中文在已确认的原生文本构建、格式化和显示边界生成，游戏继续管理布局、控件、输入和缓存，Mod 负责字形绘制；游戏业务、内部英文数据和设置动作保持原有语义。

@@ -1,0 +1,96 @@
+2026-10-22 旧消息块状重影：原生渐变的物理像素修正
+
+用户截图：末尾两行新文字清晰，前面的旧文字变成棕色块状并夹杂原色。
+本次仅静态读取源码与已有原生反汇编；没有启动游戏、注入、模拟输入、
+运行产物或测试，也没有创建测试脚本、用例、断言或假设性保护分支。
+
+确认的缺陷与约束整改
+
+modules/adapter/native_raster_patches.cpp 原 uwcn_nr_read_f68d5（原155行）
+在 F68D5 调用 read_pixel，只采样一个逻辑格的物理中心点；原
+uwcn_nr_write_f69c7（原137行）在 F69C7 调用 pixel，以这个采样驱动的
+单色结果覆盖整格。高清字形在新消息调用时已即时绘入原生主面，但是
+随后的旧消息渐变把它降为逻辑像素块，中心未命中笔画时又留下一部分
+原色。该实现违背真实输出密度的要求；此前编译/发布不证明它正确。
+
+docs/evidence/20261019-native-hd-target-boundaries.md 原75、81行所列
+F69C7/F68D5 的独立单点接入不足以保持此完整原语的高清内容；
+docs/evidence/20261019-native-raster-sampling-static.txt 的中心采样
+推导只适用于单个逻辑读值，不能作为旧消息重新着色的完整语义。
+本次已在源码改正这一具体边界。其他原语不因本记录被宣称已全部审清。
+
+原生静态依据
+
+docs/evidence/settlement-message-native-disassembly.txt:1064–1231：
+F67DD..F6A1B 由原渐变标志 RVA 5F5AE66 控制，只处理既有消息。
+消息矩形来自 RVA 61A8CE4。x 遍历 rect.x+5..rect.x+rect.w-5，
+y 遍历 rect.y+5..rect.y+rect.h-5，均包含两端；行序号从1开始。
+原 SDL_MapRGB 生成行色 clamp((226,187,153)-trunc(rowOrdinal/2))，
+并生成背景色 (226,197,153)。两者绿通道不同，不能合并。
+
+F696B 把先前读得的 packed 色放入 ESI，F696F 清除 MapRGB 参数；
+F6972 的 EAX 为背景色，原 ESP+28h 为行色，EDI=x，EBX=y。
+F6972/F6976 只给既非背景也非当前行色的像素重新着色；
+F697C..F6992 保留原800×600逻辑边界检查；F6994..F69DC 是写入
+及 SDL 条件锁。F69DF 重读原生主面指针，F69E5 起继续原 x/y 循环。
+循环结束仍由 F6A1B 清原渐变标志；F6020 原滚动搬移没有改动。
+
+ESI 并非废值：F6A36 将其传给 F5B00，真正分页返回时 F5C16 将该值
+写回前景色。因此 F68D5 的中心读取保留，仅服务这个原生寄存器语义，
+不再决定整个物理格是否着色。原循环、全部行色计算及栈内容保持原状。
+
+源码修正
+
+native_raster.cpp/.h 增加 message_shade_cell，仅在这次已确认的消息
+重新着色操作中，逐一读取该逻辑格内现有物理像素，执行原背景/行色
+判断并立即写回同一个像素。它不采样后扩散、不保存历史、不推断字形
+覆盖率、不另建布局，也不建立供上传或 Present 重放的内容。
+这里的比较是原游戏既有颜色处理的完整语义，不是全局像素跟踪。
+
+native_raster_patches.cpp 将原 F69C7 整格写补丁移到 F6972：
+覆盖8字节 3B F0 74 69 3B 74 24 28，完成原比较/写入后跳 F69DF。
+PUSHFD/PUSHAD 原始帧中的 saved_esp=原ESP-4，故 native_stack()[10]
+就是原ESP+28h。原边界检查仍先执行，完整操作借用原条件 SDL 锁，
+原 ESI、EDI、EBX 等寄存器不改；续接后的 INC/CMP 自行产生循环标志。
+原 flag、普通消息/语言重建分支、换行、滚动、输入和缓存生命周期不变。
+
+原生渐变本来就是直接替换颜色，不是 alpha 淡变；本修正保留该规则，
+不宣称旧文字继续保有原来的抗锯齿混色。已经被旧版本整格覆盖的画面
+不会由这次修正反推出字形；其像素仍由原生正常重建管理。
+
+交付状态
+
+源码修改、统一队列编译与正式文件发布均已完成。命令为根目录
+build.ps1 -Module adapter -Toolchain MinGW -Publish；默认工具链路径
+为 .toolchains/x86/w64devkit/bin，构建目录为 build/mingw-x86，
+正式目录为 package。发布前只读进程清单未见游戏，没有请求 Reload，
+没有运行时 Applied 回执。源码中的其他既有改动未在本次修改或回退。
+
+请求：da7f3de55ced45bb89b758398da3c345
+批次：6fe4ec8b7a3f439094ed0de445e7b0ac
+事务：86e295948f624d968133aef31c0bfd74
+完成时间：2026-10-22 22:40:55（Asia/Shanghai）
+已读取该请求 results JSON、批次完整日志与 publication-result.json；
+队列 Success=true、发布 success=true。此次只替换正式业务库
+package/modules/uwcn_adapter.dll 和 package/release.json。
+旧件已先移动到
+回收/20261022-224055-86e295948f624d968133aef31c0bfd74/
+并保留 package/modules/、package/ 原相对路径。
+
+构建产物与正式 Adapter SHA-256 相同：
+04a97f34f8a5929bacabb2dd97a895ad2af0f6a0d6e7d46dbab672838aa9f030
+归档旧 Adapter：
+a87c8269a5fbe5af4c6b731af81ba5931d6fb3762bb0053cf55b01eff0f4677f
+编译保留既有 SDL GetProcAddress 函数指针类型转换警告，无编译错误。
+
+编译后静态指令记录：20261022-message-gradient-compiled.txt。
+本机 objdump 读取 DLL 文件，不加载 DLL、不运行产物。新增 kernel、
+helper、entry 和 __divdi3 的指令均为整数/通用寄存器操作，未发现
+x87/SSE/MMX/AVX 指令。entry 保持 PUSHFD/PUSHAD、对齐调用和恢复；
+helper 从 saved_esp+2Ch 读取原ESP+28h，调用新的 kernel，SDL 锁仍
+按原 flags&2 条件执行。kernel 对每一个物理像素执行两次比较，仅
+写回该像素，四次边界除法调用同一整数 __divdi3。此处不把 SDL
+锁函数自身宣称为无FP实现，也不沿用旧“所有内联 helper 不调用SDL”
+的描述；新增完整比较/写入原语拥有自己的原生锁边界。
+
+以上源码、指令、构建与发布事实不能代替用户视觉验收；未自行测试。

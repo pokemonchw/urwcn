@@ -58,7 +58,7 @@ UWCN_NR_INTEGER void unlock_target(Target target) {
 extern "C" {
 std::uintptr_t uwcn_nr_resume_606c3{};
 std::uintptr_t uwcn_nr_resume_607e4{};
-std::uintptr_t uwcn_nr_resume_f69c7{};
+std::uintptr_t uwcn_nr_resume_f6972{};
 std::uintptr_t uwcn_nr_resume_11454f{};
 std::uintptr_t uwcn_nr_resume_d7aa9{};
 std::uintptr_t uwcn_nr_resume_fc98f{};
@@ -120,8 +120,9 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_glyph(Registers* registers) {
     unlock_target(target);
 }
 
-// Inline helpers run between the game's own lock and unlock. They call only
-// the pure integer kernels, never SDL, Host dispatch, font services or logging.
+// Single-access helpers run between the game's own lock and unlock. The
+// complete F6972 compare/write primitive owns that same conditional SDL lock
+// around its physical cell. No helper calls Host, font services or logging.
 UWCN_NR_HELPER void __cdecl uwcn_nr_write_606c3(Registers* registers) {
     // 606BB consumes logical y; 606BE replaces ECX with pixels. The loop keeps
     // y in [EBP-8], explicitly reloaded at 606AC after SDL_LockSurface.
@@ -134,10 +135,16 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_write_607e4(Registers* registers) {
     // Replay the covered MOV ECX,[image+61BBB10], which changes no flags.
     registers->ecx=reinterpret_cast<u32>(target.surface);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_write_f69c7(Registers* registers) {
-    const Target target=current_target();
-    pixel(target,static_cast<int>(registers->edi),static_cast<int>(registers->ebx),registers->ecx);
-    registers->ecx=reinterpret_cast<u32>(target.surface);
+UWCN_NR_HELPER void __cdecl uwcn_nr_message_shade_f6972(Registers* registers) {
+    const int x=static_cast<int>(registers->edi);
+    const int y=static_cast<int>(registers->ebx);
+    // F697C..F6992 rejects these same logical coordinates before writing.
+    if(!logical_point(x,y)) return;
+    const Target target=lock_target();
+    // F6969 returns the native background in EAX. The row color lives at
+    // original ESP+28h after F696F removes the two MapRGB argument lists.
+    message_shade_cell(target,x,y,registers->eax,native_stack(registers)[10]);
+    unlock_target(target);
 }
 UWCN_NR_HELPER void __cdecl uwcn_nr_write_11454f(Registers* registers) {
     pixel(register_target(registers->esi),static_cast<int>(registers->ebx),
@@ -153,6 +160,8 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_read_fc98f(Registers* registers) {
     registers->edi=read_pixel(register_target(registers->esi),668,91);
 }
 UWCN_NR_HELPER void __cdecl uwcn_nr_read_f68d5(Registers* registers) {
+    // Keep the original center read for ESI -> F5B00's saved foreground.
+    // F6972 now decides recoloring from each physical pixel independently.
     registers->eax=read_pixel(register_target(registers->ecx),
                              static_cast<int>(registers->edi),static_cast<int>(registers->ebx));
 }
@@ -188,9 +197,9 @@ UWCN_NR_ENTRY void uwcn_nr_entry_607e4() {
     __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_write_607e4)
                          "jmp *_uwcn_nr_resume_607e4\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_f69c7() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_write_f69c7)
-                         "jmp *_uwcn_nr_resume_f69c7\n\t");
+UWCN_NR_ENTRY void uwcn_nr_entry_f6972() {
+    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_message_shade_f6972)
+                         "jmp *_uwcn_nr_resume_f6972\n\t");
 }
 UWCN_NR_ENTRY void uwcn_nr_entry_11454f() {
     __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_write_11454f)
@@ -233,7 +242,9 @@ Patch patches[]={
     {0x606C3,7,0,uwcn_nr_entry_606c3,{0xC7,0x04,0x81,0,0,0,0}},
     // MOV [EDX+EAX*4],ECX; MOV ECX,[absolute main owner].
     {0x607E4,9,5,uwcn_nr_entry_607e4,{0x89,0x0C,0x82,0x8B,0x0D,0x10,0xBB,0x5B,0x06}},
-    {0xF69C7,9,5,uwcn_nr_entry_f69c7,{0x89,0x0C,0x82,0x8B,0x0D,0x10,0xBB,0x5B,0x06}},
+    // Complete old-message compare/write operation; resume at the native
+    // main-surface reload and x/y loop. Do not expand a center sample to a cell.
+    {0xF6972,8,0,uwcn_nr_entry_f6972,{0x3B,0xF0,0x74,0x69,0x3B,0x74,0x24,0x28}},
     // MOV [ECX+EAX*4],EDX; TEST BYTE [ESI],2; resume at JZ.
     {0x11454F,6,0,uwcn_nr_entry_11454f,{0x89,0x14,0x81,0xF6,0x06,0x02}},
     // MOV EDI,[ECX+EAX+0xA70]; prior TEST flags must survive to JZ.
@@ -314,7 +325,7 @@ Status install_raster_patches(std::uintptr_t image_base,HMODULE sdl) {
               reinterpret_cast<const u32*>(image_base+0xA211068),lock,unlock};
     uwcn_nr_resume_606c3=image_base+0x606CA;
     uwcn_nr_resume_607e4=image_base+0x607ED;
-    uwcn_nr_resume_f69c7=image_base+0xF69D0;
+    uwcn_nr_resume_f6972=image_base+0xF69DF;
     uwcn_nr_resume_11454f=image_base+0x114555;
     uwcn_nr_resume_d7aa9=image_base+0xD7AB0;
     uwcn_nr_resume_fc98f=image_base+0xFC996;

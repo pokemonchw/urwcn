@@ -1,0 +1,383 @@
+
+build/mingw-x86/out/uwcn_adapter.dll:     file format pei-i386
+
+
+Disassembly of section .text:
+
+69f40940 <__ZN4uwcn7adapter13native_raster18message_shade_cellENS1_6TargetEiijj>:
+69f40940:	55                   	push   ebp
+69f40941:	57                   	push   edi
+69f40942:	56                   	push   esi
+69f40943:	53                   	push   ebx
+69f40944:	83 ec 30             	sub    esp,0x30
+69f40947:	8b 6c 24 44          	mov    ebp,DWORD PTR [esp+0x44]
+69f4094b:	8b 4c 24 4c          	mov    ecx,DWORD PTR [esp+0x4c]
+69f4094f:	8b 74 24 58          	mov    esi,DWORD PTR [esp+0x58]
+69f40953:	8b 45 0c             	mov    eax,DWORD PTR [ebp+0xc]
+69f40956:	89 cf                	mov    edi,ecx
+69f40958:	89 4c 24 08          	mov    DWORD PTR [esp+0x8],ecx
+69f4095c:	c1 ef 1f             	shr    edi,0x1f
+69f4095f:	89 44 24 10          	mov    DWORD PTR [esp+0x10],eax
+69f40963:	f7 6c 24 54          	imul   DWORD PTR [esp+0x54]
+69f40967:	89 44 24 14          	mov    DWORD PTR [esp+0x14],eax
+69f4096b:	8d 04 0f             	lea    eax,[edi+ecx*1]
+69f4096e:	d1 f8                	sar    eax,1
+69f40970:	89 54 24 18          	mov    DWORD PTR [esp+0x18],edx
+69f40974:	8b 54 24 18          	mov    edx,DWORD PTR [esp+0x18]
+69f40978:	89 44 24 1c          	mov    DWORD PTR [esp+0x1c],eax
+69f4097c:	c1 f8 1f             	sar    eax,0x1f
+69f4097f:	89 44 24 20          	mov    DWORD PTR [esp+0x20],eax
+69f40983:	8b 44 24 14          	mov    eax,DWORD PTR [esp+0x14]
+69f40987:	03 44 24 1c          	add    eax,DWORD PTR [esp+0x1c]
+69f4098b:	13 54 24 20          	adc    edx,DWORD PTR [esp+0x20]
+69f4098f:	c1 f9 1f             	sar    ecx,0x1f
+69f40992:	89 4c 24 0c          	mov    DWORD PTR [esp+0xc],ecx
+69f40996:	89 04 24             	mov    DWORD PTR [esp],eax
+69f40999:	89 54 24 04          	mov    DWORD PTR [esp+0x4],edx
+69f4099d:	e8 ae 54 05 00       	call   69f95e50 <___divdi3>
+69f409a2:	8b 54 24 10          	mov    edx,DWORD PTR [esp+0x10]
+69f409a6:	89 c7                	mov    edi,eax
+69f409a8:	89 d1                	mov    ecx,edx
+69f409aa:	89 d0                	mov    eax,edx
+69f409ac:	c1 f9 1f             	sar    ecx,0x1f
+69f409af:	03 44 24 14          	add    eax,DWORD PTR [esp+0x14]
+69f409b3:	89 ca                	mov    edx,ecx
+69f409b5:	8b 4c 24 4c          	mov    ecx,DWORD PTR [esp+0x4c]
+69f409b9:	13 54 24 18          	adc    edx,DWORD PTR [esp+0x18]
+69f409bd:	03 44 24 1c          	add    eax,DWORD PTR [esp+0x1c]
+69f409c1:	13 54 24 20          	adc    edx,DWORD PTR [esp+0x20]
+69f409c5:	89 4c 24 08          	mov    DWORD PTR [esp+0x8],ecx
+69f409c9:	c1 f9 1f             	sar    ecx,0x1f
+69f409cc:	89 4c 24 0c          	mov    DWORD PTR [esp+0xc],ecx
+69f409d0:	89 04 24             	mov    DWORD PTR [esp],eax
+69f409d3:	89 54 24 04          	mov    DWORD PTR [esp+0x4],edx
+69f409d7:	e8 74 54 05 00       	call   69f95e50 <___divdi3>
+69f409dc:	89 44 24 14          	mov    DWORD PTR [esp+0x14],eax
+69f409e0:	39 f8                	cmp    eax,edi
+69f409e2:	0f 8e f4 00 00 00    	jle    69f40adc <__ZN4uwcn7adapter13native_raster18message_shade_cellENS1_6TargetEiijj+0x19c>
+69f409e8:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
+69f409eb:	8b 4c 24 48          	mov    ecx,DWORD PTR [esp+0x48]
+69f409ef:	89 44 24 10          	mov    DWORD PTR [esp+0x10],eax
+69f409f3:	f7 6c 24 50          	imul   DWORD PTR [esp+0x50]
+69f409f7:	89 4c 24 08          	mov    DWORD PTR [esp+0x8],ecx
+69f409fb:	89 54 24 20          	mov    DWORD PTR [esp+0x20],edx
+69f409ff:	89 ca                	mov    edx,ecx
+69f40a01:	c1 ea 1f             	shr    edx,0x1f
+69f40a04:	89 44 24 1c          	mov    DWORD PTR [esp+0x1c],eax
+69f40a08:	8d 04 0a             	lea    eax,[edx+ecx*1]
+69f40a0b:	8b 54 24 20          	mov    edx,DWORD PTR [esp+0x20]
+69f40a0f:	d1 f8                	sar    eax,1
+69f40a11:	89 44 24 24          	mov    DWORD PTR [esp+0x24],eax
+69f40a15:	c1 f8 1f             	sar    eax,0x1f
+69f40a18:	89 44 24 28          	mov    DWORD PTR [esp+0x28],eax
+69f40a1c:	8b 44 24 1c          	mov    eax,DWORD PTR [esp+0x1c]
+69f40a20:	03 44 24 24          	add    eax,DWORD PTR [esp+0x24]
+69f40a24:	13 54 24 28          	adc    edx,DWORD PTR [esp+0x28]
+69f40a28:	c1 f9 1f             	sar    ecx,0x1f
+69f40a2b:	89 4c 24 0c          	mov    DWORD PTR [esp+0xc],ecx
+69f40a2f:	89 04 24             	mov    DWORD PTR [esp],eax
+69f40a32:	89 54 24 04          	mov    DWORD PTR [esp+0x4],edx
+69f40a36:	e8 15 54 05 00       	call   69f95e50 <___divdi3>
+69f40a3b:	8b 54 24 10          	mov    edx,DWORD PTR [esp+0x10]
+69f40a3f:	89 44 24 2c          	mov    DWORD PTR [esp+0x2c],eax
+69f40a43:	89 d1                	mov    ecx,edx
+69f40a45:	89 d0                	mov    eax,edx
+69f40a47:	c1 f9 1f             	sar    ecx,0x1f
+69f40a4a:	03 44 24 1c          	add    eax,DWORD PTR [esp+0x1c]
+69f40a4e:	89 ca                	mov    edx,ecx
+69f40a50:	8b 4c 24 48          	mov    ecx,DWORD PTR [esp+0x48]
+69f40a54:	13 54 24 20          	adc    edx,DWORD PTR [esp+0x20]
+69f40a58:	03 44 24 24          	add    eax,DWORD PTR [esp+0x24]
+69f40a5c:	13 54 24 28          	adc    edx,DWORD PTR [esp+0x28]
+69f40a60:	89 4c 24 08          	mov    DWORD PTR [esp+0x8],ecx
+69f40a64:	c1 f9 1f             	sar    ecx,0x1f
+69f40a67:	89 4c 24 0c          	mov    DWORD PTR [esp+0xc],ecx
+69f40a6b:	89 04 24             	mov    DWORD PTR [esp],eax
+69f40a6e:	89 54 24 04          	mov    DWORD PTR [esp+0x4],edx
+69f40a72:	e8 d9 53 05 00       	call   69f95e50 <___divdi3>
+69f40a77:	8b 4c 24 2c          	mov    ecx,DWORD PTR [esp+0x2c]
+69f40a7b:	39 c8                	cmp    eax,ecx
+69f40a7d:	7e 5d                	jle    69f40adc <__ZN4uwcn7adapter13native_raster18message_shade_cellENS1_6TargetEiijj+0x19c>
+69f40a7f:	c1 e1 02             	shl    ecx,0x2
+69f40a82:	c1 e0 02             	shl    eax,0x2
+69f40a85:	8b 5c 24 5c          	mov    ebx,DWORD PTR [esp+0x5c]
+69f40a89:	89 4c 24 24          	mov    DWORD PTR [esp+0x24],ecx
+69f40a8d:	89 44 24 1c          	mov    DWORD PTR [esp+0x1c],eax
+69f40a91:	8d b4 26 00 00 00 00 	lea    esi,[esi+eiz*1+0x0]
+69f40a98:	2e 8d b4 26 00 00 00 	lea    esi,cs:[esi+eiz*1+0x0]
+69f40a9f:	00 
+69f40aa0:	8b 55 10             	mov    edx,DWORD PTR [ebp+0x10]
+69f40aa3:	8b 4d 14             	mov    ecx,DWORD PTR [ebp+0x14]
+69f40aa6:	8b 44 24 24          	mov    eax,DWORD PTR [esp+0x24]
+69f40aaa:	0f af d7             	imul   edx,edi
+69f40aad:	01 c8                	add    eax,ecx
+69f40aaf:	03 4c 24 1c          	add    ecx,DWORD PTR [esp+0x1c]
+69f40ab3:	01 d0                	add    eax,edx
+69f40ab5:	01 d1                	add    ecx,edx
+69f40ab7:	89 44 24 10          	mov    DWORD PTR [esp+0x10],eax
+69f40abb:	8b 44 24 10          	mov    eax,DWORD PTR [esp+0x10]
+69f40abf:	90                   	nop
+69f40ac0:	8b 10                	mov    edx,DWORD PTR [eax]
+69f40ac2:	39 f2                	cmp    edx,esi
+69f40ac4:	74 06                	je     69f40acc <__ZN4uwcn7adapter13native_raster18message_shade_cellENS1_6TargetEiijj+0x18c>
+69f40ac6:	39 da                	cmp    edx,ebx
+69f40ac8:	74 02                	je     69f40acc <__ZN4uwcn7adapter13native_raster18message_shade_cellENS1_6TargetEiijj+0x18c>
+69f40aca:	89 18                	mov    DWORD PTR [eax],ebx
+69f40acc:	83 c0 04             	add    eax,0x4
+69f40acf:	39 c1                	cmp    ecx,eax
+69f40ad1:	75 ed                	jne    69f40ac0 <__ZN4uwcn7adapter13native_raster18message_shade_cellENS1_6TargetEiijj+0x180>
+69f40ad3:	83 c7 01             	add    edi,0x1
+69f40ad6:	3b 7c 24 14          	cmp    edi,DWORD PTR [esp+0x14]
+69f40ada:	75 c4                	jne    69f40aa0 <__ZN4uwcn7adapter13native_raster18message_shade_cellENS1_6TargetEiijj+0x160>
+69f40adc:	83 c4 30             	add    esp,0x30
+69f40adf:	5b                   	pop    ebx
+69f40ae0:	5e                   	pop    esi
+69f40ae1:	5f                   	pop    edi
+69f40ae2:	5d                   	pop    ebp
+69f40ae3:	c3                   	ret
+69f40ae4:	8d 74 26 00          	lea    esi,[esi+eiz*1+0x0]
+69f40ae8:	2e 8d b4 26 00 00 00 	lea    esi,cs:[esi+eiz*1+0x0]
+69f40aef:	00 
+
+build/mingw-x86/out/uwcn_adapter.dll:     file format pei-i386
+
+
+Disassembly of section .text:
+
+69f41010 <_uwcn_nr_entry_f6972>:
+69f41010:	9c                   	pushf
+69f41011:	60                   	pusha
+69f41012:	89 e3                	mov    ebx,esp
+69f41014:	83 e4 f0             	and    esp,0xfffffff0
+69f41017:	83 ec 0c             	sub    esp,0xc
+69f4101a:	53                   	push   ebx
+69f4101b:	e8 50 08 00 00       	call   69f41870 <_uwcn_nr_message_shade_f6972>
+69f41020:	89 dc                	mov    esp,ebx
+69f41022:	61                   	popa
+69f41023:	9d                   	popf
+69f41024:	ff 25 b0 b7 ff 69    	jmp    DWORD PTR ds:0x69ffb7b0
+69f4102a:	0f 0b                	ud2
+69f4102c:	8d 74 26 00          	lea    esi,[esi+eiz*1+0x0]
+
+build/mingw-x86/out/uwcn_adapter.dll:     file format pei-i386
+
+
+Disassembly of section .text:
+
+69f41870 <_uwcn_nr_message_shade_f6972>:
+69f41870:	53                   	push   ebx
+69f41871:	83 ec 30             	sub    esp,0x30
+69f41874:	8b 54 24 38          	mov    edx,DWORD PTR [esp+0x38]
+69f41878:	8b 0a                	mov    ecx,DWORD PTR [edx]
+69f4187a:	8b 5a 10             	mov    ebx,DWORD PTR [edx+0x10]
+69f4187d:	81 f9 1f 03 00 00    	cmp    ecx,0x31f
+69f41883:	77 08                	ja     69f4188d <_uwcn_nr_message_shade_f6972+0x1d>
+69f41885:	81 fb 57 02 00 00    	cmp    ebx,0x257
+69f4188b:	76 0b                	jbe    69f41898 <_uwcn_nr_message_shade_f6972+0x28>
+69f4188d:	83 c4 30             	add    esp,0x30
+69f41890:	5b                   	pop    ebx
+69f41891:	c3                   	ret
+69f41892:	8d b6 00 00 00 00    	lea    esi,[esi+0x0]
+69f41898:	a1 c4 b7 ff 69       	mov    eax,ds:0x69ffb7c4
+69f4189d:	c7 44 24 28 20 03 00 	mov    DWORD PTR [esp+0x28],0x320
+69f418a4:	00 
+69f418a5:	c7 44 24 2c 58 02 00 	mov    DWORD PTR [esp+0x2c],0x258
+69f418ac:	00 
+69f418ad:	8b 00                	mov    eax,DWORD PTR [eax]
+69f418af:	89 44 24 24          	mov    DWORD PTR [esp+0x24],eax
+69f418b3:	f6 00 02             	test   BYTE PTR [eax],0x2
+69f418b6:	74 24                	je     69f418dc <_uwcn_nr_message_shade_f6972+0x6c>
+69f418b8:	89 54 24 20          	mov    DWORD PTR [esp+0x20],edx
+69f418bc:	89 4c 24 1c          	mov    DWORD PTR [esp+0x1c],ecx
+69f418c0:	89 04 24             	mov    DWORD PTR [esp],eax
+69f418c3:	ff 15 d0 b7 ff 69    	call   DWORD PTR ds:0x69ffb7d0
+69f418c9:	a1 c4 b7 ff 69       	mov    eax,ds:0x69ffb7c4
+69f418ce:	8b 54 24 20          	mov    edx,DWORD PTR [esp+0x20]
+69f418d2:	8b 4c 24 1c          	mov    ecx,DWORD PTR [esp+0x1c]
+69f418d6:	8b 00                	mov    eax,DWORD PTR [eax]
+69f418d8:	89 44 24 24          	mov    DWORD PTR [esp+0x24],eax
+69f418dc:	89 44 24 1c          	mov    DWORD PTR [esp+0x1c],eax
+69f418e0:	8b 42 0c             	mov    eax,DWORD PTR [edx+0xc]
+69f418e3:	8b 40 2c             	mov    eax,DWORD PTR [eax+0x2c]
+69f418e6:	89 44 24 18          	mov    DWORD PTR [esp+0x18],eax
+69f418ea:	8b 52 1c             	mov    edx,DWORD PTR [edx+0x1c]
+69f418ed:	89 5c 24 10          	mov    DWORD PTR [esp+0x10],ebx
+69f418f1:	89 54 24 14          	mov    DWORD PTR [esp+0x14],edx
+69f418f5:	8b 54 24 24          	mov    edx,DWORD PTR [esp+0x24]
+69f418f9:	89 4c 24 0c          	mov    DWORD PTR [esp+0xc],ecx
+69f418fd:	89 14 24             	mov    DWORD PTR [esp],edx
+69f41900:	8b 54 24 28          	mov    edx,DWORD PTR [esp+0x28]
+69f41904:	89 54 24 04          	mov    DWORD PTR [esp+0x4],edx
+69f41908:	8b 54 24 2c          	mov    edx,DWORD PTR [esp+0x2c]
+69f4190c:	89 54 24 08          	mov    DWORD PTR [esp+0x8],edx
+69f41910:	e8 2b f0 ff ff       	call   69f40940 <__ZN4uwcn7adapter13native_raster18message_shade_cellENS1_6TargetEiijj>
+69f41915:	8b 44 24 1c          	mov    eax,DWORD PTR [esp+0x1c]
+69f41919:	f6 00 02             	test   BYTE PTR [eax],0x2
+69f4191c:	0f 84 6b ff ff ff    	je     69f4188d <_uwcn_nr_message_shade_f6972+0x1d>
+69f41922:	89 44 24 38          	mov    DWORD PTR [esp+0x38],eax
+69f41926:	83 c4 30             	add    esp,0x30
+69f41929:	5b                   	pop    ebx
+69f4192a:	ff 25 d4 b7 ff 69    	jmp    DWORD PTR ds:0x69ffb7d4
+
+build/mingw-x86/out/uwcn_adapter.dll:     file format pei-i386
+
+
+Disassembly of section .text:
+
+69f95e50 <___divdi3>:
+69f95e50:	55                   	push   ebp
+69f95e51:	89 e5                	mov    ebp,esp
+69f95e53:	57                   	push   edi
+69f95e54:	56                   	push   esi
+69f95e55:	53                   	push   ebx
+69f95e56:	83 e4 f8             	and    esp,0xfffffff8
+69f95e59:	83 ec 18             	sub    esp,0x18
+69f95e5c:	8b 55 0c             	mov    edx,DWORD PTR [ebp+0xc]
+69f95e5f:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
+69f95e62:	8b 4d 10             	mov    ecx,DWORD PTR [ebp+0x10]
+69f95e65:	8b 5d 14             	mov    ebx,DWORD PTR [ebp+0x14]
+69f95e68:	c7 44 24 14 00 00 00 	mov    DWORD PTR [esp+0x14],0x0
+69f95e6f:	00 
+69f95e70:	89 44 24 08          	mov    DWORD PTR [esp+0x8],eax
+69f95e74:	89 d7                	mov    edi,edx
+69f95e76:	89 54 24 0c          	mov    DWORD PTR [esp+0xc],edx
+69f95e7a:	85 d2                	test   edx,edx
+69f95e7c:	79 19                	jns    69f95e97 <___divdi3+0x47>
+69f95e7e:	f7 d8                	neg    eax
+69f95e80:	c7 44 24 14 ff ff ff 	mov    DWORD PTR [esp+0x14],0xffffffff
+69f95e87:	ff 
+69f95e88:	83 d2 00             	adc    edx,0x0
+69f95e8b:	89 44 24 08          	mov    DWORD PTR [esp+0x8],eax
+69f95e8f:	f7 da                	neg    edx
+69f95e91:	89 54 24 0c          	mov    DWORD PTR [esp+0xc],edx
+69f95e95:	89 d7                	mov    edi,edx
+69f95e97:	85 db                	test   ebx,ebx
+69f95e99:	0f 88 f1 00 00 00    	js     69f95f90 <___divdi3+0x140>
+69f95e9f:	89 da                	mov    edx,ebx
+69f95ea1:	89 cb                	mov    ebx,ecx
+69f95ea3:	85 d2                	test   edx,edx
+69f95ea5:	75 39                	jne    69f95ee0 <___divdi3+0x90>
+69f95ea7:	39 df                	cmp    edi,ebx
+69f95ea9:	0f 83 b9 00 00 00    	jae    69f95f68 <___divdi3+0x118>
+69f95eaf:	89 fa                	mov    edx,edi
+69f95eb1:	8b 44 24 08          	mov    eax,DWORD PTR [esp+0x8]
+69f95eb5:	31 f6                	xor    esi,esi
+69f95eb7:	f7 f3                	div    ebx
+69f95eb9:	89 c7                	mov    edi,eax
+69f95ebb:	8b 4c 24 14          	mov    ecx,DWORD PTR [esp+0x14]
+69f95ebf:	89 f8                	mov    eax,edi
+69f95ec1:	89 f2                	mov    edx,esi
+69f95ec3:	85 c9                	test   ecx,ecx
+69f95ec5:	74 07                	je     69f95ece <___divdi3+0x7e>
+69f95ec7:	f7 d8                	neg    eax
+69f95ec9:	83 d2 00             	adc    edx,0x0
+69f95ecc:	f7 da                	neg    edx
+69f95ece:	8d 65 f4             	lea    esp,[ebp-0xc]
+69f95ed1:	5b                   	pop    ebx
+69f95ed2:	5e                   	pop    esi
+69f95ed3:	5f                   	pop    edi
+69f95ed4:	5d                   	pop    ebp
+69f95ed5:	c3                   	ret
+69f95ed6:	66 90                	xchg   ax,ax
+69f95ed8:	2e 8d b4 26 00 00 00 	lea    esi,cs:[esi+eiz*1+0x0]
+69f95edf:	00 
+69f95ee0:	39 d7                	cmp    edi,edx
+69f95ee2:	0f 82 c5 00 00 00    	jb     69f95fad <___divdi3+0x15d>
+69f95ee8:	0f bd c2             	bsr    eax,edx
+69f95eeb:	83 f0 1f             	xor    eax,0x1f
+69f95eee:	89 c6                	mov    esi,eax
+69f95ef0:	89 f1                	mov    ecx,esi
+69f95ef2:	b8 20 00 00 00       	mov    eax,0x20
+69f95ef7:	29 f0                	sub    eax,esi
+69f95ef9:	d3 e2                	shl    edx,cl
+69f95efb:	89 54 24 10          	mov    DWORD PTR [esp+0x10],edx
+69f95eff:	89 c1                	mov    ecx,eax
+69f95f01:	89 da                	mov    edx,ebx
+69f95f03:	d3 ea                	shr    edx,cl
+69f95f05:	8b 4c 24 10          	mov    ecx,DWORD PTR [esp+0x10]
+69f95f09:	09 d1                	or     ecx,edx
+69f95f0b:	89 fa                	mov    edx,edi
+69f95f0d:	89 4c 24 10          	mov    DWORD PTR [esp+0x10],ecx
+69f95f11:	89 f1                	mov    ecx,esi
+69f95f13:	d3 e3                	shl    ebx,cl
+69f95f15:	89 c1                	mov    ecx,eax
+69f95f17:	d3 ea                	shr    edx,cl
+69f95f19:	89 5c 24 04          	mov    DWORD PTR [esp+0x4],ebx
+69f95f1d:	89 f1                	mov    ecx,esi
+69f95f1f:	89 d3                	mov    ebx,edx
+69f95f21:	8b 54 24 08          	mov    edx,DWORD PTR [esp+0x8]
+69f95f25:	d3 e7                	shl    edi,cl
+69f95f27:	89 c1                	mov    ecx,eax
+69f95f29:	d3 ea                	shr    edx,cl
+69f95f2b:	09 d7                	or     edi,edx
+69f95f2d:	89 da                	mov    edx,ebx
+69f95f2f:	89 f8                	mov    eax,edi
+69f95f31:	f7 74 24 10          	div    DWORD PTR [esp+0x10]
+69f95f35:	89 d3                	mov    ebx,edx
+69f95f37:	89 c7                	mov    edi,eax
+69f95f39:	f7 64 24 04          	mul    DWORD PTR [esp+0x4]
+69f95f3d:	89 54 24 10          	mov    DWORD PTR [esp+0x10],edx
+69f95f41:	39 d3                	cmp    ebx,edx
+69f95f43:	72 12                	jb     69f95f57 <___divdi3+0x107>
+69f95f45:	8b 54 24 08          	mov    edx,DWORD PTR [esp+0x8]
+69f95f49:	89 f1                	mov    ecx,esi
+69f95f4b:	d3 e2                	shl    edx,cl
+69f95f4d:	39 c2                	cmp    edx,eax
+69f95f4f:	73 09                	jae    69f95f5a <___divdi3+0x10a>
+69f95f51:	3b 5c 24 10          	cmp    ebx,DWORD PTR [esp+0x10]
+69f95f55:	75 03                	jne    69f95f5a <___divdi3+0x10a>
+69f95f57:	83 ef 01             	sub    edi,0x1
+69f95f5a:	31 f6                	xor    esi,esi
+69f95f5c:	e9 5a ff ff ff       	jmp    69f95ebb <___divdi3+0x6b>
+69f95f61:	8d b4 26 00 00 00 00 	lea    esi,[esi+eiz*1+0x0]
+69f95f68:	85 db                	test   ebx,ebx
+69f95f6a:	75 0b                	jne    69f95f77 <___divdi3+0x127>
+69f95f6c:	b8 01 00 00 00       	mov    eax,0x1
+69f95f71:	31 d2                	xor    edx,edx
+69f95f73:	f7 f3                	div    ebx
+69f95f75:	89 c3                	mov    ebx,eax
+69f95f77:	89 f8                	mov    eax,edi
+69f95f79:	31 d2                	xor    edx,edx
+69f95f7b:	f7 f3                	div    ebx
+69f95f7d:	89 c6                	mov    esi,eax
+69f95f7f:	8b 44 24 08          	mov    eax,DWORD PTR [esp+0x8]
+69f95f83:	f7 f3                	div    ebx
+69f95f85:	89 c7                	mov    edi,eax
+69f95f87:	e9 2f ff ff ff       	jmp    69f95ebb <___divdi3+0x6b>
+69f95f8c:	8d 74 26 00          	lea    esi,[esi+eiz*1+0x0]
+69f95f90:	89 ca                	mov    edx,ecx
+69f95f92:	89 d9                	mov    ecx,ebx
+69f95f94:	f7 54 24 14          	not    DWORD PTR [esp+0x14]
+69f95f98:	f7 da                	neg    edx
+69f95f9a:	83 d1 00             	adc    ecx,0x0
+69f95f9d:	89 d3                	mov    ebx,edx
+69f95f9f:	f7 d9                	neg    ecx
+69f95fa1:	89 ca                	mov    edx,ecx
+69f95fa3:	0f 84 fe fe ff ff    	je     69f95ea7 <___divdi3+0x57>
+69f95fa9:	39 cf                	cmp    edi,ecx
+69f95fab:	73 13                	jae    69f95fc0 <___divdi3+0x170>
+69f95fad:	31 f6                	xor    esi,esi
+69f95faf:	31 ff                	xor    edi,edi
+69f95fb1:	e9 05 ff ff ff       	jmp    69f95ebb <___divdi3+0x6b>
+69f95fb6:	66 90                	xchg   ax,ax
+69f95fb8:	2e 8d b4 26 00 00 00 	lea    esi,cs:[esi+eiz*1+0x0]
+69f95fbf:	00 
+69f95fc0:	0f bd c1             	bsr    eax,ecx
+69f95fc3:	83 f0 1f             	xor    eax,0x1f
+69f95fc6:	89 c6                	mov    esi,eax
+69f95fc8:	0f 85 22 ff ff ff    	jne    69f95ef0 <___divdi3+0xa0>
+69f95fce:	39 f9                	cmp    ecx,edi
+69f95fd0:	72 0c                	jb     69f95fde <___divdi3+0x18e>
+69f95fd2:	31 ff                	xor    edi,edi
+69f95fd4:	39 5c 24 08          	cmp    DWORD PTR [esp+0x8],ebx
+69f95fd8:	0f 82 dd fe ff ff    	jb     69f95ebb <___divdi3+0x6b>
+69f95fde:	bf 01 00 00 00       	mov    edi,0x1
+69f95fe3:	e9 d3 fe ff ff       	jmp    69f95ebb <___divdi3+0x6b>
+69f95fe8:	90                   	nop
+69f95fe9:	90                   	nop
+69f95fea:	90                   	nop
+69f95feb:	90                   	nop
+69f95fec:	90                   	nop
+69f95fed:	90                   	nop
+69f95fee:	90                   	nop
+69f95fef:	90                   	nop
