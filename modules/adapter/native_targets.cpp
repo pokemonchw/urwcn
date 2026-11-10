@@ -2,6 +2,7 @@
 #include "native_root_component.h"
 #include "native_ui_cache_owners.h"
 #include "scoped_api.h"
+#include "windows_build.h"
 #include <algorithm>
 #include <array>
 #include <cstring>
@@ -373,8 +374,8 @@ Status create_component_hud_target(const SurfaceSource& source,HudTarget& target
     if(!renderer) {destroy_component_surface(target.surface);return Status::failed;}
     target.renderer=address(renderer);
     Texture* direction{};Texture* marker{};
-    if(hud_image(renderer,0x1ACAB8,direction)!=Status::ok ||
-        hud_image(renderer,0x1ACAD0,marker)!=Status::ok) {
+    if(hud_image(renderer,windows_build::rdata_rva(0x1ACAB8),direction)!=Status::ok ||
+        hud_image(renderer,windows_build::rdata_rva(0x1ACAD0),marker)!=Status::ok) {
         api.DestroyRenderer(renderer);destroy_component_surface(target.surface);return Status::failed;
     }
     target.direction=address(direction);target.marker=address(marker);return Status::ok;
@@ -528,8 +529,8 @@ Status promote_hud() {
     Texture* direction{};
     Texture* marker{};
     if(api.RenderSetScale(renderer,sx,sy)!=0 ||
-       hud_image(renderer,0x1ACAB8,direction)!=Status::ok ||
-       hud_image(renderer,0x1ACAD0,marker)!=Status::ok) {
+       hud_image(renderer,windows_build::rdata_rva(0x1ACAB8),direction)!=Status::ok ||
+       hud_image(renderer,windows_build::rdata_rva(0x1ACAD0),marker)!=Status::ok) {
         api.DestroyRenderer(renderer);
         api.FreeSurface(replacement);
         return Status::failed;

@@ -4,6 +4,7 @@
 #include "native_ui_scene.h"
 #include "native_menu_model.h"
 #include "native_menu_component.h"
+#include "windows_build.h"
 #include <algorithm>
 #include <array>
 #include <cstring>
@@ -263,7 +264,7 @@ Status construct(const NativeEvent& event,const HookSpec& hook,const EventInputs
         std::string label,value;
         auto status=decode_parser_source(pointer<const char>(args[0]),label);if(status!=Status::ok) return status;
         status=decode_parser_source(pointer<const char>(args[1]),value);if(status!=Status::ok) return status;
-        const auto label_source=args[0]==static_cast<u32>(base+0x1AA240) ? original_text(label.c_str()) :
+        const auto label_source=args[0]==static_cast<u32>(base+windows_build::rdata_rva(0x1AA240)) ? original_text(label.c_str()) :
             from_request({TextComponent::hud_label,label.c_str(),nullptr});
         const HudStatusCellInputs inputs{signed_value(input.ecx),signed_value(input.edx),args[2],args[4],
             *reinterpret_cast<const u32*>(base+0x61BBCEC),*reinterpret_cast<const u32*>(base+0xA1C0EBC),

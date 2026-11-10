@@ -29,6 +29,7 @@
 #include "native_button.h"
 #include "setup_text_calls.h"
 #include "credits_text_calls.h"
+#include "windows_build.h"
 #include "../render/byayoi_sprite.h"
 #include <windows.h>
 #include <algorithm>
@@ -145,7 +146,7 @@ void restore_startup_progress_source(const void* data) {
     startup_progress_source=native_text_resource::from_request({component,original.c_str(),has_value?value.c_str():nullptr});
 }
 
-template<class T> T* at(u32 rva) { return reinterpret_cast<T*>(host->image_base+rva); }
+template<class T> T* at(u32 rva) { return reinterpret_cast<T*>(host->image_base+windows_build::rdata_rva(rva)); }
 template<class T> T* ptr(u32 address) { return reinterpret_cast<T*>(static_cast<std::uintptr_t>(address)); }
 u32 address(const void* value) { return static_cast<u32>(reinterpret_cast<std::uintptr_t>(value)); }
 bool in(Scope kind) {
@@ -1356,6 +1357,7 @@ void initialization_failure(const wchar_t* boundary,Status status) {
 Status UWCN_CALL initialize(const HostApi* api) {
     if(!api || api->size<sizeof(HostApi) || api->abi!=kHostAbi) return Status::invalid;
     host=api;
+    windows_build::initialize(api->image_base);
     native_language_redraw::initialize(api->image_base);
     native_menu_component::initialize(api->image_base);
     native_menu_storage::initialize(api->image_base);

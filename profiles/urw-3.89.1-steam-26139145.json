@@ -1,0 +1,319 @@
+{
+  "schema": 1,
+  "game": "UnReal World",
+  "version": "3.89.1",
+  "steam_app_id": 351700,
+  "steam_build_id": "26139145",
+  "machine": "I386",
+  "exe_sha256": "c6ed73642c1b1cb1f86b818c7586224398c2f0554f6114ced31bc40ff071806d",
+  "preferred_image_base": "0x400000",
+  "scope": "Windows native display consumers: startup/intro/main menu/About/Credits/settings/load/ancestors/creation/HUD; season/portrait/attributes, all encyclopedia topics and culture legends, skills and spells, world generation, all thirteen scenarios and game-course selection, farewell, and UTF-8 character names.",
+  "evidence": [
+    "docs/evidence/main-menu-static.txt",
+    "docs/evidence/static-disassembly.txt",
+    "docs/evidence/local-inspection.json",
+    "docs/evidence/startup-loading-static.txt",
+    "docs/evidence/startup-audio-static.txt",
+    "docs/evidence/20261019-startup-loading-native.md",
+    "docs/evidence/intro-disassembly.txt",
+    "docs/evidence/intro-story-fade-disassembly.txt",
+    "docs/evidence/20261019-intro-poem-native.md",
+    "docs/evidence/20261019-footer-branding-disassembly.txt",
+    "docs/evidence/20261019-footer-branding-native.md",
+    "docs/evidence/20261019-about-native-disassembly.txt",
+    "docs/evidence/20261019-about-native.md",
+    "docs/evidence/setup-options-patches.tsv",
+    "docs/evidence/setup-options-key-disassembly.txt",
+    "docs/evidence/setup-options-key-text-disassembly.txt",
+    "docs/evidence/setup-options-title-text-disassembly.txt",
+    "docs/evidence/20261019-setup-options-native.md",
+    "docs/evidence/20261019-language-toggle.md",
+    "docs/evidence/20261019-language-input-static.md",
+    "docs/evidence/20261019-language-redraw-boundaries.md",
+    "docs/evidence/credits-disassembly.txt",
+    "docs/evidence/credits-string-bytes.txt",
+    "docs/evidence/credits-menu-disassembly.txt",
+    "docs/evidence/credits-paragraph-disassembly.txt",
+    "docs/evidence/credits-key-wait-disassembly.txt",
+    "docs/evidence/20261019-credits-native.md",
+    "docs/evidence/20261110-windows-3891-delivery.md",
+    "docs/evidence/20261110-windows-3891-hook-review.md",
+    "docs/evidence/20261110-windows-3891-native-contracts.md",
+    "docs/evidence/20261110-windows-3891-resources.md"
+  ],
+  "ownership": {
+    "text_translation": "component-specific adapter and text services",
+    "text_measurement_extension": "same font and density as glyph drawing, consumed by native UI",
+    "glyph_drawing": "mod render module within native resource operations",
+    "layout_controls_input_cache_lifecycle": "game native UI"
+  },
+  "global_native_ui_model": {
+    "platform": "Windows x86 3.89.1; this common-source revision is not implemented in the Linux branch",
+    "source": "Root, native components, Menu and Link/Message Flow, complete renderer factories and native cache constructors share neutral sources between normal display and locale invalidation",
+    "state": "HDA7 neutral arenas and NGT2 resource constructors; HDA4/NGT1 and the historical Active-only format have no implemented in-place migration",
+    "selection": "Native software D0650 precedes upload; modern 10B480 composition precedes D0850 selection and 10B680 presentation",
+    "historical_metadata": "Fields explicitly labelled historical below describe superseded page redraw hooks and are not the current global invalidation protocol",
+    "evidence": "docs/evidence/20261020-global-language-native-hook-delivery.md"
+  },
+  "about_window": {
+    "entry_rva": "0x1247C0",
+    "scope": "native title, dynamic version and copyright, publisher, release notes, installation label and press-key button",
+    "preserved_values": "native version getter, copyright years, author and publisher names, website, truncated installation path and input actions",
+    "measurement": "native centering consumes actual font width; button retains native tiles and iterates complete encoded characters",
+    "drawing": "immediate glyphs in the existing native physical-density surface",
+    "historical_refresh": "HDA4 and earlier: native About redraw skipped its new input wait; superseded by global_native_ui_model"
+  },
+  "credits_window": {
+    "entry_rva": "0x1244F0",
+    "scope_call": "0x125E6E",
+    "panel_call": "0x124511",
+    "append_calls": "modules/adapter/credits_text_calls.h",
+    "paragraph_call": "0x124669",
+    "button_call": "0x12467D",
+    "wait_call": "0x124685",
+    "scope": "native title, all 24 semantic append calls and press-key button; original standalone breaks retained",
+    "measurement": "shared native title centering, paragraph wrap and cursor advance, and full-character plain-button metrics",
+    "drawing": "immediate glyph output to the native physical-density surface; native layout and caches",
+    "original_name_encoding": "Latin-1 countrymen_1 is converted at its confirmed display boundary; other native strings are ASCII",
+    "historical_refresh": "HDA4 and earlier: whole Credits function plus background rebuilt with its wait skipped; superseded by global_native_ui_model"
+  },
+  "setup_options": {
+    "entry_rva": "0x105700",
+    "scope": "14 native formatted option labels, 13 native descriptions, title, bottom paragraphs and ESC suffix",
+    "body_calls": "modules/adapter/setup_text_calls.h",
+    "title_panel_call": "0x105752",
+    "title_draw_call": "0x115A94",
+    "footer_parse_calls": [
+      "0x105817",
+      "0x105823"
+    ],
+    "footer_scope_call": "0x10582A",
+    "footer_paragraph_call": "0xF2E5",
+    "exit_button_call": "0x106AFC",
+    "exit_suffix_draw_call": "0x1149F9",
+    "exit_width_instruction": "0xCFC5D: 8D 04 CD 0A 00 00 00",
+    "installation_path": "unchanged native _getcwd display",
+    "open_page_cache": "native cache slots retain neutral constructor sources and invalidate by language generation; no overlay"
+  },
+  "ancestors_list": {
+    "entry_rva": "0xDE990",
+    "title_call": "0xDEA14 (ESI=-1 list mode only)",
+    "scope": "title, empty message, sorting labels, six native key controls, select hint, page count and two summary statistics",
+    "summary_scope_call": "0xDEDA0",
+    "native_number_calls": [
+      "0xDD670",
+      "0xDD6D6",
+      "0xDF0BB"
+    ],
+    "native_number_display_calls": [
+      "0xDDA0A",
+      "0xDDA30",
+      "0xDF115"
+    ],
+    "select_hint_call": "0xDEEB0 -> 0x10E720, two stack arguments; native [ENTER] markup retained",
+    "shared_consumers": "0x115A94 title; 0x1149F9 key suffix; 0xCFC5D suffix width; 0x10E862 and 0x10E8F2 markup text leaves",
+    "preserved": "character names, saved death-message text, original pronoun lookup, native numeric rounding, sorting, paging, selection and input actions",
+    "drawing": "complete encoded strings and real font width within each native component call; immediate output to the native physical-density surface",
+    "historical_refresh": "HDA4 and earlier: ancestor-specific D1120 reconstruction; superseded by global_native_ui_model",
+    "historical_redraw_hooks": [
+      "0xD12B4",
+      "0xDF187",
+      "0xDEB84",
+      "0xDEBC3",
+      "0xDEBC8"
+    ],
+    "evidence": [
+      "docs/evidence/20261019-ancestors-native.md",
+      "docs/evidence/20261019-ancestors-redraw-native.md"
+    ],
+    "historical_state": "HDA3 used ancestor-specific pending bits; current neutral summary arguments are owned by common component sources"
+  },
+  "character_creation_menu": {
+    "draw_scope_call": "0x125CFB -> 0xCFFB0",
+    "title_panel_call": "0xD01A5 -> 0x115E70, title stack argument 2",
+    "title_draw_call": "0x115A94; native mode 2 left alignment",
+    "keyed_label_call": "0xD031F -> 0x114680",
+    "suffix_draw_call": "0x1149F9 -> 0x10E5A0",
+    "scope": "title, Quick and easy, Custom, Custom - easy, Custom - too easy and Exit",
+    "preserved": "English menu records, Q/C/E/T/ESC prefixes and actions, two blank rows, native panel geometry and current selection",
+    "measurement": "complete suffix decoding and real font cursor width; native mode 8 selection and mouse hit widths remain panel based",
+    "drawing": "immediate glyph output at native target density inside the original component calls",
+    "historical_refresh": "HDA4 and earlier: caller 125D05 selected a page redraw; superseded by global_native_ui_model",
+    "evidence": [
+      "docs/evidence/20261019-character-creation-static.txt",
+      "docs/evidence/20261019-character-creation-disassembly.txt",
+      "docs/evidence/20261019-character-creation-native.md"
+    ]
+  },
+  "character_profile": {
+    "entry_rva": "0x12CA0 native culture/sex/name stage controller; never replayed for translation",
+    "scope": "heading, ten culture labels, random/cultures/back, sex labels and help, name title/help/retry and three existing name errors",
+    "panel_calls": [
+      "0x12F0D",
+      "0x11939"
+    ],
+    "menu_draw_calls": [
+      "0xF678",
+      "0xF377"
+    ],
+    "shared_consumers": "D01A5 mode-8 title; D031F keyed row; 115A94 full title; 1149F9 full suffix; F2E5 native paragraph",
+    "paragraph_calls": [
+      "0x118CA",
+      "0x118FA",
+      "0xF313"
+    ],
+    "footer_scope_calls": [
+      "0x11904",
+      "0xF31A"
+    ],
+    "error_display_copy_sites": [
+      "0x11A53",
+      "0x11B27",
+      "0x11CC7"
+    ],
+    "measurement": "native left-aligned titles, complete suffix metrics and native paragraph wrap/cursor extensions; ASCII key prefixes preserved",
+    "drawing": "immediate complete glyphs in the existing native physical-density surface; no text replay or page snapshot",
+    "preserved_values": "English culture/menu records including MENULIST.SAV, numeric choices, sex values, name bytes, validation, directory checks, random generation and input actions",
+    "refresh": "common component/cache sources reconstruct culture/sex panels and heading/footer; the active name field redraws in the same original input return",
+    "name_field_boundary": "Scene has no separate NameField source; see docs/evidence/20261020-native-name-field-global-wake.md",
+    "evidence": [
+      "docs/evidence/20261019-character-profile-static.txt",
+      "docs/evidence/20261019-character-profile-disassembly.txt",
+      "docs/evidence/character-profile-ghidra.c",
+      "docs/evidence/20261019-character-profile-native.md"
+    ]
+  },
+  "scenario_village": {
+    "entry_rva": "0xFB7D0; original caller 0x17E865; original business retained on normal entry",
+    "scope_call": "0xFB7FD and 0x10707 -> 0xFB390; all thirteen native story titles and 199 body records",
+    "panel_call": "0xFB691 -> 0x116270, flags 0x30; shared left-aligned text at 0x115A94",
+    "body_format_call": "0xFB74D -> 0x10D0; borrow argument 2, retain native <br> and whitespace format",
+    "body_source": "Native story.txt and RNDCAMP.0..12 remain English; shared scenario.confirm.title/story keys identify display records; empty separators and terminal EOF retained",
+    "body_paragraph_call": "0xFB7A3 -> 0x10EB40; native tokenization, wrapping, advance and immediate glyph rendering",
+    "introduction_calls": [
+      "0xFB80C",
+      "0xFB818",
+      "0xFB824",
+      "0xFB830"
+    ],
+    "introduction_paragraph_call": "0xFB84B -> 0x10EB40",
+    "button_call": "0xFB85F -> 0x114680; existing full-character plain-button metrics",
+    "preserved_values": "English source/story files, native scenario value and generation actions, picture selection, colors, layout, UI caches and continuation input",
+    "historical_refresh": "HDA4 and earlier used the scenario-specific FB7D0 redraw; superseded by global_native_ui_model",
+    "state": "HDA7 stores the accepted native scenario record source and common component ownership; no scenario business replay",
+    "runtime_boundary": "no synthesized input; a publication receipt does not prove visible refresh",
+    "evidence": [
+      "docs/evidence/20261019-scenario-static-boundaries.txt",
+      "docs/evidence/20261019-scenario-static-disassembly.txt",
+      "docs/evidence/20261019-scenario-static-records.txt",
+      "docs/evidence/20261019-scenario-village-native.md"
+    ]
+  },
+  "main_game_hud": {
+    "surface_calls": "modules/adapter/hud_native.inc",
+    "renderer_component": "FAA30 -> 111560 -> 10E260 -> 10DE90",
+    "portrait_density_boundary": "FAA4B; native 61BBB04 surface and 61BBB0C software renderer, with native direction textures",
+    "world_text": "08FF70 scoped 10E910 centered lines; 103640 season/month/time; 0907B3 scale width",
+    "vocabulary": [
+      "catalog/zh-CN/hud.tsv",
+      "catalog/zh-CN/world_hud.tsv"
+    ],
+    "scope": "status labels and selected states, penalties, action, direction, speed, command/repeat/help labels, wielded title, date, calendar, region, generated place gloss, scale and map kind",
+    "preserved": "names, native numeric values and units, original English state/lexicons, actions, native controls, positions and caches",
+    "drawing": "complete strings rendered synchronously at actual native target density; native width, wrap, centering and cursor paths consume matching font metrics",
+    "refresh_boundary": "common neutral status Cell/Summary, full world-map and renderer factory sources; no forced FA2A0/F9200/FAA30 business replay",
+    "evidence": [
+      "docs/evidence/hud-right-static.txt",
+      "docs/evidence/world-hud-static.txt",
+      "docs/evidence/hud-redraw-static.txt",
+      "docs/evidence/hud-refresh-static.txt",
+      "docs/evidence/20261019-main-game-hud-native.md"
+    ]
+  },
+  "runtime_verification": "not performed; prohibited by project instructions",
+  "load_saved_character": {
+    "entry_rva": "0x124E90",
+    "scope": "native window title and the two empty-save-list messages",
+    "panel_scope_calls": [
+      "0x124FE7",
+      "0x12508D"
+    ],
+    "title_draw_call": "0x115A94",
+    "title_path": "CFFB0 kind 8 -> 115E70 flags 4 -> 1157B0 mode 2; original left alignment",
+    "empty_text_call": "0x12501E",
+    "press_key_text_call": "0x125054",
+    "preserved_values": "English title storage, save enumeration, character names, paths, selection and input actions",
+    "measurement": "existing complete-string font metrics update native 10E5A0 cursor advance",
+    "drawing": "immediate glyph output to the native physical-density surface; native panel and caches",
+    "refresh": "common component/cache invalidation rebuilds native display sources; save enumeration is not replayed",
+    "evidence": "docs/evidence/20261019-load-saved-character-native.md"
+  },
+  "language_toggle": {
+    "shortcut": "Shift+F10",
+    "input_hooks": [
+      "0xD1CD4",
+      "0xD26AB"
+    ],
+    "common_input_result_hook": "0xD12B4 synchronizes native selection and repaint state only",
+    "intro_mode_boundary": "0x18097D -> 0x1254C0",
+    "behavior": "display only; common Scene invalidation resolves the selected language through the same full native component consumers and cache constructors; no per-page reentry table",
+    "state": "HDA7/NGT2; Windows Host ABI remains 1 but that does not imply state compatibility with HDA4/NGT1"
+  },
+  "character_creation_complete": {
+    "function_rva": "0x12F80",
+    "text_calls_rva": [
+      "0x131D7",
+      "0x13264",
+      "0x132EB",
+      "0x13320"
+    ],
+    "button_call_rva": "0x13334",
+    "native_consumers": "10E910 centered complete text and 114680 plain button; native font metrics, glyph advance, target pixels and caches",
+    "identity": "Display-only name plus culture; UTF-8/Nordic name preserved, culture ID at A32A6F5 uses the existing ten-culture vocabulary. Native sprintf buffers and English player data are unchanged.",
+    "historical_refresh": "HDA4 and earlier rebuilt a fresh 12F80 page frame; superseded by common component sources without character-generation or save replay",
+    "evidence": [
+      "docs/evidence/20261019-character-creation-complete-native.md",
+      "docs/evidence/creation-complete-disassembly.txt",
+      "docs/evidence/creation-complete-ghidra.c"
+    ]
+  },
+  "linux_progress_sync": {
+    "status": "Historical Windows synchronization from Linux 70fcd90; resource and refresh details below predate global_native_ui_model",
+    "source_commit": "70fcd90",
+    "target": "Windows x86 PE e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9",
+    "encyclopedia": "All 312 topics / 313 GAME.NFO records, native link words and navigation; same GAME.NFO SHA256 as Linux",
+    "culture": "Culture previews and both map legends; E3A6F native 200x160 surface and E3DD2 native map target at output density",
+    "skills_spells": "Skills names, mastery, point limits, confirmation Y/N; 25 spell names/descriptions and initial/general/instant help at PE display consumers; DFFB9 scopes the spell texture footer, with title/complete summary/F1 caption at 3CE45/3CF2F/3CFA8 using spells vocabulary and the original SPELLS identity",
+    "creation": "Season, portrait, full attribute confirmation, world generation 12 fields, scenario selection 29 fields, all 13 story titles/199 records and game-course 20 fields",
+    "names": "UTF-8 in original 13-byte name field, original 12-byte input budget, whole-scalar backspace, native SDL IME and cursor; Windows StrUnicode ASCII filenames retained",
+    "farewell": "11 fields at native title/showtext/centext/button consumers; no pure redraw entry established for an already drawn farewell page",
+    "drawing": "Complete native strings measured and drawn synchronously at actual native surface/renderer density; game owns wrap, controls, hit regions, caches and presentation",
+    "historical_resource_metadata": "NGT1 stored identity and density only; current NGT2 additionally stores confirmed neutral native constructors, not pixels or glyph replay lists",
+    "historical_main_menu_refresh": "HDA4 balanced page-specific background/footer/menu redraw; current common sources supersede that route",
+    "evidence": [
+      "docs/evidence/20261019-windows-progress-sync.md",
+      "docs/evidence/20261019-windows-creation-sync-native.md",
+      "docs/evidence/20261019-windows-chinese-input.md",
+      "docs/evidence/20261019-windows-renderer-text.md",
+      "docs/evidence/20261019-windows-profile-encyclopedia-sync.md"
+    ]
+  },
+  "build_adaptation": {
+    "baseline_profile": "urw-3.89-steam-25939378.json",
+    "native_version_string_rva": "0x1AFAC0",
+    "native_version_string": "3.89.1",
+    "data_references": "Explicit old-to-new +0x10 RVA list in modules/adapter/windows_3891_rdata.inc; catalog semantic keys remain unchanged.",
+    "call_sites": {
+      "0xBC7A9": "0xBC7B9",
+      "0xBCD46": "0xBCD56",
+      "0xBEB63": "0xBEB73",
+      "0xBEEE2": "0xBEEF2"
+    },
+    "inline_operands": {
+      "0xFAAA4": "0x1AA314 -> 0x1AA324",
+      "0xE3DD2": "0x1DDAB0 -> 0x1DDAC0"
+    },
+    "baseline_metadata": "Unqualified addresses and historical entries below retain baseline semantic identities. Physical migrated data references and CALL sites are resolved by the build adapter; historical source_commit/target fields describe their original implementation.",
+    "validation": "Read-only PE/manifest/resource inspection and source review; no game execution or tests."
+  }
+}

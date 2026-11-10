@@ -4,11 +4,13 @@
 
 URWCN 是 **Byayoi 同人社区**的《不真实的世界》（UnReal World）汉化作品。
 
+Windows 2026-11-10 已完成 3.89.1 / Steam Build `26139145` 的静态构建适配、统一队列编译和正式发布；同时保留 3.89 支持。目录选择后的指纹拒绝源于游戏更新，已按新版调用点与数据地址同步修正，继续使用根 `uwcn_launcher.exe`；未运行游戏或测试，详见 [3.89.1 适配及发布回执](docs/evidence/20261110-windows-3891-delivery.md)。
+
 Windows 2026-10-20 的启动修正已正式发布：消息 Hook `C70C` 改到完整 `MOV ECX` 边界；文化图例 11 行文字统一读取实际文字参数，修正把颜色当指针导致的闪退。旧文件先移入 `回收/`，继续使用根 `uwcn_launcher.exe`。本次仅离线分析用户转储，没有自行运行或测试；最新源码、编译和发布回执见 [文化图例文字参数修正](docs/evidence/20261020-culture-legend-text-argument-fix.md)，前一项见 [Hook 边界修正记录](docs/evidence/20261020-startup-native-hook-boundary-fix.md)。
 
 社区官网：[byayoi.org](https://byayoi.org/)
 
-项目仓库：[pokemonchw/urwcn](https://github.com/pokemonchw/urwcn)。适配目标为 **UnReal World 3.89 / Steam Build 25939378**，包含 Windows x86 与 Linux x86-64 原生分支。Linux 的接入范围及尚待确认的高清边界见 [Linux 移植记录](docs/evidence/20261019-linux-native-port.md)，下文既有热发布回执属于 Windows。中文在已确认的原生文本构建、格式化和显示边界生成，游戏继续管理布局、控件、输入和缓存，Mod 负责字形绘制；游戏业务、内部英文数据和设置动作保持原有语义。
+项目仓库：[pokemonchw/urwcn](https://github.com/pokemonchw/urwcn)。Windows x86 适配目标为 **不真实的世界 3.89 / Steam Build 25939378** 和 **3.89.1 / Steam Build 26139145**；Linux x86-64 分支仍对应旧版 3.89。新版的固定调用点及只读数据引用按静态证据分别适配，详见 [3.89.1 适配记录](docs/evidence/20261110-windows-3891-delivery.md)。Linux 的接入范围及尚待确认的高清边界见 [Linux 移植记录](docs/evidence/20261019-linux-native-port.md)，下文既有热发布回执属于 Windows。中文在已确认的原生文本构建、格式化和显示边界生成，游戏继续管理布局、控件、输入和缓存，Mod 负责字形绘制；游戏业务、内部英文数据和设置动作保持原有语义。
 
 共用消息区已接入中性文本来源与原生分页，当前 Windows 源码、业务库及生成词库已编译和正式发布。动态来源及已知历史数据边界见 [消息区交付记录](docs/evidence/20261020-shared-message-delivery.md)；词库项数不代表所有任意历史消息都可恢复其语义来源。
 
@@ -175,7 +177,7 @@ Linux 随机世界生成页已完成源码汉化、统一队列编译及正式�
 
 统一构建入口为根 `build.ps1` / `build-queue.ps1`。正式启动器固定在根目录：Linux 为 `uwcn_launcher`，Windows 为 `uwcn_launcher.exe`；驻留桥和六个业务库分别位于 `package/uwcn_loader.dll`、`package/modules/`。替换旧正式文件前先移入根 `回收/` 的事务目录；没有备用运行包。
 
-Windows 用户启动入口为根 `uwcn_launcher.exe`，默认游戏路径为 `D:\program\steam\steamapps\common\UnRealWorld\urw.exe`；也可传入 `--game "游戏完整路径"`。Windows 启动器核对已确认版本，在新建进程的游戏 PE 入口前装入正式驻留桥和模块，再恢复入口。当前 ABI 1 是本轮新框架，不声称能在历史 ABI 3 驻留桥上原位迁移。
+Windows 用户启动入口为根 `uwcn_launcher.exe`，游戏目录保存在启动器旁的 `uwcn_launcher.ini` 的 `[launcher]` / `game_directory` 项。首次未配置目录，或指定目录中不存在 `urw.exe` 时，弹出系统目录选择框；选择包含 `urw.exe` 的目录后保存，取消则退出。也可传入 `--game "游戏完整路径"` 或 `--game-dir "游戏目录"` 指定并保存目录；需要更换目录时可使用这些参数或编辑配置文件。目录选择不绕过版本指纹校验。Windows 启动器核对已确认版本，在新建进程的游戏 PE 入口前装入正式驻留桥和模块，再恢复入口。当前 ABI 1 是本轮新框架，不声称能在历史 ABI 3 驻留桥上原位迁移。
 
 设置页已于批次 `bcd418e7f1574fe98569bea56747dd10`、事务 `80bf73a354c74db594bf27a86fe98fd9` 完成源码接入、统一队列编译和正式发布。Adapter、Semantic、词库、构建适配及发布清单的旧五件先移入 `回收/20261019-024201-80bf73a354c74db594bf27a86fe98fd9/`；正式清单十项 SHA-256 均与磁盘一致，既有进程 `65412` 返回 Applied。启动器与驻留桥沿用原文件。Applied 表示模块交接完成，不代表视觉验收；已经打开的设置页标题和底部缓存，等原生重新构建该页才更新。详见 [设置页交付记录](docs/evidence/20261019-setup-options-native.md)。此前 03 位置调整仍以 [署名交付记录](docs/evidence/20261019-footer-branding-native.md) 为准。
 

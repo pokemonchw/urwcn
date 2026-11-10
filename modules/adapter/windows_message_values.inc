@@ -725,9 +725,22 @@ const char* transform_domain(u32 site) {
     }
 }
 #include "windows_message_value_builders.inc"
+u32 physical_call_site(u32 legacy_site) {
+    if(windows_build::is_3891()) {
+        switch(legacy_site) {
+        case 0xbc7a9:return 0xbc7b9;
+        case 0xbcd46:return 0xbcd56;
+        case 0xbeb63:return 0xbeb73;
+        case 0xbeee2:return 0xbeef2;
+        }
+    }
+    return legacy_site;
+}
 void append_hooks(std::vector<HookSpec>& hooks) {
+    // Keep sites[] as semantic source identities, including transform_domain's
+    // BC7A9 descriptor case; only the four confirmed physical CALL sites move.
     for(u32 i=0;i<sizeof(sites)/sizeof(sites[0]);++i)
-        hooks.push_back(native_name_input::native_call(first_hook+i,sites[i].site,sites[i].target,0));
+        hooks.push_back(native_name_input::native_call(first_hook+i,physical_call_site(sites[i].site),sites[i].target,0));
     append_builder_hooks(hooks);
 }
 Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {

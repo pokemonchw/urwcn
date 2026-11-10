@@ -5,6 +5,7 @@
 /package/
 /*_launcher.exe
 /uwcn_launcher
+/uwcn_launcher.ini
 *.o
 *.obj
 *.dll

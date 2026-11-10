@@ -3,6 +3,7 @@
 #endif
 #include <windows.h>
 #include <shellapi.h>
+#include <shobjidl.h>
 #include <tlhelp32.h>
 #include <bcrypt.h>
 #include <array>
@@ -13,6 +14,30 @@
 #include <cstdint>
 
 static constexpr wchar_t expected_hash[]=L"e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9";
+// Both fixed Windows builds use the native contracts recorded in the profiles.
+static constexpr wchar_t expected_hash_3891[]=L"c6ed73642c1b1cb1f86b818c7586224398c2f0554f6114ced31bc40ff071806d";
+static HRESULT choose_game_directory(std::wstring& directory) {
+    const HRESULT initialized=CoInitializeEx(nullptr,COINIT_APARTMENTTHREADED|COINIT_DISABLE_OLE1DDE);
+    if(FAILED(initialized)) return initialized;
+    IFileOpenDialog* dialog=nullptr;
+    HRESULT result=CoCreateInstance(CLSID_FileOpenDialog,nullptr,CLSCTX_INPROC_SERVER,IID_PPV_ARGS(&dialog));
+    if(SUCCEEDED(result)) {
+        result=dialog->SetOptions(FOS_PICKFOLDERS|FOS_FORCEFILESYSTEM|FOS_PATHMUSTEXIST|FOS_NOCHANGEDIR);
+        if(SUCCEEDED(result)) result=dialog->SetTitle(L"请选择不真实的世界游戏目录（包含 urw.exe）");
+        if(SUCCEEDED(result)) result=dialog->Show(nullptr);
+        IShellItem* selected=nullptr;
+        if(SUCCEEDED(result)) result=dialog->GetResult(&selected);
+        if(SUCCEEDED(result)) {
+            PWSTR path=nullptr;
+            result=selected->GetDisplayName(SIGDN_FILESYSPATH,&path);
+            if(SUCCEEDED(result)) { directory=path; CoTaskMemFree(path); }
+            selected->Release();
+        }
+        dialog->Release();
+    }
+    CoUninitialize();
+    return result;
+}
 static std::wstring sha256(const std::wstring& path) {
     std::ifstream file(std::filesystem::path(path),std::ios::binary);
     if(!file) return {};
@@ -95,17 +120,39 @@ static bool remote_call(HANDLE process,std::uintptr_t function,void* argument,DW
     CloseHandle(thread); return ok;
 }
 int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int) {
-    std::wstring game=L"D:\\program\\steam\\steamapps\\common\\UnRealWorld\\urw.exe";
+    wchar_t own_path[32768]{}; GetModuleFileNameW(nullptr,own_path,32768);
+    const auto launcher_directory=std::filesystem::path(own_path).parent_path();
+    const auto configuration=(launcher_directory/L"uwcn_launcher.ini").wstring();
+    wchar_t configured_directory[32768]{};
+    GetPrivateProfileStringW(L"launcher",L"game_directory",L"",configured_directory,32768,configuration.c_str());
+    std::wstring game;
+    if(configured_directory[0]) game=(std::filesystem::path(configured_directory)/L"urw.exe").wstring();
     int count=0; LPWSTR* arguments=CommandLineToArgvW(GetCommandLineW(),&count);
     if(!arguments) return 1;
     if(count==3 && std::wstring(arguments[1])==L"--game") game=arguments[2];
-    else if(count!=1) { LocalFree(arguments); MessageBoxW(nullptr,L"用法：uwcn_launcher.exe [--game 游戏完整路径]",L"UWCn",MB_ICONERROR); return 1; }
+    else if(count==3 && std::wstring(arguments[1])==L"--game-dir") game=(std::filesystem::path(arguments[2])/L"urw.exe").wstring();
+    else if(count!=1) { LocalFree(arguments); MessageBoxW(nullptr,L"用法：uwcn_launcher.exe [--game 游戏完整路径 | --game-dir 游戏目录]",L"UWCn",MB_ICONERROR); return 1; }
     LocalFree(arguments);
+    while(game.empty() || GetFileAttributesW(game.c_str())==INVALID_FILE_ATTRIBUTES || (GetFileAttributesW(game.c_str())&FILE_ATTRIBUTE_DIRECTORY)) {
+        std::wstring directory;
+        const HRESULT selected=choose_game_directory(directory);
+        if(selected==HRESULT_FROM_WIN32(ERROR_CANCELLED)) return 0;
+        if(FAILED(selected)) { MessageBoxW(nullptr,L"无法打开游戏目录选择框。",L"UWCn",MB_ICONERROR); return 1; }
+        game=(std::filesystem::path(directory)/L"urw.exe").wstring();
+    }
     game=std::filesystem::absolute(game).wstring();
-    if(sha256(game)!=expected_hash) { MessageBoxW(nullptr,L"游戏文件指纹不符合已确认的 UnReal World 3.89 Steam Build 25939378。未启动游戏。",L"UWCn",MB_ICONERROR); return 1; }
+    const auto game_directory=std::filesystem::path(game).parent_path().wstring();
+    if(!WritePrivateProfileStringW(L"launcher",L"game_directory",game_directory.c_str(),configuration.c_str())) {
+        MessageBoxW(nullptr,L"无法保存启动器旁的 uwcn_launcher.ini 游戏目录配置。",L"UWCn",MB_ICONERROR); return 1;
+    }
+    const auto game_hash=sha256(game);
+    if(game_hash!=expected_hash && game_hash!=expected_hash_3891) {
+        const auto message=L"游戏文件指纹不符合已确认的不真实的世界版本。\n已适配：3.89（Build 25939378）、3.89.1（Build 26139145）。\n游戏文件："+game+
+            L"\n读取的 SHA-256："+game_hash+L"\n未启动游戏。";
+        MessageBoxW(nullptr,message.c_str(),L"UWCn",MB_ICONERROR); return 1;
+    }
     const DWORD game_entry=entry_rva(game);
     if(!game_entry) { MessageBoxW(nullptr,L"游戏 PE32 入口无效。未启动游戏。",L"UWCn",MB_ICONERROR); return 1; }
-    wchar_t own_path[32768]{}; GetModuleFileNameW(nullptr,own_path,32768);
     const std::wstring loader=(std::filesystem::path(own_path).parent_path()/L"package"/L"uwcn_loader.dll").wstring();
     HMODULE mapped=LoadLibraryExW(loader.c_str(),nullptr,DONT_RESOLVE_DLL_REFERENCES);
     if(!mapped) { MessageBoxW(nullptr,L"无法读取正式 package/uwcn_loader.dll。",L"UWCn",MB_ICONERROR); return 1; }

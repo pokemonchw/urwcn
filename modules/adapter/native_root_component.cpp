@@ -1,4 +1,5 @@
 #include "native_root_component.h"
+#include "windows_build.h"
 #include <algorithm>
 #include <array>
 #include <cstring>
@@ -119,7 +120,7 @@ struct BackgroundCall {
 struct NativeRect { std::int32_t x,y,w,h; };
 
 BackgroundSource clear_source() {
-    const auto& rect=*at<NativeRect>(0x1DDAB0);
+    const auto& rect=*at<NativeRect>(windows_build::rdata_rva(0x1DDAB0));
     return {SourceKind::native_clear,0,rect.w,rect.h,{}};
 }
 
@@ -128,7 +129,7 @@ int paint_clear() {
     // This is the same native target, native rectangle and color consumed by
     // 10B9F0 at 10BA17. Its original upload/present tail is not part of paint.
     const auto fill=*at<Fill>(0x18C1E8);
-    return fill(*at<void*>(0x61BBB10),at<NativeRect>(0x1DDAB0),0);
+    return fill(*at<void*>(0x61BBB10),at<NativeRect>(windows_build::rdata_rva(0x1DDAB0)),0);
 }
 }
 

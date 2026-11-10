@@ -1,4 +1,5 @@
 #include "native_renderer_component_binding.h"
+#include "windows_build.h"
 #include "native_component_binding.h"
 #include "native_root_component.h"
 #include "native_targets.h"
@@ -383,12 +384,12 @@ void register_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(footer_panel,0x3CDED,0x1166C0,6));
     hooks.push_back({hud_frame_begin,HookKind::inline_code,0xFAA53,0,0,5,{0x68,0xFF,0,0,0}});
     HookSpec frame{hud_frame_end,HookKind::inline_code,0xFAAA4,0,0,7,{0x66,0x8B,0x0D}};
-    const auto first_label=static_cast<u32>(base+0x1AA314);std::memcpy(frame.expected+3,&first_label,4);hooks.push_back(frame);
+    const auto first_label=static_cast<u32>(base+windows_build::rdata_rva(0x1AA314));std::memcpy(frame.expected+3,&first_label,4);hooks.push_back(frame);
     HookSpec overlay{hud_overlay_begin,HookKind::inline_code,0xFB00D,0,0,6,{0xFF,0x35}};
     const auto renderer=static_cast<u32>(base+main_renderer);std::memcpy(overlay.expected+2,&renderer,4);hooks.push_back(overlay);
     hooks.push_back(call(map_factory,0xE5ACA,0xE3D90,0));
     HookSpec map{map_created,HookKind::inline_code,0xE3DD2,0,0,7,{0x0F,0x28,0x05}};
-    const auto map_rect=static_cast<u32>(base+0x1DDAB0);std::memcpy(map.expected+3,&map_rect,4);hooks.push_back(map);
+    const auto map_rect=static_cast<u32>(base+windows_build::rdata_rva(0x1DDAB0));std::memcpy(map.expected+3,&map_rect,4);hooks.push_back(map);
     hooks.push_back(call(map_title,0xE3E22,0x113430,0));
     hooks.push_back(call(map_help,0xE3E2C,0x162530,0));
     hooks.push_back(call(map_consumer_first,0xE5ACF,0xE3EE0,0));
