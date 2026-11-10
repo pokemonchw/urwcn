@@ -3,6 +3,7 @@
 // No HUD coordinates, persistent fields or drawing replay are stored.
 namespace native_hud_language {u32 display_units();}
 Status bind_hud_location(const NativeEvent&);
+Status lend_hud_command(const NativeEvent&);
 enum HudHook : u32 {
     hud_surface_first=0x6000,
     hud_command=0x6100,hud_repeat,hud_help,hud_wielded,
@@ -93,9 +94,9 @@ Status hud_identity_display(const NativeEvent& e,const char* original,std::vecto
 Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
     if(e.id>=hud_surface_first && e.id<hud_surface_first+std::size(hud_surface_calls)) {
-        // F8E20 owns the complete native cell, including its label, number,
-        // bar and native cache record. Its prepared source is already current.
-        if(e.id==hud_surface_first && native_component_binding::consuming_component()) return Status::ok;
+        // F8E20 may already have borrowed the encoded label. An enclosing
+        // component alone does not establish that this actual label is Chinese.
+        if(e.id==hud_surface_first && native_name_input::contains_display(ptr<char>(e.arguments[0]))) return Status::ok;
         // The native arithmetic '+' separator uses the same label primitive.
         // Its statically identified literal remains native punctuation.
         if(e.id==hud_surface_first && e.arguments[0]==address(at<char>(0x1AA240))) return Status::ok;
@@ -111,16 +112,9 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
         return hud_lend(e,TextComponent::hud_penalty,0,Scope::hud_penalty,nullptr,1);
     switch(e.id) {
     case hud_command:
-        if(std::strcmp(ptr<char>(e.arguments[0]),"Wield")==0) {
-            native_component_binding::bind_source(e,native_text_resource::from_request(
-                {TextComponent::message_value,"Wield","inventory.ui"}));
-            return Status::ok;
-        }
-        // This call also consumes native command descriptions. Only its literal
-        // heading branch has the statically confirmed Command: pointer.
         if(e.arguments[0]==address(at<char>(0x1AA14C)))
             return hud_lend(e,TextComponent::hud_label,0,Scope::text);
-        return Status::ok;
+        return lend_hud_command(e);
     case hud_repeat: case hud_help:
         begin(e,Scope::hud_button); return Status::ok;
     case hud_wielded:

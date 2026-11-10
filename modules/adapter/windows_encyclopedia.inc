@@ -29,7 +29,10 @@ enum WindowsEncyclopediaHook : u32 {
     we_texture_preview_summary,we_texture_preview_button,
     we_map_software_title=0x79A0,we_map_renderer_title,
     we_map_software_first=0x79B0,we_map_renderer_first=0x79C0,
-    we_select_wait=0x79D4
+    we_select_wait=0x79D4,
+    we_map_marker_title=0x79D5,we_map_marker_first=0x79D6,
+    we_map_control_first=0x79E8,we_map_control_draw=0x79EE,
+    we_map_zoom_hint,we_map_zoom_keys
 };
 constexpr u32 we_flow_begin=0x57F1;
 const WindowsEncyclopediaTopic* windows_encyclopedia_topic;
@@ -150,13 +153,13 @@ Status windows_culture_width(const char* input,std::int32_t& width) {
     }
     return Status::ok;
 }
-Status windows_culture_lend(const NativeEvent& e,const std::string& key,u32& destination,Scope scope) {
+Status windows_culture_lend(const NativeEvent& e,const std::string& key,u32& destination,Scope scope,u32 outline=0) {
     std::string original;
     auto status=decode_parser_original(ptr<char>(destination),original);
     if(status!=Status::ok)return status;
     std::vector<char> encoded;
     status=translate(TextComponent::culture_text,original.c_str(),key.c_str(),encoded);
-    return status==Status::ok ? lend_text(e,encoded,destination,scope) : status;
+    return status==Status::ok ? lend_text(e,encoded,destination,scope,outline) : status;
 }
 Status windows_culture_paragraph(const NativeEvent& e,const std::string& key) {
     std::string original;
@@ -278,8 +281,64 @@ constexpr WindowsCultureMapCall windows_culture_map_calls[]{
     {0xE12F6,0xE3BA5,"owl_tribe"},{0xE1315,0xE3BC2,"seal_tribe"},
     {0xE1334,0xE3BE2,"njerpez"}
 };
+struct WindowsMapTextCall {u32 site;const char* key;};
+constexpr WindowsMapTextCall windows_map_marker_calls[]{
+    {0xE3132,"map.marker.you"},{0xE3207,"map.marker.village"},
+    {0xE32D1,"map.marker.cave"},{0xE339A,"map.marker.shelter"},
+    {0xE346F,"map.marker.settlement"},{0xE351E,"map.marker.trap"},
+    {0xE35CD,"map.marker.net"},{0xE36FC,"map.marker.marked"},
+    {0xE3859,"map.marker.quest"},{0xE38BE,"map.marker.quest_area"},
+    {0xE39E4,"map.marker.goods"}
+};
+// Original CALL identities, with no positions or output-row identities.
+constexpr WindowsMapTextCall windows_map_control_calls[]{
+    {0xE5D01,"map.control.markers"},{0xE5D23,"map.control.custom"},
+    {0xE5D51,"map.control.quests"},{0xE5D73,"map.control.cultures"},
+    {0xE5D95,"map.control.cursor"},{0xE5DB4,"map.control.exit"}
+};
+constexpr WindowsMapTextCall windows_map_dialog_control_calls[]{
+    {0xE452D,"map.marker.edit_text"},{0xE461E,"map.marker.remove"},
+    {0xE463D,"map.control.exit"},{0xE4B60,nullptr}
+};
+Status windows_map_control_text(const WindowsMapTextCall& call,const char* original,std::vector<char>& encoded) {
+    // E4B60 labels the actual player marker with its native letter key.
+    if(!call.key) return native_name_input::display(original,encoded);
+    return resolve_display_text(TextComponent::culture_text,original,call.key,encoded);
+}
+const WindowsMapTextCall* windows_map_control() {
+    // The resident CALL bridge replaces CFD10's stack return address. Keep
+    // the real enclosing CALL identity for this synchronous constructor.
+    for(auto scope=active.rbegin();scope!=active.rend();++scope) {
+        const auto index=static_cast<u32>(scope->kind)-static_cast<u32>(Scope::known_map_control_first);
+        if(index<std::size(windows_map_control_calls)) return &windows_map_control_calls[index];
+        const auto dialog=static_cast<u32>(scope->kind)-static_cast<u32>(Scope::known_map_dialog_control_first);
+        if(dialog<std::size(windows_map_dialog_control_calls)) return &windows_map_dialog_control_calls[dialog];
+    }
+    return nullptr;
+}
 Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
+    // Existing native_renderer_component_binding map_help CALL; do not patch
+    // E3E2C twice or inspect read_info's bridged return-address slot.
+    if(e.id==0x7D9D) {
+        if(e.phase==NativePhase::before) begin(e,Scope::known_map_help);
+        return Status::ok;
+    }
+    if(e.id>=we_map_control_first && e.id<we_map_control_first+std::size(windows_map_control_calls)) {
+        if(e.phase==NativePhase::before) {
+            begin(e,static_cast<Scope>(static_cast<u32>(Scope::known_map_control_first)+e.id-we_map_control_first));
+        } else if(e.phase==NativePhase::after) {
+            const auto& call=windows_map_control_calls[e.id-we_map_control_first];
+            // Each of these distinct actions follows E5B75's fresh Menu.
+            // CFD10 has appended this actual native row. Its stored English
+            // label and action remain original; only display consumers borrow
+            // Chinese. The binding also serves the original selection redraw.
+            const auto source=native_text_resource::from_request({TextComponent::culture_text,
+                ptr<char>(e.arguments[2]),call.key});
+            native_menu_component::commit_row(native_menu_component::active(),*at<u32>(0x5F54A34)-1,source);
+        }
+        return Status::ok;
+    }
     if(e.phase==NativePhase::after) {
         if(e.id>=we_source_first&&e.id<we_source_first+3) {
             // The game uses UCRT FILEs. Its own fgetpos import returns the
@@ -321,6 +380,9 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
     if(e.id>=we_map_renderer_first&&e.id<we_map_renderer_first+std::size(windows_culture_map_calls))
         return windows_culture_lend(e,std::string("topic.")+windows_culture_map_calls[e.id-we_map_renderer_first].key+".title",
                                    e.arguments[1],Scope::hud_renderer);
+    if(e.id>=we_map_marker_first && e.id<we_map_marker_first+std::size(windows_map_marker_calls))
+        return windows_culture_lend(e,windows_map_marker_calls[e.id-we_map_marker_first].key,
+            e.arguments[1],Scope::hud_renderer_text,e.arguments[3]&1u);
     if(e.id>=we_intro_first&&e.id<we_intro_first+10)
         return windows_culture_paragraph(e,"ui.intro_"+std::to_string(334200+(e.id-we_intro_first)*14));
     if(e.id>=we_navigation_first&&e.id<we_navigation_first+4) {
@@ -471,6 +533,9 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
     case we_help_append:
         if(!windows_skill_help_sources.empty()) return windows_skill_help_record(e);
         if(windows_encyclopedia_help)return windows_culture_paragraph(e,"ui.help_"+std::to_string(++windows_encyclopedia_help_record));
+        // These are actual file-record identities, not rendered line slots.
+        if(windows_build::is_3891() && in(Scope::known_map_help))
+            return windows_culture_paragraph(e,std::string("map.help.")+ptr<char>(e.frame->edx));
         return Status::ok;
     case we_preview_title:
         if(windows_encyclopedia_preview)return windows_culture_lend(e,std::string("topic.")+windows_encyclopedia_preview->key+
@@ -502,6 +567,17 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         return Status::ok;
     case we_map_software_title:return windows_culture_lend(e,"map.indicators_title",e.arguments[2],Scope::profile_panel);
     case we_map_renderer_title:return windows_culture_lend(e,"map.title",e.arguments[3],Scope::hud_renderer);
+    case we_map_marker_title:return windows_culture_lend(e,"map.marker.title",e.arguments[3],Scope::hud_renderer);
+    case we_map_control_draw:
+        if(const auto* control=windows_map_control()) {
+            std::vector<char> encoded;
+            const auto status=windows_map_control_text(*control,ptr<char>(e.arguments[1]),encoded);
+            if(status!=Status::ok) return status;
+            return lend_text(e,encoded,e.arguments[1],Scope::hud_renderer_text,e.arguments[3]&1u);
+        }
+        return Status::ok;
+    case we_map_zoom_hint:return windows_culture_lend(e,"map.zoom.hint",e.arguments[1],Scope::hud_renderer_text,e.arguments[3]&1u);
+    case we_map_zoom_keys:return windows_culture_lend(e,"map.zoom.keys",e.arguments[1],Scope::hud_renderer_text,e.arguments[3]&1u);
     default:handled=false;return Status::ok;
     }
 }
@@ -566,6 +642,16 @@ void append_windows_encyclopedia_hooks(std::vector<HookSpec>& hooks) {
     for(u32 i=0;i<std::size(windows_culture_map_calls);++i) {
         hooks.push_back(call(we_map_software_first+i,windows_culture_map_calls[i].software,0x10E5A0,3));
         hooks.push_back(call(we_map_renderer_first+i,windows_culture_map_calls[i].renderer,0x10E260,4));
+    }
+    if(windows_build::is_3891()) {
+        hooks.push_back(call(we_map_marker_title,0xE3084,0x1166C0,6));
+        for(u32 i=0;i<std::size(windows_map_marker_calls);++i)
+            hooks.push_back(call(we_map_marker_first+i,windows_map_marker_calls[i].site,0x10E260,4));
+        for(u32 i=0;i<std::size(windows_map_control_calls);++i)
+            hooks.push_back(call(we_map_control_first+i,windows_map_control_calls[i].site,0xCFD10,3));
+        hooks.push_back(call(we_map_control_draw,0xCFDF6,0x114D20,4));
+        hooks.push_back(call(we_map_zoom_hint,0xE5E00,0x10E260,4));
+        hooks.push_back(call(we_map_zoom_keys,0xE5E4A,0x114D20,4));
     }
 }
 

@@ -118,6 +118,8 @@ Surface* __cdecl create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 
         site==0x10C289 || site==0x10C48A || site==0x10C628 || site==0x10C3B1;
     const bool fade_owner=site==0x10D5E8 || site==0x10D65B;
     const bool culture_owner=site==0xE3A6F;
+    const bool marker_owner=windows_build::is_3891() && site==0xE3055;
+    const bool map_info_owner=windows_build::is_3891() && site==0xE554D;
     const bool help_owner=site==0x103ABB || site==0x103BF6;
     const SurfaceSource neutral{flags,w,h,depth,r,g,b,a};
     const Scale component_scale{w,h,
@@ -127,11 +129,11 @@ Surface* __cdecl create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 
         const Rect physical=scoped::physical_rect({0,0,w,h},&canvas);
         w=physical.w; h=physical.h;
     }
-    if(culture_owner || help_owner) { w=component_scale.physical_width;h=component_scale.physical_height; }
+    if(culture_owner || marker_owner || map_info_owner || help_owner) { w=component_scale.physical_width;h=component_scale.physical_height; }
     if(help_owner) help_upload_scale=component_scale;
     auto* result=api.CreateRGBSurface(flags,w,h,depth,r,g,b,a);
     if(result && (canvas_owner || fade_owner)) surfaces.emplace(result,canvas);
-    if(result && (culture_owner || help_owner)) surfaces.emplace(result,component_scale);
+    if(result && (culture_owner || marker_owner || map_info_owner || help_owner)) surfaces.emplace(result,component_scale);
     if(result && (canvas_owner || help_owner)) surface_sources.emplace(result,neutral);
     return result;
 }
@@ -203,7 +205,8 @@ Texture* __cdecl create_texture(Renderer* renderer,u32 format,int access,int w,i
     // 157D10 and 158CE0 create the quest detail/list target. Their owner,
     // constructor inputs, logical size and ordinary destruction stay native.
     const bool quest=windows_build::is_3891() && (site==0x157DAF || site==0x158D75);
-    const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2 || site==0x116EF2 || site==0x105340 || quest;
+    const bool map_marker=windows_build::is_3891() && (site==0xE418E || site==0xE49EF);
+    const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2 || site==0x116EF2 || site==0x105340 || quest || map_marker;
     if(component) return make_component_texture(renderer,format,access,w,h);
     if(upload) {
         if(output_scale()!=Status::ok) return nullptr;

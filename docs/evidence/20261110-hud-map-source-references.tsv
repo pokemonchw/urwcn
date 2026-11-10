@@ -1,0 +1,2896 @@
+function_va	name	site_va	reference_va	kind	candidate_literal
+004f8e20	hud_penalty_cell	004f8e84	0050e5a0	call	
+004f8e20	hud_penalty_cell	004f8ec7	0058b5dc	call	
+004f8e20	hud_penalty_cell	004f8eef	0058b5dc	call	
+004f8e20	hud_penalty_cell	004f8f04	00511480	call	
+004f8e20	hud_penalty_cell	004f8f49	EXTERNAL:00000034	call	
+004f8e20	hud_penalty_cell	004f8f59	0050e5a0	call	
+004f8f80	hud_heading	004f8f91	005aa144	data_candidate	bg-rpanel.png
+004f8f80	hud_heading	004f8f96	00512980	call	
+004f8f80	hud_heading	004f8fb2	EXTERNAL:00000034	call	
+004f8f80	hud_heading	004f8fcc	EXTERNAL:00000034	call	
+004f8f80	hud_heading	004f8feb	00515e70	call	
+004f8f80	hud_heading	004f9019	0050e5a0	call	
+004f9030	hud_identity	004f904e	EXTERNAL:00000034	call	
+004f9030	hud_identity	004f9068	EXTERNAL:00000034	call	
+004f9030	hud_identity	004f9087	00515e70	call	
+004f9030	hud_identity	004f90b5	0050e5a0	call	
+004f90d0	hud_command	004f90eb	004010d0	call	
+004f90d0	hud_command	004f9118	005aa154	data_candidate	INIT
+004f90d0	hud_command	004f9122	005aa154	data_candidate	INIT
+004f90d0	hud_command	004f9122	005aa156	data_candidate	IT
+004f90d0	hud_command	004f912d	005aa155	data_candidate	NIT
+004f90d0	hud_command	004f912d	005aa157	data_candidate	T
+004f90d0	hud_command	004f9161	00516270	call	
+004f90d0	hud_command	004f9182	EXTERNAL:00000034	call	
+004f90d0	hud_command	004f9191	005aa15c	data_candidate	Command: 
+004f90d0	hud_command	004f91ad	EXTERNAL:00000030	call	
+004f90d0	hud_command	004f91cf	EXTERNAL:00000034	call	
+004f90d0	hud_command	004f91e7	0050e5a0	call	
+004f90d0	hud_command	004f91f5	0058a0ae	call	
+004f9200	hud_wielded	004f9276	EXTERNAL:00000034	call	
+004f9200	hud_wielded	004f9290	00515e70	call	
+004f9200	hud_wielded	004f9297	005aa168	data_candidate	Wielded weapons/tools
+004f9200	hud_wielded	004f92a5	005157b0	call	
+004f9200	hud_wielded	004f92bc	0058ae60	call	
+004f9200	hud_wielded	004f92f7	0043f440	call	
+004f9200	hud_wielded	004f930f	00452640	call	
+004f9200	hud_wielded	004f935d	004c0190	call	
+004f9200	hud_wielded	004f937c	00590524	data_candidate	SHIELD
+004f9200	hud_wielded	004f9383	00590524	data_candidate	SHIELD
+004f9200	hud_wielded	004f9383	00590526	data_candidate	IELD
+004f9200	hud_wielded	004f938e	00590525	data_candidate	HIELD
+004f9200	hud_wielded	004f938e	00590527	data_candidate	ELD
+004f9200	hud_wielded	004f93fa	005aa180	data_candidate	 -- CENTER
+004f9200	hud_wielded	004f9405	005aa184	data_candidate	CENTER
+004f9200	hud_wielded	004f940e	005aa188	data_candidate	ER
+004f9200	hud_wielded	004f943f	005aa18c	data_candidate	 -- HIGH
+004f9200	hud_wielded	004f9449	005aa190	data_candidate	HIGH
+004f9200	hud_wielded	004f947b	005aa198	data_candidate	 -- RIGHT
+004f9200	hud_wielded	004f9482	005aa19c	data_candidate	RIGHT
+004f9200	hud_wielded	004f948a	005aa1a0	data_candidate	T
+004f9200	hud_wielded	004f94a0	005aa1a4	data_candidate	 -- LEFT
+004f9200	hud_wielded	004f94a7	005aa1a8	data_candidate	LEFT
+004f9200	hud_wielded	004f94c8	005903bc	data_candidate	%d
+004f9200	hud_wielded	004f94ce	004010d0	call	
+004f9200	hud_wielded	004f94e8	00514680	call	
+004f9200	hud_wielded	004f9508	EXTERNAL:00000034	call	
+004f9200	hud_wielded	004f951c	00511480	call	
+004f9200	hud_wielded	004f953b	EXTERNAL:00000034	call	
+004f9200	hud_wielded	004f9557	005aa1b0	data_candidate	w
+004f9200	hud_wielded	004f955c	00514680	call	
+004f9200	hud_wielded	004f957c	EXTERNAL:00000034	call	
+004f9200	hud_wielded	004f9590	00511480	call	
+004f9200	hud_wielded	004f95af	EXTERNAL:00000034	call	
+004f9200	hud_wielded	004f95b8	0058d3e8	data_candidate	-
+004f9200	hud_wielded	004f95c3	0050e5a0	call	
+004f9200	hud_wielded	004f95ed	0058a0ae	call	
+004f9600	hud_repeat	004f9642	EXTERNAL:00000034	call	
+004f9600	hud_repeat	004f964e	005aa1b4	data_candidate	r.Repeat:
+004f9600	hud_repeat	004f9660	00514680	call	
+004f9600	hud_repeat	004f967c	EXTERNAL:00000034	call	
+004f9600	hud_repeat	004f9690	00511480	call	
+004f9600	hud_repeat	004f96af	EXTERNAL:00000034	call	
+004f9600	hud_repeat	004f96c1	0050e5a0	call	
+004f9600	hud_repeat	004f96eb	00563190	call	
+004f9600	hud_repeat	004f96f5	0058c670	data_candidate	%s
+004f9600	hud_repeat	004f96fb	004010d0	call	
+004f9600	hud_repeat	004f9717	004076c0	call	
+004f9600	hud_repeat	004f9721	0058c670	data_candidate	%s
+004f9600	hud_repeat	004f9727	004010d0	call	
+004f9600	hud_repeat	004f9752	0058ae60	call	
+004f9600	hud_repeat	004f976e	005aa1c0	data_candidate	(mod) 
+004f9600	hud_repeat	004f9775	005aa1c4	data_candidate	) 
+004f9600	hud_repeat	004f97bc	0046c8b0	call	
+004f9600	hud_repeat	004f97fd	0058ae60	call	
+004f9600	hud_repeat	004f983c	0046c8b0	call	
+004f9600	hud_repeat	004f9891	0058f738	data_candidate	..
+004f9600	hud_repeat	004f98bb	EXTERNAL:00000030	call	
+004f9600	hud_repeat	004f98da	EXTERNAL:00000034	call	
+004f9600	hud_repeat	004f98f1	0050e5a0	call	
+004f9600	hud_repeat	004f9905	0058a0ae	call	
+004f9910	hud_conditions	004f995c	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f997a	00515e70	call	
+004f9910	hud_conditions	004f999b	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f99ab	005aa1c8	data_candidate	Hunger:
+004f9910	hud_conditions	004f99b0	0050e5a0	call	
+004f9910	hud_conditions	004f99d1	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f99e1	005aa1d0	data_candidate	Thirst:
+004f9910	hud_conditions	004f99e6	0050e5a0	call	
+004f9910	hud_conditions	004f9a07	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9a17	005aa1d8	data_candidate	Nutrition:
+004f9910	hud_conditions	004f9a1c	0050e5a0	call	
+004f9910	hud_conditions	004f9a3d	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9a4d	005aa1e4	data_candidate	Warmth:
+004f9910	hud_conditions	004f9a52	0050e5a0	call	
+004f9910	hud_conditions	004f9a73	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9a83	005aa1ec	data_candidate	Vigour:
+004f9910	hud_conditions	004f9a8d	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9aab	00515e70	call	
+004f9910	hud_conditions	004f9ac4	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9ae5	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9afc	0050d900	call	
+004f9910	hud_conditions	004f9b21	00514340	call	
+004f9910	hud_conditions	004f9b43	00514340	call	
+004f9910	hud_conditions	004f9b65	00514340	call	
+004f9910	hud_conditions	004f9b87	00514340	call	
+004f9910	hud_conditions	004f9b9c	005aa1f4	data_candidate	Nutrition/Warmth/Vigour
+004f9910	hud_conditions	004f9ba1	0050e5a0	call	
+004f9910	hud_conditions	004f9bb3	005aa20c	data_candidate	e
+004f9910	hud_conditions	004f9bb8	00514680	call	
+004f9910	hud_conditions	004f9bd9	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9bdf	005aa1c8	data_candidate	Hunger:
+004f9910	hud_conditions	004f9bee	0050e5a0	call	
+004f9910	hud_conditions	004f9c64	0058b5dc	call	
+004f9910	hud_conditions	004f9cbe	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9d0e	0058b5dc	call	
+004f9910	hud_conditions	004f9d36	0058b5dc	call	
+004f9910	hud_conditions	004f9d5d	0050d170	call	
+004f9910	hud_conditions	004f9d75	005aa210	data_candidate	q
+004f9910	hud_conditions	004f9d82	00514680	call	
+004f9910	hud_conditions	004f9da3	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9db1	005aa1d0	data_candidate	Thirst:
+004f9910	hud_conditions	004f9db6	0050e5a0	call	
+004f9910	hud_conditions	004f9dfc	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9e4e	0058b5dc	call	
+004f9910	hud_conditions	004f9e76	0058b5dc	call	
+004f9910	hud_conditions	004f9e98	0050d170	call	
+004f9910	hud_conditions	004f9ec5	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9ed5	005aa1d8	data_candidate	Nutrition:
+004f9910	hud_conditions	004f9eda	0050e5a0	call	
+004f9910	hud_conditions	004f9ef1	0055ff80	call	
+004f9910	hud_conditions	004f9f1b	00511480	call	
+004f9910	hud_conditions	004f9f2d	0055ff80	call	
+004f9910	hud_conditions	004f9f57	00511480	call	
+004f9910	hud_conditions	004f9f70	0050e5a0	call	
+004f9910	hud_conditions	004f9f7e	0055f450	call	
+004f9910	hud_conditions	004f9fd4	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004f9ffe	00511480	call	
+004f9910	hud_conditions	004fa02e	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004fa05a	00511480	call	
+004f9910	hud_conditions	004fa074	0050e5a0	call	
+004f9910	hud_conditions	004fa0a0	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004fa0b5	0058e938	data_candidate	 QZ
+004f9910	hud_conditions	004fa0da	0058e940	data_candidate	´QZ
+004f9910	hud_conditions	004fa0fc	0058e944	data_candidate	ÀQZ
+004f9910	hud_conditions	004fa11e	0058e948	data_candidate	ÈQZ
+004f9910	hud_conditions	004fa136	0058e94c	data_candidate	ÐQZ
+004f9910	hud_conditions	004fa146	0058e950	data_candidate	àQZ
+004f9910	hud_conditions	004fa14e	0058e93c	data_candidate	¬QZ
+004f9910	hud_conditions	004fa17a	00511480	call	
+004f9910	hud_conditions	004fa18e	EXTERNAL:00000034	call	
+004f9910	hud_conditions	004fa1a3	0058e938	data_candidate	 QZ
+004f9910	hud_conditions	004fa1c8	0058e940	data_candidate	´QZ
+004f9910	hud_conditions	004fa1ea	0058e944	data_candidate	ÀQZ
+004f9910	hud_conditions	004fa20c	0058e948	data_candidate	ÈQZ
+004f9910	hud_conditions	004fa224	0058e94c	data_candidate	ÐQZ
+004f9910	hud_conditions	004fa234	0058e950	data_candidate	àQZ
+004f9910	hud_conditions	004fa23c	0058e93c	data_candidate	¬QZ
+004f9910	hud_conditions	004fa268	00511480	call	
+004f9910	hud_conditions	004fa27d	005a51a0	data_candidate	Vigorous
+004f9910	hud_conditions	004fa27e	0050e5a0	call	
+004f9910	hud_conditions	004fa292	0058a0ae	call	
+004fa2a0	hud_complete	004fa2d3	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa2e2	005aa144	data_candidate	bg-rpanel.png
+004fa2a0	hud_complete	004fa2fb	00512980	call	
+004fa2a0	hud_complete	004fa31a	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa33f	00516270	call	
+004fa2a0	hud_complete	004fa34e	005aa154	data_candidate	INIT
+004fa2a0	hud_complete	004fa353	004f90d0	call	
+004fa2a0	hud_complete	004fa35a	004f9600	call	
+004fa2a0	hud_complete	004fa380	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa38c	005aa214	data_candidate	ESC.Help and game options
+004fa2a0	hud_complete	004fa394	00514680	call	
+004fa2a0	hud_complete	004fa3da	0058ae60	call	
+004fa2a0	hud_complete	004fa3ec	0058c680	data_candidate	%s %s
+004fa2a0	hud_complete	004fa3f2	004010d0	call	
+004fa2a0	hud_complete	004fa426	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa444	00516270	call	
+004fa2a0	hud_complete	004fa474	00511070	call	
+004fa2a0	hud_complete	004fa4c0	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa4d8	0050e5a0	call	
+004fa2a0	hud_complete	004fa4f3	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa507	0050e5a0	call	
+004fa2a0	hud_complete	004fa526	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa547	00516270	call	
+004fa2a0	hud_complete	004fa551	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa568	005113a0	call	
+004fa2a0	hud_complete	004fa587	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa599	0044b2f0	call	
+004fa2a0	hud_complete	004fa5a7	005aa230	data_candidate	Carrying
+004fa2a0	hud_complete	004fa5af	004f8e20	call	
+004fa2a0	hud_complete	004fa5cb	005aa23c	data_candidate	Penalty:
+004fa2a0	hud_complete	004fa5d3	004f8e20	call	
+004fa2a0	hud_complete	004fa5f5	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa600	0058c8c0	data_candidate	 
+004fa2a0	hud_complete	004fa605	005aa248	data_candidate	Fatigue
+004fa2a0	hud_complete	004fa60d	004f8e20	call	
+004fa2a0	hud_complete	004fa623	005aa250	data_candidate	   +
+004fa2a0	hud_complete	004fa62b	004f8e20	call	
+004fa2a0	hud_complete	004fa64d	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa658	0058c8c0	data_candidate	 
+004fa2a0	hud_complete	004fa65d	005aa258	data_candidate	Injury
+004fa2a0	hud_complete	004fa665	004f8e20	call	
+004fa2a0	hud_complete	004fa67b	005aa250	data_candidate	   +
+004fa2a0	hud_complete	004fa683	004f8e20	call	
+004fa2a0	hud_complete	004fa6a5	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa6b0	0058c8c0	data_candidate	 
+004fa2a0	hud_complete	004fa6b5	005aa260	data_candidate	Starvation
+004fa2a0	hud_complete	004fa6bd	004f8e20	call	
+004fa2a0	hud_complete	004fa6d3	005aa250	data_candidate	   +
+004fa2a0	hud_complete	004fa6db	004f8e20	call	
+004fa2a0	hud_complete	004fa6f1	005aa26c	data_candidate	Total:
+004fa2a0	hud_complete	004fa6f9	004f8e20	call	
+004fa2a0	hud_complete	004fa71b	EXTERNAL:00000034	call	
+004fa2a0	hud_complete	004fa72b	005aa274	data_candidate	Bloodloss
+004fa2a0	hud_complete	004fa733	004f8e20	call	
+004fa2a0	hud_complete	004fa73d	004f9200	call	
+004fa2a0	hud_complete	004fa744	004f9910	call	
+004fa2a0	hud_complete	004fa752	0050af90	call	
+004fa2a0	hud_complete	004fa760	00510040	call	
+004fa2a0	hud_complete	004fa777	0050b3c0	call	
+004fa2a0	hud_complete	004fa78b	EXTERNAL:00000055	call	
+004fa2a0	hud_complete	004fa79c	0058a0ae	call	
+004fa860	hud_direction	004fa896	0058b5a6	call	
+004fa860	hud_direction	004fa8c0	0058b5dc	call	
+004faa30	hud_widget	004faa6d	EXTERNAL:0000002f	call	
+004faa30	hud_widget	004faa7a	EXTERNAL:00000031	call	
+004faa30	hud_widget	004faa91	EXTERNAL:0000002f	call	
+004faa30	hud_widget	004faa9e	EXTERNAL:0000002d	call	
+004faa30	hud_widget	004faaa4	005aa324	data_candidate	ng
+004faa30	hud_widget	004faaae	005aa31c	data_candidate	   Walking
+004faa30	hud_widget	004faaf8	005aa330	data_candidate	ng
+004faa30	hud_widget	004faafe	005aa328	data_candidate	   Running
+004faa30	hud_widget	004fab29	005aa334	data_candidate	   Fallen
+004faa30	hud_widget	004fab31	005aa33c	data_candidate	n
+004faa30	hud_widget	004fab44	005aa340	data_candidate	   Sleeping
+004faa30	hud_widget	004fab4c	005aa348	data_candidate	ing
+004faa30	hud_widget	004fab5b	0058ef6c	data_candidate	ÿWWÿBonusMaterial
+004faa30	hud_widget	004fab66	005aa354	data_candidate	ed
+004faa30	hud_widget	004fab6c	005aa34c	data_candidate	   Fainted
+004faa30	hud_widget	004fabad	005aa360	data_candidate	ng
+004faa30	hud_widget	004fabb3	005aa358	data_candidate	   Hauling
+004faa30	hud_widget	004fabd0	005aa36c	data_candidate	g
+004faa30	hud_widget	004fabd6	005aa364	data_candidate	   Wading
+004faa30	hud_widget	004fabf1	005aa378	data_candidate	g
+004faa30	hud_widget	004fabf7	005aa370	data_candidate	   Skiing
+004faa30	hud_widget	004fac0b	005aa384	data_candidate	raft
+004faa30	hud_widget	004fac10	005aa37c	data_candidate	  Watercraft
+004faa30	hud_widget	004fac25	0058ef40	data_candidate	díÿ
+004faa30	hud_widget	004fac2c	005aa394	data_candidate	ing
+004faa30	hud_widget	004fac31	005aa38c	data_candidate	   Swimming
+004faa30	hud_widget	004fac5b	005aa3a0	data_candidate	g
+004faa30	hud_widget	004fac61	005aa398	data_candidate	   Hiding
+004faa30	hud_widget	004fac6e	0058ef68	data_candidate	TüTÿÿWWÿBonusMaterial
+004faa30	hud_widget	004fac9c	00511560	call	
+004faa30	hud_widget	004facc7	0058ea40	data_candidate	¢Z
+004faa30	hud_widget	004facf2	00511560	call	
+004faa30	hud_widget	004facfd	004db960	call	
+004faa30	hud_widget	004fad2d	0058b5dc	call	
+004faa30	hud_widget	004fad4c	005aa3a4	data_candidate	 %d
+004faa30	hud_widget	004fad53	005903bc	data_candidate	%d
+004faa30	hud_widget	004fad59	004010d0	call	
+004faa30	hud_widget	004fad8a	0058b5dc	call	
+004faa30	hud_widget	004fada9	005aa3a4	data_candidate	 %d
+004faa30	hud_widget	004fadb0	005903bc	data_candidate	%d
+004faa30	hud_widget	004fadb6	004010d0	call	
+004faa30	hud_widget	004fadbb	005aa3b0	data_candidate	 mi/h
+004faa30	hud_widget	004fadc3	005aa3a8	data_candidate	Speed:   mi/h
+004faa30	hud_widget	004fadcf	005aa3b4	data_candidate	h
+004faa30	hud_widget	004fadd7	005aa3c0	data_candidate	 km/h
+004faa30	hud_widget	004faddc	005aa3b8	data_candidate	Speed:   km/h
+004faa30	hud_widget	004fade8	005aa3c4	data_candidate	h
+004faa30	hud_widget	004fae38	00511560	call	
+004faa30	hud_widget	004fae5f	0058b5dc	call	
+004faa30	hud_widget	004fae71	004db960	call	
+004faa30	hud_widget	004faea3	0058b5dc	call	
+004faa30	hud_widget	004faec1	0050d030	call	
+004faa30	hud_widget	004faeff	0050e260	call	
+004faa30	hud_widget	004fafe0	EXTERNAL:0000002a	call	
+004faa30	hud_widget	004faff4	EXTERNAL:00000058	call	
+004faa30	hud_widget	004fb004	EXTERNAL:0000002f	call	
+004faa30	hud_widget	004fb013	EXTERNAL:0000003f	call	
+004faa30	hud_widget	004fb043	EXTERNAL:0000002a	call	
+004faa30	hud_widget	004fb04d	EXTERNAL:00000058	call	
+004faa30	hud_widget	004fb140	EXTERNAL:0000002b	call	
+004faa30	hud_widget	004fb16c	EXTERNAL:00000029	call	
+004faa30	hud_widget	004fb187	EXTERNAL:00000058	call	
+004faa30	hud_widget	004fb1b3	EXTERNAL:0000002a	call	
+004faa30	hud_widget	004fb1c0	EXTERNAL:0000003b	call	
+004faa30	hud_widget	004fb1e5	EXTERNAL:0000002b	call	
+004faa30	hud_widget	004fb1f3	EXTERNAL:00000058	call	
+004faa30	hud_widget	004fb239	EXTERNAL:00000037	call	
+004faa30	hud_widget	004fb242	00516e20	call	
+004faa30	hud_widget	004fb288	0058a0ae	call	
+004ff040	hud_starvation	004ff07b	004fef00	call	
+004ff040	hud_starvation	004ff08c	005aacc4	data_candidate	None
+004ff040	hud_starvation	004ff0b1	005aaccc	data_candidate	-%d%%
+004ff040	hud_starvation	004ff0b7	004010d0	call	
+004ff040	hud_starvation	004ff0d0	EXTERNAL:00000034	call	
+004ff040	hud_starvation	004ff10f	004fef00	call	
+004ff040	hud_starvation	004ff11d	0058a0ae	call	
+004ff040	hud_starvation	004ff131	004fee50	call	
+004ff040	hud_starvation	004ff13f	0058a0ae	call	
+00502d10	hud_penalties	00502d36	0058ae60	call	
+00502d10	hud_penalties	00502d4b	0044b2f0	call	
+00502d10	hud_penalties	00502d55	0058c670	data_candidate	%s
+00502d10	hud_penalties	00502d5b	004010d0	call	
+00502d10	hud_penalties	00502d7d	EXTERNAL:00000034	call	
+00502d10	hud_penalties	00502dba	004fef00	call	
+00502d10	hud_penalties	00502dcd	004fee50	call	
+00502d10	hud_penalties	00502de3	EXTERNAL:00000034	call	
+00502d10	hud_penalties	00502dfd	EXTERNAL:00000030	call	
+00502d10	hud_penalties	00502e1a	EXTERNAL:00000034	call	
+00502d10	hud_penalties	00502e2a	0044b2f0	call	
+00502d10	hud_penalties	00502e3a	0050e5a0	call	
+00502d10	hud_penalties	00502e83	0058b5dc	call	
+00502d10	hud_penalties	00502ebb	0058b5dc	call	
+00502d10	hud_penalties	00502ef6	005aaccc	data_candidate	-%d%%
+00502d10	hud_penalties	00502efc	004010d0	call	
+00502d10	hud_penalties	00502f0f	005aacc4	data_candidate	None
+00502d10	hud_penalties	00502f35	EXTERNAL:00000034	call	
+00502d10	hud_penalties	00502f71	004fef00	call	
+00502d10	hud_penalties	00502f84	004fee50	call	
+00502d10	hud_penalties	00502fa7	0058b5dc	call	
+00502d10	hud_penalties	00502fe1	004fef00	call	
+00502d10	hud_penalties	00502fed	005aacc4	data_candidate	None
+00502d10	hud_penalties	00503012	005aaccc	data_candidate	-%d%%
+00502d10	hud_penalties	00503018	004010d0	call	
+00502d10	hud_penalties	00503031	EXTERNAL:00000034	call	
+00502d10	hud_penalties	0050306d	004fef00	call	
+00502d10	hud_penalties	00503080	004fee50	call	
+00502d10	hud_penalties	005030b0	004fef00	call	
+00502d10	hud_penalties	005030c1	005aacc4	data_candidate	None
+00502d10	hud_penalties	005030e6	005aaccc	data_candidate	-%d%%
+00502d10	hud_penalties	005030ec	004010d0	call	
+00502d10	hud_penalties	00503105	EXTERNAL:00000034	call	
+00502d10	hud_penalties	00503141	004fef00	call	
+00502d10	hud_penalties	00503154	004fee50	call	
+00502d10	hud_penalties	0050318d	004fef00	call	
+00502d10	hud_penalties	005031aa	004db530	call	
+00502d10	hud_penalties	005031bd	005aacc4	data_candidate	None
+00502d10	hud_penalties	005031e2	005aaccc	data_candidate	-%d%%
+00502d10	hud_penalties	005031e8	004010d0	call	
+00502d10	hud_penalties	00503206	EXTERNAL:00000034	call	
+00502d10	hud_penalties	00503242	004fef00	call	
+00502d10	hud_penalties	00503256	0058a0ae	call	
+00502d10	hud_penalties	0050326b	004fee50	call	
+00502d10	hud_penalties	0050327f	0058a0ae	call	
+00503640	hud_calendar	0050367a	0055f8e0	call	
+00503640	hud_calendar	00503687	EXTERNAL:000000e3	call	
+00503640	hud_calendar	005036ab	0048a600	call	
+00503640	hud_calendar	005036d9	EXTERNAL:00000034	call	
+00503640	hud_calendar	005036fe	00516270	call	
+00503640	hud_calendar	0050372d	EXTERNAL:000000e3	call	
+00503640	hud_calendar	00503755	EXTERNAL:00000034	call	
+00503640	hud_calendar	0050376c	0050e5a0	call	
+00503640	hud_calendar	00503782	0055e910	call	
+00503640	hud_calendar	005037a5	EXTERNAL:000000e3	call	
+00503640	hud_calendar	005037bf	00562300	call	
+00503640	hud_calendar	005037db	EXTERNAL:00000034	call	
+00503640	hud_calendar	00503816	0050eb40	call	
+00503640	hud_calendar	00503832	EXTERNAL:00000034	call	
+00503640	hud_calendar	0050385b	0050e5a0	call	
+00503640	hud_calendar	0050388c	0050b720	call	
+00503640	hud_calendar	005038a5	0058a0ae	call	
+004fee50	hud_penalty_value	004fee93	EXTERNAL:00000030	call	
+004fee50	hud_penalty_value	004feec9	0050e5a0	call	
+004fee50	hud_penalty_value	004feed9	0058a0ae	call	
+0048ff70	hud_world_information	0048ff94	0048e4f0	call	
+0048ff70	hud_world_information	0048ffa3	0059d558	data_candidate	"%s"
+0048ff70	hud_world_information	0048ffa9	004010d0	call	
+0048ff70	hud_world_information	0048ffed	0048c160	call	
+0048ff70	hud_world_information	00490004	004ebbc0	call	
+0048ff70	hud_world_information	00490011	0048c160	call	
+0048ff70	hud_world_information	00490028	004ebbc0	call	
+0048ff70	hud_world_information	00490068	EXTERNAL:00000034	call	
+0048ff70	hud_world_information	0049008d	00516270	call	
+0048ff70	hud_world_information	0049009b	0049b040	call	
+0048ff70	hud_world_information	004900c5	EXTERNAL:000000e3	call	
+0048ff70	hud_world_information	004900da	0049b040	call	
+0048ff70	hud_world_information	004900f9	EXTERNAL:000000e3	call	
+0048ff70	hud_world_information	00490111	0059d368	data_candidate	 at 
+0048ff70	hud_world_information	00490117	EXTERNAL:000000bb	call	
+0048ff70	hud_world_information	0049011c	0048c160	call	
+0048ff70	hud_world_information	00490129	0050b320	call	
+0048ff70	hud_world_information	00490139	0058ae60	call	
+0048ff70	hud_world_information	0049014c	0058ae60	call	
+0048ff70	hud_world_information	00490164	0048e3d0	call	
+0048ff70	hud_world_information	0049018b	0048e3d0	call	
+0048ff70	hud_world_information	004901d0	EXTERNAL:00000034	call	
+0048ff70	hud_world_information	004901ea	0050e910	call	
+0048ff70	hud_world_information	00490218	0059d558	data_candidate	"%s"
+0048ff70	hud_world_information	0049021e	004010d0	call	
+0048ff70	hud_world_information	0049023d	EXTERNAL:00000034	call	
+0048ff70	hud_world_information	00490262	005dd6e0	data_candidate	¿
+0048ff70	hud_world_information	00490270	0050e910	call	
+0048ff70	hud_world_information	0049028f	EXTERNAL:00000034	call	
+0048ff70	hud_world_information	004902c8	0050e910	call	
+0048ff70	hud_world_information	004902e4	EXTERNAL:00000034	call	
+0048ff70	hud_world_information	0049031a	0050e910	call	
+0048ff70	hud_world_information	0049032d	004ebbc0	call	
+0048ff70	hud_world_information	00490340	004ebbc0	call	
+0048ff70	hud_world_information	00490355	0048e7a0	call	
+0048ff70	hud_world_information	00490375	00592850	data_candidate	terrain-
+0048ff70	hud_world_information	0049037b	EXTERNAL:000000bb	call	
+0048ff70	hud_world_information	00490398	0059d570	data_candidate	_small.jpg
+0048ff70	hud_world_information	0049039f	0059d574	data_candidate	ll.jpg
+0048ff70	hud_world_information	004903a7	0059d578	data_candidate	pg
+0048ff70	hud_world_information	004903bc	0059d57c	data_candidate	main
+0048ff70	hud_world_information	004903c1	0059d560	data_candidate	regstat_terrain
+0048ff70	hud_world_information	004903cc	00516c10	call	
+0048ff70	hud_world_information	00490418	00407520	call	
+0048ff70	hud_world_information	00490460	005dd200	data_candidate	ff¦?
+0048ff70	hud_world_information	004904aa	EXTERNAL:00000034	call	
+0048ff70	hud_world_information	004904cf	00516270	call	
+0048ff70	hud_world_information	004904ec	0048a600	call	
+0048ff70	hud_world_information	0049050a	0048a310	call	
+0048ff70	hud_world_information	0049052c	0048e4f0	call	
+0048ff70	hud_world_information	00490561	EXTERNAL:00000034	call	
+0048ff70	hud_world_information	00490588	0050e910	call	
+0048ff70	hud_world_information	00490590	0048c160	call	
+0048ff70	hud_world_information	004905a6	0059d58c	data_candidate	ers
+0048ff70	hud_world_information	004905ab	0059d584	data_candidate	=100 meters
+0048ff70	hud_world_information	004905b8	0059d598	data_candidate	ds
+0048ff70	hud_world_information	004905be	0059d590	data_candidate	=100 yards
+0048ff70	hud_world_information	004905e5	EXTERNAL:000000f7	call	
+0048ff70	hud_world_information	004905eb	0059d59c	data_candidate	Wilderness map
+0048ff70	hud_world_information	00490607	0059d5a4	data_candidate	ss map
+0048ff70	hud_world_information	00490612	0059d5a8	data_candidate	ap
+0048ff70	hud_world_information	00490635	0059d5ac	data_candidate	=2 meters
+0048ff70	hud_world_information	0049063d	0059d5b4	data_candidate	s
+0048ff70	hud_world_information	0049064e	0059d5b8	data_candidate	=6 feet
+0048ff70	hud_world_information	00490656	0059d5bc	data_candidate	eet
+0048ff70	hud_world_information	0049066c	EXTERNAL:000000f7	call	
+0048ff70	hud_world_information	00490672	0059d5c0	data_candidate	Zoom map
+0048ff70	hud_world_information	004906b9	0048a600	call	
+0048ff70	hud_world_information	004906d7	0048a310	call	
+0048ff70	hud_world_information	00490705	EXTERNAL:000000e3	call	
+0048ff70	hud_world_information	0049072b	EXTERNAL:00000034	call	
+0048ff70	hud_world_information	0049076b	0050e910	call	
+0048ff70	hud_world_information	004907a5	005dd73c	data_candidate	ffFÀ
+0048ff70	hud_world_information	004907db	0048fe90	call	
+0048ff70	hud_world_information	004907f7	EXTERNAL:00000034	call	
+0048ff70	hud_world_information	0049081f	005dd73c	data_candidate	ffFÀ
+0048ff70	hud_world_information	0049083d	0050e910	call	
+0048ff70	hud_world_information	0049084d	0058a0ae	call	
+0048fe90	hud_scale	0048febc	00514340	call	
+0048fe90	hud_scale	0048feec	00514340	call	
+0048fe90	hud_scale	0048ff11	00514340	call	
+0048fe90	hud_scale	0048ff32	EXTERNAL:00000034	call	
+0048fe90	hud_scale	0048ff44	0050e5a0	call	
+0048e3d0	place_part	0048e404	0058ae60	call	
+0048e3d0	place_part	0048e411	004a8f50	call	
+0048e420	place_combined	0048e45b	0058ae60	call	
+0048e420	place_combined	0048e484	0058ae60	call	
+0048e420	place_combined	0048e491	004a8f50	call	
+0048e420	place_combined	0048e4bd	0058ae60	call	
+0048e420	place_combined	0048e4ca	004a8f50	call	
+0048e420	place_combined	0048e4d4	0059d360	data_candidate	%s "%s"
+0048e420	place_combined	0048e4da	004010d0	call	
+0048e4f0	place_context	0048e512	0058ae60	call	
+0048e4f0	place_context	0048e51a	0048c160	call	
+0048e4f0	place_context	0048e53a	0048c160	call	
+0048e4f0	place_context	0048e549	004ebbc0	call	
+0048e4f0	place_context	0048e556	0048c160	call	
+0048e4f0	place_context	0048e56f	004ebbc0	call	
+0048e4f0	place_context	0048e5b6	0058ae60	call	
+0048e4f0	place_context	0048e602	0048c6f0	call	
+0048e4f0	place_context	0048e60a	00590794	data_candidate	kaumolais
+0048e4f0	place_context	0048e614	00593ccc	data_candidate	%s 
+0048e4f0	place_context	0048e61a	004010d0	call	
+0048e4f0	place_context	0048e627	EXTERNAL:000000e3	call	
+0048e4f0	place_context	0048e637	00407520	call	
+0048e4f0	place_context	0048e68a	0059d368	data_candidate	 at 
+0048e4f0	place_context	0048e6a3	0048e420	call	
+0048e4f0	place_context	0048e6b3	00596a28	data_candidate	%s%s
+0048e4f0	place_context	0048e6b9	004010d0	call	
+0048e4f0	place_context	0048e6f1	0058a0ae	call	
+0049b040	region_description	0049b096	0058ae60	call	
+0049b040	region_description	0049b0fb	0058ae60	call	
+0049b040	region_description	0049b111	0058ae60	call	
+0049b040	region_description	0049b127	0058ae60	call	
+0049b040	region_description	0049b170	0058ae60	call	
+0049b040	region_description	0049b185	0049ad00	call	
+0049b040	region_description	0049b1b2	00596a28	data_candidate	%s%s
+0049b040	region_description	0049b1b8	004010d0	call	
+0049b040	region_description	0049b1d7	0058a0ae	call	
+0049b040	region_description	0049b1e0	0059db00	data_candidate	 land
+0049b040	region_description	0049b1e7	0059daf8	data_candidate	no man's land
+0049b040	region_description	0049b1fb	0059db04	data_candidate	d
+0049b040	region_description	0049b210	0049acc0	call	
+0049b040	region_description	0049b221	0049ad00	call	
+0049b040	region_description	0049b230	0059db08	data_candidate	near %s
+0049b040	region_description	0049b236	004010d0	call	
+0049b040	region_description	0049b25e	0058ae60	call	
+0049b040	region_description	0049b274	00596a28	data_candidate	%s%s
+0049b040	region_description	0049b27a	004010d0	call	
+0049b040	region_description	0049b29a	0058c8c0	data_candidate	 
+0049b040	region_description	0049b307	0058a0ae	call	
+0049b040	region_description	0049b47d	0059db10	data_candidate	north of 
+0049b040	region_description	0049b484	0059db14	data_candidate	h of 
+0049b040	region_description	0049b48c	0059db18	data_candidate	 
+0049b040	region_description	0049b4aa	0059db1c	data_candidate	south of 
+0049b040	region_description	0049b4b1	0059db20	data_candidate	h of 
+0049b040	region_description	0049b4b9	0059db24	data_candidate	 
+0049b040	region_description	0049b4df	0059db28	data_candidate	east of 
+0049b040	region_description	0049b4e6	0059db2c	data_candidate	 of 
+0049b040	region_description	0049b50a	0059db34	data_candidate	west of 
+0049b040	region_description	0049b511	0059db38	data_candidate	 of 
+0049b040	region_description	0049b576	0058ae60	call	
+0049b040	region_description	0049b592	00596a28	data_candidate	%s%s
+0049b040	region_description	0049b598	004010d0	call	
+0049b040	region_description	0049b5ba	0058c8c0	data_candidate	 
+0049b040	region_description	0049b627	0058a0ae	call	
+0049b040	region_description	0049b650	0058ae60	call	
+0049b040	region_description	0049b66c	00596a28	data_candidate	%s%s
+0049b040	region_description	0049b672	004010d0	call	
+0049b040	region_description	0049b684	0058a0ae	call	
+0049ad00	culture_region	0049ad44	0058ae60	call	
+0049ad00	culture_region	0049adbd	0059da70	data_candidate	cult %d [%d,%d - %d,%d]
+0049ad00	culture_region	0049adc3	004010d0	call	
+0049ad00	culture_region	0049adf0	0058ae60	call	
+0049ad00	culture_region	0049adfe	0059da88	data_candidate	northern 
+0049ad00	culture_region	0049ae06	0059da94	data_candidate	southern 
+0049ad00	culture_region	0049ae26	0059da90	data_candidate	 
+0049ad00	culture_region	0049ae4f	0059da90	data_candidate	 
+0049ad00	culture_region	0049ae58	0059da9c	data_candidate	 
+0049ad00	culture_region	0049ae86	0059daa0	data_candidate	western 
+0049ad00	culture_region	0049aebd	0059daac	data_candidate	eastern 
+0049ad00	culture_region	0049aeef	0059dac0	data_candidate	stern 
+0049ad00	culture_region	0049aef4	0059dab8	data_candidate	north-eastern 
+0049ad00	culture_region	0049af02	0059dac4	data_candidate	n 
+0049ad00	culture_region	0049af28	0059dad0	data_candidate	stern 
+0049ad00	culture_region	0049af2d	0059dac8	data_candidate	north-western 
+0049ad00	culture_region	0049af3b	0059dad4	data_candidate	n 
+0049ad00	culture_region	0049af7d	0059dae0	data_candidate	stern 
+0049ad00	culture_region	0049af82	0059dad8	data_candidate	south-eastern 
+0049ad00	culture_region	0049af90	0059dae4	data_candidate	n 
+0049ad00	culture_region	0049afb6	0059daf0	data_candidate	stern 
+0049ad00	culture_region	0049afbb	0059dae8	data_candidate	south-western 
+0049ad00	culture_region	0049afc9	0059daf4	data_candidate	n 
+0049ad00	culture_region	0049afeb	0059da9c	data_candidate	 
+0049ad00	culture_region	0049b014	00596a28	data_candidate	%s%s
+0049ad00	culture_region	0049b01a	004010d0	call	
+0049ad00	culture_region	0049b02c	0058a0ae	call	
+004a8f50	place_generator	004a8f9c	00595a1c	data_candidate	  
+004a8f50	place_generator	004a9178	0058a0ae	call	
+004a3e70	place_lexicon	004a3e7c	0058ae60	call	
+004a3e70	place_lexicon	004a3e8d	0058ae60	call	
+004a3e70	place_lexicon	004a3e92	0059f724	data_candidate	MAA
+004a3e70	place_lexicon	004a3e9b	0059f720	data_candidate	JOKUMAA
+004a3e70	place_lexicon	004a3ec0	0059f730	data_candidate	Avo
+004a3e70	place_lexicon	004a3ec0	0059f731	data_candidate	vo
+004a3e70	place_lexicon	004a3ee0	0059f728	data_candidate	Open_
+004a3e70	place_lexicon	004a3ee0	0059f729	data_candidate	pen_
+004a3e70	place_lexicon	004a3f00	0059f740	data_candidate	Siika
+004a3e70	place_lexicon	004a3f00	0059f741	data_candidate	iika
+004a3e70	place_lexicon	004a3f20	0059f734	data_candidate	Whitefish_
+004a3e70	place_lexicon	004a3f20	0059f735	data_candidate	hitefish_
+004a3e70	place_lexicon	004a3f40	0059f750	data_candidate	Hauki
+004a3e70	place_lexicon	004a3f40	0059f751	data_candidate	auki
+004a3e70	place_lexicon	004a3f60	0059f748	data_candidate	Pike_
+004a3e70	place_lexicon	004a3f60	0059f749	data_candidate	ike_
+004a3e70	place_lexicon	004a3f80	0059f760	data_candidate	Matikka
+004a3e70	place_lexicon	004a3f80	0059f761	data_candidate	atikka
+004a3e70	place_lexicon	004a3fa0	0059f758	data_candidate	Burbot_
+004a3e70	place_lexicon	004a3fa0	0059f759	data_candidate	urbot_
+004a3e70	place_lexicon	004a3fc0	0059f770	data_candidate	Ahven
+004a3e70	place_lexicon	004a3fc0	0059f771	data_candidate	hven
+004a3e70	place_lexicon	004a3fe0	0059f768	data_candidate	Perch_
+004a3e70	place_lexicon	004a3fe0	0059f769	data_candidate	erch_
+004a3e70	place_lexicon	004a4000	0059f780	data_candidate	Lohi
+004a3e70	place_lexicon	004a4000	0059f781	data_candidate	ohi
+004a3e70	place_lexicon	004a4020	0059f778	data_candidate	Salmon_
+004a3e70	place_lexicon	004a4020	0059f779	data_candidate	almon_
+004a3e70	place_lexicon	004a4040	0059f790	data_candidate	Ahdin
+004a3e70	place_lexicon	004a4040	0059f791	data_candidate	hdin
+004a3e70	place_lexicon	004a4060	0059f788	data_candidate	Ahti's_
+004a3e70	place_lexicon	004a4060	0059f789	data_candidate	hti's_
+004a3e70	place_lexicon	004a4080	0059f7a4	data_candidate	Tuura
+004a3e70	place_lexicon	004a4080	0059f7a5	data_candidate	uura
+004a3e70	place_lexicon	004a40a0	0059f798	data_candidate	Ice pick_
+004a3e70	place_lexicon	004a40a0	0059f799	data_candidate	ce pick_
+004a3e70	place_lexicon	004a40c0	0059f7b8	data_candidate	Näkin
+004a3e70	place_lexicon	004a40c0	0059f7b9	data_candidate	äkin
+004a3e70	place_lexicon	004a40e0	0059f7ac	data_candidate	Näkki's_
+004a3e70	place_lexicon	004a40e0	0059f7ad	data_candidate	äkki's_
+004a3e70	place_lexicon	004a4100	0059f7c8	data_candidate	Soutu
+004a3e70	place_lexicon	004a4100	0059f7c9	data_candidate	outu
+004a3e70	place_lexicon	004a4120	0059f7c0	data_candidate	Rowing_
+004a3e70	place_lexicon	004a4120	0059f7c1	data_candidate	owing_
+004a3e70	place_lexicon	004a4140	0059f7d0	data_candidate	Sesta
+004a3e70	place_lexicon	004a4140	0059f7d1	data_candidate	esta
+004a3e70	place_lexicon	004a4160	0059f7d0	data_candidate	Sesta
+004a3e70	place_lexicon	004a4160	0059f7d1	data_candidate	esta
+004a3e70	place_lexicon	004a4180	0059f7e0	data_candidate	Raakku
+004a3e70	place_lexicon	004a4180	0059f7e1	data_candidate	aakku
+004a3e70	place_lexicon	004a41a0	0059f7d8	data_candidate	Mussel_
+004a3e70	place_lexicon	004a41a0	0059f7d9	data_candidate	ussel_
+004a3e70	place_lexicon	004a41c0	0059f7f0	data_candidate	Syvä
+004a3e70	place_lexicon	004a41c0	0059f7f1	data_candidate	yvä
+004a3e70	place_lexicon	004a41e0	0059f7e8	data_candidate	Deep_
+004a3e70	place_lexicon	004a41e0	0059f7e9	data_candidate	eep_
+004a3e70	place_lexicon	004a4200	0059f804	data_candidate	Matala
+004a3e70	place_lexicon	004a4200	0059f805	data_candidate	atala
+004a3e70	place_lexicon	004a4220	0059f7f8	data_candidate	Shallow_
+004a3e70	place_lexicon	004a4220	0059f7f9	data_candidate	hallow_
+004a3e70	place_lexicon	004a4240	0059f814	data_candidate	Kuohu
+004a3e70	place_lexicon	004a4240	0059f815	data_candidate	uohu
+004a3e70	place_lexicon	004a4260	0059f80c	data_candidate	Foam_
+004a3e70	place_lexicon	004a4260	0059f80d	data_candidate	oam_
+004a3e70	place_lexicon	004a4280	0059f824	data_candidate	Tippu
+004a3e70	place_lexicon	004a4280	0059f825	data_candidate	ippu
+004a3e70	place_lexicon	004a42a0	0059f81c	data_candidate	Fall_
+004a3e70	place_lexicon	004a42a0	0059f81d	data_candidate	all_
+004a3e70	place_lexicon	004a42c0	0059f834	data_candidate	Verkko
+004a3e70	place_lexicon	004a42c0	0059f835	data_candidate	erkko
+004a3e70	place_lexicon	004a42e0	0059f82c	data_candidate	Net_
+004a3e70	place_lexicon	004a42e0	0059f82d	data_candidate	et_
+004a3e70	place_lexicon	004a4300	0059f848	data_candidate	Rysä
+004a3e70	place_lexicon	004a4300	0059f849	data_candidate	ysä
+004a3e70	place_lexicon	004a4320	0059f83c	data_candidate	Trappin'_
+004a3e70	place_lexicon	004a4320	0059f83d	data_candidate	rappin'_
+004a3e70	place_lexicon	004a4340	0059f85c	data_candidate	Ruona
+004a3e70	place_lexicon	004a4340	0059f85d	data_candidate	uona
+004a3e70	place_lexicon	004a4360	0059f850	data_candidate	Catching_
+004a3e70	place_lexicon	004a4360	0059f851	data_candidate	atching_
+004a3e70	place_lexicon	004a4380	0059f86c	data_candidate	Ruuhi
+004a3e70	place_lexicon	004a4380	0059f86d	data_candidate	uuhi
+004a3e70	place_lexicon	004a43a0	0059f864	data_candidate	Punt_
+004a3e70	place_lexicon	004a43a0	0059f865	data_candidate	unt_
+004a3e70	place_lexicon	004a43c0	0059f87c	data_candidate	Rauta
+004a3e70	place_lexicon	004a43c0	0059f87d	data_candidate	auta
+004a3e70	place_lexicon	004a43e0	0059f874	data_candidate	Iron
+004a3e70	place_lexicon	004a43e0	0059f875	data_candidate	ron
+004a3e70	place_lexicon	004a4400	0059f88c	data_candidate	Vaski
+004a3e70	place_lexicon	004a4400	0059f88d	data_candidate	aski
+004a3e70	place_lexicon	004a4420	0059f884	data_candidate	Bronze
+004a3e70	place_lexicon	004a4420	0059f885	data_candidate	ronze
+004a3e70	place_lexicon	004a4440	0059f89c	data_candidate	Ruoste
+004a3e70	place_lexicon	004a4440	0059f89d	data_candidate	uoste
+004a3e70	place_lexicon	004a4460	0059f894	data_candidate	Rust
+004a3e70	place_lexicon	004a4460	0059f895	data_candidate	ust
+004a3e70	place_lexicon	004a4480	0059f8ac	data_candidate	Musta
+004a3e70	place_lexicon	004a4480	0059f8ad	data_candidate	usta
+004a3e70	place_lexicon	004a44a0	0059f8a4	data_candidate	Black
+004a3e70	place_lexicon	004a44a0	0059f8a5	data_candidate	lack
+004a3e70	place_lexicon	004a44c0	0059f8bc	data_candidate	Valkia
+004a3e70	place_lexicon	004a44c0	0059f8bd	data_candidate	alkia
+004a3e70	place_lexicon	004a44e0	0059f8b4	data_candidate	White
+004a3e70	place_lexicon	004a44e0	0059f8b5	data_candidate	hite
+004a3e70	place_lexicon	004a4500	0059f8cc	data_candidate	Terä
+004a3e70	place_lexicon	004a4500	0059f8cd	data_candidate	erä
+004a3e70	place_lexicon	004a4520	0059f8c4	data_candidate	Blade
+004a3e70	place_lexicon	004a4520	0059f8c5	data_candidate	lade
+004a3e70	place_lexicon	004a4540	0059f8dc	data_candidate	Pisto
+004a3e70	place_lexicon	004a4540	0059f8dd	data_candidate	isto
+004a3e70	place_lexicon	004a4560	0059f8d4	data_candidate	Point
+004a3e70	place_lexicon	004a4560	0059f8d5	data_candidate	oint
+004a3e70	place_lexicon	004a4580	0059f8ec	data_candidate	Miekka
+004a3e70	place_lexicon	004a4580	0059f8ed	data_candidate	iekka
+004a3e70	place_lexicon	004a45a0	0059f8e4	data_candidate	Sword
+004a3e70	place_lexicon	004a45a0	0059f8e5	data_candidate	word
+004a3e70	place_lexicon	004a45c0	0059f8f8	data_candidate	Malmi
+004a3e70	place_lexicon	004a45c0	0059f8f9	data_candidate	almi
+004a3e70	place_lexicon	004a45e0	0059f8f4	data_candidate	Ore
+004a3e70	place_lexicon	004a45e0	0059f8f5	data_candidate	re
+004a3e70	place_lexicon	004a4600	0059f8f8	data_candidate	Malmi
+004a3e70	place_lexicon	004a4600	0059f8f9	data_candidate	almi
+004a3e70	place_lexicon	004a4620	0059f8f4	data_candidate	Ore
+004a3e70	place_lexicon	004a4620	0059f8f5	data_candidate	re
+004a3e70	place_lexicon	004a4640	0059f908	data_candidate	Miilu
+004a3e70	place_lexicon	004a4640	0059f909	data_candidate	iilu
+004a3e70	place_lexicon	004a4660	0059f900	data_candidate	Kiln
+004a3e70	place_lexicon	004a4660	0059f901	data_candidate	iln
+004a3e70	place_lexicon	004a4680	0059f914	data_candidate	Terva
+004a3e70	place_lexicon	004a4680	0059f915	data_candidate	erva
+004a3e70	place_lexicon	004a46a0	0059f910	data_candidate	Tar
+004a3e70	place_lexicon	004a46a0	0059f911	data_candidate	ar
+004a3e70	place_lexicon	004a46c0	0059f91c	data_candidate	Tervas
+004a3e70	place_lexicon	004a46c0	0059f91d	data_candidate	ervas
+004a3e70	place_lexicon	004a46e0	0059f910	data_candidate	Tar
+004a3e70	place_lexicon	004a46e0	0059f911	data_candidate	ar
+004a3e70	place_lexicon	004a4700	0059f92c	data_candidate	Piki
+004a3e70	place_lexicon	004a4700	0059f92d	data_candidate	iki
+004a3e70	place_lexicon	004a4720	0059f924	data_candidate	Pitch
+004a3e70	place_lexicon	004a4720	0059f925	data_candidate	itch
+004a3e70	place_lexicon	004a4740	0059f93c	data_candidate	Puula
+004a3e70	place_lexicon	004a4740	0059f93d	data_candidate	uula
+004a3e70	place_lexicon	004a4760	0059f934	data_candidate	Woody
+004a3e70	place_lexicon	004a4760	0059f935	data_candidate	oody
+004a3e70	place_lexicon	004a4780	0059f94c	data_candidate	Kannos
+004a3e70	place_lexicon	004a4780	0059f94d	data_candidate	annos
+004a3e70	place_lexicon	004a47a0	0059f944	data_candidate	Fallen
+004a3e70	place_lexicon	004a47a0	0059f945	data_candidate	allen
+004a3e70	place_lexicon	004a47c0	0059f95c	data_candidate	Kanto
+004a3e70	place_lexicon	004a47c0	0059f95d	data_candidate	anto
+004a3e70	place_lexicon	004a47e0	0059f954	data_candidate	Stump
+004a3e70	place_lexicon	004a47e0	0059f955	data_candidate	tump
+004a3e70	place_lexicon	004a4800	0059f970	data_candidate	Kääntö
+004a3e70	place_lexicon	004a4800	0059f971	data_candidate	ääntö
+004a3e70	place_lexicon	004a4820	0059f964	data_candidate	Turning_
+004a3e70	place_lexicon	004a4820	0059f965	data_candidate	urning_
+004a3e70	place_lexicon	004a4840	0059f980	data_candidate	Taival
+004a3e70	place_lexicon	004a4840	0059f981	data_candidate	aival
+004a3e70	place_lexicon	004a4860	0059f978	data_candidate	Passage
+004a3e70	place_lexicon	004a4860	0059f979	data_candidate	assage
+004a3e70	place_lexicon	004a4880	0059f990	data_candidate	Lepo
+004a3e70	place_lexicon	004a4880	0059f991	data_candidate	epo
+004a3e70	place_lexicon	004a48a0	0059f988	data_candidate	Rest
+004a3e70	place_lexicon	004a48a0	0059f989	data_candidate	est
+004a3e70	place_lexicon	004a48c0	0059f9a4	data_candidate	Nukkuma
+004a3e70	place_lexicon	004a48c0	0059f9a5	data_candidate	ukkuma
+004a3e70	place_lexicon	004a48e0	0059f998	data_candidate	Sleeping
+004a3e70	place_lexicon	004a48e0	0059f999	data_candidate	leeping
+004a3e70	place_lexicon	004a4900	0059f9b4	data_candidate	Tuutima
+004a3e70	place_lexicon	004a4900	0059f9b5	data_candidate	uutima
+004a3e70	place_lexicon	004a4920	0059f9ac	data_candidate	Lulling
+004a3e70	place_lexicon	004a4920	0059f9ad	data_candidate	ulling
+004a3e70	place_lexicon	004a4940	0059f9c4	data_candidate	Uni
+004a3e70	place_lexicon	004a4940	0059f9c5	data_candidate	ni
+004a3e70	place_lexicon	004a4960	0059f9bc	data_candidate	Dream
+004a3e70	place_lexicon	004a4960	0059f9bd	data_candidate	ream
+004a3e70	place_lexicon	004a4980	0059f9d0	data_candidate	Yö
+004a3e70	place_lexicon	004a4980	0059f9d1	data_candidate	ö
+004a3e70	place_lexicon	004a49a0	0059f9c8	data_candidate	Night
+004a3e70	place_lexicon	004a49a0	0059f9c9	data_candidate	ight
+004a3e70	place_lexicon	004a49c0	0059f9dc	data_candidate	Syömä
+004a3e70	place_lexicon	004a49c0	0059f9dd	data_candidate	yömä
+004a3e70	place_lexicon	004a49e0	0059f9d4	data_candidate	Munch
+004a3e70	place_lexicon	004a49e0	0059f9d5	data_candidate	unch
+004a3e70	place_lexicon	004a4a00	0059f9ec	data_candidate	Velli
+004a3e70	place_lexicon	004a4a00	0059f9ed	data_candidate	elli
+004a3e70	place_lexicon	004a4a20	0059f9e4	data_candidate	Gruel
+004a3e70	place_lexicon	004a4a20	0059f9e5	data_candidate	ruel
+004a3e70	place_lexicon	004a4a40	0059f9fc	data_candidate	Puoli
+004a3e70	place_lexicon	004a4a40	0059f9fd	data_candidate	uoli
+004a3e70	place_lexicon	004a4a60	0059f9f4	data_candidate	Half
+004a3e70	place_lexicon	004a4a60	0059f9f5	data_candidate	alf
+004a3e70	place_lexicon	004a4a80	0059fa0c	data_candidate	Pala
+004a3e70	place_lexicon	004a4a80	0059fa0d	data_candidate	ala
+004a3e70	place_lexicon	004a4aa0	0059fa04	data_candidate	Piece
+004a3e70	place_lexicon	004a4aa0	0059fa05	data_candidate	iece
+004a3e70	place_lexicon	004a4ac0	0059fa18	data_candidate	Nuokku
+004a3e70	place_lexicon	004a4ac0	0059fa19	data_candidate	uokku
+004a3e70	place_lexicon	004a4ae0	0059fa14	data_candidate	Nod
+004a3e70	place_lexicon	004a4ae0	0059fa15	data_candidate	od
+004a3e70	place_lexicon	004a4b00	0059fa2c	data_candidate	Kutu
+004a3e70	place_lexicon	004a4b00	0059fa2d	data_candidate	utu
+004a3e70	place_lexicon	004a4b20	0059fa20	data_candidate	Spawning_
+004a3e70	place_lexicon	004a4b20	0059fa21	data_candidate	pawning_
+004a3e70	place_lexicon	004a4b40	0059fa3c	data_candidate	Naima
+004a3e70	place_lexicon	004a4b40	0059fa3d	data_candidate	aima
+004a3e70	place_lexicon	004a4b60	0059fa34	data_candidate	Marry
+004a3e70	place_lexicon	004a4b60	0059fa35	data_candidate	arry
+004a3e70	place_lexicon	004a4b80	0059fa44	data_candidate	Juupa
+004a3e70	place_lexicon	004a4b80	0059fa45	data_candidate	uupa
+004a3e70	place_lexicon	004a4ba0	0059fa44	data_candidate	Juupa
+004a3e70	place_lexicon	004a4ba0	0059fa45	data_candidate	uupa
+004a3e70	place_lexicon	004a4bc0	0059fa54	data_candidate	Äijön
+004a3e70	place_lexicon	004a4bc0	0059fa55	data_candidate	ijön
+004a3e70	place_lexicon	004a4be0	0059fa4c	data_candidate	Äijö's_
+004a3e70	place_lexicon	004a4be0	0059fa4d	data_candidate	ijö's_
+004a3e70	place_lexicon	004a4c00	0059fa64	data_candidate	Iso
+004a3e70	place_lexicon	004a4c00	0059fa65	data_candidate	so
+004a3e70	place_lexicon	004a4c20	0059fa5c	data_candidate	Big_
+004a3e70	place_lexicon	004a4c20	0059fa5d	data_candidate	ig_
+004a3e70	place_lexicon	004a4c40	0059fa70	data_candidate	Hirmu
+004a3e70	place_lexicon	004a4c40	0059fa71	data_candidate	irmu
+004a3e70	place_lexicon	004a4c60	0059fa68	data_candidate	Huge_
+004a3e70	place_lexicon	004a4c60	0059fa69	data_candidate	uge_
+004a3e70	place_lexicon	004a4c80	0059fa80	data_candidate	Suur
+004a3e70	place_lexicon	004a4c80	0059fa81	data_candidate	uur
+004a3e70	place_lexicon	004a4ca0	0059fa78	data_candidate	Great_
+004a3e70	place_lexicon	004a4ca0	0059fa79	data_candidate	reat_
+004a3e70	place_lexicon	004a4cc0	0059fa94	data_candidate	Ukon
+004a3e70	place_lexicon	004a4cc0	0059fa95	data_candidate	kon
+004a3e70	place_lexicon	004a4ce0	0059fa88	data_candidate	Old man's_
+004a3e70	place_lexicon	004a4ce0	0059fa89	data_candidate	ld man's_
+004a3e70	place_lexicon	004a4d00	0059faa4	data_candidate	Akan
+004a3e70	place_lexicon	004a4d00	0059faa5	data_candidate	kan
+004a3e70	place_lexicon	004a4d20	0059fa9c	data_candidate	Wive's_
+004a3e70	place_lexicon	004a4d20	0059fa9d	data_candidate	ive's_
+004a3e70	place_lexicon	004a4d40	0059fab0	data_candidate	Kauko
+004a3e70	place_lexicon	004a4d40	0059fab1	data_candidate	auko
+004a3e70	place_lexicon	004a4d60	0059faac	data_candidate	Far
+004a3e70	place_lexicon	004a4d60	0059faad	data_candidate	ar
+004a3e70	place_lexicon	004a4d80	0059fac0	data_candidate	Kova
+004a3e70	place_lexicon	004a4d80	0059fac1	data_candidate	ova
+004a3e70	place_lexicon	004a4da0	0059fab8	data_candidate	Hard
+004a3e70	place_lexicon	004a4da0	0059fab9	data_candidate	ard
+004a3e70	place_lexicon	004a4dc0	0059fad0	data_candidate	Kipu
+004a3e70	place_lexicon	004a4dc0	0059fad1	data_candidate	ipu
+004a3e70	place_lexicon	004a4de0	0059fac8	data_candidate	Pain
+004a3e70	place_lexicon	004a4de0	0059fac9	data_candidate	ain
+004a3e70	place_lexicon	004a4e00	0059fae4	data_candidate	Surma
+004a3e70	place_lexicon	004a4e00	0059fae5	data_candidate	urma
+004a3e70	place_lexicon	004a4e20	0059fad8	data_candidate	Slaughter_
+004a3e70	place_lexicon	004a4e20	0059fad9	data_candidate	laughter_
+004a3e70	place_lexicon	004a4e40	0059faf4	data_candidate	Murhi
+004a3e70	place_lexicon	004a4e40	0059faf5	data_candidate	urhi
+004a3e70	place_lexicon	004a4e60	0059faec	data_candidate	Murder_
+004a3e70	place_lexicon	004a4e60	0059faed	data_candidate	urder_
+004a3e70	place_lexicon	004a4e80	0059fb08	data_candidate	Tappo
+004a3e70	place_lexicon	004a4e80	0059fb09	data_candidate	appo
+004a3e70	place_lexicon	004a4ea0	0059fafc	data_candidate	Killing_
+004a3e70	place_lexicon	004a4ea0	0059fafd	data_candidate	illing_
+004a3e70	place_lexicon	004a4ec0	0059fb18	data_candidate	Veri
+004a3e70	place_lexicon	004a4ec0	0059fb19	data_candidate	eri
+004a3e70	place_lexicon	004a4ee0	0059fb10	data_candidate	Blood_
+004a3e70	place_lexicon	004a4ee0	0059fb11	data_candidate	lood_
+004a3e70	place_lexicon	004a4f00	0059fb28	data_candidate	Hurme
+004a3e70	place_lexicon	004a4f00	0059fb29	data_candidate	urme
+004a3e70	place_lexicon	004a4f20	0059fb20	data_candidate	Gore_
+004a3e70	place_lexicon	004a4f20	0059fb21	data_candidate	ore_
+004a3e70	place_lexicon	004a4f40	0059fb34	data_candidate	Sota
+004a3e70	place_lexicon	004a4f40	0059fb35	data_candidate	ota
+004a3e70	place_lexicon	004a4f60	0059fb30	data_candidate	War
+004a3e70	place_lexicon	004a4f60	0059fb31	data_candidate	ar
+004a3e70	place_lexicon	004a4f80	0059fb48	data_candidate	Lyömä
+004a3e70	place_lexicon	004a4f80	0059fb49	data_candidate	yömä
+004a3e70	place_lexicon	004a4fa0	0059fb3c	data_candidate	Beating_
+004a3e70	place_lexicon	004a4fa0	0059fb3d	data_candidate	eating_
+004a3e70	place_lexicon	004a4fc0	0059fb58	data_candidate	Nyrkki
+004a3e70	place_lexicon	004a4fc0	0059fb59	data_candidate	yrkki
+004a3e70	place_lexicon	004a4fe0	0059fb50	data_candidate	Fist
+004a3e70	place_lexicon	004a4fe0	0059fb51	data_candidate	ist
+004a3e70	place_lexicon	004a5000	0059fb6c	data_candidate	Kaha
+004a3e70	place_lexicon	004a5000	0059fb6d	data_candidate	aha
+004a3e70	place_lexicon	004a5020	0059fb60	data_candidate	Quarrel_
+004a3e70	place_lexicon	004a5020	0059fb61	data_candidate	uarrel_
+004a3e70	place_lexicon	004a5040	0059fb80	data_candidate	Raito
+004a3e70	place_lexicon	004a5040	0059fb81	data_candidate	aito
+004a3e70	place_lexicon	004a5060	0059fb74	data_candidate	Striped_
+004a3e70	place_lexicon	004a5060	0059fb75	data_candidate	triped_
+004a3e70	place_lexicon	004a5080	0059fb90	data_candidate	Tuuli
+004a3e70	place_lexicon	004a5080	0059fb91	data_candidate	uuli
+004a3e70	place_lexicon	004a50a0	0059fb88	data_candidate	Windy
+004a3e70	place_lexicon	004a50a0	0059fb89	data_candidate	indy
+004a3e70	place_lexicon	004a50c0	0059fba0	data_candidate	Viima
+004a3e70	place_lexicon	004a50c0	0059fba1	data_candidate	iima
+004a3e70	place_lexicon	004a50e0	0059fb98	data_candidate	Draught
+004a3e70	place_lexicon	004a50e0	0059fb99	data_candidate	raught
+004a3e70	place_lexicon	004a5100	0059fbb0	data_candidate	Tyyni
+004a3e70	place_lexicon	004a5100	0059fbb1	data_candidate	yyni
+004a3e70	place_lexicon	004a5120	0059fba8	data_candidate	Calm
+004a3e70	place_lexicon	004a5120	0059fba9	data_candidate	alm
+004a3e70	place_lexicon	004a5140	0059fbc4	data_candidate	Tyynys
+004a3e70	place_lexicon	004a5140	0059fbc5	data_candidate	yynys
+004a3e70	place_lexicon	004a5160	0059fbb8	data_candidate	Pacific_
+004a3e70	place_lexicon	004a5160	0059fbb9	data_candidate	acific_
+004a3e70	place_lexicon	004a5180	0059fbd4	data_candidate	Suoja
+004a3e70	place_lexicon	004a5180	0059fbd5	data_candidate	uoja
+004a3e70	place_lexicon	004a51a0	0059fbcc	data_candidate	Safe
+004a3e70	place_lexicon	004a51a0	0059fbcd	data_candidate	afe
+004a3e70	place_lexicon	004a51c0	0059fbe0	data_candidate	Usva
+004a3e70	place_lexicon	004a51c0	0059fbe1	data_candidate	sva
+004a3e70	place_lexicon	004a51e0	0059fbdc	data_candidate	Fog
+004a3e70	place_lexicon	004a51e0	0059fbdd	data_candidate	og
+004a3e70	place_lexicon	004a5200	0059fbf0	data_candidate	Usvi
+004a3e70	place_lexicon	004a5200	0059fbf1	data_candidate	svi
+004a3e70	place_lexicon	004a5220	0059fbe8	data_candidate	Misty
+004a3e70	place_lexicon	004a5220	0059fbe9	data_candidate	isty
+004a3e70	place_lexicon	004a5240	0059fc00	data_candidate	Kilo
+004a3e70	place_lexicon	004a5240	0059fc01	data_candidate	ilo
+004a3e70	place_lexicon	004a5260	0059fbf8	data_candidate	Sunny
+004a3e70	place_lexicon	004a5260	0059fbf9	data_candidate	unny
+004a3e70	place_lexicon	004a5280	0059fc0c	data_candidate	Päivä
+004a3e70	place_lexicon	004a5280	0059fc0d	data_candidate	äivä
+004a3e70	place_lexicon	004a52a0	0059fc08	data_candidate	Day
+004a3e70	place_lexicon	004a52a0	0059fc09	data_candidate	ay
+004a3e70	place_lexicon	004a52c0	0059fc1c	data_candidate	Suvi
+004a3e70	place_lexicon	004a52c0	0059fc1d	data_candidate	uvi
+004a3e70	place_lexicon	004a52e0	0059fc14	data_candidate	Summer
+004a3e70	place_lexicon	004a52e0	0059fc15	data_candidate	ummer
+004a3e70	place_lexicon	004a5300	0059fc24	data_candidate	Terhen
+004a3e70	place_lexicon	004a5300	0059fc25	data_candidate	erhen
+004a3e70	place_lexicon	004a5320	0059fbe8	data_candidate	Misty
+004a3e70	place_lexicon	004a5320	0059fbe9	data_candidate	isty
+004a3e70	place_lexicon	004a5340	0059fc30	data_candidate	Päivö
+004a3e70	place_lexicon	004a5340	0059fc31	data_candidate	äivö
+004a3e70	place_lexicon	004a5360	0059fc2c	data_candidate	Sun
+004a3e70	place_lexicon	004a5360	0059fc2d	data_candidate	un
+004a3e70	place_lexicon	004a5380	0059fc44	data_candidate	Pyry
+004a3e70	place_lexicon	004a5380	0059fc45	data_candidate	yry
+004a3e70	place_lexicon	004a53a0	0059fc38	data_candidate	Blizzard
+004a3e70	place_lexicon	004a53a0	0059fc39	data_candidate	lizzard
+004a3e70	place_lexicon	004a53c0	0059fc54	data_candidate	Vihma
+004a3e70	place_lexicon	004a53c0	0059fc55	data_candidate	ihma
+004a3e70	place_lexicon	004a53e0	0059fc4c	data_candidate	Drizzle
+004a3e70	place_lexicon	004a53e0	0059fc4d	data_candidate	rizzle
+004a3e70	place_lexicon	004a5400	0059fc64	data_candidate	Vihmo
+004a3e70	place_lexicon	004a5400	0059fc65	data_candidate	ihmo
+004a3e70	place_lexicon	004a5420	0059fc5c	data_candidate	Drizzly
+004a3e70	place_lexicon	004a5420	0059fc5d	data_candidate	rizzly
+004a3e70	place_lexicon	004a5440	0059fc74	data_candidate	Myrsky
+004a3e70	place_lexicon	004a5440	0059fc75	data_candidate	yrsky
+004a3e70	place_lexicon	004a5460	0059fc6c	data_candidate	Storm
+004a3e70	place_lexicon	004a5460	0059fc6d	data_candidate	torm
+004a3e70	place_lexicon	004a5480	0059fc84	data_candidate	Myrryn
+004a3e70	place_lexicon	004a5480	0059fc85	data_candidate	yrryn
+004a3e70	place_lexicon	004a54a0	0059fc7c	data_candidate	Storm's
+004a3e70	place_lexicon	004a54a0	0059fc7d	data_candidate	torm's
+004a3e70	place_lexicon	004a54c0	0059fc94	data_candidate	Tuisku
+004a3e70	place_lexicon	004a54c0	0059fc95	data_candidate	uisku
+004a3e70	place_lexicon	004a54e0	0059fc8c	data_candidate	Whirl
+004a3e70	place_lexicon	004a54e0	0059fc8d	data_candidate	hirl
+004a3e70	place_lexicon	004a5500	0059fca4	data_candidate	Pilvi
+004a3e70	place_lexicon	004a5500	0059fca5	data_candidate	ilvi
+004a3e70	place_lexicon	004a5520	0059fc9c	data_candidate	Cloud
+004a3e70	place_lexicon	004a5520	0059fc9d	data_candidate	loud
+004a3e70	place_lexicon	004a5540	0059fcb4	data_candidate	Kumo
+004a3e70	place_lexicon	004a5540	0059fcb5	data_candidate	umo
+004a3e70	place_lexicon	004a5560	0059fcac	data_candidate	Noisy
+004a3e70	place_lexicon	004a5560	0059fcad	data_candidate	oisy
+004a3e70	place_lexicon	004a5580	0059fcc4	data_candidate	Lurun
+004a3e70	place_lexicon	004a5580	0059fcc5	data_candidate	urun
+004a3e70	place_lexicon	004a55a0	0059fcbc	data_candidate	Luru's_
+004a3e70	place_lexicon	004a55a0	0059fcbd	data_candidate	uru's_
+004a3e70	place_lexicon	004a55c0	0059fcd4	data_candidate	Appo
+004a3e70	place_lexicon	004a55c0	0059fcd5	data_candidate	ppo
+004a3e70	place_lexicon	004a55e0	0059fccc	data_candidate	Gaping
+004a3e70	place_lexicon	004a55e0	0059fccd	data_candidate	aping
+004a3e70	place_lexicon	004a5600	0059fce4	data_candidate	Juuku
+004a3e70	place_lexicon	004a5600	0059fce5	data_candidate	uuku
+004a3e70	place_lexicon	004a5620	0059fcdc	data_candidate	Still
+004a3e70	place_lexicon	004a5620	0059fcdd	data_candidate	till
+004a3e70	place_lexicon	004a5640	0059fcf4	data_candidate	Hitu
+004a3e70	place_lexicon	004a5640	0059fcf5	data_candidate	itu
+004a3e70	place_lexicon	004a5660	0059fcec	data_candidate	Flake
+004a3e70	place_lexicon	004a5660	0059fced	data_candidate	lake
+004a3e70	place_lexicon	004a5680	0059fd04	data_candidate	Keski
+004a3e70	place_lexicon	004a5680	0059fd05	data_candidate	eski
+004a3e70	place_lexicon	004a56a0	0059fcfc	data_candidate	Middle_
+004a3e70	place_lexicon	004a56a0	0059fcfd	data_candidate	iddle_
+004a3e70	place_lexicon	004a56c0	0059fd14	data_candidate	Pahto
+004a3e70	place_lexicon	004a56c0	0059fd15	data_candidate	ahto
+004a3e70	place_lexicon	004a56e0	0059fd0c	data_candidate	Cliffen
+004a3e70	place_lexicon	004a56e0	0059fd0d	data_candidate	liffen
+004a3e70	place_lexicon	004a5700	0059fd24	data_candidate	Toppo
+004a3e70	place_lexicon	004a5700	0059fd25	data_candidate	oppo
+004a3e70	place_lexicon	004a5720	0059fd1c	data_candidate	Quilt
+004a3e70	place_lexicon	004a5720	0059fd1d	data_candidate	uilt
+004a3e70	place_lexicon	004a5740	0059fd34	data_candidate	Kailo
+004a3e70	place_lexicon	004a5740	0059fd35	data_candidate	ailo
+004a3e70	place_lexicon	004a5760	0059fd2c	data_candidate	Holler
+004a3e70	place_lexicon	004a5760	0059fd2d	data_candidate	oller
+004a3e70	place_lexicon	004a5780	0059fd44	data_candidate	Lappa
+004a3e70	place_lexicon	004a5780	0059fd45	data_candidate	appa
+004a3e70	place_lexicon	004a57a0	0059fd3c	data_candidate	Packing
+004a3e70	place_lexicon	004a57a0	0059fd3d	data_candidate	acking
+004a3e70	place_lexicon	004a57c0	0059fd58	data_candidate	Varho
+004a3e70	place_lexicon	004a57c0	0059fd59	data_candidate	arho
+004a3e70	place_lexicon	004a57e0	0059fd4c	data_candidate	Upright_
+004a3e70	place_lexicon	004a57e0	0059fd4d	data_candidate	pright_
+004a3e70	place_lexicon	004a5800	0059fd68	data_candidate	Muku
+004a3e70	place_lexicon	004a5800	0059fd69	data_candidate	uku
+004a3e70	place_lexicon	004a5820	0059fd60	data_candidate	Boulder
+004a3e70	place_lexicon	004a5820	0059fd61	data_candidate	oulder
+004a3e70	place_lexicon	004a5840	0059fd7c	data_candidate	Mukku
+004a3e70	place_lexicon	004a5840	0059fd7d	data_candidate	ukku
+004a3e70	place_lexicon	004a5860	0059fd70	data_candidate	Bouldery
+004a3e70	place_lexicon	004a5860	0059fd71	data_candidate	ouldery
+004a3e70	place_lexicon	004a5880	0059fd84	data_candidate	Pata
+004a3e70	place_lexicon	004a5880	0059fd85	data_candidate	ata
+004a3e70	place_lexicon	004a58a0	00599418	data_candidate	Pot
+004a3e70	place_lexicon	004a58a0	00599419	data_candidate	ot
+004a3e70	place_lexicon	004a58c0	0059fd94	data_candidate	Ämmin
+004a3e70	place_lexicon	004a58c0	0059fd95	data_candidate	mmin
+004a3e70	place_lexicon	004a58e0	0059fd8c	data_candidate	Wife's_
+004a3e70	place_lexicon	004a58e0	0059fd8d	data_candidate	ife's_
+004a3e70	place_lexicon	004a5900	0059fda4	data_candidate	Vito
+004a3e70	place_lexicon	004a5900	0059fda5	data_candidate	ito
+004a3e70	place_lexicon	004a5920	0059fd9c	data_candidate	Scutch
+004a3e70	place_lexicon	004a5920	0059fd9d	data_candidate	cutch
+004a3e70	place_lexicon	004a5940	0059fdb4	data_candidate	Pännä
+004a3e70	place_lexicon	004a5940	0059fdb5	data_candidate	ännä
+004a3e70	place_lexicon	004a5960	0059fdac	data_candidate	Moron
+004a3e70	place_lexicon	004a5960	0059fdad	data_candidate	oron
+004a3e70	place_lexicon	004a5980	0059fdc4	data_candidate	Mutti
+004a3e70	place_lexicon	004a5980	0059fdc5	data_candidate	utti
+004a3e70	place_lexicon	004a59a0	0059fdbc	data_candidate	Block
+004a3e70	place_lexicon	004a59a0	0059fdbd	data_candidate	lock
+004a3e70	place_lexicon	004a59c0	0059fdd4	data_candidate	Äyrä
+004a3e70	place_lexicon	004a59c0	0059fdd5	data_candidate	yrä
+004a3e70	place_lexicon	004a59e0	0059fdcc	data_candidate	Slopen
+004a3e70	place_lexicon	004a59e0	0059fdcd	data_candidate	lopen
+004a3e70	place_lexicon	004a5a00	0059fde4	data_candidate	Ruma
+004a3e70	place_lexicon	004a5a00	0059fde5	data_candidate	uma
+004a3e70	place_lexicon	004a5a20	0059fddc	data_candidate	Ugly
+004a3e70	place_lexicon	004a5a20	0059fddd	data_candidate	gly
+004a3e70	place_lexicon	004a5a40	0059fdf4	data_candidate	Siku
+004a3e70	place_lexicon	004a5a40	0059fdf5	data_candidate	iku
+004a3e70	place_lexicon	004a5a60	0059fdec	data_candidate	Sweet
+004a3e70	place_lexicon	004a5a60	0059fded	data_candidate	weet
+004a3e70	place_lexicon	004a5a80	0059fdfc	data_candidate	Hiisi
+004a3e70	place_lexicon	004a5a80	0059fdfd	data_candidate	iisi
+004a3e70	place_lexicon	004a5aa0	0059fdfc	data_candidate	Hiisi
+004a3e70	place_lexicon	004a5aa0	0059fdfd	data_candidate	iisi
+004a3e70	place_lexicon	004a5ac0	0059fe04	data_candidate	Louhi
+004a3e70	place_lexicon	004a5ac0	0059fe05	data_candidate	ouhi
+004a3e70	place_lexicon	004a5ae0	0059fe04	data_candidate	Louhi
+004a3e70	place_lexicon	004a5ae0	0059fe05	data_candidate	ouhi
+004a3e70	place_lexicon	004a5b00	0059fe18	data_candidate	Hiiden
+004a3e70	place_lexicon	004a5b00	0059fe19	data_candidate	iiden
+004a3e70	place_lexicon	004a5b20	0059fe0c	data_candidate	Hiisi's_
+004a3e70	place_lexicon	004a5b20	0059fe0d	data_candidate	iisi's_
+004a3e70	place_lexicon	004a5b40	0059fe2c	data_candidate	Louhen
+004a3e70	place_lexicon	004a5b40	0059fe2d	data_candidate	ouhen
+004a3e70	place_lexicon	004a5b60	0059fe20	data_candidate	Louhi's_
+004a3e70	place_lexicon	004a5b60	0059fe21	data_candidate	ouhi's_
+004a3e70	place_lexicon	004a5b80	0059fe3c	data_candidate	Pyhä
+004a3e70	place_lexicon	004a5b80	0059fe3d	data_candidate	yhä
+004a3e70	place_lexicon	004a5ba0	0059fe34	data_candidate	Sacred_
+004a3e70	place_lexicon	004a5ba0	0059fe35	data_candidate	acred_
+004a3e70	place_lexicon	004a5bc0	0059fe44	data_candidate	Hiito
+004a3e70	place_lexicon	004a5bc0	0059fe45	data_candidate	iito
+004a3e70	place_lexicon	004a5be0	0059fe44	data_candidate	Hiito
+004a3e70	place_lexicon	004a5be0	0059fe45	data_candidate	iito
+004a3e70	place_lexicon	004a5c00	0059fe54	data_candidate	Hiton
+004a3e70	place_lexicon	004a5c00	0059fe55	data_candidate	iton
+004a3e70	place_lexicon	004a5c20	0059fe4c	data_candidate	Darn
+004a3e70	place_lexicon	004a5c20	0059fe4d	data_candidate	arn
+004a3e70	place_lexicon	004a5c40	0059fe64	data_candidate	Siita
+004a3e70	place_lexicon	004a5c40	0059fe65	data_candidate	iita
+004a3e70	place_lexicon	004a5c60	0059fe5c	data_candidate	Holy_
+004a3e70	place_lexicon	004a5c60	0059fe5d	data_candidate	oly_
+004a3e70	place_lexicon	004a5c80	0059fe74	data_candidate	Kaalo
+004a3e70	place_lexicon	004a5c80	0059fe75	data_candidate	aalo
+004a3e70	place_lexicon	004a5ca0	0059fe6c	data_candidate	Troll
+004a3e70	place_lexicon	004a5ca0	0059fe6d	data_candidate	roll
+004a3e70	place_lexicon	004a5cc0	0059fe88	data_candidate	Pyhin
+004a3e70	place_lexicon	004a5cc0	0059fe89	data_candidate	yhin
+004a3e70	place_lexicon	004a5ce0	0059fe7c	data_candidate	Hallowin'_
+004a3e70	place_lexicon	004a5ce0	0059fe7d	data_candidate	allowin'_
+004a3e70	place_lexicon	004a5d00	0059fe9c	data_candidate	Paasi
+004a3e70	place_lexicon	004a5d00	0059fe9d	data_candidate	aasi
+004a3e70	place_lexicon	004a5d20	0059fe90	data_candidate	Boulder_
+004a3e70	place_lexicon	004a5d20	0059fe91	data_candidate	oulder_
+004a3e70	place_lexicon	004a5d40	0059feac	data_candidate	Noitu
+004a3e70	place_lexicon	004a5d40	0059fead	data_candidate	oitu
+004a3e70	place_lexicon	004a5d60	0059fea4	data_candidate	Spell
+004a3e70	place_lexicon	004a5d60	0059fea5	data_candidate	pell
+004a3e70	place_lexicon	004a5d80	0059febc	data_candidate	Elon
+004a3e70	place_lexicon	004a5d80	0059febd	data_candidate	lon
+004a3e70	place_lexicon	004a5da0	0059feb4	data_candidate	Crop
+004a3e70	place_lexicon	004a5da0	0059feb5	data_candidate	rop
+004a3e70	place_lexicon	004a5dc0	0059fecc	data_candidate	Pirun
+004a3e70	place_lexicon	004a5dc0	0059fecd	data_candidate	irun
+004a3e70	place_lexicon	004a5de0	0059fec4	data_candidate	Damn
+004a3e70	place_lexicon	004a5de0	0059fec5	data_candidate	amn
+004a3e70	place_lexicon	004a5e00	0059fed8	data_candidate	Pahin
+004a3e70	place_lexicon	004a5e00	0059fed9	data_candidate	ahin
+004a3e70	place_lexicon	004a5e20	0059fed4	data_candidate	Bad
+004a3e70	place_lexicon	004a5e20	0059fed5	data_candidate	ad
+004a3e70	place_lexicon	004a5e40	0059fee8	data_candidate	Pelon
+004a3e70	place_lexicon	004a5e40	0059fee9	data_candidate	elon
+004a3e70	place_lexicon	004a5e60	0059fee0	data_candidate	Fear
+004a3e70	place_lexicon	004a5e60	0059fee1	data_candidate	ear
+004a3e70	place_lexicon	004a5e80	0059fef8	data_candidate	Jumin
+004a3e70	place_lexicon	004a5e80	0059fef9	data_candidate	umin
+004a3e70	place_lexicon	004a5ea0	0059fef0	data_candidate	Jumi's_
+004a3e70	place_lexicon	004a5ea0	0059fef1	data_candidate	umi's_
+004a3e70	place_lexicon	004a5ec0	0059ff0c	data_candidate	Noijun
+004a3e70	place_lexicon	004a5ec0	0059ff0d	data_candidate	oijun
+004a3e70	place_lexicon	004a5ee0	0059ff00	data_candidate	Spellin'_
+004a3e70	place_lexicon	004a5ee0	0059ff01	data_candidate	pellin'_
+004a3e70	place_lexicon	004a5f00	0059ff1c	data_candidate	Julma
+004a3e70	place_lexicon	004a5f00	0059ff1d	data_candidate	ulma
+004a3e70	place_lexicon	004a5f20	0059ff14	data_candidate	Cruel
+004a3e70	place_lexicon	004a5f20	0059ff15	data_candidate	ruel
+004a3e70	place_lexicon	004a5f40	0059ff2c	data_candidate	Väki
+004a3e70	place_lexicon	004a5f40	0059ff2d	data_candidate	äki
+004a3e70	place_lexicon	004a5f60	0059ff24	data_candidate	Force
+004a3e70	place_lexicon	004a5f60	0059ff25	data_candidate	orce
+004a3e70	place_lexicon	004a5f80	0059ff34	data_candidate	Kivi
+004a3e70	place_lexicon	004a5f80	0059ff35	data_candidate	ivi
+004a3e70	place_lexicon	004a5fa0	00598354	data_candidate	Stone
+004a3e70	place_lexicon	004a5fa0	00598355	data_candidate	tone
+004a3e70	place_lexicon	004a5fc0	0059ff44	data_candidate	Pisan
+004a3e70	place_lexicon	004a5fc0	0059ff45	data_candidate	isan
+004a3e70	place_lexicon	004a5fe0	0059ff3c	data_candidate	Pisa's_
+004a3e70	place_lexicon	004a5fe0	0059ff3d	data_candidate	isa's_
+004a3e70	place_lexicon	004a6000	0059ff4c	data_candidate	Laavu
+004a3e70	place_lexicon	004a6000	0059ff4d	data_candidate	aavu
+004a3e70	place_lexicon	004a6020	0058d70c	data_candidate	Shelter
+004a3e70	place_lexicon	004a6020	0058d70d	data_candidate	helter
+004a3e70	place_lexicon	004a6040	0059ff5c	data_candidate	Roisto
+004a3e70	place_lexicon	004a6040	0059ff5d	data_candidate	oisto
+004a3e70	place_lexicon	004a6060	0059ff54	data_candidate	Robber
+004a3e70	place_lexicon	004a6060	0059ff55	data_candidate	obber
+004a3e70	place_lexicon	004a6080	0059ff6c	data_candidate	Hyvä
+004a3e70	place_lexicon	004a6080	0059ff6d	data_candidate	yvä
+004a3e70	place_lexicon	004a60a0	0059ff64	data_candidate	Good
+004a3e70	place_lexicon	004a60a0	0059ff65	data_candidate	ood
+004a3e70	place_lexicon	004a60c0	0059ff7c	data_candidate	Hyvös
+004a3e70	place_lexicon	004a60c0	0059ff7d	data_candidate	yvös
+004a3e70	place_lexicon	004a60e0	0059ff74	data_candidate	Goodish
+004a3e70	place_lexicon	004a60e0	0059ff75	data_candidate	oodish
+004a3e70	place_lexicon	004a6100	0059ff8c	data_candidate	Niini
+004a3e70	place_lexicon	004a6100	0059ff8d	data_candidate	iini
+004a3e70	place_lexicon	004a6120	0059ff84	data_candidate	Bast
+004a3e70	place_lexicon	004a6120	0059ff85	data_candidate	ast
+004a3e70	place_lexicon	004a6140	0059ffa0	data_candidate	Hintan
+004a3e70	place_lexicon	004a6140	0059ffa1	data_candidate	intan
+004a3e70	place_lexicon	004a6160	0059ff94	data_candidate	Hintta's_
+004a3e70	place_lexicon	004a6160	0059ff95	data_candidate	intta's_
+004a3e70	place_lexicon	004a6180	0059ffb0	data_candidate	Santa
+004a3e70	place_lexicon	004a6180	0059ffb1	data_candidate	anta
+004a3e70	place_lexicon	004a61a0	0059ffa8	data_candidate	Sand
+004a3e70	place_lexicon	004a61a0	0059ffa9	data_candidate	and
+004a3e70	place_lexicon	004a61c0	0059ffc4	data_candidate	Heimon
+004a3e70	place_lexicon	004a61c0	0059ffc5	data_candidate	eimon
+004a3e70	place_lexicon	004a61e0	0059ffb8	data_candidate	Heimo's_
+004a3e70	place_lexicon	004a61e0	0059ffb9	data_candidate	eimo's_
+004a3e70	place_lexicon	004a6200	0059ffd4	data_candidate	Ulmin
+004a3e70	place_lexicon	004a6200	0059ffd5	data_candidate	lmin
+004a3e70	place_lexicon	004a6220	0059ffcc	data_candidate	Ulmi's_
+004a3e70	place_lexicon	004a6220	0059ffcd	data_candidate	lmi's_
+004a3e70	place_lexicon	004a6240	0059ffe8	data_candidate	Kivis
+004a3e70	place_lexicon	004a6240	0059ffe9	data_candidate	ivis
+004a3e70	place_lexicon	004a6260	0059ffdc	data_candidate	Stonish_
+004a3e70	place_lexicon	004a6260	0059ffdd	data_candidate	tonish_
+004a3e70	place_lexicon	004a6280	0059fff8	data_candidate	Harmo
+004a3e70	place_lexicon	004a6280	0059fff9	data_candidate	armo
+004a3e70	place_lexicon	004a62a0	0059fff0	data_candidate	Grey
+004a3e70	place_lexicon	004a62a0	0059fff1	data_candidate	rey
+004a3e70	place_lexicon	004a62c0	005a0008	data_candidate	Perä
+004a3e70	place_lexicon	004a62c0	005a0009	data_candidate	erä
+004a3e70	place_lexicon	004a62e0	005a0000	data_candidate	Rear
+004a3e70	place_lexicon	004a62e0	005a0001	data_candidate	ear
+004a3e70	place_lexicon	004a6300	005a0018	data_candidate	Pers
+004a3e70	place_lexicon	004a6300	005a0019	data_candidate	ers
+004a3e70	place_lexicon	004a6320	005a0010	data_candidate	Rump
+004a3e70	place_lexicon	004a6320	005a0011	data_candidate	ump
+004a3e70	place_lexicon	004a6340	005a002c	data_candidate	Pärrin
+004a3e70	place_lexicon	004a6340	005a002d	data_candidate	ärrin
+004a3e70	place_lexicon	004a6360	005a0020	data_candidate	Hissing_
+004a3e70	place_lexicon	004a6360	005a0021	data_candidate	issing_
+004a3e70	place_lexicon	004a6380	005a003c	data_candidate	Murto
+004a3e70	place_lexicon	004a6380	005a003d	data_candidate	urto
+004a3e70	place_lexicon	004a63a0	005a0034	data_candidate	Break
+004a3e70	place_lexicon	004a63a0	005a0035	data_candidate	reak
+004a3e70	place_lexicon	004a63c0	0059ed94	data_candidate	Käpälä
+004a3e70	place_lexicon	004a63c0	0059ed95	data_candidate	äpälä
+004a3e70	place_lexicon	004a63e0	0059ed90	data_candidate	Paw
+004a3e70	place_lexicon	004a63e0	0059ed91	data_candidate	aw
+004a3e70	place_lexicon	004a6400	0059eda4	data_candidate	Nappi
+004a3e70	place_lexicon	004a6400	0059eda5	data_candidate	appi
+004a3e70	place_lexicon	004a6420	0059ed9c	data_candidate	Button
+004a3e70	place_lexicon	004a6420	0059ed9d	data_candidate	utton
+004a3e70	place_lexicon	004a6440	0059edb4	data_candidate	Kiuru
+004a3e70	place_lexicon	004a6440	0059edb5	data_candidate	iuru
+004a3e70	place_lexicon	004a6460	0059edac	data_candidate	Lark
+004a3e70	place_lexicon	004a6460	0059edad	data_candidate	ark
+004a3e70	place_lexicon	004a6480	0059edc4	data_candidate	Rasin
+004a3e70	place_lexicon	004a6480	0059edc5	data_candidate	asin
+004a3e70	place_lexicon	004a64a0	0059edbc	data_candidate	Rasi
+004a3e70	place_lexicon	004a64a0	0059edbd	data_candidate	asi
+004a3e70	place_lexicon	004a64c0	0059edd4	data_candidate	Kurun
+004a3e70	place_lexicon	004a64c0	0059edd5	data_candidate	urun
+004a3e70	place_lexicon	004a64e0	0059edcc	data_candidate	Gorge
+004a3e70	place_lexicon	004a64e0	0059edcd	data_candidate	orge
+004a3e70	place_lexicon	004a6500	0059ede8	data_candidate	Kustu
+004a3e70	place_lexicon	004a6500	0059ede9	data_candidate	ustu
+004a3e70	place_lexicon	004a6520	0059eddc	data_candidate	Slashed_
+004a3e70	place_lexicon	004a6520	0059eddd	data_candidate	lashed_
+004a3e70	place_lexicon	004a6540	0059edfc	data_candidate	Hallin
+004a3e70	place_lexicon	004a6540	0059edfd	data_candidate	allin
+004a3e70	place_lexicon	004a6560	0059edf0	data_candidate	Hound's_
+004a3e70	place_lexicon	004a6560	0059edf1	data_candidate	ound's_
+004a3e70	place_lexicon	004a6580	0059ee10	data_candidate	Kirrin
+004a3e70	place_lexicon	004a6580	0059ee11	data_candidate	irrin
+004a3e70	place_lexicon	004a65a0	0059ee04	data_candidate	Kirri's_
+004a3e70	place_lexicon	004a65a0	0059ee05	data_candidate	irri's_
+004a3e70	place_lexicon	004a65c0	0059ee24	data_candidate	Neidon
+004a3e70	place_lexicon	004a65c0	0059ee25	data_candidate	eidon
+004a3e70	place_lexicon	004a65e0	0059ee18	data_candidate	Maiden's_
+004a3e70	place_lexicon	004a65e0	0059ee19	data_candidate	aiden's_
+004a3e70	place_lexicon	004a6600	0059ee34	data_candidate	Niska
+004a3e70	place_lexicon	004a6600	0059ee35	data_candidate	iska
+004a3e70	place_lexicon	004a6620	0059ee2c	data_candidate	Neck
+004a3e70	place_lexicon	004a6620	0059ee2d	data_candidate	eck
+004a3e70	place_lexicon	004a6640	0059ee44	data_candidate	Tukka
+004a3e70	place_lexicon	004a6640	0059ee45	data_candidate	ukka
+004a3e70	place_lexicon	004a6660	0059ee3c	data_candidate	Hair
+004a3e70	place_lexicon	004a6660	0059ee3d	data_candidate	air
+004a3e70	place_lexicon	004a6680	0059ee54	data_candidate	Parta
+004a3e70	place_lexicon	004a6680	0059ee55	data_candidate	arta
+004a3e70	place_lexicon	004a66a0	0059ee4c	data_candidate	Beard
+004a3e70	place_lexicon	004a66a0	0059ee4d	data_candidate	eard
+004a3e70	place_lexicon	004a66c0	0059ee64	data_candidate	Läpi
+004a3e70	place_lexicon	004a66c0	0059ee65	data_candidate	äpi
+004a3e70	place_lexicon	004a66e0	0059ee5c	data_candidate	Hole
+004a3e70	place_lexicon	004a66e0	0059ee5d	data_candidate	ole
+004a3e70	place_lexicon	004a6700	0059ee70	data_candidate	Jousi
+004a3e70	place_lexicon	004a6700	0059ee71	data_candidate	ousi
+004a3e70	place_lexicon	004a6720	0059ee6c	data_candidate	Bow
+004a3e70	place_lexicon	004a6720	0059ee6d	data_candidate	ow
+004a3e70	place_lexicon	004a6740	0059ee84	data_candidate	Jouhi
+004a3e70	place_lexicon	004a6740	0059ee85	data_candidate	ouhi
+004a3e70	place_lexicon	004a6760	0059ee78	data_candidate	Horsehair_
+004a3e70	place_lexicon	004a6760	0059ee79	data_candidate	orsehair_
+004a3e70	place_lexicon	004a6780	0059ee98	data_candidate	Hevon
+004a3e70	place_lexicon	004a6780	0059ee99	data_candidate	evon
+004a3e70	place_lexicon	004a67a0	0059ee8c	data_candidate	Horse's_
+004a3e70	place_lexicon	004a67a0	0059ee8d	data_candidate	orse's_
+004a3e70	place_lexicon	004a67c0	0059eeac	data_candidate	Ori
+004a3e70	place_lexicon	004a67c0	0059eead	data_candidate	ri
+004a3e70	place_lexicon	004a67e0	0059eea0	data_candidate	Stallion_
+004a3e70	place_lexicon	004a67e0	0059eea1	data_candidate	tallion_
+004a3e70	place_lexicon	004a6800	0059eeb8	data_candidate	Tammain
+004a3e70	place_lexicon	004a6800	0059eeb9	data_candidate	ammain
+004a3e70	place_lexicon	004a6820	0059eeb0	data_candidate	Mares_
+004a3e70	place_lexicon	004a6820	0059eeb1	data_candidate	ares_
+004a3e70	place_lexicon	004a6840	0059eec8	data_candidate	Hummas
+004a3e70	place_lexicon	004a6840	0059eec9	data_candidate	ummas
+004a3e70	place_lexicon	004a6860	0059eec0	data_candidate	Horsie
+004a3e70	place_lexicon	004a6860	0059eec1	data_candidate	orsie
+004a3e70	place_lexicon	004a6880	0059eed8	data_candidate	Hummain
+004a3e70	place_lexicon	004a6880	0059eed9	data_candidate	ummain
+004a3e70	place_lexicon	004a68a0	0059eed0	data_candidate	Horses_
+004a3e70	place_lexicon	004a68a0	0059eed1	data_candidate	orses_
+004a3e70	place_lexicon	004a68c0	0059eee0	data_candidate	Art
+004a3e70	place_lexicon	004a68c0	0059eee1	data_candidate	rt
+004a3e70	place_lexicon	004a68e0	0059eee0	data_candidate	Art
+004a3e70	place_lexicon	004a68e0	0059eee1	data_candidate	rt
+004a3e70	place_lexicon	004a6900	0059eeec	data_candidate	Aito
+004a3e70	place_lexicon	004a6900	0059eeed	data_candidate	ito
+004a3e70	place_lexicon	004a6920	0059eee4	data_candidate	True
+004a3e70	place_lexicon	004a6920	0059eee5	data_candidate	rue
+004a3e70	place_lexicon	004a6940	0059eefc	data_candidate	Otra
+004a3e70	place_lexicon	004a6940	0059eefd	data_candidate	tra
+004a3e70	place_lexicon	004a6960	0059eef4	data_candidate	Barley_
+004a3e70	place_lexicon	004a6960	0059eef5	data_candidate	arley_
+004a3e70	place_lexicon	004a6980	0059ef10	data_candidate	Otrin
+004a3e70	place_lexicon	004a6980	0059ef11	data_candidate	trin
+004a3e70	place_lexicon	004a69a0	0059ef04	data_candidate	Barley's_
+004a3e70	place_lexicon	004a69a0	0059ef05	data_candidate	arley's_
+004a3e70	place_lexicon	004a69c0	0059ef20	data_candidate	Kaura
+004a3e70	place_lexicon	004a69c0	0059ef21	data_candidate	aura
+004a3e70	place_lexicon	004a69e0	0059ef18	data_candidate	Oat_
+004a3e70	place_lexicon	004a69e0	0059ef19	data_candidate	at_
+004a3e70	place_lexicon	004a6a00	0059ef30	data_candidate	Kauri
+004a3e70	place_lexicon	004a6a00	0059ef31	data_candidate	auri
+004a3e70	place_lexicon	004a6a20	0059ef28	data_candidate	Oats_
+004a3e70	place_lexicon	004a6a20	0059ef29	data_candidate	ats_
+004a3e70	place_lexicon	004a6a40	0059ef40	data_candidate	Pahna
+004a3e70	place_lexicon	004a6a40	0059ef41	data_candidate	ahna
+004a3e70	place_lexicon	004a6a60	0059ef38	data_candidate	Straw
+004a3e70	place_lexicon	004a6a60	0059ef39	data_candidate	traw
+004a3e70	place_lexicon	004a6a80	0059ef50	data_candidate	Kako
+004a3e70	place_lexicon	004a6a80	0059ef51	data_candidate	ako
+004a3e70	place_lexicon	004a6aa0	0059ef48	data_candidate	Daft_
+004a3e70	place_lexicon	004a6aa0	0059ef49	data_candidate	aft_
+004a3e70	place_lexicon	004a6ac0	0059ef60	data_candidate	Käsi
+004a3e70	place_lexicon	004a6ac0	0059ef61	data_candidate	äsi
+004a3e70	place_lexicon	004a6ae0	0059ef58	data_candidate	Hand_
+004a3e70	place_lexicon	004a6ae0	0059ef59	data_candidate	and_
+004a3e70	place_lexicon	004a6b00	0059ef74	data_candidate	Pula
+004a3e70	place_lexicon	004a6b00	0059ef75	data_candidate	ula
+004a3e70	place_lexicon	004a6b20	0059ef68	data_candidate	Trouble_
+004a3e70	place_lexicon	004a6b20	0059ef69	data_candidate	rouble_
+004a3e70	place_lexicon	004a6b40	0059ef84	data_candidate	Liina
+004a3e70	place_lexicon	004a6b40	0059ef85	data_candidate	iina
+004a3e70	place_lexicon	004a6b60	0059ef7c	data_candidate	Linen
+004a3e70	place_lexicon	004a6b60	0059ef7d	data_candidate	inen
+004a3e70	place_lexicon	004a6b80	0059ef8c	data_candidate	Kimo
+004a3e70	place_lexicon	004a6b80	0059ef8d	data_candidate	imo
+004a3e70	place_lexicon	004a6ba0	0059fff0	data_candidate	Grey
+004a3e70	place_lexicon	004a6ba0	0059fff1	data_candidate	rey
+004a3e70	place_lexicon	004a6bc0	0059ef9c	data_candidate	Kato
+004a3e70	place_lexicon	004a6bc0	0059ef9d	data_candidate	ato
+004a3e70	place_lexicon	004a6be0	0059ef94	data_candidate	Loss
+004a3e70	place_lexicon	004a6be0	0059ef95	data_candidate	oss
+004a3e70	place_lexicon	004a6c00	0059efac	data_candidate	Jyväs
+004a3e70	place_lexicon	004a6c00	0059efad	data_candidate	yväs
+004a3e70	place_lexicon	004a6c20	0059efa4	data_candidate	Grain
+004a3e70	place_lexicon	004a6c20	0059efa5	data_candidate	rain
+004a3e70	place_lexicon	004a6c40	0059efc0	data_candidate	Makkara
+004a3e70	place_lexicon	004a6c40	0059efc1	data_candidate	akkara
+004a3e70	place_lexicon	004a6c60	0059efb4	data_candidate	Sausage_
+004a3e70	place_lexicon	004a6c60	0059efb5	data_candidate	ausage_
+004a3e70	place_lexicon	004a6c80	0059efd4	data_candidate	Kaisan
+004a3e70	place_lexicon	004a6c80	0059efd5	data_candidate	aisan
+004a3e70	place_lexicon	004a6ca0	0059efc8	data_candidate	Kaisa's_
+004a3e70	place_lexicon	004a6ca0	0059efc9	data_candidate	aisa's_
+004a3e70	place_lexicon	004a6cc0	0059efe4	data_candidate	Raja
+004a3e70	place_lexicon	004a6cc0	0059efe5	data_candidate	aja
+004a3e70	place_lexicon	004a6ce0	0059efdc	data_candidate	Border
+004a3e70	place_lexicon	004a6ce0	0059efdd	data_candidate	order
+004a3e70	place_lexicon	004a6d00	0059eff8	data_candidate	Raato
+004a3e70	place_lexicon	004a6d00	0059eff9	data_candidate	aato
+004a3e70	place_lexicon	004a6d20	0059efec	data_candidate	Carcass_
+004a3e70	place_lexicon	004a6d20	0059efed	data_candidate	arcass_
+004a3e70	place_lexicon	004a6d40	0059f008	data_candidate	Kalmo
+004a3e70	place_lexicon	004a6d40	0059f009	data_candidate	almo
+004a3e70	place_lexicon	004a6d60	0059f000	data_candidate	Death
+004a3e70	place_lexicon	004a6d60	0059f001	data_candidate	eath
+004a3e70	place_lexicon	004a6d80	0059f018	data_candidate	Kuono
+004a3e70	place_lexicon	004a6d80	0059f019	data_candidate	uono
+004a3e70	place_lexicon	004a6da0	0059f010	data_candidate	Snout
+004a3e70	place_lexicon	004a6da0	0059f011	data_candidate	nout
+004a3e70	place_lexicon	004a6dc0	0059f028	data_candidate	Kämmen
+004a3e70	place_lexicon	004a6dc0	0059f029	data_candidate	ämmen
+004a3e70	place_lexicon	004a6de0	0059f020	data_candidate	Palm
+004a3e70	place_lexicon	004a6de0	0059f021	data_candidate	alm
+004a3e70	place_lexicon	004a6e00	0059f038	data_candidate	Mutka
+004a3e70	place_lexicon	004a6e00	0059f039	data_candidate	utka
+004a3e70	place_lexicon	004a6e20	0059f030	data_candidate	Curve
+004a3e70	place_lexicon	004a6e20	0059f031	data_candidate	urve
+004a3e70	place_lexicon	004a6e40	0059f048	data_candidate	Oivan
+004a3e70	place_lexicon	004a6e40	0059f049	data_candidate	ivan
+004a3e70	place_lexicon	004a6e60	0059f040	data_candidate	Oiva's_
+004a3e70	place_lexicon	004a6e60	0059f041	data_candidate	iva's_
+004a3e70	place_lexicon	004a6e80	0059f058	data_candidate	Uhtu
+004a3e70	place_lexicon	004a6e80	0059f059	data_candidate	htu
+004a3e70	place_lexicon	004a6ea0	0059f050	data_candidate	Thread_
+004a3e70	place_lexicon	004a6ea0	0059f051	data_candidate	hread_
+004a3e70	place_lexicon	004a6ec0	0059f060	data_candidate	Juan
+004a3e70	place_lexicon	004a6ec0	0059f061	data_candidate	uan
+004a3e70	place_lexicon	004a6ee0	00593cc4	data_candidate	Mixed
+004a3e70	place_lexicon	004a6ee0	00593cc5	data_candidate	ixed
+004a3e70	place_lexicon	004a6f00	0059f070	data_candidate	Karttu
+004a3e70	place_lexicon	004a6f00	0059f071	data_candidate	arttu
+004a3e70	place_lexicon	004a6f20	0059f068	data_candidate	Club
+004a3e70	place_lexicon	004a6f20	0059f069	data_candidate	lub
+004a3e70	place_lexicon	004a6f40	0059f084	data_candidate	Tervon
+004a3e70	place_lexicon	004a6f40	0059f085	data_candidate	ervon
+004a3e70	place_lexicon	004a6f60	0059f078	data_candidate	Tervo's_
+004a3e70	place_lexicon	004a6f60	0059f079	data_candidate	ervo's_
+004a3e70	place_lexicon	004a6f80	0059f098	data_candidate	Vanhan
+004a3e70	place_lexicon	004a6f80	0059f099	data_candidate	anhan
+004a3e70	place_lexicon	004a6fa0	0059f08c	data_candidate	Old one's_
+004a3e70	place_lexicon	004a6fa0	0059f08d	data_candidate	ld one's_
+004a3e70	place_lexicon	004a6fc0	0059f0ac	data_candidate	Unho
+004a3e70	place_lexicon	004a6fc0	0059f0ad	data_candidate	nho
+004a3e70	place_lexicon	004a6fe0	0059f0a0	data_candidate	Oblivion_
+004a3e70	place_lexicon	004a6fe0	0059f0a1	data_candidate	blivion_
+004a3e70	place_lexicon	004a7000	0059f0c0	data_candidate	Pertun
+004a3e70	place_lexicon	004a7000	0059f0c1	data_candidate	ertun
+004a3e70	place_lexicon	004a7020	0059f0b4	data_candidate	Perttu's_
+004a3e70	place_lexicon	004a7020	0059f0b5	data_candidate	erttu's_
+004a3e70	place_lexicon	004a7040	0059f0d4	data_candidate	Enon
+004a3e70	place_lexicon	004a7040	0059f0d5	data_candidate	non
+004a3e70	place_lexicon	004a7060	0059f0c8	data_candidate	Uncle's_
+004a3e70	place_lexicon	004a7060	0059f0c9	data_candidate	ncle's_
+004a3e70	place_lexicon	004a7080	0059f0e4	data_candidate	Pieli
+004a3e70	place_lexicon	004a7080	0059f0e5	data_candidate	ieli
+004a3e70	place_lexicon	004a70a0	0059f0dc	data_candidate	Post
+004a3e70	place_lexicon	004a70a0	0059f0dd	data_candidate	ost
+004a3e70	place_lexicon	004a70c0	0059f0ec	data_candidate	Panka
+004a3e70	place_lexicon	004a70c0	0059f0ed	data_candidate	anka
+004a3e70	place_lexicon	004a70e0	0058d8f8	data_candidate	Pine
+004a3e70	place_lexicon	004a70e0	0058d8f9	data_candidate	ine
+004a3e70	place_lexicon	004a7100	0059f100	data_candidate	Mullin
+004a3e70	place_lexicon	004a7100	0059f101	data_candidate	ullin
+004a3e70	place_lexicon	004a7120	0059f0f4	data_candidate	Bullock's_
+004a3e70	place_lexicon	004a7120	0059f0f5	data_candidate	ullock's_
+004a3e70	place_lexicon	004a7140	0059f10c	data_candidate	Lehmin
+004a3e70	place_lexicon	004a7140	0059f10d	data_candidate	ehmin
+004a3e70	place_lexicon	004a7160	0059f108	data_candidate	Cow
+004a3e70	place_lexicon	004a7160	0059f109	data_candidate	ow
+004a3e70	place_lexicon	004a7180	0059f11c	data_candidate	Lampo
+004a3e70	place_lexicon	004a7180	0059f11d	data_candidate	ampo
+004a3e70	place_lexicon	004a71a0	0059f114	data_candidate	Sheep
+004a3e70	place_lexicon	004a71a0	0059f115	data_candidate	heep
+004a3e70	place_lexicon	004a71c0	0059f12c	data_candidate	Pasko
+004a3e70	place_lexicon	004a71c0	0059f12d	data_candidate	asko
+004a3e70	place_lexicon	004a71e0	0059f124	data_candidate	Shitty_
+004a3e70	place_lexicon	004a71e0	0059f125	data_candidate	hitty_
+004a3e70	place_lexicon	004a7200	0059f13c	data_candidate	Pehku
+004a3e70	place_lexicon	004a7200	0059f13d	data_candidate	ehku
+004a3e70	place_lexicon	004a7220	0059f134	data_candidate	Litter
+004a3e70	place_lexicon	004a7220	0059f135	data_candidate	itter
+004a3e70	place_lexicon	004a7240	0059f144	data_candidate	Huhti
+004a3e70	place_lexicon	004a7240	0059f145	data_candidate	uhti
+004a3e70	place_lexicon	004a7260	0058d5a0	data_candidate	Spring
+004a3e70	place_lexicon	004a7260	0058d5a1	data_candidate	pring
+004a3e70	place_lexicon	004a7280	0059f158	data_candidate	Huhta
+004a3e70	place_lexicon	004a7280	0059f159	data_candidate	uhta
+004a3e70	place_lexicon	004a72a0	0059f14c	data_candidate	Conifer_
+004a3e70	place_lexicon	004a72a0	0059f14d	data_candidate	onifer_
+004a3e70	place_lexicon	004a72c0	0059f16c	data_candidate	Haka
+004a3e70	place_lexicon	004a72c0	0059f16d	data_candidate	aka
+004a3e70	place_lexicon	004a72e0	0059f160	data_candidate	Pasture_
+004a3e70	place_lexicon	004a72e0	0059f161	data_candidate	asture_
+004a3e70	place_lexicon	004a7300	0059f17c	data_candidate	Karku
+004a3e70	place_lexicon	004a7300	0059f17d	data_candidate	arku
+004a3e70	place_lexicon	004a7320	0059f174	data_candidate	Flee_
+004a3e70	place_lexicon	004a7320	0059f175	data_candidate	lee_
+004a3e70	place_lexicon	004a7340	0059f188	data_candidate	Miehi
+004a3e70	place_lexicon	004a7340	0059f189	data_candidate	iehi
+004a3e70	place_lexicon	004a7360	0059f184	data_candidate	Men
+004a3e70	place_lexicon	004a7360	0059f185	data_candidate	en
+004a3e70	place_lexicon	004a7380	0059f190	data_candidate	Visa
+004a3e70	place_lexicon	004a7380	0059f191	data_candidate	isa
+004a3e70	place_lexicon	004a73a0	0058d74c	data_candidate	Birch
+004a3e70	place_lexicon	004a73a0	0058d74d	data_candidate	irch
+004a3e70	place_lexicon	004a73c0	0059f1a0	data_candidate	Vihta
+004a3e70	place_lexicon	004a73c0	0059f1a1	data_candidate	ihta
+004a3e70	place_lexicon	004a73e0	0059f198	data_candidate	Whisk
+004a3e70	place_lexicon	004a73e0	0059f199	data_candidate	hisk
+004a3e70	place_lexicon	004a7400	0059f1b0	data_candidate	Vesa
+004a3e70	place_lexicon	004a7400	0059f1b1	data_candidate	esa
+004a3e70	place_lexicon	004a7420	0059f1a8	data_candidate	Sprout
+004a3e70	place_lexicon	004a7420	0059f1a9	data_candidate	prout
+004a3e70	place_lexicon	004a7440	0059f1c0	data_candidate	Mesi
+004a3e70	place_lexicon	004a7440	0059f1c1	data_candidate	esi
+004a3e70	place_lexicon	004a7460	0059f1b8	data_candidate	Honey
+004a3e70	place_lexicon	004a7460	0059f1b9	data_candidate	oney
+004a3e70	place_lexicon	004a7480	0059f1d0	data_candidate	Sima
+004a3e70	place_lexicon	004a7480	0059f1d1	data_candidate	ima
+004a3e70	place_lexicon	004a74a0	0059f1c8	data_candidate	Mead
+004a3e70	place_lexicon	004a74a0	0059f1c9	data_candidate	ead
+004a3e70	place_lexicon	004a74c0	0059fde4	data_candidate	Ruma
+004a3e70	place_lexicon	004a74c0	0059fde5	data_candidate	uma
+004a3e70	place_lexicon	004a74e0	0059fddc	data_candidate	Ugly
+004a3e70	place_lexicon	004a74e0	0059fddd	data_candidate	gly
+004a3e70	place_lexicon	004a7500	0059f1d8	data_candidate	Kallo
+004a3e70	place_lexicon	004a7500	0059f1d9	data_candidate	allo
+004a3e70	place_lexicon	004a7520	0059bb38	data_candidate	Skull
+004a3e70	place_lexicon	004a7520	0059bb39	data_candidate	kull
+004a3e70	place_lexicon	004a7540	0059f1e8	data_candidate	Hirtto
+004a3e70	place_lexicon	004a7540	0059f1e9	data_candidate	irtto
+004a3e70	place_lexicon	004a7560	0059f1e0	data_candidate	Hanging
+004a3e70	place_lexicon	004a7560	0059f1e1	data_candidate	anging
+004a3e70	place_lexicon	004a7580	0059f1fc	data_candidate	Hopsun
+004a3e70	place_lexicon	004a7580	0059f1fd	data_candidate	opsun
+004a3e70	place_lexicon	004a75a0	0059f1f0	data_candidate	Hopsu's_
+004a3e70	place_lexicon	004a75a0	0059f1f1	data_candidate	opsu's_
+004a3e70	place_lexicon	004a75c0	0059f20c	data_candidate	Lorun
+004a3e70	place_lexicon	004a75c0	0059f20d	data_candidate	orun
+004a3e70	place_lexicon	004a75e0	0059f204	data_candidate	Loru's_
+004a3e70	place_lexicon	004a75e0	0059f205	data_candidate	oru's_
+004a3e70	place_lexicon	004a7600	0059f21c	data_candidate	Kolun
+004a3e70	place_lexicon	004a7600	0059f21d	data_candidate	olun
+004a3e70	place_lexicon	004a7620	0059f214	data_candidate	Kolu's_
+004a3e70	place_lexicon	004a7620	0059f215	data_candidate	olu's_
+004a3e70	place_lexicon	004a7640	0059f230	data_candidate	Hyhkyn
+004a3e70	place_lexicon	004a7640	0059f231	data_candidate	yhkyn
+004a3e70	place_lexicon	004a7660	0059f224	data_candidate	Hyhky's_
+004a3e70	place_lexicon	004a7660	0059f225	data_candidate	yhky's_
+004a3e70	place_lexicon	004a7680	0059f240	data_candidate	Hirvas
+004a3e70	place_lexicon	004a7680	0059f241	data_candidate	irvas
+004a3e70	place_lexicon	004a76a0	0059f238	data_candidate	Stag
+004a3e70	place_lexicon	004a76a0	0059f239	data_candidate	tag
+004a3e70	place_lexicon	004a76c0	0059f248	data_candidate	Penin
+004a3e70	place_lexicon	004a76c0	0059f249	data_candidate	enin
+004a3e70	place_lexicon	004a76e0	0059edf0	data_candidate	Hound's_
+004a3e70	place_lexicon	004a76e0	0059edf1	data_candidate	ound's_
+004a3e70	place_lexicon	004a7700	0059f258	data_candidate	Riista
+004a3e70	place_lexicon	004a7700	0059f259	data_candidate	iista
+004a3e70	place_lexicon	004a7720	0059f250	data_candidate	Game
+004a3e70	place_lexicon	004a7720	0059f251	data_candidate	ame
+004a3e70	place_lexicon	004a7740	0059f268	data_candidate	Saama
+004a3e70	place_lexicon	004a7740	0059f269	data_candidate	aama
+004a3e70	place_lexicon	004a7760	0059f260	data_candidate	Gain
+004a3e70	place_lexicon	004a7760	0059f261	data_candidate	ain
+004a3e70	place_lexicon	004a7780	0059f27c	data_candidate	Tapion
+004a3e70	place_lexicon	004a7780	0059f27d	data_candidate	apion
+004a3e70	place_lexicon	004a77a0	0059f270	data_candidate	Tapio's_
+004a3e70	place_lexicon	004a77a0	0059f271	data_candidate	apio's_
+004a3e70	place_lexicon	004a77c0	0059f28c	data_candidate	Sini
+004a3e70	place_lexicon	004a77c0	0059f28d	data_candidate	ini
+004a3e70	place_lexicon	004a77e0	0059f284	data_candidate	Blue_
+004a3e70	place_lexicon	004a77e0	0059f285	data_candidate	lue_
+004a3e70	place_lexicon	004a7800	0059f29c	data_candidate	Kopsun
+004a3e70	place_lexicon	004a7800	0059f29d	data_candidate	opsun
+004a3e70	place_lexicon	004a7820	0059f294	data_candidate	Knocken
+004a3e70	place_lexicon	004a7820	0059f295	data_candidate	nocken
+004a3e70	place_lexicon	004a7840	0059f2a4	data_candidate	Kirves
+004a3e70	place_lexicon	004a7840	0059f2a5	data_candidate	irves
+004a3e70	place_lexicon	004a7860	00599794	data_candidate	Axe
+004a3e70	place_lexicon	004a7860	00599795	data_candidate	xe
+004a3e70	place_lexicon	004a7880	0059f2ac	data_candidate	Kuusi
+004a3e70	place_lexicon	004a7880	0059f2ad	data_candidate	uusi
+004a3e70	place_lexicon	004a78a0	0058d738	data_candidate	Spruce
+004a3e70	place_lexicon	004a78a0	0058d739	data_candidate	pruce
+004a3e70	place_lexicon	004a78c0	0059f2b4	data_candidate	Mänty
+004a3e70	place_lexicon	004a78c0	0059f2b5	data_candidate	änty
+004a3e70	place_lexicon	004a78e0	0058d8f8	data_candidate	Pine
+004a3e70	place_lexicon	004a78e0	0058d8f9	data_candidate	ine
+004a3e70	place_lexicon	004a7900	0059f2bc	data_candidate	Leppä
+004a3e70	place_lexicon	004a7900	0059f2bd	data_candidate	eppä
+004a3e70	place_lexicon	004a7920	0058d7d0	data_candidate	Alder
+004a3e70	place_lexicon	004a7920	0058d7d1	data_candidate	lder
+004a3e70	place_lexicon	004a7940	0059f2cc	data_candidate	Kataja
+004a3e70	place_lexicon	004a7940	0059f2cd	data_candidate	ataja
+004a3e70	place_lexicon	004a7960	0059f2c4	data_candidate	Juniper
+004a3e70	place_lexicon	004a7960	0059f2c5	data_candidate	uniper
+004a3e70	place_lexicon	004a7980	0059f2d4	data_candidate	Pihlaja
+004a3e70	place_lexicon	004a7980	0059f2d5	data_candidate	ihlaja
+004a3e70	place_lexicon	004a79a0	0058d7bc	data_candidate	Rowan
+004a3e70	place_lexicon	004a79a0	0058d7bd	data_candidate	owan
+004a3e70	place_lexicon	004a79c0	0059f2dc	data_candidate	Haapa
+004a3e70	place_lexicon	004a79c0	0059f2dd	data_candidate	aapa
+004a3e70	place_lexicon	004a79e0	0058d7e4	data_candidate	Aspen
+004a3e70	place_lexicon	004a79e0	0058d7e5	data_candidate	spen
+004a3e70	place_lexicon	004a7a00	0059f2e8	data_candidate	Näre
+004a3e70	place_lexicon	004a7a00	0059f2e9	data_candidate	äre
+004a3e70	place_lexicon	004a7a20	0059f2e4	data_candidate	Fir
+004a3e70	place_lexicon	004a7a20	0059f2e5	data_candidate	ir
+004a3e70	place_lexicon	004a7a40	0059f2fc	data_candidate	Kelo
+004a3e70	place_lexicon	004a7a40	0059f2fd	data_candidate	elo
+004a3e70	place_lexicon	004a7a60	0059f2f0	data_candidate	Dead-tree_
+004a3e70	place_lexicon	004a7a60	0059f2f1	data_candidate	ead-tree_
+004a3e70	place_lexicon	004a7a80	0059f304	data_candidate	Petäjä
+004a3e70	place_lexicon	004a7a80	0059f305	data_candidate	etäjä
+004a3e70	place_lexicon	004a7aa0	0058d8f8	data_candidate	Pine
+004a3e70	place_lexicon	004a7aa0	0058d8f9	data_candidate	ine
+004a3e70	place_lexicon	004a7ac0	0059f30c	data_candidate	Honka
+004a3e70	place_lexicon	004a7ac0	0059f30d	data_candidate	onka
+004a3e70	place_lexicon	004a7ae0	0058d8f8	data_candidate	Pine
+004a3e70	place_lexicon	004a7ae0	0058d8f9	data_candidate	ine
+004a3e70	place_lexicon	004a7b00	0059f31c	data_candidate	Riuku
+004a3e70	place_lexicon	004a7b00	0059f31d	data_candidate	iuku
+004a3e70	place_lexicon	004a7b20	0059f314	data_candidate	Pole
+004a3e70	place_lexicon	004a7b20	0059f315	data_candidate	ole
+004a3e70	place_lexicon	004a7b40	0059f32c	data_candidate	Risu
+004a3e70	place_lexicon	004a7b40	0059f32d	data_candidate	isu
+004a3e70	place_lexicon	004a7b60	0059f324	data_candidate	Twig
+004a3e70	place_lexicon	004a7b60	0059f325	data_candidate	wig
+004a3e70	place_lexicon	004a7b80	0059f33c	data_candidate	Paju
+004a3e70	place_lexicon	004a7b80	0059f33d	data_candidate	aju
+004a3e70	place_lexicon	004a7ba0	0059f334	data_candidate	Willow
+004a3e70	place_lexicon	004a7ba0	0059f335	data_candidate	illow
+004a3e70	place_lexicon	004a7bc0	0059f344	data_candidate	Koivu
+004a3e70	place_lexicon	004a7bc0	0059f345	data_candidate	oivu
+004a3e70	place_lexicon	004a7be0	0058d74c	data_candidate	Birch
+004a3e70	place_lexicon	004a7be0	0058d74d	data_candidate	irch
+004a3e70	place_lexicon	004a7c00	0059f354	data_candidate	Kukkais
+004a3e70	place_lexicon	004a7c00	0059f355	data_candidate	ukkais
+004a3e70	place_lexicon	004a7c20	0059f34c	data_candidate	Flower
+004a3e70	place_lexicon	004a7c20	0059f34d	data_candidate	lower
+004a3e70	place_lexicon	004a7c40	0059f364	data_candidate	Hako
+004a3e70	place_lexicon	004a7c40	0059f365	data_candidate	ako
+004a3e70	place_lexicon	004a7c60	0059f35c	data_candidate	Conifer
+004a3e70	place_lexicon	004a7c60	0059f35d	data_candidate	onifer
+004a3e70	place_lexicon	004a7c80	0059f370	data_candidate	Hirvi
+004a3e70	place_lexicon	004a7c80	0059f371	data_candidate	irvi
+004a3e70	place_lexicon	004a7ca0	0059f36c	data_candidate	Elk
+004a3e70	place_lexicon	004a7ca0	0059f36d	data_candidate	lk
+004a3e70	place_lexicon	004a7cc0	0059f380	data_candidate	Karhu
+004a3e70	place_lexicon	004a7cc0	0059f381	data_candidate	arhu
+004a3e70	place_lexicon	004a7ce0	0059f378	data_candidate	Bear
+004a3e70	place_lexicon	004a7ce0	0059f379	data_candidate	ear
+004a3e70	place_lexicon	004a7d00	0059f38c	data_candidate	Kettu
+004a3e70	place_lexicon	004a7d00	0059f38d	data_candidate	ettu
+004a3e70	place_lexicon	004a7d20	0059f388	data_candidate	Fox
+004a3e70	place_lexicon	004a7d20	0059f389	data_candidate	ox
+004a3e70	place_lexicon	004a7d40	0059f39c	data_candidate	Ilves
+004a3e70	place_lexicon	004a7d40	0059f39d	data_candidate	lves
+004a3e70	place_lexicon	004a7d60	0059f394	data_candidate	Lynx
+004a3e70	place_lexicon	004a7d60	0059f395	data_candidate	ynx
+004a3e70	place_lexicon	004a7d80	0059f3ac	data_candidate	Mäyrä
+004a3e70	place_lexicon	004a7d80	0059f3ad	data_candidate	äyrä
+004a3e70	place_lexicon	004a7da0	0059f3a4	data_candidate	Badger
+004a3e70	place_lexicon	004a7da0	0059f3a5	data_candidate	adger
+004a3e70	place_lexicon	004a7dc0	0059f3bc	data_candidate	Hukan
+004a3e70	place_lexicon	004a7dc0	0059f3bd	data_candidate	ukan
+004a3e70	place_lexicon	004a7de0	0059f3b4	data_candidate	Wolf's_
+004a3e70	place_lexicon	004a7de0	0059f3b5	data_candidate	olf's_
+004a3e70	place_lexicon	004a7e00	0059f3d0	data_candidate	Oravin
+004a3e70	place_lexicon	004a7e00	0059f3d1	data_candidate	ravin
+004a3e70	place_lexicon	004a7e20	0059f3c4	data_candidate	Squirrel
+004a3e70	place_lexicon	004a7e20	0059f3c5	data_candidate	quirrel
+004a3e70	place_lexicon	004a7e40	0059f3d8	data_candidate	Revon
+004a3e70	place_lexicon	004a7e40	0059f3d9	data_candidate	evon
+004a3e70	place_lexicon	004a7e60	0059f388	data_candidate	Fox
+004a3e70	place_lexicon	004a7e60	0059f389	data_candidate	ox
+004a3e70	place_lexicon	004a7e80	0059f3e8	data_candidate	Kontio
+004a3e70	place_lexicon	004a7e80	0059f3e9	data_candidate	ontio
+004a3e70	place_lexicon	004a7ea0	0059f3e0	data_candidate	Bruin
+004a3e70	place_lexicon	004a7ea0	0059f3e1	data_candidate	ruin
+004a3e70	place_lexicon	004a7ec0	0059f3f8	data_candidate	Peura
+004a3e70	place_lexicon	004a7ec0	0059f3f9	data_candidate	eura
+004a3e70	place_lexicon	004a7ee0	0059f3f0	data_candidate	Deer
+004a3e70	place_lexicon	004a7ee0	0059f3f1	data_candidate	eer
+004a3e70	place_lexicon	004a7f00	0059f408	data_candidate	meri
+004a3e70	place_lexicon	004a7f00	0059f409	data_candidate	eri
+004a3e70	place_lexicon	004a7f20	0059f400	data_candidate	_sea
+004a3e70	place_lexicon	004a7f20	0059f401	data_candidate	sea
+004a3e70	place_lexicon	004a7f40	0059f418	data_candidate	vesi
+004a3e70	place_lexicon	004a7f40	0059f419	data_candidate	esi
+004a3e70	place_lexicon	004a7f60	0059f410	data_candidate	_water
+004a3e70	place_lexicon	004a7f60	0059f411	data_candidate	water
+004a3e70	place_lexicon	004a7f80	0059f428	data_candidate	selkä
+004a3e70	place_lexicon	004a7f80	0059f429	data_candidate	elkä
+004a3e70	place_lexicon	004a7fa0	0059f420	data_candidate	wide
+004a3e70	place_lexicon	004a7fa0	0059f421	data_candidate	ide
+004a3e70	place_lexicon	004a7fc0	0059f438	data_candidate	järvi
+004a3e70	place_lexicon	004a7fc0	0059f439	data_candidate	ärvi
+004a3e70	place_lexicon	004a7fe0	0059f430	data_candidate	_lake
+004a3e70	place_lexicon	004a7fe0	0059f431	data_candidate	lake
+004a3e70	place_lexicon	004a8000	0059f448	data_candidate	koski
+004a3e70	place_lexicon	004a8000	0059f449	data_candidate	oski
+004a3e70	place_lexicon	004a8020	0059f440	data_candidate	_rapid
+004a3e70	place_lexicon	004a8020	0059f441	data_candidate	rapid
+004a3e70	place_lexicon	004a8040	0059f458	data_candidate	kosket
+004a3e70	place_lexicon	004a8040	0059f459	data_candidate	osket
+004a3e70	place_lexicon	004a8060	0059f450	data_candidate	_rapids
+004a3e70	place_lexicon	004a8060	0059f451	data_candidate	rapids
+004a3e70	place_lexicon	004a8080	0059f468	data_candidate	virta
+004a3e70	place_lexicon	004a8080	0059f469	data_candidate	irta
+004a3e70	place_lexicon	004a80a0	0059f460	data_candidate	_stream
+004a3e70	place_lexicon	004a80a0	0059f461	data_candidate	stream
+004a3e70	place_lexicon	004a80c0	0059f478	data_candidate	vuolle
+004a3e70	place_lexicon	004a80c0	0059f479	data_candidate	uolle
+004a3e70	place_lexicon	004a80e0	0059f470	data_candidate	_flow
+004a3e70	place_lexicon	004a80e0	0059f471	data_candidate	flow
+004a3e70	place_lexicon	004a8100	0059f488	data_candidate	ranta
+004a3e70	place_lexicon	004a8100	0059f489	data_candidate	anta
+004a3e70	place_lexicon	004a8120	0059f480	data_candidate	shore
+004a3e70	place_lexicon	004a8120	0059f481	data_candidate	hore
+004a3e70	place_lexicon	004a8140	0059f498	data_candidate	perä
+004a3e70	place_lexicon	004a8140	0059f499	data_candidate	erä
+004a3e70	place_lexicon	004a8160	0059f490	data_candidate	rear
+004a3e70	place_lexicon	004a8160	0059f491	data_candidate	ear
+004a3e70	place_lexicon	004a8180	0059f4a8	data_candidate	pohja
+004a3e70	place_lexicon	004a8180	0059f4a9	data_candidate	ohja
+004a3e70	place_lexicon	004a81a0	0059f4a0	data_candidate	bottom
+004a3e70	place_lexicon	004a81a0	0059f4a1	data_candidate	ottom
+004a3e70	place_lexicon	004a81c0	0059f4b8	data_candidate	lahti
+004a3e70	place_lexicon	004a81c0	0059f4b9	data_candidate	ahti
+004a3e70	place_lexicon	004a81e0	0059f4b0	data_candidate	cove
+004a3e70	place_lexicon	004a81e0	0059f4b1	data_candidate	ove
+004a3e70	place_lexicon	004a8200	0059f4c8	data_candidate	salmi
+004a3e70	place_lexicon	004a8200	0059f4c9	data_candidate	almi
+004a3e70	place_lexicon	004a8220	0059f4c0	data_candidate	strait
+004a3e70	place_lexicon	004a8220	0059f4c1	data_candidate	trait
+004a3e70	place_lexicon	004a8240	0059f4d8	data_candidate	saaret
+004a3e70	place_lexicon	004a8240	0059f4d9	data_candidate	aaret
+004a3e70	place_lexicon	004a8260	0059f4d0	data_candidate	islands
+004a3e70	place_lexicon	004a8260	0059f4d1	data_candidate	slands
+004a3e70	place_lexicon	004a8280	0059f4e0	data_candidate	kallio
+004a3e70	place_lexicon	004a8280	0059f4e1	data_candidate	allio
+004a3e70	place_lexicon	004a82a0	0058dde0	data_candidate	cliff
+004a3e70	place_lexicon	004a82a0	0058dde1	data_candidate	liff
+004a3e70	place_lexicon	004a82c0	0059f4f4	data_candidate	niemi
+004a3e70	place_lexicon	004a82c0	0059f4f5	data_candidate	iemi
+004a3e70	place_lexicon	004a82e0	0059f4e8	data_candidate	_peninsula
+004a3e70	place_lexicon	004a82e0	0059f4e9	data_candidate	peninsula
+004a3e70	place_lexicon	004a8300	0059f504	data_candidate	aapa
+004a3e70	place_lexicon	004a8300	0059f505	data_candidate	apa
+004a3e70	place_lexicon	004a8320	0059f4fc	data_candidate	open
+004a3e70	place_lexicon	004a8320	0059f4fd	data_candidate	pen
+004a3e70	place_lexicon	004a8340	0059f510	data_candidate	neva
+004a3e70	place_lexicon	004a8340	0059f511	data_candidate	eva
+004a3e70	place_lexicon	004a8360	0059f50c	data_candidate	bog
+004a3e70	place_lexicon	004a8360	0059f50d	data_candidate	og
+004a3e70	place_lexicon	004a8380	0059f51c	data_candidate	letto
+004a3e70	place_lexicon	004a8380	0059f51d	data_candidate	etto
+004a3e70	place_lexicon	004a83a0	0059f518	data_candidate	fen
+004a3e70	place_lexicon	004a83a0	0059f519	data_candidate	en
+004a3e70	place_lexicon	004a83c0	0059f52c	data_candidate	suo
+004a3e70	place_lexicon	004a83c0	0059f52d	data_candidate	uo
+004a3e70	place_lexicon	004a83e0	0059f524	data_candidate	swamp
+004a3e70	place_lexicon	004a83e0	0059f525	data_candidate	wamp
+004a3e70	place_lexicon	004a8400	0059f538	data_candidate	rahka
+004a3e70	place_lexicon	004a8400	0059f539	data_candidate	ahka
+004a3e70	place_lexicon	004a8420	0059f530	data_candidate	peat
+004a3e70	place_lexicon	004a8420	0059f531	data_candidate	eat
+004a3e70	place_lexicon	004a8440	0059f548	data_candidate	räme
+004a3e70	place_lexicon	004a8440	0059f549	data_candidate	äme
+004a3e70	place_lexicon	004a8460	0059f540	data_candidate	marsh
+004a3e70	place_lexicon	004a8460	0059f541	data_candidate	arsh
+004a3e70	place_lexicon	004a8480	0059f558	data_candidate	metsä
+004a3e70	place_lexicon	004a8480	0059f559	data_candidate	etsä
+004a3e70	place_lexicon	004a84a0	0059f550	data_candidate	_forest
+004a3e70	place_lexicon	004a84a0	0059f551	data_candidate	forest
+004a3e70	place_lexicon	004a84c0	0059f560	data_candidate	mettä
+004a3e70	place_lexicon	004a84c0	0059f561	data_candidate	että
+004a3e70	place_lexicon	004a84e0	0059622c	data_candidate	wood
+004a3e70	place_lexicon	004a84e0	0059622d	data_candidate	ood
+004a3e70	place_lexicon	004a8500	0059f570	data_candidate	maa
+004a3e70	place_lexicon	004a8500	0059f571	data_candidate	aa
+004a3e70	place_lexicon	004a8520	0059f568	data_candidate	land
+004a3e70	place_lexicon	004a8520	0059f569	data_candidate	and
+004a3e70	place_lexicon	004a8540	0059f57c	data_candidate	korpi
+004a3e70	place_lexicon	004a8540	0059f57d	data_candidate	orpi
+004a3e70	place_lexicon	004a8560	0059f574	data_candidate	mire
+004a3e70	place_lexicon	004a8560	0059f575	data_candidate	ire
+004a3e70	place_lexicon	004a8580	0059f584	data_candidate	laaja
+004a3e70	place_lexicon	004a8580	0059f585	data_candidate	aaja
+004a3e70	place_lexicon	004a85a0	0059f420	data_candidate	wide
+004a3e70	place_lexicon	004a85a0	0059f421	data_candidate	ide
+004a3e70	place_lexicon	004a85c0	0059f594	data_candidate	kolkka
+004a3e70	place_lexicon	004a85c0	0059f595	data_candidate	olkka
+004a3e70	place_lexicon	004a85e0	0059f58c	data_candidate	_corner
+004a3e70	place_lexicon	004a85e0	0059f58d	data_candidate	corner
+004a3e70	place_lexicon	004a8600	0059f5a4	data_candidate	kangas
+004a3e70	place_lexicon	004a8600	0059f5a5	data_candidate	angas
+004a3e70	place_lexicon	004a8620	0059f59c	data_candidate	_heath
+004a3e70	place_lexicon	004a8620	0059f59d	data_candidate	heath
+004a3e70	place_lexicon	004a8640	0059f5b4	data_candidate	erä
+004a3e70	place_lexicon	004a8640	0059f5b5	data_candidate	rä
+004a3e70	place_lexicon	004a8660	0059f5ac	data_candidate	_wild
+004a3e70	place_lexicon	004a8660	0059f5ad	data_candidate	wild
+004a3e70	place_lexicon	004a8680	0059f5c0	data_candidate	reitti
+004a3e70	place_lexicon	004a8680	0059f5c1	data_candidate	eitti
+004a3e70	place_lexicon	004a86a0	0059f5b8	data_candidate	_trail
+004a3e70	place_lexicon	004a86a0	0059f5b9	data_candidate	trail
+004a3e70	place_lexicon	004a86c0	0059f5d4	data_candidate	taival
+004a3e70	place_lexicon	004a86c0	0059f5d5	data_candidate	aival
+004a3e70	place_lexicon	004a86e0	0059f5c8	data_candidate	_passage
+004a3e70	place_lexicon	004a86e0	0059f5c9	data_candidate	passage
+004a3e70	place_lexicon	004a8700	0059f5e4	data_candidate	salo
+004a3e70	place_lexicon	004a8700	0059f5e5	data_candidate	alo
+004a3e70	place_lexicon	004a8720	0059f5dc	data_candidate	_wilds
+004a3e70	place_lexicon	004a8720	0059f5dd	data_candidate	wilds
+004a3e70	place_lexicon	004a8740	0059f5f4	data_candidate	mäki
+004a3e70	place_lexicon	004a8740	0059f5f5	data_candidate	äki
+004a3e70	place_lexicon	004a8760	0059f5ec	data_candidate	hill
+004a3e70	place_lexicon	004a8760	0059f5ed	data_candidate	ill
+004a3e70	place_lexicon	004a8780	0059f5fc	data_candidate	pää
+004a3e70	place_lexicon	004a8780	0059f5fd	data_candidate	ää
+004a3e70	place_lexicon	004a87a0	00598310	data_candidate	head
+004a3e70	place_lexicon	004a87a0	00598311	data_candidate	ead
+004a3e70	place_lexicon	004a87c0	0059f608	data_candidate	tunturi
+004a3e70	place_lexicon	004a87c0	0059f609	data_candidate	unturi
+004a3e70	place_lexicon	004a87e0	0059f600	data_candidate	fjeld
+004a3e70	place_lexicon	004a87e0	0059f601	data_candidate	jeld
+004a3e70	place_lexicon	004a8800	0059f618	data_candidate	vaara
+004a3e70	place_lexicon	004a8800	0059f619	data_candidate	aara
+004a3e70	place_lexicon	004a8820	0059f610	data_candidate	fell
+004a3e70	place_lexicon	004a8820	0059f611	data_candidate	ell
+004a3e70	place_lexicon	004a8840	0059f628	data_candidate	jyrkkä
+004a3e70	place_lexicon	004a8840	0059f629	data_candidate	yrkkä
+004a3e70	place_lexicon	004a8860	0059f620	data_candidate	steep
+004a3e70	place_lexicon	004a8860	0059f621	data_candidate	teep
+004a3e70	place_lexicon	004a8880	0059f638	data_candidate	kunnas
+004a3e70	place_lexicon	004a8880	0059f639	data_candidate	unnas
+004a3e70	place_lexicon	004a88a0	0059f630	data_candidate	mound
+004a3e70	place_lexicon	004a88a0	0059f631	data_candidate	ound
+004a3e70	place_lexicon	004a88c0	0059f648	data_candidate	kumpu
+004a3e70	place_lexicon	004a88c0	0059f649	data_candidate	umpu
+004a3e70	place_lexicon	004a88e0	0059f640	data_candidate	hillock
+004a3e70	place_lexicon	004a88e0	0059f641	data_candidate	illock
+004a3e70	place_lexicon	004a8900	0059f658	data_candidate	laet
+004a3e70	place_lexicon	004a8900	0059f659	data_candidate	aet
+004a3e70	place_lexicon	004a8920	0059f650	data_candidate	summits
+004a3e70	place_lexicon	004a8920	0059f651	data_candidate	ummits
+004a3e70	place_lexicon	004a8940	0059f668	data_candidate	nousu
+004a3e70	place_lexicon	004a8940	0059f669	data_candidate	ousu
+004a3e70	place_lexicon	004a8960	0059f660	data_candidate	climb
+004a3e70	place_lexicon	004a8960	0059f661	data_candidate	limb
+004a3e70	place_lexicon	004a8980	0059f678	data_candidate	niska
+004a3e70	place_lexicon	004a8980	0059f679	data_candidate	iska
+004a3e70	place_lexicon	004a89a0	0059f670	data_candidate	neck
+004a3e70	place_lexicon	004a89a0	0059f671	data_candidate	eck
+004a3e70	place_lexicon	004a89c0	0059f688	data_candidate	rinne
+004a3e70	place_lexicon	004a89c0	0059f689	data_candidate	inne
+004a3e70	place_lexicon	004a89e0	0059f680	data_candidate	slope
+004a3e70	place_lexicon	004a89e0	0059f681	data_candidate	lope
+004a3e70	place_lexicon	004a8a00	0059f4e0	data_candidate	kallio
+004a3e70	place_lexicon	004a8a00	0059f4e1	data_candidate	allio
+004a3e70	place_lexicon	004a8a20	0058dde0	data_candidate	cliff
+004a3e70	place_lexicon	004a8a20	0058dde1	data_candidate	liff
+004a3e70	place_lexicon	004a8a40	0059f69c	data_candidate	vuori
+004a3e70	place_lexicon	004a8a40	0059f69d	data_candidate	uori
+004a3e70	place_lexicon	004a8a60	0059f690	data_candidate	_mountain
+004a3e70	place_lexicon	004a8a60	0059f691	data_candidate	mountain
+004a3e70	place_lexicon	004a8a80	0059f6a8	data_candidate	huippu
+004a3e70	place_lexicon	004a8a80	0059f6a9	data_candidate	uippu
+004a3e70	place_lexicon	004a8aa0	0059f6a4	data_candidate	top
+004a3e70	place_lexicon	004a8aa0	0059f6a5	data_candidate	op
+004a3e70	place_lexicon	004a8ac0	0059f6bc	data_candidate	vuoret
+004a3e70	place_lexicon	004a8ac0	0059f6bd	data_candidate	uoret
+004a3e70	place_lexicon	004a8ae0	0059f6b0	data_candidate	_mountains
+004a3e70	place_lexicon	004a8ae0	0059f6b1	data_candidate	mountains
+004a3e70	place_lexicon	004a8b00	0059f668	data_candidate	nousu
+004a3e70	place_lexicon	004a8b00	0059f669	data_candidate	ousu
+004a3e70	place_lexicon	004a8b20	0059f660	data_candidate	climb
+004a3e70	place_lexicon	004a8b20	0059f661	data_candidate	limb
+004a3e70	place_lexicon	004a8b40	0059f6cc	data_candidate	otsa
+004a3e70	place_lexicon	004a8b40	0059f6cd	data_candidate	tsa
+004a3e70	place_lexicon	004a8b60	0059f6c4	data_candidate	front
+004a3e70	place_lexicon	004a8b60	0059f6c5	data_candidate	ront
+004a3e70	place_lexicon	004a8b80	0059f5fc	data_candidate	pää
+004a3e70	place_lexicon	004a8b80	0059f5fd	data_candidate	ää
+004a3e70	place_lexicon	004a8ba0	00598310	data_candidate	head
+004a3e70	place_lexicon	004a8ba0	00598311	data_candidate	ead
+004a3e70	place_lexicon	004a8bc0	0059f6dc	data_candidate	laki
+004a3e70	place_lexicon	004a8bc0	0059f6dd	data_candidate	aki
+004a3e70	place_lexicon	004a8be0	0059f6d4	data_candidate	_summit
+004a3e70	place_lexicon	004a8be0	0059f6d5	data_candidate	summit
+004a3e70	place_lexicon	004a8c00	0059f6ec	data_candidate	nuppi
+004a3e70	place_lexicon	004a8c00	0059f6ed	data_candidate	uppi
+004a3e70	place_lexicon	004a8c20	0059f6e4	data_candidate	point
+004a3e70	place_lexicon	004a8c20	0059f6e5	data_candidate	oint
+004a3e70	place_lexicon	004a8c40	0059f6f8	data_candidate	kärki
+004a3e70	place_lexicon	004a8c40	0059f6f9	data_candidate	ärki
+004a3e70	place_lexicon	004a8c60	0059f6f4	data_candidate	tip
+004a3e70	place_lexicon	004a8c60	0059f6f5	data_candidate	ip
+004a3e70	place_lexicon	004a8c80	0059f708	data_candidate	naula
+004a3e70	place_lexicon	004a8c80	0059f709	data_candidate	aula
+004a3e70	place_lexicon	004a8ca0	0059f700	data_candidate	nail
+004a3e70	place_lexicon	004a8ca0	0059f701	data_candidate	ail
+0048a310	date_source	0048a369	0058ae60	call	
+0048a310	date_source	0048a385	005903bc	data_candidate	%d
+0048a310	date_source	0048a38b	004010d0	call	
+0048a310	date_source	0048a3a8	005903bc	data_candidate	%d
+0048a310	date_source	0048a3ae	004010d0	call	
+0048a310	date_source	0048a3cf	0059cf84	data_candidate	th
+0048a310	date_source	0048a400	0059cf84	data_candidate	th
+0048a310	date_source	0048a41b	0059cf90	data_candidate	rd
+0048a310	date_source	0048a43a	0059cf8c	data_candidate	nd
+0048a310	date_source	0048a45a	0059cf88	data_candidate	st
+0048a310	date_source	0048a474	0059cf94	data_candidate	last
+0048a310	date_source	0048a49d	0059cf9c	data_candidate	day %d of %s week before %s
+0048a310	date_source	0048a4a3	004010d0	call	
+0048a310	date_source	0048a4c6	0059cfb8	data_candidate	%s of month:%d
+0048a310	date_source	0048a4cc	004010d0	call	
+0048a310	date_source	0048a4e2	0055e910	call	
+0048a310	date_source	0048a550	0058a0ae	call	
+0048a310	date_source	0048a579	0059cfc8	data_candidate	in %s, during %s, on %s
+0048a310	date_source	0048a57f	004010d0	call	
+0048a310	date_source	0048a591	0058a0ae	call	
+0048a310	date_source	0048a59a	0059cfe0	data_candidate	%s, %s, %s
+0048a310	date_source	0048a5a0	004010d0	call	
+0048a310	date_source	0048a5b2	0058a0ae	call	
+0048a310	date_source	0048a5d4	0059cfec	data_candidate	in %s, during %s
+0048a310	date_source	0048a5db	0059d000	data_candidate	%s, %s
+0048a310	date_source	0048a5e1	004010d0	call	
+0048a310	date_source	0048a5f3	0058a0ae	call	
+0048a600	season_source	0048a6f9	0059d008	data_candidate	winter season
+0048a600	season_source	0048a701	0059d010	data_candidate	eason
+0048a600	season_source	0048a70b	0059d018	data_candidate	midwinter point
+0048a600	season_source	0048a715	0059d014	data_candidate	n
+0048a600	season_source	0048a72d	0059d028	data_candidate	midwinter
+0048a600	season_source	0048a735	0059d030	data_candidate	r
+0048a600	season_source	0048a746	0059d034	data_candidate	latter winter
+0048a600	season_source	0048a74e	0059d03c	data_candidate	inter
+0048a600	season_source	0048a75b	0059d040	data_candidate	r
+0048a600	season_source	0048a765	0059d044	data_candidate	summer season
+0048a600	season_source	0048a76d	0059d04c	data_candidate	eason
+0048a600	season_source	0048a77a	0059d050	data_candidate	n
+0048a600	season_source	0048a789	0059d044	data_candidate	summer season
+0048a600	season_source	0048a791	0059d04c	data_candidate	eason
+0048a600	season_source	0048a79b	0059d054	data_candidate	midsummer point
+0048a600	season_source	0048a7a5	0059d050	data_candidate	n
+0048a600	season_source	0048a7bd	0059d064	data_candidate	midsummer
+0048a600	season_source	0048a7c5	0059d06c	data_candidate	r
+0048a600	season_source	0048a7d6	0059d070	data_candidate	latter summer
+0048a600	season_source	0048a7de	0059d078	data_candidate	ummer
+0048a600	season_source	0048a7eb	0059d07c	data_candidate	r
+0048a600	season_source	0048a7f5	0059d008	data_candidate	winter season
+0048a600	season_source	0048a7fd	0059d010	data_candidate	eason
+0048a600	season_source	0048a80b	0059d014	data_candidate	n
+0055e910	moon_source	0055e941	0058ae60	call	
+0055e910	moon_source	0055e951	005d79a0	data_candidate	beginning of 
+0055e910	moon_source	0055e959	005d79a8	data_candidate	g of 
+0055e910	moon_source	0055e965	005d79ac	data_candidate	 
+0055e910	moon_source	0055e977	005d79b0	data_candidate	early 
+0055e910	moon_source	0055e97e	005d79b4	data_candidate	y 
+0055e910	moon_source	0055e998	005d79b8	data_candidate	late 
+0055e910	moon_source	0055e99f	005d79bc	data_candidate	 
+0055e910	moon_source	0055e9ae	005d79c0	data_candidate	end of 
+0055e910	moon_source	0055e9b5	005d79c4	data_candidate	of 
+0055f8e0	time_source	0055f908	005d7ce0	data_candidate	dnight
+0055f8e0	time_source	0055f90d	005d7cd8	data_candidate	After midnight
+0055f8e0	time_source	0055f918	005d7ce4	data_candidate	ht
+0055f8e0	time_source	0055f92f	005d7cf0	data_candidate	urs
+0055f8e0	time_source	0055f934	005d7ce8	data_candidate	Small hours
+0055f8e0	time_source	0055f944	005d7cfc	data_candidate	rning
+0055f8e0	time_source	0055f949	005d7cf4	data_candidate	Early morning
+0055f8e0	time_source	0055f954	005d7d00	data_candidate	g
+0055f8e0	time_source	0055f963	005d7d04	data_candidate	Morning
+0055f8e0	time_source	0055f96b	005d7d08	data_candidate	ing
+0055f8e0	time_source	0055f978	005d7d14	data_candidate	ning
+0055f8e0	time_source	0055f97d	005d7d0c	data_candidate	Late morning
+0055f8e0	time_source	0055f995	005d7d1c	data_candidate	Noon
+0055f8e0	time_source	0055f9aa	005d7d24	data_candidate	Early afternoon
+0055f8e0	time_source	0055f9ba	005d7d3c	data_candidate	n
+0055f8e0	time_source	0055f9c0	005d7d34	data_candidate	Afternoon
+0055f8e0	time_source	0055f9d1	005d7d48	data_candidate	ernoon
+0055f8e0	time_source	0055f9d6	005d7d40	data_candidate	Late afternoon
+0055f8e0	time_source	0055f9e1	005d7d4c	data_candidate	on
+0055f8e0	time_source	0055f9f8	005d7d58	data_candidate	ening
+0055f8e0	time_source	0055f9fd	005d7d50	data_candidate	Early evening
+0055f8e0	time_source	0055fa08	005d7d5c	data_candidate	g
+0055f8e0	time_source	0055fa14	005d7d60	data_candidate	Evening
+0055f8e0	time_source	0055fa1c	005d7d64	data_candidate	ing
+0055f8e0	time_source	0055fa26	005d7d70	data_candidate	ning
+0055f8e0	time_source	0055fa2b	005d7d68	data_candidate	Late evening
+0055f8e0	time_source	0055fa40	0059f9c8	data_candidate	Night
+0055f8e0	time_source	0055fa48	0059f9cc	data_candidate	t
+0055f8e0	time_source	0055fa54	005d7d80	data_candidate	ht
+0055f8e0	time_source	0055fa5a	005d7d78	data_candidate	Late night
+0055f8e0	time_source	0055fa75	005d7d84	data_candidate	Midnight
+0055f8e0	time_source	0055faa2	0058a0ae	call	
+0055f450	warmth_source	0055f481	0058ae60	call	
+0055f450	warmth_source	0055f491	005d7b84	data_candidate	You feel warm.
+0055f450	warmth_source	0055f499	005d7b8c	data_candidate	 warm.
+0055f450	warmth_source	0055f49f	005d7b90	data_candidate	m.
+0055f450	warmth_source	0055f4d1	005d7ba4	data_candidate	h
+0055f450	warmth_source	0055f4d7	005d7b94	data_candidate	Freezing to death
+0055f450	warmth_source	0055f4ea	005d7ba8	data_candidate	You are freezing to death!
+0055f450	warmth_source	0055f4f1	005d7bc0	data_candidate	h!
+0055f450	warmth_source	0055f4fb	005d7bb8	data_candidate	 to death!
+0055f450	warmth_source	0055f531	005d7b14	data_candidate	Freezing
+0055f450	warmth_source	0055f54a	005d7bc4	data_candidate	You are freezing.
+0055f450	warmth_source	0055f551	005d7bd4	data_candidate	.
+0055f450	warmth_source	0055f57a	005d7bd8	data_candidate	Numbingly cold
+0055f450	warmth_source	0055f582	005d7be0	data_candidate	y cold
+0055f450	warmth_source	0055f58e	005d7be4	data_candidate	ld
+0055f450	warmth_source	0055f5a5	005d7be8	data_candidate	You are numbingly cold.
+0055f450	warmth_source	0055f5af	005d7bf8	data_candidate	y cold.
+0055f450	warmth_source	0055f5d8	005d7b20	data_candidate	Bitterly cold
+0055f450	warmth_source	0055f5e0	005d7b28	data_candidate	 cold
+0055f450	warmth_source	0055f5ec	005d7b2c	data_candidate	d
+0055f450	warmth_source	0055f5fb	005d7c00	data_candidate	You feel bitterly cold.
+0055f450	warmth_source	0055f605	005d7c10	data_candidate	y cold.
+0055f450	warmth_source	0055f629	005d7b30	data_candidate	Cold
+0055f450	warmth_source	0055f645	005d7c18	data_candidate	You feel cold.
+0055f450	warmth_source	0055f64d	005d7c20	data_candidate	 cold.
+0055f450	warmth_source	0055f659	005d7c24	data_candidate	d.
+0055f450	warmth_source	0055f67e	005d7b38	data_candidate	Chilly
+0055f450	warmth_source	0055f685	005d7b3c	data_candidate	ly
+0055f450	warmth_source	0055f6a4	005d7c28	data_candidate	You feel chilly.
+0055f450	warmth_source	0055f6c9	005d7c3c	data_candidate	Cool
+0055f450	warmth_source	0055f6e5	005d7c44	data_candidate	You feel a bit cool.
+0055f450	warmth_source	0055f6ec	005d7c54	data_candidate	ool.
+0055f450	warmth_source	0055f717	005d7b40	data_candidate	Comfortably warm
+0055f450	warmth_source	0055f729	005d7c5c	data_candidate	You feel comfortably warm.
+0055f450	warmth_source	0055f730	005d7c74	data_candidate	m.
+0055f450	warmth_source	0055f739	005d7c6c	data_candidate	ably warm.
+0055f450	warmth_source	0055f76d	005d7b54	data_candidate	Rather warm
+0055f450	warmth_source	0055f775	005d7b5c	data_candidate	arm
+0055f450	warmth_source	0055f786	005d7c78	data_candidate	You are feeling rather warm.
+0055f450	warmth_source	0055f78d	005d7c90	data_candidate	arm.
+0055f450	warmth_source	0055f795	005d7c88	data_candidate	rather warm.
+0055f450	warmth_source	0055f7c8	005d7b60	data_candidate	Warm
+0055f450	warmth_source	0055f809	005d7b68	data_candidate	Hot
+0055f450	warmth_source	0055f81c	005d7c98	data_candidate	You are feeling hot.
+0055f450	warmth_source	0055f823	005d7ca8	data_candidate	hot.
+0055f450	warmth_source	0055f84e	005d7b6c	data_candidate	Sweaty
+0055f450	warmth_source	0055f855	005d7b70	data_candidate	ty
+0055f450	warmth_source	0055f875	005d7cb0	data_candidate	You are sweaty.
+0055f450	warmth_source	0055f88a	005d7b74	data_candidate	Sweating a lot
+0055f450	warmth_source	0055f892	005d7b7c	data_candidate	 a lot
+0055f450	warmth_source	0055f89e	005d7b80	data_candidate	ot
+0055f450	warmth_source	0055f8be	005d7cc0	data_candidate	You are sweating a lot.
+0055f450	warmth_source	0055f8c8	005d7cd0	data_candidate	 a lot.
+0055ff80	nutrition_source	0055ff8c	0058ae60	call	
+0055ff80	nutrition_source	0055ff91	005d7e60	data_candidate	Abundant
+0055ff80	nutrition_source	0055ffbb	005d7e6c	data_candidate	Starving
+0055ff80	nutrition_source	0055ffdf	005d7e80	data_candidate	shed
+0055ff80	nutrition_source	0055ffe4	005d7e78	data_candidate	Malnourished
+0055ff80	nutrition_source	00560012	005d7e90	data_candidate	ient
+0055ff80	nutrition_source	00560017	005d7e88	data_candidate	Insufficient
+0055ff80	nutrition_source	00560045	005d7e98	data_candidate	Scarce
+0055ff80	nutrition_source	0056004f	005d7e9c	data_candidate	ce
+0055ff80	nutrition_source	00560074	005d7ea8	data_candidate	e
+0055ff80	nutrition_source	0056007a	005d7ea0	data_candidate	Temperate
+0055ff80	nutrition_source	0056009f	0059ff64	data_candidate	Good
+0055ff80	nutrition_source	005600c2	005d7eb4	data_candidate	d
+0055ff80	nutrition_source	005600c8	005d7eac	data_candidate	Nourished
+0055ff80	nutrition_source	005600ed	005d7eb8	data_candidate	Well-fed
+004e3020	map_marker_legend	004e304f	EXTERNAL:00000032	call	
+004e3020	map_marker_legend	004e3059	EXTERNAL:0000003e	call	
+004e3020	map_marker_legend	004e3073	005a69b8	data_candidate	MAP MARKER INDICATORS
+004e3020	map_marker_legend	004e3084	005166c0	call	
+004e3020	map_marker_legend	004e3101	00509020	call	
+004e3020	map_marker_legend	004e3119	00509260	call	
+004e3020	map_marker_legend	004e312b	005a69d0	data_candidate	You
+004e3020	map_marker_legend	004e3132	0050e260	call	
+004e3020	map_marker_legend	004e31bc	EXTERNAL:0000002f	call	
+004e3020	map_marker_legend	004e31c8	EXTERNAL:00000035	call	
+004e3020	map_marker_legend	004e31d3	EXTERNAL:00000031	call	
+004e3020	map_marker_legend	004e31ee	00508cc0	call	
+004e3020	map_marker_legend	004e3200	0058dc20	data_candidate	Village
+004e3020	map_marker_legend	004e3207	0050e260	call	
+004e3020	map_marker_legend	004e3296	00509e40	call	
+004e3020	map_marker_legend	004e32b8	00509db0	call	
+004e3020	map_marker_legend	004e32ca	0058d660	data_candidate	Cave
+004e3020	map_marker_legend	004e32d1	0050e260	call	
+004e3020	map_marker_legend	004e32df	0058ef38	data_candidate	«W
+004e3020	map_marker_legend	004e335f	00509e40	call	
+004e3020	map_marker_legend	004e3381	00509db0	call	
+004e3020	map_marker_legend	004e3393	0058d70c	data_candidate	Shelter
+004e3020	map_marker_legend	004e339a	0050e260	call	
+004e3020	map_marker_legend	004e33a8	0058ef38	data_candidate	«W
+004e3020	map_marker_legend	004e3424	EXTERNAL:0000002f	call	
+004e3020	map_marker_legend	004e3430	EXTERNAL:00000035	call	
+004e3020	map_marker_legend	004e343b	EXTERNAL:00000031	call	
+004e3020	map_marker_legend	004e3456	00508cc0	call	
+004e3020	map_marker_legend	004e3468	0058d500	data_candidate	Your settlement
+004e3020	map_marker_legend	004e346f	0050e260	call	
+004e3020	map_marker_legend	004e347d	0058ef6c	data_candidate	ÿWWÿBonusMaterial
+004e3020	map_marker_legend	004e34ed	00509020	call	
+004e3020	map_marker_legend	004e3505	00509260	call	
+004e3020	map_marker_legend	004e3517	005a69d4	data_candidate	Trap
+004e3020	map_marker_legend	004e351e	0050e260	call	
+004e3020	map_marker_legend	004e359c	00509020	call	
+004e3020	map_marker_legend	004e35b4	00509260	call	
+004e3020	map_marker_legend	004e35c6	005a341c	data_candidate	Net
+004e3020	map_marker_legend	004e35cd	0050e260	call	
+004e3020	map_marker_legend	004e3661	0050ab60	call	
+004e3020	map_marker_legend	004e368d	0050ab60	call	
+004e3020	map_marker_legend	004e36bc	0050ab60	call	
+004e3020	map_marker_legend	004e36e6	0050ab60	call	
+004e3020	map_marker_legend	004e36ee	005a69dc	data_candidate	Marked location
+004e3020	map_marker_legend	004e36fc	0050e260	call	
+004e3020	map_marker_legend	004e377f	00509260	call	
+004e3020	map_marker_legend	004e379d	00509260	call	
+004e3020	map_marker_legend	004e37c1	00509260	call	
+004e3020	map_marker_legend	004e37e1	0050ab60	call	
+004e3020	map_marker_legend	004e3801	0050ab60	call	
+004e3020	map_marker_legend	004e381f	00509260	call	
+004e3020	map_marker_legend	004e383d	00509260	call	
+004e3020	map_marker_legend	004e384f	005a69ec	data_candidate	Quest location
+004e3020	map_marker_legend	004e3859	0050e260	call	
+004e3020	map_marker_legend	004e3888	00509020	call	
+004e3020	map_marker_legend	004e38a2	00509260	call	
+004e3020	map_marker_legend	004e38b4	005a69fc	data_candidate	Quest related area
+004e3020	map_marker_legend	004e38be	0050e260	call	
+004e3020	map_marker_legend	004e393b	00509260	call	
+004e3020	map_marker_legend	004e3962	00509260	call	
+004e3020	map_marker_legend	004e3983	00509260	call	
+004e3020	map_marker_legend	004e39aa	00509260	call	
+004e3020	map_marker_legend	004e39c8	00509260	call	
+004e3020	map_marker_legend	004e39da	005a6a10	data_candidate	Ordered goods
+004e3020	map_marker_legend	004e39e4	0050e260	call	
+004e3020	map_marker_legend	004e39f6	EXTERNAL:00000041	call	
+004e3020	map_marker_legend	004e3a13	EXTERNAL:0000002e	call	
+004e3020	map_marker_legend	004e3a1f	EXTERNAL:00000033	call	
+004e3020	map_marker_legend	004e3a29	EXTERNAL:0000003c	call	
+004e3020	map_marker_legend	004e3a3a	0058a0ae	call	
+004e3a50	map_culture_legend	004e3a69	EXTERNAL:00000032	call	
+004e3a50	map_culture_legend	004e3a72	EXTERNAL:0000003e	call	
+004e3a50	map_culture_legend	004e3a89	005a6a20	data_candidate	CULTURAL REGIONS
+004e3a50	map_culture_legend	004e3a9a	005166c0	call	
+004e3a50	map_culture_legend	004e3aa1	004df570	call	
+004e3a50	map_culture_legend	004e3aa9	005908f4	data_candidate	Kaumo
+004e3a50	map_culture_legend	004e3ab7	0050e260	call	
+004e3a50	map_culture_legend	004e3abe	004df570	call	
+004e3a50	map_culture_legend	004e3ac6	00590904	data_candidate	Kiesse
+004e3a50	map_culture_legend	004e3ad4	0050e260	call	
+004e3a50	map_culture_legend	004e3adb	004df570	call	
+004e3a50	map_culture_legend	004e3ae3	0059090c	data_candidate	Reemi
+004e3a50	map_culture_legend	004e3af1	0050e260	call	
+004e3a50	map_culture_legend	004e3afb	004df570	call	
+004e3a50	map_culture_legend	004e3b03	00590928	data_candidate	Koivula
+004e3a50	map_culture_legend	004e3b11	0050e260	call	
+004e3a50	map_culture_legend	004e3b18	004df570	call	
+004e3a50	map_culture_legend	004e3b20	00590914	data_candidate	Sartola
+004e3a50	map_culture_legend	004e3b2e	0050e260	call	
+004e3a50	map_culture_legend	004e3b35	004df570	call	
+004e3a50	map_culture_legend	004e3b3d	005908fc	data_candidate	Driik
+004e3a50	map_culture_legend	004e3b4b	0050e260	call	
+004e3a50	map_culture_legend	004e3b52	004df570	call	
+004e3a50	map_culture_legend	004e3b5a	005a686c	data_candidate	Islanders
+004e3a50	map_culture_legend	004e3b68	0050e260	call	
+004e3a50	map_culture_legend	004e3b72	004df570	call	
+004e3a50	map_culture_legend	004e3b7a	005a6878	data_candidate	Kuikka-tribe
+004e3a50	map_culture_legend	004e3b88	0050e260	call	
+004e3a50	map_culture_legend	004e3b8f	004df570	call	
+004e3a50	map_culture_legend	004e3b97	005a6888	data_candidate	Owl-tribe
+004e3a50	map_culture_legend	004e3ba5	0050e260	call	
+004e3a50	map_culture_legend	004e3bac	004df570	call	
+004e3a50	map_culture_legend	004e3bb4	005a6894	data_candidate	Seal-tribe
+004e3a50	map_culture_legend	004e3bc2	0050e260	call	
+004e3a50	map_culture_legend	004e3bc9	004df570	call	
+004e3a50	map_culture_legend	004e3bd1	005a68a0	data_candidate	Njerpezit
+004e3a50	map_culture_legend	004e3be2	0050e260	call	
+004e3a50	map_culture_legend	004e3bf4	EXTERNAL:00000041	call	
+004e3a50	map_culture_legend	004e3c0e	EXTERNAL:0000002e	call	
+004e3a50	map_culture_legend	004e3c1a	EXTERNAL:00000033	call	
+004e3a50	map_culture_legend	004e3c24	EXTERNAL:0000003c	call	
+004e3d90	map_background	004e3dac	EXTERNAL:00000041	call	
+004e3d90	map_background	004e3dcc	EXTERNAL:00000038	call	
+004e3d90	map_background	004e3df8	EXTERNAL:00000058	call	
+004e3d90	map_background	004e3e07	EXTERNAL:00000040	call	
+004e3d90	map_background	004e3e15	EXTERNAL:00000058	call	
+004e3d90	map_background	004e3e1d	005a6a34	data_candidate	MAP OF KNOWN AREAS
+004e3d90	map_background	004e3e22	00513430	call	
+004e3d90	map_background	004e3e27	005a6a48	data_candidate	KNOWN_AREAS_MAP
+004e3d90	map_background	004e3e2c	00562530	call	
+004e3d90	map_background	004e3e4d	0050efd0	call	
+004e3d90	map_background	004e3e63	EXTERNAL:00000058	call	
+004e3d90	map_background	004e3e8b	005166c0	call	
+004e3d90	map_background	004e3eae	0050efd0	call	
+004e3d90	map_background	004e3ebe	EXTERNAL:00000058	call	
+004e3d90	map_background	004e3eca	0058a0ae	call	
+004e3ee0	map_legend_composition	004e3f2e	EXTERNAL:00000058	call	
+004e3ee0	map_legend_composition	004e3f3d	EXTERNAL:00000019	call	
+004e3ee0	map_legend_composition	004e3f53	EXTERNAL:00000040	call	
+004e3ee0	map_legend_composition	004e3f87	00508e50	call	
+004e3ee0	map_legend_composition	004e3f97	EXTERNAL:00000058	call	
+004e3ee0	map_legend_composition	004e3fc3	EXTERNAL:00000058	call	
+004e3ee0	map_legend_composition	004e3fd2	EXTERNAL:00000019	call	
+004e3ee0	map_legend_composition	004e3fe8	EXTERNAL:00000040	call	
+004e3ee0	map_legend_composition	004e401c	00508e50	call	
+004e3ee0	map_legend_composition	004e402c	EXTERNAL:00000058	call	
+004e3ee0	map_legend_composition	004e4039	0058a0ae	call	
+004e5990	known_areas_map	004e59a7	005a54d0	data_candidate	music_chant.ogg
+004e5990	known_areas_map	004e59b3	0040c000	call	
+004e5990	known_areas_map	004e59bd	005587a0	call	
+004e5990	known_areas_map	004e59d3	EXTERNAL:00000041	call	
+004e5990	known_areas_map	004e59f0	0048c160	call	
+004e5990	known_areas_map	004e5a1f	0048c160	call	
+004e5990	known_areas_map	004e5a37	0058b5a0	call	
+004e5990	known_areas_map	004e5a5c	005574b0	call	
+004e5990	known_areas_map	004e5ac8	EXTERNAL:00000058	call	
+004e5990	known_areas_map	004e5aca	004e3d90	call	
+004e5990	known_areas_map	004e5acf	004e3ee0	call	
+004e5990	known_areas_map	004e5afb	0050b480	call	
+004e5990	known_areas_map	004e5b06	EXTERNAL:00000051	call	
+004e5990	known_areas_map	004e5b1b	EXTERNAL:00000058	call	
+004e5990	known_areas_map	004e5b26	EXTERNAL:00000055	call	
+004e5990	known_areas_map	004e5b2f	004e3c40	call	
+004e5990	known_areas_map	004e5b65	EXTERNAL:00000034	call	
+004e5990	known_areas_map	004e5b75	004cf790	call	
+004e5990	known_areas_map	004e5be5	0058d6dc	data_candidate	%c
+004e5990	known_areas_map	004e5bff	004010d0	call	
+004e5990	known_areas_map	004e5c20	004cfd10	call	
+004e5990	known_areas_map	004e5c30	0058d6dc	data_candidate	%c
+004e5990	known_areas_map	004e5c36	004010d0	call	
+004e5990	known_areas_map	004e5c5a	004cfd10	call	
+004e5990	known_areas_map	004e5c6a	0058d6dc	data_candidate	%c
+004e5990	known_areas_map	004e5c70	004010d0	call	
+004e5990	known_areas_map	004e5c91	004cfd10	call	
+004e5990	known_areas_map	004e5ca1	0058d6dc	data_candidate	%c
+004e5990	known_areas_map	004e5ca7	004010d0	call	
+004e5990	known_areas_map	004e5ccb	004cfd10	call	
+004e5990	known_areas_map	004e5cf2	005a6c5c	data_candidate	M.Toggle map markers
+004e5990	known_areas_map	004e5d01	004cfd10	call	
+004e5990	known_areas_map	004e5d14	005a6c74	data_candidate	A.Add/edit custom marker
+004e5990	known_areas_map	004e5d23	004cfd10	call	
+004e5990	known_areas_map	004e5d42	005a6c90	data_candidate	Q.Toggle quest markers
+004e5990	known_areas_map	004e5d51	004cfd10	call	
+004e5990	known_areas_map	004e5d64	005a6ca8	data_candidate	C.Toggle cultural regions
+004e5990	known_areas_map	004e5d73	004cfd10	call	
+004e5990	known_areas_map	004e5d86	005a6cc4	data_candidate	F3.Toggle target cursor
+004e5990	known_areas_map	004e5d95	004cfd10	call	
+004e5990	known_areas_map	004e5da8	005950c8	data_candidate	ESC.Exit
+004e5990	known_areas_map	004e5db4	004cfd10	call	
+004e5990	known_areas_map	004e5dce	EXTERNAL:00000051	call	
+004e5990	known_areas_map	004e5de6	EXTERNAL:00000058	call	
+004e5990	known_areas_map	004e5df6	005a6cdc	data_candidate	Zoom map view by mouse wheel or with the following keys:
+004e5990	known_areas_map	004e5e00	0050e260	call	
+004e5990	known_areas_map	004e5e0c	EXTERNAL:00000058	call	
+004e5990	known_areas_map	004e5e14	EXTERNAL:00000051	call	
+004e5990	known_areas_map	004e5e2b	EXTERNAL:00000058	call	
+004e5990	known_areas_map	004e5e40	005a6d18	data_candidate	[CTRL -] Zoom out [CTRL +] Zoom in [CTRL 0] Reset or max
+004e5990	known_areas_map	004e5e4a	00514d20	call	
+004e5990	known_areas_map	004e5e56	EXTERNAL:00000058	call	
+004e5990	known_areas_map	004e5e62	004cf990	call	
+004e5990	known_areas_map	004e5e71	004cf990	call	
+004e5990	known_areas_map	004e5e80	004cf990	call	
+004e5990	known_areas_map	004e5f0c	0050b480	call	
+004e5990	known_areas_map	004e5f17	EXTERNAL:00000051	call	
+004e5990	known_areas_map	004e5f2c	EXTERNAL:00000058	call	
+004e5990	known_areas_map	004e5f37	EXTERNAL:00000055	call	
+004e5990	known_areas_map	004e5f47	004e3c40	call	
+004e5990	known_areas_map	004e5f59	004d1120	call	
+004e5990	known_areas_map	004e5f7d	0050b650	call	
+004e5990	known_areas_map	004e60da	004e4c70	call	
+004e5990	known_areas_map	004e6174	004e4c40	call	
+004e5990	known_areas_map	004e6199	0058b5dc	call	
+004e5990	known_areas_map	004e61f1	004e3ee0	call	
+004e5990	known_areas_map	004e6209	004e3ee0	call	
+004e5990	known_areas_map	004e621c	0048c160	call	
+004e5990	known_areas_map	004e6233	004ebbc0	call	
+004e5990	known_areas_map	004e6240	0048c160	call	
+004e5990	known_areas_map	004e6256	004ebbc0	call	
+004e5990	known_areas_map	004e626a	004e1df0	call	
+004e5990	known_areas_map	004e6282	0058ae60	call	
+004e5990	known_areas_map	004e62a1	0048c160	call	
+004e5990	known_areas_map	004e62a6	0048c160	call	
+004e5990	known_areas_map	004e62ac	004e4960	call	
+004e5990	known_areas_map	004e62d3	004e4050	call	
+004e5990	known_areas_map	004e6381	0050b650	call	
+004e5990	known_areas_map	004e63d7	0050dc50	call	
+004e5990	known_areas_map	004e658d	EXTERNAL:00000041	call	
+004e5990	known_areas_map	004e65be	0040bef0	call	
+004e5990	known_areas_map	004e65d5	0058a0ae	call	
+00562530	screen_help_source	0056254c	00594ff8	data_candidate	.%s.
+00562530	screen_help_source	00562552	004010d0	call	
+00562530	screen_help_source	00562565	005d81c4	data_candidate	gameinfo/%s_scrinfo.txt
+00562530	screen_help_source	0056256b	004010d0	call	
+00562530	screen_help_source	00562580	00562300	call	
+00562530	screen_help_source	0056258a	00562300	call	
+00562530	screen_help_source	00562595	0058f1f8	data_candidate	rb
+00562530	screen_help_source	0056259b	EXTERNAL:000000c4	call	
+00562530	screen_help_source	005625af	EXTERNAL:000000de	call	
+00562530	screen_help_source	005625cc	004d4280	call	
+00562530	screen_help_source	005625ff	0059508c	data_candidate	***
+00562530	screen_help_source	00562605	EXTERNAL:000000bb	call	
+00562530	screen_help_source	00562627	00562300	call	
+00562530	screen_help_source	0056263e	EXTERNAL:000000bb	call	
+00562530	screen_help_source	00562676	0058ae60	call	
+00562530	screen_help_source	0056267f	EXTERNAL:000000de	call	
+00562530	screen_help_source	00562691	EXTERNAL:000000d3	call	
+00562530	screen_help_source	005626a2	0058a0ae	call	
+004e4050	map_marker_edit	004e409d	0048c160	call	
+004e4050	map_marker_edit	004e40b3	004ebbc0	call	
+004e4050	map_marker_edit	004e40c4	0048c160	call	
+004e4050	map_marker_edit	004e40da	004ebbc0	call	
+004e4050	map_marker_edit	004e4150	EXTERNAL:00000041	call	
+004e4050	map_marker_edit	004e4159	005dd9d0	data_candidate	d
+004e4050	map_marker_edit	004e4188	EXTERNAL:00000038	call	
+004e4050	map_marker_edit	004e419c	005a6a58	data_candidate	ADD MARKER AT CHARACTER'S LOCATION
+004e4050	map_marker_edit	004e41a3	005a6a78	data_candidate	ON
+004e4050	map_marker_edit	004e41a9	005a6a80	data_candidate	A new marker will be added at your character's present location. 
+004e4050	map_marker_edit	004e41be	005a6a68	data_candidate	ARACTER'S LOCATION
+004e4050	map_marker_edit	004e41cb	005a6ac4	data_candidate	EDIT MARKER
+004e4050	map_marker_edit	004e41d3	005a6ad0	data_candidate	You can now edit the marker text and color, or remove it. 
+004e4050	map_marker_edit	004e41d8	005a6acc	data_candidate	KER
+004e4050	map_marker_edit	004e41e5	00562300	call	
+004e4050	map_marker_edit	004e41ea	005a6b10	data_candidate	Markers can contain two lines of text filled with information you prefer.
+004e4050	map_marker_edit	004e41f1	00562300	call	
+004e4050	map_marker_edit	004e4202	EXTERNAL:00000058	call	
+004e4050	map_marker_edit	004e4224	005166c0	call	
+004e4050	map_marker_edit	004e4245	0050efd0	call	
+004e4050	map_marker_edit	004e4325	0050ab60	call	
+004e4050	map_marker_edit	004e4356	0050ab60	call	
+004e4050	map_marker_edit	004e43a4	0050ab60	call	
+004e4050	map_marker_edit	004e43d6	0050ab60	call	
+004e4050	map_marker_edit	004e43ed	EXTERNAL:00000058	call	
+004e4050	map_marker_edit	004e440b	0050e260	call	
+004e4050	map_marker_edit	004e442c	0050e260	call	
+004e4050	map_marker_edit	004e443c	EXTERNAL:00000058	call	
+004e4050	map_marker_edit	004e4465	EXTERNAL:00000034	call	
+004e4050	map_marker_edit	004e4475	004cf790	call	
+004e4050	map_marker_edit	004e44ed	005a6b5c	data_candidate	ENTER.Edit text
+004e4050	map_marker_edit	004e452d	004cfd10	call	
+004e4050	map_marker_edit	004e4540	005a6b6c	data_candidate	R
+004e4050	map_marker_edit	004e454c	004cfd10	call	
+004e4050	map_marker_edit	004e455f	005a6b70	data_candidate	G
+004e4050	map_marker_edit	004e456b	004cfd10	call	
+004e4050	map_marker_edit	004e457e	005a6b74	data_candidate	B
+004e4050	map_marker_edit	004e458a	004cfd10	call	
+004e4050	map_marker_edit	004e459d	005a6b78	data_candidate	Y
+004e4050	map_marker_edit	004e45a9	004cfd10	call	
+004e4050	map_marker_edit	004e45bc	005a6b7c	data_candidate	W
+004e4050	map_marker_edit	004e45c8	004cfd10	call	
+004e4050	map_marker_edit	004e45dc	EXTERNAL:00000058	call	
+004e4050	map_marker_edit	004e45f1	005a6b80	data_candidate	Set color
+004e4050	map_marker_edit	004e45f8	0050e260	call	
+004e4050	map_marker_edit	004e4605	EXTERNAL:00000058	call	
+004e4050	map_marker_edit	004e4612	005a6b8c	data_candidate	DEL.Remove
+004e4050	map_marker_edit	004e461e	004cfd10	call	
+004e4050	map_marker_edit	004e4631	005950c8	data_candidate	ESC.Exit
+004e4050	map_marker_edit	004e463d	004cfd10	call	
+004e4050	map_marker_edit	004e46a7	004d1120	call	
+004e4050	map_marker_edit	004e46ee	004e1340	call	
+004e4050	map_marker_edit	004e4701	0058ae60	call	
+004e4050	map_marker_edit	004e4716	EXTERNAL:00000041	call	
+004e4050	map_marker_edit	004e4776	004e1340	call	
+004e4050	map_marker_edit	004e4789	0058a0ae	call	
+004e4050	map_marker_edit	004e47e2	0050f950	call	
+004e4050	map_marker_edit	004e4812	0050f950	call	
+004e4960	map_marker_selection	004e49ad	EXTERNAL:00000041	call	
+004e4960	map_marker_selection	004e49d4	EXTERNAL:00000058	call	
+004e4960	map_marker_selection	004e49e9	EXTERNAL:00000038	call	
+004e4960	map_marker_selection	004e49fe	EXTERNAL:00000058	call	
+004e4960	map_marker_selection	004e4a10	005a6b98	data_candidate	SELECT MARKER TO EDIT
+004e4960	map_marker_selection	004e4a1d	005166c0	call	
+004e4960	map_marker_selection	004e4a2a	EXTERNAL:00000058	call	
+004e4960	map_marker_selection	004e4a77	EXTERNAL:00000034	call	
+004e4960	map_marker_selection	004e4a87	004cf790	call	
+004e4960	map_marker_selection	004e4b3e	00595a08	data_candidate	%c.%s
+004e4960	map_marker_selection	004e4b44	004010d0	call	
+004e4960	map_marker_selection	004e4b60	004cfd10	call	
+004e4960	map_marker_selection	004e4ba4	004cf990	call	
+004e4960	map_marker_selection	004e4bd1	004d1120	call	
+004e4960	map_marker_selection	004e4beb	EXTERNAL:00000041	call	
+004e4960	map_marker_selection	004e4c13	EXTERNAL:00000041	call	
+004e4960	map_marker_selection	004e4c36	0058a0ae	call	
+004e4c70	map_location_info	004e4c78	0058b0d0	call	
+004e4c70	map_location_info	004e4cc8	EXTERNAL:00000041	call	
+004e4c70	map_location_info	004e4ce1	005620c0	call	
+004e4c70	map_location_info	004e4da2	00562300	call	
+004e4c70	map_location_info	004e4dbf	00562300	call	
+004e4c70	map_location_info	004e4ddd	00562300	call	
+004e4c70	map_location_info	004e4dfd	00562300	call	
+004e4c70	map_location_info	004e4e3f	0059416c	data_candidate	<br>
+004e4c70	map_location_info	004e4e46	00562300	call	
+004e4c70	map_location_info	004e4f7f	0048e4f0	call	
+004e4c70	map_location_info	004e4f8e	005a6bb0	data_candidate	%s<br>
+004e4c70	map_location_info	004e4f94	004010d0	call	
+004e4c70	map_location_info	004e4fa4	00562300	call	
+004e4c70	map_location_info	004e4fd2	004ec010	call	
+004e4c70	map_location_info	004e4ff7	0048b220	call	
+004e4c70	map_location_info	004e5007	0058b5a0	call	
+004e4c70	map_location_info	004e5022	0058b5a0	call	
+004e4c70	map_location_info	004e5057	005a6bcc	data_candidate	%d days ago
+004e4c70	map_location_info	004e505d	004010d0	call	
+004e4c70	map_location_info	004e5067	005a6bc0	data_candidate	yesterday
+004e4c70	map_location_info	004e506f	005a6bc8	data_candidate	y
+004e4c70	map_location_info	004e5086	005a6bb8	data_candidate	today
+004e4c70	map_location_info	004e5091	005a6bbc	data_candidate	y
+004e4c70	map_location_info	004e50ab	00451770	call	
+004e4c70	map_location_info	004e50e1	005a6bd8	data_candidate	Blacksmith %s order placed %s.<br>
+004e4c70	map_location_info	004e50e7	004010d0	call	
+004e4c70	map_location_info	004e50f7	00562300	call	
+004e4c70	map_location_info	004e510e	0059416c	data_candidate	<br>
+004e4c70	map_location_info	004e511a	00562300	call	
+004e4c70	map_location_info	004e512a	004e1df0	call	
+004e4c70	map_location_info	004e5217	0059416c	data_candidate	<br>
+004e4c70	map_location_info	004e521e	00562300	call	
+004e4c70	map_location_info	004e52d5	004ec010	call	
+004e4c70	map_location_info	004e531e	0058ae60	call	
+004e4c70	map_location_info	004e534c	005a6bcc	data_candidate	%d days ago
+004e4c70	map_location_info	004e5352	004010d0	call	
+004e4c70	map_location_info	004e535c	005a6bc0	data_candidate	yesterday
+004e4c70	map_location_info	004e5364	005a6bc8	data_candidate	y
+004e4c70	map_location_info	004e537b	005a6bb8	data_candidate	today
+004e4c70	map_location_info	004e5386	005a6bbc	data_candidate	y
+004e4c70	map_location_info	004e53a9	005a6bfc	data_candidate	Net site, visited %s.<br>
+004e4c70	map_location_info	004e53af	004010d0	call	
+004e4c70	map_location_info	004e53cd	005a6c18	data_candidate	Trapping site, visited %s.<br>
+004e4c70	map_location_info	004e53d3	004010d0	call	
+004e4c70	map_location_info	004e53f7	00562300	call	
+004e4c70	map_location_info	004e5479	0059416c	data_candidate	<br>
+004e4c70	map_location_info	004e5480	00562300	call	
+004e4c70	map_location_info	004e5498	0058a0ae	call	
+004e4c70	map_location_info	004e54e2	0050efd0	call	
+004e4c70	map_location_info	004e5547	EXTERNAL:00000032	call	
+004e4c70	map_location_info	004e5554	EXTERNAL:0000003e	call	
+004e4c70	map_location_info	004e557a	005166c0	call	
+004e4c70	map_location_info	004e5595	0050efd0	call	
+004e4c70	map_location_info	004e56ac	0050ab60	call	
+004e4c70	map_location_info	004e56dd	0050ab60	call	
+004e4c70	map_location_info	004e572b	0050ab60	call	
+004e4c70	map_location_info	004e575f	0050ab60	call	
+004e4c70	map_location_info	004e5781	0050e260	call	
+004e4c70	map_location_info	004e57ab	0050e260	call	
+004e4c70	map_location_info	004e5815	005a6c38	data_candidate	Press [A] to edit the markers here.
+004e4c70	map_location_info	004e581d	0050e260	call	
+004e4c70	map_location_info	004e582f	EXTERNAL:00000041	call	
+004e4c70	map_location_info	004e5844	EXTERNAL:0000002e	call	
+004e4c70	map_location_info	004e5850	EXTERNAL:0000003c	call	
+004e4c70	map_location_info	004e585f	EXTERNAL:00000033	call	
+004e4c70	map_location_info	004e5892	0058a0ae	call	
+004e2960	map_quest_annotation_build	004e297d	005574b0	call	
+004e2960	map_quest_annotation_build	004e2a42	EXTERNAL:0000003e	call	
+004e2960	map_quest_annotation_build	004e2a5b	004e1940	call	
+004e2960	map_quest_annotation_build	004e2a61	EXTERNAL:0000003c	call	
+004e2960	map_quest_annotation_build	004e2a7c	0040cb20	call	
+004e2960	map_quest_annotation_build	004e2aa5	004ae3f0	call	
+004e2960	map_quest_annotation_build	004e2ab6	004d3db0	call	
+004e2960	map_quest_annotation_build	004e2ac2	005a68c0	data_candidate	<infoblue>%s QUEST</infoblue><br><indblue>told by: </indblue><infoblue>%s</infoblue><br>
+004e2960	map_quest_annotation_build	004e2ac8	004010d0	call	
+004e2960	map_quest_annotation_build	004e2ae2	004e2850	call	
+004e2960	map_quest_annotation_build	004e2b7e	EXTERNAL:0000003e	call	
+004e2960	map_quest_annotation_build	004e2b9b	004e1940	call	
+004e2960	map_quest_annotation_build	004e2ba1	EXTERNAL:0000003c	call	
+004e2960	map_quest_annotation_build	004e2bb4	004d3db0	call	
+004e2960	map_quest_annotation_build	004e2bc0	005a691c	data_candidate	<infoblue>%s QUEST</infoblue><br><indblue>%s</indblue><br>
+004e2960	map_quest_annotation_build	004e2bc6	004010d0	call	
+004e2960	map_quest_annotation_build	004e2be4	004e2850	call	
+004e2960	map_quest_annotation_build	004e2c7d	EXTERNAL:0000003e	call	
+004e2960	map_quest_annotation_build	004e2c9b	004e1940	call	
+004e2960	map_quest_annotation_build	004e2ca1	EXTERNAL:0000003c	call	
+004e2960	map_quest_annotation_build	004e2cb4	004d3db0	call	
+004e2960	map_quest_annotation_build	004e2cc0	005a691c	data_candidate	<infoblue>%s QUEST</infoblue><br><indblue>%s</indblue><br>
+004e2960	map_quest_annotation_build	004e2cc6	004010d0	call	
+004e2960	map_quest_annotation_build	004e2ce4	004e2850	call	
+004e2960	map_quest_annotation_build	004e2d08	005574b0	call	
+004e2960	map_quest_annotation_build	004e2d90	EXTERNAL:0000003e	call	
+004e2960	map_quest_annotation_build	004e2da9	004e1940	call	
+004e2960	map_quest_annotation_build	004e2daf	EXTERNAL:0000003c	call	
+004e2960	map_quest_annotation_build	004e2dca	0040cb20	call	
+004e2960	map_quest_annotation_build	004e2e08	0058ae60	call	
+004e2960	map_quest_annotation_build	004e2e14	004d3db0	call	
+004e2960	map_quest_annotation_build	004e2e20	005a6958	data_candidate	<infoblue>%s QUEST</infoblue><br>
+004e2960	map_quest_annotation_build	004e2e26	004010d0	call	
+004e2960	map_quest_annotation_build	004e2e42	005a697c	data_candidate	<indblue>informant: </indblue><infoblue>
+004e2960	map_quest_annotation_build	004e2e47	005a697c	data_candidate	<indblue>informant: </indblue><infoblue>
+004e2960	map_quest_annotation_build	004e2e47	005a6980	data_candidate	blue>informant: </indblue><infoblue>
+004e2960	map_quest_annotation_build	004e2e54	005a6980	data_candidate	blue>informant: </indblue><infoblue>
+004e2960	map_quest_annotation_build	004e2e63	004ae3f0	call	
+004e2960	map_quest_annotation_build	004e2eaa	005a69a8	data_candidate	</infoblue><br>
+004e2960	map_quest_annotation_build	004e2eb7	005a69ac	data_candidate	foblue><br>
+004e2960	map_quest_annotation_build	004e2ebf	005a69b0	data_candidate	ue><br>
+004e2960	map_quest_annotation_build	004e2ec7	005a69b4	data_candidate	br>
+004e2960	map_quest_annotation_build	004e2ede	004e2850	call	
+004e2960	map_quest_annotation_build	004e2f7a	EXTERNAL:0000003e	call	
+004e2960	map_quest_annotation_build	004e2f97	004e1940	call	
+004e2960	map_quest_annotation_build	004e2f9d	EXTERNAL:0000003c	call	
+004e2960	map_quest_annotation_build	004e2fb0	004d3db0	call	
+004e2960	map_quest_annotation_build	004e2fbc	005a691c	data_candidate	<infoblue>%s QUEST</infoblue><br><indblue>%s</indblue><br>
+004e2960	map_quest_annotation_build	004e2fc2	004010d0	call	
+004e2960	map_quest_annotation_build	004e2fe0	004e2850	call	
+004e2960	map_quest_annotation_build	004e300b	0058a0ae	call	
+00563190	action_description	005631bf	005d82a4	data_candidate	Fell a tree
+00563190	action_description	005631c5	005d82b0	data_candidate	Chop blocks of wood
+00563190	action_description	005631cb	00599790	data_candidate	Log
+00563190	action_description	005631d1	005d82c4	data_candidate	Split firewood
+00563190	action_description	005631d7	005d82d4	data_candidate	Peel bark
+00563190	action_description	005631dd	005d82e0	data_candidate	Boards
+00563190	action_description	005631e3	005d82e8	data_candidate	Post spruce
+00563190	action_description	005631e9	005d82f4	data_candidate	Prepare the soil
+00563190	action_description	005631ef	005d8308	data_candidate	Plant/sow
+00563190	action_description	005631f5	005d8314	data_candidate	Harvest down
+00563190	action_description	005631fb	005d8324	data_candidate	Harvest and pick
+00563190	action_description	00563201	005d8338	data_candidate	Grind flour
+00563190	action_description	00563207	005d8344	data_candidate	Thresh (for grain/seeds/leaves)
+00563190	action_description	0056320d	005d8364	data_candidate	Twigs and branches
+00563190	action_description	00563213	005d8378	data_candidate	Build a fire
+00563190	action_description	00563219	005d8388	data_candidate	Make a hole in the ice
+00563190	action_description	0056321f	005d83a0	data_candidate	Skin an animal
+00563190	action_description	00563225	005d83b0	data_candidate	Cure the skin (for preservation)
+00563190	action_description	0056322b	005d83d4	data_candidate	Tan the skin
+00563190	action_description	00563231	005d83e4	data_candidate	Apply tanning material
+00563190	action_description	00563237	005d83fc	data_candidate	Rinse and dry the skin
+00563190	action_description	0056323d	005d8414	data_candidate	Soften the skin
+00563190	action_description	00563243	005d8424	data_candidate	Soak the skin
+00563190	action_description	00563249	005d8434	data_candidate	De-hair (for rawhide/leather)
+00563190	action_description	0056324f	005d8454	data_candidate	Clean the skin
+00563190	action_description	00563255	005d8464	data_candidate	Roast in embers
+00563190	action_description	0056325b	00593f88	data_candidate	Ember-roasted turnips
+00563190	action_description	00563261	005d8474	data_candidate	Roast on fire
+00563190	action_description	00563267	005d8484	data_candidate	Wild flour
+00563190	action_description	0056326d	005d8490	data_candidate	Roasted meat
+00563190	action_description	00563273	0059b098	data_candidate	Salted meat
+00563190	action_description	00563279	0059b0b0	data_candidate	Smoked meat
+00563190	action_description	0056327f	005d84a0	data_candidate	Dry (for preservation)
+00563190	action_description	00563285	005d84b8	data_candidate	Salt (for preservation)
+00563190	action_description	0056328b	005d84d0	data_candidate	Smoke (for preservation)
+00563190	action_description	00563291	005d84ec	data_candidate	Boil
+00563190	action_description	00563297	005d84f4	data_candidate	Cook
+00563190	action_description	0056329d	005d84fc	data_candidate	Craft modded item
+00563190	action_description	005632a3	005d8510	data_candidate	Craft an item
+00563190	action_description	005632a9	005d8644	data_candidate	Join ropes and cords
+00563190	action_description	005632af	005d865c	data_candidate	Shorten ropes and cords
+00563190	action_description	005632b5	0059bb18	data_candidate	Withe
+00563190	action_description	005632bb	005d86d8	data_candidate	Build something
+00563190	action_description	005632c1	005d8674	data_candidate	Spin yarn
+00563190	action_description	005632f9	005a341c	data_candidate	Net
+00563190	action_description	005632ff	00596e64	data_candidate	Arrow
+00563190	action_description	00563305	0059b4c4	data_candidate	Bowstring
+00563190	action_description	0056330b	005d8520	data_candidate	Repair worn-out clothes
+00563190	action_description	00563311	005d8538	data_candidate	Repair worn-out net
+00563190	action_description	00563317	005d854c	data_candidate	Bait a trap
+00563190	action_description	0056331d	005d8558	data_candidate	Set a trap
+00563190	action_description	00563323	005d8564	data_candidate	Reset triggered trap
+00563190	action_description	00563329	005d857c	data_candidate	Disassemble a trap construction
+00563190	action_description	0056332f	005d859c	data_candidate	Light lever trap
+00563190	action_description	00563335	005d85b0	data_candidate	Small deadfall trap
+00563190	action_description	0056333b	005d85c4	data_candidate	Big deadfall trap
+00563190	action_description	00563341	005d85d8	data_candidate	Heavy deadfall bear trap
+00563190	action_description	00563347	005d85f4	data_candidate	Trap pit
+00563190	action_description	0056334d	005d8600	data_candidate	Trap pit with sharp stakes
+00563190	action_description	00563353	005d861c	data_candidate	Haft a weapon or tool
+00563190	action_description	00563359	005d8634	data_candidate	Remove the haft
+00563190	action_description	0056335f	005d8680	data_candidate	Retting
+00563190	action_description	00563365	005d8688	data_candidate	Drying
+00563190	action_description	0056336b	005d8690	data_candidate	Extract plant fibre
+00563190	action_description	00563371	005d86a4	data_candidate	Tendon drying
+00563190	action_description	00563377	005d86b4	data_candidate	Separate sinew fibre
+00563190	action_description	0056337d	005d86cc	data_candidate	Sinew yarn
+00563190	action_description	00563383	005d86e8	data_candidate	Talk to someone
+00563190	action_description	00563389	005d86f8	data_candidate	Command pets and companions
+00563190	action_description	0056338f	005d8714	data_candidate	Fill with water, or milk into
+00563190	action_description	00563395	005d8734	data_candidate	Pour something into a container
+00563190	action_description	0056339b	005d8754	data_candidate	Empty a container
+00563190	action_description	005633a1	0059ecb8	data_candidate	Get up (stand)
+00563190	action_description	005633a7	005d8768	data_candidate	Wounds and injuries
+00563190	action_description	005633ad	005d877c	data_candidate	Cut a carcass for meat
+00563190	action_description	005633b3	0059ed30	data_candidate	Sleep
+00563190	action_description	005633b9	005d8794	data_candidate	Pack an animal
+00563190	action_description	005633bf	005d87a4	data_candidate	Unpack an animal
+00563190	action_description	005633c5	005d87b8	data_candidate	Active fishing
+00563190	action_description	005633cb	005d87c8	data_candidate	Set a net
+00563190	action_description	005633d1	005d87d4	data_candidate	Retrieve a net
+00563190	action_description	005633d7	005d8850	data_candidate	Wield
+00563190	action_description	005633dd	005d8858	data_candidate	Wear
+00563190	action_description	005633e3	005d8860	data_candidate	Take off
+00563190	action_description	005633e9	005d886c	data_candidate	Drop
+00563190	action_description	005633ef	005d87e4	data_candidate	Deconstruct something
+00563190	action_description	00563411	005d87fc	data_candidate	Continue paused process
+00563190	action_description	00563417	005d8814	data_candidate	Haul items
+00563190	action_description	0056341d	005d8820	data_candidate	Push/pack items
+00563190	action_description	00563423	005d8830	data_candidate	Throw an item/shoot an arrow
+0046c8b0	craft_description	0046c8de	0059aee4	data_candidate	Threshing tool
+0046c8b0	craft_description	0046c8e4	0059bb54	data_candidate	Sickle
+0046c8b0	craft_description	0046c8ea	0059aef4	data_candidate	Flail
+0046c8b0	craft_description	0046c8f0	005998d4	data_candidate	Beater
+0046c8b0	craft_description	0046c8f6	0059af98	data_candidate	Hammering tool
+0046c8b0	craft_description	0046c8fc	0059ae5c	data_candidate	Heated fireplace
+0046c8b0	craft_description	0046c902	0059afe8	data_candidate	Milk
+0046c8b0	craft_description	0046c908	00599790	data_candidate	Log
+0046c8b0	craft_description	0046c90e	0058d530	data_candidate	Water
+0046c8b0	craft_description	0046c914	0059951c	data_candidate	Flour
+0046c8b0	craft_description	0046c91a	00599514	data_candidate	Fire
+0046c8b0	craft_description	0046c920	00599b04	data_candidate	Branch
+0046c8b0	craft_description	0046c926	00599f74	data_candidate	Cutting weapon or by hand
+0046c8b0	craft_description	0046c92c	0059bb5c	data_candidate	Axe or carving knife
+0046c8b0	craft_description	0046c932	00599794	data_candidate	Axe
+0046c8b0	craft_description	0046c938	00599798	data_candidate	Knife
+0046c8b0	craft_description	0046c93e	005997a8	data_candidate	Cutting weapon
+0046c8b0	craft_description	0046c944	00599bdc	data_candidate	Cover for kota
+0046c8b0	craft_description	0046c94a	0059b50c	data_candidate	Axe haft
+0046c8b0	craft_description	0046c950	0059b590	data_candidate	Axe head
+0046c8b0	craft_description	0046c956	0059b5d8	data_candidate	Spear haft
+0046c8b0	craft_description	0046c95c	00598880	data_candidate	Spear head
+0046c8b0	craft_description	0046c962	0059bb74	data_candidate	Shingle
+0046c8b0	craft_description	0046c968	00598368	data_candidate	Battleaxe
+0046c8b0	craft_description	0046c96e	00596e34	data_candidate	Handaxe
+0046c8b0	craft_description	0046c974	0059b878	data_candidate	Broad axe
+0046c8b0	craft_description	0046c97a	0059b884	data_candidate	Carving axe
+0046c8b0	craft_description	0046c980	0059b890	data_candidate	Woodsman's axe
+0046c8b0	craft_description	0046c986	0059b8a0	data_candidate	Stone-axe
+0046c8b0	craft_description	0046c98c	0059b8ac	data_candidate	Splitting axe
+0046c8b0	craft_description	0046c992	00599ec8	data_candidate	Slender trunk
+0046c8b0	craft_description	0046c998	00599ef8	data_candidate	Fishhook
+0046c8b0	craft_description	0046c99e	0059b29c	data_candidate	Sewing needle
+0046c8b0	craft_description	0046c9a4	0059b310	data_candidate	Arrowhead
+0046c8b0	craft_description	0046c9aa	0059981c	data_candidate	Arrow shaft
+0046c8b0	craft_description	0046c9b0	0059b3f0	data_candidate	Arrow shaft blank
+0046c8b0	craft_description	0046c9b6	0059b470	data_candidate	Bark for floats
+0046c8b0	craft_description	0046c9bc	0059ba00	data_candidate	Small knife
+0046c8b0	craft_description	0046c9c2	0059ba0c	data_candidate	Broad knife
+0046c8b0	craft_description	0046c9c8	0059ba18	data_candidate	Northern knife
+0046c8b0	craft_description	0046c9ce	0059ba28	data_candidate	Kaumolais knife
+0046c8b0	craft_description	0046c9d4	0059ba38	data_candidate	Fisher's knife
+0046c8b0	craft_description	0046c9da	0059ba48	data_candidate	Spruce twig
+0046c8b0	craft_description	0046c9e0	0059ba88	data_candidate	Birch twig
+0046c8b0	craft_description	0046c9e6	0059bb8c	data_candidate	Vasta
+0046c8b0	craft_description	0046c9ec	00598354	data_candidate	Stone
+0046c8b0	craft_description	0046c9f2	005997b8	data_candidate	Shovel
+0046c8b0	craft_description	0046ca29	0059bb18	data_candidate	Withe
+0046c8b0	craft_description	0046ca2f	0059bb20	data_candidate	Antler
+0046c8b0	craft_description	0046ca35	0059bb28	data_candidate	Bone
+0046c8b0	craft_description	0046ca3b	0059bb30	data_candidate	Tooth
+0046c8b0	craft_description	0046ca41	0059bb38	data_candidate	Skull
+0046c8b0	craft_description	0046ca47	0059bb40	data_candidate	Feather
+0046c8b0	craft_description	0046ca4d	0059bb48	data_candidate	Animal hide
+0046c8b0	craft_description	0046ca53	00599550	data_candidate	Leather
+0046c8b0	craft_description	0046ca59	0059afa8	data_candidate	Root vegetables
+0046c8b0	craft_description	0046ca5f	00599724	data_candidate	Vegetables
+0046c8b0	craft_description	0046ca65	0059aff0	data_candidate	Grinding stone
+0046c8b0	craft_description	0046ca6b	0059b000	data_candidate	Berries
+0046c8b0	craft_description	0046ca71	0059ae50	data_candidate	Boiling pot
+0046c8b0	craft_description	0046ca77	0059adf0	data_candidate	Cooking pot
+0046c8b0	craft_description	0046ca7d	0059b008	data_candidate	Seeds
+0046c8b0	craft_description	0046ca83	0059b010	data_candidate	Grasses
+0046c8b0	craft_description	0046ca89	0059b018	data_candidate	Pods
+0046c8b0	craft_description	0046ca8f	0059b020	data_candidate	Grains
+0046c8b0	craft_description	0046ca95	0059b028	data_candidate	Container
+0046c8b0	craft_description	0046ca9b	0059b034	data_candidate	Raw meat
+0046c8b0	craft_description	0046caa1	0059b040	data_candidate	Raw fish
+0046c8b0	craft_description	0046caa7	0059b04c	data_candidate	Raw or salted fish
+0046c8b0	craft_description	0046caad	0059b060	data_candidate	Raw or salted meat
+0046c8b0	craft_description	0046cab3	0059b074	data_candidate	Dried fish
+0046c8b0	craft_description	0046cab9	0059b080	data_candidate	Smoked fish
+0046c8b0	craft_description	0046cabf	0059b0a4	data_candidate	Dried meat
+0046c8b0	craft_description	0046cac5	0059b0b0	data_candidate	Smoked meat
+0046c8b0	craft_description	0046cacb	0059b098	data_candidate	Salted meat
+0046c8b0	craft_description	0046cad1	0059b08c	data_candidate	Salted fish
+0046c8b0	craft_description	0046cad7	0059adac	data_candidate	Raw meat or fish
+0046c8b0	craft_description	0046cadd	00599540	data_candidate	Rope
+0046c8b0	craft_description	0046cae3	00599e88	data_candidate	Yarn
+0046c8b0	craft_description	0046cae9	0059b200	data_candidate	Water-use yarn
+0046c8b0	craft_description	0046caef	00599548	data_candidate	Cord
+0046c8b0	craft_description	0046caf5	00599b24	data_candidate	Tree trunk
+0046c8b0	craft_description	0046cafb	00599fc8	data_candidate	Spindle or by hand
+0046c8b0	craft_description	0046cb01	0059b7c8	data_candidate	Thin cordage
+0046c8b0	craft_description	0046cb07	00597570	data_candidate	Tying equipment
+0046c8b0	craft_description	0046cb0d	0059b804	data_candidate	Strong cordage
+0046c8b0	craft_description	0046cb13	00599788	data_candidate	Staff
+0046c8b0	craft_description	0046cb19	00599830	data_candidate	Wooden stake
+0046c8b0	craft_description	0046cb1f	005940f4	data_candidate	Turnip
+0046c8b0	craft_description	0046cb25	00599fdc	data_candidate	Fibre
+0046c8b0	craft_description	0046cb2b	00599418	data_candidate	Pot
+0046c8b0	craft_description	0046cb31	00599884	data_candidate	Block of wood
+0046c8b0	craft_description	0046cb37	00599b54	data_candidate	Cloth
+0046c8b0	craft_description	0046cb3d	0059b9bc	data_candidate	Bandage material
+0046c8b0	craft_description	0046cb43	0059b9d0	data_candidate	Birch-bark strip
+0046c8b0	craft_description	0046cb49	0059967c	data_candidate	Sapling
+0046c8b0	craft_description	0046cb4f	00599524	data_candidate	Mushrooms
+0046c8b0	craft_description	0046cb55	0059b9e4	data_candidate	Flowers
+0046c8b0	craft_description	0046cb5b	0059b9ec	data_candidate	Herbs
+0046c8b0	craft_description	0046cb61	0059b9f4	data_candidate	Seasoning
+0046c8b0	craft_description	0046cb67	00599cb8	data_candidate	Raw ingredients
+0046c8b0	craft_description	0046cb6d	0059bb7c	data_candidate	Wooden canteen
+0046c8b0	craft_description	0046cb73	0059888c	data_candidate	Shovel blade
+0046c8b0	craft_description	0046cb79	0059b6fc	data_candidate	Shovel haft
+0046c8b0	craft_description	0046cb7f	0059ba94	data_candidate	Wooden shovel
+0046c8b0	craft_description	0046cb85	0059b8bc	data_candidate	Northern spear
+0046c8b0	craft_description	0046cb9d	00597bbc	data_candidate	Javelin
+0046c8b0	craft_description	0046cba3	00596e3c	data_candidate	Spear
+0046c8b0	craft_description	0046cba9	00596274	data_candidate	Ango
+0046c8b0	craft_description	0046cbaf	0059b8cc	data_candidate	Kaumolais spear
+0046c8b0	craft_description	0046cbb5	0059b8dc	data_candidate	Trident
+0046c8b0	craft_description	0046cbbb	0059b8e4	data_candidate	Small trident
+0046c8b0	craft_description	0046cbc1	0059b8f4	data_candidate	Wide trident
+0046c8b0	craft_description	0046cbcb	004bdea0	call	
+0046c8b0	craft_description	0046cbe1	0059bb94	data_candidate	A specific item
+004076c0	terrain_description	004076ee	0058ae60	call	
+005232d0	skill_command	0052330a	0058ae60	call	
+005232d0	skill_command	00523312	0059060c	data_candidate	TEXTILECRAFT
+005232d0	skill_command	00523318	EXTERNAL:000000bb	call	
+005232d0	skill_command	00523325	00590614	data_candidate	RAFT
+005232d0	skill_command	0052332a	0059060c	data_candidate	TEXTILECRAFT
+005232d0	skill_command	00523360	004f90d0	call	
+005232d0	skill_command	0052336a	00532fb0	call	
+005232d0	skill_command	00523373	005af068	data_candidate	!Can't use skills in the heat of the combat!
+005232d0	skill_command	00523378	004f6510	call	
+005232d0	skill_command	00523383	0058a0ae	call	
+005232d0	skill_command	00523395	005af098	data_candidate	#Using: 
+005232d0	skill_command	0052339a	005a9f48	data_candidate	%s%s%s
+005232d0	skill_command	005233a4	004010d0	call	
+005232d0	skill_command	005233b1	004f6510	call	
+005232d0	skill_command	005233e3	EXTERNAL:00000037	call	
+005232d0	skill_command	005233f9	00522150	call	
+005232d0	skill_command	00523404	0058a0ae	call	
+00564720	main_command_description	00564720	005d8934	data_candidate	some action
+00564720	main_command_description	00564728	005d893c	data_candidate	ion
+00564720	main_command_description	0056473f	005d8940	data_candidate	Make items and constructions
+00564720	main_command_description	00564746	005d8958	data_candidate	ions
+00564720	main_command_description	00564766	005d8950	data_candidate	onstructions
+00564720	main_command_description	0056477c	005d8960	data_candidate	Butcher -- cut a carcass for meat
+00564720	main_command_description	00564783	005d8980	data_candidate	t
+00564720	main_command_description	0056479b	005d8970	data_candidate	 carcass for meat
+00564720	main_command_description	005647af	005d8994	data_candidate	wn
+00564720	main_command_description	005647b5	005d8984	data_candidate	Get up or lay down
+00564720	main_command_description	0056481f	005d8a10	data_candidate	le
+00564720	main_command_description	00564835	005d89f8	data_candidate	Pick up from adjacent tile
+00564720	main_command_description	00564843	005d8a08	data_candidate	acent tile
+00564720	main_command_description	00564858	005d8a14	data_candidate	Pick up from adjacent tile, pack animal or companion
+00564720	main_command_description	0056485f	005d8a44	data_candidate	nion
+00564720	main_command_description	0056487a	005d8a24	data_candidate	acent tile, pack animal or companion
+00564720	main_command_description	00564888	005d8a34	data_candidate	 animal or companion
+00564720	main_command_description	0056489b	005d8a5c	data_candidate	tions
+00564720	main_command_description	005648a0	005d8a4c	data_candidate	Help and game options
+00564720	main_command_description	005648ac	005d8a60	data_candidate	s
+00564720	main_command_description	005648cd	005ac724	data_candidate	 game
+00564720	main_command_description	005648d2	005ac71c	data_candidate	Save the game
+00564720	main_command_description	005648df	005ac728	data_candidate	e
+00564720	main_command_description	00564925	005d8a74	data_candidate	crafts
+00564720	main_command_description	0056492a	005d8a64	data_candidate	Make modded handcrafts
+00564720	main_command_description	00564936	005d8a78	data_candidate	ts
+00564720	main_command_description	00564959	005d8a7c	data_candidate	Quit and optionally save the game
+00564720	main_command_description	00564960	005d8a9c	data_candidate	e
+00564720	main_command_description	00564978	005d8a8c	data_candidate	lly save the game
+00564720	main_command_description	00564987	0059ed30	data_candidate	Sleep
+00564720	main_command_description	00564991	0059ed34	data_candidate	p
+00564720	main_command_description	005649a3	005d8aa8	data_candidate	ms
+00564720	main_command_description	005649a9	005d8aa0	data_candidate	Move items
+00564720	main_command_description	005649d2	005d8aac	data_candidate	Move items -- haul items around with you
+00564720	main_command_description	005649ef	005d8abc	data_candidate	ul items around with you
+00564720	main_command_description	005649fd	005d8acc	data_candidate	with you
+00564720	main_command_description	00564a15	005d8ad8	data_candidate	Push/pack -- push items at your feet to an adjacent location or pack them on an animal
+00564720	main_command_description	00564a24	005d8ad8	data_candidate	Push/pack -- push items at your feet to an adjacent location or pack them on an animal
+00564720	main_command_description	00564a24	005d8adc	data_candidate	/pack -- push items at your feet to an adjacent location or pack them on an animal
+00564720	main_command_description	00564a26	005d8adc	data_candidate	/pack -- push items at your feet to an adjacent location or pack them on an animal
+00564720	main_command_description	00564a28	005d8ade	data_candidate	ack -- push items at your feet to an adjacent location or pack them on an animal
+00564720	main_command_description	00564a2c	005d8b30	data_candidate	Quaff (drink) something
+00564720	main_command_description	00564a3f	005d8b40	data_candidate	mething
+00564720	main_command_description	00564a50	005d8b58	data_candidate	action
+00564720	main_command_description	00564a55	005d8b48	data_candidate	Repeat the last action
+00564720	main_command_description	00564a61	005d8b5c	data_candidate	on
+00564720	main_command_description	00564a84	005d8b60	data_candidate	Open a door or gate
+00564720	main_command_description	00564a8b	005d8b70	data_candidate	ate
+00564720	main_command_description	00564aa2	005d8b84	data_candidate	gate
+00564720	main_command_description	00564aa7	005d8b74	data_candidate	Close a door or gate
+00564720	main_command_description	00564aca	005d8b8c	data_candidate	Zoom in/out between wilderness and terrain map
+00564720	main_command_description	00564ad1	005d8bb4	data_candidate	in map
+00564720	main_command_description	00564adb	005d8bb8	data_candidate	ap
+00564720	main_command_description	00564aee	005d8b9c	data_candidate	een wilderness and terrain map
+00564720	main_command_description	00564b0b	005d8bac	data_candidate	nd terrain map
+00564720	main_command_description	00564b1c	005d8bbc	data_candidate	Inventory
+00564720	main_command_description	00564b24	005d8bc4	data_candidate	y
+00564720	main_command_description	00564b41	005d8bc8	data_candidate	Inventory -- look at what you are carrying 
+00564720	main_command_description	00564b48	005d8bf0	data_candidate	ng 
+00564720	main_command_description	00564b5e	005d8bd8	data_candidate	k at what you are carrying 
+00564720	main_command_description	00564b6c	005d8be8	data_candidate	e carrying 
+00564720	main_command_description	00564b7d	005d8bfc	data_candidate	ething
+00564720	main_command_description	00564b82	005d8bf4	data_candidate	Drop something
+00564720	main_command_description	00564b8f	005d8c00	data_candidate	ng
+00564720	main_command_description	00564bb3	005d8c0c	data_candidate	fire
+00564720	main_command_description	00564bb8	005d8c04	data_candidate	Start a fire
+00564720	main_command_description	00564bdd	005d8c14	data_candidate	Skills -- view and use your skills
+00564720	main_command_description	00564be4	005d8c34	data_candidate	ls
+00564720	main_command_description	00564c06	005d8c24	data_candidate	nd use your skills
+00564720	main_command_description	00564c15	005d8cac	data_candidate	r tool
+00564720	main_command_description	00564c1a	005d8c9c	data_candidate	Wield a weapon or tool
+00564720	main_command_description	00564c26	005d8cb0	data_candidate	ol
+00564720	main_command_description	00564c49	005d8cc4	data_candidate	armor
+00564720	main_command_description	00564c4e	005d8cb4	data_candidate	Wear clothes or armor
+00564720	main_command_description	00564c5a	005d8cc8	data_candidate	r
+00564720	main_command_description	00564c73	005d8ccc	data_candidate	Look in a direction
+00564720	main_command_description	00564c7a	005d8cdc	data_candidate	ion
+00564720	main_command_description	00564c91	005d8ce0	data_candidate	Look what is at the current location
+00564720	main_command_description	00564c98	005d8d00	data_candidate	tion
+00564720	main_command_description	00564cb8	005d8cf0	data_candidate	the current location
+00564720	main_command_description	00564cc7	005d8d08	data_candidate	Make - craft items and build constructions
+00564720	main_command_description	00564cce	005d8d30	data_candidate	ns
+00564720	main_command_description	00564cf0	005d8d18	data_candidate	ms and build constructions
+00564720	main_command_description	00564cfe	005d8d28	data_candidate	structions
+00564720	main_command_description	00564d0f	005ac690	data_candidate	View message log
+00564720	main_command_description	00564d2d	005d8d34	data_candidate	Chat (talk) with someone
+00564720	main_command_description	00564d4a	005d8d44	data_candidate	 someone
+00564720	main_command_description	00564d5b	005d86f8	data_candidate	Command pets and companions
+00564720	main_command_description	00564d62	005d8710	data_candidate	ons
+00564720	main_command_description	00564d78	005d8708	data_candidate	 companions
+00564720	main_command_description	00564d89	005d8d58	data_candidate	thing
+00564720	main_command_description	00564d8e	005d8d50	data_candidate	Eat something
+00564720	main_command_description	00564d9b	005d8d5c	data_candidate	g
+00564720	main_command_description	00564db5	005d8d60	data_candidate	Armour coverage statistics
+00564720	main_command_description	00564dbc	005d8d78	data_candidate	cs
+00564720	main_command_description	00564dde	005d8d70	data_candidate	statistics
+00564720	main_command_description	00564def	005d8d7c	data_candidate	Character profile
+00564720	main_command_description	00564df6	005d8d8c	data_candidate	e
+00564720	main_command_description	00564e0f	005d8d90	data_candidate	Wait for one turn
+00564720	main_command_description	00564e16	005d8da0	data_candidate	n
+00564720	main_command_description	00564e2f	005d8da4	data_candidate	Wait and rest until cancelled
+00564720	main_command_description	00564e36	005d8dbc	data_candidate	elled
+00564720	main_command_description	00564e40	005d8dc0	data_candidate	d
+00564720	main_command_description	00564e58	005d8db4	data_candidate	til cancelled
+00564720	main_command_description	00564e79	005d8df4	data_candidate	Hide
+00564720	main_command_description	00564e93	005d8e0c	data_candidate	weapon
+00564720	main_command_description	00564e98	005d8dfc	data_candidate	Attack with 1st weapon
+00564720	main_command_description	00564ea4	005d8e10	data_candidate	on
+00564720	main_command_description	00564ec7	005d8e24	data_candidate	weapon
+00564720	main_command_description	00564ecc	005d8e14	data_candidate	Attack with 2nd weapon
+00564720	main_command_description	00564ed8	005d8e28	data_candidate	on
+00564720	main_command_description	00564efb	005d8e3c	data_candidate	attack
+00564720	main_command_description	00564f00	005d8e2c	data_candidate	Repeat the last attack
+00564720	main_command_description	00564f0c	005d8e40	data_candidate	ck
+00564720	main_command_description	00564f2f	005d8e44	data_candidate	Exchange wielded weapons
+00564720	main_command_description	00564f4c	005d8e54	data_candidate	 weapons
+00564720	main_command_description	00564f5d	005b1508	data_candidate	Kick
+00564720	main_command_description	00564f77	005b1510	data_candidate	Punch
+00564720	main_command_description	00564f81	005b1514	data_candidate	h
+00564720	main_command_description	00564f93	005d8e60	data_candidate	Throw something, or shoot an arrow
+00564720	main_command_description	00564f9a	005d8e80	data_candidate	ow
+00564720	main_command_description	00564fbc	005d8e70	data_candidate	 or shoot an arrow
+00564720	main_command_description	00564fcb	005d8e84	data_candidate	Take off worn clothes or wielded weapons
+00564720	main_command_description	00564fe8	005d8e94	data_candidate	othes or wielded weapons
+00564720	main_command_description	00564ff6	005d8ea4	data_candidate	 weapons
+00564720	main_command_description	00565007	005d8eb0	data_candidate	Apply (use) a tool or container
+00564720	main_command_description	0056501a	005d8ec0	data_candidate	ol or container
+00564720	main_command_description	00565029	005d8c38	data_candidate	Game encyclopedia; a hypertext guide
+00564720	main_command_description	00565030	005d8c58	data_candidate	uide
+00564720	main_command_description	00565050	005d8c48	data_candidate	a; a hypertext guide
+00564720	main_command_description	00565075	005d8c68	data_candidate	urnal
+00564720	main_command_description	0056507a	005d8c60	data_candidate	Quest journal
+00564720	main_command_description	00565087	005d8c6c	data_candidate	l
+00564720	main_command_description	005650a1	005d8c70	data_candidate	Look what is at a chosen distant location
+00564720	main_command_description	005650a8	005d8c98	data_candidate	n
+00564720	main_command_description	005650c0	005d8c80	data_candidate	a chosen distant location
+00564720	main_command_description	005650ce	005d8c90	data_candidate	 location
+00564720	main_command_description	005650df	005d8dd4	data_candidate	 means
+00564720	main_command_description	005650e4	005d8dc4	data_candidate	Spells and magic means
+00564720	main_command_description	005650f0	005d8dd8	data_candidate	ns
+00564720	main_command_description	00565113	005d8ddc	data_candidate	Game course information
+00564720	main_command_description	00565126	005d8dec	data_candidate	rmation
+00564720	main_command_description	00565137	005ac6b4	data_candidate	as
+00564720	main_command_description	0056513d	005ac6a4	data_candidate	Map of known areas
+00564720	main_command_description	00565161	005d8768	data_candidate	Wounds and injuries
+00564720	main_command_description	00565168	005d8778	data_candidate	ies
+00564720	main_command_description	0056517f	005d89e4	data_candidate	Pick up something
+00564720	main_command_description	00565186	005d89f4	data_candidate	g
+00564720	main_command_description	0056519f	005d89b4	data_candidate	Look around
+00564720	main_command_description	005651a7	005d89bc	data_candidate	und
+00564720	main_command_description	005651be	005d89c0	data_candidate	Look what is at the chosen location
+00564720	main_command_description	005651c5	005d89e0	data_candidate	ion
+00564720	main_command_description	005651db	005d89d0	data_candidate	the chosen location
+00564720	main_command_description	005651ea	005d8998	data_candidate	Movement and rest actions
+00564720	main_command_description	005651f1	005d89b0	data_candidate	s
+00564720	main_command_description	00565204	005d89a8	data_candidate	t actions
+0050e910	native_centered_text	0050e930	0058c8c0	data_candidate	 
+0050e910	native_centered_text	0050e93c	004d4430	call	
+0050e910	native_centered_text	0050e94f	0058ae60	call	
+0050e910	native_centered_text	0050e962	0058ae60	call	
+0050e910	native_centered_text	0050e993	EXTERNAL:000000e4	call	
+0050e910	native_centered_text	0050ea1a	0058c8c0	data_candidate	 
+0050e910	native_centered_text	0050ea95	0050e5a0	call	
+0050e910	native_centered_text	0050eb19	0050e5a0	call	
+0050e910	native_centered_text	0050eb29	0058a0ae	call	
+0050efd0	native_renderer_paragraph	0050f044	0058ae60	call	
+0050efd0	native_renderer_paragraph	0050f0bc	0059416c	data_candidate	<br>
+0050efd0	native_renderer_paragraph	0050f0c9	0059416c	data_candidate	<br>
+0050efd0	native_renderer_paragraph	0050f0c9	0059416e	data_candidate	r>
+0050efd0	native_renderer_paragraph	0050f0d4	0059416d	data_candidate	br>
+0050efd0	native_renderer_paragraph	0050f0d4	0059416f	data_candidate	>
+0050efd0	native_renderer_paragraph	0050f10e	005a06a0	data_candidate	<blue>
+0050efd0	native_renderer_paragraph	0050f122	005a06a0	data_candidate	<blue>
+0050efd0	native_renderer_paragraph	0050f122	005a06a2	data_candidate	lue>
+0050efd0	native_renderer_paragraph	0050f12d	005a06a1	data_candidate	blue>
+0050efd0	native_renderer_paragraph	0050f12d	005a06a3	data_candidate	ue>
+0050efd0	native_renderer_paragraph	0050f147	005ac8cc	data_candidate	</blue>
+0050efd0	native_renderer_paragraph	0050f162	005ac8cc	data_candidate	</blue>
+0050efd0	native_renderer_paragraph	0050f162	005ac8ce	data_candidate	blue>
+0050efd0	native_renderer_paragraph	0050f16d	005ac8cd	data_candidate	/blue>
+0050efd0	native_renderer_paragraph	0050f16d	005ac8cf	data_candidate	lue>
+0050efd0	native_renderer_paragraph	0050f187	005ac8d4	data_candidate	<indblue>
+0050efd0	native_renderer_paragraph	0050f197	005ac8d4	data_candidate	<indblue>
+0050efd0	native_renderer_paragraph	0050f197	005ac8d6	data_candidate	ndblue>
+0050efd0	native_renderer_paragraph	0050f1a2	005ac8d5	data_candidate	indblue>
+0050efd0	native_renderer_paragraph	0050f1a2	005ac8d7	data_candidate	dblue>
+0050efd0	native_renderer_paragraph	0050f1bc	005ac8e0	data_candidate	</indblue>
+0050efd0	native_renderer_paragraph	0050f1c7	0058ef3c	data_candidate	LQmÿdíÿ
+0050efd0	native_renderer_paragraph	0050f1d2	005ac8e0	data_candidate	</indblue>
+0050efd0	native_renderer_paragraph	0050f1d2	005ac8e2	data_candidate	indblue>
+0050efd0	native_renderer_paragraph	0050f1dd	005ac8e1	data_candidate	/indblue>
+0050efd0	native_renderer_paragraph	0050f1dd	005ac8e3	data_candidate	ndblue>
+0050efd0	native_renderer_paragraph	0050f1f7	005ac8ec	data_candidate	<infoblue>
+0050efd0	native_renderer_paragraph	0050f207	005ac8ec	data_candidate	<infoblue>
+0050efd0	native_renderer_paragraph	0050f207	005ac8ee	data_candidate	nfoblue>
+0050efd0	native_renderer_paragraph	0050f212	005ac8ed	data_candidate	infoblue>
+0050efd0	native_renderer_paragraph	0050f212	005ac8ef	data_candidate	foblue>
+0050efd0	native_renderer_paragraph	0050f22c	005ac8f8	data_candidate	</infoblue>
+0050efd0	native_renderer_paragraph	0050f242	005ac8f8	data_candidate	</infoblue>
+0050efd0	native_renderer_paragraph	0050f242	005ac8fa	data_candidate	infoblue>
+0050efd0	native_renderer_paragraph	0050f24d	005ac8f9	data_candidate	/infoblue>
+0050efd0	native_renderer_paragraph	0050f24d	005ac8fb	data_candidate	nfoblue>
+0050efd0	native_renderer_paragraph	0050f267	005a0680	data_candidate	<red>
+0050efd0	native_renderer_paragraph	0050f277	005a0680	data_candidate	<red>
+0050efd0	native_renderer_paragraph	0050f277	005a0682	data_candidate	ed>
+0050efd0	native_renderer_paragraph	0050f282	005a0681	data_candidate	red>
+0050efd0	native_renderer_paragraph	0050f282	005a0683	data_candidate	d>
+0050efd0	native_renderer_paragraph	0050f29c	005ac89c	data_candidate	<green>
+0050efd0	native_renderer_paragraph	0050f2b2	005ac89c	data_candidate	<green>
+0050efd0	native_renderer_paragraph	0050f2b2	005ac89e	data_candidate	reen>
+0050efd0	native_renderer_paragraph	0050f2bd	005ac89d	data_candidate	green>
+0050efd0	native_renderer_paragraph	0050f2bd	005ac89f	data_candidate	een>
+0050efd0	native_renderer_paragraph	0050f2d7	005ac8a4	data_candidate	</green>
+0050efd0	native_renderer_paragraph	0050f2f2	005ac8a4	data_candidate	</green>
+0050efd0	native_renderer_paragraph	0050f2f2	005ac8a6	data_candidate	green>
+0050efd0	native_renderer_paragraph	0050f2fd	005ac8a5	data_candidate	/green>
+0050efd0	native_renderer_paragraph	0050f2fd	005ac8a7	data_candidate	reen>
+0050efd0	native_renderer_paragraph	0050f317	005ac8b0	data_candidate	<lightgray>
+0050efd0	native_renderer_paragraph	0050f327	005ac8b0	data_candidate	<lightgray>
+0050efd0	native_renderer_paragraph	0050f327	005ac8b2	data_candidate	ightgray>
+0050efd0	native_renderer_paragraph	0050f332	005ac8b1	data_candidate	lightgray>
+0050efd0	native_renderer_paragraph	0050f332	005ac8b3	data_candidate	ghtgray>
+0050efd0	native_renderer_paragraph	0050f34c	005ac8bc	data_candidate	</lightgray>
+0050efd0	native_renderer_paragraph	0050f362	005ac8bc	data_candidate	</lightgray>
+0050efd0	native_renderer_paragraph	0050f362	005ac8be	data_candidate	lightgray>
+0050efd0	native_renderer_paragraph	0050f36d	005ac8bd	data_candidate	/lightgray>
+0050efd0	native_renderer_paragraph	0050f36d	005ac8bf	data_candidate	ightgray>
+0050efd0	native_renderer_paragraph	0050f387	005a06b8	data_candidate	<black>
+0050efd0	native_renderer_paragraph	0050f3a2	005a06b8	data_candidate	<black>
+0050efd0	native_renderer_paragraph	0050f3a2	005a06ba	data_candidate	lack>
+0050efd0	native_renderer_paragraph	0050f3ad	005a06b9	data_candidate	black>
+0050efd0	native_renderer_paragraph	0050f3ad	005a06bb	data_candidate	ack>
+0050efd0	native_renderer_paragraph	0050f47c	0058c8c0	data_candidate	 
+0050efd0	native_renderer_paragraph	0050f531	0050e260	call	
+0050efd0	native_renderer_paragraph	0050f582	0058a0ae	call	
+0050efd0	native_renderer_paragraph	0050f599	0058a0ae	call	
+004cfd10	native_map_button	004cfd3f	EXTERNAL:00000051	call	
+004cfd10	native_map_button	004cfdcd	EXTERNAL:00000058	call	
+004cfd10	native_map_button	004cfdf6	00514d20	call	
+004cfd10	native_map_button	004cfe64	EXTERNAL:000000b9	call	
+004cfd10	native_map_button	004cfedf	EXTERNAL:000000b9	call	
+004cfd10	native_map_button	004cfef1	EXTERNAL:000000b9	call	
+004cfd10	native_map_button	004cff15	EXTERNAL:000000b9	call	
+004cfd10	native_map_button	004cff30	005a4df4	data_candidate	NOTEXTSPOT
+004cfd10	native_map_button	004cff38	005a4dfc	data_candidate	OT
+004cfd10	native_map_button	004cff50	005a4e00	data_candidate	TEXTSPOT
+004cfd10	native_map_button	004cff77	EXTERNAL:00000058	call	
+004cfd10	native_map_button	004cff88	0058a0ae	call	
+004cfd10	native_map_button	004cff91	0058a1e2	call	
+00514d20	native_marked_text	00514d71	005ac960	data_candidate	[]<>.
+00514d20	native_marked_text	00514d7c	004d4430	call	
+00514d20	native_marked_text	00514d93	005ac968	data_candidate	|
+00514d20	native_marked_text	00514da5	004d4430	call	
+00514d20	native_marked_text	00514dd2	EXTERNAL:000000e4	call	
+00514d20	native_marked_text	00514e1c	005a9f04	data_candidate	[%s]
+00514d20	native_marked_text	00514e22	004010d0	call	
+00514d20	native_marked_text	00514e38	EXTERNAL:000000bb	call	
+00514d20	native_marked_text	00514e55	005ac958	data_candidate	<%s>
+00514d20	native_marked_text	00514e5b	004010d0	call	
+00514d20	native_marked_text	00514e71	EXTERNAL:000000bb	call	
+00514d20	native_marked_text	00514e8e	005a6364	data_candidate	%s.
+00514d20	native_marked_text	00514e94	004010d0	call	
+00514d20	native_marked_text	00514eaa	EXTERNAL:000000bb	call	
+00514d20	native_marked_text	00514ec7	005ac96c	data_candidate	%s|
+00514d20	native_marked_text	00514ecd	004010d0	call	
+00514d20	native_marked_text	00514ee3	EXTERNAL:000000bb	call	
+00514d20	native_marked_text	00514f41	EXTERNAL:0000002e	call	
+00514d20	native_marked_text	00514fb0	EXTERNAL:00000040	call	
+00514d20	native_marked_text	00515016	EXTERNAL:00000040	call	
+00514d20	native_marked_text	00515088	EXTERNAL:00000040	call	
+00514d20	native_marked_text	005150b4	0050e260	call	
+00514d20	native_marked_text	005150d4	EXTERNAL:00000041	call	
+00514d20	native_marked_text	00515103	0050e260	call	
+00514d20	native_marked_text	00515139	0058a0ae	call	

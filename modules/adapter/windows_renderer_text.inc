@@ -107,6 +107,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     void* renderer;
     u32 outline=0;
     u32 native_prefix=0;
+    std::vector<char> map_control;
     switch(event.id) {
     case paragraph_fit:
     case paragraph_measure_advance:
@@ -135,6 +136,13 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     case hit_prefix: case hit_complete:
         text=event.id==hit_prefix ? ptr<char>(event.frame->ebp-0x40c) : ptr<char>(event.frame->edi);
         if(event.id==hit_complete) {
+            if(chinese_enabled && windows_build::is_3891()) {
+                if(const auto* control=windows_map_control()) {
+                    const auto status=windows_map_control_text(*control,text,map_control);
+                    if(status!=Status::ok) return status;
+                    text=map_control.data();
+                }
+            }
             if(const auto* separator=std::strchr(text,'.')) {
                 native_prefix=static_cast<u32>(separator+1-text)*8;
                 text=separator+1;
@@ -146,7 +154,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     default: handled=false; return Status::ok;
     }
     if(!chinese_enabled) return Status::ok;
-    if(!in(Scope::hud_renderer_text) && !in(Scope::native_renderer_resource) &&
+    if(map_control.empty() && !in(Scope::hud_renderer_text) && !in(Scope::native_renderer_resource) &&
         !native_name_input::contains_display(text)) return Status::ok;
     if(event.id==paragraph_space) {
         // The tokenizer inserts a separating space between complete Chinese

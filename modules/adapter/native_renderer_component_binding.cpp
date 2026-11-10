@@ -440,6 +440,11 @@ Status finish_event(const NativeEvent& event,DispatchResult& result,Status statu
     if(event.id==map_title) {
         if(event.phase==NativePhase::after) {map_title_borrows.erase(event.token);return status;}
         if(status!=Status::ok) return status;
+        // The complete E3D90 map constructor reaches this boundary before
+        // E3EE0 consumes 5F8FA80. Rebuild that dependency with its original
+        // E3020 factory; the game replaces the old texture and owns all pixels.
+        // This same native construction runs on entry and language wakeup.
+        if(windows_build::is_3891()) reinterpret_cast<void (UWCN_CALL *)()>(base+0xE3020)();
         if(map_paint_source) return prepare_map_title(event,map_paint_source->map.title);
         auto& owner=owners.find(writable(known_map_owner))->second.owner;
         owner.map.title=native_text_resource::from_request({TextComponent::culture_text,

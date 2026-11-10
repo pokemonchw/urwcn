@@ -1,0 +1,305 @@
+domain	source	target
+hud.command	Apply (use) a tool or container	使用工具或容器
+hud.command	Armour coverage	护甲覆盖
+hud.command	Armour coverage statistics	护甲覆盖统计
+hud.command	Attack (1st weapon)	用第一件武器攻击
+hud.command	Attack (2nd weapon)	用第二件武器攻击
+hud.command	Attack with 1st weapon	用第一件武器攻击
+hud.command	Attack with 2nd weapon	用第二件武器攻击
+hud.command	Butcher -- cut a carcass for meat	屠宰并分割兽肉
+hud.command	Character profile	角色资料
+hud.command	Chat (talk) with someone	与人交谈
+hud.command	Close a door or gate	关门
+hud.command	Command pets and companions	指挥动物与同伴
+hud.command	Discard items	丢弃物品
+hud.command	Drop something	丢弃物品
+hud.command	Eat something	进食
+hud.command	Exchange weapons	交换手持武器
+hud.command	Exchange wielded weapons	交换手持武器
+hud.command	Game course information	游戏历程信息
+hud.command	Game encyclopedia; a hypertext guide	游戏百科
+hud.command	Get up or lay down	起身或躺下
+hud.command	Help and game options	帮助与游戏选项
+hud.command	Hide	隐藏
+hud.command	Inventory	物品栏
+hud.command	Inventory -- look at what you are carrying 	查看携带的物品
+hud.command	Kick	踢击
+hud.command	Look around	环顾四周
+hud.command	Look in a direction	朝某个方向观察
+hud.command	Look what is at a chosen distant location	观察远处的指定地点
+hud.command	Look what is at the chosen location	观察指定地点
+hud.command	Look what is at the current location	观察当前位置
+hud.command	Make	制作
+hud.command	Make - craft items and build constructions	制作物品与建造设施
+hud.command	Make items and constructions	制作物品与建造设施
+hud.command	Make modded handcrafts	制作模组手工艺品
+hud.command	Make modded items	制作模组物品
+hud.command	Map of known areas	已知区域地图
+hud.command	Move items	搬运物品
+hud.command	Move items -- haul items around with you	拖运物品
+hud.command	Movement and rest actions	移动与休息
+hud.command	Open a door or gate	开门
+hud.command	Pick up and wield	拾取并握持
+hud.command	Pick up from adjacent tile	从相邻位置拾取
+hud.command	Pick up from adjacent tile, pack animal or companion	从相邻位置、驮畜或同伴处拾取
+hud.command	Pick up something	拾取物品
+hud.command	Punch	拳击
+hud.command	Push/pack -- push items at your feet to an adjacent location or pack them on an animal	推移物品或装到动物身上
+hud.command	Quaff (drink) something	饮用
+hud.command	Quest journal	任务日志
+hud.command	Quit and optionally save the game	退出并选择是否保存
+hud.command	Repeat last action	重复上次动作
+hud.command	Repeat the last action	重复上次动作
+hud.command	Repeat the last attack	重复上次攻击
+hud.command	Rest until not fatigued	休息至疲劳消退
+hud.command	Rest/Pass a turn	休息或等待一回合
+hud.command	Run	奔跑
+hud.command	Save the game	保存游戏
+hud.command	Skills -- view and use your skills	查看与使用技能
+hud.command	Sleep	睡觉
+hud.command	Spells and magic means	法术与巫术
+hud.command	Stand still	原地等待
+hud.command	Start a fire	生火
+hud.command	Take off worn clothes or wielded weapons	脱下衣物或卸下手持武器
+hud.command	Throw something, or shoot an arrow	投掷物品或射箭
+hud.command	Throw/Shoot	投掷或射击
+hud.command	Use skills	使用技能
+hud.command	View message log	查看消息记录
+hud.command	Wait and rest until cancelled	等待并休息至手动取消
+hud.command	Wait for one turn	等待一回合
+hud.command	Wear clothes or armor	穿戴衣物或护甲
+hud.command	Wield	握持
+hud.command	Wield a weapon or tool	握持武器或工具
+hud.command	Wounds and injuries	伤口与伤势
+hud.command	Zoom (in/out)	切换地图缩放
+hud.command	Zoom in/out between wilderness and terrain map	切换荒野地图与局部地图
+hud.command	some action	某个动作
+hud.map	(mod) 	（模组）
+hud.map	ADD MARKER AT CHARACTER'S LOCATION	在角色当前位置添加标记
+hud.map	EDIT MARKER	编辑标记
+hud.map	SELECT MARKER TO EDIT	选择要编辑的标记
+hud.map	A new marker will be added at your character's present location. 	将在角色当前位置添加一个新标记。
+hud.map	You can now edit the marker text and color, or remove it. 	你可以编辑标记的文字和颜色，也可以移除标记。
+hud.map	Markers can contain two lines of text filled with information you prefer.	每个标记可填写两行文字，记录你需要的信息。
+hud.map	Set color	设置颜色
+hud.map	Press [A] to edit the markers here.	按 [A] 编辑此处的标记。
+hud.map	today	今天
+hud.map	yesterday	昨天
+hud.map	%d days ago	%d天前
+hud.map	Blacksmith %s order placed %s.<br>	铁匠%s的订单，下单时间：%s。<br>
+hud.map	Net site, visited %s.<br>	渔网地点，上次查看：%s。<br>
+hud.map	Trapping site, visited %s.<br>	陷阱地点，上次查看：%s。<br>
+hud.map	%s<br>	%s<br>
+hud.map	<infoblue>%s QUEST</infoblue><br><indblue>told by: </indblue><infoblue>%s</infoblue><br>	<infoblue>%s任务</infoblue><br><indblue>告知者：</indblue><infoblue>%s</infoblue><br>
+hud.map	<infoblue>%s QUEST</infoblue><br><indblue>%s</indblue><br>	<infoblue>%s任务</infoblue><br><indblue>%s</indblue><br>
+hud.map	<infoblue>%s QUEST</infoblue><br>	<infoblue>%s任务</infoblue><br>
+hud.map	<indblue>informant: </indblue><infoblue>	<indblue>消息提供者：</indblue><infoblue>
+hud.command		
+hud.command	Active fishing	主动捕鱼
+hud.command	Apply tanning material	涂抹鞣料
+hud.command	Arrow	制作箭
+hud.command	Bait a trap	给陷阱放诱饵
+hud.command	Big deadfall trap	大型压落陷阱
+hud.command	Boards	制木板
+hud.command	Boil	水煮
+hud.command	Bowstring	制作弓弦
+hud.command	Build a fire	生火
+hud.command	Build something	建造
+hud.command	Chop blocks of wood	劈木块
+hud.command	Clean the skin	清理兽皮
+hud.command	Continue paused process	继续暂停的工作
+hud.command	Cook	烹饪
+hud.command	Craft an item	制作物品
+hud.command	Craft modded item	制作自定义物品
+hud.command	Cure the skin (for preservation)	腌制兽皮（防腐保存）
+hud.command	Cut a carcass for meat	肢解取肉
+hud.command	De-hair (for rawhide/leather)	脱毛（制作生皮或皮革）
+hud.command	Deconstruct something	拆解
+hud.command	Disassemble a trap construction	拆除陷阱
+hud.command	Do that	这样做
+hud.command	Drop	丢下
+hud.command	Dry (for preservation)	风干保存
+hud.command	Drying	晾干
+hud.command	Ember-roasted turnips	余烬烤芜菁
+hud.command	Empty a container	倒空容器
+hud.command	Extract plant fibre	提取植物纤维
+hud.command	Fell a tree	伐树
+hud.command	Fill with water, or milk into	盛水或挤奶入容器
+hud.command	Get up (stand)	起身站立
+hud.command	Grind flour	磨粉
+hud.command	Haft a weapon or tool	为武器或工具装柄
+hud.command	Harvest and pick	收获与采集
+hud.command	Harvest down	割下收获
+hud.command	Haul items	拖运物品
+hud.command	Heavy deadfall bear trap	重型压落捕熊陷阱
+hud.command	Join ropes and cords	接长绳索
+hud.command	Light lever trap	轻型杠杆陷阱
+hud.command	Log	截木
+hud.command	Make a hole in the ice	凿冰洞
+hud.command	Net	制作渔网
+hud.command	Pack an animal	给动物装载货物
+hud.command	Peel bark	剥树皮
+hud.command	Plant/sow	种植与播种
+hud.command	Post spruce	制云杉撑杆
+hud.command	Pour something into a container	倒入容器
+hud.command	Prepare the soil	整地
+hud.command	Push/pack items	推动或装载物品
+hud.command	Remove the haft	拆下柄杆
+hud.command	Repair worn-out clothes	修补破旧衣物
+hud.command	Repair worn-out net	修补破旧渔网
+hud.command	Reset triggered trap	重新布设已触发的陷阱
+hud.command	Retrieve a net	收网
+hud.command	Retting	沤麻
+hud.command	Rinse and dry the skin	漂洗并晾干兽皮
+hud.command	Roast in embers	埋入余烬烘烤
+hud.command	Roast on fire	火烤
+hud.command	Roasted meat	烤肉
+hud.command	Salt (for preservation)	盐腌保存
+hud.command	Salted meat	盐腌肉
+hud.command	Separate sinew fibre	分离肌腱纤维
+hud.command	Set a net	下网
+hud.command	Set a trap	布设陷阱
+hud.command	Shorten ropes and cords	截短绳索
+hud.command	Sinew yarn	制作筋线
+hud.command	Skin an animal	剥皮
+hud.command	Small deadfall trap	小型压落陷阱
+hud.command	Smoke (for preservation)	烟熏保存
+hud.command	Smoked meat	熏肉
+hud.command	Soak the skin	浸泡兽皮
+hud.command	Soften the skin	揉软兽皮
+hud.command	Spin yarn	纺纱
+hud.command	Split firewood	劈柴
+hud.command	Take off	脱下
+hud.command	Talk to someone	交谈
+hud.command	Tan the skin	鞣皮
+hud.command	Tendon drying	晾干肌腱
+hud.command	Thresh (for grain/seeds/leaves)	脱粒（取谷粒、种子或叶片）
+hud.command	Throw an item/shoot an arrow	投掷物品或射箭
+hud.command	Trap pit	陷坑
+hud.command	Trap pit with sharp stakes	尖桩陷坑
+hud.command	Twigs and branches	收集细枝与树枝
+hud.command	Unpack an animal	卸下动物驮载的货物
+hud.command	Wear	穿戴
+hud.command	Wild flour	野生植物粉
+hud.command	Withe	制作柔韧枝条绳
+hud.command	active fishing	主动捕鱼
+hud.command	apply tanning material	涂抹鞣料
+hud.command	arrow	制作箭
+hud.command	bait a trap	给陷阱放诱饵
+hud.command	big deadfall trap	大型压落陷阱
+hud.command	boards	制木板
+hud.command	boil	水煮
+hud.command	bowstring	制作弓弦
+hud.command	build a fire	生火
+hud.command	build something	建造
+hud.command	chop blocks of wood	劈木块
+hud.command	clean the skin	清理兽皮
+hud.command	command pets and companions	指挥动物与同伴
+hud.command	continue paused process	继续暂停的工作
+hud.command	cook	烹饪
+hud.command	craft an item	制作物品
+hud.command	craft modded item	制作自定义物品
+hud.command	cure the skin (for preservation)	腌制兽皮（防腐保存）
+hud.command	cut a carcass for meat	肢解取肉
+hud.command	de-hair (for rawhide/leather)	脱毛（制作生皮或皮革）
+hud.command	deconstruct something	拆解
+hud.command	disassemble a trap construction	拆除陷阱
+hud.command	do that	这样做
+hud.command	drop	丢下
+hud.command	dry (for preservation)	风干保存
+hud.command	drying	晾干
+hud.command	ember-roasted turnips	余烬烤芜菁
+hud.command	empty a container	倒空容器
+hud.command	extract plant fibre	提取植物纤维
+hud.command	fell a tree	伐树
+hud.command	fill with water, or milk into	盛水或挤奶入容器
+hud.command	get up (stand)	起身站立
+hud.command	grind flour	磨粉
+hud.command	haft a weapon or tool	为武器或工具装柄
+hud.command	harvest and pick	收获与采集
+hud.command	harvest down	割下收获
+hud.command	haul items	拖运物品
+hud.command	heavy deadfall bear trap	重型压落捕熊陷阱
+hud.command	join ropes and cords	接长绳索
+hud.command	light lever trap	轻型杠杆陷阱
+hud.command	log	截木
+hud.command	make a hole in the ice	凿冰洞
+hud.command	net	制作渔网
+hud.command	pack an animal	给动物装载货物
+hud.command	peel bark	剥树皮
+hud.command	plant/sow	种植与播种
+hud.command	post spruce	制云杉撑杆
+hud.command	pour something into a container	倒入容器
+hud.command	prepare the soil	整地
+hud.command	push/pack items	推动或装载物品
+hud.command	remove the haft	拆下柄杆
+hud.command	repair worn-out clothes	修补破旧衣物
+hud.command	repair worn-out net	修补破旧渔网
+hud.command	reset triggered trap	重新布设已触发的陷阱
+hud.command	retrieve a net	收网
+hud.command	retting	沤麻
+hud.command	rinse and dry the skin	漂洗并晾干兽皮
+hud.command	roast in embers	埋入余烬烘烤
+hud.command	roast on fire	火烤
+hud.command	roasted meat	烤肉
+hud.command	salt (for preservation)	盐腌保存
+hud.command	salted meat	盐腌肉
+hud.command	separate sinew fibre	分离肌腱纤维
+hud.command	set a net	下网
+hud.command	set a trap	布设陷阱
+hud.command	shorten ropes and cords	截短绳索
+hud.command	sinew yarn	制作筋线
+hud.command	skin an animal	剥皮
+hud.command	sleep	睡觉
+hud.command	small deadfall trap	小型压落陷阱
+hud.command	smoke (for preservation)	烟熏保存
+hud.command	smoked meat	熏肉
+hud.command	soak the skin	浸泡兽皮
+hud.command	soften the skin	揉软兽皮
+hud.command	spin yarn	纺纱
+hud.command	split firewood	劈柴
+hud.command	take off	脱下
+hud.command	talk to someone	交谈
+hud.command	tan the skin	鞣皮
+hud.command	tendon drying	晾干肌腱
+hud.command	thresh (for grain/seeds/leaves)	脱粒（取谷粒、种子或叶片）
+hud.command	throw an item/shoot an arrow	投掷物品或射箭
+hud.command	trap pit	陷坑
+hud.command	trap pit with sharp stakes	尖桩陷坑
+hud.command	twigs and branches	收集细枝与树枝
+hud.command	unpack an animal	卸下动物驮载的货物
+hud.command	wear	穿戴
+hud.command	wield	持用
+hud.command	wild flour	野生植物粉
+hud.command	withe	制作柔韧枝条绳
+hud.command	wounds and injuries	伤口与伤病
+hud.command	AGRICULTURE	农业
+hud.command	AXE	斧
+hud.command	BOW	弓
+hud.command	BOWYER	制弓
+hud.command	BUILDING	建造
+hud.command	CARPENTRY	木工
+hud.command	CLIMBING	攀爬
+hud.command	CLOTHCRAFT	裁缝
+hud.command	CLUB	棍棒
+hud.command	COOKERY	烹饪
+hud.command	CROSSBOW	弩
+hud.command	DODGE	闪避
+hud.command	FISHING	捕鱼
+hud.command	HERBLORE	草药知识
+hud.command	HIDEWORKING	制革
+hud.command	KNIFE	刀
+hud.command	NETMAKING	织网
+hud.command	PHYSICIAN	医术
+hud.command	SHIELD	盾牌
+hud.command	SKIING	滑雪
+hud.command	SPEAR	长矛
+hud.command	STEALTH	潜行
+hud.command	SWIMMING	游泳
+hud.command	SWORD	剑
+hud.command	TEXTILECRAFT	纺织
+hud.command	TIMBERCRAFT	伐木
+hud.command	TRACKING	追踪
+hud.command	TRAPPING	设陷捕猎
+hud.command	UNARMED	徒手格斗
+hud.command	WEATHERLORE	天气知识

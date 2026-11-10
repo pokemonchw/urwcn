@@ -207,6 +207,15 @@ Status save_second() {
 Status refresh_second() {
     const auto status=native_parent_cache_language::game_parent();return status==Status::ok ? save_second() : status;
 }
+bool known_map_wait(const NativeEvent& event) {
+    // E5EAA/E5EB0 select this exact original map target and context. E5F59
+    // is CALL-hooked, so D1120's own return slot belongs to the resident.
+    if(*at<u32>(0xA1C1CBC)!=*at<u32>(0x5F937B0) || *at<u32>(0xA1C2010)!=0xE) return false;
+    const auto page=*ptr<const u32>(event.frame->ebp);
+    const auto caller=*ptr<const u32>(page+4)-static_cast<u32>(host->image_base);
+    // The two E5990 callers are unhooked; the original page EBP survives.
+    return caller==0x1591CA || caller==0x17DF35;
+}
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=false;
     if(event.id==hud_target_entry && event.phase!=NativePhase::after && !widget_input) {
@@ -303,7 +312,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     // through that native frame, then reuse the existing map page frame.
     if(event.id==0x5100 && event.phase!=NativePhase::after &&
         event.frame->eax==static_cast<u32>(-2) && native_language_redraw::pending(map_view) &&
-        *ptr<const u32>(event.frame->ebp+4)==host->image_base+0xE5F5E) {
+        known_map_wait(event)) {
         map_selection=*at<u32>(0x5F54AB0);map_constructing=true;
         result.resume_rva=0xD19B3;handled=true;return Status::ok;
     }

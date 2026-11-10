@@ -70,7 +70,15 @@ Status dispatch(const NativeEvent& e,DispatchResult&,bool& handled) {
             native_component_binding::note_original_for_consumer(e,original);
         else {
             const auto& source=windows_messages::values.at(address(original)).text;
-            return windows_inventory::bind_expression(e,original,source,source.component);
+            auto status=windows_inventory::bind_expression(e,original,source,source.component);
+            if(status!=Status::ok) return status;
+            std::vector<char> encoded;
+            const auto key=windows_inventory::expression_key(source);
+            status=resolve_display_text(source.component,original,key.c_str(),encoded);
+            if(status!=Status::ok) return status;
+            // This complete native text call consumes its semantic value even
+            // while an enclosing component owns the current native call.
+            return lend_text(e,encoded,e.arguments[0],Scope::text);
         }
     }
     return Status::ok;

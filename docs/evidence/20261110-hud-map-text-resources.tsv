@@ -1,0 +1,1130 @@
+literal_va	source	functions	reference_sites_va	consumer_or_policy
+00000000	Click locations with mouse for more information, where available. Or use arrow keys to move	known_map_help_file	urw_scrinfo.txt:55	urw_scrinfo.txt的KNOWN_AREAS_MAP段→culture.map.help实际记录词库
+00000000	Run	hud_command_immediate	immediate ASCII copies; hud-command-callers.asm / main_command_description	hud.command完整指令词库；F91E7中文字形截短
+00000000	Wield	hud_command_immediate	immediate ASCII copies; hud-command-callers.asm / main_command_description	hud.command完整指令词库；F91E7中文字形截短
+00000000	target cursor, when visible, and select the location with [ENTER]. 	known_map_help_file	urw_scrinfo.txt:56	urw_scrinfo.txt的KNOWN_AREAS_MAP段→culture.map.help实际记录词库
+0058c670	%s	hud_penalties,hud_repeat	004f96f5,004f9721,00502d55	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0058c680	%s %s	hud_complete	004fa3ec	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0058c8c0	 	hud_complete,native_centered_text,native_renderer_paragraph,region_description	0049b29a,0049b5ba,004fa600,004fa658,004fa6b0,0050e930,0050ea1a,0050f47c	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+0058d3e8	-	hud_wielded	004f95b8	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+0058d500	Your settlement	map_marker_legend	004e3468	culture.map/topic既有词库；原生地图构建/绘制边界
+0058d530	Water	craft_description	0046c90e	craft-requirement既有词库；F9869源捕获/F98F1消费
+0058d5a0	Spring	place_lexicon	004a7260	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0058d660	Cave	map_marker_legend	004e32ca	culture.map/topic既有词库；原生地图构建/绘制边界
+0058d6dc	%c	known_areas_map	004e5be5,004e5c30,004e5c6a,004e5ca1	culture.map/topic既有词库；原生地图构建/绘制边界
+0058d70c	Shelter	map_marker_legend,place_lexicon	004a6020,004e3393	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0058d738	Spruce	place_lexicon	004a78a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0058d74c	Birch	place_lexicon	004a73a0,004a7be0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0058d7bc	Rowan	place_lexicon	004a79a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0058d7d0	Alder	place_lexicon	004a7920	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0058d7e4	Aspen	place_lexicon	004a79e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0058d8f8	Pine	place_lexicon	004a70e0,004a78e0,004a7aa0,004a7ae0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0058dc20	Village	map_marker_legend	004e3200	culture.map/topic既有词库；原生地图构建/绘制边界
+0058dde0	cliff	place_lexicon	004a82a0,004a8a20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0058f1f8	rb	screen_help_source	00562595	内部资源路径/文件模式，保持原值
+0058f738	..	hud_repeat	004f9891	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005903bc	%d	date_source,hud_widget,hud_wielded	0048a385,0048a3a8,004f94c8,004fad53,004fadb0	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+00590524	SHIELD	hud_wielded	004f937c,004f9383,004f938e	内部控制标识，保持原值
+0059060c	TEXTILECRAFT	skill_command	00523312,00523325,0052332a	skill及hud.command；消息提示使用既有MessageFlow
+00590794	kaumolais	place_context	0048e60a	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005908f4	Kaumo	map_culture_legend	004e3aa9	culture.map/topic既有词库；原生地图构建/绘制边界
+005908fc	Driik	map_culture_legend	004e3b3d	culture.map/topic既有词库；原生地图构建/绘制边界
+00590904	Kiesse	map_culture_legend	004e3ac6	culture.map/topic既有词库；原生地图构建/绘制边界
+0059090c	Reemi	map_culture_legend	004e3ae3	culture.map/topic既有词库；原生地图构建/绘制边界
+00590914	Sartola	map_culture_legend	004e3b20	culture.map/topic既有词库；原生地图构建/绘制边界
+00590928	Koivula	map_culture_legend	004e3b03	culture.map/topic既有词库；原生地图构建/绘制边界
+00592850	terrain-	hud_world_information	00490375	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+00593cc4	Mixed	place_lexicon	004a6ee0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+00593ccc	%s 	place_context	0048e614	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+00593f88	Ember-roasted turnips	action_description	0056325b	activity既有词库；hud.command；F98F1重复动作消费
+005940f4	Turnip	craft_description	0046cb1f	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059416c	<br>	map_location_info,native_renderer_paragraph	004e4e3f,004e510e,004e5217,004e5479,0050f0bc,0050f0c9,0050f0d4	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+00594ff8	.%s.	screen_help_source	0056254c	urw_scrinfo.txt实际记录→culture.map.help；可选屏幕帮助路径保持原值
+0059508c	***	screen_help_source	005625ff	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005950c8	ESC.Exit	known_areas_map,map_marker_edit	004e4631,004e5da8	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+00595a08	%c.%s	map_marker_selection	004e4b3e	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+00595a1c	  	place_generator	004a8f9c	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+0059622c	wood	place_lexicon	004a84e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+00596274	Ango	craft_description	0046cba9	craft-requirement既有词库；F9869源捕获/F98F1消费
+00596a28	%s%s	culture_region,place_context,region_description	0048e6b3,0049b014,0049b1b2,0049b274,0049b592,0049b66c	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+00596e34	Handaxe	craft_description	0046c96e	craft-requirement既有词库；F9869源捕获/F98F1消费
+00596e3c	Spear	craft_description	0046cba3	craft-requirement既有词库；F9869源捕获/F98F1消费
+00596e64	Arrow	action_description	005632ff	activity既有词库；hud.command；F98F1重复动作消费
+00597570	Tying equipment	craft_description	0046cb07	craft-requirement既有词库；F9869源捕获/F98F1消费
+00597bbc	Javelin	craft_description	0046cb9d	craft-requirement既有词库；F9869源捕获/F98F1消费
+00598310	head	place_lexicon	004a87a0,004a8ba0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+00598354	Stone	craft_description,place_lexicon	0046c9ec,004a5fa0	craft-requirement既有词库；F9869源捕获/F98F1消费
+00598368	Battleaxe	craft_description	0046c968	craft-requirement既有词库；F9869源捕获/F98F1消费
+00598880	Spear head	craft_description	0046c95c	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059888c	Shovel blade	craft_description	0046cb73	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599418	Pot	craft_description,place_lexicon	0046cb2b,004a58a0	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599514	Fire	craft_description	0046c91a	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059951c	Flour	craft_description	0046c914	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599524	Mushrooms	craft_description	0046cb4f	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599540	Rope	craft_description	0046cadd	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599548	Cord	craft_description	0046caef	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599550	Leather	craft_description	0046ca53	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059967c	Sapling	craft_description	0046cb49	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599724	Vegetables	craft_description	0046ca5f	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599788	Staff	craft_description	0046cb13	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599790	Log	action_description,craft_description	0046c908,005631cb	activity既有词库；hud.command；F98F1重复动作消费
+00599794	Axe	craft_description,place_lexicon	0046c932,004a7860	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599798	Knife	craft_description	0046c938	craft-requirement既有词库；F9869源捕获/F98F1消费
+005997a8	Cutting weapon	craft_description	0046c93e	craft-requirement既有词库；F9869源捕获/F98F1消费
+005997b8	Shovel	craft_description	0046c9f2	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059981c	Arrow shaft	craft_description	0046c9aa	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599830	Wooden stake	craft_description	0046cb19	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599884	Block of wood	craft_description	0046cb31	craft-requirement既有词库；F9869源捕获/F98F1消费
+005998d4	Beater	craft_description	0046c8f0	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599b04	Branch	craft_description	0046c920	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599b24	Tree trunk	craft_description	0046caf5	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599b54	Cloth	craft_description	0046cb37	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599bdc	Cover for kota	craft_description	0046c944	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599cb8	Raw ingredients	craft_description	0046cb67	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599e88	Yarn	craft_description	0046cae3	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599ec8	Slender trunk	craft_description	0046c992	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599ef8	Fishhook	craft_description	0046c998	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599f74	Cutting weapon or by hand	craft_description	0046c926	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599fc8	Spindle or by hand	craft_description	0046cafb	craft-requirement既有词库；F9869源捕获/F98F1消费
+00599fdc	Fibre	craft_description	0046cb25	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059adac	Raw meat or fish	craft_description	0046cad7	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059adf0	Cooking pot	craft_description	0046ca77	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ae50	Boiling pot	craft_description	0046ca71	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ae5c	Heated fireplace	craft_description	0046c8fc	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059aee4	Threshing tool	craft_description	0046c8de	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059aef4	Flail	craft_description	0046c8ea	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059af98	Hammering tool	craft_description	0046c8f6	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059afa8	Root vegetables	craft_description	0046ca59	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059afe8	Milk	craft_description	0046c902	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059aff0	Grinding stone	craft_description	0046ca65	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b000	Berries	craft_description	0046ca6b	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b008	Seeds	craft_description	0046ca7d	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b010	Grasses	craft_description	0046ca83	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b018	Pods	craft_description	0046ca89	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b020	Grains	craft_description	0046ca8f	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b028	Container	craft_description	0046ca95	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b034	Raw meat	craft_description	0046ca9b	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b040	Raw fish	craft_description	0046caa1	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b04c	Raw or salted fish	craft_description	0046caa7	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b060	Raw or salted meat	craft_description	0046caad	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b074	Dried fish	craft_description	0046cab3	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b080	Smoked fish	craft_description	0046cab9	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b08c	Salted fish	craft_description	0046cad1	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b098	Salted meat	action_description,craft_description	0046cacb,00563273	activity既有词库；hud.command；F98F1重复动作消费
+0059b0a4	Dried meat	craft_description	0046cabf	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b0b0	Smoked meat	action_description,craft_description	0046cac5,00563279	activity既有词库；hud.command；F98F1重复动作消费
+0059b200	Water-use yarn	craft_description	0046cae9	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b29c	Sewing needle	craft_description	0046c99e	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b310	Arrowhead	craft_description	0046c9a4	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b3f0	Arrow shaft blank	craft_description	0046c9b0	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b470	Bark for floats	craft_description	0046c9b6	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b4c4	Bowstring	action_description	00563305	activity既有词库；hud.command；F98F1重复动作消费
+0059b50c	Axe haft	craft_description	0046c94a	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b590	Axe head	craft_description	0046c950	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b5d8	Spear haft	craft_description	0046c956	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b6fc	Shovel haft	craft_description	0046cb79	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b7c8	Thin cordage	craft_description	0046cb01	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b804	Strong cordage	craft_description	0046cb0d	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b878	Broad axe	craft_description	0046c974	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b884	Carving axe	craft_description	0046c97a	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b890	Woodsman's axe	craft_description	0046c980	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b8a0	Stone-axe	craft_description	0046c986	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b8ac	Splitting axe	craft_description	0046c98c	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b8bc	Northern spear	craft_description	0046cb85	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b8cc	Kaumolais spear	craft_description	0046cbaf	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b8dc	Trident	craft_description	0046cbb5	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b8e4	Small trident	craft_description	0046cbbb	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b8f4	Wide trident	craft_description	0046cbc1	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b9bc	Bandage material	craft_description	0046cb3d	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b9d0	Birch-bark strip	craft_description	0046cb43	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b9e4	Flowers	craft_description	0046cb55	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b9ec	Herbs	craft_description	0046cb5b	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059b9f4	Seasoning	craft_description	0046cb61	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ba00	Small knife	craft_description	0046c9bc	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ba0c	Broad knife	craft_description	0046c9c2	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ba18	Northern knife	craft_description	0046c9c8	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ba28	Kaumolais knife	craft_description	0046c9ce	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ba38	Fisher's knife	craft_description	0046c9d4	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ba48	Spruce twig	craft_description	0046c9da	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ba88	Birch twig	craft_description	0046c9e0	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059ba94	Wooden shovel	craft_description	0046cb7f	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb18	Withe	action_description,craft_description	0046ca29,005632b5	activity既有词库；hud.command；F98F1重复动作消费
+0059bb20	Antler	craft_description	0046ca2f	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb28	Bone	craft_description	0046ca35	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb30	Tooth	craft_description	0046ca3b	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb38	Skull	craft_description,place_lexicon	0046ca41,004a7520	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb40	Feather	craft_description	0046ca47	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb48	Animal hide	craft_description	0046ca4d	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb54	Sickle	craft_description	0046c8e4	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb5c	Axe or carving knife	craft_description	0046c92c	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb74	Shingle	craft_description	0046c962	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb7c	Wooden canteen	craft_description	0046cb6d	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb8c	Vasta	craft_description	0046c9e6	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059bb94	A specific item	craft_description	0046cbe1	craft-requirement既有词库；F9869源捕获/F98F1消费
+0059cf84	th	date_source	0048a3cf,0048a400	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059cf88	st	date_source	0048a45a	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059cf8c	nd	date_source	0048a43a	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059cf90	rd	date_source	0048a41b	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059cf94	last	date_source	0048a474	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059cf9c	day %d of %s week before %s	date_source	0048a49d	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059cfb8	%s of month:%d	date_source	0048a4c6	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059cfc8	in %s, during %s, on %s	date_source	0048a579	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059cfe0	%s, %s, %s	date_source	0048a59a	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059cfec	in %s, during %s	date_source	0048a5d4	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d000	%s, %s	date_source	0048a5db	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d008	winter season	season_source	0048a6f9,0048a701,0048a715,0048a7f5,0048a7fd,0048a80b	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d018	midwinter point	season_source	0048a70b	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d028	midwinter	season_source	0048a72d,0048a735	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d034	latter winter	season_source	0048a746,0048a74e,0048a75b	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d044	summer season	season_source	0048a765,0048a76d,0048a77a,0048a789,0048a791,0048a7a5	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d054	midsummer point	season_source	0048a79b	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d064	midsummer	season_source	0048a7bd,0048a7c5	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d070	latter summer	season_source	0048a7d6,0048a7de,0048a7eb	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d360	"%s ""%s"""	place_combined	0048e4d4	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d368	 at 	hud_world_information,place_context	0048e68a,00490111	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d558	"""%s"""	hud_world_information	0048ffa3,00490218	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d560	regstat_terrain	hud_world_information	004903c1	内部资源路径/文件模式，保持原值
+0059d570	_small.jpg	hud_world_information	00490398,0049039f,004903a7	内部资源路径/文件模式，保持原值
+0059d57c	main	hud_world_information	004903bc	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d584	=100 meters	hud_world_information	004905a6,004905ab	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d590	=100 yards	hud_world_information	004905b8,004905be	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d59c	Wilderness map	hud_world_information	004905eb,00490607,00490612	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d5ac	=2 meters	hud_world_information	00490635,0049063d	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d5b8	=6 feet	hud_world_information	0049064e,00490656	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059d5c0	Zoom map	hud_world_information	00490672	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059da70	cult %d [%d,%d - %d,%d]	culture_region	0049adbd	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059da88	northern 	culture_region	0049adfe,0049ae26,0049ae4f	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059da94	southern 	culture_region	0049ae06,0049ae58,0049afeb	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059daa0	western 	culture_region	0049ae86	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059daac	eastern 	culture_region	0049aebd	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059dab8	north-eastern 	culture_region	0049aeef,0049aef4,0049af02	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059dac8	north-western 	culture_region	0049af28,0049af2d,0049af3b	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059dad8	south-eastern 	culture_region	0049af7d,0049af82,0049af90	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059dae8	south-western 	culture_region	0049afb6,0049afbb,0049afc9	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059daf8	no man's land	region_description	0049b1e0,0049b1e7,0049b1fb	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059db08	near %s	region_description	0049b230	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059db10	north of 	region_description	0049b47d,0049b484,0049b48c	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059db1c	south of 	region_description	0049b4aa,0049b4b1,0049b4b9	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059db28	east of 	region_description	0049b4df,0049b4e6	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059db34	west of 	region_description	0049b50a,0049b511	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+0059ec54	Stand still	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+0059ec60	Rest until not fatigued	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+0059ecb8	Get up (stand)	action_description	005633a1	activity既有词库；hud.command；F98F1重复动作消费
+0059ed30	Sleep	action_description,hud_command_direct_caller,main_command_description	005633b3,00564987,00564991	hud.command完整指令词库；F91E7中文字形截短
+0059ed90	Paw	place_lexicon	004a63e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ed94	Käpälä	place_lexicon	004a63c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ed9c	Button	place_lexicon	004a6420	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eda4	Nappi	place_lexicon	004a6400	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059edac	Lark	place_lexicon	004a6460	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059edb4	Kiuru	place_lexicon	004a6440	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059edbc	Rasi	place_lexicon	004a64a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059edc4	Rasin	place_lexicon	004a6480	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059edcc	Gorge	place_lexicon	004a64e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059edd4	Kurun	place_lexicon	004a64c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eddc	Slashed_	place_lexicon	004a6520	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ede8	Kustu	place_lexicon	004a6500	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059edf0	Hound's_	place_lexicon	004a6560,004a76e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059edfc	Hallin	place_lexicon	004a6540	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee04	Kirri's_	place_lexicon	004a65a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee10	Kirrin	place_lexicon	004a6580	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee18	Maiden's_	place_lexicon	004a65e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee24	Neidon	place_lexicon	004a65c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee2c	Neck	place_lexicon	004a6620	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee34	Niska	place_lexicon	004a6600	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee3c	Hair	place_lexicon	004a6660	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee44	Tukka	place_lexicon	004a6640	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee4c	Beard	place_lexicon	004a66a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee54	Parta	place_lexicon	004a6680	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee5c	Hole	place_lexicon	004a66e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee64	Läpi	place_lexicon	004a66c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee6c	Bow	place_lexicon	004a6720	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee70	Jousi	place_lexicon	004a6700	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee78	Horsehair_	place_lexicon	004a6760	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee84	Jouhi	place_lexicon	004a6740	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee8c	Horse's_	place_lexicon	004a67a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ee98	Hevon	place_lexicon	004a6780	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eea0	Stallion_	place_lexicon	004a67e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eeac	Ori	place_lexicon	004a67c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eeb0	Mares_	place_lexicon	004a6820	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eeb8	Tammain	place_lexicon	004a6800	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eec0	Horsie	place_lexicon	004a6860	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eec8	Hummas	place_lexicon	004a6840	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eed0	Horses_	place_lexicon	004a68a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eed8	Hummain	place_lexicon	004a6880	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eee0	Art	place_lexicon	004a68c0,004a68e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eee4	True	place_lexicon	004a6920	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eeec	Aito	place_lexicon	004a6900	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eef4	Barley_	place_lexicon	004a6960	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eefc	Otra	place_lexicon	004a6940	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef04	Barley's_	place_lexicon	004a69a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef10	Otrin	place_lexicon	004a6980	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef18	Oat_	place_lexicon	004a69e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef20	Kaura	place_lexicon	004a69c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef28	Oats_	place_lexicon	004a6a20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef30	Kauri	place_lexicon	004a6a00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef38	Straw	place_lexicon	004a6a60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef40	Pahna	place_lexicon	004a6a40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef48	Daft_	place_lexicon	004a6aa0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef50	Kako	place_lexicon	004a6a80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef58	Hand_	place_lexicon	004a6ae0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef60	Käsi	place_lexicon	004a6ac0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef68	Trouble_	place_lexicon	004a6b20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef74	Pula	place_lexicon	004a6b00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef7c	Linen	place_lexicon	004a6b60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef84	Liina	place_lexicon	004a6b40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef8c	Kimo	place_lexicon	004a6b80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef94	Loss	place_lexicon	004a6be0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ef9c	Kato	place_lexicon	004a6bc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059efa4	Grain	place_lexicon	004a6c20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059efac	Jyväs	place_lexicon	004a6c00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059efb4	Sausage_	place_lexicon	004a6c60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059efc0	Makkara	place_lexicon	004a6c40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059efc8	Kaisa's_	place_lexicon	004a6ca0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059efd4	Kaisan	place_lexicon	004a6c80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059efdc	Border	place_lexicon	004a6ce0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059efe4	Raja	place_lexicon	004a6cc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059efec	Carcass_	place_lexicon	004a6d20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059eff8	Raato	place_lexicon	004a6d00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f000	Death	place_lexicon	004a6d60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f008	Kalmo	place_lexicon	004a6d40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f010	Snout	place_lexicon	004a6da0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f018	Kuono	place_lexicon	004a6d80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f020	Palm	place_lexicon	004a6de0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f028	Kämmen	place_lexicon	004a6dc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f030	Curve	place_lexicon	004a6e20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f038	Mutka	place_lexicon	004a6e00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f040	Oiva's_	place_lexicon	004a6e60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f048	Oivan	place_lexicon	004a6e40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f050	Thread_	place_lexicon	004a6ea0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f058	Uhtu	place_lexicon	004a6e80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f060	Juan	place_lexicon	004a6ec0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f068	Club	place_lexicon	004a6f20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f070	Karttu	place_lexicon	004a6f00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f078	Tervo's_	place_lexicon	004a6f60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f084	Tervon	place_lexicon	004a6f40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f08c	Old one's_	place_lexicon	004a6fa0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f098	Vanhan	place_lexicon	004a6f80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0a0	Oblivion_	place_lexicon	004a6fe0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0ac	Unho	place_lexicon	004a6fc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0b4	Perttu's_	place_lexicon	004a7020	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0c0	Pertun	place_lexicon	004a7000	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0c8	Uncle's_	place_lexicon	004a7060	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0d4	Enon	place_lexicon	004a7040	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0dc	Post	place_lexicon	004a70a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0e4	Pieli	place_lexicon	004a7080	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0ec	Panka	place_lexicon	004a70c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f0f4	Bullock's_	place_lexicon	004a7120	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f100	Mullin	place_lexicon	004a7100	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f108	Cow	place_lexicon	004a7160	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f10c	Lehmin	place_lexicon	004a7140	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f114	Sheep	place_lexicon	004a71a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f11c	Lampo	place_lexicon	004a7180	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f124	Shitty_	place_lexicon	004a71e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f12c	Pasko	place_lexicon	004a71c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f134	Litter	place_lexicon	004a7220	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f13c	Pehku	place_lexicon	004a7200	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f144	Huhti	place_lexicon	004a7240	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f14c	Conifer_	place_lexicon	004a72a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f158	Huhta	place_lexicon	004a7280	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f160	Pasture_	place_lexicon	004a72e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f16c	Haka	place_lexicon	004a72c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f174	Flee_	place_lexicon	004a7320	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f17c	Karku	place_lexicon	004a7300	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f184	Men	place_lexicon	004a7360	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f188	Miehi	place_lexicon	004a7340	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f190	Visa	place_lexicon	004a7380	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f198	Whisk	place_lexicon	004a73e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1a0	Vihta	place_lexicon	004a73c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1a8	Sprout	place_lexicon	004a7420	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1b0	Vesa	place_lexicon	004a7400	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1b8	Honey	place_lexicon	004a7460	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1c0	Mesi	place_lexicon	004a7440	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1c8	Mead	place_lexicon	004a74a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1d0	Sima	place_lexicon	004a7480	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1d8	Kallo	place_lexicon	004a7500	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1e0	Hanging	place_lexicon	004a7560	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1e8	Hirtto	place_lexicon	004a7540	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1f0	Hopsu's_	place_lexicon	004a75a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f1fc	Hopsun	place_lexicon	004a7580	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f204	Loru's_	place_lexicon	004a75e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f20c	Lorun	place_lexicon	004a75c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f214	Kolu's_	place_lexicon	004a7620	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f21c	Kolun	place_lexicon	004a7600	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f224	Hyhky's_	place_lexicon	004a7660	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f230	Hyhkyn	place_lexicon	004a7640	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f238	Stag	place_lexicon	004a76a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f240	Hirvas	place_lexicon	004a7680	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f248	Penin	place_lexicon	004a76c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f250	Game	place_lexicon	004a7720	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f258	Riista	place_lexicon	004a7700	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f260	Gain	place_lexicon	004a7760	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f268	Saama	place_lexicon	004a7740	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f270	Tapio's_	place_lexicon	004a77a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f27c	Tapion	place_lexicon	004a7780	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f284	Blue_	place_lexicon	004a77e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f28c	Sini	place_lexicon	004a77c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f294	Knocken	place_lexicon	004a7820	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f29c	Kopsun	place_lexicon	004a7800	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2a4	Kirves	place_lexicon	004a7840	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2ac	Kuusi	place_lexicon	004a7880	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2b4	Mänty	place_lexicon	004a78c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2bc	Leppä	place_lexicon	004a7900	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2c4	Juniper	place_lexicon	004a7960	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2cc	Kataja	place_lexicon	004a7940	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2d4	Pihlaja	place_lexicon	004a7980	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2dc	Haapa	place_lexicon	004a79c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2e4	Fir	place_lexicon	004a7a20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2e8	Näre	place_lexicon	004a7a00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2f0	Dead-tree_	place_lexicon	004a7a60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f2fc	Kelo	place_lexicon	004a7a40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f304	Petäjä	place_lexicon	004a7a80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f30c	Honka	place_lexicon	004a7ac0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f314	Pole	place_lexicon	004a7b20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f31c	Riuku	place_lexicon	004a7b00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f324	Twig	place_lexicon	004a7b60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f32c	Risu	place_lexicon	004a7b40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f334	Willow	place_lexicon	004a7ba0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f33c	Paju	place_lexicon	004a7b80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f344	Koivu	place_lexicon	004a7bc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f34c	Flower	place_lexicon	004a7c20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f354	Kukkais	place_lexicon	004a7c00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f35c	Conifer	place_lexicon	004a7c60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f364	Hako	place_lexicon	004a7c40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f36c	Elk	place_lexicon	004a7ca0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f370	Hirvi	place_lexicon	004a7c80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f378	Bear	place_lexicon	004a7ce0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f380	Karhu	place_lexicon	004a7cc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f388	Fox	place_lexicon	004a7d20,004a7e60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f38c	Kettu	place_lexicon	004a7d00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f394	Lynx	place_lexicon	004a7d60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f39c	Ilves	place_lexicon	004a7d40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3a4	Badger	place_lexicon	004a7da0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3ac	Mäyrä	place_lexicon	004a7d80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3b4	Wolf's_	place_lexicon	004a7de0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3bc	Hukan	place_lexicon	004a7dc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3c4	Squirrel	place_lexicon	004a7e20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3d0	Oravin	place_lexicon	004a7e00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3d8	Revon	place_lexicon	004a7e40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3e0	Bruin	place_lexicon	004a7ea0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3e8	Kontio	place_lexicon	004a7e80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3f0	Deer	place_lexicon	004a7ee0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f3f8	Peura	place_lexicon	004a7ec0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f400	_sea	place_lexicon	004a7f20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f408	meri	place_lexicon	004a7f00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f410	_water	place_lexicon	004a7f60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f418	vesi	place_lexicon	004a7f40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f420	wide	place_lexicon	004a7fa0,004a85a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f428	selkä	place_lexicon	004a7f80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f430	_lake	place_lexicon	004a7fe0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f438	järvi	place_lexicon	004a7fc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f440	_rapid	place_lexicon	004a8020	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f448	koski	place_lexicon	004a8000	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f450	_rapids	place_lexicon	004a8060	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f458	kosket	place_lexicon	004a8040	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f460	_stream	place_lexicon	004a80a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f468	virta	place_lexicon	004a8080	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f470	_flow	place_lexicon	004a80e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f478	vuolle	place_lexicon	004a80c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f480	shore	place_lexicon	004a8120	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f488	ranta	place_lexicon	004a8100	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f490	rear	place_lexicon	004a8160	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f498	perä	place_lexicon	004a8140	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4a0	bottom	place_lexicon	004a81a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4a8	pohja	place_lexicon	004a8180	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4b0	cove	place_lexicon	004a81e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4b8	lahti	place_lexicon	004a81c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4c0	strait	place_lexicon	004a8220	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4c8	salmi	place_lexicon	004a8200	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4d0	islands	place_lexicon	004a8260	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4d8	saaret	place_lexicon	004a8240	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4e0	kallio	place_lexicon	004a8280,004a8a00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4e8	_peninsula	place_lexicon	004a82e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4f4	niemi	place_lexicon	004a82c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f4fc	open	place_lexicon	004a8320	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f504	aapa	place_lexicon	004a8300	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f50c	bog	place_lexicon	004a8360	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f510	neva	place_lexicon	004a8340	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f518	fen	place_lexicon	004a83a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f51c	letto	place_lexicon	004a8380	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f524	swamp	place_lexicon	004a83e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f52c	suo	place_lexicon	004a83c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f530	peat	place_lexicon	004a8420	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f538	rahka	place_lexicon	004a8400	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f540	marsh	place_lexicon	004a8460	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f548	räme	place_lexicon	004a8440	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f550	_forest	place_lexicon	004a84a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f558	metsä	place_lexicon	004a8480	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f560	mettä	place_lexicon	004a84c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f568	land	place_lexicon	004a8520	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f570	maa	place_lexicon	004a8500	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f574	mire	place_lexicon	004a8560	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f57c	korpi	place_lexicon	004a8540	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f584	laaja	place_lexicon	004a8580	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f58c	_corner	place_lexicon	004a85e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f594	kolkka	place_lexicon	004a85c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f59c	_heath	place_lexicon	004a8620	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5a4	kangas	place_lexicon	004a8600	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5ac	_wild	place_lexicon	004a8660	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5b4	erä	place_lexicon	004a8640	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5b8	_trail	place_lexicon	004a86a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5c0	reitti	place_lexicon	004a8680	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5c8	_passage	place_lexicon	004a86e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5d4	taival	place_lexicon	004a86c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5dc	_wilds	place_lexicon	004a8720	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5e4	salo	place_lexicon	004a8700	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5ec	hill	place_lexicon	004a8760	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5f4	mäki	place_lexicon	004a8740	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f5fc	pää	place_lexicon	004a8780,004a8b80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f600	fjeld	place_lexicon	004a87e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f608	tunturi	place_lexicon	004a87c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f610	fell	place_lexicon	004a8820	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f618	vaara	place_lexicon	004a8800	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f620	steep	place_lexicon	004a8860	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f628	jyrkkä	place_lexicon	004a8840	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f630	mound	place_lexicon	004a88a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f638	kunnas	place_lexicon	004a8880	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f640	hillock	place_lexicon	004a88e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f648	kumpu	place_lexicon	004a88c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f650	summits	place_lexicon	004a8920	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f658	laet	place_lexicon	004a8900	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f660	climb	place_lexicon	004a8960,004a8b20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f668	nousu	place_lexicon	004a8940,004a8b00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f670	neck	place_lexicon	004a89a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f678	niska	place_lexicon	004a8980	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f680	slope	place_lexicon	004a89e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f688	rinne	place_lexicon	004a89c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f690	_mountain	place_lexicon	004a8a60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f69c	vuori	place_lexicon	004a8a40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6a4	top	place_lexicon	004a8aa0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6a8	huippu	place_lexicon	004a8a80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6b0	_mountains	place_lexicon	004a8ae0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6bc	vuoret	place_lexicon	004a8ac0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6c4	front	place_lexicon	004a8b60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6cc	otsa	place_lexicon	004a8b40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6d4	_summit	place_lexicon	004a8be0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6dc	laki	place_lexicon	004a8bc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6e4	point	place_lexicon	004a8c20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6ec	nuppi	place_lexicon	004a8c00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6f4	tip	place_lexicon	004a8c60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f6f8	kärki	place_lexicon	004a8c40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f700	nail	place_lexicon	004a8ca0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f708	naula	place_lexicon	004a8c80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f720	JOKUMAA	place_lexicon	004a3e92,004a3e9b	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f728	Open_	place_lexicon	004a3ee0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f730	Avo	place_lexicon	004a3ec0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f734	Whitefish_	place_lexicon	004a3f20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f740	Siika	place_lexicon	004a3f00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f748	Pike_	place_lexicon	004a3f60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f750	Hauki	place_lexicon	004a3f40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f758	Burbot_	place_lexicon	004a3fa0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f760	Matikka	place_lexicon	004a3f80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f768	Perch_	place_lexicon	004a3fe0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f770	Ahven	place_lexicon	004a3fc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f778	Salmon_	place_lexicon	004a4020	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f780	Lohi	place_lexicon	004a4000	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f788	Ahti's_	place_lexicon	004a4060	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f790	Ahdin	place_lexicon	004a4040	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f798	Ice pick_	place_lexicon	004a40a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7a4	Tuura	place_lexicon	004a4080	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7ac	Näkki's_	place_lexicon	004a40e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7b8	Näkin	place_lexicon	004a40c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7c0	Rowing_	place_lexicon	004a4120	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7c8	Soutu	place_lexicon	004a4100	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7d0	Sesta	place_lexicon	004a4140,004a4160	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7d8	Mussel_	place_lexicon	004a41a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7e0	Raakku	place_lexicon	004a4180	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7e8	Deep_	place_lexicon	004a41e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7f0	Syvä	place_lexicon	004a41c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f7f8	Shallow_	place_lexicon	004a4220	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f804	Matala	place_lexicon	004a4200	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f80c	Foam_	place_lexicon	004a4260	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f814	Kuohu	place_lexicon	004a4240	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f81c	Fall_	place_lexicon	004a42a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f824	Tippu	place_lexicon	004a4280	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f82c	Net_	place_lexicon	004a42e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f834	Verkko	place_lexicon	004a42c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f83c	Trappin'_	place_lexicon	004a4320	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f848	Rysä	place_lexicon	004a4300	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f850	Catching_	place_lexicon	004a4360	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f85c	Ruona	place_lexicon	004a4340	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f864	Punt_	place_lexicon	004a43a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f86c	Ruuhi	place_lexicon	004a4380	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f874	Iron	place_lexicon	004a43e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f87c	Rauta	place_lexicon	004a43c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f884	Bronze	place_lexicon	004a4420	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f88c	Vaski	place_lexicon	004a4400	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f894	Rust	place_lexicon	004a4460	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f89c	Ruoste	place_lexicon	004a4440	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8a4	Black	place_lexicon	004a44a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8ac	Musta	place_lexicon	004a4480	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8b4	White	place_lexicon	004a44e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8bc	Valkia	place_lexicon	004a44c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8c4	Blade	place_lexicon	004a4520	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8cc	Terä	place_lexicon	004a4500	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8d4	Point	place_lexicon	004a4560	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8dc	Pisto	place_lexicon	004a4540	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8e4	Sword	place_lexicon	004a45a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8ec	Miekka	place_lexicon	004a4580	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8f4	Ore	place_lexicon	004a45e0,004a4620	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f8f8	Malmi	place_lexicon	004a45c0,004a4600	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f900	Kiln	place_lexicon	004a4660	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f908	Miilu	place_lexicon	004a4640	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f910	Tar	place_lexicon	004a46a0,004a46e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f914	Terva	place_lexicon	004a4680	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f91c	Tervas	place_lexicon	004a46c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f924	Pitch	place_lexicon	004a4720	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f92c	Piki	place_lexicon	004a4700	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f934	Woody	place_lexicon	004a4760	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f93c	Puula	place_lexicon	004a4740	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f944	Fallen	place_lexicon	004a47a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f94c	Kannos	place_lexicon	004a4780	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f954	Stump	place_lexicon	004a47e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f95c	Kanto	place_lexicon	004a47c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f964	Turning_	place_lexicon	004a4820	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f970	Kääntö	place_lexicon	004a4800	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f978	Passage	place_lexicon	004a4860	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f980	Taival	place_lexicon	004a4840	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f988	Rest	place_lexicon	004a48a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f990	Lepo	place_lexicon	004a4880	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f998	Sleeping	place_lexicon	004a48e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9a4	Nukkuma	place_lexicon	004a48c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9ac	Lulling	place_lexicon	004a4920	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9b4	Tuutima	place_lexicon	004a4900	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9bc	Dream	place_lexicon	004a4960	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9c4	Uni	place_lexicon	004a4940	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9c8	Night	place_lexicon,time_source	004a49a0,0055fa40,0055fa48	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9d0	Yö	place_lexicon	004a4980	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9d4	Munch	place_lexicon	004a49e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9dc	Syömä	place_lexicon	004a49c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9e4	Gruel	place_lexicon	004a4a20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9ec	Velli	place_lexicon	004a4a00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9f4	Half	place_lexicon	004a4a60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059f9fc	Puoli	place_lexicon	004a4a40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa04	Piece	place_lexicon	004a4aa0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa0c	Pala	place_lexicon	004a4a80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa14	Nod	place_lexicon	004a4ae0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa18	Nuokku	place_lexicon	004a4ac0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa20	Spawning_	place_lexicon	004a4b20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa2c	Kutu	place_lexicon	004a4b00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa34	Marry	place_lexicon	004a4b60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa3c	Naima	place_lexicon	004a4b40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa44	Juupa	place_lexicon	004a4b80,004a4ba0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa4c	Äijö's_	place_lexicon	004a4be0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa54	Äijön	place_lexicon	004a4bc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa5c	Big_	place_lexicon	004a4c20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa64	Iso	place_lexicon	004a4c00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa68	Huge_	place_lexicon	004a4c60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa70	Hirmu	place_lexicon	004a4c40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa78	Great_	place_lexicon	004a4ca0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa80	Suur	place_lexicon	004a4c80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa88	Old man's_	place_lexicon	004a4ce0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa94	Ukon	place_lexicon	004a4cc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fa9c	Wive's_	place_lexicon	004a4d20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059faa4	Akan	place_lexicon	004a4d00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059faac	Far	place_lexicon	004a4d60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fab0	Kauko	place_lexicon	004a4d40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fab8	Hard	place_lexicon	004a4da0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fac0	Kova	place_lexicon	004a4d80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fac8	Pain	place_lexicon	004a4de0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fad0	Kipu	place_lexicon	004a4dc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fad8	Slaughter_	place_lexicon	004a4e20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fae4	Surma	place_lexicon	004a4e00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059faec	Murder_	place_lexicon	004a4e60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059faf4	Murhi	place_lexicon	004a4e40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fafc	Killing_	place_lexicon	004a4ea0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb08	Tappo	place_lexicon	004a4e80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb10	Blood_	place_lexicon	004a4ee0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb18	Veri	place_lexicon	004a4ec0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb20	Gore_	place_lexicon	004a4f20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb28	Hurme	place_lexicon	004a4f00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb30	War	place_lexicon	004a4f60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb34	Sota	place_lexicon	004a4f40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb3c	Beating_	place_lexicon	004a4fa0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb48	Lyömä	place_lexicon	004a4f80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb50	Fist	place_lexicon	004a4fe0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb58	Nyrkki	place_lexicon	004a4fc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb60	Quarrel_	place_lexicon	004a5020	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb6c	Kaha	place_lexicon	004a5000	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb74	Striped_	place_lexicon	004a5060	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb80	Raito	place_lexicon	004a5040	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb88	Windy	place_lexicon	004a50a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb90	Tuuli	place_lexicon	004a5080	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fb98	Draught	place_lexicon	004a50e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fba0	Viima	place_lexicon	004a50c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fba8	Calm	place_lexicon	004a5120	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbb0	Tyyni	place_lexicon	004a5100	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbb8	Pacific_	place_lexicon	004a5160	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbc4	Tyynys	place_lexicon	004a5140	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbcc	Safe	place_lexicon	004a51a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbd4	Suoja	place_lexicon	004a5180	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbdc	Fog	place_lexicon	004a51e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbe0	Usva	place_lexicon	004a51c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbe8	Misty	place_lexicon	004a5220,004a5320	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbf0	Usvi	place_lexicon	004a5200	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fbf8	Sunny	place_lexicon	004a5260	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc00	Kilo	place_lexicon	004a5240	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc08	Day	place_lexicon	004a52a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc0c	Päivä	place_lexicon	004a5280	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc14	Summer	place_lexicon	004a52e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc1c	Suvi	place_lexicon	004a52c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc24	Terhen	place_lexicon	004a5300	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc2c	Sun	place_lexicon	004a5360	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc30	Päivö	place_lexicon	004a5340	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc38	Blizzard	place_lexicon	004a53a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc44	Pyry	place_lexicon	004a5380	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc4c	Drizzle	place_lexicon	004a53e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc54	Vihma	place_lexicon	004a53c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc5c	Drizzly	place_lexicon	004a5420	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc64	Vihmo	place_lexicon	004a5400	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc6c	Storm	place_lexicon	004a5460	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc74	Myrsky	place_lexicon	004a5440	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc7c	Storm's	place_lexicon	004a54a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc84	Myrryn	place_lexicon	004a5480	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc8c	Whirl	place_lexicon	004a54e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc94	Tuisku	place_lexicon	004a54c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fc9c	Cloud	place_lexicon	004a5520	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fca4	Pilvi	place_lexicon	004a5500	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fcac	Noisy	place_lexicon	004a5560	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fcb4	Kumo	place_lexicon	004a5540	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fcbc	Luru's_	place_lexicon	004a55a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fcc4	Lurun	place_lexicon	004a5580	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fccc	Gaping	place_lexicon	004a55e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fcd4	Appo	place_lexicon	004a55c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fcdc	Still	place_lexicon	004a5620	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fce4	Juuku	place_lexicon	004a5600	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fcec	Flake	place_lexicon	004a5660	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fcf4	Hitu	place_lexicon	004a5640	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fcfc	Middle_	place_lexicon	004a56a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd04	Keski	place_lexicon	004a5680	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd0c	Cliffen	place_lexicon	004a56e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd14	Pahto	place_lexicon	004a56c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd1c	Quilt	place_lexicon	004a5720	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd24	Toppo	place_lexicon	004a5700	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd2c	Holler	place_lexicon	004a5760	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd34	Kailo	place_lexicon	004a5740	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd3c	Packing	place_lexicon	004a57a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd44	Lappa	place_lexicon	004a5780	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd4c	Upright_	place_lexicon	004a57e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd58	Varho	place_lexicon	004a57c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd60	Boulder	place_lexicon	004a5820	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd68	Muku	place_lexicon	004a5800	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd70	Bouldery	place_lexicon	004a5860	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd7c	Mukku	place_lexicon	004a5840	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd84	Pata	place_lexicon	004a5880	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd8c	Wife's_	place_lexicon	004a58e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd94	Ämmin	place_lexicon	004a58c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fd9c	Scutch	place_lexicon	004a5920	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fda4	Vito	place_lexicon	004a5900	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fdac	Moron	place_lexicon	004a5960	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fdb4	Pännä	place_lexicon	004a5940	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fdbc	Block	place_lexicon	004a59a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fdc4	Mutti	place_lexicon	004a5980	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fdcc	Slopen	place_lexicon	004a59e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fdd4	Äyrä	place_lexicon	004a59c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fddc	Ugly	place_lexicon	004a5a20,004a74e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fde4	Ruma	place_lexicon	004a5a00,004a74c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fdec	Sweet	place_lexicon	004a5a60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fdf4	Siku	place_lexicon	004a5a40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fdfc	Hiisi	place_lexicon	004a5a80,004a5aa0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe04	Louhi	place_lexicon	004a5ac0,004a5ae0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe0c	Hiisi's_	place_lexicon	004a5b20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe18	Hiiden	place_lexicon	004a5b00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe20	Louhi's_	place_lexicon	004a5b60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe2c	Louhen	place_lexicon	004a5b40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe34	Sacred_	place_lexicon	004a5ba0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe3c	Pyhä	place_lexicon	004a5b80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe44	Hiito	place_lexicon	004a5bc0,004a5be0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe4c	Darn	place_lexicon	004a5c20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe54	Hiton	place_lexicon	004a5c00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe5c	Holy_	place_lexicon	004a5c60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe64	Siita	place_lexicon	004a5c40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe6c	Troll	place_lexicon	004a5ca0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe74	Kaalo	place_lexicon	004a5c80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe7c	Hallowin'_	place_lexicon	004a5ce0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe88	Pyhin	place_lexicon	004a5cc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe90	Boulder_	place_lexicon	004a5d20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fe9c	Paasi	place_lexicon	004a5d00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fea4	Spell	place_lexicon	004a5d60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059feac	Noitu	place_lexicon	004a5d40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059feb4	Crop	place_lexicon	004a5da0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059febc	Elon	place_lexicon	004a5d80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fec4	Damn	place_lexicon	004a5de0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fecc	Pirun	place_lexicon	004a5dc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fed4	Bad	place_lexicon	004a5e20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fed8	Pahin	place_lexicon	004a5e00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fee0	Fear	place_lexicon	004a5e60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fee8	Pelon	place_lexicon	004a5e40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fef0	Jumi's_	place_lexicon	004a5ea0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fef8	Jumin	place_lexicon	004a5e80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff00	Spellin'_	place_lexicon	004a5ee0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff0c	Noijun	place_lexicon	004a5ec0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff14	Cruel	place_lexicon	004a5f20	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff1c	Julma	place_lexicon	004a5f00	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff24	Force	place_lexicon	004a5f60	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff2c	Väki	place_lexicon	004a5f40	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff34	Kivi	place_lexicon	004a5f80	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff3c	Pisa's_	place_lexicon	004a5fe0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff44	Pisan	place_lexicon	004a5fc0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff4c	Laavu	place_lexicon	004a6000	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff54	Robber	place_lexicon	004a6060	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff5c	Roisto	place_lexicon	004a6040	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff64	Good	nutrition_source,place_lexicon	004a60a0,0056009f	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff6c	Hyvä	place_lexicon	004a6080	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff74	Goodish	place_lexicon	004a60e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff7c	Hyvös	place_lexicon	004a60c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff84	Bast	place_lexicon	004a6120	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff8c	Niini	place_lexicon	004a6100	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ff94	Hintta's_	place_lexicon	004a6160	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ffa0	Hintan	place_lexicon	004a6140	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ffa8	Sand	place_lexicon	004a61a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ffb0	Santa	place_lexicon	004a6180	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ffb8	Heimo's_	place_lexicon	004a61e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ffc4	Heimon	place_lexicon	004a61c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ffcc	Ulmi's_	place_lexicon	004a6220	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ffd4	Ulmin	place_lexicon	004a6200	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ffdc	Stonish_	place_lexicon	004a6260	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059ffe8	Kivis	place_lexicon	004a6240	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fff0	Grey	place_lexicon	004a62a0,004a6ba0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+0059fff8	Harmo	place_lexicon	004a6280	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+005a0000	Rear	place_lexicon	004a62e0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+005a0008	Perä	place_lexicon	004a62c0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+005a0010	Rump	place_lexicon	004a6320	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+005a0018	Pers	place_lexicon	004a6300	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+005a0020	Hissing_	place_lexicon	004a6360	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+005a002c	Pärrin	place_lexicon	004a6340	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+005a0034	Break	place_lexicon	004a63a0	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+005a003c	Murto	place_lexicon	004a6380	原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库
+005a0680	<red>	native_renderer_paragraph	0050f267,0050f277,0050f282	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005a06a0	<blue>	native_renderer_paragraph	0050f10e,0050f122,0050f12d	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005a06b8	<black>	native_renderer_paragraph	0050f387,0050f3a2,0050f3ad	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005a341c	Net	action_description,map_marker_legend	004e35c6,005632f9	activity既有词库；hud.command；F98F1重复动作消费
+005a4df4	NOTEXTSPOT	native_map_button	004cff30,004cff38	内部控制标识，保持原值
+005a4e00	TEXTSPOT	native_map_button	004cff50	原生文本语法/格式标签；按字形度量及绘制扩展消费
+005a51a0	Vigorous	hud_conditions	004fa27d,004fa27e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005a51ac	Lively	hud_conditions	004fa27e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005a51b4	A bit tired	hud_conditions	004fa27e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005a51c0	Tired	hud_conditions	004fa27e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005a51c8	Weary	hud_conditions	004fa27e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005a51d0	Extremely tired	hud_conditions	004fa27e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005a51e0	Ready to drop	hud_conditions	004fa27e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005a54d0	music_chant.ogg	known_areas_map	004e59a7	内部资源路径/文件模式，保持原值
+005a6364	%s.	native_marked_text	00514e8e	原生文本语法/格式标签；按字形度量及绘制扩展消费
+005a686c	Islanders	map_culture_legend	004e3b5a	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6878	Kuikka-tribe	map_culture_legend	004e3b7a	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6888	Owl-tribe	map_culture_legend	004e3b97	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6894	Seal-tribe	map_culture_legend	004e3bb4	culture.map/topic既有词库；原生地图构建/绘制边界
+005a68a0	Njerpezit	map_culture_legend	004e3bd1	culture.map/topic既有词库；原生地图构建/绘制边界
+005a68c0	<infoblue>%s QUEST</infoblue><br><indblue>told by: </indblue><infoblue>%s</infoblue><br>	map_quest_annotation_build	004e2ac2	hud.map任务句式+原生任务标题来源；E2850实际复制结果绑定
+005a691c	<infoblue>%s QUEST</infoblue><br><indblue>%s</indblue><br>	map_quest_annotation_build	004e2bc0,004e2cc0,004e2fbc	hud.map任务句式+原生任务标题来源；E2850实际复制结果绑定
+005a6958	<infoblue>%s QUEST</infoblue><br>	map_quest_annotation_build	004e2e20	hud.map任务句式+原生任务标题来源；E2850实际复制结果绑定
+005a697c	<indblue>informant: </indblue><infoblue>	map_quest_annotation_build	004e2e42,004e2e47,004e2e54	hud.map任务句式+原生任务标题来源；E2850实际复制结果绑定
+005a69a8	</infoblue><br>	map_quest_annotation_build	004e2eaa,004e2eb7,004e2ebf,004e2ec7	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005a69b8	MAP MARKER INDICATORS	map_marker_legend	004e3073	culture.map/topic既有词库；原生地图构建/绘制边界
+005a69d0	You	map_marker_legend	004e312b	culture.map/topic既有词库；原生地图构建/绘制边界
+005a69d4	Trap	map_marker_legend	004e3517	culture.map/topic既有词库；原生地图构建/绘制边界
+005a69dc	Marked location	map_marker_legend	004e36ee	culture.map/topic既有词库；原生地图构建/绘制边界
+005a69ec	Quest location	map_marker_legend	004e384f	culture.map/topic既有词库；原生地图构建/绘制边界
+005a69fc	Quest related area	map_marker_legend	004e38b4	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6a10	Ordered goods	map_marker_legend	004e39da	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6a20	CULTURAL REGIONS	map_culture_legend	004e3a89	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6a34	MAP OF KNOWN AREAS	map_background	004e3e1d	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6a48	KNOWN_AREAS_MAP	map_background	004e3e27	内部控制标识，保持原值
+005a6a58	ADD MARKER AT CHARACTER'S LOCATION	map_marker_edit	004e419c,004e41a3,004e41be	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6a80	A new marker will be added at your character's present location. 	map_marker_edit	004e41a9	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6ac4	EDIT MARKER	map_marker_edit	004e41cb,004e41d8	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6ad0	You can now edit the marker text and color, or remove it. 	map_marker_edit	004e41d3	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6b10	Markers can contain two lines of text filled with information you prefer.	map_marker_edit	004e41ea	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6b5c	ENTER.Edit text	map_marker_edit	004e44ed	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6b6c	R	map_marker_edit	004e4540	原生颜色快捷键，保持输入动作
+005a6b70	G	map_marker_edit	004e455f	原生颜色快捷键，保持输入动作
+005a6b74	B	map_marker_edit	004e457e	原生颜色快捷键，保持输入动作
+005a6b78	Y	map_marker_edit	004e459d	原生颜色快捷键，保持输入动作
+005a6b7c	W	map_marker_edit	004e45bc	原生颜色快捷键，保持输入动作
+005a6b80	Set color	map_marker_edit	004e45f1	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6b8c	DEL.Remove	map_marker_edit	004e4612	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6b98	SELECT MARKER TO EDIT	map_marker_selection	004e4a10	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6bb0	%s<br>	map_location_info	004e4f8e	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6bb8	today	map_location_info	004e5086,004e5091,004e537b,004e5386	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6bc0	yesterday	map_location_info	004e5067,004e506f,004e535c,004e5364	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6bcc	%d days ago	map_location_info	004e5057,004e534c	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6bd8	Blacksmith %s order placed %s.<br>	map_location_info	004e50e1	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6bfc	Net site, visited %s.<br>	map_location_info	004e53a9	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6c18	Trapping site, visited %s.<br>	map_location_info	004e53cd	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6c38	Press [A] to edit the markers here.	map_location_info	004e5815	hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留
+005a6c5c	M.Toggle map markers	known_areas_map	004e5cf2	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6c74	A.Add/edit custom marker	known_areas_map	004e5d14	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6c90	Q.Toggle quest markers	known_areas_map	004e5d42	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6ca8	C.Toggle cultural regions	known_areas_map	004e5d64	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6cc4	F3.Toggle target cursor	known_areas_map	004e5d86	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6cdc	Zoom map view by mouse wheel or with the following keys:	known_areas_map	004e5df6	culture.map/topic既有词库；原生地图构建/绘制边界
+005a6d18	[CTRL -] Zoom out [CTRL +] Zoom in [CTRL 0] Reset or max	known_areas_map	004e5e40	culture.map/topic既有词库；原生地图构建/绘制边界
+005a9f04	[%s]	native_marked_text	00514e1c	原生文本语法/格式标签；按字形度量及绘制扩展消费
+005a9f48	%s%s%s	skill_command	0052339a	skill及hud.command；消息提示使用既有MessageFlow
+005aa144	bg-rpanel.png	hud_complete,hud_heading	004f8f91,004fa2e2	内部资源路径/文件模式，保持原值
+005aa154	INIT	hud_command,hud_complete	004f9118,004f9122,004f912d,004fa34e	内部控制标识，保持原值
+005aa15c	Command: 	hud_command	004f9191	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa168	Wielded weapons/tools	hud_wielded	004f9297	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa180	 -- CENTER	hud_wielded	004f93fa,004f9405,004f940e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa18c	 -- HIGH	hud_wielded	004f943f,004f9449	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa198	 -- RIGHT	hud_wielded	004f947b,004f9482,004f948a	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa1a4	 -- LEFT	hud_wielded	004f94a0,004f94a7	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa1b0	w	hud_wielded	004f9557	原生界面快捷键，保持输入动作
+005aa1b4	r.Repeat:	hud_repeat	004f964e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa1c0	(mod) 	hud_repeat	004f976e,004f9775	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa1c8	Hunger:	hud_conditions	004f99ab,004f9bdf	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa1d0	Thirst:	hud_conditions	004f99e1,004f9db1	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa1d8	Nutrition:	hud_conditions	004f9a17,004f9ed5	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa1e4	Warmth:	hud_conditions	004f9a4d	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa1ec	Vigour:	hud_conditions	004f9a83	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa1f4	Nutrition/Warmth/Vigour	hud_conditions	004f9b9c	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa20c	e	hud_conditions	004f9bb3	原生界面快捷键，保持输入动作
+005aa210	q	hud_conditions	004f9d75	原生界面快捷键，保持输入动作
+005aa214	ESC.Help and game options	hud_complete	004fa38c	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa230	Carrying	hud_complete	004fa5a7	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa23c	Penalty:	hud_complete	004fa5cb	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa248	Fatigue	hud_complete	004fa605	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa250	   +	hud_complete	004fa623,004fa67b,004fa6d3	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005aa258	Injury	hud_complete	004fa65d	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa260	Starvation	hud_complete	004fa6b5	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa26c	Total:	hud_complete	004fa6f1	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa274	Bloodloss	hud_complete	004fa72b	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa294	     EAST	hud_widget	004facf2	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa2a0	  NORTH-EAST	hud_widget	004facf2	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa2b0	     NORTH	hud_widget	004facf2	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa2bc	  NORTH-WEST	hud_widget	004facf2	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa2cc	     WEST	hud_widget	004facf2	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa2d8	  SOUTH-WEST	hud_widget	004facf2	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa2e8	     SOUTH	hud_widget	004facf2	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa2f4	  SOUTH-EAST	hud_widget	004facf2	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa31c	   Walking	hud_widget	004faaa4,004faaae	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa328	   Running	hud_widget	004faaf8,004faafe	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa334	   Fallen	hud_widget	004fab29,004fab31	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa340	   Sleeping	hud_widget	004fab44,004fab4c	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa34c	   Fainted	hud_widget	004fab66,004fab6c	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa358	   Hauling	hud_widget	004fabad,004fabb3	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa364	   Wading	hud_widget	004fabd0,004fabd6	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa370	   Skiing	hud_widget	004fabf1,004fabf7	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa37c	  Watercraft	hud_widget	004fac0b,004fac10	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa38c	   Swimming	hud_widget	004fac2c,004fac31	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa398	   Hiding	hud_widget	004fac5b,004fac61	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa3a4	 %d	hud_widget	004fad4c,004fada9	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa3a8	Speed:   mi/h	hud_widget	004fadbb,004fadc3,004fadcf	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aa3b8	Speed:   km/h	hud_widget	004fadd7,004faddc,004fade8	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aacc4	None	hud_penalties,hud_starvation	004ff08c,00502f0f,00502fed,005030c1,005031bd	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005aaccc	-%d%%	hud_penalties,hud_starvation	004ff0b1,00502ef6,00503012,005030e6,005031e2	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005ac690	View message log	main_command_description	00564d0f	hud.command完整指令词库；F91E7中文字形截短
+005ac6a4	Map of known areas	main_command_description	00565137,0056513d	hud.command完整指令词库；F91E7中文字形截短
+005ac71c	Save the game	hud_command_direct_caller,main_command_description	005648cd,005648d2,005648df	hud.command完整指令词库；F91E7中文字形截短
+005ac89c	<green>	native_renderer_paragraph	0050f29c,0050f2b2,0050f2bd	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac8a4	</green>	native_renderer_paragraph	0050f2d7,0050f2f2,0050f2fd	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac8b0	<lightgray>	native_renderer_paragraph	0050f317,0050f327,0050f332	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac8bc	</lightgray>	native_renderer_paragraph	0050f34c,0050f362,0050f36d	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac8cc	</blue>	native_renderer_paragraph	0050f147,0050f162,0050f16d	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac8d4	<indblue>	native_renderer_paragraph	0050f187,0050f197,0050f1a2	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac8e0	</indblue>	native_renderer_paragraph	0050f1bc,0050f1d2,0050f1dd	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac8ec	<infoblue>	native_renderer_paragraph	0050f1f7,0050f207,0050f212	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac8f8	</infoblue>	native_renderer_paragraph	0050f22c,0050f242,0050f24d	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac958	<%s>	native_marked_text	00514e55	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac960	[]<>.	native_marked_text	00514d71	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac968	|	native_marked_text	00514d93	标点/格式语法/数值，原生保留；%s操作数按来源翻译
+005ac96c	%s|	native_marked_text	00514ec7	原生文本语法/格式标签；按字形度量及绘制扩展消费
+005af068	!Can't use skills in the heat of the combat!	skill_command	00523373	skill及hud.command；消息提示使用既有MessageFlow
+005af098	#Using: 	skill_command	00523395	skill及hud.command；消息提示使用既有MessageFlow
+005b14d4	Throw/Shoot	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005b14e0	Attack (1st weapon)	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005b14f4	Attack (2nd weapon)	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005b1508	Kick	hud_command_direct_caller,main_command_description	00564f5d	hud.command完整指令词库；F91E7中文字形截短
+005b1510	Punch	hud_command_direct_caller,main_command_description	00564f77,00564f81	hud.command完整指令词库；F91E7中文字形截短
+005d79a0	beginning of 	moon_source	0055e951,0055e959,0055e965	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d79b0	early 	moon_source	0055e977,0055e97e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d79b8	late 	moon_source	0055e998,0055e99f	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d79c0	end of 	moon_source	0055e9ae,0055e9b5	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b14	Freezing	warmth_source	0055f531	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b20	Bitterly cold	warmth_source	0055f5d8,0055f5e0,0055f5ec	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b30	Cold	warmth_source	0055f629	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b38	Chilly	warmth_source	0055f67e,0055f685	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b40	Comfortably warm	warmth_source	0055f717	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b54	Rather warm	warmth_source	0055f76d,0055f775	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b60	Warm	warmth_source	0055f7c8	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b68	Hot	warmth_source	0055f809	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b6c	Sweaty	warmth_source	0055f84e,0055f855	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b74	Sweating a lot	warmth_source	0055f88a,0055f892,0055f89e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b84	You feel warm.	warmth_source	0055f491,0055f499,0055f49f	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7b94	Freezing to death	warmth_source	0055f4d1,0055f4d7	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7ba8	You are freezing to death!	warmth_source	0055f4ea,0055f4f1,0055f4fb	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7bc4	You are freezing.	warmth_source	0055f54a,0055f551	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7bd8	Numbingly cold	warmth_source	0055f57a,0055f582,0055f58e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7be8	You are numbingly cold.	warmth_source	0055f5a5,0055f5af	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7c00	You feel bitterly cold.	warmth_source	0055f5fb,0055f605	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7c18	You feel cold.	warmth_source	0055f645,0055f64d,0055f659	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7c28	You feel chilly.	warmth_source	0055f6a4	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7c3c	Cool	warmth_source	0055f6c9	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7c44	You feel a bit cool.	warmth_source	0055f6e5,0055f6ec	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7c5c	You feel comfortably warm.	warmth_source	0055f729,0055f730,0055f739	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7c78	You are feeling rather warm.	warmth_source	0055f786,0055f78d,0055f795	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7c98	You are feeling hot.	warmth_source	0055f81c,0055f823	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7cb0	You are sweaty.	warmth_source	0055f875	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7cc0	You are sweating a lot.	warmth_source	0055f8be,0055f8c8	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7cd8	After midnight	time_source	0055f908,0055f90d,0055f918	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7ce8	Small hours	time_source	0055f92f,0055f934	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7cf4	Early morning	time_source	0055f944,0055f949,0055f954	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d04	Morning	time_source	0055f963,0055f96b	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d0c	Late morning	time_source	0055f978,0055f97d	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d1c	Noon	time_source	0055f995	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d24	Early afternoon	time_source	0055f9aa	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d34	Afternoon	time_source	0055f9ba,0055f9c0	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d40	Late afternoon	time_source	0055f9d1,0055f9d6,0055f9e1	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d50	Early evening	time_source	0055f9f8,0055f9fd,0055fa08	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d60	Evening	time_source	0055fa14,0055fa1c	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d68	Late evening	time_source	0055fa26,0055fa2b	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d78	Late night	time_source	0055fa54,0055fa5a	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7d84	Midnight	time_source	0055fa75	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7e60	Abundant	nutrition_source	0055ff91	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7e6c	Starving	nutrition_source	0055ffbb	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7e78	Malnourished	nutrition_source	0055ffdf,0055ffe4	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7e88	Insufficient	nutrition_source	00560012,00560017	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7e98	Scarce	nutrition_source	00560045,0056004f	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7ea0	Temperate	nutrition_source	00560074,0056007a	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7eac	Nourished	nutrition_source	005600c2,005600c8	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d7eb8	Well-fed	nutrition_source	005600ed	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
+005d81c4	gameinfo/%s_scrinfo.txt	screen_help_source	00562565	内部资源路径/文件模式，保持原值
+005d82a4	Fell a tree	action_description	005631bf	activity既有词库；hud.command；F98F1重复动作消费
+005d82b0	Chop blocks of wood	action_description	005631c5	activity既有词库；hud.command；F98F1重复动作消费
+005d82c4	Split firewood	action_description	005631d1	activity既有词库；hud.command；F98F1重复动作消费
+005d82d4	Peel bark	action_description	005631d7	activity既有词库；hud.command；F98F1重复动作消费
+005d82e0	Boards	action_description	005631dd	activity既有词库；hud.command；F98F1重复动作消费
+005d82e8	Post spruce	action_description	005631e3	activity既有词库；hud.command；F98F1重复动作消费
+005d82f4	Prepare the soil	action_description	005631e9	activity既有词库；hud.command；F98F1重复动作消费
+005d8308	Plant/sow	action_description	005631ef	activity既有词库；hud.command；F98F1重复动作消费
+005d8314	Harvest down	action_description	005631f5	activity既有词库；hud.command；F98F1重复动作消费
+005d8324	Harvest and pick	action_description	005631fb	activity既有词库；hud.command；F98F1重复动作消费
+005d8338	Grind flour	action_description	00563201	activity既有词库；hud.command；F98F1重复动作消费
+005d8344	Thresh (for grain/seeds/leaves)	action_description	00563207	activity既有词库；hud.command；F98F1重复动作消费
+005d8364	Twigs and branches	action_description	0056320d	activity既有词库；hud.command；F98F1重复动作消费
+005d8378	Build a fire	action_description	00563213	activity既有词库；hud.command；F98F1重复动作消费
+005d8388	Make a hole in the ice	action_description	00563219	activity既有词库；hud.command；F98F1重复动作消费
+005d83a0	Skin an animal	action_description	0056321f	activity既有词库；hud.command；F98F1重复动作消费
+005d83b0	Cure the skin (for preservation)	action_description	00563225	activity既有词库；hud.command；F98F1重复动作消费
+005d83d4	Tan the skin	action_description	0056322b	activity既有词库；hud.command；F98F1重复动作消费
+005d83e4	Apply tanning material	action_description	00563231	activity既有词库；hud.command；F98F1重复动作消费
+005d83fc	Rinse and dry the skin	action_description	00563237	activity既有词库；hud.command；F98F1重复动作消费
+005d8414	Soften the skin	action_description	0056323d	activity既有词库；hud.command；F98F1重复动作消费
+005d8424	Soak the skin	action_description	00563243	activity既有词库；hud.command；F98F1重复动作消费
+005d8434	De-hair (for rawhide/leather)	action_description	00563249	activity既有词库；hud.command；F98F1重复动作消费
+005d8454	Clean the skin	action_description	0056324f	activity既有词库；hud.command；F98F1重复动作消费
+005d8464	Roast in embers	action_description	00563255	activity既有词库；hud.command；F98F1重复动作消费
+005d8474	Roast on fire	action_description	00563261	activity既有词库；hud.command；F98F1重复动作消费
+005d8484	Wild flour	action_description	00563267	activity既有词库；hud.command；F98F1重复动作消费
+005d8490	Roasted meat	action_description	0056326d	activity既有词库；hud.command；F98F1重复动作消费
+005d84a0	Dry (for preservation)	action_description	0056327f	activity既有词库；hud.command；F98F1重复动作消费
+005d84b8	Salt (for preservation)	action_description	00563285	activity既有词库；hud.command；F98F1重复动作消费
+005d84d0	Smoke (for preservation)	action_description	0056328b	activity既有词库；hud.command；F98F1重复动作消费
+005d84ec	Boil	action_description	00563291	activity既有词库；hud.command；F98F1重复动作消费
+005d84f4	Cook	action_description	00563297	activity既有词库；hud.command；F98F1重复动作消费
+005d84fc	Craft modded item	action_description	0056329d	activity既有词库；hud.command；F98F1重复动作消费
+005d8510	Craft an item	action_description	005632a3	activity既有词库；hud.command；F98F1重复动作消费
+005d8520	Repair worn-out clothes	action_description	0056330b	activity既有词库；hud.command；F98F1重复动作消费
+005d8538	Repair worn-out net	action_description	00563311	activity既有词库；hud.command；F98F1重复动作消费
+005d854c	Bait a trap	action_description	00563317	activity既有词库；hud.command；F98F1重复动作消费
+005d8558	Set a trap	action_description	0056331d	activity既有词库；hud.command；F98F1重复动作消费
+005d8564	Reset triggered trap	action_description	00563323	activity既有词库；hud.command；F98F1重复动作消费
+005d857c	Disassemble a trap construction	action_description	00563329	activity既有词库；hud.command；F98F1重复动作消费
+005d859c	Light lever trap	action_description	0056332f	activity既有词库；hud.command；F98F1重复动作消费
+005d85b0	Small deadfall trap	action_description	00563335	activity既有词库；hud.command；F98F1重复动作消费
+005d85c4	Big deadfall trap	action_description	0056333b	activity既有词库；hud.command；F98F1重复动作消费
+005d85d8	Heavy deadfall bear trap	action_description	00563341	activity既有词库；hud.command；F98F1重复动作消费
+005d85f4	Trap pit	action_description	00563347	activity既有词库；hud.command；F98F1重复动作消费
+005d8600	Trap pit with sharp stakes	action_description	0056334d	activity既有词库；hud.command；F98F1重复动作消费
+005d861c	Haft a weapon or tool	action_description	00563353	activity既有词库；hud.command；F98F1重复动作消费
+005d8634	Remove the haft	action_description	00563359	activity既有词库；hud.command；F98F1重复动作消费
+005d8644	Join ropes and cords	action_description	005632a9	activity既有词库；hud.command；F98F1重复动作消费
+005d865c	Shorten ropes and cords	action_description	005632af	activity既有词库；hud.command；F98F1重复动作消费
+005d8674	Spin yarn	action_description	005632c1	activity既有词库；hud.command；F98F1重复动作消费
+005d8680	Retting	action_description	0056335f	activity既有词库；hud.command；F98F1重复动作消费
+005d8688	Drying	action_description	00563365	activity既有词库；hud.command；F98F1重复动作消费
+005d8690	Extract plant fibre	action_description	0056336b	activity既有词库；hud.command；F98F1重复动作消费
+005d86a4	Tendon drying	action_description	00563371	activity既有词库；hud.command；F98F1重复动作消费
+005d86b4	Separate sinew fibre	action_description	00563377	activity既有词库；hud.command；F98F1重复动作消费
+005d86cc	Sinew yarn	action_description	0056337d	activity既有词库；hud.command；F98F1重复动作消费
+005d86d8	Build something	action_description	005632bb	activity既有词库；hud.command；F98F1重复动作消费
+005d86e8	Talk to someone	action_description	00563383	activity既有词库；hud.command；F98F1重复动作消费
+005d86f8	Command pets and companions	action_description,main_command_description	00563389,00564d5b,00564d62,00564d78	hud.command完整指令词库；F91E7中文字形截短
+005d8714	Fill with water, or milk into	action_description	0056338f	activity既有词库；hud.command；F98F1重复动作消费
+005d8734	Pour something into a container	action_description	00563395	activity既有词库；hud.command；F98F1重复动作消费
+005d8754	Empty a container	action_description	0056339b	activity既有词库；hud.command；F98F1重复动作消费
+005d8768	Wounds and injuries	action_description,main_command_description	005633a7,00565161,00565168	hud.command完整指令词库；F91E7中文字形截短
+005d877c	Cut a carcass for meat	action_description	005633ad	activity既有词库；hud.command；F98F1重复动作消费
+005d8794	Pack an animal	action_description	005633b9	activity既有词库；hud.command；F98F1重复动作消费
+005d87a4	Unpack an animal	action_description	005633bf	activity既有词库；hud.command；F98F1重复动作消费
+005d87b8	Active fishing	action_description	005633c5	activity既有词库；hud.command；F98F1重复动作消费
+005d87c8	Set a net	action_description	005633cb	activity既有词库；hud.command；F98F1重复动作消费
+005d87d4	Retrieve a net	action_description	005633d1	activity既有词库；hud.command；F98F1重复动作消费
+005d87e4	Deconstruct something	action_description	005633ef	activity既有词库；hud.command；F98F1重复动作消费
+005d87fc	Continue paused process	action_description	00563411	activity既有词库；hud.command；F98F1重复动作消费
+005d8814	Haul items	action_description	00563417	activity既有词库；hud.command；F98F1重复动作消费
+005d8820	Push/pack items	action_description	0056341d	activity既有词库；hud.command；F98F1重复动作消费
+005d8830	Throw an item/shoot an arrow	action_description	00563423	activity既有词库；hud.command；F98F1重复动作消费
+005d8850	Wield	action_description	005633d7	activity既有词库；hud.command；F98F1重复动作消费
+005d8858	Wear	action_description	005633dd	activity既有词库；hud.command；F98F1重复动作消费
+005d8860	Take off	action_description	005633e3	activity既有词库；hud.command；F98F1重复动作消费
+005d886c	Drop	action_description	005633e9	activity既有词库；hud.command；F98F1重复动作消费
+005d8934	some action	main_command_description	00564720,00564728	hud.command完整指令词库；F91E7中文字形截短
+005d8940	Make items and constructions	main_command_description	0056473f,00564746,00564766	hud.command完整指令词库；F91E7中文字形截短
+005d8960	Butcher -- cut a carcass for meat	main_command_description	0056477c,00564783,0056479b	hud.command完整指令词库；F91E7中文字形截短
+005d8984	Get up or lay down	main_command_description	005647af,005647b5	hud.command完整指令词库；F91E7中文字形截短
+005d8998	Movement and rest actions	main_command_description	005651ea,005651f1,00565204	hud.command完整指令词库；F91E7中文字形截短
+005d89b4	Look around	hud_command_direct_caller,main_command_description	0056519f,005651a7	hud.command完整指令词库；F91E7中文字形截短
+005d89c0	Look what is at the chosen location	main_command_description	005651be,005651c5,005651db	hud.command完整指令词库；F91E7中文字形截短
+005d89e4	Pick up something	hud_command_direct_caller,main_command_description	0056517f,00565186	hud.command完整指令词库；F91E7中文字形截短
+005d89f8	Pick up from adjacent tile	main_command_description	0056481f,00564835,00564843	hud.command完整指令词库；F91E7中文字形截短
+005d8a14	Pick up from adjacent tile, pack animal or companion	main_command_description	00564858,0056485f,0056487a,00564888	hud.command完整指令词库；F91E7中文字形截短
+005d8a4c	Help and game options	main_command_description	0056489b,005648a0,005648ac	hud.command完整指令词库；F91E7中文字形截短
+005d8a64	Make modded handcrafts	main_command_description	00564925,0056492a,00564936	hud.command完整指令词库；F91E7中文字形截短
+005d8a7c	Quit and optionally save the game	main_command_description	00564959,00564960,00564978	hud.command完整指令词库；F91E7中文字形截短
+005d8aa0	Move items	main_command_description	005649a3,005649a9	hud.command完整指令词库；F91E7中文字形截短
+005d8aac	Move items -- haul items around with you	main_command_description	005649d2,005649ef,005649fd	hud.command完整指令词库；F91E7中文字形截短
+005d8ad8	Push/pack -- push items at your feet to an adjacent location or pack them on an animal	main_command_description	00564a15,00564a24,00564a26,00564a28	hud.command完整指令词库；F91E7中文字形截短
+005d8b30	Quaff (drink) something	main_command_description	00564a2c,00564a3f	hud.command完整指令词库；F91E7中文字形截短
+005d8b48	Repeat the last action	main_command_description	00564a50,00564a55,00564a61	hud.command完整指令词库；F91E7中文字形截短
+005d8b60	Open a door or gate	main_command_description	00564a84,00564a8b	hud.command完整指令词库；F91E7中文字形截短
+005d8b74	Close a door or gate	main_command_description	00564aa2,00564aa7	hud.command完整指令词库；F91E7中文字形截短
+005d8b8c	Zoom in/out between wilderness and terrain map	main_command_description	00564aca,00564ad1,00564adb,00564aee,00564b0b	hud.command完整指令词库；F91E7中文字形截短
+005d8bbc	Inventory	main_command_description	00564b1c,00564b24	hud.command完整指令词库；F91E7中文字形截短
+005d8bc8	Inventory -- look at what you are carrying 	main_command_description	00564b41,00564b48,00564b5e,00564b6c	hud.command完整指令词库；F91E7中文字形截短
+005d8bf4	Drop something	main_command_description	00564b7d,00564b82,00564b8f	hud.command完整指令词库；F91E7中文字形截短
+005d8c04	Start a fire	main_command_description	00564bb3,00564bb8	hud.command完整指令词库；F91E7中文字形截短
+005d8c14	Skills -- view and use your skills	main_command_description	00564bdd,00564be4,00564c06	hud.command完整指令词库；F91E7中文字形截短
+005d8c38	Game encyclopedia; a hypertext guide	main_command_description	00565029,00565030,00565050	hud.command完整指令词库；F91E7中文字形截短
+005d8c60	Quest journal	main_command_description	00565075,0056507a,00565087	hud.command完整指令词库；F91E7中文字形截短
+005d8c70	Look what is at a chosen distant location	main_command_description	005650a1,005650a8,005650c0,005650ce	hud.command完整指令词库；F91E7中文字形截短
+005d8c9c	Wield a weapon or tool	main_command_description	00564c15,00564c1a,00564c26	hud.command完整指令词库；F91E7中文字形截短
+005d8cb4	Wear clothes or armor	main_command_description	00564c49,00564c4e,00564c5a	hud.command完整指令词库；F91E7中文字形截短
+005d8ccc	Look in a direction	main_command_description	00564c73,00564c7a	hud.command完整指令词库；F91E7中文字形截短
+005d8ce0	Look what is at the current location	main_command_description	00564c91,00564c98,00564cb8	hud.command完整指令词库；F91E7中文字形截短
+005d8d08	Make - craft items and build constructions	main_command_description	00564cc7,00564cce,00564cf0,00564cfe	hud.command完整指令词库；F91E7中文字形截短
+005d8d34	Chat (talk) with someone	main_command_description	00564d2d,00564d4a	hud.command完整指令词库；F91E7中文字形截短
+005d8d50	Eat something	main_command_description	00564d89,00564d8e,00564d9b	hud.command完整指令词库；F91E7中文字形截短
+005d8d60	Armour coverage statistics	main_command_description	00564db5,00564dbc,00564dde	hud.command完整指令词库；F91E7中文字形截短
+005d8d7c	Character profile	main_command_description	00564def,00564df6	hud.command完整指令词库；F91E7中文字形截短
+005d8d90	Wait for one turn	main_command_description	00564e0f,00564e16	hud.command完整指令词库；F91E7中文字形截短
+005d8da4	Wait and rest until cancelled	main_command_description	00564e2f,00564e36,00564e40,00564e58	hud.command完整指令词库；F91E7中文字形截短
+005d8dc4	Spells and magic means	main_command_description	005650df,005650e4,005650f0	hud.command完整指令词库；F91E7中文字形截短
+005d8ddc	Game course information	main_command_description	00565113,00565126	hud.command完整指令词库；F91E7中文字形截短
+005d8df4	Hide	main_command_description	00564e79	hud.command完整指令词库；F91E7中文字形截短
+005d8dfc	Attack with 1st weapon	main_command_description	00564e93,00564e98,00564ea4	hud.command完整指令词库；F91E7中文字形截短
+005d8e14	Attack with 2nd weapon	main_command_description	00564ec7,00564ecc,00564ed8	hud.command完整指令词库；F91E7中文字形截短
+005d8e2c	Repeat the last attack	main_command_description	00564efb,00564f00,00564f0c	hud.command完整指令词库；F91E7中文字形截短
+005d8e44	Exchange wielded weapons	main_command_description	00564f2f,00564f4c	hud.command完整指令词库；F91E7中文字形截短
+005d8e60	Throw something, or shoot an arrow	main_command_description	00564f93,00564f9a,00564fbc	hud.command完整指令词库；F91E7中文字形截短
+005d8e84	Take off worn clothes or wielded weapons	main_command_description	00564fcb,00564fe8,00564ff6	hud.command完整指令词库；F91E7中文字形截短
+005d8eb0	Apply (use) a tool or container	main_command_description	00565007,0056501a	hud.command完整指令词库；F91E7中文字形截短
+005dc34c	Zoom (in/out)	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005dc41c	Pick up and wield	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005dc458	Make	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005dc460	Make modded items	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005dc474	Armour coverage	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005dc484	Repeat last action	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005dc4d0	Discard items	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005dc4e0	Use skills	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005dc4ec	Rest/Pass a turn	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
+005dc500	Exchange weapons	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短

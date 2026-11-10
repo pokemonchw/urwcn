@@ -43,6 +43,30 @@ culture.ui.help_3	也可以自行输入英文关键词或主题进行搜索。
 culture.map.title	文化区域
 culture.map.known_areas_title	已知区域地图
 culture.map.indicators_title	文化区域图例
+culture.map.marker.title	地图标记图例
+culture.map.marker.you	你
+culture.map.marker.village	村落
+culture.map.marker.cave	洞穴
+culture.map.marker.shelter	庇护所
+culture.map.marker.settlement	你的定居点
+culture.map.marker.trap	陷阱
+culture.map.marker.net	渔网
+culture.map.marker.marked	已标记地点
+culture.map.marker.quest	任务地点
+culture.map.marker.quest_area	任务相关区域
+culture.map.marker.goods	订购的货物
+culture.map.control.markers	M.显示/隐藏地图标记
+culture.map.control.custom	A.添加/编辑自定义标记
+culture.map.control.quests	Q.显示/隐藏任务标记
+culture.map.control.cultures	C.显示/隐藏文化区域
+culture.map.control.cursor	F3.显示/隐藏目标光标
+culture.map.control.exit	ESC.退出
+culture.map.marker.edit_text	ENTER.编辑文字
+culture.map.marker.remove	DEL.移除
+culture.map.zoom.hint	使用鼠标滚轮或以下按键缩放地图：
+culture.map.zoom.keys	[CTRL -] 缩小 [CTRL +] 放大 [CTRL 0] 重置或最大缩放
+culture.map.help.Click locations with mouse for more information, where available. Or use arrow keys to move	用鼠标点击地点，可查看其详细信息（如有）。也可在目标光标显示时，用方向键移动光标，
+culture.map.help.target cursor, when visible, and select the location with [ENTER]. 	再按[ENTER]选择地点。
 culture.ui.no_info	抱歉，没有找到这个主题的相关信息。
 culture.ui.continue	按任意键继续
 culture.ui.intro_334200	你即将首次以这名角色进入《不真实的世界》。
