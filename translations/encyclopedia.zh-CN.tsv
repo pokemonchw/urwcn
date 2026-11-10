@@ -1,8 +1,24 @@
 # GAME.NFO physical source range TAB complete Chinese semantic passage. Braced native topic names are links, not translated word fragments.
+# The native START index retains its individual source records and <br> markers; U+3000 is authored whitespace, distinct from ASCII tokenizer separators.
 4	主要主题索引：
-6-9	{WORLD}与传说：{WORLD}、{THE BEGINNING}、{THE INEHMO}、{THE FIRST WINTER}<br>
-11-17	自然：{TERRAIN}、{WEATHER}、{ANIMALS}、{PLANTS}、{MARKING OF TIME}<br>{CULTURES}：{CULTURES}、{NORTHERN PEOPLES}、{WESTERN PEOPLES}、{EASTERN PEOPLES}、{MYTHOLOGY}、{VILLAGES}<br>生计：{HUNTING}、{FISHING}、{TRADING}、{AGRICULTURE}<br>
-19-25	角色：{NUTRITION}、{SKILLS}、{PENALTIES}、{SPELLS}、{MOVING}<br>物品：{WEAPONS}、{CLOTHES}、{ARMOURS}、{ARMOUR MATERIALS}、{TOOLS}、{VALUABLES}<br>战斗：{MISSILE COMBAT}、{MELEE}、{INJURIES}<br>
+6	＊　世界背景　　　　　　　　　　　　　　　　　＊　神话传说<br>
+7	　．{WORLD}　　　　　　　　　　　　　　　　　　　　．{THE BEGINNING}<br>
+8	　　　　　　　　　　　　　　　　　　　　　　　　．{THE INEHMO}（人类）<br>
+9	　　　　　　　　　　　　　　　　　　　　　　　　．{THE FIRST WINTER}<br>
+11	＊　自然　　　　　　　　　　　　　　　　　　　＊　文化主题　　　　　　　　　　　　　　　　　＊　生计<br>
+12	　．{TERRAIN}　　　　　　　　　　　　　　　　　　　　．{CULTURES}　　　　　　　　　　　　　　　　　　　　．{HUNTING}<br>
+13	　．{WEATHER}　　　　　　　　　　　　　　　　　　　　．{NORTHERN PEOPLES}　　　　　　　　　　　　　　　　　　．{FISHING}<br>
+14	　．{ANIMALS}　　　　　　　　　　　　　　　　　　　　．{WESTERN PEOPLES}　　　　　　　　　　　　　　　　　　．{TRADING}<br>
+15	　．{PLANTS}　　　　　　　　　　　　　　　　　　　　．{EASTERN PEOPLES}　　　　　　　　　　　　　　　　　　．{AGRICULTURE}<br>
+16	　．{MARKING OF TIME}　　　　　　　　　　　　　　　　　．{MYTHOLOGY}<br>
+17	　　　　　　　　　　　　　　　　　　　　　　　　．{VILLAGES}<br>
+19	＊　角色　　　　　　　　　　　　　　　　　　　＊　物品　　　　　　　　　　　　　　　　　　　＊　战斗<br>
+20	　．{NUTRITION}　　　　　　　　　　　　　　　　　　　　．{WEAPONS}　　　　　　　　　　　　　　　　　　　　．{MISSILE COMBAT}<br>
+21	　．{SKILLS}　　　　　　　　　　　　　　　　　　　　．{CLOTHES}　　　　　　　　　　　　　　　　　　　　．{MELEE}<br>
+22	　．{PENALTIES}　　　　　　　　　　　　　　　　．{ARMOURS}　　　　　　　　　　　　　　　　　　　　．{INJURIES}<br>
+23	　．{SPELLS}　　　　　　　　　　　　　　　　　　　　．{ARMOUR MATERIALS}<br>
+24	　．{MOVING}　　　　　　　　　　　　　　　　　　　　．{TOOLS}<br>
+25	　　　　　　　　　　　　　　　　　　　　　　　　．{VALUABLES}<br>
 27-28	还可以浏览游戏维基，了解更多信息：<br>http://www.unrealworld.fi/wiki
 32-34	标为“编写中”的条目内容可能已经过时，或正在等待重写。<br>较新的信息可查阅游戏维基：<br>http://www.unrealworld.fi/wiki<br>
 40-42	游戏以公元800至1000年左右的芬兰铁器时代为主要原型。故事发生在{THE UNREAL WORLD}，这是一个以芬兰历史与民间传说为基础的架空世界。<br>

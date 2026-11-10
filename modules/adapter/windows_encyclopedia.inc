@@ -63,7 +63,11 @@ Status windows_culture_text(const std::string& key,std::vector<char>& encoded) {
     const TextRequest request{TextComponent::culture_text,"",key.c_str()};
     std::vector<char> utf8;
     auto status=service_text(ModuleId::semantic,text_op::translate,&request,sizeof(request),utf8);
-    return status==Status::ok ? codec(layout_op::encode_native,utf8.data(),encoded) : status;
+    if(status!=Status::ok)return status;
+    // This table always contains Chinese display labels. F5 restores it while
+    // the native UI is still English, before Chinese is enabled again.
+    const CodecRequest encoding{utf8.data()};
+    return service_text(ModuleId::layout,layout_op::encode_native,&encoding,sizeof(encoding),encoded);
 }
 Status initialize_windows_encyclopedia() {
     struct Link { const char* name;const char* key; };

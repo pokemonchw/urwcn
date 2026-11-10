@@ -59,26 +59,26 @@ culture.topic.encyclopedia_3.title	百科首页
 culture.link.3_0	百科首页
 culture.record.36	主要主题索引：
 culture.record.38	
-culture.record.80	{WORLD}与传说：{WORLD}、{THE BEGINNING}、{THE INEHMO}、{THE FIRST WINTER}<br>
-culture.record.127	
-culture.record.184	
-culture.record.234	
+culture.record.80	＊　世界背景　　　　　　　　　　　　　　　　　＊　神话传说<br>
+culture.record.127	　．{WORLD}　　　　　　　　　　　　　　　　　　　　．{THE BEGINNING}<br>
+culture.record.184	　　　　　　　　　　　　　　　　　　　　　　　　．{THE INEHMO}（人类）<br>
+culture.record.234	　　　　　　　　　　　　　　　　　　　　　　　　．{THE FIRST WINTER}<br>
 culture.record.236	
-culture.record.302	自然：{TERRAIN}、{WEATHER}、{ANIMALS}、{PLANTS}、{MARKING OF TIME}<br>{CULTURES}：{CULTURES}、{NORTHERN PEOPLES}、{WESTERN PEOPLES}、{EASTERN PEOPLES}、{MYTHOLOGY}、{VILLAGES}<br>生计：{HUNTING}、{FISHING}、{TRADING}、{AGRICULTURE}<br>
-culture.record.367	
-culture.record.432	
-culture.record.497	
-culture.record.566	
-culture.record.609	
-culture.record.651	
+culture.record.302	＊　自然　　　　　　　　　　　　　　　　　　　＊　文化主题　　　　　　　　　　　　　　　　　＊　生计<br>
+culture.record.367	　．{TERRAIN}　　　　　　　　　　　　　　　　　　　　．{CULTURES}　　　　　　　　　　　　　　　　　　　　．{HUNTING}<br>
+culture.record.432	　．{WEATHER}　　　　　　　　　　　　　　　　　　　　．{NORTHERN PEOPLES}　　　　　　　　　　　　　　　　　　．{FISHING}<br>
+culture.record.497	　．{ANIMALS}　　　　　　　　　　　　　　　　　　　　．{WESTERN PEOPLES}　　　　　　　　　　　　　　　　　　．{TRADING}<br>
+culture.record.566	　．{PLANTS}　　　　　　　　　　　　　　　　　　　　．{EASTERN PEOPLES}　　　　　　　　　　　　　　　　　　．{AGRICULTURE}<br>
+culture.record.609	　．{MARKING OF TIME}　　　　　　　　　　　　　　　　　．{MYTHOLOGY}<br>
+culture.record.651	　　　　　　　　　　　　　　　　　　　　　　　　．{VILLAGES}<br>
 culture.record.653	
-culture.record.716	角色：{NUTRITION}、{SKILLS}、{PENALTIES}、{SPELLS}、{MOVING}<br>物品：{WEAPONS}、{CLOTHES}、{ARMOURS}、{ARMOUR MATERIALS}、{TOOLS}、{VALUABLES}<br>战斗：{MISSILE COMBAT}、{MELEE}、{INJURIES}<br>
-culture.record.789	
-culture.record.853	
-culture.record.920	
-culture.record.971	
-culture.record.1011	
-culture.record.1055	
+culture.record.716	＊　角色　　　　　　　　　　　　　　　　　　　＊　物品　　　　　　　　　　　　　　　　　　　＊　战斗<br>
+culture.record.789	　．{NUTRITION}　　　　　　　　　　　　　　　　　　　　．{WEAPONS}　　　　　　　　　　　　　　　　　　　　．{MISSILE COMBAT}<br>
+culture.record.853	　．{SKILLS}　　　　　　　　　　　　　　　　　　　　．{CLOTHES}　　　　　　　　　　　　　　　　　　　　．{MELEE}<br>
+culture.record.920	　．{PENALTIES}　　　　　　　　　　　　　　　　．{ARMOURS}　　　　　　　　　　　　　　　　　　　　．{INJURIES}<br>
+culture.record.971	　．{SPELLS}　　　　　　　　　　　　　　　　　　　　．{ARMOUR MATERIALS}<br>
+culture.record.1011	　．{MOVING}　　　　　　　　　　　　　　　　　　　　．{TOOLS}<br>
+culture.record.1055	　　　　　　　　　　　　　　　　　　　　　　　　．{VALUABLES}<br>
 culture.record.1057	
 culture.record.1129	还可以浏览游戏维基，了解更多信息：<br>http://www.unrealworld.fi/wiki
 culture.record.1161	
