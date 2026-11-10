@@ -436,6 +436,17 @@ void enter_component_paint(native_component_model::Handle handle,native_componen
         kind==Kind::action_button ? (action_key ? Scope::setup_exit : Scope::creation_button) :
         kind==Kind::compound_hint ? Scope::ancestors_select : Scope::text;
     Active context{component_paint_token(handle),scope,0,0,0,0,outline};
+    if(chinese_enabled && kind==Kind::button && model.source.native_source==0x124C3E &&
+       model.text.component==TextComponent::about_press_key) {
+        // User-authorized positioning exception for this About button only.
+        // Its panel has already consumed these actual native x/width inputs;
+        // reuse them on ordinary construction and existing cache repaint alike.
+        const auto& panel=native_component_model::get(native_component_model::current(
+            {model.source.owner,0x124848,static_cast<u32>(TextComponent::about_title)}));
+        const auto& input=std::get<native_component_model::PanelInputs>(panel.inputs);
+        context.centered=1;
+        context.center_x=input.origin.x.input+input.width.input/2;
+    }
     if(kind==Kind::hud_status_cell)
         active.push_back({component_paint_token(handle),Scope::hud_penalty,0,0,0,0,outline});
     // TextBlock paint passes the measured left edge to native 10E5A0.
@@ -847,8 +858,16 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         return lend_text(e,encoded,e.arguments[0],Scope::plain_button);
     }
     case about_button_width:
-        if(in(Scope::plain_button) || (native_name_input::contains_display(native_button::label(e))
-            && !std::strchr(native_button::label(e),'.'))) return native_button::width(e,result,metrics);
+        if(in(Scope::plain_button)) {
+            const auto status=native_button::width(e,result,metrics);
+            if(status!=Status::ok) return status;
+            const auto button=std::find_if(active.rbegin(),active.rend(),
+                [](const Active& scope){return scope.kind==Scope::plain_button;});
+            if(button->centered) native_button::center(e,button->center_x);
+            return Status::ok;
+        }
+        if(native_name_input::contains_display(native_button::label(e)) &&
+           !std::strchr(native_button::label(e),'.')) return native_button::width(e,result,metrics);
         break;
     case about_button_text:
         if(in(Scope::plain_button)) begin(e,Scope::text,e.arguments[2]);

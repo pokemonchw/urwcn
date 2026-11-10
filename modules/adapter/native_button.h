@@ -34,6 +34,14 @@ inline Status width(const NativeEvent& event,DispatchResult& result,Measure meas
     return Status::ok;
 }
 
+inline void center(const NativeEvent& event,std::int32_t center_x) {
+    // 1146DD has committed the native eight-unit tile count. The left and
+    // right caps each occupy seven units (114740 and 1147FE). 114716 reloads
+    // this original x local before any cap, tile or label is drawn.
+    const auto tiles=*pointer<std::int32_t>(event.frame->ebp-0x98);
+    *pointer<std::int32_t>(event.frame->ebp-0xA0)=center_x-(tiles*8+14)/2;
+}
+
 inline Status character(const NativeEvent& event) {
     // AFTER 1148E9's sprintf("%c"): retain its native local destination, but
     // replace the single transport byte with the complete encoded character.
