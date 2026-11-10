@@ -426,12 +426,14 @@ u64 component_paint_token(native_component_model::Handle handle) {
 void enter_component_paint(native_component_model::Handle handle,native_component_model::Kind kind,u32 outline) {
     using Kind=native_component_model::Kind;
     const auto& model=native_component_model::get(handle);
-    const bool action_key=kind==Kind::button && model.text.prefix.find('.')!=std::string::npos;
+    const bool action_key=(kind==Kind::button || kind==Kind::action_button) &&
+        model.text.prefix.find('.')!=std::string::npos;
     const auto scope=kind==Kind::panel || kind==Kind::legacy_panel || kind==Kind::title_strip ? Scope::titled_panel :
         kind==Kind::native_heading_band || kind==Kind::native_identity_heading ? Scope::titled_panel :
         kind==Kind::button ? (action_key ? Scope::setup_exit : Scope::plain_button) :
         kind==Kind::paragraph || kind==Kind::skill_help ? Scope::paragraph :
-        kind==Kind::centered_text ? Scope::hud_centered : kind==Kind::action_button ? Scope::creation_button :
+        kind==Kind::centered_text ? Scope::hud_centered :
+        kind==Kind::action_button ? (action_key ? Scope::setup_exit : Scope::creation_button) :
         kind==Kind::compound_hint ? Scope::ancestors_select : Scope::text;
     Active context{component_paint_token(handle),scope,0,0,0,0,outline};
     if(kind==Kind::hud_status_cell)
@@ -664,8 +666,9 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         if(e.id==about_version_format) status=formatted(e,TextComponent::about_version,ptr<char>(e.arguments[2]));
         if(e.id==about_copyright_format) status=formatted(e,TextComponent::about_copyright,ptr<char>(e.arguments[2]));
         if(e.id==about_publisher_format) status=formatted(e,TextComponent::about_publisher,nullptr);
-        if(e.id==about_button_character && (in(Scope::plain_button)
-            || native_name_input::contains_display(native_button::label(e)))) status=native_button::character(e);
+        if(e.id==about_button_character && !std::strchr(native_button::label(e),'.') &&
+           (in(Scope::plain_button) || native_name_input::contains_display(native_button::label(e))))
+            status=native_button::character(e);
         if(e.id==ancestors_page_format) {
             const auto value=std::to_string(static_cast<std::int32_t>(e.arguments[2]))+" / "+
                 std::to_string(static_cast<std::int32_t>(e.arguments[3]));

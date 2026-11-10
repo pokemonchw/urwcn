@@ -123,7 +123,8 @@ Status creation_complete_identity(const NativeEvent& e) {
 Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
     if(e.phase==NativePhase::after) {
-        if(e.id==about_button_character && in(Scope::creation_button)) return native_button::character(e);
+        if(e.id==about_button_character && in(Scope::creation_button) &&
+           !std::strchr(native_button::label(e),'.')) return native_button::character(e);
         handled=false;return Status::ok;
     }
     if(e.id>=creation_text_first && e.id<creation_text_first+std::size(creation_text_calls)) {
@@ -203,7 +204,7 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
         if(contains_display(ptr<char>(e.frame->ebp-0x404))) result.skip_original=1;
         return Status::ok;
     case setup_exit_width:
-        if(in(Scope::creation_button)) {
+        if(in(Scope::creation_button) && !std::strchr(ptr<char>(e.frame->edi),'.')) {
             render::Metrics measured{};const auto status=metrics(ptr<char>(e.frame->edi),measured);
             if(status!=Status::ok) return status;
             e.frame->eax=static_cast<u32>(measured.logical_width+10);result.skip_original=1;return Status::ok;
@@ -220,7 +221,9 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
         if(in(Scope::creation_button) && !std::strchr(native_button::label(e),'.')) return native_button::width(e,result,metrics);
         break;
     case about_button_advance:
-        if(in(Scope::creation_button)) {
+        // A dot separates the native keycap from its complete suffix. Its
+        // ASCII prefix keeps the same eight-unit advance as the cap tiles.
+        if(in(Scope::creation_button) && !std::strchr(native_button::label(e),'.')) {
             const auto* label=native_button::label(e);
             if(label[e.frame->ebx]=='<' || label[e.frame->ebx]=='>') {
                 e.frame->edx=*ptr<u32>(e.frame->ebp-0xA4);++e.frame->ebx;result.skip_original=1;return Status::ok;
@@ -228,7 +231,12 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
             return native_button::advance(e,result,metrics);
         }
         break;
-    case about_button_text: case setup_exit_text: case creation_button_highlight_1: case creation_button_highlight_2:
+    case about_button_text: case creation_button_highlight_1: case creation_button_highlight_2:
+        if(in(Scope::creation_button) && !std::strchr(native_button::label(e),'.')) {
+            begin(e,Scope::text,e.arguments[2]);return Status::ok;
+        }
+        break;
+    case setup_exit_text:
         if(in(Scope::creation_button)) {begin(e,Scope::text,e.arguments[2]);return Status::ok;}
         break;
     default:
