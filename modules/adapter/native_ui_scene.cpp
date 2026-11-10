@@ -259,6 +259,38 @@ struct InputView {
         if(menu) native_menu_component::release(menu);
     }
 };
+bool contains_source(Revision revision,native_text_resource::SourceKey source) {
+    const auto& container=containers.find(revision)->second;
+    if(container.parent && contains_source(container.parent,source)) return true;
+    for(const auto& child:container.children) {
+        if(child.source==source) return true;
+        if(child.kind==ComponentKind::cache_region &&
+            contains_source(regions.find(child.handle)->second.source,source)) return true;
+    }
+    return false;
+}
+void restore_native_source(Revision revision,const Child& missing,
+    const std::vector<Child>& construction,std::size_t successor) {
+    auto& container=containers.find(revision)->second;
+    if(container.background!=missing.source.owner) return;
+    if(container.parent) restore_native_source(container.parent,missing,construction,successor);
+    for(const auto& child:container.children) {
+        if(child.kind==ComponentKind::cache_region)
+            restore_native_source(regions.find(child.handle)->second.source,missing,construction,successor);
+    }
+    if(contains_source(revision,missing.source)) return;
+    // The original constructor has supplied these actual sibling identities.
+    // An old cache keeps its own frozen siblings; only the omitted component
+    // is inserted before the first already present native successor.
+    const auto following=std::find_if(container.children.begin(),container.children.end(),
+        [&](const Child& child) {
+            return std::any_of(construction.begin()+successor,construction.end(),
+                [&](const Child& original){return original.source==child.source;});
+        });
+    if(following!=container.children.end()) {
+        retain(missing);container.children.insert(following,missing);
+    }
+}
 Status install_renderer_sources(Revision revision,bool materialize_renderer) {
     const auto& container=containers.find(revision)->second;
     if(container.parent) {
@@ -415,6 +447,35 @@ void renderer_retired(native_text_resource::SourceKey key) {
 }
 Revision current() { return active_revision; }
 bool materializing() { return painting; }
+bool contains_source(native_text_resource::SourceKey source) {
+    return contains_source(active_revision,source);
+}
+Status rebuild_native_source(native_text_resource::SourceKey source,Status (*construct)()) {
+    const InputView input;
+    const auto previous=active_revision;
+    const auto background=native_root_component::current();
+    const auto rebuilding=next_revision++;
+    containers.emplace(rebuilding,Container{background,0,{}});
+    active_revision=rebuilding;
+    // Capture a real native construction, with its normal component hooks.
+    // No original Scene or cache source is replaced by this temporary owner.
+    auto status=native_root_component::paint_background(background);
+    if(status==Status::ok) status=construct();
+    active_revision=previous;
+    const auto& construction=containers.find(rebuilding)->second.children;
+    if(status==Status::ok) {
+        const auto recovered=std::find_if(construction.begin(),construction.end(),
+            [&](const Child& child){return child.source==source;});
+        const auto successor=static_cast<std::size_t>(recovered-construction.begin())+1;
+        for(const auto& [revision,container]:containers) {
+            if(revision!=rebuilding && container.background==background)
+                restore_native_source(revision,*recovered,construction,successor);
+        }
+    }
+    for(const auto& child:construction) release(child);
+    containers.erase(rebuilding);
+    return status;
+}
 void cache_saved(Slot slot) {
     if(painting) return;
     synchronize_root();
@@ -540,10 +601,22 @@ Status repaint() {
     native_root_component::activate(previous_background);
     return status;
 }
-Status language_changed() {
+Status language_changed(bool all_caches) {
     ++language_revision;
     const auto resource=native_culture_legend::language_changed();
-    return resource==Status::ok?repaint():resource;
+    if(resource!=Status::ok) return resource;
+    if(all_caches) {
+        for(const auto& [slot,revision]:caches) {
+            (void)revision;
+            const auto status=prepare_cache(slot,native_ui_cache_owners::surface(
+                static_cast<native_ui_cache_owners::Slot>(slot)));
+            if(status!=Status::ok) return status;
+        }
+        // Before the first native background constructor there is no Scene
+        // to materialize. The next constructor consumes the selected language.
+        if(!active_revision) return Status::ok;
+    }
+    return repaint();
 }
 Status prepare_cache(Slot slot,void* surface) {
     auto& cached_language=cache_languages.find(slot)->second;

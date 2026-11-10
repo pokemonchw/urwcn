@@ -14,6 +14,7 @@ Status UWCN_CALL install_hooks(const HookSpec*,u32);
 Status UWCN_CALL native_fragment(u32,u32);
 void dispatch(NativeEvent&,DispatchResult&);
 void service_control();
+void request_hotkey();
 bool install_control_imports();
 void UWCN_CALL log(const wchar_t*);
 bool initialize_modules();

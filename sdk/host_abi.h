@@ -44,6 +44,11 @@ struct DispatchResult {
 };
 inline constexpr u32 kNativeDispatch = 1;
 inline constexpr u32 kNativeInvalidate = 2;
+// Native UI lifecycle bridge: change the displayed language synchronously,
+// including native caches, and control whether the F10 language action exists.
+// Both operations accept one u32 (zero/nonzero); they do not change HostApi.
+inline constexpr u32 kNativeSetTranslation = 3;
+inline constexpr u32 kNativeTranslationAvailable = 4;
 inline constexpr u32 kModuleDependenciesChanged = 0xFFFF0001;
 
 struct HookSpec {

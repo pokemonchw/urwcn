@@ -50,9 +50,10 @@ abi1_retirement::RetirementRoutes retired_routes{};
 bool retired_for_publication{};
 bool chinese_enabled=true;
 bool intro_chinese=true;
+bool translation_available=true;
 
 enum Hook : u32 {
-    menu_scope=1, footer_initial, footer_loop, version_scope, menu_input,
+    menu_scope=1, footer_initial, footer_loop, version_scope, menu_input, menu_frame,
     menu_text=10, version_format, copyright_format, production_append, authors_append,
     version_text, production_paragraph, copyright_paragraph, authors_paragraph, paragraph_text,
     copyright_append, footer_logo, footer_panel,
@@ -193,7 +194,18 @@ Status service_text(ModuleId module,u32 operation,const void* input,u32 input_si
     output.resize(bytes);
     return Status::ok;
 }
+Status encode_parser_original(const char*,std::vector<char>&);
+Status decode_parser_original(const char*,std::string&);
 Status codec(u32 operation,const char* input,std::vector<char>& output) {
+    if(!chinese_enabled) {
+        if(operation==layout_op::encode_native) return encode_parser_original(input,output);
+        if(operation!=layout_op::decode_native) return Status::invalid;
+        std::string utf8;
+        const auto status=decode_parser_original(input,utf8);
+        if(status!=Status::ok) return status;
+        output.assign(utf8.begin(),utf8.end());output.push_back(0);
+        return Status::ok;
+    }
     CodecRequest request{input};
     return service_text(ModuleId::layout,operation,&request,sizeof(request),output);
 }
@@ -250,6 +262,14 @@ render::TextRequest render_request(const char* utf8,std::int32_t x,std::int32_t 
         10,9,0,0,outline_budget(),domain.width,domain.height};
 }
 Status metrics_at_outline(const char* encoded,u32 outline,render::Metrics& output) {
+    if(!chinese_enabled) {
+        // 10DDB0 advances every original native font8x10 byte by eight pixels.
+        // This is the original width contract, independent of translation fonts.
+        output={};
+        output.logical_width=static_cast<std::int32_t>(std::strlen(encoded))*8;
+        output.pixel_width=output.logical_width;
+        return Status::ok;
+    }
     std::vector<char> utf8;
     auto result=codec(layout_op::decode_native,encoded,utf8);
     if(result!=Status::ok) return result;
@@ -551,9 +571,12 @@ Status profile_name_error(const NativeEvent& e,DispatchResult& result,TextCompon
 
 #include "footer.inc"
 
-Status invalidate() {
-    const auto status=native_ui_scene::language_changed();
+Status invalidate(bool all_caches=false) {
+    const auto status=native_ui_scene::language_changed(all_caches);
     if(status!=Status::ok) return status;
+    // Revision zero precedes the first native background constructor. The
+    // chosen language applies to that construction; no Scene exists to present.
+    if(native_ui_scene::current()==0) return Status::ok;
     const bool menu_active=*at<u32>(0x5F54DF0)!=0;
     const bool menu_renderer=menu_active && *at<u32>(0x5F54B94)!=0;
     // D153C/D196C/D19B3 own this shared native input phase. The original input
@@ -620,7 +643,7 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     }
     const auto language_input=native_language_input::dispatch(e,result,host->image_base);
     if(language_input.handled) {
-        if(!language_input.toggle) return Status::ok;
+        if(!language_input.toggle || !translation_available) return Status::ok;
         chinese_enabled=!chinese_enabled;
         intro_chinese=chinese_enabled;
         return invalidate();
@@ -1034,7 +1057,7 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
             begin(e,Scope::text,e.arguments[2]);
         break;
     case outline_top: case outline_bottom: case outline_left: case outline_right: case foreground:
-        if(text_context() || native_name_input::contains_display(ptr<char>(e.arguments[0]))) {
+        if(chinese_enabled && (text_context() || native_name_input::contains_display(ptr<char>(e.arguments[0])))) {
             auto status=draw(e);
             if(status!=Status::ok) return status;
             result.skip_original=1;
@@ -1523,6 +1546,7 @@ Status UWCN_CALL initialize(const HostApi* api) {
         call(menu_input,0x125BE1,0xD1120,0),
         call(footer_initial,0x125AF5,0x1250E0,0),
         call(footer_loop,0x125BA3,0x1250E0,0),
+        call(menu_frame,0x125BC5,0x116270,5),
         call(version_scope,0x125BD7,0x124710,0),
         call(window_targets_rebuilt,0xD1E99,0x10ADB0,0),
         call(menu_text,0xD0367,0x10E5A0,3),
@@ -1581,11 +1605,35 @@ Status UWCN_CALL initialize(const HostApi* api) {
 }
 Status UWCN_CALL invoke(u32 operation,const void* input,u32 bytes,void* output,u32* output_bytes) {
     if(operation==kNativeInvalidate) return invalidate();
+    if(operation==kNativeSetTranslation || operation==kNativeTranslationAvailable) {
+        if(!input || bytes!=sizeof(u32)) return Status::invalid;
+        if(output_bytes) *output_bytes=0;
+        const auto value=*static_cast<const u32*>(input)!=0;
+        if(operation==kNativeTranslationAvailable) {
+            native_name_input::set_translation_available(value);
+            translation_available=value;
+            return Status::ok;
+        }
+        chinese_enabled=value;intro_chinese=value;
+        return invalidate(true);
+    }
     if(operation==kModuleDependenciesChanged) {
         if(!input || bytes!=sizeof(u32)) return Status::invalid;
         if(output_bytes) *output_bytes=0;
         const auto status=initialize_windows_encyclopedia();
         if(status!=Status::ok) return status;
+        const native_text_resource::SourceKey frame{native_root_component::current(),0x125BC5,
+            static_cast<u32>(TextComponent::load_character)};
+        if(in(Scope::menu_input) && !native_ui_scene::contains_source(frame)) {
+            // 125BA3..125BE1 is the original footer, frame, version and Menu
+            // construction. Its final CFFB0 CALL is already a resident boundary;
+            // no input wait, business action or enclosing local is re-entered.
+            const auto rebuilt=native_ui_scene::rebuild_native_source(frame,[]() {
+                return host->native_fragment(0x125BA3,0x125BE1);
+            });
+            if(rebuilt!=Status::ok) return rebuilt;
+            return invalidate(true);
+        }
         return invalidate();
     }
     if(operation!=kNativeDispatch || !input || bytes!=sizeof(NativeEvent) || !output_bytes) return Status::invalid;

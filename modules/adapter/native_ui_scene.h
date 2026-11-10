@@ -30,6 +30,12 @@ void footer_constructed(native_footer_component::Handle);
 void message_constructed(native_message_flow::Handle);
 Revision current();
 bool materializing();
+bool contains_source(native_text_resource::SourceKey);
+// Run one confirmed native constructor against this same root to recover a
+// previously omitted component. Its actual successor sources determine that
+// component's place in the existing Scene and native cache source graph.
+// Existing source instances, cached Menu records and cache owners stay intact.
+Status rebuild_native_source(native_text_resource::SourceKey,Status (*construct)());
 
 // The native cache owner freezes this source revision at its successful save.
 // The native cache still owns its SDL resource, rectangle and actual copy.
@@ -40,7 +46,7 @@ Status prepare_cache_restore(Slot,const native_ui_cache_owners::RestoreInput&,
     native_ui_cache_owners::PreparedRestore&);
 Status cache_restored(Slot,const native_ui_cache_owners::PreparedRestore&,int native_result);
 Status repaint();
-Status language_changed();
+Status language_changed(bool all_caches=false);
 Status prepare_cache(Slot,void* native_surface);
 
 std::vector<std::uint8_t> save();

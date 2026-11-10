@@ -1,4 +1,6 @@
-# UnReal World 汉化热重载设计
+# 不真实的世界汉化热重载设计
+
+2026-11-10 Windows Shift+F5 控制修订：第一次同步恢复原文并实际卸载五个翻译提供库，保留 Loader 和原文 Adapter 跟随原生 UI 生命周期，游戏可继续；第二次在停驻边界保存最新 Adapter 状态，并重新加载最新六库及中文。卸载态 F10 不会开启中文。本次包含驻留桥修改；旧运行桥没有原位自替换能力。具体源码、限制及交付状态见 [F5 生命周期记录](evidence/20261110-shift-f5-lifecycle.md)。本段取代下文历史版本的 F5、ABI 与交接位置描述。
 
 > Linux 当前协议：ABI 2 驻留桥使用同用户 AF_UNIX 通道和分阶段原生调用，统一队列已接入 `-Reload`。具体实现、ABI 1 迁移限制及交付状态见 [Linux 热更新记录](evidence/20261019-linux-hot-reload.md)。下文 Windows ABI 与历史方案不代替 Linux 的实现边界。
 

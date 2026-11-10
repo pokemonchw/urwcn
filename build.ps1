@@ -20,6 +20,8 @@ param(
     [switch]$Publish,
     [switch]$Reload,
     [int[]]$TargetPid = 0,
+    [string]$WinePrefix,
+    [string]$WinePath,
     [string]$PackageDirectory
 )
 $ErrorActionPreference = 'Stop'

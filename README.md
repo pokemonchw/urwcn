@@ -4,6 +4,10 @@
 
 URWCN 是 **Byayoi 同人社区**的《不真实的世界》（UnReal World）汉化作品。
 
+Windows 2026-11-10 主菜单木纹框丢失已修正：漏接的原生面板进入游戏组件生命周期，已打开主菜单的旧场景和缓存来源按真实原生构造顺序迁移。源码、队列编译、正式发布及当前 Wine 进程热加载均已完成，Adapter 第4代返回 Applied，无需重启；旧两件先移入 `回收/`。未操作游戏或运行测试，详见 [原生面板修正与热发布回执](docs/evidence/20261110-main-menu-native-frame.md)。
+
+Windows 2026-11-10 已补齐 **Shift+F5** 的卸载与重载：第一次恢复原文并卸载五个翻译提供库，保留 Loader 和原文界面生命周期桥，继续游戏；第二次加载最新六库并恢复中文。源码、队列编译及正式发布已完成，旧件已移入 `回收/`。本次含驻留桥变更，下一次从根 `uwcn_launcher.exe` 正常启动时加载；没有运行游戏或测试，详见 [F5 生命周期与交付回执](docs/evidence/20261110-shift-f5-lifecycle.md)。
+
 Windows 2026-11-10 已完成 3.89.1 / Steam Build `26139145` 的静态构建适配、统一队列编译和正式发布；同时保留 3.89 支持。目录选择后的指纹拒绝源于游戏更新，已按新版调用点与数据地址同步修正，继续使用根 `uwcn_launcher.exe`；未运行游戏或测试，详见 [3.89.1 适配及发布回执](docs/evidence/20261110-windows-3891-delivery.md)。
 
 Windows 2026-10-20 的启动修正已正式发布：消息 Hook `C70C` 改到完整 `MOV ECX` 边界；文化图例 11 行文字统一读取实际文字参数，修正把颜色当指针导致的闪退。旧文件先移入 `回收/`，继续使用根 `uwcn_launcher.exe`。本次仅离线分析用户转储，没有自行运行或测试；最新源码、编译和发布回执见 [文化图例文字参数修正](docs/evidence/20261020-culture-legend-text-argument-fix.md)，前一项见 [Hook 边界修正记录](docs/evidence/20261020-startup-native-hook-boundary-fix.md)。

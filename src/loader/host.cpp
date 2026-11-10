@@ -17,6 +17,8 @@ static std::wstring package_path;
 static std::recursive_mutex gate;
 static u32 active_calls=0;
 static bool enabled=true;
+static bool translation_unloaded=false;
+static u32 hotkey_requests=0;
 static DWORD game_thread=0;
 struct Module { HMODULE image=nullptr; const ModuleApi* table=nullptr; std::vector<std::uint8_t> state; u32 generation=1; };
 static std::array<Module,6> modules;
@@ -171,6 +173,70 @@ bool initialize_modules() {
 }
 static void release_candidates() { for(HANDLE file:candidate_files) CloseHandle(file); candidate_files.clear(); candidate_identity.clear(); }
 static std::wstring wide(const std::string& value);
+static bool retire_modules(u32 mask) {
+    for(u32 i=0;i<modules.size();++i) if(mask&(1u<<i)) {
+        auto& module=modules[i]; u32 size=0;
+        if(!module.table) continue; // A cancelled transaction retains its saved state.
+        const Status sizing=module.table->save_state(nullptr,&size);
+        if(sizing!=Status::ok && sizing!=Status::insufficient_buffer) { error_text=L"State sizing failed: "+std::wstring(names[i]); return false; }
+        module.state.resize(size);
+        if(size && module.table->save_state(module.state.data(),&size)!=Status::ok) { error_text=L"State save failed: "+std::wstring(names[i]); return false; }
+    }
+    enabled=false;
+    for(int i=5;i>=0;--i) if(mask&(1u<<i)) {
+        auto& module=modules[static_cast<std::size_t>(i)];
+        if(!module.image) continue;
+        module.table->shutdown(); module.table=nullptr;
+        if(!FreeLibrary(module.image)) { error_text=L"FreeLibrary failed: "+std::wstring(names[i]); return false; }
+        module.image=nullptr;
+    }
+    return true;
+}
+static bool restore_modules(u32 mask) {
+    // The native thread stays stopped until all selected providers and their
+    // saved native scopes have been restored in dependency order.
+    enabled=true;
+    for(u32 i=0;i<modules.size();++i) if(mask&(1u<<i)) {
+        if(!load_module(i,true)) { enabled=false; return false; }
+        ++modules[i].generation;
+    }
+    for(u32 i=0;i<modules.size();++i) {
+        u32 capacity=0;
+        if(invoke(static_cast<ModuleId>(i+1),kModuleDependenciesChanged,&mask,sizeof(mask),nullptr,&capacity)!=Status::ok) {
+            enabled=false; error_text=L"Module dependency refresh failed: "+std::wstring(names[i]); return false;
+        }
+    }
+    return true;
+}
+static bool translation_action(u32 operation,bool value) {
+    const u32 argument=value ? 1 : 0;
+    u32 bytes=0;
+    if(invoke(ModuleId::adapter,operation,&argument,sizeof(argument),nullptr,&bytes)==Status::ok) return true;
+    error_text=L"Native translation lifecycle operation failed: "+std::to_wstring(operation);
+    return false;
+}
+static bool unload_translation() {
+    // The bridge continues to follow the real native UI while translation is
+    // unloaded. No stopped-thread snapshot is replayed after original gameplay.
+    if(!translation_action(kNativeSetTranslation,false) ||
+       !translation_action(kNativeTranslationAvailable,false)) return false;
+    if(!retire_modules(31)) return false;
+    enabled=true;
+    translation_unloaded=true;
+    log(L"Shift+F5: translation unloaded (catalog, semantic, render, layout, main_menu); native UI lifecycle bridge remains active in original language.");
+    return true;
+}
+static bool reload_translation() {
+    // Save the bridge now: its source owners and native call tokens have kept
+    // advancing while the five translation providers were absent.
+    if(!retire_modules(32) || !restore_modules(63)) return false;
+    if(!translation_action(kNativeTranslationAvailable,true) ||
+       !translation_action(kNativeSetTranslation,true)) return false;
+    translation_unloaded=false;
+    log(L"Shift+F5: latest translation modules and native UI bridge reloaded; Chinese enabled.");
+    return true;
+}
+void request_hotkey() { ++hotkey_requests; }
 static bool prepare_transaction() {
     std::ifstream listing(std::filesystem::path(stage_path+L"\\candidate-files.tsv"),std::ios::binary);
     std::string line;
@@ -202,23 +268,7 @@ static bool prepare_transaction() {
         candidate_hash[i]=hash_bytes(bytes);
         if(candidate_hash[i].empty()) { error_text=L"Candidate hashing failed."; return false; }
     }
-    for(u32 i=0;i<modules.size();++i) if(change_mask&(1u<<i)) {
-        auto& module=modules[i]; u32 size=0;
-        if(!module.table) continue; // A cancelled transaction retains its saved state.
-        const Status sizing=module.table->save_state(nullptr,&size);
-        if(sizing!=Status::ok && sizing!=Status::insufficient_buffer) { error_text=L"State sizing failed."; return false; }
-        module.state.resize(size);
-        if(size && module.table->save_state(module.state.data(),&size)!=Status::ok) { error_text=L"State save failed."; return false; }
-    }
-    enabled=false;
-    for(int i=5;i>=0;--i) if(change_mask&(1u<<i)) {
-        auto& module=modules[static_cast<std::size_t>(i)];
-        if(!module.image) continue;
-        module.table->shutdown(); module.table=nullptr;
-        if(!FreeLibrary(module.image)) { error_text=L"FreeLibrary failed; module remains disabled."; return false; }
-        module.image=nullptr;
-    }
-    return true;
+    return retire_modules(change_mask);
 }
 static bool commit_transaction() {
     for(const auto& identity:candidate_identity) {
@@ -229,20 +279,7 @@ static bool commit_transaction() {
         std::vector<std::uint8_t> bytes;
         if(!read_bytes(module_path(package_path,i),bytes) || hash_bytes(bytes)!=candidate_hash[i] || !inspect_module(bytes,i+1)) { error_text=L"Published module differs from pinned candidate."; return false; }
     }
-    // Initialization occurs with the gate held. Only the initialized providers
-    // are callable; no native callback can observe a partially loaded group.
-    enabled=true;
-    for(u32 i=0;i<modules.size();++i) if(change_mask&(1u<<i)) {
-        if(!load_module(i,true)) { enabled=false; return false; }
-        ++modules[i].generation;
-    }
-    for(u32 i=0;i<modules.size();++i) {
-        u32 capacity=0;
-        if(invoke(static_cast<ModuleId>(i+1),kModuleDependenciesChanged,&change_mask,sizeof(change_mask),nullptr,&capacity)!=Status::ok) {
-            enabled=false; error_text=L"Module dependency refresh failed: "+std::wstring(names[i]); return false;
-        }
-    }
-    return true;
+    return restore_modules(change_mask);
 }
 void service_control() {
     if(GetCurrentThreadId()!=game_thread) return;
@@ -250,9 +287,21 @@ void service_control() {
     if(!lock.owns_lock() || active_calls!=0) return;
     {
         std::lock_guard<std::mutex> control(control_lock);
-        if(phase!=TransactionPhase::prepare_requested) return;
+        if(phase!=TransactionPhase::prepare_requested) {
+            while(hotkey_requests) {
+                --hotkey_requests;
+                error_text.clear();
+                if(!(translation_unloaded ? reload_translation() : unload_translation())) {
+                    log(error_text.c_str());
+                    return;
+                }
+            }
+            return;
+        }
     }
-    const bool prepared=prepare_transaction();
+    // An explicitly requested publication also resumes an unloaded translation
+    // group before applying its selected compatible module transaction.
+    const bool prepared=(!translation_unloaded || reload_translation()) && prepare_transaction();
     {
         std::lock_guard<std::mutex> control(control_lock);
         phase=prepared ? TransactionPhase::ready : TransactionPhase::failed;

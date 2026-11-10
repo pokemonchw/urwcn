@@ -112,7 +112,7 @@ std::string windows_encyclopedia_tokens(const char* input) {
     return words;
 }
 Status windows_culture_width(const char* input,std::int32_t& width) {
-    if(!windows_encyclopedia_line) {
+    if(!chinese_enabled || !windows_encyclopedia_line) {
         render::Metrics measured{};
         const auto status=native_name_input::measure(input,measured);
         width=measured.logical_width;return status;
@@ -162,7 +162,7 @@ Status windows_culture_paragraph(const NativeEvent& e,const std::string& key) {
 Status windows_culture_draw(const NativeEvent& e) {
     if(!windows_encyclopedia_native_consuming)return Status::ok;
     std::vector<char> encoded;
-    if(windows_encyclopedia_line) {
+    if(chinese_enabled && windows_encyclopedia_line) {
         const auto text=windows_culture_display(ptr<char>(e.arguments[0]));
         encoded.assign(text.begin(),text.end());encoded.push_back(0);
     } else {
@@ -252,7 +252,7 @@ u32 windows_encyclopedia_match(const NativeEvent& e) {
 }
 const char* __cdecl windows_encyclopedia_strstr(const char* input,const char* needle) {
     using Find=const char* (__cdecl *)(const char*,const char*);
-    if(!windows_encyclopedia_line||address(input)!=windows_encyclopedia_link_frame-0x388)
+    if(!chinese_enabled||!windows_encyclopedia_line||address(input)!=windows_encyclopedia_link_frame-0x388)
         return (*at<Find>(0x18C350))(input,needle);
     NativeFrame frame{};frame.ebp=windows_encyclopedia_link_frame;
     u32 args[]{address(input),address(needle)};
@@ -286,7 +286,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
                 [&](const WindowsUpperSource& value){return value.token==e.token;});
             if(source!=windows_encyclopedia_upper.end()) {
                 auto* output=ptr<char>(e.frame->eax);
-                for(std::size_t i=0;source->text[i];) {
+                for(std::size_t i=0;chinese_enabled && source->text[i];) {
                     if(windows_encyclopedia_scalar(reinterpret_cast<const unsigned char*>(source->text.c_str()+i))) {
                         output[i]=source->text[i];output[i+1]=source->text[i+1];i+=2;
                     }else ++i;
@@ -349,14 +349,14 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
     }
     case we_body:return windows_encyclopedia_body(e,result);
     case we_tokenize:
-        if(windows_encyclopedia_line) {
+        if(chinese_enabled && windows_encyclopedia_line) {
             const auto words=windows_encyclopedia_tokens(ptr<char>(e.frame->edx));
             std::vector<char> encoded(words.begin(),words.end());encoded.push_back(0);
             return lend_text(e,encoded,e.frame->edx,Scope::allocation);
         }
         return Status::ok;
     case we_upper_first:case we_upper_second:
-        if(windows_encyclopedia_native_consuming) {
+        if(chinese_enabled && windows_encyclopedia_native_consuming) {
             windows_encyclopedia_upper.push_back({e.token,ptr<char>(e.frame->ecx)});
             if(e.id==we_upper_second)windows_encyclopedia_link_frame=e.frame->ebp;
         }
@@ -366,7 +366,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         // Only CF is live across the following native JAE. Preserve its byte
         // length in ECX, while a complete two-byte scalar counts as text.
         e.frame->eflags=(e.frame->eflags&~1u)|
-            (e.frame->ecx<3&&!(windows_encyclopedia_line&&e.frame->ecx!=0)?1u:0u);
+            (e.frame->ecx<3&&!(chinese_enabled&&windows_encyclopedia_line&&e.frame->ecx!=0)?1u:0u);
         result.skip_original=1;
         return Status::ok;
     case we_word_fit:case we_pair_fit:
@@ -385,28 +385,28 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         return Status::ok;
     case we_word_text:case we_link_text:return windows_culture_draw(e);
     case we_space_text:
-        if(windows_encyclopedia_line) { e.frame->eax=0;result.skip_original=1; }
+        if(chinese_enabled && windows_encyclopedia_line) { e.frame->eax=0;result.skip_original=1; }
         else return windows_culture_draw(e);
         return Status::ok;
     case we_space_copy:
         // A transport scalar already carries its complete token boundary.
         // Keep native separators after ASCII tokens, including adjacent links,
         // without expanding every CJK scalar in the native 200-byte prefix.
-        if(windows_encyclopedia_line&&windows_encyclopedia_scalar(ptr<unsigned char>(e.frame->ebp-0x598))) {
+        if(chinese_enabled&&windows_encyclopedia_line&&windows_encyclopedia_scalar(ptr<unsigned char>(e.frame->ebp-0x598))) {
             e.frame->esi=*at<u32>(0xA225314);result.resume_rva=0x3DC3B;
         }
         return Status::ok;
     case we_link_second:
-        if(windows_encyclopedia_line) { e.frame->esi=address(reinterpret_cast<const void*>(windows_encyclopedia_strstr));result.skip_original=1; }
+        if(chinese_enabled && windows_encyclopedia_line) { e.frame->esi=address(reinterpret_cast<const void*>(windows_encyclopedia_strstr));result.skip_original=1; }
         return Status::ok;
     case we_link_first:case we_link_third:
-        if(windows_encyclopedia_line) { e.frame->eax=windows_encyclopedia_match(e);result.skip_original=1; }
+        if(chinese_enabled && windows_encyclopedia_line) { e.frame->eax=windows_encyclopedia_match(e);result.skip_original=1; }
         else { using Find=const char* (__cdecl *)(const char*,const char*);
             e.frame->eax=address((*at<Find>(0x18C350))(ptr<char>(e.arguments[0]),ptr<char>(e.arguments[1])));result.skip_original=1; }
         return Status::ok;
     case we_boundary_first:case we_boundary_second: {
         using Find=const char* (__cdecl *)(const char*,int);
-        e.frame->eax=windows_encyclopedia_line&&e.arguments[1]>=0x80?e.arguments[0]:
+        e.frame->eax=chinese_enabled&&windows_encyclopedia_line&&e.arguments[1]>=0x80?e.arguments[0]:
             address((*at<Find>(0x18C348))(ptr<char>(e.arguments[0]),e.arguments[1]));
         result.skip_original=1;return Status::ok;
     }

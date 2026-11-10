@@ -10,6 +10,8 @@ param(
     [switch]$Publish,
     [switch]$Reload,
     [int[]]$TargetPid = 0,
+    [string]$WinePrefix,
+    [string]$WinePath,
     [string]$PackageDirectory = (Join-Path $PSScriptRoot 'package')
 )
 $ErrorActionPreference = 'Stop'
@@ -30,6 +32,8 @@ $configuration = [ordered]@{
     Publish=[bool]$Publish
     Reload=[bool]$Reload
     TargetPid=$TargetPid
+    WinePrefix=$(if ($WinePrefix) { [IO.Path]::GetFullPath($WinePrefix) } else { '' })
+    WinePath=$(if ($WinePath) { [IO.Path]::GetFullPath($WinePath) } else { '' })
     PackageDirectory=[IO.Path]::GetFullPath($PackageDirectory)
 }
 $configurationText = $configuration | ConvertTo-Json -Compress
@@ -44,7 +48,7 @@ $stateMutex.WaitOne() | Out-Null
 try {
     if (Test-Path -LiteralPath $configurationFile) {
         $existing = Get-Content -LiteralPath $configurationFile -Raw
-        if ($existing.Trim() -ne $configurationText) { throw 'The active compile queue uses different Toolchain/CMakePath/CompilerPath/BuildDirectory/ModuleSourceDirectory/Publish/Reload/TargetPid/PackageDirectory. Wait for it to finish before changing these parameters.' }
+        if ($existing.Trim() -ne $configurationText) { throw 'The active compile queue uses different Toolchain/CMakePath/CompilerPath/BuildDirectory/ModuleSourceDirectory/Publish/Reload/TargetPid/WinePrefix/WinePath/PackageDirectory. Wait for it to finish before changing these parameters.' }
     } else { [IO.File]::WriteAllText($configurationFile,$configurationText,[Text.UTF8Encoding]::new($false)) }
     [IO.File]::WriteAllText((Join-Path $queue "pending/$requestId.json"),($request | ConvertTo-Json -Depth 8),[Text.UTF8Encoding]::new($false))
 } finally { $stateMutex.ReleaseMutex() }
@@ -83,6 +87,7 @@ try {
                     BuildDirectory=$configuration.BuildDirectory; PackageDirectory=$configuration.PackageDirectory
                     ModuleSourceDirectory=$configuration.ModuleSourceDirectory
                     Publish=[bool]$Publish; Reload=[bool]$Reload; TargetPid=$TargetPid; BatchId=$batchId
+                    WinePrefix=$configuration.WinePrefix; WinePath=$configuration.WinePath
                 }
                 if (!$fullGraph) { $options.Module=$modules }
                 & (Join-Path $PSScriptRoot 'cmake/build-once.ps1') @options *>&1 | Tee-Object -FilePath $log
@@ -92,7 +97,7 @@ try {
                 $failure | Out-File -LiteralPath $log -Append -Encoding utf8
             } finally { Remove-Item Env:UWCN_COMPILE_BATCH }
             foreach ($entry in $requests) {
-                $result = [ordered]@{ RequestId=$entry.RequestId; BatchId=$batchId; Success=$success; Error=$failure; Modules=$modules; FullGraph=$fullGraph; Toolchain=$Toolchain; CompilerPath=$configuration.CompilerPath; BuildDirectory=$configuration.BuildDirectory; ModuleSourceDirectory=$configuration.ModuleSourceDirectory; Log=$log; PublishRequested=[bool]$Publish; ReloadRequested=[bool]$Reload; TargetPid=$TargetPid; CompletedAt=[DateTimeOffset]::UtcNow.ToString('o') }
+                $result = [ordered]@{ RequestId=$entry.RequestId; BatchId=$batchId; Success=$success; Error=$failure; Modules=$modules; FullGraph=$fullGraph; Toolchain=$Toolchain; CompilerPath=$configuration.CompilerPath; BuildDirectory=$configuration.BuildDirectory; ModuleSourceDirectory=$configuration.ModuleSourceDirectory; Log=$log; PublishRequested=[bool]$Publish; ReloadRequested=[bool]$Reload; TargetPid=$TargetPid; WinePrefix=$configuration.WinePrefix; WinePath=$configuration.WinePath; CompletedAt=[DateTimeOffset]::UtcNow.ToString('o') }
                 $resultPath=Join-Path $queue "results/$($entry.RequestId).json"
                 $resultTemporary="$resultPath.tmp"
                 [IO.File]::WriteAllText($resultTemporary,($result | ConvertTo-Json -Depth 8),[Text.UTF8Encoding]::new($false))

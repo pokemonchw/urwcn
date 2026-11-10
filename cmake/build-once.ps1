@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string[]]$Module,[string]$Toolchain,[string]$CMakePath,[string]$CompilerPath,[string]$BuildDirectory,[string]$ModuleSourceDirectory,
-    [switch]$Publish,[switch]$Reload,[int[]]$TargetPid = 0,[string]$PackageDirectory,[string]$BatchId
+    [switch]$Publish,[switch]$Reload,[int[]]$TargetPid = 0,[string]$WinePrefix,[string]$WinePath,[string]$PackageDirectory,[string]$BatchId
 )
 $ErrorActionPreference = 'Stop'
 if (!$BatchId -or $env:UWCN_COMPILE_BATCH -ne $BatchId) { throw 'Compilation must be submitted through root build.ps1 or build-queue.ps1.' }
@@ -40,6 +40,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "Incremental compilation failed with exit code $LASTEXITCODE" }
     if ($Publish) {
         $publishArguments = @{ Toolchain=$Toolchain; BuildDirectory=$BuildDirectory; PackageDirectory=$PackageDirectory; BatchId=$BatchId; Reload=[bool]$Reload; TargetPid=$TargetPid }
+        $publishArguments.WinePrefix=$WinePrefix; $publishArguments.WinePath=$WinePath
         if ($Module) { $publishArguments.Module=$Module }
         & (Join-Path $projectRoot 'publish.ps1') @publishArguments
     } else {

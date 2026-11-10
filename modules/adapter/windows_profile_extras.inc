@@ -29,15 +29,10 @@ void restore_windows_profile_error_source(const void* bytes) {
 bool windows_season_drawing;
 bool windows_attributes_drawing;
 Status windows_title_metrics(const char* input,render::Metrics& measured) {
-    std::vector<char> encoded,utf8;
-    auto status=native_name_input::display(input,encoded);
+    std::vector<char> encoded;
+    const auto status=native_name_input::display(input,encoded);
     if(status!=Status::ok)return status;
-    status=codec(layout_op::decode_native,encoded.data(),utf8);
-    if(status!=Status::ok)return status;
-    auto request=render_request(utf8.data(),0,0,0);
-    request.outline=1; // These native title calls all pass shadow=1.
-    u32 bytes=sizeof(measured);
-    return host->invoke(ModuleId::render,render::op::measure,&request,sizeof(request),&measured,&bytes);
+    return metrics_at_outline(encoded.data(),1,measured); // Native title calls pass shadow=1.
 }
 struct WindowsProfileField { u32 site; TextComponent component; };
 constexpr WindowsProfileField windows_attribute_panels[]{

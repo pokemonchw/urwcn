@@ -7,13 +7,17 @@ param(
     [string]$PackageDirectory = (Join-Path $PSScriptRoot 'package'),
     [Parameter(Mandatory)][string]$BatchId,
     [switch]$Reload,
-    [int[]]$TargetPid = 0
+    [int[]]$TargetPid = 0,
+    [string]$WinePrefix,
+    [string]$WinePath
 )
 $ErrorActionPreference = 'Stop'
 if ($env:UWCN_COMPILE_BATCH -ne $BatchId) { throw 'Formal publication belongs to the root compile queue batch.' }
 $PackageDirectory = [IO.Path]::GetFullPath($PackageDirectory)
 $formalRoot = Split-Path -Parent $PackageDirectory
 $targetLinux = $Toolchain -eq 'Linux'
+$wineControl = $IsLinux -and !$targetLinux -and $Reload -and $WinePrefix -and $WinePath
+if ([bool]$WinePrefix -ne [bool]$WinePath) { throw 'Wine publication requires both WinePrefix and WinePath.' }
 $launcherName = if ($targetLinux) { 'uwcn_launcher' } else { 'uwcn_launcher.exe' }
 $retiredLauncherName = if ($targetLinux) { 'uwcn_launcher.exe' } else { 'uwcn_launcher' }
 if ($formalRoot -ne [IO.Path]::GetFullPath($PSScriptRoot) -or (Split-Path -Leaf $PackageDirectory) -ne 'package') { throw "Formal publication is restricted to root $launcherName and package/." }
@@ -120,7 +124,42 @@ $candidateLines = [Collections.Generic.List[string]]::new()
 $candidateLines.Add('UWCN_CANDIDATE_V1')
 foreach ($file in $files | Where-Object { $_.Relative -ne $launcherName }) { $candidateLines.Add("$($file.Hash)`t$($file.Relative)") }
 [IO.File]::WriteAllLines((Join-Path $stage 'candidate-files.tsv'),$candidateLines,[Text.UTF8Encoding]::new($false))
+function Send-WineControl([int]$ProcessId,[string]$Command) {
+    # This is the existing Mono interpreter shipped by the explicitly selected
+    # Proton distribution. No control executable is compiled or installed.
+    $wineFiles = Split-Path -Parent (Split-Path -Parent $WinePath)
+    $interpreter = Join-Path $wineFiles 'share/wine/mono/wine-mono-11.3.0/lib/mono/4.5/csharp.exe'
+    $source = [IO.File]::ReadAllText((Join-Path $PSScriptRoot 'cmake/wine-control.cs'))
+    $start = [Diagnostics.ProcessStartInfo]::new()
+    $start.FileName = $WinePath
+    $start.UseShellExecute = $false
+    $start.RedirectStandardOutput = $true
+    $start.RedirectStandardError = $true
+    $start.Environment['WINEPREFIX'] = $WinePrefix
+    $start.Environment['UWCN_WINE_CONTROL_PID'] = [string]$ProcessId
+    $start.Environment['UWCN_WINE_CONTROL_COMMAND'] = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Command))
+    $start.ArgumentList.Add($interpreter)
+    $start.ArgumentList.Add('-r:System.Core')
+    $start.ArgumentList.Add('-e')
+    $start.ArgumentList.Add($source)
+    $process = [Diagnostics.Process]::Start($start)
+    try {
+        $standardOutput = $process.StandardOutput.ReadToEndAsync()
+        $standardError = $process.StandardError.ReadToEndAsync()
+        $process.WaitForExit()
+        $output = $standardOutput.GetAwaiter().GetResult()
+        $diagnostic = $standardError.GetAwaiter().GetResult()
+        if ($process.ExitCode -ne 0) { throw "Wine control interpreter failed for Windows PID ${ProcessId}: $diagnostic$output" }
+        $prefix = 'UWCN_CONTROL_RECEIPT '
+        $receipts = @($output -split '\r?\n' | Where-Object { $_.StartsWith($prefix) })
+        if ($receipts.Count -ne 1) { throw "Wine control interpreter returned no unique receipt for Windows PID ${ProcessId}: $diagnostic$output" }
+        $response = $receipts[0].Substring($prefix.Length)
+        if (!$response) { throw 'Resident control channel closed without a receipt.' }
+        return $response
+    } finally { $process.Dispose() }
+}
 function Send-Control([int]$ProcessId,[string]$Command) {
+    if ($wineControl) { return Send-WineControl $ProcessId $Command }
     $socket = $null
     if ($targetLinux) {
         $socket = [Net.Sockets.Socket]::new([Net.Sockets.AddressFamily]::Unix,[Net.Sockets.SocketType]::Stream,[Net.Sockets.ProtocolType]::Unspecified)
@@ -169,7 +208,10 @@ try {
         $mask=0
         foreach ($name in $reloadModules) { $mask = $mask -bor (1 -shl [array]::IndexOf($allModules,$name)) }
         foreach ($target in $targets) {
-            $target.prepare_receipt=Send-Control $target.pid "PREPARE $transaction $mask $stage"
+            # This selected Wine prefix maps z: to /. Only PREPARE's path
+            # argument crosses from the host filesystem into Windows syntax.
+            $controlStage = if ($wineControl) { 'Z:' + [IO.Path]::GetFullPath($stage).Replace('/','\') } else { $stage }
+            $target.prepare_receipt=Send-Control $target.pid "PREPARE $transaction $mask $controlStage"
             if ($target.prepare_receipt -ne "ReadyToPublish $transaction") { throw "Resident prepare failed for PID $($target.pid): $($target.prepare_receipt)" }
             $target.ready=$true
         }

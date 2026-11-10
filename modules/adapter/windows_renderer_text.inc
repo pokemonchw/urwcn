@@ -60,7 +60,7 @@ Status draw_main_renderer(const NativeEvent& event) {
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=true;
     if(event.id>=renderer_leaf_first && event.id<renderer_leaf_first+5) {
-        if(event.phase==NativePhase::before &&
+        if(event.phase==NativePhase::before && chinese_enabled &&
            (in(Scope::hud_renderer_text) || in(Scope::native_renderer_resource) ||
             native_name_input::contains_display(ptr<char>(event.arguments[1])))) {
             const auto status=draw_main_renderer(event);
@@ -111,6 +111,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         break;
     default: handled=false; return Status::ok;
     }
+    if(!chinese_enabled) return Status::ok;
     if(!in(Scope::hud_renderer_text) && !in(Scope::native_renderer_resource) &&
         !native_name_input::contains_display(text)) return Status::ok;
     if(event.id==paragraph_space) {

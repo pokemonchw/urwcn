@@ -17,12 +17,51 @@ static Pump pump_events=nullptr,clear_error=nullptr;
 static Delay delay=nullptr;
 static Present present=nullptr;
 static Error get_error=nullptr;
-static int __cdecl poll_bridge(void* event) { service_control(); return poll_event(event); }
+static bool f5_consumed=false;
+template<class T> static T event_value(const unsigned char* event,u32 offset) {
+    T value;
+    std::memcpy(&value,event+offset,sizeof(value));
+    return value;
+}
+static bool consume_hotkey(void* raw) {
+    const auto* event=static_cast<const unsigned char*>(raw);
+    const auto type=event_value<u32>(event,0);
+    if(type==0x200) {
+        if(event[12]==13) f5_consumed=false;
+        return false;
+    }
+    if((type!=0x300 && type!=0x301) || event_value<u32>(event,20)!=0x4000003e) return false;
+    if(type==0x301) {
+        const bool consumed=f5_consumed;
+        f5_consumed=false;
+        return consumed;
+    }
+    const bool repeat=event[13]!=0;
+    // Native event drains can discard KEYUP; repeat=0 starts a new press.
+    if(!repeat) f5_consumed=false;
+    else if(f5_consumed) return true;
+    const auto modifiers=event_value<unsigned short>(event,24);
+    if(!(modifiers&0x0003) || (modifiers&0x0fc0)) return false;
+    f5_consumed=true;
+    if(!repeat) request_hotkey();
+    return true;
+}
+static int __cdecl poll_bridge(void* event) {
+    for(;;) {
+        service_control();
+        const int result=poll_event(event);
+        if(result<=0 || !event || !consume_hotkey(event)) return result;
+    }
+}
 static int __cdecl wait_bridge(void* event) {
     for(;;) {
         service_control(); clear_error();
         const int result=wait_timeout(event,16);
-        if(result || *get_error()) return result;
+        if(result) {
+            if(event && consume_hotkey(event)) continue;
+            return result;
+        }
+        if(*get_error()) return result;
     }
 }
 static int __cdecl timeout_bridge(void* event,int timeout) {
@@ -31,10 +70,34 @@ static int __cdecl timeout_bridge(void* event,int timeout) {
         service_control();
         const int remaining=timeout<0 ? 16 : std::max(0,timeout-static_cast<int>(GetTickCount64()-start));
         clear_error(); const int result=wait_timeout(event,std::min(16,remaining));
-        if(result || *get_error() || (timeout>=0 && GetTickCount64()-start>=static_cast<ULONGLONG>(timeout))) return result;
+        if(result) {
+            if(event && consume_hotkey(event)) {
+                service_control();
+                if(timeout>=0 && GetTickCount64()-start>=static_cast<ULONGLONG>(timeout)) return 0;
+                continue;
+            }
+            return result;
+        }
+        if(*get_error() || (timeout>=0 && GetTickCount64()-start>=static_cast<ULONGLONG>(timeout))) return result;
     }
 }
-static int __cdecl peep_bridge(void* events,int count,int action,u32 first,u32 last) { service_control(); return peep_events(events,count,action,first,last); }
+static int __cdecl peep_bridge(void* events,int count,int action,u32 first,u32 last) {
+    service_control();
+    const int result=peep_events(events,count,action,first,last);
+    // SDL_GETEVENT consumes events. ADD/PEEK keep their original queue semantics.
+    if(action!=2 || result<=0 || !events) return result;
+    auto* bytes=static_cast<unsigned char*>(events);
+    int kept=0;
+    // URW's D1050/D1BA9 advance its SDL2 event records by 0x38 bytes.
+    for(int index=0;index<result;++index) {
+        auto* event=bytes+index*0x38;
+        if(consume_hotkey(event)) continue;
+        if(kept!=index) std::memcpy(bytes+kept*0x38,event,0x38);
+        ++kept;
+    }
+    service_control();
+    return kept;
+}
 static void __cdecl pump_bridge() { service_control(); pump_events(); }
 static void __cdecl delay_bridge(u32 milliseconds) {
     if(milliseconds==0) { service_control(); delay(0); return; }

@@ -152,28 +152,39 @@ Status candidate_rectangle(const NativeEvent& event) {
     api.SetTextInputRect(&rectangle);
     return Status::ok;
 }
+void set_translation_available(bool available) {
+    state.committed=0;
+    if(!state.active) return;
+    if(available) api.StartTextInput();
+    else api.StopTextInput();
+}
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=true;
     switch(event.id) {
     case scope:
         if(event.phase==NativePhase::before) {
             state={1,0};
-            begin(event,Scope::text);
-            api.StartTextInput();
-        } else { state.active=0; api.StopTextInput(); }
+            if(translation_available) {
+                begin(event,Scope::text);
+                api.StartTextInput();
+            }
+        } else {
+            state.active=0;
+            if(translation_available) api.StopTextInput();
+        }
         return Status::ok;
     case commit:
-        if(state.active) {
+        if(translation_available && state.active) {
             // key_event has copied the true SDL_TEXTINPUT text to getkeystring.
             state.committed=1;
             result.resume_rva=0xd2083; // Native -2 return; getkey skips keysym.
         }
         return Status::ok;
     case stop_initial: case stop_modifiers:
-        if(state.active) result.resume_rva=event.id==stop_initial ? 0xd1c74 : 0xd1cf6;
+        if(translation_available && state.active) result.resume_rva=event.id==stop_initial ? 0xd1c74 : 0xd1cf6;
         return Status::ok;
     case edit_dispatch:
-        if(state.active && state.committed) {
+        if(translation_available && state.active && state.committed) {
             state.committed=0;
             const auto* text=at<unsigned char>(0x5f549b8);
             if(text[0]=='*' && !text[1]) {
@@ -198,7 +209,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         } else result.resume_rva=event.frame->ebx==8 ? 0x10f788 : 0x10f80e;
         return Status::ok;
     case backspace:
-        if(state.active) {
+        if(translation_available && state.active) {
             auto* text=at<unsigned char>(0xa49b9a8);
             std::size_t last=0;
             for(std::size_t cursor=0;text[cursor];) {
@@ -211,7 +222,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         }
         return Status::ok;
     case erase_initial: case erase_backspace: case erase_random:
-        if(state.active) {
+        if(translation_available && state.active) {
             render::Metrics measured{};
             const auto status=measure(at<char>(0xa49b9a8),measured);
             if(status!=Status::ok) return status;
@@ -221,7 +232,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         }
         return Status::ok;
     case cursor:
-        return state.active && event.phase==NativePhase::before ? candidate_rectangle(event) : Status::ok;
+        return translation_available && state.active && event.phase==NativePhase::before ? candidate_rectangle(event) : Status::ok;
     case uppercase:
         if(const auto bytes=span(at<unsigned char>(0x5f54bc0)+event.frame->esi)) {
             event.frame->esi+=bytes-1;

@@ -63,13 +63,7 @@ Status hud_draw_renderer(const NativeEvent& e) {
     return host->invoke(ModuleId::render,render::op::draw_renderer,&request,sizeof(request),&measured,&bytes);
 }
 Status hud_scale_metrics(const char* encoded,render::Metrics& measured) {
-    std::vector<char> utf8;
-    auto status=codec(layout_op::decode_native,encoded,utf8);
-    if(status!=Status::ok) return status;
-    auto request=render_request(utf8.data(),0,0,0);
-    request.outline=1; // 08FF1E pushes the native scale label's shadow flag.
-    u32 bytes=sizeof(measured);
-    return host->invoke(ModuleId::render,render::op::measure,&request,sizeof(request),&measured,&bytes);
+    return metrics_at_outline(encoded,1,measured); // 08FF1E pushes shadow=1.
 }
 Status hud_identity_display(const NativeEvent& e,const char* original,std::vector<char>& encoded) {
     // FA3F2 formats "%s %s" from Plr.name and Plr.inhabitant. Choose_Name
@@ -240,8 +234,8 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     }
     case hud_renderer_top: case hud_renderer_bottom: case hud_renderer_left:
     case hud_renderer_right: case hud_renderer_foreground:
-        if(in(Scope::hud_renderer_text) || in(Scope::native_renderer_resource) ||
-            native_name_input::contains_display(ptr<char>(e.arguments[1]))) {
+        if(chinese_enabled && (in(Scope::hud_renderer_text) || in(Scope::native_renderer_resource) ||
+            native_name_input::contains_display(ptr<char>(e.arguments[1])))) {
             const auto status=hud_draw_renderer(e);
             if(status!=Status::ok) return status;
             result.skip_original=1;
