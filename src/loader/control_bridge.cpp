@@ -18,6 +18,10 @@ static Delay delay=nullptr;
 static Present present=nullptr;
 static Error get_error=nullptr;
 static bool f5_consumed=false;
+static bool input_return(u32 caller) {
+    u32 requested=0,bytes=sizeof(requested);
+    return invoke(ModuleId::adapter,kNativeInputReturn,&caller,sizeof(caller),&requested,&bytes)==Status::ok && requested!=0;
+}
 template<class T> static T event_value(const unsigned char* event,u32 offset) {
     T value;
     std::memcpy(&value,event+offset,sizeof(value));
@@ -47,15 +51,21 @@ static bool consume_hotkey(void* raw) {
     return true;
 }
 static int __cdecl poll_bridge(void* event) {
+    const auto caller=static_cast<u32>(reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-api.image_base);
     for(;;) {
         service_control();
+        if(input_return(caller)) return 0;
         const int result=poll_event(event);
         if(result<=0 || !event || !consume_hotkey(event)) return result;
     }
 }
 static int __cdecl wait_bridge(void* event) {
+    const auto caller=static_cast<u32>(reinterpret_cast<std::uintptr_t>(__builtin_return_address(0))-api.image_base);
     for(;;) {
         service_control(); clear_error();
+        // The reloadable Adapter decides whether this native caller needs
+        // to leave its wait. The resident bridge retains no refresh request.
+        if(input_return(caller)) return 0;
         const int result=wait_timeout(event,16);
         if(result) {
             if(event && consume_hotkey(event)) continue;

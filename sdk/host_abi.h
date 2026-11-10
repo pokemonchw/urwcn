@@ -49,6 +49,10 @@ inline constexpr u32 kNativeInvalidate = 2;
 // Both operations accept one u32 (zero/nonzero); they do not change HostApi.
 inline constexpr u32 kNativeSetTranslation = 3;
 inline constexpr u32 kNativeTranslationAvailable = 4;
+// Query the reloadable Adapter at a native SDL input return boundary.
+// Input: caller return RVA (u32). Output: return from this wait (u32).
+// The resident bridge owns no pending UI refresh state or page policy.
+inline constexpr u32 kNativeInputReturn = 5;
 inline constexpr u32 kModuleDependenciesChanged = 0xFFFF0001;
 
 struct HookSpec {

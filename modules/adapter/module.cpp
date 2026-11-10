@@ -1600,6 +1600,14 @@ Status UWCN_CALL initialize(const HostApi* api) {
     return status;
 }
 Status UWCN_CALL invoke(u32 operation,const void* input,u32 bytes,void* output,u32* output_bytes) {
+    if(operation==kNativeInputReturn) {
+        if(!input || bytes!=sizeof(u32) || !output_bytes) return Status::invalid;
+        if(!output || *output_bytes<sizeof(u32)) {
+            *output_bytes=sizeof(u32);return Status::insufficient_buffer;
+        }
+        *static_cast<u32*>(output)=native_language_redraw::input_return(*static_cast<const u32*>(input))?1u:0u;
+        *output_bytes=sizeof(u32);return Status::ok;
+    }
     if(operation==kNativeInvalidate) return invalidate();
     if(operation==kNativeSetTranslation || operation==kNativeTranslationAvailable) {
         if(!input || bytes!=sizeof(u32)) return Status::invalid;
