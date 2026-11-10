@@ -43,6 +43,11 @@ resources = defaultdict(lambda: {'sites': set(), 'functions': set()})
 for ref in refs:
     if ref['kind'] != 'data_candidate':
         continue
+    # Full quest constructor bodies also contain dialogue and business-message
+    # resources. Only the five proven map-location fields enter this screen's
+    # finite inventory; their complete raw references remain available below.
+    if ref['name'].startswith('quest_'):
+        continue
     value = canonical(int(ref['reference_va'], 16))
     if value is None:
         continue
@@ -63,6 +68,10 @@ for address in direct_commands:
 for source in ('Run', 'Wield'):
     resources[(0, source)]['functions'].add('hud_command_immediate')
     resources[(0, source)]['sites'].add('immediate ASCII copies; hud-command-callers.asm / main_command_description')
+for address, site in [(0x5b8774, '0054a71d'), (0x5bd418, '0054d08c'),
+                      (0x5be01c, '0054e223'), (0x5bef80, '0054f216'), (0x5c9450, '00555298')]:
+    resources[(address, literal(address))]['functions'].add('quest_map_location_field')
+    resources[(address, literal(address))]['sites'].add(site)
 
 # The decompiler identifies these native pointer tables explicitly. Their
 # pointed-to strings are sources; the pointer bytes themselves are not.
@@ -126,6 +135,8 @@ def consumer(functions, source):
         return '原生地名组合：芬兰语专名保持原值，英文释义进入world_place_lexemes既有词库'
     if any(name.startswith('map_quest_annotation') for name in functions):
         return 'hud.map任务句式+原生任务标题来源；E2850实际复制结果绑定'
+    if 'quest_map_location_field' in functions:
+        return 'hud.map.location四条固定说明和一条NPC说明语法；不据大写标题猜译'
     if any(name in functions for name in ('map_marker_edit', 'map_marker_selection', 'map_location_info')):
         return 'hud.map/culture.map标记控件；162300段落来源；姓名/玩家文字保留'
     if 'known_map_help_file' in functions:
@@ -157,4 +168,5 @@ with (evidence / '20261110-hud-command-callers.asm').open('w') as output:
     for index, line in enumerate(assembly):
         if re.search(r'call\s+0x4f90d0\b', line):
             output.write('\n'.join(assembly[max(0, index - 14):index + 3]) + '\n\n')
-print(f'Extracted {len(resources)} complete literal resources from 50 native functions; added {len(additions)} activity/skill command entries.')
+functions = re.findall(r'/\* \w+; VA [0-9a-f]+ \*/', (ANALYSIS / 'hud-map-ghidra.c').read_text())
+print(f'Extracted {len(resources)} complete literal resources from {len(functions)} native functions; added {len(additions)} activity/skill command entries.')

@@ -935,6 +935,11 @@ literal_va	source	functions	reference_sites_va	consumer_or_policy
 005b14f4	Attack (2nd weapon)	hud_command_direct_caller		hud.command完整指令词库；F91E7中文字形截短
 005b1508	Kick	hud_command_direct_caller,main_command_description	00564f5d	hud.command完整指令词库；F91E7中文字形截短
 005b1510	Punch	hud_command_direct_caller,main_command_description	00564f77,00564f81	hud.command完整指令词库；F91E7中文字形截短
+005b8774	Area where the wolf might dwell	quest_map_location_field	0054a71d	hud.map.location四条固定说明和一条NPC说明语法；不据大写标题猜译
+005bd418	Probable area where the robbers were met	quest_map_location_field	0054d08c	hud.map.location四条固定说明和一条NPC说明语法；不据大写标题猜译
+005be01c	Possible location of the shelter	quest_map_location_field	0054e223	hud.map.location四条固定说明和一条NPC说明语法；不据大写标题猜译
+005bef80	Trapping site from where the birds were stolen	quest_map_location_field	0054f216	hud.map.location四条固定说明和一条NPC说明语法；不据大写标题猜译
+005c9450	Assumed whereabouts of the %s	quest_map_location_field	00555298	hud.map.location四条固定说明和一条NPC说明语法；不据大写标题猜译
 005d79a0	beginning of 	moon_source	0055e951,0055e959,0055e965	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
 005d79b0	early 	moon_source	0055e977,0055e97e	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费
 005d79b8	late 	moon_source	0055e998,0055e99f	hud/world既有词库或MessageFlow消息来源；实际原生显示调用消费

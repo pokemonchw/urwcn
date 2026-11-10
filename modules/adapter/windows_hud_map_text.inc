@@ -55,6 +55,19 @@ MessageText quest_title(const char* uppercase) {
     source.original=message_source_utf8(uppercase); // Native toupper's result.
     return source;
 }
+MessageText quest_location(const char* original) {
+    // The sixteen stock quest types' complete constructors populate this
+    // field through four literal copies and 555298's one NPC format. The
+    // latter uses the same unowned-creature source as the type-35 title.
+    constexpr const char* labels[]{"Area where the wolf might dwell",
+        "Probable area where the robbers were met","Possible location of the shelter",
+        "Trapping site from where the birds were stolen"};
+    for(const auto* label:labels)
+        if(std::strcmp(original,label)==0) return message_source_lookup("hud.map.location",original);
+    constexpr char prefix[]="Assumed whereabouts of the ";
+    return native_message_source::format(message_source_lookup("hud.map.location","Assumed whereabouts of the %s"),
+        {message_source_value("npc",original+sizeof(prefix)-1)},{"%s"});
+}
 Status paragraph_source(const NativeEvent& e,u32 index) {
     if(!chinese_enabled) return Status::ok;
     const auto* original=ptr<char>(e.frame->edx);
@@ -216,7 +229,7 @@ Status dispatch(const NativeEvent& e,DispatchResult&,bool& handled) {
             arguments={quest_title(ptr<char>(e.arguments[2]))};syntax={"%s"};
             if(kind!=quest_informant) {
                 arguments.push_back(kind==quest_origin ? message_source_identity(ptr<char>(e.arguments[3])) :
-                    message_source_bound(ptr<char>(e.arguments[3])));syntax.push_back("%s");
+                    quest_location(ptr<char>(e.arguments[3])));syntax.push_back("%s");
             }
         }
         bind_format(e.arguments[0],native_message_source::format(

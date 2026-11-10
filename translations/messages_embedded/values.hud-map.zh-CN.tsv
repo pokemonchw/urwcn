@@ -1,4 +1,9 @@
 domain	source	target
+hud.map.location	Area where the wolf might dwell	狼可能栖息的区域
+hud.map.location	Probable area where the robbers were met	可能遇见劫匪的区域
+hud.map.location	Possible location of the shelter	庇护所可能所在的位置
+hud.map.location	Trapping site from where the birds were stolen	鸟被偷走的陷阱地点
+hud.map.location	Assumed whereabouts of the %s	%s可能所在的位置
 hud.command	Apply (use) a tool or container	使用工具或容器
 hud.command	Armour coverage	护甲覆盖
 hud.command	Armour coverage statistics	护甲覆盖统计

@@ -1,0 +1,6 @@
+setter_va	literal_va	field_va	source	consumer
+0054a71d	005b8774	0a81e3c8	Area where the wolf might dwell	E2BC6/E2CC6/E2FC2; hud.map.location
+0054d08c	005bd418	0a8c91a8	Probable area where the robbers were met	E2BC6/E2CC6/E2FC2; hud.map.location
+0054e223	005be01c	0a81e3c8	Possible location of the shelter	E2BC6/E2CC6/E2FC2; hud.map.location
+0054f216	005bef80	0a81e3c8	Trapping site from where the birds were stolen	E2BC6/E2CC6/E2FC2; hud.map.location
+00555298	005c9450	0a8d8388	Assumed whereabouts of the %s	EBP-74 native NPC description; same source as type-35 title; hud.map.location
