@@ -436,14 +436,8 @@ void enter_component_paint(native_component_model::Handle handle,native_componen
     Active context{component_paint_token(handle),scope,0,0,0,0,outline};
     if(kind==Kind::hud_status_cell)
         active.push_back({component_paint_token(handle),Scope::hud_penalty,0,0,0,0,outline});
-    if(kind==Kind::text_block) {
-        const auto& x=std::get<native_component_model::TextBlockInputs>(model.inputs).anchor.x;
-        using Source=native_component_model::LayoutSource;
-        if(x.source==Source::center_input || x.source==Source::center_native_i32) {
-            context.centered=1;
-            context.center_x=x.source==Source::center_input ? x.input : *at<std::int32_t>(x.rva);
-        }
-    }
+    // TextBlock paint passes the measured left edge to native 10E5A0.
+    // Its leaves already include that origin and the native outline offsets.
     active.push_back(context);
 }
 void leave_component_paint(native_component_model::Handle handle,native_component_model::Kind) {
