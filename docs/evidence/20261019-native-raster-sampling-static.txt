@@ -1,5 +1,11 @@
 2026-10-19: native integer raster sampling and font API scope
 
+2026-11-10 correction: the gradient's sample-and-fill pair destroys detail
+inside already rendered high-density glyphs. F68D5/F69C7 replacements are
+retired; the native message-gradient loop now consumes physical coordinates.
+See 20261110-message-gradient-density.md. This historical arithmetic review
+does not establish that logical-cell sampling preserves high-density text.
+
 Scope: source inspection and arithmetic derivation only. No game execution,
 test, assertion or compiled-product execution was performed for this record.
 

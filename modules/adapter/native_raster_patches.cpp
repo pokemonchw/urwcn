@@ -21,6 +21,7 @@ struct Registers {
 };
 struct Bindings {
     render::Surface** main_surface;
+    const render::Rect* message_rectangle;
     const std::uint8_t* glyph_masks;
     const u32* foreground;
     int (__cdecl *lock)(render::Surface*);
@@ -40,6 +41,14 @@ UWCN_NR_INTEGER bool logical_point(int x,int y) {
 UWCN_NR_INTEGER const u32* native_stack(const Registers* registers) {
     return reinterpret_cast<const u32*>(registers->saved_esp+4);
 }
+UWCN_NR_INTEGER int gradient_edge(int coordinate,int physical,int logical) {
+    return static_cast<int>((std::int64_t(coordinate)*physical+logical/2)/logical);
+}
+UWCN_NR_INTEGER int gradient_last(int coordinate,int physical,int logical) {
+    // The original gradient includes its last logical row/column. Extend its
+    // complete half-open physical cell, using the native canvas edge rule.
+    return gradient_edge(coordinate+1,physical,logical)-1;
+}
 UWCN_NR_INTEGER Target lock_target() {
     Target target=current_target();
     // Original 10BAD8/10BCC4/10BE07 check bit 2 and ignore the lock result.
@@ -58,11 +67,15 @@ UWCN_NR_INTEGER void unlock_target(Target target) {
 extern "C" {
 std::uintptr_t uwcn_nr_resume_606c3{};
 std::uintptr_t uwcn_nr_resume_607e4{};
-std::uintptr_t uwcn_nr_resume_f69c7{};
 std::uintptr_t uwcn_nr_resume_11454f{};
 std::uintptr_t uwcn_nr_resume_d7aa9{};
 std::uintptr_t uwcn_nr_resume_fc98f{};
-std::uintptr_t uwcn_nr_resume_f68d5{};
+render::Surface** uwcn_nr_main_surface{};
+std::uintptr_t uwcn_nr_gradient_rows{},uwcn_nr_gradient_end{};
+std::uintptr_t uwcn_nr_gradient_columns{},uwcn_nr_gradient_next_row{};
+std::uintptr_t uwcn_nr_resume_gradient_row{},uwcn_nr_resume_gradient_shade{};
+std::uintptr_t uwcn_nr_resume_gradient_read_x{},uwcn_nr_resume_gradient_read_y{};
+std::uintptr_t uwcn_nr_resume_gradient_write_x{},uwcn_nr_resume_gradient_write_y{};
 
 // Whole native functions: ECX/EDX are coordinates, stack arguments remain
 // caller-cleaned. Pixel/line/glyph have no consumed return value. Read returns
@@ -134,11 +147,6 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_write_607e4(Registers* registers) {
     // Replay the covered MOV ECX,[image+61BBB10], which changes no flags.
     registers->ecx=reinterpret_cast<u32>(target.surface);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_write_f69c7(Registers* registers) {
-    const Target target=current_target();
-    pixel(target,static_cast<int>(registers->edi),static_cast<int>(registers->ebx),registers->ecx);
-    registers->ecx=reinterpret_cast<u32>(target.surface);
-}
 UWCN_NR_HELPER void __cdecl uwcn_nr_write_11454f(Registers* registers) {
     pixel(register_target(registers->esi),static_cast<int>(registers->ebx),
           static_cast<int>(registers->edi),registers->edx);
@@ -152,9 +160,32 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_read_fc98f(Registers* registers) {
     // pixels + (pitch/4)*364 + 0xA70 samples (668,91); flags feed FC996 JZ.
     registers->edi=read_pixel(register_target(registers->esi),668,91);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_read_f68d5(Registers* registers) {
-    registers->eax=read_pixel(register_target(registers->ecx),
-                             static_cast<int>(registers->edi),static_cast<int>(registers->ebx));
+// These helpers only extend the actual F6510 gradient's loop operands. The
+// original F68D5 read, color comparisons, F69C7 write and SDL lock/unlock run
+// unchanged, once per physical pixel. No Mod pixel scan or retained draw data.
+UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_begin(Registers* registers) {
+    const auto* surface=*bindings.main_surface;
+    registers->ebx=gradient_edge(static_cast<int>(registers->ebx),surface->h,600);
+    registers->eax=gradient_last(static_cast<int>(registers->eax),surface->h,600);
+}
+UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_row(Registers* registers) {
+    const auto* surface=*bindings.main_surface;
+    registers->edi=gradient_edge(static_cast<int>(registers->edx)+5,surface->w,800);
+    registers->eax=gradient_last(static_cast<int>(registers->eax+registers->edx),surface->w,800);
+}
+UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_shade(Registers* registers) {
+    const auto* surface=*bindings.main_surface;
+    // Invert rounded physical cell edges. F684A..F6869 still calculate and
+    // clamp the original logical-row tint, even at a fractional output scale.
+    const auto logical_y=static_cast<int>(((std::uint64_t(registers->ebx)*2+1)*600-1)/
+                                        (std::uint64_t(surface->h)*2));
+    registers->eax=logical_y-bindings.message_rectangle->y-4;
+}
+UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_column_end(Registers* registers) {
+    registers->eax=gradient_last(static_cast<int>(registers->eax),(*bindings.main_surface)->w,800);
+}
+UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_row_end(Registers* registers) {
+    registers->eax=gradient_last(static_cast<int>(registers->eax),(*bindings.main_surface)->h,600);
 }
 }
 
@@ -188,10 +219,6 @@ UWCN_NR_ENTRY void uwcn_nr_entry_607e4() {
     __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_write_607e4)
                          "jmp *_uwcn_nr_resume_607e4\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_f69c7() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_write_f69c7)
-                         "jmp *_uwcn_nr_resume_f69c7\n\t");
-}
 UWCN_NR_ENTRY void uwcn_nr_entry_11454f() {
     __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_write_11454f)
                          // Covered TEST must produce the flags for 114555 JZ.
@@ -205,12 +232,49 @@ UWCN_NR_ENTRY void uwcn_nr_entry_fc98f() {
     __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_read_fc98f)
                          "jmp *_uwcn_nr_resume_fc98f\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_f68d5() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_read_f68d5)
-                         // ESP is now the native ESP. MOV preserves TEST flags.
-                         "movl %eax,0x18(%esp)\n\tjmp *_uwcn_nr_resume_f68d5\n\t");
+UWCN_NR_ENTRY void uwcn_nr_entry_gradient_begin() {
+    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_begin)
+                         "cmpl %eax,%ebx\n\tja 1f\n\t"
+                         "jmp *_uwcn_nr_gradient_rows\n\t"
+                         "1: jmp *_uwcn_nr_gradient_end\n\t");
+}
+UWCN_NR_ENTRY void uwcn_nr_entry_gradient_row() {
+    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_row)
+                         "jmp *_uwcn_nr_resume_gradient_row\n\t");
+}
+UWCN_NR_ENTRY void uwcn_nr_entry_gradient_shade() {
+    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_shade)
+                         "cltd\n\tjmp *_uwcn_nr_resume_gradient_shade\n\t");
+}
+UWCN_NR_ENTRY void uwcn_nr_entry_gradient_column_end() {
+    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_column_end)
+                         "cmpl %eax,%edi\n\tjbe 1f\n\t"
+                         "jmp *_uwcn_nr_gradient_next_row\n\t"
+                         "1: jmp *_uwcn_nr_gradient_columns\n\t");
+}
+UWCN_NR_ENTRY void uwcn_nr_entry_gradient_row_end() {
+    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_row_end)
+                         "cmpl %eax,%ebx\n\tjbe 1f\n\t"
+                         "jmp *_uwcn_nr_gradient_end\n\t"
+                         "1: jmp *_uwcn_nr_gradient_rows\n\t");
 }
 }
+
+// The four original signed bounds checks use this same native surface's
+// physical dimensions. PUSH/POP preserve EAX and the CMP flags reach the
+// original JL/JGE. The original negative-coordinate checks remain in place.
+#define UWCN_NR_GRADIENT_BOUND(name,offset,coordinate) \
+    extern "C" UWCN_NR_ENTRY void uwcn_nr_entry_gradient_##name() { \
+        __asm__ __volatile__( \
+            "pushl %eax\n\tmovl _uwcn_nr_main_surface,%eax\n\t" \
+            "movl (%eax),%eax\n\tcmpl " #offset "(%eax),%" #coordinate "\n\t" \
+            "popl %eax\n\tjmp *_uwcn_nr_resume_gradient_" #name "\n\t"); \
+    }
+UWCN_NR_GRADIENT_BOUND(read_x,8,edi)
+UWCN_NR_GRADIENT_BOUND(read_y,12,ebx)
+UWCN_NR_GRADIENT_BOUND(write_x,8,edi)
+UWCN_NR_GRADIENT_BOUND(write_y,12,ebx)
+#undef UWCN_NR_GRADIENT_BOUND
 
 namespace {
 struct Patch {
@@ -233,14 +297,22 @@ Patch patches[]={
     {0x606C3,7,0,uwcn_nr_entry_606c3,{0xC7,0x04,0x81,0,0,0,0}},
     // MOV [EDX+EAX*4],ECX; MOV ECX,[absolute main owner].
     {0x607E4,9,5,uwcn_nr_entry_607e4,{0x89,0x0C,0x82,0x8B,0x0D,0x10,0xBB,0x5B,0x06}},
-    {0xF69C7,9,5,uwcn_nr_entry_f69c7,{0x89,0x0C,0x82,0x8B,0x0D,0x10,0xBB,0x5B,0x06}},
     // MOV [ECX+EAX*4],EDX; TEST BYTE [ESI],2; resume at JZ.
     {0x11454F,6,0,uwcn_nr_entry_11454f,{0x89,0x14,0x81,0xF6,0x06,0x02}},
     // MOV EDI,[ECX+EAX+0xA70]; prior TEST flags must survive to JZ.
     {0xD7AA9,7,0,uwcn_nr_entry_d7aa9,{0x8B,0xBC,0x01,0x70,0x0A,0,0}},
     {0xFC98F,7,0,uwcn_nr_entry_fc98f,{0x8B,0xBC,0x01,0x70,0x0A,0,0}},
-    // MOV EAX,[EDX+EAX*4]; MOV [ESP+0x18],EAX; preserve prior TEST.
-    {0xF68D5,7,0,uwcn_nr_entry_f68d5,{0x8B,0x04,0x82,0x89,0x44,0x24,0x18}}
+    // Complete native message-gradient loop geometry; its original physical
+    // pixel reads/writes are no longer replaced with logical-cell samples.
+    {0xF67FD,8,0,uwcn_nr_entry_gradient_begin,{0x3B,0xD8,0x0F,0x87,0x16,0x02,0,0}},
+    {0xF682D,5,0,uwcn_nr_entry_gradient_row,{0x8D,0x7A,0x05,0x03,0xC2}},
+    {0xF6845,5,0,uwcn_nr_entry_gradient_shade,{0x8B,0x44,0x24,0x30,0x99}},
+    {0xF6889,6,0,uwcn_nr_entry_gradient_read_x,{0x81,0xFF,0x20,0x03,0,0}},
+    {0xF6899,6,0,uwcn_nr_entry_gradient_read_y,{0x81,0xFB,0x58,0x02,0,0}},
+    {0xF6984,6,0,uwcn_nr_entry_gradient_write_x,{0x81,0xFF,0x20,0x03,0,0}},
+    {0xF698C,6,0,uwcn_nr_entry_gradient_write_y,{0x81,0xFB,0x58,0x02,0,0}},
+    {0xF69F6,8,0,uwcn_nr_entry_gradient_column_end,{0x3B,0xF8,0x0F,0x86,0x72,0xFE,0xFF,0xFF}},
+    {0xF6A13,8,0,uwcn_nr_entry_gradient_row_end,{0x3B,0xD8,0x0F,0x86,0x05,0xFE,0xFF,0xFF}}
 };
 constexpr std::size_t patch_count=sizeof(patches)/sizeof(patches[0]);
 std::uintptr_t installed_image{};
@@ -310,15 +382,25 @@ Status install_raster_patches(std::uintptr_t image_base,HMODULE sdl) {
         std::memcpy(patch.replacement+1,&displacement,sizeof(displacement));
     }
     bindings={reinterpret_cast<render::Surface**>(owner),
+              reinterpret_cast<const render::Rect*>(image_base+0x61A8CE4),
               reinterpret_cast<const std::uint8_t*>(image_base+0xA1BBD28),
               reinterpret_cast<const u32*>(image_base+0xA211068),lock,unlock};
     uwcn_nr_resume_606c3=image_base+0x606CA;
     uwcn_nr_resume_607e4=image_base+0x607ED;
-    uwcn_nr_resume_f69c7=image_base+0xF69D0;
     uwcn_nr_resume_11454f=image_base+0x114555;
     uwcn_nr_resume_d7aa9=image_base+0xD7AB0;
     uwcn_nr_resume_fc98f=image_base+0xFC996;
-    uwcn_nr_resume_f68d5=image_base+0xF68DC;
+    uwcn_nr_main_surface=bindings.main_surface;
+    uwcn_nr_gradient_rows=image_base+0xF6805;
+    uwcn_nr_gradient_end=image_base+0xF6A1B;
+    uwcn_nr_gradient_columns=image_base+0xF6870;
+    uwcn_nr_gradient_next_row=image_base+0xF69FE;
+    uwcn_nr_resume_gradient_row=image_base+0xF6832;
+    uwcn_nr_resume_gradient_shade=image_base+0xF684A;
+    uwcn_nr_resume_gradient_read_x=image_base+0xF688F;
+    uwcn_nr_resume_gradient_read_y=image_base+0xF689F;
+    uwcn_nr_resume_gradient_write_x=image_base+0xF698A;
+    uwcn_nr_resume_gradient_write_y=image_base+0xF6992;
     installed_image=image_base;
     return write_all(true)?Status::ok:Status::failed;
 }
