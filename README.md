@@ -134,6 +134,8 @@ Windows 构建使用 PowerShell 7 和 i686 MinGW C++20 工具链；CMake 最低�
 
 ## 已接入范围与本地交付记录
 
+Windows“选择目标”提示框已补齐标题、两段鼠标／方向键说明和“退出／选择”按钮，保留原ESC、ENTER、方向键键帽及原生折行、背景和输入动作。源码、统一队列编译及正式热发布均完成：批次 `e32fd31af72c4cea8d5662f738669d70`、事务 `817b6b45379749dfaa5783184b09708d`，PID `364` 返回三模块Applied，旧五件先移入 `回收/`。完整静态依据及回执见[目标提示框记录](docs/evidence/20261110-target-help-native.md)，未自行运行游戏或测试，Applied不代替画面验收。
+
 Windows 角色创建完成页已补齐标题、完整入世提示、芬兰谚语与来源、继续按钮，姓名后的民族复用十文化译名，`Kaumolainen` 显示为“考莫人”。源码、统一队列编译及正式热发布已完成；批次 `1aec37e7384c47d1bbe74fd2bbe48fd8`、事务 `9b90629e213143a293c064c1849d57db`，PID `121728` 返回 Adapter 第4代 Applied，旧五件先移入 `回收/`。已打开页在下一次自然原生输入循环重绘，保留角色业务与原输入动作；未自行测试或验收画面。完整静态依据与交付回执见 [角色创建完成页记录](docs/evidence/20261019-character-creation-complete-native.md)。
 
 Windows 随机世界生成页的 Shift+F10 当前页刷新已修复，并完成统一队列编译和正式热发布：语言切换后沿原生输入返回重建标题、地图说明、按钮及缓存，保留世界、起点、缩放、图例开关和选择。批次 `13ea90c136d94ce594eb7e4687ed6e54`、事务 `559148cf474448cc8d925a41f28b47bf`，PID `121728` 返回 Adapter 第3代 Applied；旧正式 DLL 和清单先移入 `回收/`。未自行运行游戏或测试，Applied 不代替视觉验收；根因、静态依据和完整交付回执见 [世界页语言刷新记录](docs/evidence/20261019-windows-world-language-refresh.md)。

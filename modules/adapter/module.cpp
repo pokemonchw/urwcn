@@ -634,6 +634,9 @@ Status dispatch_windows_messages(const NativeEvent&,DispatchResult&,bool&);
 namespace windows_keyboard_help {
 Status dispatch(const NativeEvent&,DispatchResult&,bool&);
 }
+namespace windows_target_help {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+}
 namespace native_full_language {
 Status menu(const NativeEvent&,bool& rebuilt,u32& selection);
 Status dispatch(const NativeEvent&,DispatchResult&,bool& handled);
@@ -729,7 +732,8 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
     for(auto dispatch_extension:{dispatch_windows_profile,dispatch_windows_creation,
             dispatch_windows_skills,dispatch_windows_encyclopedia,dispatch_windows_renderer,
-            dispatch_windows_messages,windows_keyboard_help::dispatch,windows_inventory::dispatch}) {
+            dispatch_windows_messages,windows_keyboard_help::dispatch,windows_target_help::dispatch,
+            windows_inventory::dispatch}) {
         extension=dispatch_extension(e,result,handled);
         if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
     }
@@ -1398,6 +1402,7 @@ Status translate_culture_back(const char*,const char* topic,std::vector<char>& e
 #include "native_debug_input_language.inc"
 #include "native_text_edit_language.inc"
 #include "windows_keyboard_help.inc"
+#include "windows_target_help.inc"
 #include "windows_message_values.inc"
 #include "windows_message_crafted_items.inc"
 #include "windows_message_items.inc"
@@ -1783,6 +1788,7 @@ Status UWCN_CALL initialize(const HostApi* api) {
     native_debug_input_language::append_hooks(hooks);
     native_text_edit_language::append_hooks(hooks);
     windows_keyboard_help::append_hooks(hooks);
+    windows_target_help::append_hooks(hooks);
     native_menu_component::append_hooks(hooks);
     native_menu_storage::append_hooks(hooks);
     native_root_component::append_hooks(hooks);

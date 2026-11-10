@@ -99,6 +99,7 @@ enum class TextComponent : std::uint32_t {
     skills_help_record = 0xF05,
     spells_help_record = 0xF06,
     keyboard_help_text = 0xF07,
+    target_help_text = 0xF08,
     creation_complete_title = 0xF10, creation_complete_enter = 0xF11,
     creation_complete_proverb = 0xF12, creation_complete_source = 0xF13,
     creation_complete_press_key = 0xF14,

@@ -1,4 +1,9 @@
 # UWCn native UI component catalog. UTF-8, key TAB text. Native <br> is preserved.
+target_help.title	选择目标
+target_help.mouse	用鼠标点击目标位置，或
+target_help.cursor	用图示方向键／数字键移动光标来选择目标。
+target_help.exit	ESC.退出
+target_help.select	ENTER.选择
 game_course.title	选择游戏进程
 game_course.name.free	不真实的世界
 game_course.name.wild	荒野求生
