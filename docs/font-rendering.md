@@ -34,6 +34,8 @@
 
 使用 Windows 安装字体 Microsoft YaHei Bold 的 msyhbd.ttc，使用粗体文件的原生字面。固定 collection face index 为 0，SDL_ttf 样式为 regular，hinting 为 TTF_HINTING_NORMAL；不额外叠加模拟粗体。不复制系统字体，不新增字体包，不扫描其他字体或建立自动回退链。
 
+Wine/Proton 使用已安装的 `Windows/Fonts/msyhbd.ttf`，face index 为 0；本机静态字体元数据确认是 Microsoft YaHei，OS/2 字重 700。通过 ntdll 的 `wine_get_version` 导出区分环境，原生 Windows 继续使用上述 TTC。这是明确的平台文件选择，不是文件探测或字体回退。根因与交付见 [Proton 字体路径修正](evidence/20261110-proton-font-path.md)。
+
 Linux 已确认的字体为正式包现有 `SourceHanSans.ttc`，使用 face 22 **Source Han Sans SC Heavy**（原生字重 900），SDL_ttf 样式仍为 regular，不叠加模拟粗体。Linux 的 ASCII 由游戏位图字体绘制，轮廓字体的校准集只包含固定参考集和完整词库中的非 ASCII 字符；原生 ASCII 的实际度量与推进保持原义。字号和字重修正的静态依据、发布状态见 [Linux 字号与字重记录](evidence/20261019-linux-font-size-weight.md)。
 
 Linux 非 ASCII 字符的推进量为实测逻辑宽度加 **2 逻辑像素字距**，随原生目标坐标变换进入实际输出；软件面与 renderer 的测量、绘制共享这一规则。末字符也保留完整字符格，与原生逐字推进契约一致；原生整串宽度、居中、折行、按钮及光标使用相同度量。字距在显示度量边界提供，不向词库插入空格，也不改变原生段落的分词空格语义。字号与字重保持不变；该调整不代表原生描边的完整样式包络已经接入。依据及交付状态见 [Linux 字距修正记录](evidence/20261019-linux-glyph-spacing.md)。

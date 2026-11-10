@@ -137,7 +137,11 @@ bool FontEngine::initialize(const std::string& repertoire) {
     if(!api.initialize()) return false;
 #if defined(_WIN32)
     wchar_t directory[MAX_PATH]; if(!GetWindowsDirectoryW(directory,MAX_PATH)) return false;
-    const std::wstring file=std::wstring(directory)+L"\\Fonts\\msyhbd.ttc";
+    // Proton installs Microsoft YaHei Bold as an individual TrueType face;
+    // native Windows uses the collection. Both select the confirmed face 0.
+    const bool wine=GetProcAddress(GetModuleHandleW(L"ntdll.dll"),"wine_get_version")!=nullptr;
+    const std::wstring file=std::wstring(directory)+
+        (wine ? L"\\Fonts\\msyhbd.ttf" : L"\\Fonts\\msyhbd.ttc");
     if(!sha256(file,identity_)) return false;
     const int length=WideCharToMultiByte(CP_UTF8,0,file.c_str(),-1,nullptr,0,nullptr,nullptr);
     std::vector<char> path(length); WideCharToMultiByte(CP_UTF8,0,file.c_str(),-1,path.data(),length,nullptr,nullptr); path_=path.data();
