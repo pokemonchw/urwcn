@@ -412,6 +412,11 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
             reinterpret_cast<void (__fastcall *)(const char*,const void*)>(host->image_base+0x10C540)(
                 ptr<const char>(*at<u32>(0xF78BC)),ptr<const void>(event.frame->esp+0x40));
             event.frame->ebx=0;event.frame->esi=0;event.frame->edi=address(target_heading.c_str());
+            // F784F originally lends this same title to F7AD0's %s.
+            // F7CFD has since reused the slot for the saved display float;
+            // replaying the construction must restore both original inputs.
+            // F7CFD overwrites it again before the resumed input consumes it.
+            *ptr<u32>(event.frame->esp+0x24)=event.frame->edi;
             target_constructing=true;result.resume_rva=0xF78B1;
         }
         break;

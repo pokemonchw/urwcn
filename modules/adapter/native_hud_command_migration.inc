@@ -32,7 +32,9 @@ const char* target_title(const NativeEvent& event) {
         {0x11A72F,0x11A724},{0x11A94A,0x11A93F},{0x11BD27,0x11BD1C},
         {0x11C196,0x11C18B},{0x11FA7A,0x11FA6F},{0x11FD64,0x11FD59},
         {0x1322E5,0x1322DA},{0x132552,0x132547},{0x166C24,0x166C19},
-        {0x166FBF,0x166FB4},{0x170D7C,0x170D6D},{0x17DB9B,0x17DB90}
+        {0x166FBF,0x166FB4},{0x170D7C,0x170D6D},{0x17DB9B,0x17DB90},
+        // All three mode-4 debug producers explicitly accept an empty title.
+        {0x175145,0x17513A},{0x175172,0x175167},{0x17B35A,0x17B34F}
     };
     const auto& source=*std::find_if(std::begin(producers),std::end(producers),
         [caller](const auto& value){return value.caller==caller;});

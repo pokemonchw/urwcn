@@ -4,6 +4,82 @@ target_help.mouse	用鼠标点击目标位置，或
 target_help.cursor	用图示方向键／数字键移动光标来选择目标。
 target_help.exit	ESC.退出
 target_help.select	ENTER.选择
+target_help.creature.next	下一个生物，或 
+target_help.creature.previous	上一个生物
+target_help.action_keys	可使用图示的方向键／数字键选择方向，也可用鼠标点击位置。
+target_help.heading.the plants to harvest	选择要采集的植物
+target_help.prompt.select the plants to harvest	请选择要采集的植物。
+target_help.heading.location of the trap	选择陷阱位置
+target_help.prompt.select location of the trap	请选择陷阱位置。
+target_help.heading.a trap to trigger again	选择要重新触发的陷阱
+target_help.prompt.select a trap to trigger again	请选择要重新触发的陷阱。
+target_help.heading.where is your trap pit	选择陷阱坑的位置
+target_help.prompt.select where is your trap pit	请选择陷阱坑的位置。
+target_help.heading.select a trap	选择陷阱
+target_help.prompt.select select a trap	请选择陷阱。
+target_help.heading.where to set this net	选择下网位置
+target_help.prompt.select where to set this net	请选择下网位置。
+target_help.heading.plant to examine	选择要辨识的植物
+target_help.prompt.select plant to examine	请选择要辨识的植物。
+target_help.heading.what to deconstruct	选择要拆除的建筑
+target_help.prompt.select what to deconstruct	请选择要拆除的建筑。
+target_help.heading.from where to pick	选择拾取来源
+target_help.prompt.select from where to pick	请选择拾取来源。
+target_help.heading.water source or an animal to milk	选择水源或要挤奶的动物
+target_help.prompt.select water source or an animal to milk	请选择水源或要挤奶的动物。
+target_help.heading.where to push the items	选择物品推动方向
+target_help.prompt.select where to push the items	请选择物品推动方向。
+target_help.heading.location of construction	选择建造位置
+target_help.prompt.select location of construction	请选择建造位置。
+target_help.heading.where to make a hole	选择开洞位置
+target_help.prompt.select where to make a hole	请选择开洞位置。
+target_help.heading.tree to peel bark from	选择要剥皮的树
+target_help.prompt.select tree to peel bark from	请选择要剥皮的树。
+target_help.heading.a young spruce to fell	选择要砍伐的云杉幼树
+target_help.prompt.select a young spruce to fell	请选择要砍伐的云杉幼树。
+target_help.heading.a tree to fell	选择要砍伐的树
+target_help.prompt.select a tree to fell	请选择要砍伐的树。
+target_help.heading.trunk to chop	选择要截成木块的树干
+target_help.prompt.select trunk to chop	请选择要截成木块的树干。
+target_help.heading.trunk to make boards from	选择要制成木板的树干
+target_help.prompt.select trunk to make boards from	请选择要制成木板的树干。
+target_help.heading.block of wood to split	选择要劈开的木块
+target_help.prompt.select block of wood to split	请选择要劈开的木块。
+target_help.heading.trunk to carve into a log	选择要削成原木的树干
+target_help.prompt.select trunk to carve into a log	请选择要削成原木的树干。
+target_help.heading.where to climb	选择攀爬位置
+target_help.prompt.select where to climb	请选择攀爬位置。
+target_help.heading.where to look	选择观察位置
+target_help.prompt.select where to look	请选择观察位置。
+target_help.heading.preferred tree	选择要采集枝条的树
+target_help.prompt.select preferred tree	请选择要采集枝条的树。
+target_help.heading.where to build a fire	选择生火位置
+target_help.prompt.select where to build a fire	请选择生火位置。
+target_help.heading.where to kick	选择踢击方向
+target_help.prompt.select where to kick	请选择踢击方向。
+target_help.heading.where is your enemy	选择敌人位置
+target_help.prompt.select where is your enemy	请选择敌人位置。
+target_help.heading.where to tie	选择拴系位置
+target_help.prompt.select where to tie	请选择拴系位置。
+target_help.heading.creature to be tied	选择要拴住的动物
+target_help.prompt.select creature to be tied	请选择要拴住的动物。
+target_help.heading.mihin sihtaa	选择瞄准位置
+target_help.heading.direction where to look	选择观察方向
+target_help.prompt.select direction where to look	请选择观察方向。
+target_help.heading.door you wish to open	选择要打开的门
+target_help.prompt.select door you wish to open	请选择要打开的门。
+target_help.heading.door you wish to close	选择要关闭的门
+target_help.prompt.select door you wish to close	请选择要关闭的门。
+target_help.heading.work under construction	选择尚未完工的建筑
+target_help.prompt.select work under construction	请选择尚未完工的建筑。
+target_help.heading.carcass to skin	选择要剥皮的尸体
+target_help.prompt.select carcass to skin	请选择要剥皮的尸体。
+target_help.heading.carcass to cut	选择要分割的尸体
+target_help.prompt.select carcass to cut	请选择要分割的尸体。
+target_help.heading.where to set the trap	选择设置陷阱的位置
+target_help.prompt.select where to set the trap	请选择设置陷阱的位置。
+target_help.heading.where to dig a pit	选择挖坑位置
+target_help.prompt.select where to dig a pit	请选择挖坑位置。
 game_course.title	选择游戏进程
 game_course.name.free	不真实的世界
 game_course.name.wild	荒野求生

@@ -1,0 +1,38 @@
+source_va	producer_rva_chain	mode	original_heading	chinese_heading	original_prompt	chinese_prompt
+0058CCA0	00469A	02	the plants to harvest	选择要采集的植物	Select the plants to harvest	请选择要采集的植物。
+0058CFE4	005238	02	location of the trap	选择陷阱位置	Select location of the trap	请选择陷阱位置。
+0058D14C	0058EB	02	a trap to trigger again	选择要重新触发的陷阱	Select a trap to trigger again	请选择要重新触发的陷阱。
+0058D0C4	005996	02	where is your trap pit	选择陷阱坑的位置	Select where is your trap pit	请选择陷阱坑的位置。
+0058D434	00633D	02	select a trap	选择陷阱	Select select a trap	请选择陷阱。
+00592DEC	0316A9	02	where to set this net	选择下网位置	Select where to set this net	请选择下网位置。
+005943A8	03B556	12	plant to examine	选择要辨识的植物	Select plant to examine	请选择要辨识的植物。
+00596FF0	04606B	02	what to deconstruct	选择要拆除的建筑	Select what to deconstruct	请选择要拆除的建筑。
+00598768	04CF96	02	from where to pick	选择拾取来源	Select from where to pick	请选择拾取来源。
+005987B8	04D1BF	02	water source or an animal to milk	选择水源或要挤奶的动物	Select water source or an animal to milk	请选择水源或要挤奶的动物。
+0059615C	058F6B	06	where to push the items	选择物品推动方向	Select where to push the items	请选择物品推动方向。
+005AAFA4	101D67	02	location of construction	选择建造位置	Select location of construction	请选择建造位置。
+005ACF5C	11843E	02	where to make a hole	选择开洞位置	Select where to make a hole	请选择开洞位置。
+005ACFA4	1188BC	02	tree to peel bark from	选择要剥皮的树	Select tree to peel bark from	请选择要剥皮的树。
+005AD2B4	11959C	02	a young spruce to fell	选择要砍伐的云杉幼树	Select a young spruce to fell	请选择要砍伐的云杉幼树。
+005AD400	119849	02	a tree to fell	选择要砍伐的树	Select a tree to fell	请选择要砍伐的树。
+005AD51C	11A32A	02	trunk to chop	选择要截成木块的树干	Select trunk to chop	请选择要截成木块的树干。
+005AD554	11A509	02	trunk to make boards from	选择要制成木板的树干	Select trunk to make boards from	请选择要制成木板的树干。
+005AD5D0	11A72A	02	block of wood to split	选择要劈开的木块	Select block of wood to split	请选择要劈开的木块。
+005AD614	11A945	02	trunk to carve into a log	选择要削成原木的树干	Select trunk to carve into a log	请选择要削成原木的树干。
+005AD9C8	11BD22	02	where to climb	选择攀爬位置	Select where to climb	请选择攀爬位置。
+005ADB7C	11C191	06	where to look	选择观察位置	Select where to look	请选择观察位置。
+005AE250	11FA75	02	preferred tree	选择要采集枝条的树	Select preferred tree	请选择要采集枝条的树。
+005AE3F0	11FD5F	06	where to build a fire	选择生火位置	Select where to build a fire	请选择生火位置。
+005B13F4	1322E0	06	where to kick	选择踢击方向	Select where to kick	请选择踢击方向。
+005B1430	13254D	02	where is your enemy	选择敌人位置	Select where is your enemy	请选择敌人位置。
+005D95A0	166C1F	02	where to tie	选择拴系位置	Select where to tie	请选择拴系位置。
+005D95F4	166FBA	02	creature to be tied	选择要拴住的动物	Select creature to be tied	请选择要拴住的动物。
+005DA7B8	170D77	10	Mihin Sihtaa	选择瞄准位置		
+005DC5BC	17DB96	12	direction where to look	选择观察方向	Select direction where to look	请选择观察方向。
+0059EBAC	A313E → F8808	06	door you wish to open	选择要打开的门	Select door you wish to open	请选择要打开的门。
+0059EC00	A3387 → F8808	06	door you wish to close	选择要关闭的门	Select door you wish to close	请选择要关闭的门。
+005AAF8C	101D3C → F8B51	02	work under construction	选择尚未完工的建筑	Select work under construction	请选择尚未完工的建筑。
+005ADDF0	11DB2E → F8B51	02	carcass to skin	选择要剥皮的尸体	Select carcass to skin	请选择要剥皮的尸体。
+005ADE00	11DC3A → F8B51	02	carcass to cut	选择要分割的尸体	Select carcass to cut	请选择要分割的尸体。
+0058D214	59C7 → F8BC5	02	where to set the trap	选择设置陷阱的位置	Select where to set the trap	请选择设置陷阱的位置。
+005D9370	166281 → F8BC5	02	where to dig a pit	选择挖坑位置	Select where to dig a pit	请选择挖坑位置。
