@@ -63,6 +63,7 @@ void release(Handle handle);
 // must never be replaced by a source snapshot. A snapshot resolves its actual
 // logical input owner before installing any native bytes.
 void activate(Handle handle);
+const MenuModel& paint_records(Handle handle);
 // The original MENULIST.SAV fread has already installed its complete header
 // and rows. Adopt those bytes into that saved source's real InputOwner;
 // storage captures the departing owner before the first native read.

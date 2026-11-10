@@ -161,6 +161,8 @@ void activate(Handle handle) {
     if(previous) release(previous);
 }
 
+const MenuModel& paint_records(Handle handle) { return models.find(handle)->second.native; }
+
 void deactivate() {
     capture_active();
     const auto previous=active_handle;

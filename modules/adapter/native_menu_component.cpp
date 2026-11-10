@@ -224,12 +224,12 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         return Status::ok;
     case paint_begin:
         native_consuming=true;
-        native_menu_model::activate(native_menu_model::active());
+        if(!painting) native_menu_model::activate(native_menu_model::active());
         if(!painting) native_menu_model::capture_style(native_menu_model::active());
         return Status::ok;
     case paint_commit:
         *reinterpret_cast<u32*>(base+0x61BBAC4)=0;
-        native_menu_model::capture_into(native_menu_model::active());
+        if(!painting) native_menu_model::capture_into(native_menu_model::active());
         native_consuming=false;
         native_ui_scene::menu_constructed(active());
         result.resume_rva=0xD03FD;
@@ -319,7 +319,14 @@ void commit_row(Handle menu,u32 index,const native_text_resource::TextSource& so
 Status paint(Handle handle) {
     const auto previous=active();
     if(previous) retain(previous);
-    activate(handle);
+    // Materialize the frozen source with its own native records and bindings.
+    // Keep the live input owner untouched while native CFFB0 consumes it.
+    native_menu_model::MenuModel live;
+    std::memcpy(live.header.data(),reinterpret_cast<const void*>(base+0x5F54A20),live.header.size());
+    std::memcpy(live.rows.data(),reinterpret_cast<const void*>(base+rows_rva),live.rows.size());
+    const auto& records=native_menu_model::paint_records(handle);
+    std::memcpy(reinterpret_cast<void*>(base+0x5F54A20),records.header.data(),records.header.size());
+    std::memcpy(reinterpret_cast<void*>(base+rows_rva),records.rows.data(),records.rows.size());
     paint_result=Status::ok;
     using Paint=void (UWCN_CALL *)();
     const auto& style=native_menu_model::style(handle);
@@ -332,12 +339,10 @@ Status paint(Handle handle) {
     }
     painting=false;
     painting_source=0;
-    native_menu_model::capture_into(active());
+    std::memcpy(reinterpret_cast<void*>(base+0x5F54A20),live.header.data(),live.header.size());
+    std::memcpy(reinterpret_cast<void*>(base+rows_rva),live.rows.data(),live.rows.size());
     const auto status=paint_result;
-    if(previous) {
-        activate(previous);
-        release(previous);
-    } else deactivate();
+    if(previous) release(previous);
     return status;
 }
 
