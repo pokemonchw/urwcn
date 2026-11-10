@@ -308,8 +308,11 @@ CalibratedFont* FontEngine::font(double density,int line_height,int ink_height,i
             if(!sample_glyph(*f,glyph,a,b,ink)) { api.CloseFont(f->font); return nullptr; }
             if(!ink) continue;
             if(first) { top=a; bottom=b; first=false; } else { top=std::min(top,a); bottom=std::max(bottom,b); }
-            // Adding reference glyphs can only expand this candidate's union.
-            if(bottom-top>physical_ink || bottom-top+2*border>physical_line) { fits=false; break; }
+            // The ink budget describes one glyph, while the full repertoire
+            // shares a baseline inside the native 8x10 foreground cell.
+            // Native text calls apply their +/-1 outline outside that cell;
+            // reserving it inside the cell unnecessarily shrinks foregrounds.
+            if(b-a>physical_ink || bottom-top>physical_line) { fits=false; break; }
         }
         if(first || !fits) { api.CloseFont(f->font); continue; }
         f->top=top-border; f->bottom=bottom+border;
