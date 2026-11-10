@@ -41,6 +41,9 @@ struct SurfaceSource {
 SurfaceSource component_surface_source(const void* native_surface);
 u32 create_component_surface(const SurfaceSource&);
 void destroy_component_surface(u32 native_surface);
+// The actual 10F950 input return has retired its upload texture. Adopt only
+// that still-live editor's original surface/renderer before its full redraw.
+Status promote_text_field(u32& native_surface,u32& native_renderer);
 struct HudTarget {u32 surface,renderer,direction,marker;};
 Status create_component_hud_target(const SurfaceSource&,HudTarget&);
 void destroy_component_hud_target(const HudTarget&);

@@ -121,6 +121,7 @@ Surface* __cdecl create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 
     const bool marker_owner=windows_build::is_3891() && site==0xE3055;
     const bool map_info_owner=windows_build::is_3891() && site==0xE554D;
     const bool help_owner=site==0x103ABB || site==0x103BF6;
+    const bool text_field_owner=windows_build::is_3891() && site==0x10F9D0;
     const SurfaceSource neutral{flags,w,h,depth,r,g,b,a};
     const Scale component_scale{w,h,
         scoped::physical_rect({0,0,w,h},&canvas).w,
@@ -129,12 +130,12 @@ Surface* __cdecl create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 
         const Rect physical=scoped::physical_rect({0,0,w,h},&canvas);
         w=physical.w; h=physical.h;
     }
-    if(culture_owner || marker_owner || map_info_owner || help_owner) { w=component_scale.physical_width;h=component_scale.physical_height; }
+    if(culture_owner || marker_owner || map_info_owner || help_owner || text_field_owner) { w=component_scale.physical_width;h=component_scale.physical_height; }
     if(help_owner) help_upload_scale=component_scale;
     auto* result=api.CreateRGBSurface(flags,w,h,depth,r,g,b,a);
     if(result && (canvas_owner || fade_owner)) surfaces.emplace(result,canvas);
-    if(result && (culture_owner || marker_owner || map_info_owner || help_owner)) surfaces.emplace(result,component_scale);
-    if(result && (canvas_owner || help_owner)) surface_sources.emplace(result,neutral);
+    if(result && (culture_owner || marker_owner || map_info_owner || help_owner || text_field_owner)) surfaces.emplace(result,component_scale);
+    if(result && (canvas_owner || help_owner || text_field_owner)) surface_sources.emplace(result,neutral);
     return result;
 }
 Renderer* __cdecl create_software_renderer(Surface* surface) {
@@ -384,6 +385,28 @@ u32 create_component_surface(const SurfaceSource& source) {
 }
 void destroy_component_surface(u32 surface) {
     free_surface(reinterpret_cast<Surface*>(static_cast<std::uintptr_t>(surface)));
+}
+Status promote_text_field(u32& surface,u32& renderer) {
+    auto* original=reinterpret_cast<Surface*>(static_cast<std::uintptr_t>(surface));
+    if(scale(original)) return Status::ok;
+    // A 10F950 frame already waiting during this first compatible update owns
+    // the original unextended surface. 10F9B1..10F9CA confirms these exact
+    // constructor flags/depth/masks; its actual w/h are still logical here.
+    // The next 10FA19 iteration clears and reconstructs the whole field.
+    const SurfaceSource source{0,original->w,original->h,32,0,0,0,0};
+    const auto status=output_scale();if(status!=Status::ok) return status;
+    const auto extent=scoped::physical_rect({0,0,source.width,source.height},&canvas);
+    auto* replacement=api.CreateRGBSurface(source.flags,extent.w,extent.h,source.depth,
+        source.red_mask,source.green_mask,source.blue_mask,source.alpha_mask);
+    if(!replacement) return Status::failed;
+    surfaces.emplace(replacement,Scale{source.width,source.height,extent.w,extent.h});
+    surface_sources.emplace(replacement,source);
+    auto* replacement_renderer=create_software_renderer(replacement);
+    if(!replacement_renderer) {free_surface(replacement);return Status::failed;}
+    api.DestroyRenderer(reinterpret_cast<Renderer*>(static_cast<std::uintptr_t>(renderer)));
+    free_surface(original);
+    surface=address(replacement);renderer=address(replacement_renderer);
+    return Status::ok;
 }
 Status create_component_hud_target(const SurfaceSource& source,HudTarget& target) {
     target.surface=create_component_surface(source);

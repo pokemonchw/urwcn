@@ -204,8 +204,16 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=false;
     if(event.id==field_input) {
         handled=true;
+        if(windows_build::is_3891()) {
+            if(event.phase==NativePhase::before) native_name_input::activate_marker();
+            else {
+                const auto status=native_targets::promote_text_field(
+                    *ptr<u32>(event.frame->ebp-0x2c),*ptr<u32>(event.frame->ebp-0x28));
+                if(status!=Status::ok) return status;
+            }
+        }
         if(event.phase!=NativePhase::after || event.frame->eax!=static_cast<u32>(-2) ||
-           !native_language_redraw::pending(View::map)) return Status::ok;
+           native_name_input::state.committed || !native_language_redraw::pending(View::map)) return Status::ok;
         // The real 10F950 frame still owns its accepted ring buffer, native
         // surface/renderer, coordinates and native colour arguments. Its -2
         // branch will redraw that exact prompt and present from 10FA10.
@@ -216,7 +224,17 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         if(status==Status::ok) native_language_redraw::completed(View::map);
         return status;
     }
-    if(event.id==field_text) {handled=true;return Status::ok;}
+    if(event.id==field_text) {
+        handled=true;
+        if(event.phase==NativePhase::after) {end(event.token);return Status::ok;}
+        if(!windows_build::is_3891()) return Status::ok;
+        native_name_input::activate_marker();
+        if(!translation_available) return Status::ok;
+        std::vector<char> encoded;
+        const auto status=native_name_input::display(ptr<const char>(event.arguments[1]),encoded);
+        if(status!=Status::ok) return status;
+        return lend_text(event,encoded,event.arguments[1],Scope::hud_renderer_text,0);
+    }
     if(event.id==field_cursor_width && event.phase!=NativePhase::after) {
         handled=true;
         const auto* input=ptr<const char>(*ptr<const u32>(event.frame->ebp-0x40));

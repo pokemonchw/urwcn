@@ -238,7 +238,8 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     }
     case hud_renderer_top: case hud_renderer_bottom: case hud_renderer_left:
     case hud_renderer_right: case hud_renderer_foreground:
-        if(chinese_enabled && (in(Scope::hud_renderer_text) || in(Scope::native_renderer_resource) ||
+        if((chinese_enabled || in(Scope::profile_identity_unicode)) &&
+           (in(Scope::hud_renderer_text) || in(Scope::native_renderer_resource) ||
             native_name_input::contains_display(ptr<char>(e.arguments[1])))) {
             const auto status=hud_draw_renderer(e);
             if(status!=Status::ok) return status;

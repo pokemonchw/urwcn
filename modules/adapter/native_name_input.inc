@@ -1,12 +1,15 @@
-// Windows 3.89 native Choose_Name/getst/key_event boundaries. This file is
+// Windows native Choose_Name/getst, map text field and key_event boundaries. This file is
 // included after codec()/metrics(); it owns no UI layout or drawing cache.
-// Static instructions: docs/evidence/20261019-windows-chinese-input.md.
+// Static instructions: docs/evidence/20261019-windows-chinese-input.md and
+// docs/evidence/20261110-map-marker-chinese-input.md.
 namespace native_name_input {
 enum Hook : u32 {
     scope=0x5400,commit,stop_initial,stop_modifiers,edit_dispatch,backspace,
     erase_initial,erase_backspace,erase_random,cursor,uppercase,lowercase,path_capacity,
-    showtext_copy,renshowtext_copy,renderer_showtext_copy
+    showtext_copy,renshowtext_copy,renderer_showtext_copy,
+    marker_edit=0x5410,marker_cursor,marker_finished,marker_extent
 };
+// active: 1 = Choose_Name/getst, 2 = the native map-marker ring editor.
 struct State { u32 active{},committed{}; };
 State state{};
 struct Api {
@@ -145,8 +148,18 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(instruction(showtext_copy,0x10e5d2,{0x8d,0x8d,0xd0,0xfe,0xff,0xff}));
     hooks.push_back(instruction(renshowtext_copy,0x10e29d,{0x8d,0x8d,0xc8,0xfe,0xff,0xff}));
     hooks.push_back(instruction(renderer_showtext_copy,0x10e43d,{0x8d,0x8d,0xc8,0xfe,0xff,0xff}));
+    if(windows_build::is_3891()) {
+        // Implement both sides of the relative JNE; never replay the branch.
+        hooks.push_back(instruction(marker_edit,0x10fb4d,{0x83,0xfb,8,0x75,0x1d}));
+        hooks.push_back(native_call(marker_cursor,0x10fa7e,0x10e260,4));
+        auto finished=instruction(marker_finished,0x10fc08,{0xff,0x15,0,0,0,0});
+        const auto free_surface=address(at<void*>(0x18c1f4));
+        std::memcpy(finished.expected+2,&free_surface,4);hooks.push_back(finished);
+        hooks.push_back(instruction(marker_extent,0x10fa98,
+            {0x8b,0x43,8,0x89,0x45,0xe4,0x8b,0x43,0x0c,0x89,0x45,0xe8}));
+    }
 }
-Status candidate_rectangle(const NativeEvent& event) {
+Status candidate_rectangle(int x,int y,u32 outline) {
     auto* renderer=*at<render::Renderer*>(0xa2110cc);
     int logical_w,logical_h;
     api.RenderGetLogicalSize(renderer,&logical_w,&logical_h);
@@ -157,9 +170,8 @@ Status candidate_rectangle(const NativeEvent& event) {
         sx=float(output_w)/800;
         sy=float(output_h)/600;
     }
-    const auto x=static_cast<int>(event.frame->ecx),y=static_cast<int>(event.frame->edx);
     render::Metrics underscore{};
-    const auto status=measure("_",underscore);
+    const auto status=measure("_",underscore,outline);
     if(status!=Status::ok) return status;
     render::Rect rectangle;
     int right,bottom;
@@ -169,6 +181,32 @@ Status candidate_rectangle(const NativeEvent& event) {
     rectangle.h=bottom-rectangle.y;
     api.SetTextInputRect(&rectangle);
     return Status::ok;
+}
+void activate_marker() {
+    if(state.active==2) return;
+    state={2,0};
+    if(translation_available) api.StartTextInput();
+}
+void append_committed(char* buffer,std::size_t capacity) {
+    auto used=std::strlen(buffer);
+    for(auto* p=at<unsigned char>(0x5f549b8);*p;) {
+        // SDL_TEXTINPUT contains complete UTF-8 scalars. Keep the native
+        // byte capacity, including when a candidate commits several scalars.
+        const unsigned bytes=*p<0x80 ? 1 : *p<0xe0 ? 2 : *p<0xf0 ? 3 : 4;
+        if(used+bytes>capacity) break;
+        std::memcpy(buffer+used,p,bytes);
+        used+=bytes;p+=bytes;
+    }
+    buffer[used]=0;
+}
+void erase_last(unsigned char* text) {
+    std::size_t last=0;
+    for(std::size_t cursor=0;text[cursor];) {
+        last=cursor;
+        const auto bytes=span(text+cursor);
+        cursor+=bytes ? bytes : 1;
+    }
+    text[last]=0;
 }
 void set_translation_available(bool available) {
     state.committed=0;
@@ -202,7 +240,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         if(translation_available && state.active) result.resume_rva=event.id==stop_initial ? 0xd1c74 : 0xd1cf6;
         return Status::ok;
     case edit_dispatch:
-        if(translation_available && state.active && state.committed) {
+        if(translation_available && state.active==1 && state.committed) {
             state.committed=0;
             const auto* text=at<unsigned char>(0x5f549b8);
             if(text[0]=='*' && !text[1]) {
@@ -210,37 +248,19 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
                 result.resume_rva=0x10f80e;
                 return Status::ok;
             }
-            auto* buffer=at<char>(0xa49b9a8);
-            auto used=std::strlen(buffer);
             const auto capacity=*ptr<u32>(event.frame->ebp-0xb4);
-            for(auto* p=text;*p;) {
-                // SDL_TEXTINPUT provides complete UTF-8 scalars. The native
-                // byte budget also bounds the next Plr.name[13] copy.
-                const unsigned bytes=*p<0x80 ? 1 : *p<0xe0 ? 2 : *p<0xf0 ? 3 : 4;
-                if(used+bytes>capacity) break;
-                std::memcpy(buffer+used,p,bytes);
-                used+=bytes;
-                p+=bytes;
-            }
-            buffer[used]=0;
+            append_committed(at<char>(0xa49b9a8),capacity);
             result.resume_rva=0x10f8b7; // Native color/coordinates and redraw.
         } else result.resume_rva=event.frame->ebx==8 ? 0x10f788 : 0x10f80e;
         return Status::ok;
     case backspace:
-        if(translation_available && state.active) {
-            auto* text=at<unsigned char>(0xa49b9a8);
-            std::size_t last=0;
-            for(std::size_t cursor=0;text[cursor];) {
-                last=cursor;
-                const auto bytes=span(text+cursor);
-                cursor+=bytes ? bytes : 1;
-            }
-            text[last]=0;
+        if(translation_available && state.active==1) {
+            erase_last(at<unsigned char>(0xa49b9a8));
             result.resume_rva=0x10f801;
         }
         return Status::ok;
     case erase_initial: case erase_backspace: case erase_random:
-        if(translation_available && state.active) {
+        if(translation_available && state.active==1) {
             render::Metrics measured{};
             const auto status=measure(at<char>(0xa49b9a8),measured);
             if(status!=Status::ok) return status;
@@ -250,7 +270,40 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         }
         return Status::ok;
     case cursor:
-        return translation_available && state.active && event.phase==NativePhase::before ? candidate_rectangle(event) : Status::ok;
+        return translation_available && state.active==1 && event.phase==NativePhase::before ?
+            candidate_rectangle(static_cast<int>(event.frame->ecx),static_cast<int>(event.frame->edx),outline_budget()) : Status::ok;
+    case marker_edit:
+        if(translation_available && state.active==2 && state.committed) {
+            state.committed=0;
+            append_committed(ptr<char>(event.frame->esi),64);
+            result.resume_rva=0x10fa10;
+        } else if(translation_available && state.active==2 && event.frame->ebx==8) {
+            erase_last(ptr<unsigned char>(event.frame->esi));
+            result.resume_rva=0x10fa10;
+        } else result.resume_rva=event.frame->ebx==8 ? 0x10fb52 : 0x10fb6f;
+        return Status::ok;
+    case marker_cursor:
+        if(translation_available && event.phase==NativePhase::before) {
+            // 10FA8C..10FAA1 constructs the native output destination from
+            // these same live locals. Translate its actual local cursor to
+            // the main renderer only for the operating system's IME UI.
+            const int x=*ptr<int>(event.frame->ebp-0x34)+static_cast<int>(event.frame->edx);
+            const int y=*ptr<int>(event.frame->ebp-0x38)-2+static_cast<int>(event.arguments[0]);
+            return candidate_rectangle(x,y,0);
+        }
+        return Status::ok;
+    case marker_finished:
+        state={};
+        if(translation_available) api.StopTextInput();
+        return Status::ok;
+    case marker_extent: {
+        const auto source=native_targets::component_surface_source(ptr<void>(event.frame->ebx));
+        *ptr<int>(event.frame->ebp-0x1c)=source.width;
+        *ptr<int>(event.frame->ebp-0x18)=source.height;
+        event.frame->eax=static_cast<u32>(source.height);
+        result.skip_original=1;
+        return Status::ok;
+    }
     case uppercase:
         if(const auto bytes=span(at<unsigned char>(0x5f54bc0)+event.frame->esi)) {
             event.frame->esi+=bytes-1;
