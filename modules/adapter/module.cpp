@@ -108,8 +108,9 @@ enum class Scope : u32 {
     hud_centered=0x100, hud_penalty=0x101, hud_button=0x102,
     hud_title=0x103, hud_renderer=0x104, hud_renderer_text=0x105, hud_scale=0x106,
     native_renderer_resource=0x107,
-    known_map_control_first=0x108,known_map_help=0x10E,
+    known_map_control_first=0x108,known_map_help=0x10E,wounds_help=0x10F,
     known_map_dialog_control_first=0x110,
+    wounds_frame=0x118,
     message_pending=0x200, message_body=0x201
 };
 struct Active {
@@ -1435,6 +1436,7 @@ Status translate_culture_back(const char*,const char* topic,std::vector<char>& e
 #include "windows_inventory.inc"
 #include "windows_wielded.inc"
 #include "windows_hud_map_text.inc"
+#include "windows_wounds.inc"
 
 Status bind_hud_location(const NativeEvent& e) {
     const auto* original=ptr<char>(e.arguments[1]);
@@ -1471,7 +1473,7 @@ Status dispatch_windows_messages(const NativeEvent& event,DispatchResult& result
             windows_message_hearing::dispatch,windows_message_weather::dispatch,
             windows_message_debug_sources::dispatch,windows_message_combat_body::dispatch,
             windows_message_audit_copies::dispatch,windows_message_late_sources::dispatch,
-            windows_wielded::dispatch,windows_hud_map_text::dispatch}) {
+            windows_wielded::dispatch,windows_hud_map_text::dispatch,windows_wounds::dispatch}) {
         const auto status=dispatch(event,result,handled);
         if(handled) return status;
     }
@@ -1504,6 +1506,7 @@ void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
     windows_inventory::append_hooks(hooks);
     windows_wielded::append_hooks(hooks);
     windows_hud_map_text::append_hooks(hooks);
+    windows_wounds::append_hooks(hooks);
 }
 std::vector<unsigned char> save_windows_message_state() {
     std::vector<unsigned char> state;

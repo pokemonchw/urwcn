@@ -32,7 +32,7 @@ enum WindowsEncyclopediaHook : u32 {
     we_select_wait=0x79D4,
     we_map_marker_title=0x79D5,we_map_marker_first=0x79D6,
     we_map_control_first=0x79E8,we_map_control_draw=0x79EE,
-    we_map_zoom_hint,we_map_zoom_keys
+    we_map_zoom_hint,we_map_zoom_keys,we_wounds_help=0x79F1
 };
 constexpr u32 we_flow_begin=0x57F1;
 const WindowsEncyclopediaTopic* windows_encyclopedia_topic;
@@ -364,14 +364,15 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
             }
             return Status::ok;
         }
-        if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+3) {
+        if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+4) {
             windows_encyclopedia_preview=nullptr;return Status::ok;
         }
         if(e.id==we_help_scope) { windows_encyclopedia_help=false;return Status::ok; }
+        if(e.id==we_wounds_help) return Status::ok;
         handled=false;return Status::ok;
     }
     if(e.id>=we_source_first&&e.id<we_source_first+3)return Status::ok;
-    if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+3) {
+    if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+4) {
         windows_encyclopedia_preview=windows_find_topic(ptr<char>(e.frame->ecx));return Status::ok;
     }
     if(e.id>=we_map_software_first&&e.id<we_map_software_first+std::size(windows_culture_map_calls))
@@ -530,12 +531,15 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
     case we_notice_button:case we_initial_button:return windows_culture_lend(e,"ui.continue",e.arguments[0],Scope::plain_button);
     case we_intro_paragraph:case we_help_paragraph:begin(e,Scope::paragraph,e.arguments[3]);return Status::ok;
     case we_help_scope:windows_encyclopedia_help=true;windows_encyclopedia_help_record=0;return Status::ok;
+    case we_wounds_help:begin(e,Scope::wounds_help);return Status::ok;
     case we_help_append:
         if(!windows_skill_help_sources.empty()) return windows_skill_help_record(e);
         if(windows_encyclopedia_help)return windows_culture_paragraph(e,"ui.help_"+std::to_string(++windows_encyclopedia_help_record));
         // These are actual file-record identities, not rendered line slots.
         if(windows_build::is_3891() && in(Scope::known_map_help))
             return windows_culture_paragraph(e,std::string("map.help.")+ptr<char>(e.frame->edx));
+        if(in(Scope::wounds_help))
+            return windows_culture_paragraph(e,std::string("wounds.help.")+ptr<char>(e.frame->edx));
         return Status::ok;
     case we_preview_title:
         if(windows_encyclopedia_preview)return windows_culture_lend(e,std::string("topic.")+windows_encyclopedia_preview->key+
@@ -637,6 +641,10 @@ void append_windows_encyclopedia_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(we_preview_title,0x3CBA8,0x10E5A0,3));
     hooks.push_back(call(we_preview_summary,0x3CC8A,0x10E5A0,3));
     hooks.push_back(call(we_preview_button,0x3CCF3,0xCFAF0,2));
+    if(windows_build::is_3891()) {
+        hooks.push_back(call(we_preview_scope_first+3,0xD7B80,0x3CA90,0));
+        hooks.push_back(call(we_wounds_help,0xFDBA7,0x162530,0));
+    }
     hooks.push_back(call(we_map_software_title,0xE11CD,0x116270,5));
     hooks.push_back(call(we_map_renderer_title,0xE3A9A,0x1166C0,6));
     for(u32 i=0;i<std::size(windows_culture_map_calls);++i) {

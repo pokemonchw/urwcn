@@ -3450,3 +3450,18 @@ culture.topic.encyclopedia_3568.summary	壁炉主要为房屋供暖，也可用�
 culture.topic.encyclopedia_3587.summary	桑拿房既是分娩之所，也是逝者在葬礼前接受最后清洗的地方。
 culture.topic.encyclopedia_3611.summary	科塔帐篷类似大帐篷，所有文化都懂得搭建和使用，北方民族最为常用。
 culture.topic.encyclopedia_3628.summary	为了取得耕地，人们必须砍掉一片森林，最简单有效的办法是烧掉伐倒的树木。
+culture.wounds.title	伤口、伤势与疾病
+culture.wounds.header	状态       伤口描述                     伤害    已治疗
+culture.wounds.critical	  危重
+culture.wounds.serious	  严重
+culture.wounds.minor	   轻微
+culture.wounds.empty	你目前没有伤病。
+culture.wounds.bleeding	流血
+culture.wounds.help.These colors indicate the state of your injuries. 	这些颜色表示伤势的严重程度。
+culture.wounds.help.The state of fresh wounds is not known until they have been 	新伤口的严重程度须等到经过治疗，
+culture.wounds.help.treated - or have started to heal on their own.<br>	或开始自行愈合后才能得知。<br>
+culture.wounds.help.BL abbreviation is used for bleeding wounds.<br>	“流血”表示伤口正在出血。<br>
+culture.wounds.help.<br>	<br>
+culture.wounds.help.The TREATED bar shows how many of all the possible treatments	“已治疗”条显示今天已对伤口实施了多少种可用疗法。
+culture.wounds.help.have been applied to the wound today. Wounds can be treated	伤口每天都可使用
+culture.wounds.help.on a daily basis by using the PHYSICIAN skill.	医术技能进行治疗。
