@@ -2,6 +2,7 @@
 [CmdletBinding()]
 param(
     [string[]]$Module,
+    [Parameter(Mandatory)][ValidateSet('MinGW','Linux')][string]$Toolchain,
     [Parameter(Mandatory)][string]$BuildDirectory,
     [string]$PackageDirectory = (Join-Path $PSScriptRoot 'package'),
     [Parameter(Mandatory)][string]$BatchId,
@@ -12,7 +13,9 @@ $ErrorActionPreference = 'Stop'
 if ($env:UWCN_COMPILE_BATCH -ne $BatchId) { throw 'Formal publication belongs to the root compile queue batch.' }
 $PackageDirectory = [IO.Path]::GetFullPath($PackageDirectory)
 $formalRoot = Split-Path -Parent $PackageDirectory
-$launcherName = if ($IsLinux) { 'uwcn_launcher' } else { 'uwcn_launcher.exe' }
+$targetLinux = $Toolchain -eq 'Linux'
+$launcherName = if ($targetLinux) { 'uwcn_launcher' } else { 'uwcn_launcher.exe' }
+$retiredLauncherName = if ($targetLinux) { 'uwcn_launcher.exe' } else { 'uwcn_launcher' }
 if ($formalRoot -ne [IO.Path]::GetFullPath($PSScriptRoot) -or (Split-Path -Leaf $PackageDirectory) -ne 'package') { throw "Formal publication is restricted to root $launcherName and package/." }
 $allModules = @('catalog','semantic','render','layout','main_menu','adapter')
 if (!$Module) { $Module = @('launcher','loader') + $allModules }
@@ -23,10 +26,10 @@ $stage = Join-Path $BuildDirectory "stage/$transaction"
 New-Item -ItemType Directory -Path $stage -Force | Out-Null
 $files = [Collections.Generic.List[object]]::new()
 $retirements = @(
-    if ($IsLinux -and $Module -contains 'launcher') {
-        $oldLauncher = Join-Path $formalRoot 'uwcn_launcher.exe'
+    if ($Module -contains 'launcher') {
+        $oldLauncher = Join-Path $formalRoot $retiredLauncherName
         if (Test-Path -LiteralPath $oldLauncher -PathType Leaf) {
-            [pscustomobject]@{Relative='uwcn_launcher.exe'; Formal=$oldLauncher}
+            [pscustomobject]@{Relative=$retiredLauncherName; Formal=$oldLauncher}
         }
     }
 )
@@ -55,7 +58,7 @@ foreach ($file in Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'profiles'
     $relative = 'profiles/' + [IO.Path]::GetRelativePath((Join-Path $PSScriptRoot 'profiles'),$file.FullName).Replace('\','/')
     Add-Candidate $file.FullName $relative
 }
-if ($IsLinux) {
+if ($targetLinux) {
     $game = Join-Path $env:HOME '.local/share/Steam/steamapps/common/UnRealWorld/urw3-bin'
     $gamePathSource = Join-Path $stage 'linux-game-path-source.txt'
     [IO.File]::WriteAllText($gamePathSource,([IO.Path]::GetFullPath($game)+"`n"),[Text.UTF8Encoding]::new($false))
@@ -93,7 +96,7 @@ if (Test-Path -LiteralPath $currentManifest) {
     $previous = Get-Content -LiteralPath $currentManifest -Raw | ConvertFrom-Json
     foreach ($property in $previous.files.PSObject.Properties) { $identities[$property.Name]=$property.Value }
 }
-if ($IsLinux -and $Module -contains 'launcher') { $identities.Remove('uwcn_launcher.exe') }
+if ($Module -contains 'launcher') { $identities.Remove($retiredLauncherName) }
 foreach ($name in $allModules) {
     $relative = "modules/uwcn_$name.dll"
     $candidate = $files | Where-Object Relative -eq $relative
@@ -102,7 +105,7 @@ foreach ($name in $allModules) {
 }
 foreach ($file in $files | Where-Object { !$_.Relative.StartsWith('modules/') }) { $identities[$file.Relative]=$file.Hash }
 $manifest = [ordered]@{ format='uwcn-release-v1'; host_abi=1; transaction=$transaction; compile_batch=$BatchId; changed_modules=$reloadModules; files=$identities }
-if ($IsLinux) {
+if ($targetLinux) {
     $manifest.host_abi=2
     $manifest.hot_reload_protocol='UWCN_LINUX_CONTROL_V1'
     $manifest.platform='linux-x86_64'
@@ -119,7 +122,7 @@ foreach ($file in $files | Where-Object { $_.Relative -ne $launcherName }) { $ca
 [IO.File]::WriteAllLines((Join-Path $stage 'candidate-files.tsv'),$candidateLines,[Text.UTF8Encoding]::new($false))
 function Send-Control([int]$ProcessId,[string]$Command) {
     $socket = $null
-    if ($IsLinux) {
+    if ($targetLinux) {
         $socket = [Net.Sockets.Socket]::new([Net.Sockets.AddressFamily]::Unix,[Net.Sockets.SocketType]::Stream,[Net.Sockets.ProtocolType]::Unspecified)
         # Abstract AF_UNIX name matches the resident; SO_PEERCRED checks UID.
         $status = Get-Content -LiteralPath "/proc/$ProcessId/status"
@@ -136,7 +139,7 @@ function Send-Control([int]$ProcessId,[string]$Command) {
         $client = [IO.Pipes.NamedPipeClientStream]::new('.',"uwcn-$ProcessId",[IO.Pipes.PipeDirection]::InOut)
     }
     try {
-        if (!$IsLinux) { $client.Connect(15000) }
+        if (!$targetLinux) { $client.Connect(15000) }
         $encoding = [Text.UTF8Encoding]::new($false)
         $reader = [IO.StreamReader]::new($client,$encoding,$false,4096,$true)
         try {
@@ -191,7 +194,7 @@ try {
         New-Item -ItemType Directory -Path (Split-Path -Parent $file.Formal) -Force | Out-Null
         Copy-Item -LiteralPath $file.Stage -Destination $file.Formal
     }
-    if ($IsLinux) {
+    if ($targetLinux) {
         $launcherFile = Join-Path $PSScriptRoot $launcherName
         [IO.File]::SetUnixFileMode($launcherFile,([IO.UnixFileMode]::UserRead -bor [IO.UnixFileMode]::UserWrite -bor [IO.UnixFileMode]::UserExecute -bor [IO.UnixFileMode]::GroupRead -bor [IO.UnixFileMode]::GroupExecute -bor [IO.UnixFileMode]::OtherRead -bor [IO.UnixFileMode]::OtherExecute))
         $applications = Join-Path $env:HOME '.local/share/applications'

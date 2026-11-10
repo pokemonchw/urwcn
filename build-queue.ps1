@@ -4,8 +4,8 @@ param(
     [ValidateSet('launcher','loader','catalog','semantic','render','layout','main_menu','adapter')][string[]]$Module,
     [ValidateSet('MinGW','Linux')][string]$Toolchain = $(if ($IsLinux) { 'Linux' } else { 'MinGW' }),
     [string]$CMakePath = $(if ($IsLinux) { '/usr/bin/cmake' } else { Join-Path $PSScriptRoot '.toolchains/x86/w64devkit/bin/cmake.exe' }),
-    [string]$CompilerPath = $(if ($IsLinux) { '/usr/bin/g++' } else { Join-Path $PSScriptRoot '.toolchains/x86/w64devkit/bin/g++.exe' }),
-    [string]$BuildDirectory = $(Join-Path $PSScriptRoot $(if ($IsLinux) { 'build/linux-x86_64' } else { 'build/mingw-x86' })),
+    [string]$CompilerPath = $(if ($IsLinux) { if ($Toolchain -eq 'MinGW') { Join-Path $env:HOME '.local/share/dfcn-toolchains/mingw-w64-16.2.0/usr/bin/i686-w64-mingw32-g++' } else { '/usr/bin/g++' } } else { Join-Path $PSScriptRoot '.toolchains/x86/w64devkit/bin/g++.exe' }),
+    [string]$BuildDirectory = $(Join-Path $PSScriptRoot $(if ($Toolchain -eq 'Linux') { 'build/linux-x86_64' } else { 'build/mingw-x86' })),
     [string]$ModuleSourceDirectory = $PSScriptRoot,
     [switch]$Publish,
     [switch]$Reload,
@@ -92,7 +92,7 @@ try {
                 $failure | Out-File -LiteralPath $log -Append -Encoding utf8
             } finally { Remove-Item Env:UWCN_COMPILE_BATCH }
             foreach ($entry in $requests) {
-                $result = [ordered]@{ RequestId=$entry.RequestId; BatchId=$batchId; Success=$success; Error=$failure; Modules=$modules; FullGraph=$fullGraph; ModuleSourceDirectory=$configuration.ModuleSourceDirectory; Log=$log; PublishRequested=[bool]$Publish; ReloadRequested=[bool]$Reload; TargetPid=$TargetPid; CompletedAt=[DateTimeOffset]::UtcNow.ToString('o') }
+                $result = [ordered]@{ RequestId=$entry.RequestId; BatchId=$batchId; Success=$success; Error=$failure; Modules=$modules; FullGraph=$fullGraph; Toolchain=$Toolchain; CompilerPath=$configuration.CompilerPath; BuildDirectory=$configuration.BuildDirectory; ModuleSourceDirectory=$configuration.ModuleSourceDirectory; Log=$log; PublishRequested=[bool]$Publish; ReloadRequested=[bool]$Reload; TargetPid=$TargetPid; CompletedAt=[DateTimeOffset]::UtcNow.ToString('o') }
                 $resultPath=Join-Path $queue "results/$($entry.RequestId).json"
                 $resultTemporary="$resultPath.tmp"
                 [IO.File]::WriteAllText($resultTemporary,($result | ConvertTo-Json -Depth 8),[Text.UTF8Encoding]::new($false))

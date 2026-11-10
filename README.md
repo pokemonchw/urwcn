@@ -68,6 +68,36 @@ Windows 构建使用 PowerShell 7 和 i686 MinGW C++20 工具链；CMake 最低�
 
 `make.exe` 应与 `g++.exe` 位于同一目录。本地已有工具链时也可使用脚本默认的 `.toolchains/x86/w64devkit/bin/`。不带 `-Publish` 仅生成构建产物；需要正式交付时在同一入口添加 `-Publish`，脚本会先将被替换的旧文件移入根 `回收/`，再更新根启动器与 `package/`。使用时启动根 `uwcn_launcher.exe`，可传入 `--game "游戏完整路径"`。
 
+### Linux 交叉编译 Windows x86
+
+在 Linux 上直接运行下面的脚本，即可编译并发布完整的 Windows x86 版。无参数时，脚本向统一队列提交 `build.ps1 -Toolchain MinGW -Publish`；完成后，Windows 启动器位于项目根目录：
+
+```bash
+./build-windows-cross.sh
+```
+
+默认依赖路径为项目内的 `.toolchains/powershell/pwsh`（PowerShell 7）、`/usr/bin/cmake`（3.24 或更高版本）、`/usr/bin/make` 和 `$HOME/.local/share/dfcn-toolchains/mingw-w64-16.2.0/usr/bin/i686-w64-mingw32-g++`。该用户目录中的工具链同时包含 x64 和 i686 编译器，本项目使用 i686；不需要安装系统级工具链，也不依赖 DFCN 的源码或 SDL2 SDK。构建目录为 `build/mingw-x86`。`cmake/windows-x86.cmake` 按 [CMake 工具链文件机制](https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html#cross-compiling) 声明 Windows/x86 目标，Linux 宿主使用 `Unix Makefiles` 生成器；编译器原生运行于 Linux，不使用 Wine 或 Proton。
+
+队列执行交叉编译时隔离外部编译标志、头文件与库搜索路径、pkg-config 和 CMake 工具链环境变量，将命令搜索路径固定为所选编译器目录与 `/usr/bin:/bin`，完成后恢复调用环境。保留本项目现有 C++20、Release 优化和静态运行库链接配置，不生成词库或重新提取游戏绑定。脚本不下载、扫描或自动切换工具链；其他安装位置通过原有参数显式指定：
+
+```bash
+./build-windows-cross.sh -CompilerPath /opt/mingw/bin/i686-w64-mingw32-g++
+```
+
+带参数时，脚本按传入参数提交请求；例如下面的命令只编译两个模块，不发布：
+
+```bash
+./build-windows-cross.sh -Module layout,render
+```
+
+发布位置为根目录的 `uwcn_launcher.exe`、`package/uwcn_loader.dll` 和 `package/modules/` 下的六个业务 DLL。两个平台共用正式 `package/`；从 Linux 切换为 Windows 时，原根 ELF 启动器和被替换的文件先移入 `回收/`。仅需编译完整 Windows 版时，在 PowerShell 中运行 `./build.ps1 -Toolchain MinGW`，产物暂存在 `build/mingw-x86/out/`。
+
+交叉编译与本机编译共用 `build/.compile-queue`，忙碌期间不同工具链的请求不能并行提交；不另建队列，也不清理已有构建树。每批仍执行一次配置和一次增量构建。入口完成时打印请求 ID、批次 ID、结果 JSON 与批次日志路径；结果 JSON 同时记录目标工具链、编译器路径和构建目录。
+
+编译和发布均不运行启动器、DLL、游戏或测试。
+
+2026-10-29 已使用上述入口完成 Windows x86 全图编译：请求 `831b475734034caba0cb0fd220e5a6ec`，批次 `1810d7c1f97e4c83a838f515b6b8e73b`。结果位于 `build/.compile-queue/results/831b475734034caba0cb0fd220e5a6ec.json`，日志位于 `build/.compile-queue/batches/1810d7c1f97e4c83a838f515b6b8e73b.log`；八项产物均已生成，现有业务源码仍有函数指针转换、枚举分支、初始化、缩进和未使用项警告。本次未带 `-Publish`，正式启动器与 `package/` 未更新，也未运行产物或测试。首次请求 `2c0ea25d593243b8b8a878acaaca6456`／批次 `aebd8424450945faa2319e54968f89cd` 在配置阶段失败：PowerShell 将传给 .NET 字符串参数的 `$null` 转为空字符串，导致 GCC 的执行前缀未被移除；已改用 [NullString](https://learn.microsoft.com/en-us/dotnet/api/system.management.automation.language.nullstring) 正确移除变量，并保留首次失败的队列回执。
+
 开发与交付约束见 [AGENTS.md](AGENTS.md)。本次更名与首次源码上传未编译、未替换正式运行文件，也未运行游戏或测试。
 
 ## 许可与署名
