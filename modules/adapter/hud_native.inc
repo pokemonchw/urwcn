@@ -109,6 +109,11 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
         return hud_lend(e,TextComponent::hud_penalty,0,Scope::hud_penalty,nullptr,1);
     switch(e.id) {
     case hud_command:
+        if(std::strcmp(ptr<char>(e.arguments[0]),"Wield")==0) {
+            native_component_binding::bind_source(e,native_text_resource::from_request(
+                {TextComponent::message_value,"Wield","inventory.ui"}));
+            return Status::ok;
+        }
         // This call also consumes native command descriptions. Only its literal
         // heading branch has the statically confirmed Command: pointer.
         if(e.arguments[0]==address(at<char>(0x1AA14C)))

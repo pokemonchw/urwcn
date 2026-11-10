@@ -214,10 +214,17 @@ Status codec(u32 operation,const char* input,std::vector<char>& output) {
 Status translate_culture_back(const char* original,const char* topic,std::vector<char>& encoded);
 Status translate_skills_limit(TextComponent component,const char* value,std::vector<char>& encoded);
 Status translate_help_record(TextComponent component,const char* value,std::vector<char>& encoded);
+Status resolve_native_message_expression(TextComponent,const char*,std::vector<char>&);
+Status resolve_encyclopedia_preview_summary(const char*,std::vector<char>&);
+Status native_text_limit(std::vector<char>&,std::int32_t,std::int32_t,u32);
 Status resolve_display_text(TextComponent component,const char* original,const char* value,std::vector<char>& encoded) {
     // The same neutral native component resolves against the global language.
     if(!chinese_enabled)
         return encode_component_original(original,encoded);
+    if(component==TextComponent::native_message_expression || component==TextComponent::inventory_item_text)
+        return resolve_native_message_expression(component,value,encoded);
+    if(component==TextComponent::encyclopedia_preview_summary)
+        return resolve_encyclopedia_preview_summary(value,encoded);
     if(component==TextComponent::culture_back) return translate_culture_back(original,value,encoded);
     if(component==TextComponent::skills_limit_improve || component==TextComponent::skills_limit_degrade)
         return translate_skills_limit(component,value,encoded);
@@ -671,6 +678,9 @@ Status dispatch(const NativeEvent&,DispatchResult&,bool&);
 namespace native_text_edit_language {
 Status dispatch(const NativeEvent&,DispatchResult&,bool&);
 }
+namespace windows_inventory {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+}
 Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     result={};
     bool handled{};
@@ -716,7 +726,7 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
     for(auto dispatch_extension:{dispatch_windows_profile,dispatch_windows_creation,
             dispatch_windows_skills,dispatch_windows_encyclopedia,dispatch_windows_renderer,
-            dispatch_windows_messages,windows_keyboard_help::dispatch}) {
+            dispatch_windows_messages,windows_keyboard_help::dispatch,windows_inventory::dispatch}) {
         extension=dispatch_extension(e,result,handled);
         if(handled) { if(e.phase==NativePhase::after) end(e.token);return extension; }
     }
@@ -1408,6 +1418,7 @@ Status translate_culture_back(const char*,const char* topic,std::vector<char>& e
 #include "windows_message_combat_body.inc"
 #include "windows_message_audit_copies.inc"
 #include "windows_message_late_sources.inc"
+#include "windows_inventory.inc"
 
 Status message_translate_value(const char* tag,const char* value,std::string& text) {
     return windows_message_values::translate_tag(tag,value,text);
@@ -1461,6 +1472,7 @@ void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
     windows_message_combat_body::append_hooks(hooks);
     windows_message_audit_copies::append_hooks(hooks);
     windows_message_late_sources::append_hooks(hooks);
+    windows_inventory::append_hooks(hooks);
 }
 std::vector<unsigned char> save_windows_message_state() {
     std::vector<unsigned char> state;

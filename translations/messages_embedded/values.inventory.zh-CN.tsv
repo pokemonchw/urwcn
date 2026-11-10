@@ -1,0 +1,38 @@
+domain	source	target
+inventory.ui	What do you want to wield?	准备手持哪件物品？
+inventory.ui	Select an item to 	选择要
+inventory.ui	Select items to 	选择要
+inventory.verb	wield	手持的物品
+inventory.ui	.	。
+inventory.ui	Use hotkeys, mouse click or .ENTER to select.	使用快捷键、鼠标点击或 .ENTER 选择。
+inventory.ui	Use hotkeys, mouse click or 	使用快捷键、鼠标点击或 
+inventory.ui	Select all	全选
+inventory.ui	Deselect all	取消全选
+inventory.ui	You can select multiple items here.	这里可以选择多件物品。
+inventory.ui	Done - proceed with selected.	完成，继续处理所选物品。
+inventory.ui	You have selected the maximum number of entries.	已达到可选数量上限。
+inventory.format	...or select %d more entries.	……还可选择%d项。
+inventory.ui	Take off all wielded items, go empty handed.	收起所有手持物品，空出双手。
+inventory.ui	Unwield 1st weapon	收起第一件武器
+inventory.ui	Unwield 2nd weapon	收起第二件武器
+inventory.ui	Move	移动
+inventory.ui	Next page	下一页
+inventory.ui	Prev page	上一页
+inventory.ui	Cancel	取消
+inventory.ui	Viewing:	显示：
+inventory.ui	Viewing: All items	显示：全部物品
+inventory.format	Viewing: %s	显示：%s
+inventory.format	%c.All types	%c.全部类别
+inventory.ui	All types	全部类别
+inventory.ui	Filter	筛选
+inventory.ui	usage	用途
+inventory.ui	wear	磨损
+inventory.ui	weight	重量
+inventory.ui	wielded	手持
+inventory.ui	  worn 	已穿戴
+inventory.ui	 in use	使用中
+inventory.ui	Applicable, but none available.	适用，但没有可用物品。
+inventory.ui	Wield	手持
+inventory.suffix	 (unpaid)	（未付款）
+inventory.suffix	 (taken)	（已拿取）
+inventory.suffix	 (unpaid) (taken)	（未付款）（已拿取）

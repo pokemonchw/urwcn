@@ -108,7 +108,10 @@ enum class TextComponent : std::uint32_t {
     world_date = 0x10103, world_scale = 0x10104, world_map_kind = 0x10105,
     world_season = 0x10106, world_month = 0x10107, world_time = 0x10108,
     message_literal = 0x10200, message_template = 0x10201,
-    message_value = 0x10202, message_continue = 0x10203, message_more = 0x10204
+    message_value = 0x10202, message_continue = 0x10203, message_more = 0x10204,
+    // Adapter-owned neutral expressions, resolved before the native consumer.
+    native_message_expression = 0x10205, inventory_item_text = 0x10206,
+    encyclopedia_preview_summary = 0x10207
 };
 namespace text_op { constexpr std::uint32_t translate = 1; }
 namespace catalog_op { constexpr std::uint32_t lookup = 1, repertoire = 2; }

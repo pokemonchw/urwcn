@@ -69,6 +69,12 @@ Status windows_culture_text(const std::string& key,std::vector<char>& encoded) {
     const CodecRequest encoding{utf8.data()};
     return service_text(ModuleId::layout,layout_op::encode_native,&encoding,sizeof(encoding),encoded);
 }
+Status resolve_encyclopedia_preview_summary(const char* key,std::vector<char>& encoded) {
+    const auto status=windows_culture_text(key,encoded);
+    // 3CC16/3CC25 impose the native 92-cell synopsis bound before showtext.
+    const auto cells=*at<unsigned char>(0x3CC18);
+    return status==Status::ok ? native_text_limit(encoded,cells*8,cells*8,1) : status;
+}
 Status initialize_windows_encyclopedia() {
     struct Link { const char* name;const char* key; };
     const Link links[]{
@@ -299,14 +305,14 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
             }
             return Status::ok;
         }
-        if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+2) {
+        if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+3) {
             windows_encyclopedia_preview=nullptr;return Status::ok;
         }
         if(e.id==we_help_scope) { windows_encyclopedia_help=false;return Status::ok; }
         handled=false;return Status::ok;
     }
     if(e.id>=we_source_first&&e.id<we_source_first+3)return Status::ok;
-    if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+2) {
+    if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+3) {
         windows_encyclopedia_preview=windows_find_topic(ptr<char>(e.frame->ecx));return Status::ok;
     }
     if(e.id>=we_map_software_first&&e.id<we_map_software_first+std::size(windows_culture_map_calls))
@@ -466,9 +472,18 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         if(!windows_skill_help_sources.empty()) return windows_skill_help_record(e);
         if(windows_encyclopedia_help)return windows_culture_paragraph(e,"ui.help_"+std::to_string(++windows_encyclopedia_help_record));
         return Status::ok;
-    case we_preview_title:case we_preview_summary:
+    case we_preview_title:
         if(windows_encyclopedia_preview)return windows_culture_lend(e,std::string("topic.")+windows_encyclopedia_preview->key+
-            (e.id==we_preview_title?".title":".summary"),e.arguments[0],Scope::text);
+            ".title",e.arguments[0],Scope::text);
+        return Status::ok;
+    case we_preview_summary:
+        if(windows_encyclopedia_preview) {
+            const auto key=std::string("topic.")+windows_encyclopedia_preview->key+".summary";
+            std::vector<char> encoded;
+            const auto status=translate(TextComponent::encyclopedia_preview_summary,ptr<char>(e.arguments[0]),key.c_str(),encoded);
+            if(status!=Status::ok)return status;
+            return lend_text(e,encoded,e.arguments[0],Scope::text,e.arguments[2]);
+        }
         return Status::ok;
     case we_preview_button:
         if(windows_encyclopedia_preview) {
@@ -478,7 +493,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
             std::string english;
             auto status=decode_parser_original(suffix,english);if(status!=Status::ok)return status;
             std::vector<char> label;
-            status=translate(TextComponent::culture_text,english.c_str(),"ui.launch",label);
+            status=translate(TextComponent::culture_text,english.c_str(),"ui.launch_encyclopedia",label);
             if(status!=Status::ok)return status;
             native_component_binding::note_prefix(e,prefix.c_str());
             label.insert(label.begin(),prefix.begin(),prefix.end());
@@ -541,8 +556,8 @@ void append_windows_encyclopedia_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(we_help_scope,0x3E441,0x162530,0));
     hooks.push_back(call(we_help_append,0x162627,0x162300,0));
     hooks.push_back(call(we_help_paragraph,0x3E476,0x10EB40,4));
-    const u32 preview[]{0xF7BA,0xE0ECA};
-    for(u32 i=0;i<2;++i)hooks.push_back(call(we_preview_scope_first+i,preview[i],0x3CA90,0));
+    const u32 preview[]{0xF7BA,0xE0ECA,0x561E0};
+    for(u32 i=0;i<std::size(preview);++i)hooks.push_back(call(we_preview_scope_first+i,preview[i],0x3CA90,0));
     hooks.push_back(call(we_preview_title,0x3CBA8,0x10E5A0,3));
     hooks.push_back(call(we_preview_summary,0x3CC8A,0x10E5A0,3));
     hooks.push_back(call(we_preview_button,0x3CCF3,0xCFAF0,2));
