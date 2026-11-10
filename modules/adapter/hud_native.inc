@@ -2,6 +2,7 @@
 // confirmed native call identities and synchronous text/measurement adapters.
 // No HUD coordinates, persistent fields or drawing replay are stored.
 namespace native_hud_language {u32 display_units();}
+Status bind_hud_location(const NativeEvent&);
 enum HudHook : u32 {
     hud_surface_first=0x6000,
     hud_command=0x6100,hud_repeat,hud_help,hud_wielded,
@@ -102,6 +103,7 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     }
     if(e.id>=hud_center_first && e.id<hud_center_first+std::size(hud_center_calls)) {
         const auto component=hud_center_calls[e.id-hud_center_first].component;
+        if(component==TextComponent::world_location) return bind_hud_location(e);
         const auto* name=component==TextComponent::world_place_gloss ? ptr<char>(e.frame->ebp-0x278) : nullptr;
         return hud_lend(e,component,1,Scope::hud_centered,name,e.arguments[3]);
     }

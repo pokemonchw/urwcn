@@ -6,7 +6,7 @@ namespace windows_message_calendar {
 enum class Kind:u32 { date,place };
 enum Hook:u32 { date_first=0xe900,place_call=0xe906,ordinal_number,ordinal_debug,
     ordinal_last,day_format,debug_day_format,moon_call,date_on,date_day,
-    date_full_on,date_full,date_short,place_culture,place_at,place_format };
+    date_full_on,date_full,date_short,place_culture,place_at,place_format,hud_place_call };
 const u32 date_calls[]={0x17231c,0x172340,0x172364,0x172388,0x1723ac,0x1723d0};
 struct Frame {
     Kind kind{};u32 parent{},pending_owner{};
@@ -52,6 +52,7 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     for(u32 i=0;i<std::size(date_calls);++i)
         hooks.push_back(native_call(date_first+i,date_calls[i],0x8a310,52));
     hooks.push_back(native_call(place_call,0x1772e8,0x8e4f0,1));
+    hooks.push_back(native_call(hud_place_call,0x9052c,0x8e4f0,1));
     struct Call {u32 id,site,words;};
     for(const auto& call:{Call{ordinal_number,0x8a38b,3},Call{ordinal_debug,0x8a3ae,3},
         Call{day_format,0x8a4a3,5},Call{debug_day_format,0x8a4cc,4},
@@ -67,19 +68,21 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     const auto at_text=address(at<char>(0x19d368));std::memcpy(at_word.expected+1,&at_text,4);hooks.push_back(at_word);
 }
 Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
-    handled=event.id>=date_first && event.id<=place_format;if(!handled)return Status::ok;
-    if(event.id<=place_call) {
+    handled=event.id>=date_first && event.id<=hud_place_call;if(!handled)return Status::ok;
+    if(event.id<=place_call || event.id==hud_place_call) {
         if(event.phase==NativePhase::before) {
-            Frame frame;frame.kind=event.id==place_call?Kind::place:Kind::date;
+            Frame frame;frame.kind=event.id==place_call || event.id==hud_place_call?Kind::place:Kind::date;
             frame.parent=event.frame->ebp;frames.push_back(std::move(frame));
         } else {
             auto frame=std::move(frames.back());frames.pop_back();
+            // 90531..9054B copies this exact returned context to EBP-D8.
+            if(event.id==hud_place_call)
+                message_bind_copy(ptr<char>(event.frame->ebp-0xd8),ptr<char>(event.frame->eax),frame.body);
             message_bind_source(ptr<char>(event.frame->eax),std::move(frame.body));
         }
         return Status::ok;
     }
-    // These producers also serve native HUD calls. Only the observed shared
-    // message caller owns the semantic construction scope.
+    // Only the confirmed shared-message and HUD callers own these scopes.
     if(!owns(event))return Status::ok;
     auto& frame=frames.back();
     if(event.id==ordinal_last) {

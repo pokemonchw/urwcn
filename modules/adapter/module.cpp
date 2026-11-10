@@ -1429,6 +1429,11 @@ Status translate_culture_back(const char*,const char* topic,std::vector<char>& e
 #include "windows_inventory.inc"
 #include "windows_wielded.inc"
 
+Status bind_hud_location(const NativeEvent& e) {
+    const auto* original=ptr<char>(e.arguments[1]);
+    return windows_inventory::bind_expression(e,original,windows_messages::values.at(address(original)).text);
+}
+
 Status message_translate_value(const char* tag,const char* value,std::string& text) {
     return windows_message_values::translate_tag(tag,value,text);
 }

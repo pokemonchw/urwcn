@@ -67648,9 +67648,11 @@ message.value.work.7061727469616c6c79206275696c74	已建造一部分
 message.value.work.7061727469616c6c792063726166746564	已制作一部分
 message.value.work.73656d692d66696e6973686564	半成品
 message.value.inventory.ui.5768617420646f20796f752077616e7420746f207769656c643f	准备手持哪件物品？
+message.value.inventory.ui.5768617420646f20796f752077616e7420746f206170706c793f	准备使用哪件物品？
 message.value.inventory.ui.53656c65637420616e206974656d20746f20	选择要
 message.value.inventory.ui.53656c656374206974656d7320746f20	选择要
 message.value.inventory.verb.7769656c64	手持的物品
+message.value.inventory.verb.6170706c79	使用的物品
 message.value.inventory.ui.2e	。
 message.value.inventory.ui.55736520686f746b6579732c206d6f75736520636c69636b206f72202e454e54455220746f2073656c6563742e	使用快捷键、鼠标点击或 .ENTER 选择。
 message.value.inventory.ui.55736520686f746b6579732c206d6f75736520636c69636b206f7220	使用快捷键、鼠标点击或 
