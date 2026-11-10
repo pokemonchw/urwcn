@@ -30,6 +30,14 @@ struct LabelBoxCall {
     const char* text;
     u32 color;
 };
+// 115AD0 mode 5 owns a section bar and centers its title within the supplied
+// width. Its y,width,title,mode stack arguments are caller-cleaned.
+struct SectionCall {
+    u32 function,renderer;
+    std::int32_t x,y,width;
+    const char* title;
+    u32 mode;
+};
 // 113430 has no stack arguments: ECX is the native target texture and EDX
 // is its heading. Its own native body selects A2110CC and paints the title.
 struct HeadingCall { u32 function,texture;const char* title; };
@@ -42,6 +50,7 @@ extern "C" void UWCN_CALL uwcn_renderer_paragraph(const ParagraphCall*);
 extern "C" void UWCN_CALL uwcn_renderer_panel(const PanelCall*);
 extern "C" void UWCN_CALL uwcn_renderer_text_block(const TextBlockCall*);
 extern "C" void UWCN_CALL uwcn_renderer_label_box(const LabelBoxCall*);
+extern "C" void UWCN_CALL uwcn_renderer_section(const SectionCall*);
 extern "C" void UWCN_CALL uwcn_renderer_heading(const HeadingCall*);
 extern "C" void UWCN_CALL uwcn_renderer_marked_button(const MarkedButtonCall*);
 }

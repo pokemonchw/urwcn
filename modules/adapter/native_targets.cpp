@@ -28,6 +28,10 @@ using namespace render;
 using Scale=scoped::SurfaceScale;
 std::uintptr_t base{};
 Scale canvas{800,600,800,600};
+// 103A30 constructs each help surface and uploads it synchronously, with no
+// input wait between these two confirmed boundaries. Only its constructor
+// density is borrowed here; no pixels, text or UI positions are retained.
+Scale help_upload_scale{};
 std::unordered_map<Surface*,Scale> surfaces;
 std::unordered_map<Texture*,Scale> textures;
 std::unordered_map<Surface*,SurfaceSource> surface_sources;
@@ -114,6 +118,7 @@ Surface* __cdecl create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 
         site==0x10C289 || site==0x10C48A || site==0x10C628 || site==0x10C3B1;
     const bool fade_owner=site==0x10D5E8 || site==0x10D65B;
     const bool culture_owner=site==0xE3A6F;
+    const bool help_owner=site==0x103ABB || site==0x103BF6;
     const SurfaceSource neutral{flags,w,h,depth,r,g,b,a};
     const Scale component_scale{w,h,
         scoped::physical_rect({0,0,w,h},&canvas).w,
@@ -122,11 +127,12 @@ Surface* __cdecl create_surface(u32 flags,int w,int h,int depth,u32 r,u32 g,u32 
         const Rect physical=scoped::physical_rect({0,0,w,h},&canvas);
         w=physical.w; h=physical.h;
     }
-    if(culture_owner) { w=component_scale.physical_width;h=component_scale.physical_height; }
+    if(culture_owner || help_owner) { w=component_scale.physical_width;h=component_scale.physical_height; }
+    if(help_owner) help_upload_scale=component_scale;
     auto* result=api.CreateRGBSurface(flags,w,h,depth,r,g,b,a);
     if(result && (canvas_owner || fade_owner)) surfaces.emplace(result,canvas);
-    if(result && culture_owner) surfaces.emplace(result,component_scale);
-    if(result && canvas_owner) surface_sources.emplace(result,neutral);
+    if(result && (culture_owner || help_owner)) surfaces.emplace(result,component_scale);
+    if(result && (canvas_owner || help_owner)) surface_sources.emplace(result,neutral);
     return result;
 }
 Renderer* __cdecl create_software_renderer(Surface* surface) {
@@ -194,14 +200,23 @@ Texture* __cdecl create_texture(Renderer* renderer,u32 format,int access,int w,i
     const bool upload=site==0x117973;
     // MagicProfile's native page and CompileInfoboxRitualList's description.
     // Both are native render targets; their logical rectangles remain native.
-    const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2 || site==0x116EF2;
+    const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2 || site==0x116EF2 || site==0x105340;
     if(component) return make_component_texture(renderer,format,access,w,h);
     if(upload) {
         if(output_scale()!=Status::ok) return nullptr;
         w=canvas.physical_width; h=canvas.physical_height;
     }
+    // 10528F..1052A6 supplies fixed logical dimensions for the help body,
+    // unlike 103B5A..103B6D, which reads the footer surface's actual size.
+    // Allocate the body's upload texture at the exact density of the surface
+    // just drawn; UpdateTexture consumes that surface's physical pixel pitch.
+    if(site==0x1052AC) {
+        w=help_upload_scale.physical_width;
+        h=help_upload_scale.physical_height;
+    }
     auto* result=api.CreateTexture(renderer,format,access,w,h);
     if(result && upload) textures.emplace(result,canvas);
+    if(result && (site==0x103B73 || site==0x1052AC)) textures.emplace(result,help_upload_scale);
     return result;
 }
 int __cdecl set_render_target(Renderer* renderer,Texture* target) {

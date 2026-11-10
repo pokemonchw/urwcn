@@ -14,7 +14,7 @@ struct State {u32 pending;u32 rebuilding;};
 enum class View:u32 { ancestors=1,setup=3,attributes=4,culture=5,
     main=6,about,credits,creation,scenario_selection,scenario_confirmation,
     game_course,world,skills=15,spells,encyclopedia,profile,load,
-    story,creation_complete,farewell,startup,intro,hud,map,messages };
+    story,creation_complete,farewell,startup,intro,hud,map,messages,keyboard_help };
 using MenuRebuild=Status (*)(const NativeEvent&,bool& rebuilt,u32& selection);
 void initialize(const HostApi*,MenuRebuild);
 void request(bool main_menu);

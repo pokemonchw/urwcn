@@ -26,7 +26,7 @@ void request(bool main_menu) {
             View::scenario_confirmation,View::game_course,View::world,View::skills,
             View::spells,View::encyclopedia,View::profile,View::load,View::story,
             View::creation_complete,View::farewell,View::startup,View::intro,
-            View::hud,View::map,View::messages})
+            View::hud,View::map,View::messages,View::keyboard_help})
         state.pending|=1u<<static_cast<u32>(view);
     if(main_menu) state.pending|=main_menu_pending;
 }
