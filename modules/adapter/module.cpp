@@ -1262,6 +1262,23 @@ Status rebuild_native_menu(const NativeEvent& event,bool& rebuilt,u32& selection
 }
 Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Consumer consumer) {
     using Consumer=native_menu_component::Consumer;
+    // 108730 builds English upper rows; 1002B0 copies them through CF990
+    // into the real Menu. Bind at CFFB0's complete native text consumers so
+    // its title, row metrics, selection and cached source share one language.
+    // The unchanged native header also identifies a menu adopted on reload.
+    if(std::strcmp(at<char>(0x5F54A38),"HELP AND GAME OPTIONS")==0) {
+        if(consumer==Consumer::plain_title || consumer==Consumer::title_panel) {
+            native_menu_component::bind_title(TextComponent::message_value,
+                at<char>(0x5F54A38),"menu.title");
+        } else if(consumer==Consumer::button_row) {
+            // D031F is reached only for an action row containing '.'.
+            // Keep the actual ?, Q, O, F1, CTRL+s and ESC key-cap prefix.
+            const auto* suffix=std::strchr(ptr<char>(e.arguments[0]),'.')+1;
+            native_menu_component::bind_row(e.frame->esi,TextComponent::message_value,
+                suffix,"menu.label",true);
+        }
+        return Status::ok;
+    }
     if(consumer==Consumer::plain_row && in(Scope::menu)) {
         native_menu_component::bind_row(e.frame->esi,static_cast<TextComponent>(e.frame->ebx),
             ptr<char>(e.arguments[0]));
