@@ -40,3 +40,136 @@ inventory.ui	Wield	手持
 inventory.suffix	 (unpaid)	（未付款）
 inventory.suffix	 (taken)	（已拿取）
 inventory.suffix	 (unpaid) (taken)	（未付款）（已拿取）
+inventory.ui	What do you want to grind for flour?	准备将什么磨成面粉？
+inventory.verb	grind	磨成面粉的物品
+inventory.ui	Select a crop to plant/sow?	选择要种植或播种的作物
+inventory.verb	plant/sow	种植或播种的作物
+inventory.ui	What do you want to use as a bait?	准备使用什么作诱饵？
+inventory.verb	bait the trap with	用作陷阱诱饵的物品
+inventory.ui	Choose a net?	选择一张渔网
+inventory.verb	fish with	用于捕鱼的用具
+inventory.ui	Choose your fishing equipment?	选择捕鱼用具
+inventory.verb	bait the hook with	用作鱼钩诱饵的物品
+inventory.ui	What do you want to eat?	准备吃什么？
+inventory.verb	eat	食用的物品
+inventory.ui	What do you want to drink?	准备喝什么？
+inventory.verb	drink	饮用的物品
+inventory.ui	Select an item from vegetable kingdom?	选择要查看的植物物品
+inventory.verb	examine	查看的植物物品
+inventory.ui	Select the net to repair	选择要修补的渔网
+inventory.verb	repair	修补的物品
+inventory.ui	Select a weapon or tool whose haft to remove?	选择要拆除柄杆的武器或工具
+inventory.verb	remove the haft from	拆除柄杆的武器或工具
+inventory.ui	Select the head of a weapon or tool to haft?	选择要装柄的武器或工具头
+inventory.verb	haft	装柄的武器或工具头
+inventory.ui	Select a piece clothing to repair	选择要修补的衣物
+inventory.ui	Select a tying equipment you want to shorten?	选择要截短的捆绑用具
+inventory.verb	shorten	截短的捆绑用具
+inventory.ui	Select tying equipment to join with another?	选择要连接的捆绑用具
+inventory.verb	join	连接的捆绑用具
+inventory.ui	What to join with the selected tying equipment?	准备将什么与所选捆绑用具连接？
+inventory.ui	What do you want to pick up?	准备拾取哪些物品？
+inventory.verb	pick up	拾取的物品
+inventory.ui	Select a container to fill	选择要装满的容器
+inventory.verb	fill	装满的容器
+inventory.ui	What do you want to throw, or shoot?	准备投掷或发射什么？
+inventory.verb	throw/shoot	投掷或发射的物品
+inventory.ui	Select a container to empty?	选择要倒空的容器
+inventory.verb	empty	倒空的容器
+inventory.ui	What do you want to pour or put into that container?	准备向该容器倒入或放入什么？
+inventory.verb	fill the container with	装入容器的物品
+inventory.ui	Select the target container?	选择目标容器
+inventory.verb	be filled	填装的目标容器
+inventory.ui	What do you want to drop?	准备丢弃哪些物品？
+inventory.verb	drop	丢弃的物品
+inventory.ui	Select items on the ground you wish to move	选择地面上要拖运的物品
+inventory.verb	haul around	拖运的物品
+inventory.ui	What do you want to wear?	准备穿戴哪件物品？
+inventory.verb	wear	穿戴的物品
+inventory.ui	What do you want to take off?	准备脱下哪件物品？
+inventory.verb	take off	脱下的物品
+inventory.ui	You are carrying the following items.	你携带着以下物品。
+inventory.verb	examine (weapon or armour)	查看的武器或护甲
+inventory.ui		
+inventory.verb		
+inventory.ui	What do you want to pack on it?	准备在它身上装载哪些物品？
+inventory.verb	pack	装载的物品
+inventory.ui	What do you want to move to that location?	准备将哪些物品移到该地点？
+inventory.verb	move	移动的物品
+inventory.ui	Select required equipment	选择所需工具
+inventory.verb	use	使用的工具
+inventory.ui	What do you want to unpack?	准备卸下哪些物品？
+inventory.verb	unpack	卸下的物品
+inventory.ui	Select a skin to cure	选择要初步处理的皮张
+inventory.verb	cure	初步处理的皮张
+inventory.ui	Select a skin to de-hair	选择要脱毛的皮张
+inventory.verb	de-hair	脱毛的皮张
+inventory.ui	Select a skin to clean	选择要清理的皮张
+inventory.verb	clean	清理的皮张
+inventory.ui	Select a skin to tan	选择要鞣制的皮张
+inventory.verb	tan	鞣制的皮张
+inventory.ui	Select plant fibres to spin into yarn	选择要纺成线的植物纤维
+inventory.verb	spin	纺成线的植物纤维
+inventory.ui	Select sinew fibres for making sinew yarn	选择要制成筋腱线的肌腱纤维
+inventory.verb	make yarn from	制成筋腱线的肌腱纤维
+inventory.ui	Select the plants for retting	选择要沤制的植物
+inventory.verb	ret	沤制的植物
+inventory.ui	Select the plant material to extract fibre from	选择要提取纤维的植物材料
+inventory.verb	extract fibres from	提取纤维的植物材料
+inventory.ui	Select dried tendons to separating sinew fibres from	选择要分离纤维的干肌腱
+inventory.verb	separate sinew fibres from	分离纤维的干肌腱
+inventory.ui	Select the retted plants to dry	选择要晾干的沤制植物
+inventory.verb	dry	晾干的材料
+inventory.ui	Select the tendons to dry	选择要晾干的肌腱
+inventory.ui	What do you want to trade?	准备交易哪些物品？
+inventory.verb	trade	交易的物品
+inventory.ui	What do you want to give?	准备交付哪些物品？
+inventory.verb	deliver	交付的物品
+inventory.ui	What do you want to trade from me?	准备向我购买哪些物品？
+inventory.verb	start trading about	购买的物品
+inventory.ui	Select a fishing rod to repair with this hook?	选择要用此鱼钩修好的钓竿
+inventory.verb	have the hook attached to	装上鱼钩的钓竿
+inventory.ui	Select a bow to repair with this string?	选择要用此弓弦修好的弓
+inventory.verb	have the bowstring attached to	装上弓弦的弓
+inventory.ui	ITEMINFO	物品信息
+inventory.verb	tweak	调整的物品
+inventory.ui	Items selection	物品选择
+inventory.no-verb	Select an item to 	选择一件物品
+inventory.no-verb	Select items to 	选择物品
+inventory.ui	empty	空
+inventory.ui	1st	主手
+inventory.ui	2nd	副手
+inventory.ui	Are you sure to cancel?	确定要取消吗？
+inventory.ui	All	全部
+inventory.ui	Number?	指定数量
+inventory.ui	Enter amount: 	输入数量：
+inventory.format	HOW MANY? (OF TOTAL %d)	选择多少？（共%d件）
+inventory.ui	What do you want to pick?	准备取走哪些物品？
+inventory.verb	pick	取走的物品
+action		
+action	bait the hook with	用作鱼钩诱饵
+action	bait the trap with	用作陷阱诱饵
+action	be filled	装填
+action	deliver	交付
+action	drink	饮用
+action	examine	查看
+action	examine (weapon or armour)	查看（武器或护甲）
+action	fill the container with	装入容器
+action	haul around	拖运
+action	have the bowstring attached to	安装弓弦
+action	have the hook attached to	安装鱼钩
+action	make yarn from	制成筋腱线
+action	move	移动
+action	pack	装载
+action	pick up	拾取
+action	plant/sow	种植或播种
+action	remove the haft from	拆除柄杆
+action	start trading about	购买
+action	throw/shoot	投掷或射击
+action	trade	交易
+action	tweak	调整
+action	unpack	卸载
+action	wield	手持
+action	pick	取走
+inventory.ui	<Y>es	<Y>是
+inventory.ui	<N>o	<N>否

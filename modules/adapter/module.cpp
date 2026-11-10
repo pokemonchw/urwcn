@@ -437,7 +437,9 @@ Status measure_component_text(const char* encoded,std::int32_t& width) {
 Status measure_menu_text(const char* encoded,const char* original,std::int32_t& width) {
     const native_name_input::UnicodeMeasure unicode(native_name_input::requires_unicode(original) ? original : "");
     render::Metrics measured{};
-    const auto status=metrics(encoded,measured);
+    const bool highlighted_query=std::strcmp(original,"<Y>es")==0 || std::strcmp(original,"<N>o")==0;
+    const auto visible=highlighted_query ? native_button::visible_text(encoded,std::strlen(encoded)) : std::string(encoded);
+    const auto status=metrics(visible.c_str(),measured);
     if(status==Status::ok) width=measured.logical_width;
     return status;
 }
@@ -1023,6 +1025,8 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         break;
     case setup_exit_width:
         if(in(Scope::setup_exit) || native_name_input::contains_display(ptr<char>(e.frame->edi))) {
+            if(!std::strchr(ptr<char>(e.frame->edi),'.'))
+                return native_button::unmarked_row_width(e,result,metrics);
             // CFAF0 has already terminated its local copy at '.', while EDI
             // still owns the complete borrowed text. Preserve the native ESC
             // cell width, separator and margins; replace only suffix width.

@@ -1,0 +1,59 @@
+caller_va	call_va	target_va	title_va	title	title_zh	verb_va	verb	verb_zh
+00404030	004040c3	00455060	0058cbd0	What do you want to grind for flour?	准备将什么磨成面粉？	0058cbc8	grind	磨成面粉的物品
+00404c70	00404df4	00455060	0058cf10	Select a crop to plant/sow?	选择要种植或播种的作物	0058cf04	plant/sow	种植或播种的作物
+00405230	00405282	004581f0	0058d024	What do you want to use as a bait?	准备使用什么作诱饵？	0058d010	bait the trap with	用作陷阱诱饵的物品
+004311e0	00431488	004581f0	00592d90	Choose a net?	选择一张渔网	00592d84	fish with	用于捕鱼的用具
+004311e0	004314a3	004581f0	00592da0	Choose your fishing equipment?	选择捕鱼用具	00592d84	fish with	用于捕鱼的用具
+004311e0	00431ac7	004581f0	0058d024	What do you want to use as a bait?	准备使用什么作诱饵？	00592fb4	bait the hook with	用作鱼钩诱饵的物品
+00435a70	00435a93	00455060	00593b58	What do you want to eat?	准备吃什么？	005935f0	eat	食用的物品
+00436160	004362ea	00455060	00593c18	What do you want to drink?	准备喝什么？	00593c10	drink	饮用的物品
+0043b3d0	0043b483	00455060	00594478	Select an item from vegetable kingdom?	选择要查看的植物物品	00594470	examine	查看的植物物品
+00443d30	00443d91	004581f0	00596b20	Select the net to repair	选择要修补的渔网	00596b18	repair	修补的物品
+00443fc0	00444063	00455060	00596be8	Select a weapon or tool whose haft to remove?	选择要拆除柄杆的武器或工具	00596bd0	remove the haft from	拆除柄杆的武器或工具
+00444500	0044459a	00455060	00596dbc	Select the head of a weapon or tool to haft?	选择要装柄的武器或工具头	00596db4	haft	装柄的武器或工具头
+00445510	004456d6	004581f0	00596ebc	Select a piece clothing to repair	选择要修补的衣物	00596b18	repair	修补的物品
+00447180	004471b4	004581f0	0059717c	Select a tying equipment you want to shorten?	选择要截短的捆绑用具	00597174	shorten	截短的捆绑用具
+00447630	00447659	004581f0	005972dc	Select tying equipment to join with another?	选择要连接的捆绑用具	005972d4	join	连接的捆绑用具
+00447630	0044779e	004581f0	005973bc	What to join with the selected tying equipment?	准备将什么与所选捆绑用具连接？	005972d4	join	连接的捆绑用具
+0044cc80	0044ccbc	00455060	00598650	What do you want to pick up?	准备拾取哪些物品？	00598648	pick up	拾取的物品
+0044cc80	0044cdb6	00455060	00598650	What do you want to pick up?	准备拾取哪些物品？	00598648	pick up	拾取的物品
+0044d010	0044d054	004581f0	00598784	Select a container to fill	选择要装满的容器	0059877c	fill	装满的容器
+0044dcf0	0044def5	004581f0	00598964	What do you want to throw, or shoot?	准备投掷或发射什么？	00598958	throw/shoot	投掷或发射的物品
+00450320	00450350	004581f0	00598d50	Select a container to empty?	选择要倒空的容器	00597914	empty	倒空的容器
+004504c0	0045051c	004581f0	00595538	What do you want to pour or put into that container?	准备向该容器倒入或放入什么？	00595520	fill the container with	装入容器的物品
+004504c0	00450630	004581f0	00595598	Select the target container?	选择目标容器	0059558c	be filled	填装的目标容器
+00458050	0045808a	00455060	00595e20	What do you want to drop?	准备丢弃哪些物品？	00595e18	drop	丢弃的物品
+00458250	00458365	00455060	00595ec4	Select items on the ground you wish to move	选择地面上要拖运的物品	00595eb8	haul around	拖运的物品
+004584d0	004584f6	00455060	00595f6c	What do you want to wear?	准备穿戴哪件物品？	005959c8	wear	穿戴的物品
+00458680	004586b1	004581f0	00595f90	What do you want to wield?	准备手持哪件物品？	00595f88	wield	手持的物品
+00458830	00458844	004581f0	00595fe8	What do you want to take off?	准备脱下哪件物品？	00595fdc	take off	脱下的物品
+00458ca0	00458d35	004581f0	005960f0	What do you want to apply?	准备使用哪件物品？	005960e8	apply	使用的物品
+00458e30	00458e64	00455060	00596128	You are carrying the following items.	你携带着以下物品。	0059610c	examine (weapon or armour)	查看的武器或护甲
+00458eb0	00458f1c	00455060	0058c616			0058c616		
+00458eb0	00458fe3	00455060	00596194	What do you want to pack on it?	准备在它身上装载哪些物品？	0059618c	pack	装载的物品
+00458eb0	00459023	00455060	005961bc	What do you want to move to that location?	准备将哪些物品移到该地点？	005961b4	move	移动的物品
+00468ac0	00469260	00455060	0059aa3c	Select required equipment	选择所需工具	0059aa38	use	使用的工具
+004ab510	004ab5ab	00455060	005a017c	What do you want to unpack?	准备卸下哪些物品？	005a0174	unpack	卸下的物品
+004e8d40	004e8dd0	00455060	005a8a4c	What do you want to sacrifice?	准备献祭哪件物品？	005a8a40	sacrifice	献祭的物品
+0051dc70	0051dcc0	004581f0	005ade18	Select a skin to cure	选择要初步处理的皮张	005ade10	cure	初步处理的皮张
+0051e140	0051e19b	004581f0	005adef4	Select a skin to de-hair	选择要脱毛的皮张	005adeec	de-hair	脱毛的皮张
+0051e5b0	0051e5fd	004581f0	005adfa8	Select a skin to clean	选择要清理的皮张	005adfa0	clean	清理的皮张
+0051eb90	0051ed46	004581f0	005ae01c	Select a skin to tan	选择要鞣制的皮张	005ae018	tan	鞣制的皮张
+00520180	005203a1	004581f0	005ae668	Select plant fibres to spin into yarn	选择要纺成线的植物纤维	005ae660	spin	纺成线的植物纤维
+00520180	005203a1	004581f0	005ae6a0	Select sinew fibres for making sinew yarn	选择要制成筋腱线的肌腱纤维	005ae690	make yarn from	制成筋腱线的肌腱纤维
+00520a30	00520a80	004581f0	005ae8a0	Select the plants for retting	选择要沤制的植物	005ae89c	ret	沤制的植物
+00520e40	00520e90	004581f0	005aea40	Select the plant material to extract fibre from	选择要提取纤维的植物材料	005aea2c	extract fibres from	提取纤维的植物材料
+00521410	00521470	004581f0	005aeb68	Select dried tendons to separating sinew fibres from	选择要分离纤维的干肌腱	005aeb4c	separate sinew fibres from	分离纤维的干肌腱
+00521900	00521961	004581f0	005aec24	Select the retted plants to dry	选择要晾干的沤制植物	0058dd78	dry	晾干的材料
+00521900	00521961	004581f0	005aec44	Select the tendons to dry	选择要晾干的肌腱	0058dd78	dry	晾干的材料
+005383b0	00538462	004581f0	005b2914	What do you want to trade?	准备交易哪些物品？	005b290c	trade	交易的物品
+0053b700	0053b73d	004581f0	005b37e4	What do you want to give?	准备交付哪些物品？	005b37dc	deliver	交付的物品
+0053dd30	0053dd80	00455060	005b45e8	What do you want to trade from me?	准备向我购买哪些物品？	005b45d4	start trading about	购买的物品
+00565d00	00565d55	00455060	005d9130	Select a fishing rod to repair with this hook?	选择要用此鱼钩修好的钓竿	005d9114	have the hook attached to	装上鱼钩的钓竿
+00565f20	00565f75	00455060	005d9274	Select a bow to repair with this string?	选择要用此弓弦修好的弓	005d9254	have the bowstring attached to	装上弓弦的弓
+0056fe30	0057bdd0	004581f0	005dbe50	ITEMINFO	物品信息	0058c616		
+0056fe30	0057be4f	004581f0	005dbe50	ITEMINFO	物品信息	0058c616		
+0056fe30	0057be8e	004581f0	005dbe50	ITEMINFO	物品信息	0058c616		
+0056fe30	0057bf73	004581f0	005dbe50	ITEMINFO	物品信息	0058c616		
+0056fe30	0057c7ab	004581f0	005dbe50	ITEMINFO	物品信息	005dc164	tweak	调整的物品
+004ab510	004ab5ab	00455060	005a01a0	What do you want to pick?	准备取走哪些物品？	005a0198	pick	取走的物品

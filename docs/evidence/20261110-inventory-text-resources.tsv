@@ -1,0 +1,202 @@
+domain	source	target	native_boundary
+inventory.ui	What do you want to wield?	准备手持哪件物品？	5565B -> 116270
+inventory.ui	What do you want to apply?	准备使用哪件物品？	5565B -> 116270
+inventory.ui	What do you want to sacrifice?	准备献祭哪件物品？	5565B -> 116270
+inventory.ui	Select an item to 	选择要	5570A -> 10E5A0
+inventory.ui	Select items to 	选择要	5570A -> 10E5A0
+inventory.verb	wield	手持的物品	5573A -> 10E5A0
+inventory.verb	apply	使用的物品	5573A -> 10E5A0
+inventory.verb	sacrifice	献祭的物品	5573A -> 10E5A0
+inventory.ui	.	。	5576B -> 10E5A0
+inventory.ui	Use hotkeys, mouse click or .ENTER to select.	使用快捷键、鼠标点击或 .ENTER 选择。	559D2 -> 10E5A0
+inventory.ui	Use hotkeys, mouse click or 	使用快捷键、鼠标点击或 	559D2 -> 10E5A0; 559EE native width operand
+inventory.ui	Select all	全选	55A23 -> CFAF0
+inventory.ui	Deselect all	取消全选	55B04 -> CFAF0
+inventory.ui	You can select multiple items here.	这里可以选择多件物品。	55A78 -> 10E5A0
+inventory.ui	Done - proceed with selected.	完成，继续处理所选物品。	55B7E -> CFAF0
+inventory.ui	You have selected the maximum number of entries.	已达到可选数量上限。	55A78 -> 10E5A0
+inventory.format	...or select %d more entries.	……还可选择%d项。	55BEC -> 10D0; 55A78 -> 10E5A0
+inventory.ui	Take off all wielded items, go empty handed.	收起所有手持物品，空出双手。	55C76 -> CFAF0
+inventory.ui	Unwield 1st weapon	收起第一件武器	55CA9 -> CFAF0
+inventory.ui	Unwield 2nd weapon	收起第二件武器	55D2A -> CFAF0
+inventory.ui	Move	移动	55E2C -> CFAF0
+inventory.ui	Next page	下一页	55E49 -> CFAF0
+inventory.ui	Prev page	上一页	55E69 -> CFAF0
+inventory.ui	Cancel	取消	55EAB -> CFAF0
+inventory.ui	Viewing:	显示：	55F9E -> 10E5A0
+inventory.ui	Viewing: All items	显示：全部物品	55EC7 -> 10D0; 55F86 -> 10E5A0
+inventory.format	Viewing: %s	显示：%s	55EE6 -> 10D0; 55F86 -> 10E5A0
+inventory.format	%c.All types	%c.全部类别	55FB9 -> 10D0; 55FF9 -> CFAF0
+inventory.ui	All types	全部类别	55FF9 -> CFAF0
+inventory.ui	Filter	筛选	56015 -> CFAF0
+inventory.ui	usage	用途	5438E -> 10E5A0
+inventory.ui	wear	磨损	543D6 -> 10E5A0
+inventory.ui	weight	重量	5440F -> 10E5A0
+inventory.ui	wielded	手持	544E4 -> 10E5A0
+inventory.ui	  worn 	已穿戴	544E4 -> 10E5A0
+inventory.ui	 in use	使用中	544E4 -> 10E5A0
+inventory.ui	Applicable, but none available.	适用，但没有可用物品。	54920 -> 10E5A0
+inventory.ui	Wield	手持	F91E7 -> 10E5A0
+inventory.suffix	 (unpaid)	（未付款）	545CF/545FE -> 10D0; 54690 -> CFAF0
+inventory.suffix	 (taken)	（已拿取）	545CF/545FE -> 10D0; 54690 -> CFAF0
+inventory.suffix	 (unpaid) (taken)	（未付款）（已拿取）	545CF/545FE -> 10D0; 54690 -> CFAF0
+inventory.ui	What do you want to grind for flour?	准备将什么磨成面粉？	5565B -> 116270
+inventory.verb	grind	磨成面粉的物品	5573A -> 10E5A0
+inventory.ui	Select a crop to plant/sow?	选择要种植或播种的作物	5565B -> 116270
+inventory.verb	plant/sow	种植或播种的作物	5573A -> 10E5A0
+inventory.ui	What do you want to use as a bait?	准备使用什么作诱饵？	5565B -> 116270
+inventory.verb	bait the trap with	用作陷阱诱饵的物品	5573A -> 10E5A0
+inventory.ui	Choose a net?	选择一张渔网	5565B -> 116270
+inventory.verb	fish with	用于捕鱼的用具	5573A -> 10E5A0
+inventory.ui	Choose your fishing equipment?	选择捕鱼用具	5565B -> 116270
+inventory.verb	bait the hook with	用作鱼钩诱饵的物品	5573A -> 10E5A0
+inventory.ui	What do you want to eat?	准备吃什么？	5565B -> 116270
+inventory.verb	eat	食用的物品	5573A -> 10E5A0
+inventory.ui	What do you want to drink?	准备喝什么？	5565B -> 116270
+inventory.verb	drink	饮用的物品	5573A -> 10E5A0
+inventory.ui	Select an item from vegetable kingdom?	选择要查看的植物物品	5565B -> 116270
+inventory.verb	examine	查看的植物物品	5573A -> 10E5A0
+inventory.ui	Select the net to repair	选择要修补的渔网	5565B -> 116270
+inventory.verb	repair	修补的物品	5573A -> 10E5A0
+inventory.ui	Select a weapon or tool whose haft to remove?	选择要拆除柄杆的武器或工具	5565B -> 116270
+inventory.verb	remove the haft from	拆除柄杆的武器或工具	5573A -> 10E5A0
+inventory.ui	Select the head of a weapon or tool to haft?	选择要装柄的武器或工具头	5565B -> 116270
+inventory.verb	haft	装柄的武器或工具头	5573A -> 10E5A0
+inventory.ui	Select a piece clothing to repair	选择要修补的衣物	5565B -> 116270
+inventory.ui	Select a tying equipment you want to shorten?	选择要截短的捆绑用具	5565B -> 116270
+inventory.verb	shorten	截短的捆绑用具	5573A -> 10E5A0
+inventory.ui	Select tying equipment to join with another?	选择要连接的捆绑用具	5565B -> 116270
+inventory.verb	join	连接的捆绑用具	5573A -> 10E5A0
+inventory.ui	What to join with the selected tying equipment?	准备将什么与所选捆绑用具连接？	5565B -> 116270
+inventory.ui	What do you want to pick up?	准备拾取哪些物品？	5565B -> 116270
+inventory.verb	pick up	拾取的物品	5573A -> 10E5A0
+inventory.ui	Select a container to fill	选择要装满的容器	5565B -> 116270
+inventory.verb	fill	装满的容器	5573A -> 10E5A0
+inventory.ui	What do you want to throw, or shoot?	准备投掷或发射什么？	5565B -> 116270
+inventory.verb	throw/shoot	投掷或发射的物品	5573A -> 10E5A0
+inventory.ui	Select a container to empty?	选择要倒空的容器	5565B -> 116270
+inventory.verb	empty	倒空的容器	5573A -> 10E5A0
+inventory.ui	What do you want to pour or put into that container?	准备向该容器倒入或放入什么？	5565B -> 116270
+inventory.verb	fill the container with	装入容器的物品	5573A -> 10E5A0
+inventory.ui	Select the target container?	选择目标容器	5565B -> 116270
+inventory.verb	be filled	填装的目标容器	5573A -> 10E5A0
+inventory.ui	What do you want to drop?	准备丢弃哪些物品？	5565B -> 116270
+inventory.verb	drop	丢弃的物品	5573A -> 10E5A0
+inventory.ui	Select items on the ground you wish to move	选择地面上要拖运的物品	5565B -> 116270
+inventory.verb	haul around	拖运的物品	5573A -> 10E5A0
+inventory.ui	What do you want to wear?	准备穿戴哪件物品？	5565B -> 116270
+inventory.verb	wear	穿戴的物品	5573A -> 10E5A0
+inventory.ui	What do you want to take off?	准备脱下哪件物品？	5565B -> 116270
+inventory.verb	take off	脱下的物品	5573A -> 10E5A0
+inventory.ui	You are carrying the following items.	你携带着以下物品。	5565B -> 116270
+inventory.verb	examine (weapon or armour)	查看的武器或护甲	5573A -> 10E5A0
+inventory.ui			5565B -> 116270
+inventory.verb			5573A -> 10E5A0
+inventory.ui	What do you want to pack on it?	准备在它身上装载哪些物品？	5565B -> 116270
+inventory.verb	pack	装载的物品	5573A -> 10E5A0
+inventory.ui	What do you want to move to that location?	准备将哪些物品移到该地点？	5565B -> 116270
+inventory.verb	move	移动的物品	5573A -> 10E5A0
+inventory.ui	Select required equipment	选择所需工具	5565B -> 116270
+inventory.verb	use	使用的工具	5573A -> 10E5A0
+inventory.ui	What do you want to unpack?	准备卸下哪些物品？	5565B -> 116270
+inventory.verb	unpack	卸下的物品	5573A -> 10E5A0
+inventory.ui	Select a skin to cure	选择要初步处理的皮张	5565B -> 116270
+inventory.verb	cure	初步处理的皮张	5573A -> 10E5A0
+inventory.ui	Select a skin to de-hair	选择要脱毛的皮张	5565B -> 116270
+inventory.verb	de-hair	脱毛的皮张	5573A -> 10E5A0
+inventory.ui	Select a skin to clean	选择要清理的皮张	5565B -> 116270
+inventory.verb	clean	清理的皮张	5573A -> 10E5A0
+inventory.ui	Select a skin to tan	选择要鞣制的皮张	5565B -> 116270
+inventory.verb	tan	鞣制的皮张	5573A -> 10E5A0
+inventory.ui	Select plant fibres to spin into yarn	选择要纺成线的植物纤维	5565B -> 116270
+inventory.verb	spin	纺成线的植物纤维	5573A -> 10E5A0
+inventory.ui	Select sinew fibres for making sinew yarn	选择要制成筋腱线的肌腱纤维	5565B -> 116270
+inventory.verb	make yarn from	制成筋腱线的肌腱纤维	5573A -> 10E5A0
+inventory.ui	Select the plants for retting	选择要沤制的植物	5565B -> 116270
+inventory.verb	ret	沤制的植物	5573A -> 10E5A0
+inventory.ui	Select the plant material to extract fibre from	选择要提取纤维的植物材料	5565B -> 116270
+inventory.verb	extract fibres from	提取纤维的植物材料	5573A -> 10E5A0
+inventory.ui	Select dried tendons to separating sinew fibres from	选择要分离纤维的干肌腱	5565B -> 116270
+inventory.verb	separate sinew fibres from	分离纤维的干肌腱	5573A -> 10E5A0
+inventory.ui	Select the retted plants to dry	选择要晾干的沤制植物	5565B -> 116270
+inventory.verb	dry	晾干的材料	5573A -> 10E5A0
+inventory.ui	Select the tendons to dry	选择要晾干的肌腱	5565B -> 116270
+inventory.ui	What do you want to trade?	准备交易哪些物品？	5565B -> 116270
+inventory.verb	trade	交易的物品	5573A -> 10E5A0
+inventory.ui	What do you want to give?	准备交付哪些物品？	5565B -> 116270
+inventory.verb	deliver	交付的物品	5573A -> 10E5A0
+inventory.ui	What do you want to trade from me?	准备向我购买哪些物品？	5565B -> 116270
+inventory.verb	start trading about	购买的物品	5573A -> 10E5A0
+inventory.ui	Select a fishing rod to repair with this hook?	选择要用此鱼钩修好的钓竿	5565B -> 116270
+inventory.verb	have the hook attached to	装上鱼钩的钓竿	5573A -> 10E5A0
+inventory.ui	Select a bow to repair with this string?	选择要用此弓弦修好的弓	5565B -> 116270
+inventory.verb	have the bowstring attached to	装上弓弦的弓	5573A -> 10E5A0
+inventory.ui	ITEMINFO	物品信息	5565B -> 116270
+inventory.verb	tweak	调整的物品	5573A -> 10E5A0
+inventory.ui	Items selection	物品选择	5565B -> 116270
+inventory.no-verb	Select an item to 	选择一件物品	5570A -> 10E5A0; native verb EBP+14h is empty
+inventory.no-verb	Select items to 	选择物品	5570A -> 10E5A0; native verb EBP+14h is empty
+inventory.ui	empty	空	5478B -> 10E5A0
+inventory.ui	1st	主手	4B19C -> 10E5A0
+inventory.ui	2nd	副手	4B19C -> 10E5A0
+inventory.ui	Are you sure to cancel?	确定要取消吗？	568C8 -> FBB10; FBBE2 -> 116270
+inventory.ui	All	全部	FBE91 -> CFAF0
+inventory.ui	Number?	指定数量	FBF3F -> CFAF0
+inventory.ui	Enter amount: 	输入数量：	FC05F -> 10E5A0
+inventory.format	HOW MANY? (OF TOTAL %d)	选择多少？（共%d件）	FBDE8/FBF99 -> 10D0; FBE1B/FBFB8 -> 116270
+inventory.ui	What do you want to pick?	准备取走哪些物品？	5565B -> 116270
+inventory.verb	pick	取走的物品	5573A -> 10E5A0
+action			56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	bait the hook with	用作鱼钩诱饵	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	bait the trap with	用作陷阱诱饵	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	be filled	装填	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	deliver	交付	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	drink	饮用	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	examine	查看	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	examine (weapon or armour)	查看（武器或护甲）	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	fill the container with	装入容器	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	haul around	拖运	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	have the bowstring attached to	安装弓弦	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	have the hook attached to	安装鱼钩	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	make yarn from	制成筋腱线	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	move	移动	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	pack	装载	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	pick up	拾取	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	plant/sow	种植或播种	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	remove the haft from	拆除柄杆	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	start trading about	购买	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	throw/shoot	投掷或射击	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	trade	交易	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	tweak	调整	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	unpack	卸载	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	wield	手持	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+action	pick	取走	56B8E/56BBA/56BE6 -> 10D0; existing resource/message consumers
+inventory.ui	<Y>es	<Y>是	FBC54 -> CFAF0 -> 114680
+inventory.ui	<N>o	<N>否	FBC6D -> CFAF0 -> 114680
+menu.label	Preferred types	偏好类别	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Weapons	武器	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Armours & Clothes	盔甲与衣物	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Containers	容器	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Hides & Skins	兽皮	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Textiles & Yarn	纺织品与纱线	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Tools	工具	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Foods	食物	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Timber	木料	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Vehicles	车辆	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Valuables	贵重物品	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Plants	植物	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Carcasses	尸体	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Miscellaneous	杂物	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+menu.label	Unpaid	未付款	448AD0 -> 5434B/548E0/55EE6; 531C7 -> FFB30
+unit	lb	磅	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+unit	kg	千克	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+unit	%.1f	%.1f	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+unit	%.2f	%.2f	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+unit	%.0f	%.0f	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+unit	 lb	磅	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+unit	 lbs	磅	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+unit	 oz	盎司	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+unit	 kg	千克	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+unit	 g	克	4B2F0 -> 4BD10; 4BD15 native copy; 547E1 -> 10E5A0
+menu.label	All types	所有类别	53319 -> FFB30
+menu.title	View what type of items?	查看哪类物品？	53323 -> 1002B0

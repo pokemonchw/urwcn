@@ -294,6 +294,18 @@ Status family(u32 caller,u32 parent,u32 body,u32 selected,u32 mode,u32 last_prev
     if(status==Status::ok) select(selected);
     return status;
 }
+Status inventory_query_parent(u32 query_owner) {
+    // 568C8 -> FBB10: the query's saved EBP is the live inventory owner.
+    // 55060 aligns ESP, allocates 14C4h, then saves three registers.
+    const auto parent=*ptr<const u32>(query_owner);
+    const auto slot=static_cast<u32>(native_ui_cache_owners::Slot::first);
+    const auto source=native_ui_scene::saved_menu(slot);
+    const auto selected=saved_selection(slot);
+    native_menu_component::retain(source);
+    const auto status=family(0x561ED,parent,(parent&~u32{7})-0x14D0,selected,0,0,source);
+    native_menu_component::release(source);
+    return status;
+}
 Status restore_parent(const NativeEvent& event) {
     const auto name=ptr<const char>(event.frame->ecx);
     const auto slot=named_slot(name);

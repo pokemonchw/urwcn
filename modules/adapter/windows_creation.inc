@@ -205,13 +205,13 @@ Status dispatch_windows_creation(const NativeEvent& e,DispatchResult& result,boo
         return Status::ok;
     case setup_exit_width:
         if(in(Scope::creation_button) && !std::strchr(ptr<char>(e.frame->edi),'.')) {
-            render::Metrics measured{};const auto status=metrics(ptr<char>(e.frame->edi),measured);
-            if(status!=Status::ok) return status;
-            e.frame->eax=static_cast<u32>(measured.logical_width+10);result.skip_original=1;return Status::ok;
+            return native_button::unmarked_row_width(e,result,metrics);
         }
         break;
     case creation_button_prefix_width:
         if(contains_display(ptr<char>(e.frame->ebp-0x408))) {
+            if(!std::strchr(ptr<char>(e.frame->edi),'.'))
+                return native_button::unmarked_row_width(e,result,metrics);
             render::Metrics measured{};const auto status=metrics(ptr<char>(e.frame->ebp-0x408),measured);
             if(status!=Status::ok) return status;
             e.frame->eax=static_cast<u32>(measured.logical_width+10);result.skip_original=1;

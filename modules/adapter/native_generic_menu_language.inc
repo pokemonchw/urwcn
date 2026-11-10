@@ -98,8 +98,13 @@ Status query(const NativeEvent& event,bool second) {
     // complete query, before the native sprintf's shared scratch is reused.
     const std::string text=ptr<const char>(*ptr<const u32>(event.frame->ebp-0x43C));
     const auto owner=*ptr<const u32>(event.frame->ebp);
-    native_parent_cache_language::restore_first_hud();
-    auto status=native_parent_cache_language::game_parent();
+    Status status;
+    if(second && text=="Are you sure to cancel?")
+        status=native_parent_cache_language::inventory_query_parent(owner);
+    else {
+        native_parent_cache_language::restore_first_hud();
+        status=native_parent_cache_language::game_parent();
+    }
     if(status!=Status::ok) return status;
     constructing=Construction::query;
     const Query input{address(at<void>(second ? 0xFBB97 : 0xFB938)),owner,address(text.c_str())};
@@ -108,6 +113,21 @@ Status query(const NativeEvent& event,bool second) {
     uwcn_generic_query(&input);
     constructing=Construction::none;
     return Status::ok;
+}
+void bind_query_buttons(u32 menu) {
+    const auto& records=native_menu_model::paint_records(menu);
+    u32 count{};std::memcpy(&count,records.header.data()+0x14,sizeof(count));
+    for(u32 row=0;row<count;++row) {
+        u32 action{};
+        std::memcpy(&action,records.rows.data()+row*native_menu_model::row_stride+0xC8,sizeof(action));
+        // FBC54/FBC6D construct these exact visible actions; FBC7F/FBC8E
+        // are the original empty ESC/SPACE actions. No row index is assumed.
+        if(action=='Y' || action=='N') {
+            const auto* original=action=='Y' ? "<Y>es" : "<N>o";
+            native_menu_model::bind_row(menu,row,native_text_resource::from_request(
+                {TextComponent::message_value,original,"inventory.ui"}),{});
+        }
+    }
 }
 Status history(const NativeEvent& event) {
     const auto owner=*ptr<const u32>(event.frame->ebp);
@@ -153,6 +173,7 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
        caller!=0x1427FA && caller!=0x14705A) return Status::ok;
     const auto current=native_menu_component::active();
     native_menu_component::retain(current);
+    if(caller==0xFBC98) bind_query_buttons(current);
     const auto flip=*at<u32>(0x61BBA5C);
     *at<u32>(0x61BBA5C)=1;
     Status status;
@@ -255,8 +276,22 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         event.frame->eax=static_cast<u32>(measured.logical_width);result.resume_rva=0xFE601;
         return Status::ok;
     }
-    if(event.id==history_append || event.id==history_paragraph || event.id==history_footer ||
-       event.id==query_panel || event.id==query_second_panel)
+    if(event.id==query_second_panel) {
+        const auto* original=ptr<char>(event.arguments[2]);
+        if(std::strcmp(original,"Are you sure to cancel?")==0) {
+            const auto source=native_text_resource::from_request(
+                {TextComponent::message_value,original,"inventory.ui"});
+            native_component_binding::bind_source(event,source);
+            if(!chinese_enabled) return Status::ok;
+            std::vector<char> encoded;
+            const auto status=native_text_resource::resolve_source(source,
+                resolve_display_text,encode_component_original,encoded);
+            if(status!=Status::ok) return status;
+            return lend_text(event,encoded,event.arguments[2],Scope::titled_panel);
+        }
+        return Status::ok;
+    }
+    if(event.id==history_append || event.id==history_paragraph || event.id==history_footer || event.id==query_panel)
         return Status::ok;
     if(event.id==query_finished || event.id==query_second_finished) {
         if(constructing==Construction::query)

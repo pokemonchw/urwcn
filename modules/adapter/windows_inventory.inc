@@ -2,6 +2,7 @@
 // Only original text expressions cross these complete component CALLs.
 // Evidence: docs/evidence/20261110-wield-inventory-native.md.
 // Sacrifice: docs/evidence/20261110-sacrifice-inventory-native.md.
+// Complete caller/text census: docs/evidence/20261110-inventory-all-text.md.
 Status native_text_limit(std::vector<char>& encoded,std::int32_t maximum,std::int32_t retained,u32 outline) {
     render::Metrics measured{};auto status=metrics_at_outline(encoded.data(),outline,measured);
     if(status!=Status::ok || measured.logical_width<=maximum) return status;
@@ -21,7 +22,8 @@ namespace windows_inventory {
 enum Hook:u32 {
     text_first=0x18200,name_copy=0x18300,row_format,partial_row_format,item_button,
     viewing_all,viewing_category,all_types_format,viewing_width,all_types_width,
-    enter_origin,remaining_format
+    enter_origin,remaining_format,
+    extra_text_first=0x18320,weight_copy=0x18340,quantity_format,quantity_more_format,cancel_source
 };
 struct TextCall {u32 site,target;const char* domain;};
 constexpr TextCall text_calls[]{
@@ -51,6 +53,20 @@ constexpr TextCall text_calls[]{
     {0x544E4,0x10E5A0,"inventory.ui"},
     {0x54920,0x10E5A0,"inventory.ui"}
 };
+// Append independently: the original text IDs and the two following IDs stay
+// stable across compatible module handover.
+constexpr TextCall extra_text_calls[]{
+    {0x5478B,0x10E5A0,"inventory.ui"},
+    {0x547E1,0x10E5A0,"inventory.ui"},
+    {0x4B19C,0x10E5A0,"inventory.ui"},
+    {0xFBE1B,0x116270,"inventory.ui"},
+    {0xFBFB8,0x116270,"inventory.ui"},
+    {0xFBE91,0xCFAF0,"inventory.ui"},
+    {0xFBF3F,0xCFAF0,"inventory.ui"},
+    {0xFC05F,0x10E5A0,"inventory.ui"},
+    {0xFBC54,0xCFAF0,"inventory.ui"},
+    {0xFBC6D,0xCFAF0,"inventory.ui"}
+};
 
 std::string expression_key(const MessageText& source) {
     std::vector<unsigned char> bytes;native_message_source::write(bytes,source);
@@ -63,6 +79,19 @@ native_text_resource::TextSource expression(const char* original,const MessageTe
         TextComponent component=TextComponent::native_message_expression) {
     return {component,message_source_utf8(original),expression_key(source),true,
         native_text_resource::TextPolicy::semantic,{},{}};
+}
+Status consume_source(const NativeEvent& e,const native_text_resource::TextSource& source,u32 argument,Scope scope) {
+    native_component_binding::bind_source(e,source);
+    // CFAF0 forwards this label to CF990 while constructing the accepted
+    // native Menu. Keep its semantic source with that same original row.
+    if(scope==Scope::setup_exit || scope==Scope::creation_button)
+        native_menu_component::bind_constructor_row(e.token,source);
+    if(!chinese_enabled) return Status::ok;
+    std::vector<char> encoded;
+    const auto status=native_text_resource::resolve_source(source,resolve_display_text,encode_component_original,encoded);
+    if(status!=Status::ok) return status;
+    return lend_text(e,encoded,e.arguments[argument],scope,
+        scope==Scope::text ? e.arguments[2] : *at<u32>(0x5F54A9C));
 }
 Status bind_expression(const NativeEvent& e,const char* original,const MessageText& source,
         TextComponent component=TextComponent::native_message_expression) {
@@ -93,25 +122,35 @@ Status bind_text(const NativeEvent& e,const TextCall& c) {
         c.target==0xCFAF0 || c.target==0x1157B0 ? 1u : 0u;
     const auto* original=ptr<char>(e.arguments[argument]);
     if(c.site==0x55A78 && std::strncmp(original,"...or select ",13)==0)
-        return bind_expression(e,original,windows_messages::values.at(address(original)).text);
-    // 58680, 58CA0 and E8D40 supply these confirmed native title/verb pairs.
-    // Other commands retain their own title and verb semantics.
-    if(c.site==0x5565B && std::strcmp(original,"What do you want to wield?")!=0 &&
-       std::strcmp(original,"What do you want to apply?")!=0 &&
-       std::strcmp(original,"What do you want to sacrifice?")!=0) return Status::ok;
-    if(c.site==0x5573A && std::strcmp(original,"wield")!=0 &&
-       std::strcmp(original,"apply")!=0 && std::strcmp(original,"sacrifice")!=0) return Status::ok;
+        return consume_source(e,expression(original,windows_messages::values.at(address(original)).text),0,Scope::text);
+    if(c.site==0x547E1 || c.site==0xFBE1B || c.site==0xFBFB8) {
+        if(c.site==0x547E1)
+            native_component_binding::note_native_record(e,*ptr<u32>(e.frame->ebp-0x81C));
+        return consume_source(e,expression(original,message_source_bound(original)),argument,
+            c.target==0x116270 ? Scope::titled_panel : Scope::text);
+    }
+    if(c.site==0xFBC54 || c.site==0xFBC6D) {
+        // These actual labels are <Y>es / <N>o, with native highlight
+        // delimiters, rather than the dotted keycap syntax used below.
+        return consume_source(e,native_text_resource::from_request(
+            {TextComponent::message_value,original,"inventory.ui"}),argument,Scope::creation_button);
+    }
+    // Every 55060/581F0 caller is statically enumerated, including the
+    // original empty verb. The native EBP+14h input owns that distinction.
+    const auto* domain=c.site==0x5570A && *ptr<char>(*ptr<u32>(e.frame->ebp+0x14))==0
+        ? "inventory.no-verb" : c.domain;
     const auto* suffix=c.target==0xCFAF0 ? std::strchr(original,'.')+1 : original;
     auto source=native_text_resource::from_request({TextComponent::message_value,
-        message_source_utf8(suffix).c_str(),c.domain});
+        message_source_utf8(suffix).c_str(),domain});
     source.prefix.assign(original,suffix);
-    native_component_binding::bind_source(e,source);
     if(c.target==0x1157B0) native_component_binding::note_native_record(e,
         c.site==0x5434B ? static_cast<unsigned char>(e.frame->ebx) : e.frame->edi);
     if(c.site==0x54920) native_component_binding::note_native_record(e,e.frame->edi);
-    if(c.site==0x5438E || c.site==0x543D6 || c.site==0x5440F || c.site==0x544E4)
+    if(c.site==0x5438E || c.site==0x543D6 || c.site==0x5440F || c.site==0x544E4 || c.site==0x5478B)
         native_component_binding::note_native_record(e,*ptr<u32>(e.frame->ebp-0x81C));
-    return Status::ok;
+    const auto scope=c.target==0x116270 || c.target==0x1157B0 ? Scope::titled_panel :
+        c.target==0xCFAF0 ? Scope::setup_exit : Scope::text;
+    return consume_source(e,source,argument,scope);
 }
 Status measure_expression(const char* original,render::Metrics& measured) {
     std::vector<char> encoded;
@@ -138,10 +177,45 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(remaining_format,0x55BEC,0x10D0,3));
     hooks.push_back(call(text_first+std::size(text_calls),0x55F86,0x10E5A0,3));
     hooks.push_back(call(text_first+std::size(text_calls)+1,0x55FF9,0xCFAF0,2));
+    for(u32 i=0;i<std::size(extra_text_calls);++i) {
+        const auto& c=extra_text_calls[i];
+        hooks.push_back(call(extra_text_first+i,c.site,c.target,c.target==0x116270 ? 5 :
+            c.target==0xCFAF0 ? 2 : 3));
+    }
+    // 4BD15..4BD1F prepares the exact 4B2F0 return's native copy. The loop
+    // backedge starts at 4BD20, after this single source association.
+    hooks.push_back(inline_hook(weight_copy,0x4BD15,{0x8B,0xD3,0x2B,0xD0,0x0F,0x1F,0x80,0,0,0,0}));
+    hooks.push_back(call(quantity_format,0xFBDE8,0x10D0,3));
+    hooks.push_back(call(quantity_more_format,0xFBF99,0x10D0,3));
+    hooks.push_back(call(cancel_source,0x568C8,0xFBB10,0));
 }
 Status dispatch(const NativeEvent& e,DispatchResult& result,bool& handled) {
-    handled=e.id>=text_first && e.id<=remaining_format;
+    handled=(e.id>=text_first && e.id<=remaining_format) ||
+        (e.id>=extra_text_first && e.id<extra_text_first+std::size(extra_text_calls)) ||
+        (e.id>=weight_copy && e.id<=cancel_source);
     if(!handled) return Status::ok;
+    if(e.id>=extra_text_first && e.id<extra_text_first+std::size(extra_text_calls))
+        return e.phase==NativePhase::before ? bind_text(e,extra_text_calls[e.id-extra_text_first]) : Status::ok;
+    if(e.id==weight_copy) {
+        if(e.phase==NativePhase::inline_before) {
+            const auto* original=ptr<char>(e.frame->eax);
+            message_bind_copy(ptr<char>(e.frame->ebx),original,message_source_bound(original));
+        }
+        return Status::ok;
+    }
+    if(e.id==quantity_format || e.id==quantity_more_format) {
+        if(e.phase==NativePhase::after) message_bind_source(ptr<char>(e.arguments[0]),native_message_source::format(
+            message_source_lookup("inventory.format",ptr<char>(e.arguments[1])),
+            {native_message_source::scalar(native_message_source::Scalar::signed32,e.arguments[2],"%d")},{"%d"}));
+        return Status::ok;
+    }
+    if(e.id==cancel_source) {
+        if(e.phase==NativePhase::before) {
+            const auto* original=ptr<char>(e.frame->ecx);
+            message_bind_source(ptr<char>(e.frame->ecx),message_source_lookup("inventory.ui",original));
+        }
+        return Status::ok;
+    }
     if(e.id>=text_first && e.id<text_first+std::size(text_calls))
         return e.phase==NativePhase::before ? bind_text(e,text_calls[e.id-text_first]) : Status::ok;
     if(e.id==name_copy && e.phase==NativePhase::after) {
@@ -193,7 +267,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result,bool& handled) {
         if(formatted.children.size()==4) suffix=native_message_source::format(
             native_message_source::original("(%d) %s"),{formatted.children[2],std::move(suffix)},{"%d","%s"});
         source.value=expression_key(suffix);
-        native_component_binding::bind_source(e,source);return Status::ok;
+        return consume_source(e,source,1,Scope::setup_exit);
     }
     if(e.id==text_first+std::size(text_calls) || e.id==text_first+std::size(text_calls)+1) {
         const auto* original=ptr<char>(e.arguments[e.id==text_first+std::size(text_calls) ? 0 : 1]);
@@ -201,11 +275,11 @@ Status dispatch(const NativeEvent& e,DispatchResult& result,bool& handled) {
             render::Metrics measured{};auto status=measure_expression(original,measured);
             if(status!=Status::ok) return status;
             native_component_binding::note_center(e,static_cast<std::int32_t>(e.frame->ecx)+measured.logical_width/2);
-            return bind_expression(e,original,windows_messages::values.at(address(original)).text);
+            return consume_source(e,expression(original,windows_messages::values.at(address(original)).text),0,Scope::text);
         }
         const auto* suffix=std::strchr(original,'.')+1;
         auto source=native_text_resource::from_request({TextComponent::message_value,suffix,"inventory.ui"});
-        source.prefix.assign(original,suffix);native_component_binding::bind_source(e,source);return Status::ok;
+        source.prefix.assign(original,suffix);return consume_source(e,source,1,Scope::setup_exit);
     }
     if(!chinese_enabled) return Status::ok;
     if(e.id==viewing_width || e.id==all_types_width) {
