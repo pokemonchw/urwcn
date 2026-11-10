@@ -111,7 +111,8 @@ enum class TextComponent : std::uint32_t {
     message_value = 0x10202, message_continue = 0x10203, message_more = 0x10204,
     // Adapter-owned neutral expressions, resolved before the native consumer.
     native_message_expression = 0x10205, inventory_item_text = 0x10206,
-    encyclopedia_preview_summary = 0x10207
+    encyclopedia_preview_summary = 0x10207,
+    hud_wielded_item_text = 0x10208, hud_wielded_shield_text = 0x10209
 };
 namespace text_op { constexpr std::uint32_t translate = 1; }
 namespace catalog_op { constexpr std::uint32_t lookup = 1, repertoire = 2; }

@@ -67684,3 +67684,7 @@ message.value.inventory.suffix.2028756e7061696429	（未付款）
 message.value.inventory.suffix.202874616b656e29	（已拿取）
 message.value.inventory.suffix.2028756e7061696429202874616b656e29	（未付款）（已拿取）
 message.value.inventory.format.2e2e2e6f722073656c656374202564206d6f726520656e74726965732e	……还可选择%d项。
+message.value.hud.wielded.202d2d2043454e544552	——中位
+message.value.hud.wielded.202d2d2048494748	——高位
+message.value.hud.wielded.202d2d205249474854	——右侧
+message.value.hud.wielded.202d2d204c454654	——左侧

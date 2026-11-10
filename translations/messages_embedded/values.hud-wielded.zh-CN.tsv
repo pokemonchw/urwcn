@@ -1,0 +1,5 @@
+domain	source	target
+hud.wielded	 -- CENTER	——中位
+hud.wielded	 -- HIGH	——高位
+hud.wielded	 -- RIGHT	——右侧
+hud.wielded	 -- LEFT	——左侧

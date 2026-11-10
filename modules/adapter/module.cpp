@@ -215,6 +215,7 @@ Status translate_culture_back(const char* original,const char* topic,std::vector
 Status translate_skills_limit(TextComponent component,const char* value,std::vector<char>& encoded);
 Status translate_help_record(TextComponent component,const char* value,std::vector<char>& encoded);
 Status resolve_native_message_expression(TextComponent,const char*,std::vector<char>&);
+Status resolve_hud_wielded_text(TextComponent,const char*,std::vector<char>&);
 Status resolve_encyclopedia_preview_summary(const char*,std::vector<char>&);
 Status native_text_limit(std::vector<char>&,std::int32_t,std::int32_t,u32);
 Status resolve_display_text(TextComponent component,const char* original,const char* value,std::vector<char>& encoded) {
@@ -223,6 +224,8 @@ Status resolve_display_text(TextComponent component,const char* original,const c
         return encode_component_original(original,encoded);
     if(component==TextComponent::native_message_expression || component==TextComponent::inventory_item_text)
         return resolve_native_message_expression(component,value,encoded);
+    if(component==TextComponent::hud_wielded_item_text || component==TextComponent::hud_wielded_shield_text)
+        return resolve_hud_wielded_text(component,value,encoded);
     if(component==TextComponent::encyclopedia_preview_summary)
         return resolve_encyclopedia_preview_summary(value,encoded);
     if(component==TextComponent::culture_back) return translate_culture_back(original,value,encoded);
@@ -1419,6 +1422,7 @@ Status translate_culture_back(const char*,const char* topic,std::vector<char>& e
 #include "windows_message_audit_copies.inc"
 #include "windows_message_late_sources.inc"
 #include "windows_inventory.inc"
+#include "windows_wielded.inc"
 
 Status message_translate_value(const char* tag,const char* value,std::string& text) {
     return windows_message_values::translate_tag(tag,value,text);
@@ -1442,7 +1446,8 @@ Status dispatch_windows_messages(const NativeEvent& event,DispatchResult& result
             windows_message_appended::dispatch,windows_message_transfers::dispatch,
             windows_message_hearing::dispatch,windows_message_weather::dispatch,
             windows_message_debug_sources::dispatch,windows_message_combat_body::dispatch,
-            windows_message_audit_copies::dispatch,windows_message_late_sources::dispatch}) {
+            windows_message_audit_copies::dispatch,windows_message_late_sources::dispatch,
+            windows_wielded::dispatch}) {
         const auto status=dispatch(event,result,handled);
         if(handled) return status;
     }
@@ -1473,6 +1478,7 @@ void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
     windows_message_audit_copies::append_hooks(hooks);
     windows_message_late_sources::append_hooks(hooks);
     windows_inventory::append_hooks(hooks);
+    windows_wielded::append_hooks(hooks);
 }
 std::vector<unsigned char> save_windows_message_state() {
     std::vector<unsigned char> state;

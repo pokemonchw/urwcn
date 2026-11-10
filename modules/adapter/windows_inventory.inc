@@ -68,11 +68,14 @@ Status bind_expression(const NativeEvent& e,const char* original,const MessageTe
     native_component_binding::bind_source(e,expression(original,source,component));
     return Status::ok;
 }
-Status resolve_expression(TextComponent component,const char* value,std::vector<char>& encoded) {
+MessageText read_expression(const char* value) {
     const std::string key(value);std::vector<unsigned char> bytes;
     for(std::size_t i=0;i<key.size();i+=2)
         bytes.push_back(static_cast<unsigned char>(std::stoul(key.substr(i,2),nullptr,16)));
-    const auto* cursor=bytes.data();const auto source=native_message_source::read(cursor);
+    const auto* cursor=bytes.data();return native_message_source::read(cursor);
+}
+Status resolve_expression(TextComponent component,const char* value,std::vector<char>& encoded) {
+    const auto source=read_expression(value);
     std::string text;auto status=message_project_source(source,true,text);
     if(status!=Status::ok) return status;
     status=codec(layout_op::encode_native,text.c_str(),encoded);
