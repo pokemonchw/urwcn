@@ -1,6 +1,7 @@
 // 55060 / 54160: the native inventory owns the list, controls and preview.
 // Only original text expressions cross these complete component CALLs.
 // Evidence: docs/evidence/20261110-wield-inventory-native.md.
+// Sacrifice: docs/evidence/20261110-sacrifice-inventory-native.md.
 Status native_text_limit(std::vector<char>& encoded,std::int32_t maximum,std::int32_t retained,u32 outline) {
     render::Metrics measured{};auto status=metrics_at_outline(encoded.data(),outline,measured);
     if(status!=Status::ok || measured.logical_width<=maximum) return status;
@@ -93,12 +94,13 @@ Status bind_text(const NativeEvent& e,const TextCall& c) {
     const auto* original=ptr<char>(e.arguments[argument]);
     if(c.site==0x55A78 && std::strncmp(original,"...or select ",13)==0)
         return bind_expression(e,original,windows_messages::values.at(address(original)).text);
-    // 58680 and 58CA0 supply these confirmed native title/verb pairs.
+    // 58680, 58CA0 and E8D40 supply these confirmed native title/verb pairs.
     // Other commands retain their own title and verb semantics.
     if(c.site==0x5565B && std::strcmp(original,"What do you want to wield?")!=0 &&
-       std::strcmp(original,"What do you want to apply?")!=0) return Status::ok;
+       std::strcmp(original,"What do you want to apply?")!=0 &&
+       std::strcmp(original,"What do you want to sacrifice?")!=0) return Status::ok;
     if(c.site==0x5573A && std::strcmp(original,"wield")!=0 &&
-       std::strcmp(original,"apply")!=0) return Status::ok;
+       std::strcmp(original,"apply")!=0 && std::strcmp(original,"sacrifice")!=0) return Status::ok;
     const auto* suffix=c.target==0xCFAF0 ? std::strchr(original,'.')+1 : original;
     auto source=native_text_resource::from_request({TextComponent::message_value,
         message_source_utf8(suffix).c_str(),c.domain});

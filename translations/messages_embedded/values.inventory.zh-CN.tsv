@@ -1,10 +1,12 @@
 domain	source	target
 inventory.ui	What do you want to wield?	准备手持哪件物品？
 inventory.ui	What do you want to apply?	准备使用哪件物品？
+inventory.ui	What do you want to sacrifice?	准备献祭哪件物品？
 inventory.ui	Select an item to 	选择要
 inventory.ui	Select items to 	选择要
 inventory.verb	wield	手持的物品
 inventory.verb	apply	使用的物品
+inventory.verb	sacrifice	献祭的物品
 inventory.ui	.	。
 inventory.ui	Use hotkeys, mouse click or .ENTER to select.	使用快捷键、鼠标点击或 .ENTER 选择。
 inventory.ui	Use hotkeys, mouse click or 	使用快捷键、鼠标点击或 
