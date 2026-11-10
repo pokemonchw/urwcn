@@ -49,6 +49,7 @@ struct HudStatusCellCall {
     u32 label_color,native_record;
 };
 struct HudStatusBarCall {u32 target;std::int32_t x,y,amount,maximum;};
+struct SkillInfoCall {u32 target;std::int32_t y;u32 skill;};
 extern "C" void UWCN_CALL uwcn_component_panel(const PanelCall*);
 extern "C" void UWCN_CALL uwcn_component_legacy_panel(const LegacyPanelCall*);
 extern "C" void UWCN_CALL uwcn_component_button(const ButtonCall*);
@@ -66,4 +67,7 @@ extern "C" void UWCN_CALL uwcn_component_world_map_marker(const WorldMapMarkerCa
 extern "C" void UWCN_CALL uwcn_component_no_argument(const NoArgumentCall*);
 extern "C" void UWCN_CALL uwcn_component_hud_status_cell(const HudStatusCellCall*);
 extern "C" void UWCN_CALL uwcn_component_hud_status_bar(const HudStatusBarCall*);
+extern "C" void UWCN_CALL uwcn_component_skill_info(const SkillInfoCall*);
+extern "C" void UWCN_CALL uwcn_component_skill_help(const NoArgumentCall*);
+extern "C" void UWCN_CALL uwcn_component_fragment_return();
 }

@@ -242,7 +242,22 @@ Status construct(const NativeEvent& event,const HookSpec& hook,const EventInputs
     const auto& args=input.arguments;
     Handle handle{};
     u32 text_argument{};
-    if(target==0x10EB40) {
+    if(target==0xE03D0) {
+        // AsetaTaito supplies the real skill identity and the native row Y.
+        // Piirra_SkillInfo owns its meter, percent, mastery and talent stars.
+        const SkillInfoInputs inputs{native_input(signed_value(input.edx)),args[0]};
+        handle=upsert_skill_info({native_root_component::current(),target,args[0]},inputs);
+    } else if(target==0x11D20) {
+        // NaytaOptioRuutu reads current native point accounting. Keep both
+        // ordinary callers attached to this one native widget identity.
+        handle=upsert_skill_options({native_root_component::current(),target,0},
+            {native_component_style::capture_panel()});
+    } else if(target==0x10EB40 && hook.site_rva==0xE0CBE) {
+        // This first call measures; its enclosing native fragment also sizes
+        // the help window and paints the same paragraph at the resulting height.
+        handle=upsert_skill_help({native_root_component::current(),0xE0CA9,0},
+            {native_component_style::capture_panel()},builder);
+    } else if(target==0x10EB40) {
         if(signed_value(args[1])==-1) return Status::ok;
         const ParagraphInputs inputs{origin(input),native_input(signed_value(args[0])),
             native_input(signed_value(args[1])),args[2],args[3]};
@@ -380,7 +395,7 @@ Status construct(const NativeEvent& event,const HookSpec& hook,const EventInputs
         event.arguments[1]=address(prepared.fragments[1].data());
     } else if(target==0xFEE50) {
         event.arguments[0]=address(prepared.fragments[2].data());
-    } else if(target==0xFEF00 || target==0xF9910) {
+    } else if(target==0xFEF00 || target==0xF9910 || target==0xE03D0 || target==0x11D20) {
         // The accepted amount/maximum remain the original native integers.
     } else if(target==0x605B0 || target==0x60360 || target==0x60450) {
         // These complete native map components have no text argument.

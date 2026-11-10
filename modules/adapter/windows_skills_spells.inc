@@ -5,6 +5,7 @@ enum WindowsSkillsHook : u32 {
     ws_improve,ws_degrade,ws_limit_improve,ws_limit_degrade,ws_limit_paragraph,
     ws_name,ws_mastery,ws_help,ws_help_paragraph,ws_confirm_first=0x7640,
     ws_heading_width=0x7650,ws_heading_text,
+    ws_info=0x7660,ws_options,ws_options_update,ws_help_end,
     wm_heading=0x7700,wm_help_first=0x7710,wm_description=0x7714,wm_button,wm_exit,
     wm_heading_text,wm_paragraph_first=0x7720,
     wm_footer_scope=0x7730,wm_footer_title,wm_footer_summary,wm_footer_button
@@ -111,6 +112,15 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
         begin(e,Scope::hud_renderer_text,e.arguments[4]&1u);return Status::ok;
     }
     switch(e.id) {
+    case ws_info:case ws_options:case ws_options_update:
+        // The common binding owns these complete native widgets, including
+        // their numeric values, meters, frames and display-only children.
+        return Status::ok;
+    case ws_help_end:
+        if(native_component_model::painting_skill_help())
+            result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(
+                native_component_calls::uwcn_component_fragment_return)-host->image_base);
+        return Status::ok;
     case ws_remaining:
         return windows_skill_lend(e,TextComponent::skills_text,"remaining",e.arguments[0],Scope::text);
     case ws_improve:case ws_degrade:
@@ -209,6 +219,14 @@ void append_windows_skills_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(ws_mastery,0xE0523,0x10D0,3));
     hooks.push_back(call(ws_help,0xE0CA4,0x162530,0));
     hooks.push_back(call(ws_help_paragraph,0xE0CBE,0x10EB40,4));
+    hooks.push_back(call(ws_info,0xE0746,0xE03D0,1));
+    hooks.push_back(call(ws_options,0xE0E2A,0x11D20,0));
+    hooks.push_back(call(ws_options_update,0x1213D,0x11D20,0));
+    auto help_end=inline_hook(ws_help_end,0xE0D22,
+        {0xC7,0x05,0,0,0,0,0x01,0,0,0});
+    const auto explicit_rows=address(at<void>(0x5F549B0));
+    std::memcpy(help_end.expected+2,&explicit_rows,4);
+    hooks.push_back(help_end);
     constexpr u32 confirmations[]{0x121F5,0x12205,0x12220,0x12239};
     for(u32 i=0;i<std::size(confirmations);++i)
         hooks.push_back(call(ws_confirm_first+i,confirmations[i],i ? 0xCF990 : 0xCF790,i ? 0 : 5));

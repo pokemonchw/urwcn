@@ -17,6 +17,7 @@ std::map<Handle,Version> models;
 std::map<SourceKey,Handle> current_sources;
 std::vector<SourceBinding> bindings;
 const HudStatusSummaryInputs* summary_paint_source{};
+bool skill_help_painting{};
 
 struct Writer {
     std::vector<std::uint8_t> bytes;
@@ -83,6 +84,9 @@ struct Writer {
         scalar(value.layout);scalar(value.nutrition);scalar(value.hunger);scalar(value.thirst);
         scalar(value.vigour);scalar(value.warmth_bits);scalar(value.frame_color);scalar(value.shade_color);style(value.panel);
     }
+    void inputs(const SkillInfoInputs& value) { layout(value.y);scalar(value.skill); }
+    void inputs(const SkillOptionsInputs& value) { style(value.panel); }
+    void inputs(const SkillHelpInputs& value) { style(value.panel); }
 };
 struct Reader {
     const std::uint8_t* cursor;
@@ -196,7 +200,12 @@ struct Reader {
                 const auto layout=input.scalar<u32>(),nutrition=input.scalar<u32>(),hunger=input.scalar<u32>(),thirst=input.scalar<u32>();
                 const auto vigour=input.scalar<u32>(),warmth=input.scalar<u32>(),frame=input.scalar<u32>(),shade=input.scalar<u32>();
                 return HudStatusSummaryInputs{layout,nutrition,hunger,thirst,vigour,warmth,frame,shade,input.panel_style()};
-            }
+            },
+            [](Reader& input)->Inputs {
+                const auto y=input.layout();return SkillInfoInputs{y,input.scalar<u32>()};
+            },
+            [](Reader& input)->Inputs { return SkillOptionsInputs{input.panel_style()}; },
+            [](Reader& input)->Inputs { return SkillHelpInputs{input.panel_style()}; }
         };
         return decoders[static_cast<u32>(kind)](*this);
     }
@@ -253,13 +262,15 @@ u32 outline(const Component& component) {
     switch(component.kind) {
     case Kind::panel:case Kind::legacy_panel:case Kind::native_heading_band:
     case Kind::native_identity_heading:case Kind::compound_hint:case Kind::title_strip:
-    case Kind::scale_ruler:case Kind::hud_status_cell:case Kind::hud_status_summary:return 1;
+    case Kind::scale_ruler:case Kind::hud_status_cell:case Kind::hud_status_summary:
+    case Kind::skill_help:return 1;
     case Kind::button:return std::get<ButtonInputs>(component.inputs).outline;
     case Kind::paragraph:return std::get<ParagraphInputs>(component.inputs).outline;
     case Kind::centered_text:return std::get<CenteredTextInputs>(component.inputs).outline;
     case Kind::text_block:return std::get<TextBlockInputs>(component.inputs).outline;
     case Kind::statistic_label:return 0;
-    case Kind::world_map:case Kind::world_map_marker:case Kind::world_map_controls:return 0;
+    case Kind::world_map:case Kind::world_map_marker:case Kind::world_map_controls:
+    case Kind::skill_info:case Kind::skill_options:return 0;
     case Kind::action_button:return std::get<ActionButtonInputs>(component.inputs).style.suffix_outline;
     }
     return 0;
@@ -310,6 +321,7 @@ void initialize(std::uintptr_t image_base) {
     base=image_base;next_handle=1;models.clear();current_sources.clear();bindings.clear();
     native_component_style::initialize(image_base);
     summary_paint_source=nullptr;
+    skill_help_painting=false;
 }
 void push_source(u64 token,SourceKey key,const TextSource& text) { bindings.push_back({token,key,text}); }
 void pop_source(u64 token) {
@@ -378,6 +390,16 @@ Handle update_hud_status_bar(SourceKey source,std::int32_t amount,std::int32_t m
 Handle upsert_hud_status_summary(SourceKey source,const HudStatusSummaryInputs& inputs) {
     return upsert({source,Kind::hud_status_summary,inputs,native_text_resource::original_text(""),{}});
 }
+Handle upsert_skill_info(SourceKey source,const SkillInfoInputs& inputs) {
+    return upsert({source,Kind::skill_info,inputs,native_text_resource::original_text(""),{}});
+}
+Handle upsert_skill_options(SourceKey source,const SkillOptionsInputs& inputs) {
+    return upsert({source,Kind::skill_options,inputs,native_text_resource::original_text(""),{}});
+}
+Handle upsert_skill_help(SourceKey source,const SkillHelpInputs& inputs,const ParagraphSource& paragraph) {
+    return upsert({source,Kind::skill_help,inputs,native_text_resource::original_text(""),paragraph});
+}
+bool painting_skill_help() { return skill_help_painting; }
 const HudStatusSummaryInputs* painting_hud_status_summary() {return summary_paint_source;}
 u32 menu_owner(Handle handle) {
     const auto& component=get(handle);
@@ -452,7 +474,7 @@ void remove_owner(u64 owner) {
 Status prepare(Handle handle,const PaintServices& services,PreparedText& prepared) {
     const auto& component=get(handle);
     prepared.fragments.clear();
-    if(component.kind==Kind::paragraph) {
+    if(component.kind==Kind::paragraph || component.kind==Kind::skill_help) {
         for(const auto& fragment:component.paragraph.fragments) {
             prepared.fragments.emplace_back();
             auto status=resolve_text(fragment,services,prepared.fragments.back());
@@ -629,8 +651,33 @@ Status paint(Handle handle,const PaintServices& services) {
         const NoArgumentCall call{static_cast<u32>(base+0xF9910)};uwcn_component_no_argument(&call);
         summary_paint_source=nullptr;frame=previous_frame;shade=previous_shade;break;
     }
+    case Kind::skill_info: {
+        const auto& input=std::get<SkillInfoInputs>(component.inputs);
+        const SkillInfoCall call{static_cast<u32>(base+0xE03D0),value(input.y),input.skill};
+        uwcn_component_skill_info(&call);break;
+    }
+    case Kind::skill_options: {
+        const auto& input=std::get<SkillOptionsInputs>(component.inputs);
+        const native_component_style::PanelScope panel(input.panel);
+        const NoArgumentCall call{static_cast<u32>(base+0x11D20)};
+        uwcn_component_no_argument(&call);break;
+    }
+    case Kind::skill_help: {
+        parse_prepared_paragraph(component.paragraph,prepared.fragments);
+        const auto& input=std::get<SkillHelpInputs>(component.inputs);
+        const native_component_style::PanelScope panel(input.panel);
+        // The native fragment measures the current paragraph, builds its
+        // frame from that result and draws the body in the same invocation.
+        // Its confirmed end hook returns after both caller-cleaned stacks.
+        const NoArgumentCall call{static_cast<u32>(base+0xE0CA9)};
+        skill_help_painting=true;
+        uwcn_component_skill_help(&call);
+        skill_help_painting=false;break;
+    }
     }
     services.leave(handle,component.kind);
+    if(component.kind==Kind::skill_options || component.kind==Kind::skill_help)
+        return services.restore_parser();
     return Status::ok;
 }
 std::vector<std::uint8_t> save() {

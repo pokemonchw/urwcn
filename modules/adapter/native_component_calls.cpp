@@ -223,4 +223,32 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_hud_status_bar(c
         "popl %ebx\n\t"
         "ret\n\t");
 }
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_skill_info(const SkillInfoCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "movl 8(%esp),%ebx\n\t"
+        "pushl 8(%ebx)\n\t"
+        "movl 4(%ebx),%edx\n\t"
+        "call *(%ebx)\n\t"
+        "addl $4,%esp\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_skill_help(const NoArgumentCall*) {
+    __asm__ __volatile__(
+        "pushl %ebx\n\t"
+        "pushl %esi\n\t"
+        "pushl %edi\n\t"
+        "pushl %ebp\n\t"
+        "movl 20(%esp),%ebx\n\t"
+        "call *(%ebx)\n\t"
+        "popl %ebp\n\t"
+        "popl %edi\n\t"
+        "popl %esi\n\t"
+        "popl %ebx\n\t"
+        "ret\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_fragment_return() {
+    __asm__ __volatile__("ret\n\t");
+}
 }

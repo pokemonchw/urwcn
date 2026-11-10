@@ -9,7 +9,8 @@ using native_text_resource::TextSource;
 using Handle=u32;
 enum class Kind : u32 { panel,legacy_panel,button,paragraph,centered_text,text_block,
     statistic_label,action_button,native_heading_band,native_identity_heading,compound_hint,title_strip,scale_ruler,
-    world_map,world_map_marker,world_map_controls,hud_status_cell,hud_status_summary };
+    world_map,world_map_marker,world_map_controls,hud_status_cell,hud_status_summary,
+    skill_info,skill_options,skill_help };
 
 enum class LayoutSource : u32 {
     native_input,native_i32,center_input,center_native_i32,right_input,right_native_i32
@@ -82,9 +83,18 @@ struct HudStatusSummaryInputs {
     u32 layout,nutrition,hunger,thirst,vigour,warmth_bits,frame_color,shade_color;
     native_component_style::PanelStyle panel;
 };
+// E03D0 consumes the original skill ID and row anchor, then reads the game's
+// skill records and draws its bar, percentage, mastery and talent together.
+struct SkillInfoInputs { LayoutValue y;u32 skill; };
+// 11D20 owns the complete option-count frame, limits and adjustment buttons.
+// Its window consumes the caller's native panel style; counts and limits
+// remain native game data, with no caller arguments to the original function.
+struct SkillOptionsInputs { native_component_style::PanelStyle panel; };
+struct SkillHelpInputs { native_component_style::PanelStyle panel; };
 using Inputs=std::variant<PanelInputs,LegacyPanelInputs,ButtonInputs,ParagraphInputs,
     CenteredTextInputs,TextBlockInputs,StatisticLabelInputs,ActionButtonInputs,NativeHeadingInputs,CompoundHintInputs,TitleStripInputs,ScaleRulerInputs,
-    WorldMapInputs,WorldMapMarkerInputs,WorldMapControlsInputs,HudStatusCellInputs,HudStatusSummaryInputs>;
+    WorldMapInputs,WorldMapMarkerInputs,WorldMapControlsInputs,HudStatusCellInputs,HudStatusSummaryInputs,
+    SkillInfoInputs,SkillOptionsInputs,SkillHelpInputs>;
 
 // Paragraph fragments are the neutral input records of one native paragraph,
 // including its own markup. They are not output lines or text draw operations.
@@ -137,6 +147,10 @@ Handle upsert_hud_status_cell(SourceKey,const HudStatusCellInputs&,const TextSou
 Handle update_hud_status_text(SourceKey,const TextSource&,u32 color);
 Handle update_hud_status_bar(SourceKey,std::int32_t amount,std::int32_t maximum);
 Handle upsert_hud_status_summary(SourceKey,const HudStatusSummaryInputs&);
+Handle upsert_skill_info(SourceKey,const SkillInfoInputs&);
+Handle upsert_skill_options(SourceKey,const SkillOptionsInputs&);
+Handle upsert_skill_help(SourceKey,const SkillHelpInputs&,const ParagraphSource&);
+bool painting_skill_help();
 const HudStatusSummaryInputs* painting_hud_status_summary();
 // A native cache snapshots its Menu and passes the matching new owner here.
 // The detached component owns one reference, adopted by that cache container.
@@ -164,6 +178,7 @@ struct PaintServices {
     Status (*measure)(const char*,std::int32_t& width);
     void (*enter)(Handle,Kind,u32 outline);
     void (*leave)(Handle,Kind);
+    Status (*restore_parser)();
 };
 struct PreparedText { std::vector<std::vector<char>> fragments; };
 Status prepare(Handle,const PaintServices&,PreparedText&);

@@ -429,7 +429,8 @@ void enter_component_paint(native_component_model::Handle handle,native_componen
     const bool action_key=kind==Kind::button && model.text.prefix.find('.')!=std::string::npos;
     const auto scope=kind==Kind::panel || kind==Kind::legacy_panel || kind==Kind::title_strip ? Scope::titled_panel :
         kind==Kind::native_heading_band || kind==Kind::native_identity_heading ? Scope::titled_panel :
-        kind==Kind::button ? (action_key ? Scope::setup_exit : Scope::plain_button) : kind==Kind::paragraph ? Scope::paragraph :
+        kind==Kind::button ? (action_key ? Scope::setup_exit : Scope::plain_button) :
+        kind==Kind::paragraph || kind==Kind::skill_help ? Scope::paragraph :
         kind==Kind::centered_text ? Scope::hud_centered : kind==Kind::action_button ? Scope::creation_button :
         kind==Kind::compound_hint ? Scope::ancestors_select : Scope::text;
     Active context{component_paint_token(handle),scope,0,0,0,0,outline};
@@ -450,7 +451,8 @@ void leave_component_paint(native_component_model::Handle handle,native_componen
 }
 native_component_model::PaintServices component_paint_services() {
     return {resolve_display_text,encode_component_original,encode_component_words,
-        measure_component_text,enter_component_paint,leave_component_paint};
+        measure_component_text,enter_component_paint,leave_component_paint,
+        native_component_binding::restore_paragraph_builder};
 }
 u64 renderer_component_token(native_renderer_component_model::Handle handle) {
     return 0xFFFFFFFE00000000ull|handle;
