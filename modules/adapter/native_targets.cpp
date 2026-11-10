@@ -163,10 +163,9 @@ int __cdecl blit(Surface* source,const Rect* src,Surface* destination,Rect* dst)
     native_ui_cache_owners::BlitPreparation prepared;
     const auto status=native_ui_cache_owners::before_blit(caller_return,source,destination,src,dst,prepared);
     if(status!=Status::ok) return -1;
-    const auto* from=prepared.restoring && prepared.restore.has_source ? &prepared.restore.source : src;
-    auto* to=prepared.restoring && prepared.restore.has_destination ? &prepared.restore.destination : dst;
-    const int result=scoped::blit(api,source,from,scale(source),destination,to,scale(destination),false);
-    if(prepared.restoring && dst) *dst=prepared.restore.destination;
+    // The native caller owns clipping and the SDL destination update. Source
+    // lifetime observation must not substitute a rectangle from Mod state.
+    const int result=scoped::blit(api,source,src,scale(source),destination,dst,scale(destination),false);
     native_ui_cache_owners::after_blit(caller_return,source,destination,prepared,result);
     return result;
 }

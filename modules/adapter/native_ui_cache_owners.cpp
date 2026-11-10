@@ -14,9 +14,9 @@ struct CopySite { u32 caller_return; Family family; Operation operation; };
 struct Copy { Slot slot; Operation operation; };
 
 // Actual original caller-return addresses, including the compiler's indirect
-// register CALLs. The census is 33 first-background copies, three second-
+// register CALLs. The census is 33 first-background copies, ten second-
 // background copies, two named copies and two menu-cache copies.
-constexpr std::array<CopySite,40> copies{{
+constexpr std::array<CopySite,47> copies{{
     {0x3A38E,Family::first,Operation::save},
     {0x48FE6,Family::first,Operation::save},
     {0x5558B,Family::first,Operation::save},
@@ -50,6 +50,13 @@ constexpr std::array<CopySite,40> copies{{
     {0x10DA77,Family::first,Operation::restore},
     {0x10DAF7,Family::first,Operation::restore},
     {0x16ECD7,Family::first,Operation::restore},
+    {0xFE435,Family::second,Operation::save},
+    {0x1039AC,Family::second,Operation::save},
+    {0x1233E9,Family::second,Operation::save},
+    {0x146379,Family::second,Operation::save},
+    {0x15D540,Family::second,Operation::save},
+    {0x15D668,Family::second,Operation::save},
+    {0x15D6B7,Family::second,Operation::save},
     {0x10D37B,Family::second,Operation::save},
     {0x10D3B7,Family::second,Operation::restore},
     {0x10D447,Family::second,Operation::restore},

@@ -1,6 +1,7 @@
 // Included inside the adapter's anonymous namespace. This file contains only
 // confirmed native call identities and synchronous text/measurement adapters.
 // No HUD coordinates, persistent fields or drawing replay are stored.
+namespace native_hud_language {u32 display_units();}
 enum HudHook : u32 {
     hud_surface_first=0x6000,
     hud_command=0x6100,hud_repeat,hud_help,hud_wielded,
@@ -181,8 +182,10 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
         if(in(Scope::hud_scale)) begin(e,Scope::text,e.arguments[2]);
         return Status::ok;
     case hud_identity_width: {
+        const auto* original=ptr<char>(e.frame->ebp-0x408);
+        const native_name_input::UnicodeMeasure unicode(original);
         std::vector<char> encoded;
-        auto status=hud_identity_display(e,ptr<char>(e.frame->ebp-0x408),encoded);
+        auto status=hud_identity_display(e,original,encoded);
         if(status!=Status::ok) return status;
         render::Metrics measured{};
         status=metrics_at_outline(encoded.data(),1,measured);
@@ -225,7 +228,7 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
         // FAE38 supplies the heading alone; this native numeric draw consumes
         // the same value with its unit. Its coordinates and native color stay.
         std::string value=ptr<char>(e.arguments[1]);
-        value+=*at<u32>(0xA2D0AF4) ? " km/h" : " mi/h";
+        value+=native_hud_language::display_units() ? " km/h" : " mi/h";
         native_component_binding::note_original_for_consumer(e,value.c_str());
         std::vector<char> encoded;
         const auto status=codec(layout_op::encode_native,value.c_str(),encoded);

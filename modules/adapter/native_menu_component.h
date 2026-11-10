@@ -13,7 +13,7 @@ using Enter=void (*)(const NativeEvent&,Consumer);
 using Leave=void (*)(u64 token);
 using DecodeOriginal=Status (*)(const char*,std::string&);
 using BeforeConsume=Status (*)(const NativeEvent&,Consumer);
-using Measure=Status (*)(const char*,std::int32_t& logical_width);
+using Measure=Status (*)(const char* encoded,const char* original,std::int32_t& logical_width);
 // Callbacks belong to this loaded generation and are rebound at initialize;
 // no callback/code pointer is included in the component's saved state.
 void configure(const HostApi* host,native_text_resource::Resolve resolve,

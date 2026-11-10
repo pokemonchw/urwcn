@@ -42,6 +42,7 @@ void append(std::vector<std::uint8_t>& bytes,u32 value) {
 void initialize(std::uintptr_t image_base) {
     base=image_base;saved_source=0;writing_source=0;pending.clear();
 }
+u32 stored_menu() {return saved_source;}
 void append_hooks(std::vector<HookSpec>& hooks) {
     // The original EXE imports api-ms-win-crt-stdio-l1-1-0.dll. These UCRT
     // exports are its actual original fread/fwrite entry points; the IAT may

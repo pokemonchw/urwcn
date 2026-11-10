@@ -52,6 +52,9 @@ Handle upsert_label_box(SourceKey,TargetSource,const LabelBoxInputs&,const TextS
 Handle upsert_heading(SourceKey,TargetSource,const TextSource&);
 Handle upsert_marked_button(SourceKey,TargetSource,const MarkedButtonInputs&,const TextSource&);
 const Component& get(Handle);
+// Borrow the neutral input of this already constructed native component.
+// This neither traverses a page nor paints a renderer owner.
+const Component& current(SourceKey);
 u32 display_style(Handle);
 // Complete CFD10 writes its own native row instead of entering CF990.
 // Accept that row's canonical label after its ordinary/full locale consume.

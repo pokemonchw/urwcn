@@ -574,6 +574,24 @@ const TextSource& field_source(TextComponent component) {
     return fields.find({native_root_component::current(),component})->second;
 }
 const TextSource* current_event_source() { return current_source(); }
+const char* native_call_text(const NativeEvent& event) {
+    const auto hook=metadata.find(event.id);
+    if(event.phase!=NativePhase::before || hook==metadata.end() || hook->second.kind!=HookKind::call) return nullptr;
+    switch(hook->second.target_rva) {
+    case 0x116270:case 0x115E70:return pointer<const char>(event.arguments[2]);
+    case 0x10E5A0:case 0x114680:case 0xE10F0:case 0x10E720:return pointer<const char>(event.arguments[0]);
+    case 0x10E260:case 0x10E910:case 0xCFAF0:case 0x1157B0:case 0x8FE90:
+        return pointer<const char>(event.arguments[1]);
+    case 0xF8F80:case 0xF9030:return pointer<const char>(event.frame->ecx);
+    case 0x162300:return pointer<const char>(event.frame->edx);
+    default:return nullptr;
+    }
+}
+const ParagraphSource* native_call_paragraph(const NativeEvent& event) {
+    const auto hook=metadata.find(event.id);
+    return event.phase==NativePhase::before && hook!=metadata.end() &&
+        hook->second.kind==HookKind::call && hook->second.target_rva==0x10EB40 ? &builder : nullptr;
+}
 const ParagraphSource& current_paragraph_source() { return builder; }
 bool current_event_center(std::int32_t& center) {
     const auto& value=event_inputs.back().center;if(!value) return false;center=*value;return true;

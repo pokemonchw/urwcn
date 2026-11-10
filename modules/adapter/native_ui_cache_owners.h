@@ -6,9 +6,8 @@
 namespace uwcn::adapter::native_ui_cache_owners {
 enum class Slot : u32 { first=0,second=1,named0=2,named1=3,named2=4,named3=5,menu=6 };
 
-// Complete original cache-copy inputs, borrowed only for this synchronous
-// native operation. A cache component prepares its canonical arguments before
-// that same original copy consumes them.
+// Complete original cache-copy inputs, borrowed only to observe source
+// ownership during this synchronous native operation. They are never replaced.
 struct RestoreInput {
     const void* native_surface;
     const render::Rect* source;
@@ -41,8 +40,8 @@ void set_callbacks(const Callbacks& callbacks);
 
 // Only the statically enumerated native copy caller returns and their actual
 // native cache owners are observed. No pixels or text calls are observed.
-// The prepared cache component owns the complete original rectangle inputs;
-// no overlap calculation assigns another component to a rectangle.
+// The original native copy exclusively owns its pixels and rectangle inputs.
+// Source observation neither repaints a cache nor substitutes its geometry.
 Status before_blit(u32 caller_return_rva,const void* source,const void* destination,
     const render::Rect* source_rect,render::Rect* destination_rect,BlitPreparation&);
 void after_blit(u32 caller_return_rva,const void* source,const void* destination,

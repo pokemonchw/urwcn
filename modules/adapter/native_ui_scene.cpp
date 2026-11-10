@@ -23,10 +23,9 @@ struct CacheIdentity {
     u32 lifetime;
     native_targets::SurfaceSource constructor;
 };
-// This is one native cache-restore component, not a list of text draws. Its
-// constructor source is the native saved Scene, its resource belongs to the
-// original cache slot, and its rectangles are that complete copy's inputs.
-// Repeated updates replace the same component and its native layer position.
+// Legacy source ownership retained for compatible HDA7 module handover.
+// These records no longer authorize drawing, resource creation or geometry
+// changes. Native cache copies alone restore the pixels and rectangles.
 struct CacheRegion {
     u32 references;
     native_text_resource::SourceKey key;
@@ -165,148 +164,13 @@ native_menu_component::Handle menu_owner(const Child& child) {
     const auto source=source_menu_owner(child);
     return source ? native_menu_component::input_owner(source) : 0;
 }
-Status paint_region(u32 handle);
-struct NativeCacheResources {
-    NativeCacheResources() {native_renderer_component_binding::begin_native_cache_resources();}
-    ~NativeCacheResources() {native_renderer_component_binding::end_native_cache_resources();}
-};
-Status paint(Revision revision,native_renderer_component_binding::PaintDestination destination) {
+void install_renderer_sources(Revision revision) {
     const auto& container=containers.find(revision)->second;
-    auto status=container.parent ? paint(container.parent,destination) :
-        native_root_component::paint_background(container.background);
-    if(status!=Status::ok) return status;
+    if(container.parent) install_renderer_sources(container.parent);
     for(const auto& child:container.children) {
-        if(child.kind==ComponentKind::component) status=native_component_model::paint(child.handle,services);
-        else if(child.kind==ComponentKind::menu) status=native_menu_component::paint(child.handle);
-        else if(child.kind==ComponentKind::image) status=native_image_component::paint(child.handle);
-        else if(child.kind==ComponentKind::flow) status=native_link_flow_component::paint(child.handle);
-        else if(child.kind==ComponentKind::renderer) status=native_renderer_component_binding::paint(child.handle,destination);
-        else if(child.kind==ComponentKind::footer) status=native_footer_component::paint(child.handle);
-        else if(child.kind==ComponentKind::cache_region) status=paint_region(child.handle);
-        else status=native_message_flow::paint(child.handle);
-        if(status!=Status::ok) return status;
-    }
-    return Status::ok;
-}
-void prepare_region(const CacheRegion& region,native_ui_cache_owners::PreparedRestore& prepared) {
-    prepared.has_source=region.has_source;prepared.has_destination=region.has_destination;
-    prepared.source=region.from;prepared.destination=region.to;
-    if(region.menu) {
-        // Both original 10DBB0 callers obtain this rectangle from the actual
-        // Menu header. Resolve those same fields after native menu layout;
-        // an old translated width or a former selected-row rectangle is not
-        // a source. The logical input owner remains the game's current view.
-        const auto previous=native_menu_component::active();
-        if(previous) native_menu_component::retain(previous);
-        native_menu_component::activate(region.menu);
-        prepared.source=*reinterpret_cast<const render::Rect*>(base+0x5F54A20);
-        prepared.destination=prepared.source;
-        if(previous) {native_menu_component::activate(previous);native_menu_component::release(previous);}
-        else native_menu_component::deactivate();
-    }
-}
-Status paint_region(u32 handle) {
-    const auto& region=regions.find(handle)->second;
-    const auto surface=native_targets::create_component_surface(region.constructor);
-    if(!surface) return Status::failed;
-    auto& cache=*reinterpret_cast<u32*>(base+region.owner_field);
-    auto& target=*reinterpret_cast<u32*>(base+0x61BBB10);
-    const auto previous_cache=cache,previous_target=target;
-    const auto previous_background=native_root_component::current();
-    // The temporary resource is installed into the actual native cache owner
-    // while that owner's neutral Scene is materialized. No texture or bitmap
-    // from the previous language supplies its base.
-    cache=surface;target=surface;
-    Status status;
-    {
-        const NativeCacheResources resources;
-        status=paint(region.source,native_renderer_component_binding::PaintDestination::native_surface_cache);
-    }
-    target=previous_target;
-    native_root_component::activate(previous_background);
-    if(status==Status::ok) {
-        native_ui_cache_owners::PreparedRestore prepared;
-        prepare_region(region,prepared);
-        status=native_targets::copy_cache_component(surface,
-            prepared.has_source?&prepared.source:nullptr,
-            prepared.has_destination?&prepared.destination:nullptr);
-    }
-    cache=previous_cache;
-    native_targets::destroy_component_surface(surface);
-    return status;
-}
-// The native software cache copy does not select a Menu or a Flow. Keep the
-// caller's actual logical input view across all source materialization; frozen
-// resource owners may update their own native layout, never become the input
-// view merely because they occur last in a cached parent layer.
-struct InputView {
-    native_menu_component::Handle menu=native_menu_component::active();
-    native_link_flow_component::Handle flow=native_link_flow_component::active();
-    InputView() {
-        if(menu) native_menu_component::retain(menu);
-        if(flow) native_link_flow_component::retain(flow);
-    }
-    ~InputView() {
-        if(native_link_flow_component::active()!=flow) {
-            if(flow) native_link_flow_component::activate(flow);
-            else native_link_flow_component::deactivate();
-        }
-        if(native_menu_component::active()!=menu) {
-            if(menu) native_menu_component::activate(menu);
-            else native_menu_component::deactivate();
-        }
-        if(flow) native_link_flow_component::release(flow);
-        if(menu) native_menu_component::release(menu);
-    }
-};
-bool contains_source(Revision revision,native_text_resource::SourceKey source) {
-    const auto& container=containers.find(revision)->second;
-    if(container.parent && contains_source(container.parent,source)) return true;
-    for(const auto& child:container.children) {
-        if(child.source==source) return true;
-        if(child.kind==ComponentKind::cache_region &&
-            contains_source(regions.find(child.handle)->second.source,source)) return true;
-    }
-    return false;
-}
-void restore_native_source(Revision revision,const Child& missing,
-    const std::vector<Child>& construction,std::size_t successor) {
-    auto& container=containers.find(revision)->second;
-    if(container.background!=missing.source.owner) return;
-    if(container.parent) restore_native_source(container.parent,missing,construction,successor);
-    for(const auto& child:container.children) {
-        if(child.kind==ComponentKind::cache_region)
-            restore_native_source(regions.find(child.handle)->second.source,missing,construction,successor);
-    }
-    if(contains_source(revision,missing.source)) return;
-    // The original constructor has supplied these actual sibling identities.
-    // An old cache keeps its own frozen siblings; only the omitted component
-    // is inserted before the first already present native successor.
-    const auto following=std::find_if(container.children.begin(),container.children.end(),
-        [&](const Child& child) {
-            return std::any_of(construction.begin()+successor,construction.end(),
-                [&](const Child& original){return original.source==child.source;});
-        });
-    if(following!=container.children.end()) {
-        retain(missing);container.children.insert(following,missing);
-    }
-}
-Status install_renderer_sources(Revision revision,bool materialize_renderer) {
-    const auto& container=containers.find(revision)->second;
-    if(container.parent) {
-        const auto status=install_renderer_sources(container.parent,materialize_renderer);if(status!=Status::ok) return status;
-    }
-    for(const auto& child:container.children) {
-        if(child.kind==ComponentKind::renderer) {
+        if(child.kind==ComponentKind::renderer)
             native_renderer_component_binding::activate(child.handle);
-            if(materialize_renderer) {
-                const auto status=native_renderer_component_binding::paint(child.handle,
-                    native_renderer_component_binding::PaintDestination::active_native_owner);
-                if(status!=Status::ok) return status;
-            }
-        }
     }
-    return Status::ok;
 }
 template<class T> void append(std::vector<std::uint8_t>& output,const T& value) {
     const auto offset=output.size();output.resize(offset+sizeof(value));
@@ -447,35 +311,6 @@ void renderer_retired(native_text_resource::SourceKey key) {
 }
 Revision current() { return active_revision; }
 bool materializing() { return painting; }
-bool contains_source(native_text_resource::SourceKey source) {
-    return contains_source(active_revision,source);
-}
-Status rebuild_native_source(native_text_resource::SourceKey source,Status (*construct)()) {
-    const InputView input;
-    const auto previous=active_revision;
-    const auto background=native_root_component::current();
-    const auto rebuilding=next_revision++;
-    containers.emplace(rebuilding,Container{background,0,{}});
-    active_revision=rebuilding;
-    // Capture a real native construction, with its normal component hooks.
-    // No original Scene or cache source is replaced by this temporary owner.
-    auto status=native_root_component::paint_background(background);
-    if(status==Status::ok) status=construct();
-    active_revision=previous;
-    const auto& construction=containers.find(rebuilding)->second.children;
-    if(status==Status::ok) {
-        const auto recovered=std::find_if(construction.begin(),construction.end(),
-            [&](const Child& child){return child.source==source;});
-        const auto successor=static_cast<std::size_t>(recovered-construction.begin())+1;
-        for(const auto& [revision,container]:containers) {
-            if(revision!=rebuilding && container.background==background)
-                restore_native_source(revision,*recovered,construction,successor);
-        }
-    }
-    for(const auto& child:construction) release(child);
-    containers.erase(rebuilding);
-    return status;
-}
 void cache_saved(Slot slot) {
     if(painting) return;
     synchronize_root();
@@ -535,27 +370,24 @@ void cache_retired(Slot slot) {
     if(painting) return;
     caches.erase(slot);cache_languages.erase(slot);cache_sources.erase(slot);retire_unused();
 }
-Status materialize_cache(Slot slot,void* native_surface) {
-    const InputView input;
-    auto& target=*reinterpret_cast<void**>(base+0x61BBB10);
-    const auto previous_target=target;
-    const auto previous_background=native_root_component::current();
-    target=native_surface;painting=true;
-    Status status;
-    {
-        const NativeCacheResources resources;
-        status=paint(caches.find(slot)->second,native_renderer_component_binding::PaintDestination::native_surface_cache);
+native_root_component::RootRevision saved_background(Slot slot) {
+    return containers.find(caches.find(slot)->second)->second.background;
+}
+bool cache_needs_language(Slot slot) {return cache_languages.find(slot)->second!=language_revision;}
+native_menu_component::Handle saved_menu(Slot slot) {
+    auto revision=caches.find(slot)->second;
+    for(;;) {
+        const auto& container=containers.find(revision)->second;
+        const auto menu=std::find_if(container.children.rbegin(),container.children.rend(),
+            [](const Child& child){return child.kind==ComponentKind::menu;});
+        if(menu!=container.children.rend()) return menu->handle;
+        revision=container.parent;
     }
-    painting=false;target=previous_target;
-    native_root_component::activate(previous_background);
-    return status;
 }
 Status prepare_cache_restore(Slot slot,const native_ui_cache_owners::RestoreInput& input,
     native_ui_cache_owners::PreparedRestore& prepared) {
     synchronize_root();
     if(!active_revision) return Status::unavailable;
-    const auto status=prepare_cache(slot,const_cast<void*>(input.native_surface));
-    if(status!=Status::ok) return status;
     const auto& identity=cache_sources.find(slot)->second;
     const auto cache_slot=static_cast<native_ui_cache_owners::Slot>(slot);
     const auto field=native_ui_cache_owners::owner_field(cache_slot);
@@ -568,20 +400,20 @@ Status prepare_cache_restore(Slot slot,const native_ui_cache_owners::RestoreInpu
     if(menu) native_menu_component::retain(menu);
     regions.emplace(handle,std::move(region));
     prepared.component=handle;
-    prepare_region(regions.find(handle)->second,prepared);
     return Status::ok;
 }
 Status cache_restored(Slot slot,const native_ui_cache_owners::PreparedRestore& prepared,int native_result) {
     const auto& region=regions.find(prepared.component)->second;
     if(native_result!=0) {release_region(prepared.component);return Status::failed;}
     if(!region.has_source) {
-        const InputView input;
         active_revision=caches.find(slot)->second;
         native_root_component::activate(containers.find(active_revision)->second.background);
-        painting=true;const auto status=install_renderer_sources(active_revision,true);painting=false;
+        // Restore source ownership only. The original native cache already
+        // supplied the complete pixels; no retained component is painted.
+        install_renderer_sources(active_revision);
         release_region(prepared.component);
         retire_unused();
-        return status;
+        return Status::ok;
     }
     // Commit the same canonical instance consumed by the ordinary native
     // copy. It replaces this slot/lifetime's restore component, rather than
@@ -591,40 +423,11 @@ Status cache_restored(Slot slot,const native_ui_cache_owners::PreparedRestore& p
     retire_unused();
     return Status::ok;
 }
-Status repaint() {
-    if(!active_revision) return Status::unavailable;
-    const InputView input;
-    const auto previous_background=native_root_component::current();
-    painting=true;const auto status=paint(active_revision,native_renderer_component_binding::PaintDestination::active_native_owner);
-    if(status==Status::ok) install_renderer_sources(active_revision,false);
-    painting=false;
-    native_root_component::activate(previous_background);
-    return status;
-}
-Status language_changed(bool all_caches,bool native_reconstruction) {
+Status language_changed() {
     ++language_revision;
-    const auto resource=native_culture_legend::language_changed();
-    if(resource!=Status::ok) return resource;
-    if(native_reconstruction) return Status::ok;
-    if(all_caches) {
-        for(const auto& [slot,revision]:caches) {
-            (void)revision;
-            const auto status=prepare_cache(slot,native_ui_cache_owners::surface(
-                static_cast<native_ui_cache_owners::Slot>(slot)));
-            if(status!=Status::ok) return status;
-        }
-        // Before the first native background constructor there is no Scene
-        // to materialize. The next constructor consumes the selected language.
-        if(!active_revision) return Status::ok;
-    }
-    return repaint();
-}
-Status prepare_cache(Slot slot,void* surface) {
-    auto& cached_language=cache_languages.find(slot)->second;
-    if(cached_language==language_revision) return Status::ok;
-    const auto status=materialize_cache(slot,surface);
-    if(status==Status::ok) cached_language=language_revision;
-    return status;
+    // Cached pixels belong to the game. A language revision must never
+    // replace them from this incomplete legacy component registry.
+    return native_culture_legend::language_changed();
 }
 std::vector<std::uint8_t> save() {
     std::vector<std::uint8_t> payload;

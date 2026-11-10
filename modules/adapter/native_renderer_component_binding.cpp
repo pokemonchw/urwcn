@@ -613,6 +613,13 @@ Status paint_known_map(const Owner& owner,PaintDestination destination) {
     painting=false;
     return status==Status::ok && !replacement?Status::failed:status;
 }
+Status construct_known_map() {
+    const auto handle=current_owners.find(known_map_owner)->second;
+    retain(handle);
+    const auto status=paint_known_map(owners.find(handle)->second.owner,PaintDestination::active_native_owner);
+    release(handle);
+    return status;
+}
 void paint_heading_copy(PaintDestination destination,u32 renderer,u32& caller_target) {
     // The native factory finds its own 'headingicons' record by the original
     // literal. Its selected existing slot, rather than a remembered ordinal,

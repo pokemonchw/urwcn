@@ -485,7 +485,13 @@ Status prepare(Handle handle,const PaintServices& services,PreparedText& prepare
         }
     } else {
         prepared.fragments.emplace_back();
+        // An identity heading's unchanged name prefix may contain Unicode in
+        // either language. Resolve its complete text under the same native
+        // component scope used for measurement and immediate glyph drawing.
+        const bool identity=component.kind==Kind::native_identity_heading;
+        if(identity) services.enter(handle,component.kind,outline(component));
         auto status=resolve_text(component.text,services,prepared.fragments.back());
+        if(identity) services.leave(handle,component.kind);
         if(status!=Status::ok) return status;
         if(component.kind==Kind::hud_status_cell) {
             prepared.fragments.emplace_back();

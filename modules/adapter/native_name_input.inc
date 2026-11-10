@@ -40,6 +40,14 @@ bool contains_utf8(const char* text) {
         if(span(p)) return true;
     return false;
 }
+bool requires_unicode(const char* text) {
+    for(auto* p=reinterpret_cast<const unsigned char*>(text);*p;) {
+        const auto bytes=span(p);
+        if(bytes>=3 || (bytes==2 && *p>=0xC4)) return true;
+        p+=bytes ? bytes : 1;
+    }
+    return false;
+}
 bool contains_display(const char* text) {
     for(auto* p=reinterpret_cast<const unsigned char*>(text);*p;++p)
         if(transport(p) || span(p)) return true;
@@ -72,10 +80,20 @@ Status display(const char* input,std::vector<char>& output) {
     output.push_back('\0');
     return Status::ok;
 }
-Status measure(const char* input,render::Metrics& measured) {
+struct UnicodeMeasure {
+    bool entered;
+    inline static u64 next_token=0xFFFFFFFA00000000ull;
+    u64 token;
+    explicit UnicodeMeasure(const char* input):entered(!chinese_enabled && contains_utf8(input)),token(++next_token) {
+        if(entered) active.push_back({token,Scope::profile_identity_unicode,0,0,0,0,0});
+    }
+    ~UnicodeMeasure() {if(entered) end(token);}
+};
+Status measure(const char* input,render::Metrics& measured,u32 outline=outline_budget()) {
+    const UnicodeMeasure unicode(input);
     std::vector<char> encoded;
     const auto status=display(input,encoded);
-    return status==Status::ok ? metrics(encoded.data(),measured) : status;
+    return status==Status::ok ? metrics_at_outline(encoded.data(),outline,measured) : status;
 }
 Status initialize(HMODULE sdl) {
 #define NAME_BIND(name) api.name=reinterpret_cast<decltype(api.name)>(GetProcAddress(sdl,"SDL_" #name)); if(!api.name) return Status::unavailable

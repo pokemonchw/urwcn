@@ -14,25 +14,28 @@ enum WindowsProfileHook : u32 {
 constexpr u32 wp_name_error_parser=0x57F2;
 // The three confirmed literal-copy constructors select this neutral display
 // resource. ESI is only success/failure at the later 118EE parser consumer.
-struct WindowsProfileErrorSource { u32 component,native_source_rva; };
+struct WindowsProfileErrorSource {
+    u32 component,native_source_rva;
+    // Choose_Name's complete footer consumes mode and an accepted UI tint
+    // input. Neither value is layout, pixels, a game random state or text.
+    u32 footer_mode,footer_tint;
+};
 WindowsProfileErrorSource windows_profile_error_source{};
 void windows_profile_error_constructed(TextComponent component,u32 native_source_rva) {
-    windows_profile_error_source={static_cast<u32>(component),native_source_rva};
+    windows_profile_error_source.component=static_cast<u32>(component);
+    windows_profile_error_source.native_source_rva=native_source_rva;
 }
 std::vector<std::uint8_t> save_windows_profile_error_source() {
     const auto* bytes=reinterpret_cast<const std::uint8_t*>(&windows_profile_error_source);
     return {bytes,bytes+sizeof(windows_profile_error_source)};
 }
-void restore_windows_profile_error_source(const void* bytes) {
+void restore_windows_profile_error_source(const void* bytes,u32) {
     std::memcpy(&windows_profile_error_source,bytes,sizeof(windows_profile_error_source));
 }
 bool windows_season_drawing;
 bool windows_attributes_drawing;
 Status windows_title_metrics(const char* input,render::Metrics& measured) {
-    std::vector<char> encoded;
-    const auto status=native_name_input::display(input,encoded);
-    if(status!=Status::ok)return status;
-    return metrics_at_outline(encoded.data(),1,measured); // Native title calls pass shadow=1.
+    return native_name_input::measure(input,measured,1); // Native title calls pass shadow=1.
 }
 struct WindowsProfileField { u32 site; TextComponent component; };
 constexpr WindowsProfileField windows_attribute_panels[]{
@@ -141,6 +144,11 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
         std::string original_culture,original_name;
         decode_parser_original(separator+1,original_culture);
         decode_parser_original(name.c_str(),original_name);
+        // Language selection changes the culture label, not the player's
+        // Unicode name. This complete native title uses one transport, metric
+        // and glyph path until F9030 returns, including when showing English.
+        if(!chinese_enabled && native_name_input::contains_utf8(original_name.c_str()))
+            begin(e,Scope::profile_identity_unicode);
         std::vector<char> culture;
         const auto component=static_cast<TextComponent>(static_cast<u32>(TextComponent::profile_culture_0)+
             *at<unsigned char>(0xA32A6F5));

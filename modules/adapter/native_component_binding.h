@@ -20,6 +20,10 @@ void register_hooks(std::vector<HookSpec>&);
 // borrowed display buffer survives finish_event. Ordinary CALL display buffers
 // remain owned only until that same CALL's After notification.
 void begin_event(const NativeEvent&);
+// Borrow the whole text input of a confirmed complete native CALL ABI.
+// It is used only for that call's encoding/font context, never retained.
+const char* native_call_text(const NativeEvent&);
+const native_component_model::ParagraphSource* native_call_paragraph(const NativeEvent&);
 void note_source(const TextRequest&);
 void bind_source(const NativeEvent&,const TextSource&);
 void note_source_for_consumer(const NativeEvent&,TextComponent);

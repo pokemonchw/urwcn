@@ -7,6 +7,8 @@ namespace uwcn::adapter::native_menu_storage {
 // Its real fwrite/fread protocol owns source identity independently of pixel
 // caches. Only the statically confirmed header/row calls participate here.
 void initialize(std::uintptr_t image_base);
+// Borrow the Menu input owned by the original MENULIST.SAV write pair.
+u32 stored_menu();
 void append_hooks(std::vector<HookSpec>&);
 Status dispatch(const NativeEvent&,DispatchResult&,bool& handled);
 std::vector<std::uint8_t> save();

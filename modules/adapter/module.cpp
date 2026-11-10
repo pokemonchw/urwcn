@@ -101,7 +101,7 @@ enum class Scope : u32 {
     character_creation=34, character_creation_panel=35, character_creation_label=36,
     profile_culture=37, profile_sex=38, profile_panel=39, profile_footer=40,
     scenario_story=41, scenario_panel=42, creation_button=43, creation_paragraph=44,
-    encyclopedia_input=45, spells_footer=46,
+    encyclopedia_input=45, spells_footer=46, profile_identity_unicode=47, skills_input=48,
     load_saved_panel=0xA0,
     ancestors_title=50, ancestors_select=51, ancestors_row=52,
     hud_centered=0x100, hud_penalty=0x101, hud_button=0x102,
@@ -196,8 +196,9 @@ Status service_text(ModuleId module,u32 operation,const void* input,u32 input_si
 }
 Status encode_parser_original(const char*,std::vector<char>&);
 Status decode_parser_original(const char*,std::string&);
+Status encode_component_original(const char*,std::vector<char>&);
 Status codec(u32 operation,const char* input,std::vector<char>& output) {
-    if(!chinese_enabled) {
+    if(!chinese_enabled && !in(Scope::profile_identity_unicode)) {
         if(operation==layout_op::encode_native) return encode_parser_original(input,output);
         if(operation!=layout_op::decode_native) return Status::invalid;
         std::string utf8;
@@ -215,7 +216,7 @@ Status translate_help_record(TextComponent component,const char* value,std::vect
 Status resolve_display_text(TextComponent component,const char* original,const char* value,std::vector<char>& encoded) {
     // The same neutral native component resolves against the global language.
     if(!chinese_enabled)
-        return codec(layout_op::encode_native,original,encoded);
+        return encode_component_original(original,encoded);
     if(component==TextComponent::culture_back) return translate_culture_back(original,value,encoded);
     if(component==TextComponent::skills_limit_improve || component==TextComponent::skills_limit_degrade)
         return translate_skills_limit(component,value,encoded);
@@ -262,7 +263,7 @@ render::TextRequest render_request(const char* utf8,std::int32_t x,std::int32_t 
         10,9,0,0,outline_budget(),domain.width,domain.height};
 }
 Status metrics_at_outline(const char* encoded,u32 outline,render::Metrics& output) {
-    if(!chinese_enabled) {
+    if(!chinese_enabled && !in(Scope::profile_identity_unicode)) {
         // 10DDB0 advances every original native font8x10 byte by eight pixels.
         // This is the original width contract, independent of translation fonts.
         output={};
@@ -384,6 +385,7 @@ Status centered_text(const NativeEvent& e) {
 }
 
 Status encode_component_original(const char* text,std::vector<char>& encoded) {
+    const native_name_input::UnicodeMeasure unicode(native_name_input::requires_unicode(text) ? text : "");
     return codec(layout_op::encode_native,text,encoded);
 }
 Status decode_parser_original(const char* input,std::string& utf8) {
@@ -416,12 +418,26 @@ Status encode_component_words(std::vector<char>& encoded) {
 }
 Status measure_component_text(const char* encoded,std::int32_t& width) {
     render::Metrics measured{};
+    const auto status=!chinese_enabled && native_name_input::contains_utf8(encoded) ?
+        native_name_input::measure(encoded,measured) : metrics(encoded,measured);
+    if(status==Status::ok) width=measured.logical_width;
+    return status;
+}
+Status measure_menu_text(const char* encoded,const char* original,std::int32_t& width) {
+    const native_name_input::UnicodeMeasure unicode(native_name_input::requires_unicode(original) ? original : "");
+    render::Metrics measured{};
     const auto status=metrics(encoded,measured);
     if(status==Status::ok) width=measured.logical_width;
     return status;
 }
 u64 component_paint_token(native_component_model::Handle handle) {
     return 0xFFFFFFFF00000000ull|handle;
+}
+bool source_requires_unicode(const native_text_resource::TextSource& source) {
+    return native_name_input::requires_unicode(source.original.c_str()) ||
+        native_name_input::requires_unicode(source.prefix.c_str()) ||
+        native_name_input::requires_unicode(source.suffix.c_str()) ||
+        (source.has_value && native_name_input::requires_unicode(source.value.c_str()));
 }
 void enter_component_paint(native_component_model::Handle handle,native_component_model::Kind kind,u32 outline) {
     using Kind=native_component_model::Kind;
@@ -436,6 +452,10 @@ void enter_component_paint(native_component_model::Handle handle,native_componen
         kind==Kind::action_button ? (action_key ? Scope::setup_exit : Scope::creation_button) :
         kind==Kind::compound_hint ? Scope::ancestors_select : Scope::text;
     Active context{component_paint_token(handle),scope,0,0,0,0,outline};
+    const bool unicode=source_requires_unicode(model.text) || std::any_of(
+        model.paragraph.fragments.begin(),model.paragraph.fragments.end(),source_requires_unicode);
+    if(!chinese_enabled && unicode)
+        active.push_back({component_paint_token(handle),Scope::profile_identity_unicode,0,0,0,0,outline});
     if(chinese_enabled && kind==Kind::button && model.source.native_source==0x124C3E &&
        model.text.component==TextComponent::about_press_key) {
         // User-authorized positioning exception for this About button only.
@@ -491,7 +511,7 @@ void cache_source_saved(native_ui_cache_owners::Slot slot) {
 Status cache_source_before_restore(native_ui_cache_owners::Slot slot,
     const native_ui_cache_owners::RestoreInput& input,native_ui_cache_owners::PreparedRestore& prepared) {
     const auto status=native_ui_scene::prepare_cache_restore(static_cast<u32>(slot),input,prepared);
-    report_ui_status(L"Native cache locale materialization",status);
+    report_ui_status(L"Native cache source ownership",status);
     return status;
 }
 void cache_source_restored(native_ui_cache_owners::Slot slot,
@@ -560,6 +580,10 @@ Status character_creation_label(const NativeEvent& e,TextComponent component) {
 Status bind_menu_consumer_source(const NativeEvent&,native_menu_component::Consumer);
 void enter_menu_component(const NativeEvent& event,native_menu_component::Consumer consumer) {
     using Consumer=native_menu_component::Consumer;
+    const auto* original=consumer==Consumer::title_panel || consumer==Consumer::plain_title ?
+        at<char>(0x5F54A38) : ptr<char>(event.frame->esi+(consumer==Consumer::annotation ? 0x64 : 0));
+    if(!chinese_enabled && native_name_input::requires_unicode(original))
+        begin(event,Scope::profile_identity_unicode);
     const auto kind=consumer==Consumer::title_panel ? Scope::character_creation_panel :
         consumer==Consumer::button_row ? Scope::character_creation_label : Scope::text;
     begin(event,kind,kind==Scope::text ? event.arguments[2] : 0);
@@ -580,51 +604,13 @@ Status profile_name_error(const NativeEvent& e,DispatchResult& result,TextCompon
 
 #include "footer.inc"
 
-Status invalidate(bool all_caches=false) {
-    const native_text_resource::SourceKey setup_panel_source{native_root_component::current(),0x105752,
-        static_cast<u32>(TextComponent::setup_title)};
-    const bool native_setup=native_ui_scene::current()!=0 && native_ui_scene::contains_source(setup_panel_source);
-    const auto status=native_ui_scene::language_changed(all_caches,native_setup);
+Status invalidate() {
+    const auto status=native_ui_scene::language_changed();
     if(status!=Status::ok) return status;
-    // Revision zero precedes the first native background constructor. The
-    // chosen language applies to that construction; no Scene exists to present.
-    if(native_ui_scene::current()==0) return Status::ok;
-    if(native_setup) {
-        // Preserve the native selection and live setup locals. Its confirmed
-        // input continuation reconstructs the whole page, including footer,
-        // installation path and setupscr, before its own normal presentation.
-        native_language_redraw::request();return Status::ok;
-    }
-    const bool menu_active=*at<u32>(0x5F54DF0)!=0;
-    const bool menu_renderer=menu_active && *at<u32>(0x5F54B94)!=0;
-    // D153C/D196C/D19B3 own this shared native input phase. The original input
-    // component draws its current selection after its body has been rebuilt.
-    const auto draw_selection=[&] {
-        const auto selection=*at<u32>(0x5F54AB0);
-        constexpr u64 selection_token=0xFFFFFFFC00000000ull;
-        active.push_back({selection_token,menu_renderer ? Scope::hud_renderer_text : Scope::creation_button,
-            0,0,0,0,*at<u32>(0x5F54A9C)&1u});
-        if(menu_renderer) {
-            const native_component_calls::SelectorRendererCall call{
-                address(at<void>(0xD0850)),selection};
-            native_component_calls::uwcn_component_selector_renderer(&call);
-        } else reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0xD0650)(selection,0);
-        end(selection_token);
-    };
-    if(menu_active && !menu_renderer) draw_selection();
-    native_language_redraw::request();
-    // D1E26..D1E7B and D1ED1..D1F56 select the original presentation mode
-    // from these shared input/renderer fields. The modern path composes its
-    // native texture owners; 10B720 only uploads the software UI surface.
-    const bool renderer=menu_renderer || *at<u32>(0x5F55634);
-    using Present=void (UWCN_CALL *)();
-    if(renderer) {
-        reinterpret_cast<Present>(host->image_base+0x10B480)();
-        // D125A -> D1266 composes the frame before drawing the modern selector
-        // on the default target; composing afterward would erase that selector.
-        if(menu_renderer) draw_selection();
-        reinterpret_cast<Present>(host->image_base+0x10B680)();
-    } else reinterpret_cast<Present>(host->image_base+0x10B720)();
+    // A language change never clears the current page, rewrites cache pixels
+    // or presents a partial component list. The native input continuation
+    // rebuilds only a statically confirmed complete drawing boundary.
+    native_language_redraw::request(in(Scope::menu_input));
     return Status::ok;
 }
 Status dispatch_hud(const NativeEvent&,DispatchResult&,bool&);
@@ -634,9 +620,80 @@ Status dispatch_windows_skills(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_encyclopedia(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_renderer(const NativeEvent&,DispatchResult&,bool&);
 Status dispatch_windows_messages(const NativeEvent&,DispatchResult&,bool&);
+namespace native_full_language {
+Status menu(const NativeEvent&,bool& rebuilt,u32& selection);
+Status dispatch(const NativeEvent&,DispatchResult&,bool& handled);
+Status wait(const NativeEvent&);
+}
+namespace native_skill_confirmation {
+Status menu(const NativeEvent&,bool&,u32&);
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+}
+namespace native_wait_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+Status wait(const NativeEvent&);
+}
+namespace native_encyclopedia_wait_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+Status wait(const NativeEvent&);
+}
+namespace native_quest_menu_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+Status wait(const NativeEvent&);
+Status menu(const NativeEvent&,bool&,u32&);
+}
+namespace native_hud_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+}
+namespace native_parent_cache_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+Status menu(const NativeEvent&,bool&,u32&);
+Status game_parent();
+}
+namespace native_first_cache_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+}
+namespace native_conversation_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+Status wait(const NativeEvent&);
+}
+namespace native_generic_menu_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+Status menu(const NativeEvent&,bool&,u32&);
+}
+namespace native_debug_input_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+}
+namespace native_text_edit_language {
+Status dispatch(const NativeEvent&,DispatchResult&,bool&);
+}
 Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     result={};
     bool handled{};
+    auto full=native_text_edit_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_full_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_encyclopedia_wait_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_quest_menu_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_skill_confirmation::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_wait_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_hud_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_parent_cache_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_first_cache_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_conversation_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_generic_menu_language::dispatch(e,result,handled);
+    if(handled) return full;
+    full=native_debug_input_language::dispatch(e,result,handled);
+    if(handled) return full;
     auto native_component=native_root_component::dispatch(e,result,handled);
     if(handled) return native_component;
     native_component=native_culture_legend::dispatch(e,result,handled);
@@ -666,7 +723,8 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         intro_chinese=chinese_enabled;
         return invalidate();
     }
-    if(native_language_redraw::dispatch(e,result)) return Status::ok;
+    native_component=native_language_redraw::dispatch(e,result,handled);
+    if(handled) return native_component;
     // Published old SDL calls can return through their resident After bridge
     // after a transaction. Their tracking service and 17 old IDs are retired.
     if(e.id>=0x4000 && e.id<=0x400C && e.phase==NativePhase::after) return Status::ok;
@@ -877,7 +935,17 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
             && !std::strchr(native_button::label(e),'.')))
             return native_button::advance(e,result,metrics);
         break;
-    case about_wait:case credits_wait:case about_input_tick:break;
+    case about_wait:case credits_wait:break;
+    case about_input_tick: {
+        const auto status=native_full_language::wait(e);
+        if(status!=Status::ok) return status;
+        const auto wait_status=native_wait_language::wait(e);
+        if(wait_status!=Status::ok) return wait_status;
+        const auto encyclopedia_status=native_encyclopedia_wait_language::wait(e);
+        if(encyclopedia_status!=Status::ok) return encyclopedia_status;
+        const auto quest_status=native_quest_menu_language::wait(e);
+        return quest_status==Status::ok ? native_conversation_language::wait(e) : quest_status;
+    }
     case setup_panel: {
         std::vector<char> encoded;
         const auto status=translate(TextComponent::setup_title,ptr<char>(e.arguments[2]),nullptr,encoded);
@@ -1084,7 +1152,8 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
             begin(e,Scope::text,e.arguments[2]);
         break;
     case outline_top: case outline_bottom: case outline_left: case outline_right: case foreground:
-        if(chinese_enabled && (text_context() || native_name_input::contains_display(ptr<char>(e.arguments[0])))) {
+        if((chinese_enabled || in(Scope::profile_identity_unicode)) &&
+           (text_context() || native_name_input::contains_display(ptr<char>(e.arguments[0])))) {
             auto status=draw(e);
             if(status!=Status::ok) return status;
             result.skip_original=1;
@@ -1139,9 +1208,21 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
 Status dispatch(const NativeEvent& event,DispatchResult& result) {
     native_component_binding::begin_event(event);
     native_renderer_component_binding::begin_event(event);
+    if(!chinese_enabled) {
+        const auto* text=native_component_binding::native_call_text(event);
+        if(text && native_name_input::contains_utf8(text)) begin(event,Scope::profile_identity_unicode);
+        const auto* paragraph=native_component_binding::native_call_paragraph(event);
+        if(paragraph && std::any_of(paragraph->fragments.begin(),paragraph->fragments.end(),source_requires_unicode))
+            begin(event,Scope::profile_identity_unicode);
+    }
     const auto status=native_renderer_component_binding::finish_event(event,result,
         dispatch_native(event,result));
-    return native_component_binding::finish_event(event,result,status);
+    const auto complete=native_component_binding::finish_event(event,result,status);
+    if(event.phase==NativePhase::after)
+        active.erase(std::remove_if(active.begin(),active.end(),[&](const Active& scope){
+            return scope.token==event.token && scope.kind==Scope::profile_identity_unicode;
+        }),active.end());
+    return complete;
 }
 
 HookSpec call(u32 id,u32 site,u32 target,u32 count) {
@@ -1160,6 +1241,21 @@ HookSpec inline_hook(u32 id,u32 site,std::initializer_list<unsigned char> bytes)
 #include "windows_creation.inc"
 #include "windows_skills_spells.inc"
 #include "windows_encyclopedia.inc"
+#include "native_full_language.inc"
+#include "native_encyclopedia_wait_language.inc"
+#include "native_quest_menu_language.inc"
+#include "native_skill_confirmation.inc"
+#include "native_wait_language.inc"
+Status rebuild_native_menu(const NativeEvent& event,bool& rebuilt,u32& selection) {
+    auto status=native_full_language::menu(event,rebuilt,selection);
+    if(status!=Status::ok || rebuilt) return status;
+    status=native_skill_confirmation::menu(event,rebuilt,selection);
+    if(status!=Status::ok || rebuilt) return status;
+    status=native_parent_cache_language::menu(event,rebuilt,selection);
+    if(status!=Status::ok || rebuilt) return status;
+    status=native_generic_menu_language::menu(event,rebuilt,selection);
+    return status==Status::ok && !rebuilt ? native_quest_menu_language::menu(event,rebuilt,selection) : status;
+}
 Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Consumer consumer) {
     using Consumer=native_menu_component::Consumer;
     if(consumer==Consumer::plain_row && in(Scope::menu)) {
@@ -1259,6 +1355,14 @@ Status translate_culture_back(const char*,const char* topic,std::vector<char>& e
 }
 #include "windows_renderer_text.inc"
 #include "windows_messages.inc"
+#include "native_hud_language.inc"
+#include "native_hud_command_migration.inc"
+#include "native_parent_cache_language.inc"
+#include "native_first_cache_language.inc"
+#include "native_conversation_language.inc"
+#include "native_generic_menu_language.inc"
+#include "native_debug_input_language.inc"
+#include "native_text_edit_language.inc"
 #include "windows_message_values.inc"
 #include "windows_message_crafted_items.inc"
 #include "windows_message_items.inc"
@@ -1371,7 +1475,9 @@ std::vector<std::uint8_t> save_native_ui_state() {
         native_renderer_component_binding::save(),native_culture_legend::save(),native_link_flow_component::save(),
         native_message_flow::save(),native_ui_scene::save(),
         save_windows_encyclopedia_state(),save_windows_skill_help_sources(),save_windows_profile_error_source(),
-        save_startup_progress_source(),native_menu_storage::save()};
+        save_startup_progress_source(),native_menu_storage::save(),native_hud_language::save(),
+        native_encyclopedia_wait_language::save(),native_conversation_language::save(),
+        native_text_edit_language::save()};
     std::vector<std::uint8_t> output;
     for(const auto& section:sections) {
         const auto size=static_cast<u32>(section.size());
@@ -1381,20 +1487,27 @@ std::vector<std::uint8_t> save_native_ui_state() {
     }
     return output;
 }
-void restore_native_ui_state(const void* payload) {
+template<void (*Restore)(const void*)>
+void restore_ui_section(const void* payload,u32) {Restore(payload);}
+Status restore_native_ui_state(const void* payload,u32) {
     const auto* cursor=static_cast<const std::uint8_t*>(payload);
-    using Restore=void (*)(const void*);
-    const Restore restore_sections[]{native_root_component::restore,native_component_model::restore,
-        native_component_binding::restore,native_image_component::restore,native_footer_component::restore,
-        native_renderer_component_model::restore,native_hud_icons::restore,native_renderer_component_binding::restore,
-        native_culture_legend::restore,
-        native_link_flow_component::restore,native_message_flow::restore,native_ui_scene::restore,restore_windows_encyclopedia_state,
-        restore_windows_skill_help_sources,restore_windows_profile_error_source,restore_startup_progress_source,
-        native_menu_storage::restore};
+    using Restore=void (*)(const void*,u32);
+    const Restore restore_sections[]{restore_ui_section<native_root_component::restore>,
+        restore_ui_section<native_component_model::restore>,restore_ui_section<native_component_binding::restore>,
+        restore_ui_section<native_image_component::restore>,restore_ui_section<native_footer_component::restore>,
+        restore_ui_section<native_renderer_component_model::restore>,restore_ui_section<native_hud_icons::restore>,
+        restore_ui_section<native_renderer_component_binding::restore>,restore_ui_section<native_culture_legend::restore>,
+        restore_ui_section<native_link_flow_component::restore>,restore_ui_section<native_message_flow::restore>,
+        restore_ui_section<native_ui_scene::restore>,restore_ui_section<restore_windows_encyclopedia_state>,
+        restore_ui_section<restore_windows_skill_help_sources>,restore_windows_profile_error_source,
+        restore_ui_section<restore_startup_progress_source>,restore_ui_section<native_menu_storage::restore>,
+        native_hud_language::restore,native_encyclopedia_wait_language::restore,native_conversation_language::restore,
+        native_text_edit_language::restore};
     for(const auto restore:restore_sections) {
         u32 bytes;std::memcpy(&bytes,cursor,sizeof(bytes));cursor+=sizeof(bytes);
-        restore(cursor);cursor+=bytes;
+        restore(cursor,bytes);cursor+=bytes;
     }
+    return Status::ok;
 }
 Status dispatch_windows_renderer(const NativeEvent& e,DispatchResult& result,bool& handled) {
     return windows_renderer_text::dispatch(e,result,handled);
@@ -1408,12 +1521,12 @@ Status UWCN_CALL initialize(const HostApi* api) {
     if(!api || api->size<sizeof(HostApi) || api->abi!=kHostAbi) return Status::invalid;
     host=api;
     windows_build::initialize(api->image_base);
-    native_language_redraw::initialize(api->image_base);
+    native_language_redraw::initialize(api,rebuild_native_menu);
     native_menu_component::initialize(api->image_base);
     native_menu_storage::initialize(api->image_base);
     native_menu_component::configure(api,resolve_display_text,encode_component_original,decode_parser_original,
         bind_menu_consumer_source,enter_menu_component,end);
-    native_menu_component::configure_measure(measure_component_text);
+    native_menu_component::configure_measure(measure_menu_text);
     native_root_component::initialize(api->image_base);
     native_component_model::initialize(api->image_base);
     native_renderer_component_model::initialize(api->image_base);
@@ -1617,6 +1730,18 @@ Status UWCN_CALL initialize(const HostApi* api) {
     native_name_input::append_hooks(hooks);
     native_language_input::append_hooks(host->image_base,hooks);
     native_language_redraw::append_hooks(hooks);
+    native_full_language::append_hooks(hooks);
+    native_encyclopedia_wait_language::append_hooks(hooks);
+    native_quest_menu_language::append_hooks(hooks);
+    native_skill_confirmation::append_hooks(hooks);
+    native_wait_language::append_hooks(hooks);
+    native_hud_language::append_hooks(hooks);
+    native_parent_cache_language::append_hooks(hooks);
+    native_first_cache_language::append_hooks(hooks);
+    native_conversation_language::append_hooks(hooks);
+    native_generic_menu_language::append_hooks(hooks);
+    native_debug_input_language::append_hooks(hooks);
+    native_text_edit_language::append_hooks(hooks);
     native_menu_component::append_hooks(hooks);
     native_menu_storage::append_hooks(hooks);
     native_root_component::append_hooks(hooks);
@@ -1650,25 +1775,13 @@ Status UWCN_CALL invoke(u32 operation,const void* input,u32 bytes,void* output,u
             return Status::ok;
         }
         chinese_enabled=value;intro_chinese=value;
-        return invalidate(true);
+        return invalidate();
     }
     if(operation==kModuleDependenciesChanged) {
         if(!input || bytes!=sizeof(u32)) return Status::invalid;
         if(output_bytes) *output_bytes=0;
         const auto status=initialize_windows_encyclopedia();
         if(status!=Status::ok) return status;
-        const native_text_resource::SourceKey frame{native_root_component::current(),0x125BC5,
-            static_cast<u32>(TextComponent::load_character)};
-        if(in(Scope::menu_input) && !native_ui_scene::contains_source(frame)) {
-            // 125BA3..125BE1 is the original footer, frame, version and Menu
-            // construction. Its final CFFB0 CALL is already a resident boundary;
-            // no input wait, business action or enclosing local is re-entered.
-            const auto rebuilt=native_ui_scene::rebuild_native_source(frame,[]() {
-                return host->native_fragment(0x125BA3,0x125BE1);
-            });
-            if(rebuilt!=Status::ok) return rebuilt;
-            return invalidate(true);
-        }
         return invalidate();
     }
     if(operation!=kNativeDispatch || !input || bytes!=sizeof(NativeEvent) || !output_bytes) return Status::invalid;
@@ -1698,7 +1811,7 @@ Status UWCN_CALL save_state(void* output,u32* bytes) {
     std::memcpy(output,&count,sizeof(count));
     if(count) std::memcpy(static_cast<unsigned char*>(output)+sizeof(count),active.data(),count*sizeof(Active));
     auto* suffix=static_cast<unsigned char*>(output)+active_bytes;
-    const u32 tag=0x37414448,native_bytes=static_cast<u32>(native.size()),
+    const u32 tag=0x38414448,native_bytes=static_cast<u32>(native.size()),
         menu_bytes=static_cast<u32>(menu.size()),message_bytes=static_cast<u32>(messages.size()),
         ui_bytes=static_cast<u32>(ui.size());
     std::memcpy(suffix,&tag,sizeof(tag)); suffix+=sizeof(tag);
@@ -1748,42 +1861,38 @@ Status UWCN_CALL restore_state(const void* input,u32 bytes) {
     const auto* suffix=static_cast<const unsigned char*>(input)+active_bytes;
     u32 tag{},native_bytes{};
     std::memcpy(&tag,suffix,sizeof(tag)); suffix+=sizeof(tag);
-    // HDA2 is the published predecessor, with Chinese always enabled. HDA3
-    // appends only language/input state; native resource and Active layouts stay.
-    // HDA6 was an unpublished translated-string snapshot; it is not the
-    // neutral Text graph stored by HDA7 and has no implemented migration.
-    if(tag!=0x32414448 && tag!=0x33414448 && tag!=0x34414448 && tag!=0x35414448 && tag!=0x37414448) return Status::invalid;
+    // HDA7 did not retain the Command input, accepted keyword branch,
+    // consecutive text inputs or every second-cache owner. Completed calls cannot be
+    // recovered from that payload; this is an incompatible state ABI.
+    if(tag!=0x38414448) {
+        host->log(L"HDA8 requires complete native constructor inputs and cache owners; older adapter state has no lossless in-place migration.");
+        return Status::unavailable;
+    }
     std::memcpy(&retired_routes,suffix,sizeof(retired_routes)); suffix+=sizeof(retired_routes);
     std::memcpy(&native_bytes,suffix,sizeof(native_bytes)); suffix+=sizeof(native_bytes);
     u32 menu_bytes{},message_bytes{},ui_bytes{};
-    if(tag==0x35414448 || tag==0x37414448) {
-        std::memcpy(&menu_bytes,suffix,sizeof(menu_bytes)); suffix+=sizeof(menu_bytes);
-    }
-    if(tag==0x37414448) {
-        std::memcpy(&message_bytes,suffix,sizeof(message_bytes)); suffix+=sizeof(message_bytes);
-    }
-    if(tag==0x37414448) {std::memcpy(&ui_bytes,suffix,sizeof(ui_bytes));suffix+=sizeof(ui_bytes);}
-    const u32 language_bytes=(tag==0x34414448 || tag==0x35414448 || tag==0x37414448) ? 7*sizeof(u32) :
-        tag==0x33414448 ? 5*sizeof(u32) : 0;
-    const u32 extended_header_bytes=tag==0x37414448 ? 3*sizeof(u32) : tag==0x35414448 ? sizeof(u32) : 0;
+    std::memcpy(&menu_bytes,suffix,sizeof(menu_bytes)); suffix+=sizeof(menu_bytes);
+    std::memcpy(&message_bytes,suffix,sizeof(message_bytes)); suffix+=sizeof(message_bytes);
+    std::memcpy(&ui_bytes,suffix,sizeof(ui_bytes));suffix+=sizeof(ui_bytes);
+    const u32 language_bytes=7*sizeof(u32);
+    const u32 extended_header_bytes=3*sizeof(u32);
     if(bytes!=prefix+extended_header_bytes+native_bytes+language_bytes+menu_bytes+message_bytes+ui_bytes ||
         retired_routes.count>retired_routes.entries.size()) return Status::invalid;
     auto status=native_targets::restore(suffix,native_bytes);
     if(status==Status::unavailable)
         host->log(L"NGT1 state has no native component/cache constructor sources; the current adapter cannot migrate this active UI to the global source model in place.");
     if(status!=Status::ok) return status;
-    if(tag==0x33414448 || tag==0x34414448 || tag==0x35414448 || tag==0x37414448) {
-        u32 language[7]{};
-        std::memcpy(language,suffix+native_bytes,language_bytes);
-        chinese_enabled=language[0]!=0;
-        intro_chinese=language[1]!=0;
-        native_language_input::restore({language[2]});
-        if(tag==0x37414448) native_language_redraw::restore({language[3],language[4]});
-        if(tag==0x34414448 || tag==0x35414448 || tag==0x37414448) native_name_input::restore({language[5],language[6]});
-    }
-    if(tag==0x37414448) native_menu_component::restore(suffix+native_bytes+language_bytes);
-    if(tag==0x37414448) restore_windows_message_state(suffix+native_bytes+language_bytes+menu_bytes);
-    if(tag==0x37414448) restore_native_ui_state(suffix+native_bytes+language_bytes+menu_bytes+message_bytes);
+    u32 language[7]{};
+    std::memcpy(language,suffix+native_bytes,language_bytes);
+    chinese_enabled=language[0]!=0;
+    intro_chinese=language[1]!=0;
+    native_language_input::restore({language[2]});
+    native_language_redraw::restore({language[3],language[4]});
+    native_name_input::restore({language[5],language[6]});
+    native_menu_component::restore(suffix+native_bytes+language_bytes);
+    restore_windows_message_state(suffix+native_bytes+language_bytes+menu_bytes);
+    status=restore_native_ui_state(suffix+native_bytes+language_bytes+menu_bytes+message_bytes,ui_bytes);
+    if(status!=Status::ok) return status;
     const auto routes=native_targets::routes();
     status=abi1_retirement::bind_routes(retired_routes,routes);
     if(status!=Status::ok) return status;

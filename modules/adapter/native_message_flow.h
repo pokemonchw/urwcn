@@ -49,7 +49,10 @@ struct Continuation {
     u32 return_rva,index,color,cursor_x,cursor_y,wait_color;
     bool complete;
 };
-struct Services { Status (*consume)(Handle,const Record&); };
+struct Services {
+    Status (*consume)(Handle,const Record&);
+    Status (*completed)(Handle,const Record&);
+};
 void initialize(std::uintptr_t image_base);
 void configure(const Services&);
 Handle construct_background(SourceKey,const PanelSource&);
@@ -61,6 +64,16 @@ Status paint_background(Handle);
 Handle append(SourceKey,u32 native_frame,const char* native_input,
     const char* accepted_english,bool sound_field,const native_message_source::Text&);
 const Source& get(Handle);
+// The original message-panel constructor establishes this current component.
+Handle current(SourceKey);
+// Borrow the component belonging to the actual currently suspended F5B00.
+Handle waiting_source(u32 wait_frame);
+// F6510 has no counter assignment between its entry and its F5B00 calls.
+// A 100 seed selects Continue only at that record's first acknowledgement;
+// F5BAE then resets it, so later acknowledgements select More.
+bool waiting_continue(u32 wait_frame);
+u32 waiting_frame(Handle);
+const NativeState& current_state(Handle);
 const Record& record(u32 native_frame);
 Handle live_source(u32 native_frame);
 // FA347 follows the actual whole native message-panel clear. F6164 is the

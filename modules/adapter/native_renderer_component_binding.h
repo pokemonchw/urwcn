@@ -39,6 +39,9 @@ void activate(Handle);
 void native_texture_destroying(u32 texture);
 void native_surface_destroying(u32 surface);
 native_renderer_component_model::TargetSource target_source(u32 native_owner_field);
+// Re-enter only the complete E3D90/E3EE0 known-map factory from its actual
+// accepted MapInputs. It does not traverse renderer children or paint a Scene.
+Status construct_known_map();
 void hud_icon_constructed(u32 native_owner_field,u32 icon_handle);
 // Shared original FB01C boundary: before an ordinary icon constructor it is
 // the successful native overlay-clear end. During complete background paint

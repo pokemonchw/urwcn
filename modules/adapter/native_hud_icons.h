@@ -14,6 +14,8 @@ struct PreparedIcon {u32 native_record,alpha;};
 using OwnerSource=TargetSource (*)(u32 native_owner_field);
 using Constructed=void (*)(u32 native_owner_field,Handle);
 void configure(std::uintptr_t image_base,OwnerSource,Constructed);
+// Synchronous complete-widget constructor input; never saved across waits.
+void borrow_direction(const u32* input);
 void append_hooks(std::vector<HookSpec>&);
 Status dispatch(const NativeEvent&,DispatchResult&,bool& handled);
 const SourceKey& source(Handle);

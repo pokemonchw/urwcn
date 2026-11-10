@@ -148,6 +148,24 @@ Handle append(SourceKey key,u32 frame,const char* input,const char* english,bool
     return handle;
 }
 const Source& get(Handle handle) {return instances.find(handle)->second.source;}
+Handle current(SourceKey key) {return current_sources.find(key)->second;}
+Handle waiting_source(u32 frame) {
+    return std::find_if(calls.begin(),calls.end(),
+        [frame](const auto& value){return value.second.wait.wait_frame==frame;})->second.source;
+}
+bool waiting_continue(u32 frame) {
+    const auto& call=std::find_if(calls.begin(),calls.end(),
+        [frame](const auto& value){return value.second.wait.wait_frame==frame;})->second;
+    return find_record(call).entry.counter==100 && call.wait.acknowledged==0;
+}
+u32 waiting_frame(Handle handle) {
+    const auto& source=get(handle);
+    for(const auto& [frame,call]:calls)
+        if(call.wait.wait_frame && owner(call.source)==owner(handle) &&
+            call.record==source.records.back().identity) return call.wait.wait_frame;
+    return 0;
+}
+const NativeState& current_state(Handle handle) {return instances.find(owner(handle))->second.state;}
 const Record& record(u32 frame) {return find_record(calls.find(frame)->second);}
 Handle live_source(u32 frame) {return calls.find(frame)->second.source;}
 Handle clear(SourceKey key) {
@@ -254,6 +272,10 @@ Status paint(Handle handle) {
         // This record's actual native wait is the visible input boundary. The
         // source revision cannot display records beyond the current input.
         if(target()) break;
+        // A completed prompt can own accepted native getst fields. Their
+        // complete native construction precedes the next message's original
+        // scroll, so that same canonical flow owns their visible lifetime.
+        status=services.completed(handle,record);if(status!=Status::ok) break;
     }
     const auto result=capture();const bool updates_wait=installed_continuation;painting_source=nullptr;painting=0;
     const auto current=current_sources.find(source.key);
@@ -264,7 +286,7 @@ Status paint(Handle handle) {
     // pagination input. A real suspended message wait receives its newly
     // generated native continuation; other calls keep their caller's inputs.
     install(previous);
-    if(updates_wait && status==Status::ok) {
+    if((updates_wait || actual_source) && status==Status::ok) {
         native(0x61A8CB8)=result.message_x;native(0x61A968C)=result.message_y;
         native(0xA3840E8)=result.completed_x;native(0xA3840C4)=result.completed_y;counter()=result.counter;
     }

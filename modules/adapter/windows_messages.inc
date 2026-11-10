@@ -6,6 +6,9 @@ namespace windows_message_values {
 MessageText source(const char*,const char*);
 MessageText tag_source(const char*,const char*);
 }
+namespace native_text_edit_language {
+Status after_message(native_message_flow::Handle,const native_message_flow::Record&);
+}
 
 template<class T> void message_state_write(std::vector<unsigned char>& output,const T& value) {
     const auto* data=reinterpret_cast<const unsigned char*>(&value);
@@ -110,7 +113,18 @@ void transfer_display(u32 generated_frame,u32 ordinary_frame) {
             ptr<Display>(value.allocation)->frame==generated_frame;
     });
     if(generated!=active.end()) {
-        auto adopted=*generated;active.erase(generated);adopted.token=token;
+        auto adopted=*generated;
+        const auto generated_token=adopted.token;
+        active.erase(generated);adopted.token=token;
+        // The encoded source, its native word loop and final glyphs share
+        // the complete F6510 display lifetime. A real pagination continuation
+        // adopts that same Unicode scope with its Host-owned text buffers.
+        const auto unicode=std::find_if(active.begin(),active.end(),[generated_token](const Active& value) {
+            return value.token==generated_token && value.kind==Scope::profile_identity_unicode;
+        });
+        if(unicode!=active.end()) {
+            auto context=*unicode;active.erase(unicode);context.token=token;active.push_back(context);
+        }
         ptr<Display>(adopted.allocation)->frame=ordinary_frame;active.push_back(adopted);
     }
 }
@@ -121,7 +135,7 @@ Status consume_flow(native_message_flow::Handle,const native_message_flow::Recor
     reinterpret_cast<NativeMessage>(at<void>(0xf6510))(record.native_input.c_str());
     return generated_status;
 }
-native_message_flow::Services flow_services() {return {consume_flow};}
+native_message_flow::Services flow_services() {return {consume_flow,native_text_edit_language::after_message};}
 }
 
 std::string message_source_utf8(const char* native) {
@@ -379,6 +393,11 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
             return status;
         }
         std::vector<char> encoded;
+        // An original player/name field can contain actual UTF-8 while the
+        // surrounding message is English. Decide from that complete accepted
+        // semantic input, before producing the native display transport.
+        const bool unicode=!chinese_enabled && native_name_input::requires_unicode(projected.c_str());
+        const native_name_input::UnicodeMeasure encoding(unicode ? projected.c_str() : "");
         status=codec(layout_op::encode_native,projected.c_str(),encoded);
         if(status!=Status::ok) {
             if(painting) {generated_status=status;result.resume_rva=0xf6ebb;return Status::ok;}
@@ -398,6 +417,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         std::memcpy(record->english,at<char>(0x61a84b8),sizeof(record->english));
         std::memcpy(source(record),encoded.data(),encoded.size());
         *word(record)=0;*history_text(record)=0;
+        if(unicode) active.push_back({event.token,Scope::profile_identity_unicode,0,0,0,0,0});
         active.push_back({event.token,Scope::message_body,address(record),0,0,0,0});
         event.frame->ecx=address(source(record));result.resume_rva=0xf6a4a;
         return Status::ok;

@@ -95,7 +95,8 @@ Status measure_row(u32 index,std::int32_t& width) {
     std::vector<char> encoded;
     const auto status=resolve_binding(native_menu_model::row(source_handle(),index),encoded);
     if(status!=Status::ok) {paint_result=status;return status;}
-    const auto measured=measure(encoded.data(),width);
+    const auto& source=native_menu_model::row(source_handle(),index).source;
+    const auto measured=measure(encoded.data(),source.original.c_str(),width);
     if(measured!=Status::ok) paint_result=measured;
     return measured;
 }

@@ -55,6 +55,7 @@ Handle next_handle=1,direction_current{},overlay_current{},activity_current{};
 std::map<Handle,Version> icons;
 std::map<SourceKey,Handle> current_sources;
 std::optional<Handle> painting;
+const u32* borrowed_direction{};
 template<class T> T& native(u32 rva) {return *reinterpret_cast<T*>(base+rva);}
 u32 address(const void* value) {return static_cast<u32>(reinterpret_cast<std::uintptr_t>(value));}
 u32 exit_rva(void (*exit)()) {return address(reinterpret_cast<const void*>(exit))-static_cast<u32>(base);}
@@ -105,9 +106,11 @@ IconSource read_source(const std::uint8_t*& input) {
 void configure(std::uintptr_t image_base,OwnerSource owner,Constructed callback) {
     base=image_base;owner_source=owner;constructed=callback;next_handle=1;
     icons.clear();current_sources.clear();painting.reset();direction_current=overlay_current=activity_current=0;
+    borrowed_direction=nullptr;
     uwcn_hud_direction_native_entry=static_cast<u32>(base+0xFAF04);
     uwcn_hud_activity_native_entry=static_cast<u32>(base+0xFB06F);
 }
+void borrow_direction(const u32* input) {borrowed_direction=input;}
 void append_hooks(std::vector<HookSpec>& hooks) {
     absolute(hooks,direction_begin,0xFAF04,{0xA1,0,0,0,0},1,0x619F97C);
     absolute(hooks,direction_branch,0xFAFB3,{0x8B,0x1D,0,0,0,0},2,0x18C1D0);
@@ -143,12 +146,14 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     }
     switch(event.id) {
     case direction_begin:
-        direction_current=construct(Kind::direction,native<u32>(direction_field),255);
-        native<u32>(direction_field)=prepare(direction_current).native_record;break;
+        direction_current=construct(Kind::direction,borrowed_direction ? *borrowed_direction : native<u32>(direction_field),255);
+        if(!borrowed_direction) native<u32>(direction_field)=prepare(direction_current).native_record;
+        break;
     case direction_end:constructed(hud_surface,direction_current);break;
     case overlay_begin:
-        overlay_current=construct(Kind::overlay_direction,native<u32>(direction_field),255);
-        native<u32>(direction_field)=prepare(overlay_current).native_record;break;
+        overlay_current=construct(Kind::overlay_direction,borrowed_direction ? *borrowed_direction : native<u32>(direction_field),255);
+        if(!borrowed_direction) native<u32>(direction_field)=prepare(overlay_current).native_record;
+        break;
     case overlay_end:constructed(overlay_texture,overlay_current);break;
     case activity_alpha: {
         const auto alpha=*reinterpret_cast<const u32*>(static_cast<std::uintptr_t>(event.frame->esp));
@@ -222,10 +227,10 @@ std::vector<std::uint8_t> save() {
 }
 void restore(const void* payload) {
     auto* input=static_cast<const std::uint8_t*>(payload);next_handle=read<u32>(input);
-    const auto count=read<u32>(input),sources=read<u32>(input);icons.clear();current_sources.clear();painting.reset();
+    const auto count=read<u32>(input),sources=read<u32>(input);icons.clear();current_sources.clear();painting.reset();borrowed_direction=nullptr;
     for(u32 i=0;i<count;++i) {const auto handle=read<u32>(input),references=read<u32>(input);icons.emplace(handle,Version{references,read_source(input)});}
     for(u32 i=0;i<sources;++i) {const auto owner=read<u64>(input),native_source=read<u64>(input);const auto field=read<u32>(input),handle=read<u32>(input);
         current_sources.emplace(SourceKey{owner,native_source,field},handle);}
 }
-void shutdown() {icons.clear();current_sources.clear();painting.reset();base=0;owner_source=nullptr;constructed=nullptr;}
+void shutdown() {icons.clear();current_sources.clear();painting.reset();borrowed_direction=nullptr;base=0;owner_source=nullptr;constructed=nullptr;}
 }

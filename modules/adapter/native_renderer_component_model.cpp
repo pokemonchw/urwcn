@@ -226,6 +226,7 @@ Handle upsert_marked_button(SourceKey key,TargetSource target,const MarkedButton
     return upsert({key,target,Kind::marked_button,inputs,text,{}});
 }
 const Component& get(Handle handle) { return models.find(handle)->second.component; }
+const Component& current(SourceKey key) { return get(current_sources.find(key)->second); }
 u32 display_style(Handle handle) {return text_style(get(handle));}
 void commit_native_row(Handle handle) {
     const auto& component=get(handle);const auto& input=std::get<MarkedButtonInputs>(component.inputs);
