@@ -3,9 +3,9 @@
 #include <vector>
 
 namespace uwcn::adapter::native_language_redraw {
-// Shared input synchronization and the statically confirmed DE990 page
-// continuation. State retains only pending/rebuilding flags, never UI content.
-// Pending bits: menu selection, ancestor reconstruction, native zero-event exit.
+// Shared input synchronization and confirmed setup/DE990 page continuations.
+// State retains only pending/rebuilding flags, never UI content. Pending bits:
+// menu selection, ancestors, native zero-event exit, setup reconstruction.
 struct State {u32 pending;u32 rebuilding;};
 void initialize(std::uintptr_t image_base);
 void request();

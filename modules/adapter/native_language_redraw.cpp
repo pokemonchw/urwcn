@@ -6,21 +6,29 @@ namespace {
 std::uintptr_t base{};
 State state{};
 constexpr u32 native_menu_input_result=0x5100;
+constexpr u32 setup_input_result=0x5101,setup_initialization=0x5102;
 constexpr u32 ancestors_input_result=0x5103,ancestors_capacity=0x5104,
     ancestors_index_load=0x5105,ancestors_index_ready=0x5106,native_event_result=0x5107;
+constexpr u32 menu_selection_pending=1,ancestors_pending=2,input_exit_pending=4,setup_pending=8;
+constexpr u32 ancestors_rebuilding=1,setup_rebuilding=2;
 }
 void initialize(std::uintptr_t image_base) {base=image_base;state={};}
-void request() {state.pending=7;}
+void request() {state.pending=menu_selection_pending|ancestors_pending|input_exit_pending|setup_pending;}
 bool input_return(u32 caller_return_rva) {
     // D1C8E's PollEvent and D1CF8's WaitEvent feed the same D1D69 boundary.
     // Keep this decision with the saved/reloadable native reconstruction state.
-    return (state.pending&4u) &&
+    return (state.pending&input_exit_pending) &&
         (caller_return_rva==0xD1C94 || caller_return_rva==0xD1CFA);
 }
 void append_hooks(std::vector<HookSpec>& hooks) {
     // This is the common D1120 input protocol, shared by every native Menu.
     hooks.push_back({native_menu_input_result,HookKind::inline_code,0xD12B4,0,0,8,
         {0x8B,0xF8,0x8D,0x85,0xF8,0xFB,0xFF,0xFF}});
+    // 106B20 remains the native CALL, preserving D1120's real return address.
+    hooks.push_back({setup_input_result,HookKind::inline_code,0x106B25,0,0,5,
+        {0x8B,0xF0,0x83,0xFE,0x64}});
+    hooks.push_back({setup_initialization,HookKind::inline_code,0x1057E2,0,0,6,
+        {0xC6,0x45,0x8A,0x00,0x33,0xF6}});
     hooks.push_back({ancestors_input_result,HookKind::inline_code,0xDF187,0,0,5,
         {0x8B,0xD0,0x83,0xFA,0xFF}});
     HookSpec capacity{ancestors_capacity,HookKind::inline_code,0xDEB84,0,0,8,
@@ -40,15 +48,34 @@ bool dispatch(const NativeEvent& event,DispatchResult& result) {
     if(event.id==native_event_result) {
         // D1D01 has cleared the original event type after SDL returned zero.
         // D2083 is D1C00's existing balanced non-key return (-2).
-        if((state.pending&4u) && *reinterpret_cast<const u32*>(base+0x5F555F8)==0) {
-            state.pending&=~4u;result.resume_rva=0xD2083;
+        if((state.pending&input_exit_pending) && *reinterpret_cast<const u32*>(base+0x5F555F8)==0) {
+            state.pending&=~input_exit_pending;result.resume_rva=0xD2083;
+        }
+        return true;
+    }
+    if(event.id==setup_input_result) {
+        if(state.rebuilding==setup_rebuilding) {
+            // The existing setup frame carries the option state. ESI is the
+            // real selection, later restored by the original 106B0E store.
+            event.frame->esi=*reinterpret_cast<const u32*>(base+0x5F54AB0);
+            result.resume_rva=0x105716;
+        }
+        return true;
+    }
+    if(event.id==setup_initialization) {
+        state.pending&=~setup_pending;
+        if(state.rebuilding==setup_rebuilding) {
+            state.rebuilding=0;
+            // Skip initial local/selection resets, config reload and audio
+            // fade. Native footer, cwd, setupscr and body constructors follow.
+            result.resume_rva=0x10580D;
         }
         return true;
     }
     // Confirmed DE990 continuation: rebuild through the original constructors,
     // without reloading its index or changing its live sort/page locals.
     if(event.id==ancestors_input_result) {
-        if(state.rebuilding) {
+        if(state.rebuilding==ancestors_rebuilding) {
             *reinterpret_cast<u32*>(event.frame->ebp-0x5AC)=
                 *reinterpret_cast<const u32*>(base+0x5F54AB0);
             event.frame->esi=static_cast<u32>(-1);result.resume_rva=0xDE9DE;
@@ -56,35 +83,39 @@ bool dispatch(const NativeEvent& event,DispatchResult& result) {
         return true;
     }
     if(event.id==ancestors_capacity) {
-        state.pending&=~2u;
-        if(state.rebuilding) {
+        state.pending&=~ancestors_pending;
+        if(state.rebuilding==ancestors_rebuilding) {
             event.frame->eax=*reinterpret_cast<const u32*>(event.frame->ebp-0x5A4);
             result.resume_rva=0xDEBB1;
         }
         return true;
     }
     if(event.id==ancestors_index_load) {
-        if(state.rebuilding) result.skip_original=1;
+        if(state.rebuilding==ancestors_rebuilding) result.skip_original=1;
         return true;
     }
     if(event.id==ancestors_index_ready) {
-        if(state.rebuilding) {state.rebuilding=0;result.resume_rva=0xDEC33;}
+        if(state.rebuilding==ancestors_rebuilding) {state.rebuilding=0;result.resume_rva=0xDEC33;}
         return true;
     }
     if(event.id!=native_menu_input_result) return false;
-    if(event.frame->eax==static_cast<u32>(-2)) state.pending&=~4u;
-    if((state.pending&2u) && event.frame->eax==static_cast<u32>(-2) &&
-        *reinterpret_cast<const u32*>(event.frame->ebp+4)==base+0xDF187) {
-        state.rebuilding=1;state.pending&=~2u;result.resume_rva=0xD19B3;
+    if(event.frame->eax==static_cast<u32>(-2)) state.pending&=~input_exit_pending;
+    if((state.pending&setup_pending) && event.frame->eax==static_cast<u32>(-2) &&
+        *reinterpret_cast<const u32*>(event.frame->ebp+4)==base+0x106B25) {
+        state.rebuilding=setup_rebuilding;state.pending&=~setup_pending;result.resume_rva=0xD19B3;
     }
-    if(state.pending&1u) {
+    if((state.pending&ancestors_pending) && event.frame->eax==static_cast<u32>(-2) &&
+        *reinterpret_cast<const u32*>(event.frame->ebp+4)==base+0xDF187) {
+        state.rebuilding=ancestors_rebuilding;state.pending&=~ancestors_pending;result.resume_rva=0xD19B3;
+    }
+    if(state.pending&menu_selection_pending) {
         // The source rebuild can reindex native link rows while preserving
         // their English action identity. D1120's previous-selection local and
         // its own repaint flag must consume the resulting real selection.
         *reinterpret_cast<u32*>(event.frame->ebp-0x430)=
             *reinterpret_cast<const u32*>(base+0x5F54AB0);
         *reinterpret_cast<u32*>(event.frame->ebp-0x41C)=1;
-        state.pending&=~1u;
+        state.pending&=~menu_selection_pending;
     }
     return true;
 }

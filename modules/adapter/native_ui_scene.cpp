@@ -601,10 +601,11 @@ Status repaint() {
     native_root_component::activate(previous_background);
     return status;
 }
-Status language_changed(bool all_caches) {
+Status language_changed(bool all_caches,bool native_reconstruction) {
     ++language_revision;
     const auto resource=native_culture_legend::language_changed();
     if(resource!=Status::ok) return resource;
+    if(native_reconstruction) return Status::ok;
     if(all_caches) {
         for(const auto& [slot,revision]:caches) {
             (void)revision;

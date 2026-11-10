@@ -46,7 +46,9 @@ Status prepare_cache_restore(Slot,const native_ui_cache_owners::RestoreInput&,
     native_ui_cache_owners::PreparedRestore&);
 Status cache_restored(Slot,const native_ui_cache_owners::PreparedRestore&,int native_result);
 Status repaint();
-Status language_changed(bool all_caches=false);
+// A confirmed native page continuation rebuilds its own pixels and caches.
+// In that case only advance the language revision; do not materialize a Scene.
+Status language_changed(bool all_caches=false,bool native_reconstruction=false);
 Status prepare_cache(Slot,void* native_surface);
 
 std::vector<std::uint8_t> save();

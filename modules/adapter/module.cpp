@@ -568,11 +568,20 @@ Status profile_name_error(const NativeEvent& e,DispatchResult& result,TextCompon
 #include "footer.inc"
 
 Status invalidate(bool all_caches=false) {
-    const auto status=native_ui_scene::language_changed(all_caches);
+    const native_text_resource::SourceKey setup_panel_source{native_root_component::current(),0x105752,
+        static_cast<u32>(TextComponent::setup_title)};
+    const bool native_setup=native_ui_scene::current()!=0 && native_ui_scene::contains_source(setup_panel_source);
+    const auto status=native_ui_scene::language_changed(all_caches,native_setup);
     if(status!=Status::ok) return status;
     // Revision zero precedes the first native background constructor. The
     // chosen language applies to that construction; no Scene exists to present.
     if(native_ui_scene::current()==0) return Status::ok;
+    if(native_setup) {
+        // Preserve the native selection and live setup locals. Its confirmed
+        // input continuation reconstructs the whole page, including footer,
+        // installation path and setupscr, before its own normal presentation.
+        native_language_redraw::request();return Status::ok;
+    }
     const bool menu_active=*at<u32>(0x5F54DF0)!=0;
     const bool menu_renderer=menu_active && *at<u32>(0x5F54B94)!=0;
     // D153C/D196C/D19B3 own this shared native input phase. The original input
