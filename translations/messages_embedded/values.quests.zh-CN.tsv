@@ -1,4 +1,7 @@
 domain	source	target
+quest.journal	QUEST JOURNAL	任务日志
+quest.journal	You are not currently involved in any quests.	你目前没有正在进行的任务。
+quest.journal	Quests may come in your way by talking and interacting with people.	与人交谈和互动，可能会获得任务。
 treasure	in a cave	在一处洞穴内
 treasure	on a cliff	在一处峭壁上
 treasure	hidden somewhere around there	藏在那附近的某处

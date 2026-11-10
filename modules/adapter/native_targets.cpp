@@ -200,7 +200,10 @@ Texture* __cdecl create_texture(Renderer* renderer,u32 format,int access,int w,i
     const bool upload=site==0x117973;
     // MagicProfile's native page and CompileInfoboxRitualList's description.
     // Both are native render targets; their logical rectangles remain native.
-    const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2 || site==0x116EF2 || site==0x105340;
+    // 157D10 and 158CE0 create the quest detail/list target. Their owner,
+    // constructor inputs, logical size and ordinary destruction stay native.
+    const bool quest=windows_build::is_3891() && (site==0x157DAF || site==0x158D75);
+    const bool component=site==0xDF995 || site==0xDFC7B || site==0xE3DD2 || site==0x116EF2 || site==0x105340 || quest;
     if(component) return make_component_texture(renderer,format,access,w,h);
     if(upload) {
         if(output_scale()!=Status::ok) return nullptr;

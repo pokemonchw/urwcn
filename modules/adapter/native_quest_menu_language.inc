@@ -5,7 +5,10 @@ namespace native_quest_menu_language {
 using View=native_language_redraw::View;
 enum class Construction { none,detail,list,empty };
 Construction constructing{};
-enum Hook:u32 { detail_finished=0x51F0,list_finished,list_index,empty_wait,empty_finished };
+enum Hook:u32 {
+    detail_finished=0x51F0,list_finished,list_index,empty_wait,empty_finished,
+    title_panel,title_text,empty_text_first
+};
 struct Detail {u32 target,frame,origin,recreate,set_target;};
 extern "C" __attribute__((naked)) void UWCN_CALL uwcn_quest_detail(const Detail*) {
     __asm__ __volatile__(
@@ -27,6 +30,29 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     auto finished=inline_hook(empty_finished,0x159335,{0xC7,0x05,0,0,0,0,0,0,0,0});
     const auto flip=address(at<void>(0x61BBA5C));
     std::memcpy(finished.expected+2,&flip,4);hooks.push_back(finished);
+    if(windows_build::is_3891()) {
+        hooks.push_back(call(title_panel,0x1135AB,0x1166C0,6));
+        hooks.push_back(call(title_text,0x1135C1,0x10E260,4));
+        hooks.push_back(call(empty_text_first,0x15928B,0x10E260,4));
+        hooks.push_back(call(empty_text_first+1,0x1592DA,0x10E260,4));
+    }
+}
+Status heading(const NativeEvent& event) {
+    std::vector<char> encoded;
+    const auto status=translate(TextComponent::message_value,at<char>(0x1CC6F8),"quest.journal",encoded);
+    if(status!=Status::ok) return status;
+    // 113550 supplies this exact panel's renderer, x, y and width. Native
+    // 115AD0 mode 5 constructs the same 1166C0 band, then measures and centers
+    // its complete title. No English title position is copied into the Mod.
+    const native_renderer_component_calls::SectionCall call{
+        address(at<void>(0x115AD0)),event.frame->ecx,
+        static_cast<std::int32_t>(event.frame->edx),
+        static_cast<std::int32_t>(event.arguments[0]),
+        static_cast<std::int32_t>(event.arguments[1]),encoded.data(),5};
+    begin(event,Scope::hud_renderer_text,1);
+    native_renderer_component_calls::uwcn_renderer_section(&call);
+    end(event.token);
+    return Status::ok;
 }
 Status construct(u32 page,Construction kind) {
     const auto flip=*at<u32>(0x61BBA5C);
@@ -68,12 +94,38 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32&) {
     return status;
 }
 Status wait(const NativeEvent& event) {
-    if(event.phase!=NativePhase::before || !native_language_redraw::pending(View::hud) ||
-       *ptr<const u32>(event.frame->ebp+4)!=host->image_base+0x159335) return Status::ok;
-    return construct(*ptr<const u32>(event.frame->ebp),Construction::empty);
+    if(event.phase!=NativePhase::before || !native_language_redraw::pending(View::hud))
+        return Status::ok;
+    // 158DB4/158DBA select this exact native output owner and context before
+    // entering the empty branch. Other D3C80 pages own different contexts.
+    if(*at<u32>(0xA1C2010)!=0x10 ||
+       *at<u32>(0xA1C1CBC)!=*at<u32>(0xA220EF4)) return Status::ok;
+    // The hooked 159330 CALL substitutes the resident After bridge for the
+    // D3C80 return address. Its saved EBP still names the real 158CE0 frame;
+    // that constructor's sole, unhooked caller is 17DED9 -> 17DEDE. At this
+    // D3D05 tick, 158CE0 calls D3C80 only from its empty-list branch.
+    const auto page=*ptr<const u32>(event.frame->ebp);
+    if(*ptr<const u32>(page+4)!=host->image_base+0x17DEDE) return Status::ok;
+    return construct(page,Construction::empty);
 }
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=false;
+    if(event.id>=title_panel && event.id<=empty_text_first+1) {
+        handled=true;
+        if(event.phase==NativePhase::after) {end(event.token);return Status::ok;}
+        if(!chinese_enabled) return Status::ok;
+        if(event.id==title_panel) {
+            const auto status=heading(event);
+            if(status==Status::ok) result.skip_original=1;
+            return status;
+        }
+        if(event.id==title_text) {result.skip_original=1;return Status::ok;}
+        std::vector<char> encoded;
+        const auto status=translate(TextComponent::message_value,
+            ptr<char>(event.arguments[1]),"quest.journal",encoded);
+        if(status!=Status::ok) return status;
+        return lend_text(event,encoded,event.arguments[1],Scope::hud_renderer_text,event.arguments[3]&1u);
+    }
     if(event.phase==NativePhase::after) return Status::ok;
     switch(event.id) {
     case native_full_language::input_entry:
