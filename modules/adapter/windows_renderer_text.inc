@@ -5,6 +5,7 @@ enum Hook : u32 {
     paragraph_fit=0x7c00,paragraph_measure_advance,paragraph_draw_advance,paragraph_space,
     centered_heading,panel_title,panel_title_inset,marked_tiles,marked_advance,
     hit_prefix,hit_complete,
+    landscape_width=0x7c10,landscape_text,
     renderer_leaf_first=0x7c20
 };
 Status measure(const char* encoded,void* renderer,u32 outline,render::Metrics& measured) {
@@ -37,6 +38,12 @@ void append_hooks(std::vector<HookSpec>& hooks) {
         {0x8d,0x1c,0xcb,0x89,0x9d,0xcc,0xf3,0xff,0xff}));
     hooks.push_back(instruction(hit_prefix,0xcfeaa,{0x8d,0x04,0xcd,0x0a,0,0,0}));
     hooks.push_back(instruction(hit_complete,0xcfecb,{0x8d,0x04,0xcd,0x0a,0,0,0}));
+    // 8FF70 stores the selected terrain in its type-5 image record. Its
+    // original width arithmetic centers the label; 10B3C0 draws that record.
+    if(windows_build::is_3891()) {
+        hooks.push_back(instruction(landscape_width,0x90456,{0x8d,0x04,0xd5,0,0,0,0}));
+        hooks.push_back(native_call(landscape_text,0x10b44f,0x10e3e0,4));
+    }
     constexpr u32 renderer_leaves[]{0x10e4bb,0x10e4d1,0x10e4e5,0x10e4f9,0x10e50e};
     for(u32 i=0;i<std::size(renderer_leaves);++i)
         hooks.push_back(native_call(renderer_leaf_first+i,renderer_leaves[i],0x10e170,3));
@@ -59,6 +66,33 @@ Status draw_main_renderer(const NativeEvent& event) {
 }
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=true;
+    if(event.id==landscape_width) {
+        if(!chinese_enabled) return Status::ok;
+        const auto* original=at<char>(0xA385234)+event.frame->esi;
+        std::vector<char> encoded;
+        auto status=translate(TextComponent::message_value,original,"terrain",encoded);
+        if(status!=Status::ok) return status;
+        render::Metrics measured{};
+        status=measure(encoded.data(),*at<void*>(0xA2110CC),1,measured);
+        if(status!=Status::ok) return status;
+        // Replace only strlen*8. The native CDQ/SUB/SAR and the image's
+        // actual rectangle still determine the saved caption position.
+        event.frame->eax=static_cast<u32>(measured.logical_width);
+        result.skip_original=1;
+        return Status::ok;
+    }
+    if(event.id==landscape_text) {
+        if(event.phase!=NativePhase::before || !chinese_enabled ||
+           *ptr<u32>(event.frame->esi+0x14)!=5) return Status::ok;
+        std::vector<char> encoded;
+        const auto status=translate(TextComponent::message_value,
+            ptr<char>(event.arguments[1]),"terrain",encoded);
+        if(status!=Status::ok) return status;
+        // The record retains its English source. Only this complete native
+        // outlined draw borrows Chinese; its five leaves paint synchronously
+        // at the main renderer's actual output density.
+        return lend_text(event,encoded,event.arguments[1],Scope::hud_renderer_text,1);
+    }
     if(event.id>=renderer_leaf_first && event.id<renderer_leaf_first+5) {
         if(event.phase==NativePhase::before && chinese_enabled &&
            (in(Scope::hud_renderer_text) || in(Scope::native_renderer_resource) ||
