@@ -1,6 +1,10 @@
 UWCN main-menu translation version: static implementation record
 Date: 2026-10-18
 
+Historical record, superseded by 20261019-footer-branding-native.md and
+20261111-translation-build-version.md. Current versions include the local
+compilation hour; the ABI 3 metadata and DisplayPlan text below is obsolete.
+
 Scope and reference
 -------------------
 The main-menu branding request adds the Byayoi logo, the exact credit

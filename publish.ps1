@@ -52,6 +52,7 @@ foreach ($name in $Module) {
     $output = if ($name -eq 'launcher') { $launcherName } else { "uwcn_$name.dll" }
     Add-Candidate (Join-Path $BuildDirectory "out/$output") $relative
 }
+Add-Candidate (Join-Path $BuildDirectory 'out/build-hour.txt') 'metadata/build-hour.txt'
 if ($Module -contains 'catalog') {
     foreach ($file in Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'catalog') -File -Recurse) {
         $relative = 'catalog/' + [IO.Path]::GetRelativePath((Join-Path $PSScriptRoot 'catalog'),$file.FullName).Replace('\','/')

@@ -38,6 +38,9 @@ Status sha256(std::istream& stream,std::array<std::uint8_t,32>& digest) {
 }
 
 Status generate_translation_version(std::string& version) {
+    std::ifstream build_hour_stream(std::filesystem::path(host_api->package_path)/"metadata/build-hour.txt",std::ios::binary);
+    std::string build_hour;
+    if(!std::getline(build_hour_stream,build_hour)) return Status::unavailable;
     // The identity covers the formal business modules and their Chinese catalog,
     // in ModuleId order. Paths and lowercase digests are part of the hash input;
     // neither the loader nor a runtime UI value participates in this version.
@@ -83,6 +86,7 @@ Status generate_translation_version(std::string& version) {
         version[digest[0]%5]=static_cast<char>('A'+digest[1]%26);
     else if(std::all_of(version.begin(),version.end(),[](char c) { return c>='A' && c<='Z'; }))
         version[digest[0]%5]=static_cast<char>('0'+digest[1]%10);
+    version=build_hour+'.'+version;
     return Status::ok;
 }
 

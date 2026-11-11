@@ -5,6 +5,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 if (!$BatchId -or $env:UWCN_COMPILE_BATCH -ne $BatchId) { throw 'Compilation must be submitted through root build.ps1 or build-queue.ps1.' }
+$buildHour = (Get-Date).ToString('yyyy.MM.dd.HH',[Globalization.CultureInfo]::InvariantCulture)
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $compilerDirectory = Split-Path -Parent $CompilerPath
 $makePath = if ($IsLinux) { '/usr/bin/make' } else { Join-Path $compilerDirectory 'make.exe' }
@@ -38,6 +39,8 @@ try {
     if ($Module) { $buildArguments += '--target'; $buildArguments += @($Module | ForEach-Object { "uwcn_$_" }) }
     & $CMakePath @buildArguments
     if ($LASTEXITCODE -ne 0) { throw "Incremental compilation failed with exit code $LASTEXITCODE" }
+    [IO.File]::WriteAllText((Join-Path $BuildDirectory 'out/build-hour.txt'),($buildHour+"`n"),[Text.UTF8Encoding]::new($false))
+    Write-Output "Translation build hour: $buildHour"
     if ($Publish) {
         $publishArguments = @{ Toolchain=$Toolchain; BuildDirectory=$BuildDirectory; PackageDirectory=$PackageDirectory; BatchId=$BatchId; Reload=[bool]$Reload; TargetPid=$TargetPid }
         $publishArguments.WinePrefix=$WinePrefix; $publishArguments.WinePath=$WinePath
