@@ -34,7 +34,7 @@
 
 - 请求 `0c9a24a2e6b54147970a33361a0162ce`，批次 `9a7ed83befe04a43b613dbae4d9c35bc`。已读取对应请求结果 JSON 和完整批次日志；`Success=true`、`PublishRequested=true`、`ReloadRequested=true`。一次配置、一次增量构建，两个模块编译成功，无编译警告。
 - 发布事务 `626f8aabdf574492b5029e96bbe03370`。已读取 `build/linux-x86_64/stage/626f8aabdf574492b5029e96bbe03370/publication-result.json`，`success=true`。
-- 正式替换 `package/modules/uwcn_render.dll`、`package/modules/uwcn_adapter.dll`、Linux profile 和 `package/release.json`。旧四件先移入 `回收/20261019-165006-626f8aabdf574492b5029e96bbe03370/package/`，保留相对路径；发布器也按既有规则归档应用菜单旧链接。
+- 正式替换 `package/modules/urwcn_render.dll`、`package/modules/urwcn_adapter.dll`、Linux profile 和 `package/release.json`。旧四件先移入 `回收/20261019-165006-626f8aabdf574492b5029e96bbe03370/package/`，保留相对路径；发布器也按既有规则归档应用菜单旧链接。
 - PID `3950079` 先返回 `ReadyToPublish`，提交后返回同一事务 `Applied`：Render 第 2 代、Adapter 第 2 代。未关闭或重启游戏，未注入额外驻留层。
 - 正式 Render SHA256：`d244a6349edefdb8f1ea533ca797f19559caa8d68085b341c5027ef60546af63`；正式 Adapter：`b04ce9b09047d8f26e9a546c6c532bfdaa7e4a2a2101c516a57a6ec75706e1a6`；正式 Linux profile：`0c6acb32cfa8576f0a725ac6d2ff886c8a5c9e63c15a513f2bd4cf1f586577e9`。三者分别与构建产物／源码和正式清单相符。
 

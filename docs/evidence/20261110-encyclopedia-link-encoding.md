@@ -1,19 +1,19 @@
 # 百科链接表重载编码修正
 
-日期：2026-11-10（Asia/Shanghai）。依据用户提供的百科首页截图、已有 `package/uwcn.log`、源码及 `build/analysis/windows-3891-native-full.asm` 静态分析。没有启动游戏、注入、模拟输入、运行产物、执行或编写测试、添加断言或推测性的保护／回退／兜底。
+日期：2026-11-10（Asia/Shanghai）。依据用户提供的百科首页截图、已有 `package/urwcn.log`、源码及 `build/analysis/windows-3891-native-full.asm` 静态分析。没有启动游戏、注入、模拟输入、运行产物、执行或编写测试、添加断言或推测性的保护／回退／兜底。
 
 ## 根因及证据
 
 截图中黑字正文已按中文推进，蓝色链接、下划线和选择框却仍使用英文别名宽度。例如 `THE.BEGINNING` 的13字节按原生每字节8逻辑像素计算，符合截图中明显过长的下划线。不是仅有逐词元取整误差。
 
-`package/uwcn.log:2700–2703` 已有两次 Shift+F5 卸载和重载记录，紧接 `2704` 起连续出现 `30984/30985/31014/31015/31016` 的 `status 1`。这些分别是 `we_word_fit / we_pair_fit / we_prefix_width / we_label_width / we_underline`，即换行、链接定位、命中宽度和下划线的中文度量失败。这里只读已有日志，没有为复现而操作游戏。
+`package/urwcn.log:2700–2703` 已有两次 Shift+F5 卸载和重载记录，紧接 `2704` 起连续出现 `30984/30985/31014/31015/31016` 的 `status 1`。这些分别是 `we_word_fit / we_pair_fit / we_prefix_width / we_label_width / we_underline`，即换行、链接定位、命中宽度和下划线的中文度量失败。这里只读已有日志，没有为复现而操作游戏。
 
 完整静态调用链如下：
 
 1. `src/loader/host.cpp::unload_translation()` 先设 `kNativeSetTranslation(false)` 并卸载翻译提供库；`reload_translation()` 在 `retire_modules(32)` 保存当前 Adapter 的英文状态，经 `restore_modules(63)` 恢复，再发依赖更新，最后才设 `kNativeSetTranslation(true)`。
 2. `modules/adapter/module.cpp::restore_state()` 恢复 `chinese_enabled=false`；`kModuleDependenciesChanged` 随后调用 `initialize_windows_encyclopedia()`，重建链接显示表。
 3. 原 `windows_culture_text()` 对明确的中文链接词条调用依赖当前显示语言的 `codec(encode_native)`。英文状态下它转入 `encode_parser_original()`，对中文保留 UTF-8 字节；`windows_encyclopedia_words` 因而持有 UTF-8。重新开启中文只调用 `invalidate()`，没有重新编码这个表。
-4. `windows_culture_width()` 直接将表内标签交给 `metrics()`；中文状态下 `layout::decode()` 要求原生双字节 transport，读到 UTF-8 lead 大于 `BF` 即返回 `invalid`。`src/loader/host.cpp::dispatch()` 对这类错误只写日志，`hook_host.cpp::uwcn_inline_dispatch()` 因未取得替换决定而继续原 ASCII 宽度指令。
+4. `windows_culture_width()` 直接将表内标签交给 `metrics()`；中文状态下 `layout::decode()` 要求原生双字节 transport，读到 UTF-8 lead 大于 `BF` 即返回 `invalid`。`src/loader/host.cpp::dispatch()` 对这类错误只写日志，`hook_host.cpp::urwcn_inline_dispatch()` 因未取得替换决定而继续原 ASCII 宽度指令。
 5. 绘制与度量的区别在 `native_name_input.inc::showtext_copy`：原生 `10E5D2` 的本地文本副本会经 `contains_utf8 → display()` 规范成 transport。字形和 `10E700` 光标因此仍消费中文，而链接度量失败后保留英文 `strlen×8`，造成错位、重复可见及重叠。
 
 `3.89.1` 的 `3D9BC/3DAC7/3D591/3D5FB/3D6AE/3D728` 均与现有 Hook 的指令及参数一致，驻留桥的 `skip_original` 实现正确，不需要更改桥或原生坐标。
@@ -47,10 +47,10 @@
 | 批次日志 | `build/.compile-queue/batches/511f662fda534795a06748421e1707cc.log`；一次配置、一次增量编译及链接完成，保留既有警告，无编译错误 |
 | 正式事务 | `d01ecb5d5911434ebb61c4747b14633f` |
 | 发布结果 | `build/mingw-x86/stage/d01ecb5d5911434ebb61c4747b14633f/publication-result.json`；`success=true` |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/release.json` |
 | 旧件归档 | `回收/20261110-161832-d01ecb5d5911434ebb61c4747b14633f/package/`，两件均保留原相对路径 |
 | 热交接 | Windows PID `364` 返回 `ReadyToPublish` 后 `Applied`，Adapter第5代；无需退出或重启 |
 
-新 Adapter 的构建件、正式件及 Applied 回执 SHA-256 均为 `e724241351f7bc167b13bbb9c249a63d323eb78061b1d6150197aa6366bbd4f7`；归档旧 Adapter 为 `2f8bb901d3bacfcde6e292a4de5b77b6553753a0f161659612c080db8ac29001`。正式入口仍为根 `uwcn_launcher.exe` 及相邻 `package/`，没有独立修复包或平行运行副本。源码提交编译后至批次完成未继续修改请求范围源码。
+新 Adapter 的构建件、正式件及 Applied 回执 SHA-256 均为 `e724241351f7bc167b13bbb9c249a63d323eb78061b1d6150197aa6366bbd4f7`；归档旧 Adapter 为 `2f8bb901d3bacfcde6e292a4de5b77b6553753a0f161659612c080db8ac29001`。正式入口仍为根 `urwcn_launcher.exe` 及相邻 `package/`，没有独立修复包或平行运行副本。源码提交编译后至批次完成未继续修改请求范围源码。
 
 Adapter初始化及依赖刷新已重建链接表；现有语言失效通知由原生输入返回边界进入百科完整构造，重新生成正文、链接及控件。没有发送输入或以重启强制刷新。Applied仅证明模块事务完成，不能代替画面验收。

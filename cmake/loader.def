@@ -1,2 +1,2 @@
 EXPORTS
-uwcn_initialize=uwcn_initialize@4
+urwcn_initialize=urwcn_initialize@4

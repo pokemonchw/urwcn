@@ -2,7 +2,7 @@
 #include "../../sdk/host_abi.h"
 #include "../render/sdl_api.h"
 
-namespace uwcn::adapter::native_raster {
+namespace urwcn::adapter::native_raster {
 // The caller owns the native surface and supplies its original logical extent.
 // It is a valid 32-bit surface whose physical dimensions are at least the
 // positive logical dimensions. The caller has already performed any SDL lock

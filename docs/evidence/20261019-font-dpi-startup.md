@@ -40,7 +40,7 @@ RMSE 是 0–255 红通道的拟合误差。两个区域在 1.5 倍下均低于�
 - 源码：启动前 DPI hint 已接入；字体规范与初步审查的排除结论已更正。
 - 修改前源码和文档：保留在 `回收/20261019-font-dpi-source-2d32004169f44e94b81cc25624aa3443/`。
 - 编译：统一入口 `build.ps1 -Module launcher -Publish` 已成功。请求 `99b72100d2ee4db587b0f37e494b2f91`，批次 `704b7920c5824cb7b67fe95500ea9d99`；已读取对应请求 JSON 与完整批次日志，`Success=true`。没有编译或执行字体示例、测试工程或游戏。
-- 正式发布：2026-10-19 08:39:31（Asia/Shanghai）事务 `41070669c7054afab6885f04174d1757` 成功；已读取暂存目录的 `publication-result.json`。本事务只替换根 `uwcn_launcher.exe` 与 `package/release.json`。旧两件先移入 `回收/20261019-083930-41070669c7054afab6885f04174d1757/`，保留原相对路径。没有发布并行修改中的其他业务模块，也没有另建运行目录。
+- 正式发布：2026-10-19 08:39:31（Asia/Shanghai）事务 `41070669c7054afab6885f04174d1757` 成功；已读取暂存目录的 `publication-result.json`。本事务只替换根 `urwcn_launcher.exe` 与 `package/release.json`。旧两件先移入 `回收/20261019-083930-41070669c7054afab6885f04174d1757/`，保留原相对路径。没有发布并行修改中的其他业务模块，也没有另建运行目录。
 - 产物身份：正式根启动器与本批编译产物 SHA-256 同为 `aa7af7793590f743f9acba4320ae95e95d481cfafee067e3e8a1dc4f35b01d5a`，正式清单记录相同值。旧启动器 SHA-256 为 `b7190fe371d83de8f5edb190b35a78e915e8c3e143ad445cccfd9787f6a53969`。只读 PE 导入核对确认新文件含 `SetEnvironmentVariableW` 与原 `CreateProcessW`。
 - 运行时：`ReloadRequested=false`、`runtime_requested=false`，没有 Applied 回执。该启动声明由下次正常启动的游戏消费；不声称当前已创建窗口已改变。
 - 运行：未启动、运行或测试；没有视觉验收结论。

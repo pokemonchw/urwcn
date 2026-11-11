@@ -1,7 +1,7 @@
 // Linux 3.89 get_camp's display-only fragment. The original story file,
 // native button construction, Y/N actions and current selection stay native.
-extern "C" void uwcn_linux_redraw_scenario_fragment(std::uintptr_t);
-extern "C" void uwcn_linux_redraw_scenario_return();
+extern "C" void urwcn_linux_redraw_scenario_fragment(std::uintptr_t);
+extern "C" void urwcn_linux_redraw_scenario_return();
 
 bool scenario_confirmation_refresh=true;
 bool scenario_confirmation_chinese;
@@ -32,7 +32,7 @@ void scenario_confirmation_button(Frame& frame) {
         scenario_confirmation_refresh=false;
         scenario_confirmation_chinese=chinese;
         if(rebuilding_scenario_confirmation)
-            frame.resume=reinterpret_cast<std::uintptr_t>(uwcn_linux_redraw_scenario_return);
+            frame.resume=reinterpret_cast<std::uintptr_t>(urwcn_linux_redraw_scenario_return);
     }
 }
 void scenario_confirmation_input_return(std::uintptr_t caller) {
@@ -44,7 +44,7 @@ void scenario_confirmation_input_return(std::uintptr_t caller) {
         rebuilding_scenario_confirmation=true;
         // 1CEFC..1CF7E reads/draws the story and builds native controls only.
         // It excludes story creation, the input wait and selection handling.
-        uwcn_linux_redraw_scenario_fragment(host->image_base+0x1cefc);
+        urwcn_linux_redraw_scenario_fragment(host->image_base+0x1cefc);
         rebuilding_scenario_confirmation=false;
         native<void (*)(int)>(0xf6110)(selection);
         native<void (*)()>(0x13d5a0)();

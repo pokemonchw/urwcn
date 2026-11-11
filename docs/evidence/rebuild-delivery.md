@@ -32,15 +32,15 @@
 
 已读取各请求对应的 build/.compile-queue/results/<request-id>.json 和 batches/<batch-id>.log。最终仍有 GetProcAddress 从 FARPROC 到已确认 cdecl 函数签名的编译器转换警告，未关闭警告，也未将编译成功称为零警告。缩进和 HookSpec vector 增长诊断已经处理；后者改为独立接收 render specs 再合并。
 
-静态检查正式 PE 文件为 i386，六模块均导出 uwcn_module_descriptor 和 uwcn_get_module_api，驻留桥导出 uwcn_initialize。导入表仅含 Windows DLL，无额外 MinGW 运行库 DLL、业务模块相互导入。记录见 [正式 PE 信息](rebuild-delivery-pe.txt)。这些是文件读取与反汇编，不是执行或测试产物。
+静态检查正式 PE 文件为 i386，六模块均导出 urwcn_module_descriptor 和 urwcn_get_module_api，驻留桥导出 urwcn_initialize。导入表仅含 Windows DLL，无额外 MinGW 运行库 DLL、业务模块相互导入。记录见 [正式 PE 信息](rebuild-delivery-pe.txt)。这些是文件读取与反汇编，不是执行或测试产物。
 
 ## 正式发布回执
 
 - 事务：3bc905527c2046a88bbf172270de8f74。
 - 回执：build/mingw-x86/stage/3bc905527c2046a88bbf172270de8f74/publication-result.json。
-- 正式启动器：根 uwcn_launcher.exe。
-- 驻留桥：package/uwcn_loader.dll。
-- 业务模块：package/modules/uwcn_{catalog,semantic,render,layout,main_menu,adapter}.dll。
+- 正式启动器：根 urwcn_launcher.exe。
+- 驻留桥：package/urwcn_loader.dll。
+- 业务模块：package/modules/urwcn_{catalog,semantic,render,layout,main_menu,adapter}.dll。
 - 词库：package/catalog/zh-CN/main_menu.tsv。
 - 适配：package/profiles/urw-3.89-steam-25939378.json。
 - 发布清单：package/release.json。

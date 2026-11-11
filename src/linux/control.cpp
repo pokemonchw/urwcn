@@ -14,7 +14,7 @@
 #include <stdexcept>
 #include <thread>
 
-namespace uwcn::linux_host {
+namespace urwcn::linux_host {
 namespace {
 int listener=-1,client=-1;
 std::atomic<bool> listening{};
@@ -53,7 +53,7 @@ void start_control() {
     listener=socket(AF_UNIX,SOCK_STREAM|SOCK_CLOEXEC,0);
     if(listener<0) throw std::runtime_error("Cannot create resident control socket");
     // Linux abstract namespace: no filesystem alias or stale socket file.
-    const auto name="uwcn-"+std::to_string(geteuid())+"-"+std::to_string(getpid());
+    const auto name="urwcn-"+std::to_string(geteuid())+"-"+std::to_string(getpid());
     sockaddr_un address{};
     address.sun_family=AF_UNIX;
     std::memcpy(address.sun_path+1,name.data(),name.size());
@@ -78,7 +78,7 @@ void stop_control() {
 }
 namespace {
 template<class T> T sdl(const char* name) { return reinterpret_cast<T>(dlsym(RTLD_NEXT,name)); }
-void service() { uwcn::linux_host::service_control(); }
+void service() { urwcn::linux_host::service_control(); }
 int wait_event(SDL_Event* event,int timeout) {
     static const auto wait=sdl<decltype(&SDL_WaitEventTimeout)>("SDL_WaitEventTimeout");
     static const auto clear=sdl<decltype(&SDL_ClearError)>("SDL_ClearError");

@@ -303,7 +303,7 @@ void culture_notice(Frame& frame,Phase phase,CallState& state) {
             // keyword search; 51C48 instead leaves the browser altogether.
             if(frame.resume-host->image_base-5==0x518af) {
                 culture_redrawing=true;
-                uwcn_linux_redraw_main_fragment(host->image_base+0x51ac4);
+                urwcn_linux_redraw_main_fragment(host->image_base+0x51ac4);
                 culture_redrawing=false;
             }
         }
@@ -352,7 +352,7 @@ void culture_history(Frame& frame) {
     if(!culture_redrawing) frame.rax=call(frame,0x4fb90);
 }
 void culture_background_end(Frame& frame) {
-    if(culture_redrawing) frame.resume=reinterpret_cast<std::uintptr_t>(uwcn_linux_redraw_main_return);
+    if(culture_redrawing) frame.resume=reinterpret_cast<std::uintptr_t>(urwcn_linux_redraw_main_return);
     else frame.rax=host->image_base+0x331100; // Covered native LEA RAX.
 }
 void culture_select(Frame& frame,Phase phase,CallState& state) {
@@ -382,7 +382,7 @@ void redraw_culture() {
     culture_browser_chinese=chinese;
     culture_redrawing=true;
     // Reuse native background and header arguments, without music/history setup.
-    uwcn_linux_redraw_main_fragment(host->image_base+0x51ac4);
+    urwcn_linux_redraw_main_fragment(host->image_base+0x51ac4);
     native<int (*)(const char*)>(0x51720)(topic.c_str());
     culture_redrawing=false;
     // Match the original action/topic, not its old screen position.

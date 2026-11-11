@@ -65,12 +65,12 @@
 - 请求：`a51f71facc9341729b6ffaac25c59497`。
 - 批次：`feb3cf65bbe14ffbac4d6ec568f86a6b`；完成时间 `2026-10-19 17:34:30 Asia/Shanghai`。
 - 发布事务：`32199d2897d343e4b5a5416f6a32fb2f`。
-- 正式替换：`package/modules/uwcn_adapter.dll`、`package/modules/uwcn_semantic.dll`、`package/catalog/zh-CN/main_menu.tsv`、Linux profile、`package/release.json` 共五件。Catalog 二进制内容未变化，仍按本次模块集合重新加载词库。
+- 正式替换：`package/modules/urwcn_adapter.dll`、`package/modules/urwcn_semantic.dll`、`package/catalog/zh-CN/main_menu.tsv`、Linux profile、`package/release.json` 共五件。Catalog 二进制内容未变化，仍按本次模块集合重新加载词库。
 - 旧五件先按原相对路径移入 `回收/20261019-173430-32199d2897d343e4b5a5416f6a32fb2f/`，再更新正式位置。根启动器与驻留桥无需变更，没有建立平行运行包。
 - 已读取对应 `build/.compile-queue/results/a51f71facc9341729b6ffaac25c59497.json`、`batches/feb3cf65bbe14ffbac4d6ec568f86a6b.log` 及 `build/linux-x86_64/stage/32199d2897d343e4b5a5416f6a32fb2f/publication-result.json`。请求 `Success=true`，发布 `success=true`、`runtime_requested=true`。
 - PID `3968932` 返回 `ReadyToPublish` 后完成正式归档／替换，再返回 `Applied`；Catalog、Semantic、Adapter 均为第2代。
 - Adapter SHA-256：`19476e0e4fdecf9751b2574f98a965813b3a11f61eb0cae30b90ffff0ed1553b`；Semantic：`b001e9e7bcfc2136f06e289c21a6fd3da1ae55fec3764975cff67ab9b0d7f21b`。正式清单与运行时回执记录相同身份。
-- 对正式 Adapter 的只读反汇编确认 `uwcn_linux_redraw_world_fragment:26742` 为保存 R14/R15、设置图例值、间接调用原生片段、恢复寄存器并返回的桥。没有执行该产物。
+- 对正式 Adapter 的只读反汇编确认 `urwcn_linux_redraw_world_fragment:26742` 为保存 R14/R15、设置图例值、间接调用原生片段、恢复寄存器并返回的桥。没有执行该产物。
 - 编译保留 `semantic.cpp:key` 既有 HUD／world 枚举分派警告；新增世界生成组件有明确分派，Adapter 与汇编没有新增编译警告。
 
 没有启动、关闭或重启游戏，没有注入输入、运行测试、编写测试用例或断言。仅执行已授权兼容业务热发布；Applied 表示模块交接完成，当前旧页的下一次原生重建及实际视觉效果未自行验收。

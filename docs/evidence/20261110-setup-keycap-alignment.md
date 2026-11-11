@@ -39,7 +39,7 @@
 - 根入口：`build.ps1 -Toolchain MinGW -Module adapter -Reload -TargetPid 364`，显式使用当前 Proton 的 `WinePrefix` 与 `WinePath`。
 - 请求 `4b0df3aafb0e4ad89791c36c009ccd1f`；批次 `bc06d6fb16bc4e92be160bbffa2f7890`。已读取对应 `results` JSON 与完整批次日志，`Success=true`、`PublishRequested=true`、`ReloadRequested=true`；一次配置、一次增量构建完成，保留既有函数指针转换、未使用符号及缩进警告。
 - 正式事务 `729305c35c00466c8c9983df95ebb4d4` 于 2026-11-10 11:39:55（Asia/Shanghai）完成；已读取 `build/mingw-x86/stage/729305c35c00466c8c9983df95ebb4d4/publication-result.json`，`success=true`。
-- 已更新正式 `package/modules/uwcn_adapter.dll` 和 `package/release.json`；旧两件先按原相对路径移入 `回收/20261110-113954-729305c35c00466c8c9983df95ebb4d4/`。
+- 已更新正式 `package/modules/urwcn_adapter.dll` 和 `package/release.json`；旧两件先按原相对路径移入 `回收/20261110-113954-729305c35c00466c8c9983df95ebb4d4/`。
 - 正式 DLL SHA-256 为 `c516094c9bec91879dd7c31ce078b77dba0c5a4893b74460c097307360dc62f3`，与构建输出和正式清单一致。
 - 用现有 Proton Mono 解释器只读枚举确认 Windows PID `364`，既有兼容事务返回 `ReadyToPublish`、`Applied ... adapter:c516094c9bec91879dd7c31ce078b77dba0c5a4893b74460c097307360dc62f3:4`，运行中 Adapter 第 4 代交接完成。
 

@@ -40,10 +40,10 @@
 
 源码、统一队列编译与正式发布均已完成。并行开局页修改保留在共享源码中，交付包含这些修改。
 
-- 入口：根目录 `build.ps1 -Module adapter,catalog,semantic,render,main_menu -Toolchain MinGW -CMakePath D:\workspace\uwcn\.toolchains\x86\w64devkit\bin\cmake.exe -CompilerPath D:\workspace\uwcn\.toolchains\x86\w64devkit\bin\g++.exe -BuildDirectory D:\workspace\uwcn\build\mingw-x86 -PackageDirectory D:\workspace\uwcn\package -Publish -TargetPid 0`。
+- 入口：根目录 `build.ps1 -Module adapter,catalog,semantic,render,main_menu -Toolchain MinGW -CMakePath D:\workspace\urwcn\.toolchains\x86\w64devkit\bin\cmake.exe -CompilerPath D:\workspace\urwcn\.toolchains\x86\w64devkit\bin\g++.exe -BuildDirectory D:\workspace\urwcn\build\mingw-x86 -PackageDirectory D:\workspace\urwcn\package -Publish -TargetPid 0`。
 - 请求 `f008c0b0630d4758bfa8a32c61051963`，批次 `bb31dbf3f3894011a0ee0da1e1ee6620`，2026-10-19 08:37:36（Asia/Shanghai）完成。对应 results JSON 与 batches 日志已读取，Success 为 true；一次配置、一次增量构建，五个目标均完成。日志保留既有 `SDL_GetRGB` 函数指针转换警告，无编译错误。
-- 正式发布事务 `c2785e5465ef495ca21aaa2c03d123f8`。本批次替换 `package/modules/uwcn_main_menu.dll`、`package/modules/uwcn_semantic.dll`、正式 profile 和 `package/release.json` 四件；旧四件先移入 `回收/20261019-083736-c2785e5465ef495ca21aaa2c03d123f8/`，保留原相对路径，归档文件已确认存在。
-- Adapter、Catalog、Render 及新增词库已由此前并行批次 `bb5482e7791a4d34a70c869f1c00d807` 发布，本批次产物与正式文件一致，未重复替换。最终 `package/release.json` 的十二项正式文件 SHA-256 已逐项读取核对，均一致；启动器对应项目根目录 `uwcn_launcher.exe`，其余文件对应正式 `package/`。
+- 正式发布事务 `c2785e5465ef495ca21aaa2c03d123f8`。本批次替换 `package/modules/urwcn_main_menu.dll`、`package/modules/urwcn_semantic.dll`、正式 profile 和 `package/release.json` 四件；旧四件先移入 `回收/20261019-083736-c2785e5465ef495ca21aaa2c03d123f8/`，保留原相对路径，归档文件已确认存在。
+- Adapter、Catalog、Render 及新增词库已由此前并行批次 `bb5482e7791a4d34a70c869f1c00d807` 发布，本批次产物与正式文件一致，未重复替换。最终 `package/release.json` 的十二项正式文件 SHA-256 已逐项读取核对，均一致；启动器对应项目根目录 `urwcn_launcher.exe`，其余文件对应正式 `package/`。
 - 发布前读取到游戏已无运行进程，因此本批次采用离线正式发布，没有请求 Reload，也没有运行时 Applied 回执。文件交付成功不代表已进行游戏运行或视觉验收。
 
 未自行测试、启动游戏、注入、模拟操作或运行产物；没有测试脚本、测试用例或断言。仅进行离线静态分析，编译只生成交付文件。

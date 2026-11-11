@@ -125,7 +125,7 @@ Reduced native control-flow reconstruction (original English retained):
 
 The strstr import is IAT 18C350; it is not strcmp. The two delimiter searches
 are strchr at IAT 18C348. The game's skip/full-table/enable behavior above is
-descriptive evidence, not a request to recreate its business logic in UWCn.
+descriptive evidence, not a request to recreate its business logic in URWCN.
 
 Progress display ABI, color and final presentation
 --------------------------------------------------
@@ -285,17 +285,17 @@ Tool:
  C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
 JAVA_HOME:
  C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
-Independent project: build/startup-ghidra/uwcn-startup-audio, imported from the
+Independent project: build/startup-ghidra/urwcn-startup-audio, imported from the
 original urw.exe disk image. This project does not open or modify the setup
 analysis project's database. Both Ghidra settings and cache are private to
 build/startup-ghidra.
 
 Headless options: -analysisTimeoutPerFile 300 -max-cpu 4
- -scriptPath D:\workspace\uwcn\docs\evidence
+ -scriptPath D:\workspace\urwcn\docs\evidence
  -postScript startup_audio_Decompile.java
-             D:\workspace\uwcn\docs\evidence\startup-audio-ghidra.c
- -log D:\workspace\uwcn\docs\evidence\startup-audio-ghidra.log
- -scriptlog D:\workspace\uwcn\docs\evidence\startup-audio-ghidra-script.log
+             D:\workspace\urwcn\docs\evidence\startup-audio-ghidra.c
+ -log D:\workspace\urwcn\docs\evidence\startup-audio-ghidra.log
+ -scriptlog D:\workspace\urwcn\docs\evidence\startup-audio-ghidra-script.log
 
 startup_audio_Decompile.java is a static extraction script adapted from the
 existing setup_options_Decompile.java. It requests actual Ghidra C output for

@@ -4,9 +4,11 @@
 
 URWCN 是 **Byayoi 同人社区**的《不真实的世界》（UnReal World）汉化作品。
 
-2026-11-11 14:33:19 的启动闪退已从实际转储定位到开场诗淡入循环：原循环跳回125260，进入了从12525D开始的Mod跳转补丁中间。已将补丁移到共同循环入口125260，保留原63次淡入及等待。源码修正、统一队列编译和正式Adapter／适配／清单发布均完成，三件旧文件先移入 `回收/`；继续使用根 `uwcn_launcher.exe`。未启动游戏或运行测试，完整现场与交付回执见[开场循环闪退修正](docs/evidence/20261111-startup-intro-loop-crash.md)。
+2026-11-11 已统一全部项目名称，包含源码、构建目标、导出、环境变量、控制通道、文档和正式文件。Windows 正式入口为根 `urwcn_launcher.exe`，原游戏目录配置已迁入 `urwcn_launcher.ini`；驻留库与六个业务库已同步编译、发布，旧文件先移入 `回收/`。Linux 全图编译完成，本轮正式交付仍为 Windows 版。未启动游戏或运行测试，批次、文件身份和既有待整改项见[全项目名称统一记录](docs/evidence/20261111-project-naming.txt)。
 
-2026-11-11 14:16:50 的闪退已从实际转储定位到文化选择页：旧Mod跳转补丁覆盖了原自动分支的落点，游戏跳进补丁中间，在 `0040F8D6` 发生访问冲突。现将接入点移到两条原分支的共同完整指令边界，保留原选择和随机逻辑。源码修正、统一队列编译及正式Adapter／适配／清单发布均完成，三件旧文件先移入 `回收/`。游戏已在该次闪退中退出，本批不请求热加载；下次根 `uwcn_launcher.exe` 正常启动使用更新后的正式包。未运行游戏或测试，现场、静态依据、已知待整改项和交付回执见[文化选择分支闪退修正](docs/evidence/20261111-culture-branch-crash.md)。下文当前PID及Applied均为各历史批次的回执。
+2026-11-11 14:33:19 的启动闪退已从实际转储定位到开场诗淡入循环：原循环跳回125260，进入了从12525D开始的Mod跳转补丁中间。已将补丁移到共同循环入口125260，保留原63次淡入及等待。源码修正、统一队列编译和正式Adapter／适配／清单发布均完成，三件旧文件先移入 `回收/`；继续使用根 `urwcn_launcher.exe`。未启动游戏或运行测试，完整现场与交付回执见[开场循环闪退修正](docs/evidence/20261111-startup-intro-loop-crash.md)。
+
+2026-11-11 14:16:50 的闪退已从实际转储定位到文化选择页：旧Mod跳转补丁覆盖了原自动分支的落点，游戏跳进补丁中间，在 `0040F8D6` 发生访问冲突。现将接入点移到两条原分支的共同完整指令边界，保留原选择和随机逻辑。源码修正、统一队列编译及正式Adapter／适配／清单发布均完成，三件旧文件先移入 `回收/`。游戏已在该次闪退中退出，本批不请求热加载；下次根 `urwcn_launcher.exe` 正常启动使用更新后的正式包。未运行游戏或测试，现场、静态依据、已知待整改项和交付回执见[文化选择分支闪退修正](docs/evidence/20261111-culture-branch-crash.md)。下文当前PID及Applied均为各历史批次的回执。
 
 Windows 3.89.1 地图加载窗口的 `LOADING MAP ...` 已接入自己的原生完整文字调用，译为“正在载入地图……”，复用既有中文字形与真实宽度接口，原进度条、窗口和上传流程保持。源码、统一队列编译及正式热发布均完成，当前 Windows PID `364` 的 Catalog 第5代、Semantic 第4代、Adapter 第6代返回 `Applied`；六件旧文件先移入 `回收/`。无需重启，译文由下一次正常地图加载绘制消费；未操作或测试游戏，详见[地图加载提示记录](docs/evidence/20261111-map-loading-native.md)。
 
@@ -14,7 +16,7 @@ Windows 3.89.1 读档进度窗口已补齐“请稍候……”“正在载入�
 
 Windows 3.89.1 确认框按钮空白已按原生生命周期修正：上一批只重建正文，再交给不绘制此类按钮的通用 Menu；现改为重新执行确认 owner 自己的 Panel、Menu 和两个按钮完整构建，在原输入前返回，并修正原生提前返回遗留的绘制状态。退出、保存、死亡及其他确认的103条新增资源继续沿用。源码、统一队列编译及正式 Adapter 热发布完成，当前 Windows PID `364` 的 Adapter 第3代返回 `Applied`，旧件先移入 `回收/`。未操作或测试游戏；详见[按钮空白修正](docs/evidence/20261111-confirmation-buttons-fix.md)和[完整文本提取](docs/evidence/20261111-confirmation-all-text.md)。
 
-2026-11-11 用户最终明确是 **Shift+P** 后直接退出。静态确认该命令打开游戏中的角色资料页：年龄文字消费者误用了仅在创建角色时登记的来源，导致读取不存在的字段。现已按原生实际年龄／冒险天数的三种句式登记资料页来源，并让共同消费者按原模式使用对应字段。源码、统一队列编译及正式 Adapter／Catalog／词库发布均完成，旧件先移入 `回收/`；根 `uwcn_launcher.exe` 继续加载同一正式包。未自行启动或测试游戏，未取得崩溃 EIP，不将静态缺陷修正当作运行验收。详见[Shift+P 资料页年龄来源修正](docs/evidence/20261111-shift-p-profile-age-crash.md)。此前两批 Loader 异常记录交付另见[排查历史](docs/evidence/20261111-p-command-crash.md)。以下 PID `468` 等均为此前历史交付回执，已退出进程不会接收更新；本轮未请求 Reload，也没有新的 Applied。
+2026-11-11 用户最终明确是 **Shift+P** 后直接退出。静态确认该命令打开游戏中的角色资料页：年龄文字消费者误用了仅在创建角色时登记的来源，导致读取不存在的字段。现已按原生实际年龄／冒险天数的三种句式登记资料页来源，并让共同消费者按原模式使用对应字段。源码、统一队列编译及正式 Adapter／Catalog／词库发布均完成，旧件先移入 `回收/`；根 `urwcn_launcher.exe` 继续加载同一正式包。未自行启动或测试游戏，未取得崩溃 EIP，不将静态缺陷修正当作运行验收。详见[Shift+P 资料页年龄来源修正](docs/evidence/20261111-shift-p-profile-age-crash.md)。此前两批 Loader 异常记录交付另见[排查历史](docs/evidence/20261111-p-command-crash.md)。以下 PID `468` 等均为此前历史交付回执，已退出进程不会接收更新；本轮未请求 Reload，也没有新的 Applied。
 
 Windows 3.89.1 百科关键词框已接入中文输入与搜索：系统输入法提交完整 UTF-8，按完整字符退格，使用原生文字度量和光标定位；既有中文主题标题及链接别名映射到原英文主题标识，再由游戏执行原查询、跳转和历史流程。原30字节输入容量保留，常用汉字最多10个，可中英文混输。源码、统一队列编译及正式热发布均完成，当前 PID `468` 的 Catalog、Adapter 第7代返回 `Applied`，旧件先移入 `回收/`，无需重启；详见[百科中文搜索记录](docs/evidence/20261111-encyclopedia-chinese-search.md)。未运行游戏测试，实际输入与画面待用户验收。
 
@@ -26,7 +28,7 @@ Windows 3.89.1 聊天界面的顶部标题、NPC 称谓及右侧全部聊天菜�
 
 目标选择窗口底部“下一个生物，或／上一个生物”漏译已从独立原生辅助函数完整提取，同时接入实际中文字宽，使后续加减号键帽仍按原生推进关系定位。源码、两条资源、统一队列编译及正式包发布均已完成，旧件先移入 `回收/`；本批没有请求热更新或运行游戏测试，详见[生物切换提示补齐记录](docs/evidence/20261110-direction-creature-hint.md)。此前“全部文本已处理”的清单遗漏此函数，已明确更正。
 
-Windows 3.89.1 方向／目标选择窗口已完成全部文本来源的静态提取：66个直接调用点、三包装函数的7个调用点，共37种非空动作标题、36种实际动作提示及固定帮助、按钮和方向键帽。新增74条译文，包含截图中的开关门分支，并补齐三个明确空标题的原生语言重建来源。首批热更新取得 Applied 后用户未操作即退出，不能视为稳定运行；静态确认完整重建漏恢复正文 `%s` 所用的栈上标题指针，已补齐并经统一队列编译、正式替换 `package/modules/uwcn_adapter.dll`，旧件先移入 `回收/`。游戏已退出，本次修正没有请求热加载或取得新的 Applied。详见[完整提取及交付记录](docs/evidence/20261110-direction-dialog-all-text.md)与[栈槽生命周期修正](docs/evidence/20261110-direction-dialog-hot-reload-stack.md)。未启动游戏或运行测试。
+Windows 3.89.1 方向／目标选择窗口已完成全部文本来源的静态提取：66个直接调用点、三包装函数的7个调用点，共37种非空动作标题、36种实际动作提示及固定帮助、按钮和方向键帽。新增74条译文，包含截图中的开关门分支，并补齐三个明确空标题的原生语言重建来源。首批热更新取得 Applied 后用户未操作即退出，不能视为稳定运行；静态确认完整重建漏恢复正文 `%s` 所用的栈上标题指针，已补齐并经统一队列编译、正式替换 `package/modules/urwcn_adapter.dll`，旧件先移入 `回收/`。游戏已退出，本次修正没有请求热加载或取得新的 Applied。详见[完整提取及交付记录](docs/evidence/20261110-direction-dialog-all-text.md)与[栈槽生命周期修正](docs/evidence/20261110-direction-dialog-hot-reload-stack.md)。未启动游戏或运行测试。
 
 Windows 3.89.1 地图自定义标记已接入中文输入：沿原生两行编辑器消费系统输入法的完整 UTF-8 提交，按完整字符退格，光标与字形使用原生度量及实际输出密度。原每行64字节容量、提交／取消和标记保存流程保持。源码、统一队列编译及正式热发布已完成，当前 PID368 的 Adapter 第2代返回 `Applied`，旧件先移入 `回收/`；首次连接旧 PID364 的发布失败如实保留。静态依据及回执见[地图标记中文输入记录](docs/evidence/20261110-map-marker-chinese-input.md)。没有运行游戏测试，输入和画面待用户验收。
 
@@ -50,7 +52,7 @@ Windows 2026-11-10 百科首页文本错位与重叠已修正：Shift+F5重载�
 
 Windows 2026-11-10 已补齐 ESC“帮助与游戏选项”菜单的标题、键盘指令、退出、设置、百科、保存及取消汉化：既有译文此前只用于消息回显，本次接入原生 Menu 完整绘制与度量，保留原按键、选择和缓存生命周期。源码、统一队列编译、正式发布及当前 Windows PID `364` 的兼容热交接均已完成，Catalog和Adapter第2代返回 `Applied`，旧件已移入 `回收/`，无需重启。未操作游戏或运行测试，视觉效果待用户验收；详见[原生菜单接入与交付回执](docs/evidence/20261110-help-options-menu-native.md)。
 
-Windows 2026-11-10 针对 Shift+F10 闪退报告，已修正帮助页重建入口漏留16字节原生待清理参数空间的栈错误，完成统一队列编译和正式发布，并只读核对最终 DLL 的两条续接指令。旧件先移入 `回收/`。当前游戏已退出，本批次没有请求热加载或取得 Applied；下次从根 `uwcn_launcher.exe` 正常启动加载。没有自行重现、运行测试或启动游戏；未取得本次异常转储，不将静态缺陷结论当作唯一故障的运行证明，详见[语言切换栈修正与交付回执](docs/evidence/20261110-keyboard-help-language-stack-fix.md)。
+Windows 2026-11-10 针对 Shift+F10 闪退报告，已修正帮助页重建入口漏留16字节原生待清理参数空间的栈错误，完成统一队列编译和正式发布，并只读核对最终 DLL 的两条续接指令。旧件先移入 `回收/`。当前游戏已退出，本批次没有请求热加载或取得 Applied；下次从根 `urwcn_launcher.exe` 正常启动加载。没有自行重现、运行测试或启动游戏；未取得本次异常转储，不将静态缺陷结论当作唯一故障的运行证明，详见[语言切换栈修正与交付回执](docs/evidence/20261110-keyboard-help-language-stack-fix.md)。
 
 Windows 2026-11-10 按键帮助页正文异常放大、键帽及蓝条纵向拉伸已定位为上一版漏扩展正文上传纹理的实际尺寸，源码已按同次原生表面的真实物理尺寸修正。统一队列编译、正式文件发布和当前 Windows PID `368` 的兼容热交接均已完成，Adapter 第2代返回 `Applied`；旧件先移入 `回收/`，无需重启。未操作游戏或运行测试，详见[正文纹理尺寸修正与交付回执](docs/evidence/20261110-keyboard-help-density-fix.md)。
 
@@ -58,11 +60,11 @@ Windows 2026-11-10 已完整接入可滚动按键帮助页：全部八章、两�
 
 Windows 2026-11-10 主菜单木纹框丢失已修正：漏接的原生面板进入游戏组件生命周期，已打开主菜单的旧场景和缓存来源按真实原生构造顺序迁移。源码、队列编译、正式发布及当前 Wine 进程热加载均已完成，Adapter 第4代返回 Applied，无需重启；旧两件先移入 `回收/`。未操作游戏或运行测试，详见 [原生面板修正与热发布回执](docs/evidence/20261110-main-menu-native-frame.md)。
 
-Windows 2026-11-10 已补齐 **Shift+F5** 的卸载与重载：第一次恢复原文并卸载五个翻译提供库，保留 Loader 和原文界面生命周期桥，继续游戏；第二次加载最新六库并恢复中文。源码、队列编译及正式发布已完成，旧件已移入 `回收/`。本次含驻留桥变更，下一次从根 `uwcn_launcher.exe` 正常启动时加载；没有运行游戏或测试，详见 [F5 生命周期与交付回执](docs/evidence/20261110-shift-f5-lifecycle.md)。
+Windows 2026-11-10 已补齐 **Shift+F5** 的卸载与重载：第一次恢复原文并卸载五个翻译提供库，保留 Loader 和原文界面生命周期桥，继续游戏；第二次加载最新六库并恢复中文。源码、队列编译及正式发布已完成，旧件已移入 `回收/`。本次含驻留桥变更，下一次从根 `urwcn_launcher.exe` 正常启动时加载；没有运行游戏或测试，详见 [F5 生命周期与交付回执](docs/evidence/20261110-shift-f5-lifecycle.md)。
 
-Windows 2026-11-10 已完成 3.89.1 / Steam Build `26139145` 的静态构建适配、统一队列编译和正式发布；同时保留 3.89 支持。目录选择后的指纹拒绝源于游戏更新，已按新版调用点与数据地址同步修正，继续使用根 `uwcn_launcher.exe`；未运行游戏或测试，详见 [3.89.1 适配及发布回执](docs/evidence/20261110-windows-3891-delivery.md)。
+Windows 2026-11-10 已完成 3.89.1 / Steam Build `26139145` 的静态构建适配、统一队列编译和正式发布；同时保留 3.89 支持。目录选择后的指纹拒绝源于游戏更新，已按新版调用点与数据地址同步修正，继续使用根 `urwcn_launcher.exe`；未运行游戏或测试，详见 [3.89.1 适配及发布回执](docs/evidence/20261110-windows-3891-delivery.md)。
 
-Windows 2026-10-20 的启动修正已正式发布：消息 Hook `C70C` 改到完整 `MOV ECX` 边界；文化图例 11 行文字统一读取实际文字参数，修正把颜色当指针导致的闪退。旧文件先移入 `回收/`，继续使用根 `uwcn_launcher.exe`。本次仅离线分析用户转储，没有自行运行或测试；最新源码、编译和发布回执见 [文化图例文字参数修正](docs/evidence/20261020-culture-legend-text-argument-fix.md)，前一项见 [Hook 边界修正记录](docs/evidence/20261020-startup-native-hook-boundary-fix.md)。
+Windows 2026-10-20 的启动修正已正式发布：消息 Hook `C70C` 改到完整 `MOV ECX` 边界；文化图例 11 行文字统一读取实际文字参数，修正把颜色当指针导致的闪退。旧文件先移入 `回收/`，继续使用根 `urwcn_launcher.exe`。本次仅离线分析用户转储，没有自行运行或测试；最新源码、编译和发布回执见 [文化图例文字参数修正](docs/evidence/20261020-culture-legend-text-argument-fix.md)，前一项见 [Hook 边界修正记录](docs/evidence/20261020-startup-native-hook-boundary-fix.md)。
 
 社区官网：[byayoi.org](https://byayoi.org/)
 
@@ -76,11 +78,11 @@ Windows 游戏内按 **Shift+F10** 选择中英文。2026-11-10 已定位共用�
 
 2026-11-10 后续完整修复已覆盖已接入的原生显示族：角色创建及错误页脚、技能确认、HUD/消息分页、速度组件构造中等待、地图及命令/物品窗口、NPC会话、任务日志、动画和告别，以及全部26个getst文本编辑调用。first、second、menu和named父缓存按各自真实语言revision重建，连续输入随原消息记录构造，不再只重画前景文字。源码已完成静态交叉审查，并通过统一队列编译和正式文件发布；正式Adapter为 `a71c5165fa65c008b7d369d51253d7f4b2bfcbca79b6d5da8aa5cbdadf19e07a`，旧DLL和清单已先移入 `回收/`。覆盖表、静态依据和正式交付回执见 [完整原生语言重建](docs/evidence/20261110-language-switch-completion.md)。第4、5代回执保留为历史记录。
 
-本轮私有状态升级为HDA8，21节完整保存真实构造与输入语义。旧HDA7没有保存已返回的Command输入、百科实际选择路径及部分缓存owner，现有驻留框架不能无损补回这些历史信息；因此本批次只正式发布文件，没有向旧进程执行Reload或取得Applied，下次从根 `uwcn_launcher.exe` 正常启动时加载新版本。没有关闭、重启或操作游戏，也没有运行测试。原 [公共原生 UI 交付记录](docs/evidence/20261020-global-language-native-hook-delivery.md) 不能作为旧Scene设计合规的证明，既有待退役结构仍明确记录于本轮证据。Linux尚未移植本轮Windows改动，编译与正式发布不代表运行画面验收。
+本轮私有状态升级为HDA8，21节完整保存真实构造与输入语义。旧HDA7没有保存已返回的Command输入、百科实际选择路径及部分缓存owner，现有驻留框架不能无损补回这些历史信息；因此本批次只正式发布文件，没有向旧进程执行Reload或取得Applied，下次从根 `urwcn_launcher.exe` 正常启动时加载新版本。没有关闭、重启或操作游戏，也没有运行测试。原 [公共原生 UI 交付记录](docs/evidence/20261020-global-language-native-hook-delivery.md) 不能作为旧Scene设计合规的证明，既有待退役结构仍明确记录于本轮证据。Linux尚未移植本轮Windows改动，编译与正式发布不代表运行画面验收。
 
 Windows 百科“文化”页截图中的正文与链接错位已定位为原生逐词元推进和合串前缀取整不一致，源码已统一为按原生词元累计字宽，并保留游戏行缓冲中的完整词元边界。统一队列编译、正式发布及兼容业务热加载均已完成，PID `121728` 返回 Adapter 第2代 Applied；旧两件先移入 `回收/`。详细回执及刷新边界见 [百科词元度量修正](docs/evidence/20261019-windows-encyclopedia-token-metrics.md)；未自行运行或测试。
 
-Windows 已完成 Linux `70fcd90` 已接入范围的源码同步、队列编译和正式文件发布：中文姓名、季节和属性、百科与文化图例、技能和法术、世界生成、全部开局情境、游戏进程及告别页，以及原生文字度量和缓存重建。此前“全部已接入范围”的表述遗漏了 Windows 法术页纹理底栏，三行百科提示的补接和独立交付状态见 [底栏修正记录](docs/evidence/20261019-windows-spells-footer-native.md)。初始化失败后的驻留桥重试修正也已发布；用户关闭旧进程后完成正式替换，下次从根 `uwcn_launcher.exe` 正常启动加载。本轮未自行启动或测试，保留各页已记录的原生刷新边界。完整过程见 [Windows 同步回执](docs/evidence/20261019-windows-progress-sync.md)。
+Windows 已完成 Linux `70fcd90` 已接入范围的源码同步、队列编译和正式文件发布：中文姓名、季节和属性、百科与文化图例、技能和法术、世界生成、全部开局情境、游戏进程及告别页，以及原生文字度量和缓存重建。此前“全部已接入范围”的表述遗漏了 Windows 法术页纹理底栏，三行百科提示的补接和独立交付状态见 [底栏修正记录](docs/evidence/20261019-windows-spells-footer-native.md)。初始化失败后的驻留桥重试修正也已发布；用户关闭旧进程后完成正式替换，下次从根 `urwcn_launcher.exe` 正常启动加载。本轮未自行启动或测试，保留各页已记录的原生刷新边界。完整过程见 [Windows 同步回执](docs/evidence/20261019-windows-progress-sync.md)。
 
 Linux 角色姓名框已完成中文输入源码、统一队列编译和正式发布：系统输入法提交完整中文，退格删除完整字符，光标和字形沿原生 UI 更新；中英文可混输。原存档姓名容量为12字节，最多容纳4个常用汉字或12个英文字母，混输共用容量；英文姓名仍至少3个字母。旧文件已归档至 `回收/`，下次正常启动加载，未自行运行或测试。其他输入框尚未接入；Windows 姓名输入已在本轮同步，沿用其原生 ASCII 存档目录编码。回执和静态依据分别见 [Linux 中文姓名记录](docs/evidence/20261019-linux-chinese-input.md) 与 [Windows 中文姓名记录](docs/evidence/20261019-windows-chinese-input.md)。
 
@@ -96,10 +98,10 @@ Linux 主菜单切换后的旧文字残留已完成源码修正、队列编译�
 
 使用系统 x86-64 GCC、CMake、Make、OpenSSL 开发库、SDL2 和 SDL2_ttf；本机的便携 PowerShell 来自 [PowerShell 官方发行版](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6)。首次本机发布会从已安装的思源黑体集合复制简体中文 Bold 字面对应的字体文件，以及本机 Steam Runtime 的 SDL2_net 库和第三方许可证。
 
-Linux 正式入口是根目录无扩展名的 **`uwcn_launcher`**，由 C++ 编译为原生 ELF64 可执行文件。直接启动它即可，运行时无需 PowerShell 或 Wine；汉化资源和模块从相邻的 `package/` 加载。发布时安装应用菜单入口 **UnReal World 简体中文**，指向这一份正式启动器；也可在终端执行：
+Linux 正式入口是根目录无扩展名的 **`urwcn_launcher`**，由 C++ 编译为原生 ELF64 可执行文件。直接启动它即可，运行时无需 PowerShell 或 Wine；汉化资源和模块从相邻的 `package/` 加载。发布时安装应用菜单入口 **UnReal World 简体中文**，指向这一份正式启动器；也可在终端执行：
 
 ```bash
-./uwcn_launcher
+./urwcn_launcher
 ```
 
 启动器读取 `package/linux-game-path.txt` 中的本机 Steam 游戏位置，也接受 `--game /完整路径/urw3-bin`。原游戏二进制、业务数据和设置原值保持原样。Linux 已接入运行中业务模块发布协议，支持统一队列的 `-Reload -TargetPid`，详见 [Linux 热更新](docs/evidence/20261019-linux-hot-reload.md)。软件画布、菜单缓存及 Heading 软件目标已接入输出密度扩展，主菜单缩放沿原生构建重绘；其他页面缩放重建与描边预算仍待处理。源码、编译及正式发布状态见 [Linux 字体密度修正](docs/evidence/20261019-linux-font-density.md)。没有启动游戏、运行产物或自行测试。
@@ -118,7 +120,7 @@ Linux 退出告别页的标题、克里族谚语、献辞、底部寄语和继�
 
 ## 项目命名与构建
 
-项目名已由 `uwcn` 更名为 `urwcn`，从本仓库克隆时使用 `urwcn` 目录。Linux 启动器为 `uwcn_launcher`，Windows 启动器为 `uwcn_launcher.exe`；`package/uwcn_loader.dll`、`package/modules/uwcn_*.dll` 及内部 ABI、导出名和控制协议保留原名。Linux 库虽然保留 `.dll` 文件名，实际格式为 ELF64。历史证据中的旧项目名及绝对路径保留其记录时的含义。
+项目统一使用 `urwcn` 名称，覆盖源码命名空间、构建目标、宏、环境变量、导出名、控制通道、发布清单和文档。Linux 启动器为 `urwcn_launcher`，Windows 启动器为 `urwcn_launcher.exe`，游戏目录配置为根 `urwcn_launcher.ini`；驻留库为 `package/urwcn_loader.dll`，业务库为 `package/modules/urwcn_*.dll`。Linux 库使用 `.dll` 扩展名，实际格式为 ELF64。整套更名需要同步更新启动器、驻留库和六个业务库，现有驻留桥不能在运行中迁移自身及导出、通道名称。历史文档中的名称统一为当前拼写；原始日志、转储、历史构建记录及 `回收/` 文件保留原始内容，定位旧文件以原始批次和 SHA-256 为准。
 
 本仓库提供源码、词库、构建适配和设计/静态证据文档。工具链、构建缓存、本地正式运行包和 `回收/` 中的历史文件不纳入 Git；游戏原始反编译、反汇编及字符串提取文件保留在本地，文档中的相关引用作为分析出处。下文已有交付回执记录的是本地发布状态，不表示仓库包含预编译运行包。
 
@@ -128,7 +130,7 @@ Windows 构建使用 PowerShell 7 和 i686 MinGW C++20 工具链；CMake 最低�
 .\build.ps1 -CMakePath "C:\tools\cmake\bin\cmake.exe" -CompilerPath "C:\tools\w64devkit\bin\g++.exe"
 ```
 
-`make.exe` 应与 `g++.exe` 位于同一目录。本地已有工具链时也可使用脚本默认的 `.toolchains/x86/w64devkit/bin/`。不带 `-Publish` 仅生成构建产物；需要正式交付时在同一入口添加 `-Publish`，脚本会先将被替换的旧文件移入根 `回收/`，再更新根启动器与 `package/`。使用时启动根 `uwcn_launcher.exe`，可传入 `--game "游戏完整路径"`。
+`make.exe` 应与 `g++.exe` 位于同一目录。本地已有工具链时也可使用脚本默认的 `.toolchains/x86/w64devkit/bin/`。不带 `-Publish` 仅生成构建产物；需要正式交付时在同一入口添加 `-Publish`，脚本会先将被替换的旧文件移入根 `回收/`，再更新根启动器与 `package/`。使用时启动根 `urwcn_launcher.exe`，可传入 `--game "游戏完整路径"`。
 
 ### Linux 交叉编译 Windows x86
 
@@ -152,7 +154,7 @@ Windows 构建使用 PowerShell 7 和 i686 MinGW C++20 工具链；CMake 最低�
 ./build-windows-cross.sh -Module layout,render
 ```
 
-发布位置为根目录的 `uwcn_launcher.exe`、`package/uwcn_loader.dll` 和 `package/modules/` 下的六个业务 DLL。两个平台共用正式 `package/`；从 Linux 切换为 Windows 时，原根 ELF 启动器和被替换的文件先移入 `回收/`。仅需编译完整 Windows 版时，在 PowerShell 中运行 `./build.ps1 -Toolchain MinGW`，产物暂存在 `build/mingw-x86/out/`。
+发布位置为根目录的 `urwcn_launcher.exe`、`package/urwcn_loader.dll` 和 `package/modules/` 下的六个业务 DLL。两个平台共用正式 `package/`；从 Linux 切换为 Windows 时，原根 ELF 启动器和被替换的文件先移入 `回收/`。仅需编译完整 Windows 版时，在 PowerShell 中运行 `./build.ps1 -Toolchain MinGW`，产物暂存在 `build/mingw-x86/out/`。
 
 交叉编译与本机编译共用 `build/.compile-queue`，忙碌期间不同工具链的请求不能并行提交；不另建队列，也不清理已有构建树。每批仍执行一次配置和一次增量构建。入口完成时打印请求 ID、批次 ID、结果 JSON 与批次日志路径；结果 JSON 同时记录目标工具链、编译器路径和构建目录。
 
@@ -186,7 +188,7 @@ Linux 开局情境选择页已完成源码汉化、统一队列编译及正式�
 
 Linux 随机世界生成页已完成源码汉化、统一队列编译及正式热发布：标题、放大／缩小、文化区域与图例、文化内开局、重新选择起点、重新生成世界、进入游戏及动态缩放／比例尺，共12项。批次 `feb3cf65bbe14ffbac4d6ec568f86a6b`，事务 `32199d2897d343e4b5a5416f6a32fb2f`；PID `3968932` 返回三模块第2代 Applied，旧五件已移入 `回收/`。原生文字、按钮、选择与命中区域沿原生构建同步更新；热加载或切换语言后，旧页在下一次正常交互进入原生控件构建时刷新，保留世界、起点、图例状态和当前选择。未运行游戏或测试；静态依据、既有边界与交付回执见 [随机世界生成页记录](docs/evidence/20261019-world-generation-native.md)。
 
-字体被 Windows 150% 位图放大的启动边界修正已完成源码、统一队列编译和正式发布：根 `uwcn_launcher.exe` 在游戏创建前传入 `SDL_WINDOWS_DPI_AWARENESS=permonitorv2`，由原生 SDL 初始化消费，使字形使用真实输出密度。批次 `704b7920c5824cb7b67fe95500ea9d99`，事务 `41070669c7054afab6885f04174d1757`；旧启动器与发布清单已移入 `回收/`。下次正常启动生效，不追溯改变已有窗口；未自行运行或测试。原图证据、先前100%结论的更正、窗口大小影响及交付回执见 [DPI 启动修正记录](docs/evidence/20261019-font-dpi-startup.md)。
+字体被 Windows 150% 位图放大的启动边界修正已完成源码、统一队列编译和正式发布：根 `urwcn_launcher.exe` 在游戏创建前传入 `SDL_WINDOWS_DPI_AWARENESS=permonitorv2`，由原生 SDL 初始化消费，使字形使用真实输出密度。批次 `704b7920c5824cb7b67fe95500ea9d99`，事务 `41070669c7054afab6885f04174d1757`；旧启动器与发布清单已移入 `回收/`。下次正常启动生效，不追溯改变已有窗口；未自行运行或测试。原图证据、先前100%结论的更正、窗口大小影响及交付回执见 [DPI 启动修正记录](docs/evidence/20261019-font-dpi-startup.md)。
 
 主游戏截图界面已完成源码汉化、统一队列编译和正式发布：状态栏、行动与方位、速度、日历、地域、地名释义、日期、比例尺和底部提示采用中文；人物姓名、原地名、数值和动作保持。对应原生 surface 与头像 renderer 使用真实输出密度字形，布局、控件和缓存由游戏管理。最终批次 `bb31dbf3f3894011a0ee0da1e1ee6620`、事务 `c2785e5465ef495ca21aaa2c03d123f8`；本批次旧四件先移入对应 `回收/`，正式清单十二项哈希一致。当时无运行中的游戏进程，未请求运行时热加载，未自行运行或测试。正式交付状态及旧缓存刷新边界见 [主游戏界面记录](docs/evidence/20261019-main-game-hud-native.md)。
 
@@ -239,9 +241,9 @@ Linux 随机世界生成页已完成源码汉化、统一队列编译及正式�
 
 历史窗口的旧实现不能视为重建已完成；设置页以本轮原生接入记录为准，关于、鸣谢、先祖等界面仍以各自新接入及交付记录为准。Byayoi 标识以本轮原生页脚接入为准，历史固定行槽方案已废止。新增接入须另行记录已确认的原生边界，禁止照抄旧页面布局。
 
-统一构建入口为根 `build.ps1` / `build-queue.ps1`。正式启动器固定在根目录：Linux 为 `uwcn_launcher`，Windows 为 `uwcn_launcher.exe`；驻留桥和六个业务库分别位于 `package/uwcn_loader.dll`、`package/modules/`。替换旧正式文件前先移入根 `回收/` 的事务目录；没有备用运行包。
+统一构建入口为根 `build.ps1` / `build-queue.ps1`。正式启动器固定在根目录：Linux 为 `urwcn_launcher`，Windows 为 `urwcn_launcher.exe`；驻留桥和六个业务库分别位于 `package/urwcn_loader.dll`、`package/modules/`。替换旧正式文件前先移入根 `回收/` 的事务目录；没有备用运行包。
 
-Windows 用户启动入口为根 `uwcn_launcher.exe`，游戏目录保存在启动器旁的 `uwcn_launcher.ini` 的 `[launcher]` / `game_directory` 项。首次未配置目录，或指定目录中不存在 `urw.exe` 时，弹出系统目录选择框；选择包含 `urw.exe` 的目录后保存，取消则退出。也可传入 `--game "游戏完整路径"` 或 `--game-dir "游戏目录"` 指定并保存目录；需要更换目录时可使用这些参数或编辑配置文件。目录选择不绕过版本指纹校验。Windows 启动器核对已确认版本，在新建进程的游戏 PE 入口前装入正式驻留桥和模块，再恢复入口。当前 ABI 1 是本轮新框架，不声称能在历史 ABI 3 驻留桥上原位迁移。
+Windows 用户启动入口为根 `urwcn_launcher.exe`，游戏目录保存在启动器旁的 `urwcn_launcher.ini` 的 `[launcher]` / `game_directory` 项。首次未配置目录，或指定目录中不存在 `urw.exe` 时，弹出系统目录选择框；选择包含 `urw.exe` 的目录后保存，取消则退出。也可传入 `--game "游戏完整路径"` 或 `--game-dir "游戏目录"` 指定并保存目录；需要更换目录时可使用这些参数或编辑配置文件。目录选择不绕过版本指纹校验。Windows 启动器核对已确认版本，在新建进程的游戏 PE 入口前装入正式驻留桥和模块，再恢复入口。当前 ABI 1 是本轮新框架，不声称能在历史 ABI 3 驻留桥上原位迁移。
 
 设置页已于批次 `bcd418e7f1574fe98569bea56747dd10`、事务 `80bf73a354c74db594bf27a86fe98fd9` 完成源码接入、统一队列编译和正式发布。Adapter、Semantic、词库、构建适配及发布清单的旧五件先移入 `回收/20261019-024201-80bf73a354c74db594bf27a86fe98fd9/`；正式清单十项 SHA-256 均与磁盘一致，既有进程 `65412` 返回 Applied。启动器与驻留桥沿用原文件。Applied 表示模块交接完成，不代表视觉验收；已经打开的设置页标题和底部缓存，等原生重新构建该页才更新。详见 [设置页交付记录](docs/evidence/20261019-setup-options-native.md)。此前 03 位置调整仍以 [署名交付记录](docs/evidence/20261019-footer-branding-native.md) 为准。
 

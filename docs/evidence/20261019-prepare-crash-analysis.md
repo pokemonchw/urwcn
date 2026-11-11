@@ -4,8 +4,8 @@
 
 - 转储：`C:\Users\WIN11\AppData\Local\CrashDumps\urw.exe.119880.dmp`，时间 2026-10-19 02:13:01，异常线程 72996。
 - 失败请求：`6850be278210403b9894d03df9d18513`；批次：`9414bd8644bc499a93fb4ad9540e62f3`。
-- 转储中的旧 render 加载基址：`0x586A0000`；模块路径为正式 `package/modules/uwcn_render.dll`。
-- 对应旧文件现位于 `回收/20261019-021416-70e97bed31a04ea1a4096ae67ebfa897/package/modules/uwcn_render.dll`，SHA256：`0cefb5e1d2e7b19d55db4598e6666af49225e5ec3b39a5accf1eb11ae52f5cf1`。不得用随后发布的新 DLL 解释本转储。
+- 转储中的旧 render 加载基址：`0x586A0000`；模块路径为正式 `package/modules/urwcn_render.dll`。
+- 对应旧文件现位于 `回收/20261019-021416-70e97bed31a04ea1a4096ae67ebfa897/package/modules/urwcn_render.dll`，SHA256：`0cefb5e1d2e7b19d55db4598e6666af49225e5ec3b39a5accf1eb11ae52f5cf1`。不得用随后发布的新 DLL 解释本转储。
 
 ## 已确认调用链
 

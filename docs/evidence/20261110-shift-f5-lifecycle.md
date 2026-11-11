@@ -37,13 +37,13 @@
 - 批次 ID：`148c250353cd4b4eb9e6dc6358c93c62`。
 - 发布事务：`7ef85aba20214f2ea88c5aeae6986cc6`，2026-11-10 10:43:35（Asia/Shanghai）完成。
 - 已读取 `build/.compile-queue/results/449324e334d5400abcba0771a6913fba.json`、对应批次 `.log` 和 `build/mingw-x86/stage/7ef85aba20214f2ea88c5aeae6986cc6/publication-result.json`：编译及发布成功，`PublishRequested=true`、`ReloadRequested=false`、`runtime_requested=false`，没有运行时 Applied 回执。编译保留既有函数指针转换、未用符号、缩进及成员初始化警告。
-- 正式更新 `package/uwcn_loader.dll`、`package/modules/uwcn_adapter.dll`、`package/release.json`。这三件旧文件先按原相对路径移入 `回收/20261110-104335-7ef85aba20214f2ea88c5aeae6986cc6/`，目录及旧 DLL 的 SHA-256 均已只读取得。根 `uwcn_launcher.exe` 沿用正式入口，没有平行运行包。
+- 正式更新 `package/urwcn_loader.dll`、`package/modules/urwcn_adapter.dll`、`package/release.json`。这三件旧文件先按原相对路径移入 `回收/20261110-104335-7ef85aba20214f2ea88c5aeae6986cc6/`，目录及旧 DLL 的 SHA-256 均已只读取得。根 `urwcn_launcher.exe` 沿用正式入口，没有平行运行包。
 - 正式两件 DLL 的 SHA-256 与本批构建产物一致，也与正式发布清单记录一致。新驻留桥在下一次正常启动时加载；没有向运行中的旧桥注入更新。
 
 | 正式文件 | SHA-256 |
 | --- | --- |
-| `package/uwcn_loader.dll` | `fdbe982ddc4e787b37a4f4df1cfe9fcb9fb1dbd457d8b04aa31450ebdbd14aad` |
-| `package/modules/uwcn_adapter.dll` | `fed6bd6c4ea1981102b360ef8bd2f3be77fc4fa848845b02492fe8ba707bfc8d` |
+| `package/urwcn_loader.dll` | `fdbe982ddc4e787b37a4f4df1cfe9fcb9fb1dbd457d8b04aa31450ebdbd14aad` |
+| `package/modules/urwcn_adapter.dll` | `fed6bd6c4ea1981102b360ef8bd2f3be77fc4fa848845b02492fe8ba707bfc8d` |
 | `package/release.json` | `d2f2fdf286bf56a4ec1bde1f511f5a719adce862ce4828f8de01cea2a9fc48d6` |
 
 没有启动、注入、关闭或重启游戏，没有模拟输入、运行产物或测试；没有创建测试用例或断言。上述结果是源码、编译和正式文件发布结果，不是运行验收。

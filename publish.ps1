@@ -12,14 +12,14 @@ param(
     [string]$WinePath
 )
 $ErrorActionPreference = 'Stop'
-if ($env:UWCN_COMPILE_BATCH -ne $BatchId) { throw 'Formal publication belongs to the root compile queue batch.' }
+if ($env:URWCN_COMPILE_BATCH -ne $BatchId) { throw 'Formal publication belongs to the root compile queue batch.' }
 $PackageDirectory = [IO.Path]::GetFullPath($PackageDirectory)
 $formalRoot = Split-Path -Parent $PackageDirectory
 $targetLinux = $Toolchain -eq 'Linux'
 $wineControl = $IsLinux -and !$targetLinux -and $Reload -and $WinePrefix -and $WinePath
 if ([bool]$WinePrefix -ne [bool]$WinePath) { throw 'Wine publication requires both WinePrefix and WinePath.' }
-$launcherName = if ($targetLinux) { 'uwcn_launcher' } else { 'uwcn_launcher.exe' }
-$retiredLauncherName = if ($targetLinux) { 'uwcn_launcher.exe' } else { 'uwcn_launcher' }
+$launcherName = if ($targetLinux) { 'urwcn_launcher' } else { 'urwcn_launcher.exe' }
+$retiredLauncherName = if ($targetLinux) { 'urwcn_launcher.exe' } else { 'urwcn_launcher' }
 if ($formalRoot -ne [IO.Path]::GetFullPath($PSScriptRoot) -or (Split-Path -Leaf $PackageDirectory) -ne 'package') { throw "Formal publication is restricted to root $launcherName and package/." }
 $allModules = @('catalog','semantic','render','layout','main_menu','adapter')
 if (!$Module) { $Module = @('launcher','loader') + $allModules }
@@ -48,8 +48,8 @@ function Add-Candidate([string]$Source,[string]$Relative) {
     $files.Add([pscustomobject]@{Relative=$Relative; Stage=$destination; Formal=$formal; Hash=$hash; Changed=$changed})
 }
 foreach ($name in $Module) {
-    $relative = if ($name -eq 'launcher') { $launcherName } elseif ($name -eq 'loader') { 'uwcn_loader.dll' } else { "modules/uwcn_$name.dll" }
-    $output = if ($name -eq 'launcher') { $launcherName } else { "uwcn_$name.dll" }
+    $relative = if ($name -eq 'launcher') { $launcherName } elseif ($name -eq 'loader') { 'urwcn_loader.dll' } else { "modules/urwcn_$name.dll" }
+    $output = if ($name -eq 'launcher') { $launcherName } else { "urwcn_$name.dll" }
     Add-Candidate (Join-Path $BuildDirectory "out/$output") $relative
 }
 Add-Candidate (Join-Path $BuildDirectory 'out/build-hour.txt') 'metadata/build-hour.txt'
@@ -90,7 +90,7 @@ Categories=Game;RolePlaying;
 }
 if (!$Reload -and @($files | Where-Object Changed).Count -eq 0 -and $retirements.Count -eq 0) { Write-Output 'Formal publication skipped: selected contents are unchanged.'; return }
 $changes = @($files | Where-Object Changed)
-$reloadModules = @($allModules | Where-Object { $name=$_; @($changes | Where-Object Relative -eq "modules/uwcn_$name.dll").Count -gt 0 })
+$reloadModules = @($allModules | Where-Object { $name=$_; @($changes | Where-Object Relative -eq "modules/urwcn_$name.dll").Count -gt 0 })
 if (@($changes | Where-Object { $_.Relative.StartsWith('catalog/') }).Count -gt 0 -and $reloadModules -notcontains 'catalog') { $reloadModules += 'catalog' }
 # Explicit reload includes unchanged selected modules: the running generation
 # can lag behind disk, and an explicitly retried transaction must retain its mask.
@@ -103,16 +103,16 @@ if (Test-Path -LiteralPath $currentManifest) {
 }
 if ($Module -contains 'launcher') { $identities.Remove($retiredLauncherName) }
 foreach ($name in $allModules) {
-    $relative = "modules/uwcn_$name.dll"
+    $relative = "modules/urwcn_$name.dll"
     $candidate = $files | Where-Object Relative -eq $relative
     if ($candidate) { $identities[$relative]=$candidate.Hash }
     elseif (Test-Path -LiteralPath (Join-Path $PackageDirectory $relative)) { $identities[$relative]=(Get-FileHash -LiteralPath (Join-Path $PackageDirectory $relative) -Algorithm SHA256).Hash.ToLowerInvariant() }
 }
 foreach ($file in $files | Where-Object { !$_.Relative.StartsWith('modules/') }) { $identities[$file.Relative]=$file.Hash }
-$manifest = [ordered]@{ format='uwcn-release-v1'; host_abi=1; transaction=$transaction; compile_batch=$BatchId; changed_modules=$reloadModules; files=$identities }
+$manifest = [ordered]@{ format='urwcn-release-v1'; host_abi=1; transaction=$transaction; compile_batch=$BatchId; changed_modules=$reloadModules; files=$identities }
 if ($targetLinux) {
     $manifest.host_abi=2
-    $manifest.hot_reload_protocol='UWCN_LINUX_CONTROL_V1'
+    $manifest.hot_reload_protocol='URWCN_LINUX_CONTROL_V1'
     $manifest.platform='linux-x86_64'
     $manifest.binary_format='ELF64 (extensionless launcher; historical .dll library filenames retained)'
     $manifest.game_sha256='4bbbef363fe64678ae9674ff9330f3cb0bec813d94379483813de152c164aabe'
@@ -122,7 +122,7 @@ $manifestSource = Join-Path $stage 'release-source.json'
 Add-Candidate $manifestSource 'release.json'
 $changes = @($files | Where-Object Changed)
 $candidateLines = [Collections.Generic.List[string]]::new()
-$candidateLines.Add('UWCN_CANDIDATE_V1')
+$candidateLines.Add('URWCN_CANDIDATE_V1')
 foreach ($file in $files | Where-Object { $_.Relative -ne $launcherName }) { $candidateLines.Add("$($file.Hash)`t$($file.Relative)") }
 [IO.File]::WriteAllLines((Join-Path $stage 'candidate-files.tsv'),$candidateLines,[Text.UTF8Encoding]::new($false))
 function Send-WineControl([int]$ProcessId,[string]$Command) {
@@ -137,8 +137,8 @@ function Send-WineControl([int]$ProcessId,[string]$Command) {
     $start.RedirectStandardOutput = $true
     $start.RedirectStandardError = $true
     $start.Environment['WINEPREFIX'] = $WinePrefix
-    $start.Environment['UWCN_WINE_CONTROL_PID'] = [string]$ProcessId
-    $start.Environment['UWCN_WINE_CONTROL_COMMAND'] = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Command))
+    $start.Environment['URWCN_WINE_CONTROL_PID'] = [string]$ProcessId
+    $start.Environment['URWCN_WINE_CONTROL_COMMAND'] = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Command))
     $start.ArgumentList.Add($interpreter)
     $start.ArgumentList.Add('-r:System.Core')
     $start.ArgumentList.Add('-e')
@@ -151,7 +151,7 @@ function Send-WineControl([int]$ProcessId,[string]$Command) {
         $output = $standardOutput.GetAwaiter().GetResult()
         $diagnostic = $standardError.GetAwaiter().GetResult()
         if ($process.ExitCode -ne 0) { throw "Wine control interpreter failed for Windows PID ${ProcessId}: $diagnostic$output" }
-        $prefix = 'UWCN_CONTROL_RECEIPT '
+        $prefix = 'URWCN_CONTROL_RECEIPT '
         $receipts = @($output -split '\r?\n' | Where-Object { $_.StartsWith($prefix) })
         if ($receipts.Count -ne 1) { throw "Wine control interpreter returned no unique receipt for Windows PID ${ProcessId}: $diagnostic$output" }
         $response = $receipts[0].Substring($prefix.Length)
@@ -168,7 +168,7 @@ function Send-Control([int]$ProcessId,[string]$Command) {
         $status = Get-Content -LiteralPath "/proc/$ProcessId/status"
         $uidLine = $status | Where-Object { $_.StartsWith('Uid:') }
         $processUid = ($uidLine -split '\s+')[2]
-        $endpoint = [Net.Sockets.UnixDomainSocketEndPoint]::new(([string][char]0) + "uwcn-$processUid-$ProcessId")
+        $endpoint = [Net.Sockets.UnixDomainSocketEndPoint]::new(([string][char]0) + "urwcn-$processUid-$ProcessId")
         try { $socket.Connect($endpoint) }
         catch {
             $socket.Dispose()
@@ -176,7 +176,7 @@ function Send-Control([int]$ProcessId,[string]$Command) {
         }
         $client = [Net.Sockets.NetworkStream]::new($socket,$true)
     } else {
-        $client = [IO.Pipes.NamedPipeClientStream]::new('.',"uwcn-$ProcessId",[IO.Pipes.PipeDirection]::InOut)
+        $client = [IO.Pipes.NamedPipeClientStream]::new('.',"urwcn-$ProcessId",[IO.Pipes.PipeDirection]::InOut)
     }
     try {
         if (!$targetLinux) { $client.Connect(15000) }
@@ -258,7 +258,7 @@ try {
             $target.commit_receipt=Send-Control $target.pid "COMMIT $transaction"
             if (!$target.commit_receipt.StartsWith("Applied $transaction ")) { throw "Resident commit failed for PID $($target.pid): $($target.commit_receipt)" }
             foreach ($name in $reloadModules) {
-                $hash=($files | Where-Object Relative -eq "modules/uwcn_$name.dll").Hash
+                $hash=($files | Where-Object Relative -eq "modules/urwcn_$name.dll").Hash
                 if ($target.commit_receipt -notmatch [regex]::Escape("$($name):$($hash):")) { throw "Applied receipt for PID $($target.pid) lacks matching identity for $name" }
             }
             $target.applied=$true

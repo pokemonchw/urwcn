@@ -7,7 +7,7 @@
 #include <optional>
 #include <utility>
 
-namespace uwcn::adapter::native_root_component {
+namespace urwcn::adapter::native_root_component {
 namespace {
 std::uintptr_t base{};
 RootRevision next_revision=1;
@@ -125,7 +125,7 @@ BackgroundSource clear_source() {
 }
 
 int paint_clear() {
-    using Fill=int (UWCN_CALL *)(void*,const NativeRect*,u32);
+    using Fill=int (URWCN_CALL *)(void*,const NativeRect*,u32);
     // This is the same native target, native rectangle and color consumed by
     // 10B9F0 at 10BA17. Its original upload/present tail is not part of paint.
     const auto fill=*at<Fill>(0x18C1E8);
@@ -135,7 +135,7 @@ int paint_clear() {
 
 // 1127C0 uses ECX/EDX and four caller-cleaned stack slots. Its first two
 // slots are unused; [EBP+10]/[EBP+14] are the original target width/height.
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_draw_native_root_background(
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_draw_native_root_background(
     const BackgroundCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
@@ -232,7 +232,7 @@ Status paint_background(RootRevision revision) {
     };
     painting_revision=revision;
     background_painted=false;
-    uwcn_draw_native_root_background(&native);
+    urwcn_draw_native_root_background(&native);
     painting_revision=0;
     return background_painted ? Status::ok : Status::failed;
 }

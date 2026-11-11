@@ -6,7 +6,7 @@
 #include <map>
 
 namespace {
-using namespace uwcn;
+using namespace urwcn;
 // A transport alphabet for the confirmed native tokenizer. Native wrappers
 // remap C4/E4/F6, so those bytes never appear in the encoded representation.
 // This representation has no bearing on width: Render supplies real metrics.
@@ -60,10 +60,10 @@ Status decode(const char* input,std::string& result) {
     }
     return Status::ok;
 }
-Status UWCN_CALL initialize(const HostApi* host) {
+Status URWCN_CALL initialize(const HostApi* host) {
     return host && host->abi==kHostAbi && host->size==sizeof(HostApi) ? Status::ok : Status::invalid;
 }
-Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* capacity) {
+Status URWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* capacity) {
     if(op==kModuleDependenciesChanged) return input && bytes==sizeof(u32) ? Status::ok : Status::invalid;
     if(op==layout_op::decode) {
         if(!input || bytes!=sizeof(DecodeRequest)) return Status::invalid;
@@ -80,12 +80,12 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
     const auto status=op==layout_op::encode_native ? encode(request.text,result) : decode(request.text,result);
     return status==Status::ok ? copy_text(result,output,capacity) : status;
 }
-Status UWCN_CALL save(void* output,u32* capacity) {
+Status URWCN_CALL save(void* output,u32* capacity) {
     std::vector<u32> state{1,static_cast<u32>(scalar_by_token.size())};
     state.insert(state.end(),scalar_by_token.begin(),scalar_by_token.end());
     return copy_output(state.data(),static_cast<u32>(state.size()*sizeof(u32)),output,capacity);
 }
-Status UWCN_CALL restore(const void* input,u32 bytes) {
+Status URWCN_CALL restore(const void* input,u32 bytes) {
     if(!input || bytes<2*sizeof(u32) || bytes%sizeof(u32)) return Status::invalid;
     const auto* state=static_cast<const u32*>(input);
     const auto count=state[1];
@@ -100,8 +100,8 @@ Status UWCN_CALL restore(const void* input,u32 bytes) {
     scalar_by_token.swap(scalars);token_by_scalar.swap(indices);
     return Status::ok;
 }
-void UWCN_CALL shutdown() { scalar_by_token.clear();token_by_scalar.clear(); }
+void URWCN_CALL shutdown() { scalar_by_token.clear();token_by_scalar.clear(); }
 const ModuleApi api={sizeof(ModuleApi),kHostAbi,ModuleId::layout,initialize,invoke,save,restore,shutdown};
 }
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor={uwcn::kDescriptorMagic,uwcn::kHostAbi,4,uwcn::kModuleMachine,1};
-UWCN_EXPORT const uwcn::ModuleApi* UWCN_CALL uwcn_get_module_api() { return &api; }
+URWCN_EXPORT const urwcn::ModuleDescriptor urwcn_module_descriptor={urwcn::kDescriptorMagic,urwcn::kHostAbi,4,urwcn::kModuleMachine,1};
+URWCN_EXPORT const urwcn::ModuleApi* URWCN_CALL urwcn_get_module_api() { return &api; }

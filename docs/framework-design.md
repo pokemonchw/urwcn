@@ -8,7 +8,7 @@
 
 2026-10-18 最新要求：重载可在任何游戏界面发起并完成，不得要求退主菜单、关闭窗口或手动卸载。此前本文的 Footer 限制已撤销。当前通用桥采用短 Before / 驻留原函数 / 短 After，以及不按界面筛选的 SDL 事件等待服务泵；adapter 调度协议和状态模式为 `2`，HostApi ABI 仍为 `3`。详见 [当前热重载设计](hot-reload.md)。本文以下旧窗口实现和原独立显示计划不作为现行 UI 所有权要求；原审查项已完成原生文字链源码、编译和正式交付，未运行验收，见 [交付记录](evidence/native-ui-text-static.txt)；[静态审查](evidence/native-ui-ownership-audit.txt) 保留初次发现。
 
-2026-10-18 当前修订将热重载管理与汉化业务分开：`uwcn_loader.dll` 只链接 `host.cpp`、`hook_host.cpp` 与 `control_bridge.cpp`；全部 `native_*` 界面适配归属第六个业务模块 `uwcn_adapter.dll`。驻留 HookHost 接收通用补丁描述并持有稳定 x86 入口、原函数调用与返回路径，通用控制桥服务 SDL 事件与等待，不识别具体 UI。界面字段和调用适配均由可重载业务实现。旧独立中文计划、固定行槽及几何反写已撤除，当前通过原生文字构建点与 Mod 字形 Hook，由 Mod 绘字、游戏管理 UI 缓存。下文开头的五模块窗口接入段落是此次迁移前的历史说明，更新方式以本节及模块表为准。
+2026-10-18 当前修订将热重载管理与汉化业务分开：`urwcn_loader.dll` 只链接 `host.cpp`、`hook_host.cpp` 与 `control_bridge.cpp`；全部 `native_*` 界面适配归属第六个业务模块 `urwcn_adapter.dll`。驻留 HookHost 接收通用补丁描述并持有稳定 x86 入口、原函数调用与返回路径，通用控制桥服务 SDL 事件与等待，不识别具体 UI。界面字段和调用适配均由可重载业务实现。旧独立中文计划、固定行槽及几何反写已撤除，当前通过原生文字构建点与 Mod 字形 Hook，由 Mod 绘字、游戏管理 UI 缓存。下文开头的五模块窗口接入段落是此次迁移前的历史说明，更新方式以本节及模块表为准。
 
 Host ABI 保持 `3`，adapter 服务与状态模式为 `2/2`。`adapter` 的模块 ID 为 `6`、掩码为 `32`，六模块总掩码为 `63`。它与 `catalog`、`semantic`、`render`、`layout`、`main_menu` 使用同一生命周期、代数、租约、队列和正式发布事务；兼容的原生补丁描述变化随 adapter 退役、登记和激活，不要求改驻留代码。新桥已在用户退出旧进程后完成统一队列编译和正式发布，未运行验收，回执见 [新桥交付记录](evidence/anywhere-reload-static.txt)。用户要求这是本轮整改最后一次退出；后续汉化、字体、度量、显示适配和原生 UI 所有权整改须通过业务热更，在任意游戏界面交接，不依赖主菜单或逐窗口白名单。
 
@@ -24,11 +24,11 @@ Host ABI 保持 `3`，adapter 服务与状态模式为 `2/2`。`adapter` 的模�
 
 这里的“独立”是独立源码、构建目标、二进制、状态所有权和生命周期。运行时仍有明确的数据依赖；模块更新可能使下游布局或纹理失效，重新计算这些数据不等于重新编译或重新加载下游模块。启动器和必须留在调用链上的驻留桥接也各自构建，但更新后通过正常重启生效。
 
-交付目录中，`uwcn_launcher.exe` 放在 `package/` 的上级，与 `package/` 同级；加载器、业务 DLL、词库及适配资料都收在 `package/` 内。启动入口不放进模块或运行数据目录。
+交付目录中，`urwcn_launcher.exe` 放在 `package/` 的上级，与 `package/` 同级；加载器、业务 DLL、词库及适配资料都收在 `package/` 内。启动入口不放进模块或运行数据目录。
 
 ## 1. 依据、现状与边界
 
-本稿承接 [汉化方案](design.md) 的显示边界与内部英文语义约束，以及 [热重载协议](hot-reload.md) 的入口租约、状态交接和正式路径加载原则；将其中单个 `uwcn_core.dll` 的职责拆成独立模块。主界面路径以以下静态资料为依据：
+本稿承接 [汉化方案](design.md) 的显示边界与内部英文语义约束，以及 [热重载协议](hot-reload.md) 的入口租约、状态交接和正式路径加载原则；将其中单个 `urwcn_core.dll` 的职责拆成独立模块。主界面路径以以下静态资料为依据：
 
 - [主界面静态记录](evidence/main-menu-static.txt)：字段身份、原生 ABI、文本副作用和输入循环交接路径。
 - [主界面布局修订](evidence/main-menu-layout-fix.txt)：18 逻辑像素行框、最终输出像素栅格化与驻留 present 桥。
@@ -46,20 +46,20 @@ Host ABI 保持 `3`，adapter 服务与状态模式为 `2/2`。`adapter` 的模�
 
 | 构建目标 / 产物 | 独占职责与状态 | 更新方式 |
 | --- | --- | --- |
-| `uwcn_launcher` / `uwcn_launcher.exe` | 启动参数、游戏目录、首次装载驻留层 | 独立编译；下次启动生效 |
-| `uwcn_loader` / `uwcn_loader.dll` | 通用 HookHost、稳定 x86 入口及原生调用返回、模块登记、租约、控制通道、重载状态机、交接字节 | 独立编译；正常重启生效 |
-| `uwcn_adapter` / `uwcn_adapter.dll` | 已确认界面的补丁描述、作用域、原生字段读取、输入与显示调用适配、几何应用、显示计划业务 | 单独编译、单独重载 |
-| `uwcn_main_menu` / `uwcn_main_menu.dll` | 已确认字段快照到语义 ID 的关联、显示字段组织 | 单独编译、单独重载 |
-| `uwcn_catalog` / `uwcn_catalog.dll` | TSV 解析、现有词条索引、不可变词库快照；不决定游戏 UI 身份 | 修改解析与索引代码时单独重载 |
-| `uwcn_semantic` / `uwcn_semantic.dll` | 按启动、主界面与设置语义 ID 及参数生成 UTF-8 显示字段 | 单独编译、单独重载 |
-| `uwcn_layout` / `uwcn_layout.dll` | 中文行框、文本位置、对齐、显示计划和交互矩形计算 | 单独编译、单独重载 |
-| `uwcn_render` / `uwcn_render.dll` | 字体、文字度量、按最终像素栅格化、纹理及游戏 SDL 实例上的合成 | 单独编译、单独重载 |
+| `urwcn_launcher` / `urwcn_launcher.exe` | 启动参数、游戏目录、首次装载驻留层 | 独立编译；下次启动生效 |
+| `urwcn_loader` / `urwcn_loader.dll` | 通用 HookHost、稳定 x86 入口及原生调用返回、模块登记、租约、控制通道、重载状态机、交接字节 | 独立编译；正常重启生效 |
+| `urwcn_adapter` / `urwcn_adapter.dll` | 已确认界面的补丁描述、作用域、原生字段读取、输入与显示调用适配、几何应用、显示计划业务 | 单独编译、单独重载 |
+| `urwcn_main_menu` / `urwcn_main_menu.dll` | 已确认字段快照到语义 ID 的关联、显示字段组织 | 单独编译、单独重载 |
+| `urwcn_catalog` / `urwcn_catalog.dll` | TSV 解析、现有词条索引、不可变词库快照；不决定游戏 UI 身份 | 修改解析与索引代码时单独重载 |
+| `urwcn_semantic` / `urwcn_semantic.dll` | 按启动、主界面与设置语义 ID 及参数生成 UTF-8 显示字段 | 单独编译、单独重载 |
+| `urwcn_layout` / `urwcn_layout.dll` | 中文行框、文本位置、对齐、显示计划和交互矩形计算 | 单独编译、单独重载 |
+| `urwcn_render` / `urwcn_render.dll` | 字体、文字度量、按最终像素栅格化、纹理及游戏 SDL 实例上的合成 | 单独编译、单独重载 |
 | `catalog/zh-CN/main_menu.tsv` | 启动、主界面与设置中文词条数据 | 刷新数据；不编译 DLL |
 | `profiles/urw-3.89-steam-25939378.json` | 当前构建的指纹、RVA、原生 ABI 与字段证据 | 与适配版本配套发布；不作为普通词库刷新 |
 
 `HookHost` 由 `src/loader/hook_host.cpp` 实现，与通用模块管理一起链接成驻留 DLL。驻留 thunk / slot 的地址在进程期内稳定，保留控制 Hook 与原函数透传路径。adapter 持有原生适配作用域并调用原函数，在原生输入等待期间允许保有 adapter 调用帧和租约；请求等待返回已有主菜单 Footer 外层，在进入下一次 adapter dispatch 前、全部模块租约为零时才交接。游戏不持久保存 adapter 函数指针。adapter 退役前作废其计划并恢复几何，原有路由描述由驻留槽位保留，adapter 不可用时执行原函数；兼容新代激活时在该边界校验并更新补丁集合，控制 Hook 的描述保持不变。仅修改词库、语义、字号、布局或绘制时不重新安装原生补丁。
 
-现有 `uwcn_core.dll` 在完成迁移后退出新框架。业务模块不再静态链接进一个总核心；否则仍只能整体重载。字体库、SDL 和编译器运行库属于依赖，不纳入业务 DLL 热替换集合。
+现有 `urwcn_core.dll` 在完成迁移后退出新框架。业务模块不再静态链接进一个总核心；否则仍只能整体重载。字体库、SDL 和编译器运行库属于依赖，不纳入业务 DLL 热替换集合。
 
 ## 3. 数据流与模块依赖
 
@@ -91,7 +91,7 @@ flowchart TD
 
 `adapter` 负责原生显示业务顺序，Host 负责通用生命周期与调用保护。Host 不包含界面识别、词条匹配、中文句式或排版算法。`render` 不捕获英文、不识别游戏界面。
 
-汉化组版本属于 `main_menu` 显示业务：Host 的 `read_package("metadata/package-identity")` 返回通用原始身份字节，首行为 `UWCN_PACKAGE_IDENTITY_V1`，后接六模块及已提交词库的 SHA-256，均以 LF 分隔。`main_menu` 对这些字节计算显示版本的 SHA-256、五位 Base36 和字母数字调整。Host 不提供 `metadata/translation-version`，不解释版本格式，也不因该显示规则修改而重新编译。
+汉化组版本属于 `main_menu` 显示业务：Host 的 `read_package("metadata/package-identity")` 返回通用原始身份字节，首行为 `URWCN_PACKAGE_IDENTITY_V1`，后接六模块及已提交词库的 SHA-256，均以 LF 分隔。`main_menu` 对这些字节计算显示版本的 SHA-256、五位 Base36 和字母数字调整。Host 不提供 `metadata/translation-version`，不解释版本格式，也不因该显示规则修改而重新编译。
 
 主界面适配器按已确认索引产生语义 ID，例如索引 0 对应 `main_menu.load_character`；词库模块可继续使用现有短键 `load_character`，二者的显式映射属于 `semantic`。不要求改写原生行标签，也不以英文整串匹配菜单身份。
 
@@ -99,7 +99,7 @@ flowchart TD
 
 ### 4.1 最小公共 ABI
 
-所有模块使用 C++20 实现，对外为显式 `__cdecl` 的 x86 C ABI；六模块迁移采用 Host ABI `3` 和配套的通用 HookHost 契约。原游戏的混合寄存器和栈约定由驻留薄桥转换为固定帧，adapter 按已确认参数规则消费；普通语义、布局和绘制模块不读取原生寄存器。每个模块用固定的无修饰导出名 `uwcn_get_module_api` 交付自己的函数表，具体导出由各目标的 `.def` 文件固定。
+所有模块使用 C++20 实现，对外为显式 `__cdecl` 的 x86 C ABI；六模块迁移采用 Host ABI `3` 和配套的通用 HookHost 契约。原游戏的混合寄存器和栈约定由驻留薄桥转换为固定帧，adapter 按已确认参数规则消费；普通语义、布局和绘制模块不读取原生寄存器。每个模块用固定的无修饰导出名 `urwcn_get_module_api` 交付自己的函数表，具体导出由各目标的 `.def` 文件固定。
 
 公共契约只含固定宽度整数、明确布局的记录、长度、版本和句柄。记录使用相对字节偏移引用变长内容；UTF-8 内容始终带长度。接口头按能力分别提供，不创建包含所有实现类型的总头文件。
 
@@ -189,21 +189,21 @@ Host 分配事务标识；同一次字段生成、度量、行框应用和绘制
 
 每个业务目标使用 CMake `MODULE`，各自编入自己的 `.cpp`；启动器使用 executable，驻留层使用 `SHARED`。`MODULE` 的含义就是由运行时动态加载、供插件使用而不被其他目标链接。[CMake 3.24 官方说明](https://cmake.org/cmake/help/v3.24/command/add_library.html)
 
-接口声明使用窄 `INTERFACE` 目标，例如 `uwcn_host_abi`、`uwcn_fields_abi`、`uwcn_metrics_abi`、`uwcn_display_abi`。这些目标不携带公共实现源文件。`layout` 依赖度量契约头，但不链接 `render` DLL。
+接口声明使用窄 `INTERFACE` 目标，例如 `urwcn_host_abi`、`urwcn_fields_abi`、`urwcn_metrics_abi`、`urwcn_display_abi`。这些目标不携带公共实现源文件。`layout` 依赖度量契约头，但不链接 `render` DLL。
 
 拟议目标片段：
 
 ```cmake
-add_library(uwcn_layout MODULE
+add_library(urwcn_layout MODULE
     modules/layout/module.cpp
     modules/layout/main_menu_layout.cpp
     modules/layout/exports.def)
-target_link_libraries(uwcn_layout PRIVATE
-    uwcn_host_abi uwcn_fields_abi uwcn_metrics_abi uwcn_display_abi)
-set_target_properties(uwcn_layout PROPERTIES PREFIX "")
+target_link_libraries(urwcn_layout PRIVATE
+    urwcn_host_abi urwcn_fields_abi urwcn_metrics_abi urwcn_display_abi)
+set_target_properties(urwcn_layout PROPERTIES PREFIX "")
 ```
 
-其他业务目标各自使用相同的目标组织方式。不要把它们编成静态库后再合进 `uwcn_core.dll`，也不要用 `add_dependencies` 把所有业务目标串成一条构建链。
+其他业务目标各自使用相同的目标组织方式。不要把它们编成静态库后再合进 `urwcn_core.dll`，也不要用 `add_dependencies` 把所有业务目标串成一条构建链。
 
 ### 6.2 构建目录和选择
 
@@ -239,9 +239,9 @@ set_target_properties(uwcn_layout PROPERTIES PREFIX "")
 
 构建输出写入 `build/<preset>/out/`，发布候选放入 `build/<preset>/stage/<transaction>/`。游戏只从 `package/modules/` 的正式 DLL 名称加载。stage 仅用于构建与发布，不生成运行 shadow DLL 或历史运行副本，沿用原热重载方案的正式路径原则。
 
-正式运行根为 `package/`。启动器从自身 EXE 所在目录定位 `package/uwcn_loader.dll`；驻留层以自身 DLL 所在目录为运行根，统一向业务模块提供 `modules/`、`catalog/`、`profiles/` 和 `release.json` 的位置。Mod 路径均解析成绝对路径，不依赖当前工作目录；游戏的工作目录仍为游戏安装目录，重载不改变它。
+正式运行根为 `package/`。启动器从自身 EXE 所在目录定位 `package/urwcn_loader.dll`；驻留层以自身 DLL 所在目录为运行根，统一向业务模块提供 `modules/`、`catalog/`、`profiles/` 和 `release.json` 的位置。Mod 路径均解析成绝对路径，不依赖当前工作目录；游戏的工作目录仍为游戏安装目录，重载不改变它。
 
-正式 `release.json` 内的文件路径相对运行根，例如 `modules/uwcn_layout.dll`。候选清单内的路径则相对本次 stage 根，控制请求明确携带该候选根的绝对路径。两种清单不混用相对路径基准。若保留 `-PackageDirectory` 参数，它只指定运行根；整包交付将启动器放到该目录的父目录，日常业务模块发布只更新运行根内的文件。
+正式 `release.json` 内的文件路径相对运行根，例如 `modules/urwcn_layout.dll`。候选清单内的路径则相对本次 stage 根，控制请求明确携带该候选根的绝对路径。两种清单不混用相对路径基准。若保留 `-PackageDirectory` 参数，它只指定运行根；整包交付将启动器放到该目录的父目录，日常业务模块发布只更新运行根内的文件。
 
 这样可以在旧模块仍加载时完成新版本的编译和链接；链接器不会写入正在使用的正式 DLL。正式文件替换放在旧模块退役之后。
 
@@ -319,7 +319,7 @@ sequenceDiagram
 
 字体校准、逻辑坐标到输出像素的映射、页脚行槽及 render 资源契约细化见 [主界面高清字体渲染与自适应方案](font-rendering.md)。字体仍由 layout / render 负责，不增加字体业务 DLL；adapter 仅应用共享几何和显示计划。
 
-修改 `main_menu.tsv` 不经过 DLL 退役：发布完整词库包，由现有 `catalog` 代码解析为候选快照，在显示事务边界一次提交并递增 `catalog_generation`，重建主界面显示计划。一次度量与绘制使用同一包。修改 TSV 解析代码才重载 `uwcn_catalog.dll`。
+修改 `main_menu.tsv` 不经过 DLL 退役：发布完整词库包，由现有 `catalog` 代码解析为候选快照，在显示事务边界一次提交并递增 `catalog_generation`，重建主界面显示计划。一次度量与绘制使用同一包。修改 TSV 解析代码才重载 `urwcn_catalog.dll`。
 
 代码模块重载与数据刷新使用同一控制队列顺序执行。一次模块发布指定其使用的已提交数据包身份，不在交接中途切到另一份词库。显示开关只控制输出，不承担卸载职责。
 
@@ -361,15 +361,15 @@ docs/framework-design.md
 build/<preset>/                   长期保留的构建树
   out/                            链接输出，不供游戏加载
   stage/<transaction>/            完整候选及发布清单
-uwcn_launcher.exe                 上级目录的启动入口，与 package/ 同级
+urwcn_launcher.exe                 上级目录的启动入口，与 package/ 同级
 package/
-  uwcn_loader.dll
-  modules/uwcn_main_menu.dll
-  modules/uwcn_catalog.dll
-  modules/uwcn_semantic.dll
-  modules/uwcn_layout.dll
-  modules/uwcn_render.dll
-  modules/uwcn_adapter.dll
+  urwcn_loader.dll
+  modules/urwcn_main_menu.dll
+  modules/urwcn_catalog.dll
+  modules/urwcn_semantic.dll
+  modules/urwcn_layout.dll
+  modules/urwcn_render.dll
+  modules/urwcn_adapter.dll
   catalog/zh-CN/main_menu.tsv
   profiles/urw-3.89-steam-25939378.json
   release.json                    当前完整发布清单
@@ -377,7 +377,7 @@ package/
 
 各模块目录包含自己的构建声明，私有头只对自身 target 可见。导出 ABI、Win32/i686 与实际交付文件名统一固定，MinGW 也不额外生成带 `lib` 前缀的运行模块名。
 
-用户从交付根目录启动时，入口为 `./uwcn_launcher.exe`；无需进入 `package/`。发布包整体移动时，启动器与 `package/` 保持上述相对层级。
+用户从交付根目录启动时，入口为 `./urwcn_launcher.exe`；无需进入 `package/`。发布包整体移动时，启动器与 `package/` 保持上述相对层级。
 
 ## 11. 改动与实际工作量对应
 

@@ -4,7 +4,7 @@
 #include "../render/sdl_api.h"
 #include <vector>
 
-namespace uwcn::adapter::native_targets {
+namespace urwcn::adapter::native_targets {
 Status initialize(std::uintptr_t image_base, HMODULE sdl);
 // IAT values are process-lifetime E9 gateways. Game frames may cache them.
 Status install();

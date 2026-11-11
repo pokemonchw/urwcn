@@ -1,4 +1,4 @@
-UWCn 重建框架：静态审查与实现说明
+URWCN 重建框架：静态审查与实现说明
 日期：2026-10-19
 
 本轮开始时的实际文件状态
@@ -21,7 +21,7 @@ UWCn 重建框架：静态审查与实现说明
 源码职责
 ========
 src/launcher/main.cpp：检查已确认 EXE SHA-256；从启动器自身目录定位
-package/uwcn_loader.dll；创建挂起的新游戏进程、注入驻留层并显式初始化；
+package/urwcn_loader.dll；创建挂起的新游戏进程、注入驻留层并显式初始化；
 初始化成功后恢复其主线程，失败结束的只会是本次新建且游戏入口尚未放行的进程。
 游戏工作目录仍为游戏安装目录。模块初始化失败不启动无效 Mod。
 
@@ -83,7 +83,7 @@ SDK及构建脚本中的断言；未添加测试。内存与绘制资源由所�
 全图；配置参数冲突拒绝入队；每批一次配置、一次增量构建，不清理构建树。
 cmake/build-once.ps1只受队列调用。每请求独立JSON结果，以临时文件同目录
 Move完成提交；批次日志路径为build/.compile-queue/batches/<batch>.log。
-正式启动器只写根uwcn_launcher.exe，驻留DLL只写package/，业务DLL只写
+正式启动器只写根urwcn_launcher.exe，驻留DLL只写package/，业务DLL只写
 package/modules/。没有独立修复包、运行shadow目录或构建目录启动入口。
 增量release.json继承未变化文件身份。无Publish请求只生成构建目录产物。
 

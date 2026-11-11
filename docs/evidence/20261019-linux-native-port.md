@@ -70,7 +70,7 @@ Shift+F10 在本机 key_event/kb_hit 的 SDL 事件消费边界处理真实用�
 
 ## 编译与正式发布
 
-统一调用根 `build.ps1 -Toolchain Linux -Publish`。Linux 构建树为 `build/linux-x86_64`；同一个根队列执行配置、增量构建与发布，不另建队列。按用户后续明确的 Linux 独立二进制启动要求，正式入口改为根目录无扩展名的 `uwcn_launcher`；其余正式文件为 `package/uwcn_loader.dll`、`package/modules/`、词库、Linux profile 和 release.json，二进制格式均为 ELF64。启动器由 `src/linux/launcher.cpp` 编译，直接加载相邻正式包并启动本机原生游戏，运行时不依赖 PowerShell 或 Wine。
+统一调用根 `build.ps1 -Toolchain Linux -Publish`。Linux 构建树为 `build/linux-x86_64`；同一个根队列执行配置、增量构建与发布，不另建队列。按用户后续明确的 Linux 独立二进制启动要求，正式入口改为根目录无扩展名的 `urwcn_launcher`；其余正式文件为 `package/urwcn_loader.dll`、`package/modules/`、词库、Linux profile 和 release.json，二进制格式均为 ELF64。启动器由 `src/linux/launcher.cpp` 编译，直接加载相邻正式包并启动本机原生游戏，运行时不依赖 PowerShell 或 Wine。
 
 Linux 发布额外包含正式字体、所需 SDL2_net、许可证、本机游戏路径和 desktop 入口。应用菜单链接指向同一正式启动器，不创建修复包、备用启动器或游戏运行副本。旧件按事务移入根 `回收/` 后才替换。
 
@@ -81,7 +81,7 @@ Linux 发布额外包含正式字体、所需 SDL2_net、许可证、本机游�
 - 发布事务：`54a1f1ec1df6434897cc6ff8d9b3af80`。
 - 已读取 `build/.compile-queue/results/7854542ec1764db688c489eaef9a7a85.json` 与完整批次日志 `build/.compile-queue/batches/1ce9e17f596244d2866ddf22f353f433.log`；`Success=true`、`FullGraph=true`、`PublishRequested=true`、`ReloadRequested=false`。
 - 一次配置和一次构建生成启动器、驻留库及六个业务模块，随后队列内正式发布。日志中的 15 条 semantic key switch 枚举警告源于已有 HUD/world 分发前置分支，未阻止编译；没有为消除警告添加默认语义或兜底分支。
-- 根 `uwcn_launcher.exe` 权限为 `0755`；`file`/`readelf` 静态识别全部八个交付二进制为本机 ELF64。驻留入口和模块导出在 ELF 符号表中可见。
+- 根 `urwcn_launcher.exe` 权限为 `0755`；`file`/`readelf` 静态识别全部八个交付二进制为本机 ELF64。驻留入口和模块导出在 ELF 符号表中可见。
 - 正式 `package/release.json` 记载的 19 项文件已逐项核对 SHA256，未发现不一致。该项仅检查交付文件身份，没有加载或执行模块。
 - 应用菜单链接 `~/.local/share/applications/urwcn.desktop` 指向正式 `package/urwcn.desktop`，其 Exec 为项目根正式启动器；游戏路径文件指向本机 Steam 原生 `urw3-bin`。
 - 回收批次目录：`回收/20261019-103425-54a1f1ec1df6434897cc6ff8d9b3af80/`。这是本机首次正式交付，没有被替换的旧运行文件；没有制造旧文件备份或平行运行包。
@@ -91,12 +91,12 @@ Linux 发布额外包含正式字体、所需 SDL2_net、许可证、本机游�
 
 ## Linux 独立二进制入口更正
 
-用户随后明确要求 Linux 独立二进制启动文件。本次移除 `cmake/linux.cmake` 中启动器的 `.exe` 后缀配置，Linux 正式入口为根 `uwcn_launcher`。`publish.ps1`、Linux profile、desktop 入口、README 和根交付约束同步采用此路径；Windows 仍使用 `uwcn_launcher.exe`。相邻 `package/` 继续提供汉化资源和模块。
+用户随后明确要求 Linux 独立二进制启动文件。本次移除 `cmake/linux.cmake` 中启动器的 `.exe` 后缀配置，Linux 正式入口为根 `urwcn_launcher`。`publish.ps1`、Linux profile、desktop 入口、README 和根交付约束同步采用此路径；Windows 仍使用 `urwcn_launcher.exe`。相邻 `package/` 继续提供汉化资源和模块。
 
 2026-10-19 10:41:38（Asia/Shanghai），通过根 `build.ps1 -Toolchain Linux -Module launcher -Publish` 完成一次配置、一次增量构建及正式发布：
 
 - 请求 `ce750da238604ec0b11c8f0b5719fc4c`；批次 `552ad634465d4ea3af71ee4f69043a62`；事务 `39e12140d3f34793a80a03eb2a9d73d7`。
 - 已读取对应请求结果 JSON、完整批次日志及 `publication-result.json`，编译和发布均成功。此次仅构建启动器，业务模块未重新构建。
-- 旧根 `uwcn_launcher.exe`、旧 Linux profile、desktop 文件和发布清单先移入 `回收/20261019-104138-39e12140d3f34793a80a03eb2a9d73d7/`，保留原相对路径；应用菜单旧链接也记录在同一回收事务下。
-- 正式 `uwcn_launcher` 权限为 `0755`，`file` 静态识别为 x86-64 ELF PIE 可执行文件。SHA256 为 `83e27dcf4534c98cb8bc23379be79a507664442c6cea3305999c61a8ea19d2f1`，与正式发布清单一致。清单移除了旧 `.exe` 启动器条目，desktop 的 Exec 指向根 `uwcn_launcher`。
+- 旧根 `urwcn_launcher.exe`、旧 Linux profile、desktop 文件和发布清单先移入 `回收/20261019-104138-39e12140d3f34793a80a03eb2a9d73d7/`，保留原相对路径；应用菜单旧链接也记录在同一回收事务下。
+- 正式 `urwcn_launcher` 权限为 `0755`，`file` 静态识别为 x86-64 ELF PIE 可执行文件。SHA256 为 `83e27dcf4534c98cb8bc23379be79a507664442c6cea3305999c61a8ea19d2f1`，与正式发布清单一致。清单移除了旧 `.exe` 启动器条目，desktop 的 Exec 指向根 `urwcn_launcher`。
 - 源码和构建配置已修改，产物已构建，正式入口已发布。没有执行启动器、游戏、模块或测试，也未请求运行中热更新。

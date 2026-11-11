@@ -2,7 +2,7 @@
 #include "../../sdk/host_abi.h"
 #include <vector>
 
-namespace uwcn::adapter::native_language_redraw {
+namespace urwcn::adapter::native_language_redraw {
 // Shared input synchronization and confirmed native drawing continuations.
 // State retains pending flags and the reconstruction phase. During E66B0
 // reconstruction, rebuilding's high bits retain the actual Menu selection;

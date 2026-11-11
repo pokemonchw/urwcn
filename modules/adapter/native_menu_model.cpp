@@ -3,7 +3,7 @@
 #include <map>
 #include <utility>
 
-namespace uwcn::adapter::native_menu_model {
+namespace urwcn::adapter::native_menu_model {
 namespace {
 struct Instance {
     u32 references=1; // The active native view owns one reference.

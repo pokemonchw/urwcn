@@ -18,4 +18,4 @@
 
 Windows Adapter 请求 `7b1fa7db83d8412f80ebc774f8d63d1c`，批次 `74bfd9b85e6a4e97ad8b48de01fe0fd5`，经根 build.ps1 队列完成编译；已读取对应结果 JSON 和批次日志。存在既有类型转换、未使用函数与缩进警告。
 
-正式发布事务 `9e8465074eb74ae895637c95b15ecfab` 更新 `package/modules/uwcn_adapter.dll` 和 `package/release.json`。旧文件保留于 `回收/20261110-111917-9e8465074eb74ae895637c95b15ecfab/`。现有 Proton 进程 Windows PID 368 返回 `ReadyToPublish` 和 `Applied ... adapter:375d7219f005642bf00c27dbbb2a3246daa89cb6614b93b1913bcb7bac95a598:3`；这确认模块交接完成，不等于画面验收。源码修改、产物编译、正式文件发布均已完成。
+正式发布事务 `9e8465074eb74ae895637c95b15ecfab` 更新 `package/modules/urwcn_adapter.dll` 和 `package/release.json`。旧文件保留于 `回收/20261110-111917-9e8465074eb74ae895637c95b15ecfab/`。现有 Proton 进程 Windows PID 368 返回 `ReadyToPublish` 和 `Applied ... adapter:375d7219f005642bf00c27dbbb2a3246daa89cb6614b93b1913bcb7bac95a598:3`；这确认模块交接完成，不等于画面验收。源码修改、产物编译、正式文件发布均已完成。

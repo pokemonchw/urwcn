@@ -7,8 +7,8 @@
 #include <stdexcept>
 #include <vector>
 
-extern "C" void uwcn_linux_gateway();
-namespace uwcn::linux_host {
+extern "C" void urwcn_linux_gateway();
+namespace urwcn::linux_host {
 namespace {
 constexpr std::size_t arena_bytes=65536;
 unsigned char* arena;
@@ -69,7 +69,7 @@ void gateway(Hook& entry) {
     const auto index=static_cast<std::uint32_t>(&entry-records.data());
     entry.relay[0]=0x68;
     std::memcpy(entry.relay+1,&index,4);
-    jump(entry.relay+5,reinterpret_cast<void*>(uwcn_linux_gateway));
+    jump(entry.relay+5,reinterpret_cast<void*>(urwcn_linux_gateway));
     patch(entry,entry.kind==Kind::tail ? 0xe9 : 0xe8);
 }
 void instruction(std::uint32_t site,std::uint32_t bytes,InlineCallback callback) {
@@ -136,7 +136,7 @@ void dispatch(Frame& frame) {
     --records[index].active;
 }
 }
-extern "C" const uwcn::linux_host::Hooks* uwcn_linux_hooks_v2() { return &uwcn::linux_host::api; }
-extern "C" __attribute__((visibility("hidden"))) void uwcn_linux_dispatch(uwcn::linux_host::Frame* frame) {
-    uwcn::linux_host::dispatch(*frame);
+extern "C" const urwcn::linux_host::Hooks* urwcn_linux_hooks_v2() { return &urwcn::linux_host::api; }
+extern "C" __attribute__((visibility("hidden"))) void urwcn_linux_dispatch(urwcn::linux_host::Frame* frame) {
+    urwcn::linux_host::dispatch(*frame);
 }

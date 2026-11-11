@@ -4,7 +4,7 @@
 #include <cwchar>
 #include <iterator>
 
-namespace uwcn::host::crash_report {
+namespace urwcn::host::crash_report {
 namespace {
 constexpr u32 native_exception_filter=0xFFFF1000;
 constexpr u32 native_cookie_check=0xFFFF1001;

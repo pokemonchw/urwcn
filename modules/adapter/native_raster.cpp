@@ -4,32 +4,32 @@
 // prevent integer loops from being vectorized through FP/SIMD registers. The
 // parent integration must statically inspect the compiled instructions before
 // using these kernels from a native bridge without an FP-state save.
-#define UWCN_INTEGER_RASTER __attribute__((target("no-sse,no-sse2,no-mmx")))
+#define URWCN_INTEGER_RASTER __attribute__((target("no-sse,no-sse2,no-mmx")))
 
-namespace uwcn::adapter::native_raster {
+namespace urwcn::adapter::native_raster {
 namespace {
-UWCN_INTEGER_RASTER int edge(int coordinate,int physical,int logical) noexcept {
+URWCN_INTEGER_RASTER int edge(int coordinate,int physical,int logical) noexcept {
     // Calls use nonnegative, in-range edges. Adding floor(logical/2) implements
     // round-to-nearest with positive halves rounded up, without floating point.
     const auto numerator=std::int64_t(coordinate)*physical+logical/2;
     return static_cast<int>(numerator/logical);
 }
-UWCN_INTEGER_RASTER int sample_center(int coordinate,int physical,int logical) noexcept {
+URWCN_INTEGER_RASTER int sample_center(int coordinate,int physical,int logical) noexcept {
     // Exact logical-cell center, evaluated in integers. With physical >=
     // logical it belongs to [edge(x),edge(x+1)), unlike a truncated 16.16
     // reverse-scaling increment, which can sample a neighbouring write cell.
     const auto numerator=(std::uint64_t(coordinate)*2+1)*static_cast<unsigned>(physical);
     return static_cast<int>(numerator/(std::uint64_t(logical)*2));
 }
-UWCN_INTEGER_RASTER u32* row(render::Surface* surface,int y) noexcept {
+URWCN_INTEGER_RASTER u32* row(render::Surface* surface,int y) noexcept {
     return reinterpret_cast<u32*>(static_cast<std::uint8_t*>(surface->pixels)+std::size_t(y)*surface->pitch);
 }
-UWCN_INTEGER_RASTER bool in_bounds(Target target,int x,int y) noexcept {
+URWCN_INTEGER_RASTER bool in_bounds(Target target,int x,int y) noexcept {
     return x>=0 && y>=0 && x<target.logical_width && y<target.logical_height;
 }
 }
 
-UWCN_INTEGER_RASTER void pixel(Target target,int x,int y,u32 packed) noexcept {
+URWCN_INTEGER_RASTER void pixel(Target target,int x,int y,u32 packed) noexcept {
     // Original 10BAB0 rejects logical coordinates outside the 800 x 600 domain.
     if(!in_bounds(target,x,y)) return;
     const int left=edge(x,target.surface->w,target.logical_width);
@@ -42,7 +42,7 @@ UWCN_INTEGER_RASTER void pixel(Target target,int x,int y,u32 packed) noexcept {
     }
 }
 
-UWCN_INTEGER_RASTER u32 read_pixel(Target target,int x,int y) noexcept {
+URWCN_INTEGER_RASTER u32 read_pixel(Target target,int x,int y) noexcept {
     // Original 10BC90 returns packed zero for an out-of-range coordinate.
     if(!in_bounds(target,x,y)) return 0;
     const int px=sample_center(x,target.surface->w,target.logical_width);
@@ -50,7 +50,7 @@ UWCN_INTEGER_RASTER u32 read_pixel(Target target,int x,int y) noexcept {
     return row(target.surface,py)[px];
 }
 
-UWCN_INTEGER_RASTER void line(Target target,int x1,int y1,int x2,int y2,u32 packed) noexcept {
+URWCN_INTEGER_RASTER void line(Target target,int x1,int y1,int x2,int y2,u32 packed) noexcept {
     // 11434C..11439C rejects endpoints; it does not clip the supplied line.
     if(!in_bounds(target,x1,y1) || !in_bounds(target,x2,y2)) return;
     const int dx=x2>=x1?x2-x1:x1-x2;
@@ -88,7 +88,7 @@ UWCN_INTEGER_RASTER void line(Target target,int x1,int y1,int x2,int y2,u32 pack
     } while(--remaining);
 }
 
-UWCN_INTEGER_RASTER void glyph(Target target,int x,int y,const std::uint8_t* native_80_mask,u32 packed) noexcept {
+URWCN_INTEGER_RASTER void glyph(Target target,int x,int y,const std::uint8_t* native_80_mask,u32 packed) noexcept {
     for(int gy=0;gy<10;++gy) {
         for(int gx=0;gx<8;++gx) {
             if(native_80_mask[gy*8+gx]==1) pixel(target,x+gx,y+gy,packed);
@@ -97,4 +97,4 @@ UWCN_INTEGER_RASTER void glyph(Target target,int x,int y,const std::uint8_t* nat
 }
 }
 
-#undef UWCN_INTEGER_RASTER
+#undef URWCN_INTEGER_RASTER

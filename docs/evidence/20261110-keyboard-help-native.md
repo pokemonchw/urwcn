@@ -60,7 +60,7 @@
 | 批次日志 | `batches/80480fce8aec493893353af35000c4fd.log`：一次配置、一次增量构建，三个目标均完成 |
 | 正式事务 | `b4875c2e08204ee7b7405fb76c68363b`，2026-11-10 15:29:18（Asia/Shanghai）完成 |
 | 正式结果 | `build/mingw-x86/stage/b4875c2e08204ee7b7405fb76c68363b/publication-result.json`：`success=true`、`applied=true` |
-| 修正版替换文件 | `package/modules/uwcn_adapter.dll`、`package/release.json` |
+| 修正版替换文件 | `package/modules/urwcn_adapter.dll`、`package/release.json` |
 | 修正版旧件归档 | `回收/20261110-152917-b4875c2e08204ee7b7405fb76c68363b/package/`，保留原相对路径 |
 | 全部本轮正式更新 | Adapter、Catalog、Semantic 三个业务库、`package/catalog/zh-CN/main_menu.tsv` 及发布清单；首批已发布的词库和两库在修正版事务重新加载 |
 | 当前进程 | 宿主 PID `2944694`，Windows PID `364`；已有 Proton Mono 解释器只读枚举取得，无新控制二进制 |
@@ -70,9 +70,9 @@
 
 | 正式文件 | SHA-256 |
 | --- | --- |
-| `package/modules/uwcn_adapter.dll` | `d08b987f054114903cb19de30f8a593e8140aae393345af47cdddd196ca4a7d0` |
-| `package/modules/uwcn_catalog.dll` | `9313e505e5046220745f3c3aa47e3095e75dbc05a3aa5dfec6c9766b67217869` |
-| `package/modules/uwcn_semantic.dll` | `9ba9ba515c98078f6b4107c1fede213c68e5b5301b74c80417207c100da9081f` |
+| `package/modules/urwcn_adapter.dll` | `d08b987f054114903cb19de30f8a593e8140aae393345af47cdddd196ca4a7d0` |
+| `package/modules/urwcn_catalog.dll` | `9313e505e5046220745f3c3aa47e3095e75dbc05a3aa5dfec6c9766b67217869` |
+| `package/modules/urwcn_semantic.dll` | `9ba9ba515c98078f6b4107c1fede213c68e5b5301b74c80417207c100da9081f` |
 | `package/catalog/zh-CN/main_menu.tsv` | `8d5fdc0e46c3fb8b93494acb91a2a7349aebb1cf1e86d0abe0b1810c727e87c4` |
 
-已读取两批请求结果、完整批次日志、两次正式发布结果、归档文件和最终身份；末条游戏日志为 `Compatible module transaction applied.`。既有函数指针转换、extern 初始化、未使用参数/函数及缩进警告仍存在，没有放宽编译规则。源码修改、产物编译、正式文件发布与当前进程兼容交接均已完成，根 `uwcn_launcher.exe` 正常入口消费同一正式包，无平行运行副本。未启动、关闭、重启或模拟操作游戏；未运行测试、创建测试脚本或断言。Applied 仅证明模块交接，不代表画面验收。
+已读取两批请求结果、完整批次日志、两次正式发布结果、归档文件和最终身份；末条游戏日志为 `Compatible module transaction applied.`。既有函数指针转换、extern 初始化、未使用参数/函数及缩进警告仍存在，没有放宽编译规则。源码修改、产物编译、正式文件发布与当前进程兼容交接均已完成，根 `urwcn_launcher.exe` 正常入口消费同一正式包，无平行运行副本。未启动、关闭、重启或模拟操作游戏；未运行测试、创建测试脚本或断言。Applied 仅证明模块交接，不代表画面验收。

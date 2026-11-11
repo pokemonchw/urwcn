@@ -39,7 +39,7 @@
 | 完整日志 | `build/.compile-queue/batches/87e3ba4a229a4e8598784279b0d6c943.log`，已读取 |
 | 正式事务 | `bc8d6da2bd534128bd670c4ba04f1da5`，2026-11-11 14:31:14（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/bc8d6da2bd534128bd670c4ba04f1da5/publication-result.json`：`success=true`、`runtime_requested=false`，已读取 |
-| 正式变更 | `package/modules/uwcn_main_menu.dll`、`package/metadata/build-hour.txt`、`package/release.json` |
+| 正式变更 | `package/modules/urwcn_main_menu.dll`、`package/metadata/build-hour.txt`、`package/release.json` |
 | 正式编译小时 | `2026.11.11.14`，从正式时间文件读取 |
 | MainMenu SHA-256 | `d69b1e69650ca19ed2fdeede66572b83f2f2acf22a211f46f4ffdf8378e280f1`，正式文件与发布清单一致 |
 | 时间文件 SHA-256 | `24b73794f60a00e4e39788ae3605cb45b823deebfa79387030735af5414948c0`，正式文件与发布清单一致 |

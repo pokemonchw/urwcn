@@ -4,7 +4,7 @@
 禁止以优化这些节点或贡献记录继续实施；现行要求见docs/font-rendering.md，
 出处与正文纠正见20261019-document-render-policy.md。
 日期：2026-10-18
-项目：D:\workspace\uwcn
+项目：D:\workspace\urwcn
 
 用户反馈与既有证据
 ==================
@@ -12,11 +12,11 @@
 本次只读取用户此次启动留下的日志、Windows 事件与转储；代理没有启动游戏、
 调试运行中的进程、模拟输入、运行交付产物或测试。
 
-package/uwcn.log 在 23:47:14、23:47:37 已记录 Loader initialized，说明
+package/urwcn.log 在 23:47:14、23:47:37 已记录 Loader initialized，说明
 前次修复后已通过初始模块生命周期。本次退出发生在随后原生绘制期间。
 Windows Application 1000/1001 两组事件（23:47:31/34、23:47:54/58）均为：
   application: urw.exe
-  module: D:\workspace\uwcn\package\modules\uwcn_render.dll
+  module: D:\workspace\urwcn\package\modules\urwcn_render.dll
   exception: 0xC00000FD (stack overflow)
   module offset: 0xA01A
   failed render SHA256:
@@ -86,7 +86,7 @@ shared_ptr 析构也沿前史递归。当时处理了深链栈依赖，但未消
 正式发布事务：bb9ed8afa7244b38bf04a46b932d1123
 旧 render DLL 与旧 release.json 先移入：
   回收/20261018-235810-bb9ed8afa7244b38bf04a46b932d1123/package/
-再替换 package/modules/uwcn_render.dll 与清单。
+再替换 package/modules/urwcn_render.dll 与清单。
 正式 render、构建产物、发布清单 SHA256 相同：
 4bb2adcc01ebcfbeee62dc1fde1444928ccad293adbcbeb6b8fb7b9966131e69
 adapter SHA256 保持：

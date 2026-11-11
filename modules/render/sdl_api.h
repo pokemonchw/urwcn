@@ -9,7 +9,7 @@ using HMODULE = void*;
 
 // Public SDL 2.30.0 ABI declarations. No SDL implementation or private TTF
 // layout is copied; symbols bind to the game's already loaded SDL instance.
-namespace uwcn::render {
+namespace urwcn::render {
 struct Rect { int x,y,w,h; };
 struct FRect { float x,y,w,h; };
 struct Color { std::uint8_t r,g,b,a; };

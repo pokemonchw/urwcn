@@ -78,8 +78,8 @@ D1120 的保存槽由原始 `SUB ESP,434h` 和 PUSH 顺序确定：EBX 为 `[EBP
 
 已分别读取两个 `build/.compile-queue/results/<请求>.json`、对应 `batches/<批次>.log` 及 `build/mingw-x86/stage/<事务>/publication-result.json`。两次均为 `PublishRequested=true`、`ReloadRequested=true`；发布事务均 `success=true`、`runtime_requested=true`、`applied=true`。日志仅有既有函数指针转换、未使用项、初始化及缩进等警告，无编译错误。
 
-两批正式替换均为 `package/modules/uwcn_adapter.dll` 和 `package/release.json`，旧文件先移入各自 `回收/20261110-125333-cae1337630214bbb8a46ab931d403cbd/package/`、`回收/20261110-125537-a3e4f838d51e4ed19f0a42230f878485/package/`，保留原相对路径。已读取归档文件身份及哈希；第一批归档 DLL 为前次 `b0a57ce6...`，第二批为第4代 `19f27b46...`。无平行修复包。
+两批正式替换均为 `package/modules/urwcn_adapter.dll` 和 `package/release.json`，旧文件先移入各自 `回收/20261110-125333-cae1337630214bbb8a46ab931d403cbd/package/`、`回收/20261110-125537-a3e4f838d51e4ed19f0a42230f878485/package/`，保留原相对路径。已读取归档文件身份及哈希；第一批归档 DLL 为前次 `b0a57ce6...`，第二批为第4代 `19f27b46...`。无平行修复包。
 
-最终正式 DLL 与构建输出 SHA-256 一致，并与 `Applied a3e4f838d51e4ed19f0a42230f878485 adapter:eea7881b0c52896992ec9de701f06a3ef52c029e8704c9a2af59b52630f1741b:5` 回执一致。根 `uwcn_launcher.exe` 的正常正式加载路径已更新，没有要求用户卸载、换页或退出重启。
+最终正式 DLL 与构建输出 SHA-256 一致，并与 `Applied a3e4f838d51e4ed19f0a42230f878485 adapter:eea7881b0c52896992ec9de701f06a3ef52c029e8704c9a2af59b52630f1741b:5` 回执一致。根 `urwcn_launcher.exe` 的正常正式加载路径已更新，没有要求用户卸载、换页或退出重启。
 
 编译及授权热发布事务不等于画面验收；没有启动、关闭或重启游戏，没有注入验证、输入模拟、测试、测试用例、测试脚本或断言。**本批源码修改、产物编译、正式发布和兼容业务交接完成；全界面即时切换目标仍未完成。**

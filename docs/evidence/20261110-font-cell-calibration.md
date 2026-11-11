@@ -6,7 +6,7 @@
 
 ## 静态依据与原因
 
-- 当前正式 `package/modules/uwcn_render.dll`、`uwcn_adapter.dll` 均为 Windows PE32，采用 MinGW 发布。上一轮读取的 Linux 字号记录不能替代此包的实际路径。
+- 当前正式 `package/modules/urwcn_render.dll`、`urwcn_adapter.dll` 均为 Windows PE32，采用 MinGW 发布。上一轮读取的 Linux 字号记录不能替代此包的实际路径。
 - `modules/adapter/module.cpp::render_request` 和 `windows_renderer_text.inc` 统一传入前景字格 10、墨迹预算 9。文字测量与即时绘字都进入 `FontEngine::font`。
 - 原生 `10BD90` 的字模循环覆盖 8×10 前景格；原 `10E5A0` 在此之外分别以 y−1、y+1、x−1、x+1 调用完整串绘制，再绘前景。已有静态入口见 `rebuild-ui-boundaries.txt:104` 起与 `font-rendering-static.txt:98` 起；3.89.1 文字入口契约见 `20261110-windows-3891-native-contracts.md`。10 是前景字格高度，不能把其误解释为前景加外部描边的总高度。
 - 只读解析本机 `URW.FNT`：长度 20480=256×8×10；A–Z 非零 mask 行均为 0..6，小写 g/p/q/y 为 2..7。字格高度与可见字面高度本就不同。
@@ -29,7 +29,7 @@
 - 统一入口：`.toolchains/powershell/pwsh -NoProfile -Command '& ./build.ps1 -Toolchain MinGW -Module render -Publish'`。
 - 请求 `bf2ef3eda486456eb9c8b23dfcccaac4`；批次 `1ae33c2762df4e3dbc22f11458686d3a`。已读取对应 results JSON 与完整批次日志，`Success=true`、`PublishRequested=true`、`ReloadRequested=false`。一次配置与一次增量构建完成；日志中保留既有 `GetProcAddress` 函数指针转换警告。
 - 正式事务 `81784499d67e412a9e6593cd82bbd3f2`，已读取 `build/mingw-x86/stage/81784499d67e412a9e6593cd82bbd3f2/publication-result.json`，`success=true`。
-- 已替换正式 `package/modules/uwcn_render.dll` 并更新 `package/release.json`；旧两件先按原相对路径移入 `回收/20261110-110526-81784499d67e412a9e6593cd82bbd3f2/package/`。
+- 已替换正式 `package/modules/urwcn_render.dll` 并更新 `package/release.json`；旧两件先按原相对路径移入 `回收/20261110-110526-81784499d67e412a9e6593cd82bbd3f2/package/`。
 - 正式 DLL SHA-256：`92321da0907376fe60dcd1c88026a4b2cc04a4869bfb19f53a0d722c766ea4b5`，与编译输出和正式清单一致。
 
 源码修改、Windows 产物编译与正式文件发布均已完成。本批次未请求运行时加载，回执 `runtime_requested=false`，不能称为运行中的游戏已应用更新。未运行产物或测试，视觉效果未由代理运行验收。

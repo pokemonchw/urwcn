@@ -33,7 +33,7 @@
 - 根入口 `build.ps1 -Toolchain MinGW -Module adapter -Reload -TargetPid 364`，显式指定当前 Proton WinePrefix 与 WinePath；一次配置、一次增量构建，没有清理构建树。日志保留既有函数指针转换、未用符号和缩进警告。
 - 请求 `e6e4414c01e54f8c8beb6b5047ab931f`；批次 `3d6f51d6961c4bcf9b70865f21ec1c11`。已读取对应 `build/.compile-queue/results` JSON 及完整批次日志，`Success=true`、`PublishRequested=true`、`ReloadRequested=true`。
 - 正式事务 `81639f1808c24109878a6d89c852ba4f`；已读取 `build/mingw-x86/stage/81639f1808c24109878a6d89c852ba4f/publication-result.json`，`success=true`。
-- 正式 `package/modules/uwcn_adapter.dll` 与 `package/release.json` 已更新。旧两件先按原相对路径移入 `回收/20261110-115358-81639f1808c24109878a6d89c852ba4f/`，静态目录读取确认两件均保留。没有平行运行副本。
+- 正式 `package/modules/urwcn_adapter.dll` 与 `package/release.json` 已更新。旧两件先按原相对路径移入 `回收/20261110-115358-81639f1808c24109878a6d89c852ba4f/`，静态目录读取确认两件均保留。没有平行运行副本。
 - 正式 DLL SHA-256 `8b2ee10d1f8bbf277e31f099dd5df785e3da5ab30e0ca27e0b149c81fc662153`，与构建输出一致。
 - 仅通过系统进程表和当前 Proton 的既有 Mono 解释器只读确认 Linux PID `2832305` / Windows PID `364`；既有驻留事务返回 `ReadyToPublish` 和 `Applied ... adapter:8b2ee10d1f8bbf277e31f099dd5df785e3da5ab30e0ca27e0b149c81fc662153:2`，运行中 Adapter 第2代已交接。
 

@@ -55,7 +55,7 @@
 | 完整批次日志 | `build/.compile-queue/batches/ea5cf79f9627402895ca5661575a038d.log` |
 | 正式事务 | `26921c8a364e424dbb51466c94a66d45`，2026-11-10 17:31:45（Asia/Shanghai）完成 |
 | 正式发布结果 | `build/mingw-x86/stage/26921c8a364e424dbb51466c94a66d45/publication-result.json`，`success=true`、运行时 `applied=true` |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv`、`package/release.json` |
 | 旧件归档 | `回收/20261110-173143-26921c8a364e424dbb51466c94a66d45/package/`，三件旧文件先移入归档再替换，保留原相对路径，已只读确认存在 |
 | 当前进程交接 | Windows PID `364` 返回 `ReadyToPublish`，随后 Catalog 第16代／Adapter 第17代 `Applied` |
 
@@ -65,4 +65,4 @@
 | Catalog DLL，Applied | `cd5ea4f63e239691176f6bf1e38a1b4c232a0c9c5f8182eb80aacefbfa8e6719` |
 | messages.tsv，源码／正式件一致 | `1451e10876db3faea328c7ebefbd4151700b4b000047f80f75a4fb4550c4708a` |
 
-源码修改、产物编译、正式文件发布及当前进程兼容交接均已完成，根 `uwcn_launcher.exe` 继续使用同一正式包，无需重启。没有平行运行副本，未启动、关闭、重启或模拟操作游戏，未运行测试、创建测试用例或断言。Applied 仅证明模块交接，画面由用户验收。
+源码修改、产物编译、正式文件发布及当前进程兼容交接均已完成，根 `urwcn_launcher.exe` 继续使用同一正式包，无需重启。没有平行运行副本，未启动、关闭、重启或模拟操作游戏，未运行测试、创建测试用例或断言。Applied 仅证明模块交接，画面由用户验收。

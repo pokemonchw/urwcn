@@ -74,10 +74,10 @@
 
 | 正式文件（相对 package） | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `a70a27724ddc3c5e279398818f658cd6566cf0abe25fd49f3daa06ad0c32a57f` |
-| `modules/uwcn_semantic.dll` | `1cd7b6ae66f96f86276675aff3d010240c89d43e0d2b39db5873b5d145e42517` |
-| `modules/uwcn_catalog.dll` | `06d64733a1d425269ebc3574cc86d0c4b27d0638c58e5f3b0f633442d041822d` |
-| `modules/uwcn_render.dll` | `99484cba7419131461872c808728dfe0243ae4875be427bda73362f3fda9b3c1` |
+| `modules/urwcn_adapter.dll` | `a70a27724ddc3c5e279398818f658cd6566cf0abe25fd49f3daa06ad0c32a57f` |
+| `modules/urwcn_semantic.dll` | `1cd7b6ae66f96f86276675aff3d010240c89d43e0d2b39db5873b5d145e42517` |
+| `modules/urwcn_catalog.dll` | `06d64733a1d425269ebc3574cc86d0c4b27d0638c58e5f3b0f633442d041822d` |
+| `modules/urwcn_render.dll` | `99484cba7419131461872c808728dfe0243ae4875be427bda73362f3fda9b3c1` |
 | `catalog/zh-CN/main_menu.tsv` | `ea54375a733665d28e542b2b68471bbf830620cb4da4a42965c03263c9cb1cd7` |
 | `profiles/urw-3.89-steam-25939378.json` | `40a41e337128a6abed1826454e5732daeb855e5c6bed2788b271d12191fc5789` |
 

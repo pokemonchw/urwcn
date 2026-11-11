@@ -60,18 +60,18 @@ SDK 新增 `TextComponent::load_saved_wait/progress/ready = A03/A04/A05`；Seman
 | 完整批次日志 | `build/.compile-queue/batches/5c85e233350747bd99742f8dc11d1fcf.log`，已完整读取 |
 | 正式事务 | `011fc6ba41ae41998349cdf96fd1021e`，2026-11-11 13:18:21（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/011fc6ba41ae41998349cdf96fd1021e/publication-result.json`，`success=true`、当前目标 `applied=true`，已读取 |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`uwcn_catalog.dll`、`uwcn_semantic.dll`，`package/catalog/zh-CN/main_menu.tsv`、新版构建适配和 `package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`urwcn_catalog.dll`、`urwcn_semantic.dll`，`package/catalog/zh-CN/main_menu.tsv`、新版构建适配和 `package/release.json` |
 | 旧件回收 | `回收/20261111-131819-011fc6ba41ae41998349cdf96fd1021e/package/`，六件先归档后替换，保留原相对路径；旧三库及旧词库、适配、清单实际存在 |
 | 进程身份 | 宿主 PID `3275331` 仍为原游戏进程；既有 Proton Mono 解释器只读枚举确认 Windows PID `364 urw` |
 | 兼容交接 | `ReadyToPublish` 后返回 Catalog 第3代、Semantic 第2代、Adapter 第4代 `Applied` |
 
 | 正式文件 | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `f8baef33a07270a8022225accb3406e29b98f92912d38857c25fff65630fb8f3` |
-| `modules/uwcn_catalog.dll` | `63c92de78b550b1092aaa88618aef23dc7f2726699b4baddc5cd3b679f69cb55` |
-| `modules/uwcn_semantic.dll` | `917ef8128bae8a3f4379688228518ca8b98ff5873b9e3a5fcc1e4608b5a6d41a` |
+| `modules/urwcn_adapter.dll` | `f8baef33a07270a8022225accb3406e29b98f92912d38857c25fff65630fb8f3` |
+| `modules/urwcn_catalog.dll` | `63c92de78b550b1092aaa88618aef23dc7f2726699b4baddc5cd3b679f69cb55` |
+| `modules/urwcn_semantic.dll` | `917ef8128bae8a3f4379688228518ca8b98ff5873b9e3a5fcc1e4608b5a6d41a` |
 | `catalog/zh-CN/main_menu.tsv` | `31626d31e2340ce0ea951871a234f4b9b4997ab19247a9cc958102d77ea29f3b` |
 
-只读核对三份正式库与构建输出一致，正式主词库与源码一致，正式新版构建适配与源码一致；正式清单及 Applied 的库身份与以上一致。正式词库已含三条新增键。根 `uwcn_launcher.exe` 使用同一正式包，没有替换启动器或驻留库，没有平行运行副本。
+只读核对三份正式库与构建输出一致，正式主词库与源码一致，正式新版构建适配与源码一致；正式清单及 Applied 的库身份与以上一致。正式词库已含三条新增键。根 `urwcn_launcher.exe` 使用同一正式包，没有替换启动器或驻留库，没有平行运行副本。
 
 源码修改、产物编译、正式文件发布及当前进程兼容交接均完成。无需退出重启，译文在下一次正常读档构建时消费；没有强制重入读档业务或替用户触发加载。`Applied` 仅表示模块交接，不表示实际画面已验收；本轮未自行测试。

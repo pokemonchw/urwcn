@@ -87,12 +87,12 @@
 
 2026-10-19 23:03:43（Asia/Shanghai）交付回执：
 
-- 根入口：`build.ps1 -Module adapter -ModuleSourceDirectory D:\workspace\uwcn\build\.source-snapshots\hud-culture-6c22637 -Publish`。
+- 根入口：`build.ps1 -Module adapter -ModuleSourceDirectory D:\workspace\urwcn\build\.source-snapshots\hud-culture-6c22637 -Publish`。
 - 请求 `86678613a04a4ebba0ab50f3b3dcf027`，批次 `7c37c48420db4d878748c87f507a26d3`。
   已读取对应结果 JSON 和完整批次日志，`Success=true`，一次配置、一次构建，
   沿用 `build/mingw-x86`。日志中 48 项警告均为既有 SDL 函数地址类型转换警告。
 - 发布事务 `57348cebb78b4b998c0cecdb4158c851` 的 `publication-result.json`
-  为 `success=true`。正式替换 `package/modules/uwcn_adapter.dll` 和 `package/release.json`。
+  为 `success=true`。正式替换 `package/modules/urwcn_adapter.dll` 和 `package/release.json`。
 - 旧两件先按原相对路径移入 `回收/20261019-230343-57348cebb78b4b998c0cecdb4158c851/`。
   已核对归档旧 DLL 哈希仍为上述 `e55fa878…`。
 - 正式 DLL、构建产物、事务暂存和正式清单的 Adapter SHA-256 一致：

@@ -6,7 +6,7 @@ param(
     [string]$Ghidra = 'C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat',
     [string]$JavaDirectory = 'C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1',
     [string]$ProjectDirectory = (Join-Path $PSScriptRoot '..\..\build\intro-ghidra'),
-    [string]$ProjectName = 'uwcn-intro'
+    [string]$ProjectName = 'urwcn-intro'
 )
 
 # Read-only offline extraction of PE bytes and instructions; never runs the EXE.

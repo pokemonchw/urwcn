@@ -272,15 +272,15 @@ Reproducible static archive
 ---------------------------
 Ghidra: C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
 JDK: C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
-Independent project: build/ancestors-ghidra/uwcn-ancestors, import urw.exe.
+Independent project: build/ancestors-ghidra/urwcn-ancestors, import urw.exe.
 Java properties application.settingsdir, application.cachedir, java.io.tmpdir
 point to build/ancestors-ghidra/settings and build/ancestors-ghidra/cache.
 Initial analysis options: -analysisTimeoutPerFile300 -max-cpu4.
 Final extraction: -process urw.exe -noanalysis
- -scriptPath D:\workspace\uwcn\docs\evidence
- -postScript ancestors_Decompile.java D:\workspace\uwcn\docs\evidence\ancestors-ghidra.c
- -log D:\workspace\uwcn\docs\evidence\ancestors-ghidra.log
- -scriptlog D:\workspace\uwcn\docs\evidence\ancestors-ghidra-script.log
+ -scriptPath D:\workspace\urwcn\docs\evidence
+ -postScript ancestors_Decompile.java D:\workspace\urwcn\docs\evidence\ancestors-ghidra.c
+ -log D:\workspace\urwcn\docs\evidence\ancestors-ghidra.log
+ -scriptlog D:\workspace\urwcn\docs\evidence\ancestors-ghidra-script.log
 
 The final extraction reports all 12 requested functions and Save succeeded;
 it exited0. The logs retain earlier tooling errors followed by the corrected

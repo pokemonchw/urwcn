@@ -42,7 +42,7 @@
 | 完整日志 | `build/.compile-queue/batches/1320bcfb775042e3b5a4740dab6850d7.log`，已完整读取 |
 | 正式事务 | `42e02acdf5754308af132df55cf62b61`，2026-11-11 14:56:30（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/42e02acdf5754308af132df55cf62b61/publication-result.json`，`success=true`、`runtime_requested=true`，已读取 |
-| 正式变更 | `package/modules/uwcn_adapter.dll`、`package/catalog/zh-CN/main_menu.tsv`、`package/release.json` |
+| 正式变更 | `package/modules/urwcn_adapter.dll`、`package/catalog/zh-CN/main_menu.tsv`、`package/release.json` |
 | Adapter SHA-256 | `f7389dddbeeb274f52c9238e10abc19862b158b6297741e99925e8ed60566cee` |
 | 中文主词库 SHA-256 | `1048498bcab5da3ec07872ce9ca56404dd33e7fd60a28572aad6daa5537bcad7` |
 | 旧件回收 | `回收/20261111-145628-42e02acdf5754308af132df55cf62b61/package/` 下保留上述三个旧文件的原相对路径，已读取清单 |

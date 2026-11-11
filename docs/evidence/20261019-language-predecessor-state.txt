@@ -1,10 +1,10 @@
 
-package\modules\uwcn_adapter.dll:     file format pei-i386
+package\modules\urwcn_adapter.dll:     file format pei-i386
 
 
 Disassembly of section .text:
 
-69e01ff0 <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj>:
+69e01ff0 <__ZN4urwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj>:
 69e01ff0:	8d 4c 24 04          	lea    ecx,[esp+0x4]
 69e01ff4:	83 e4 f8             	and    esp,0xfffffff8
 69e01ff7:	ff 71 fc             	push   DWORD PTR [ecx-0x4]
@@ -27,11 +27,11 @@ Disassembly of section .text:
 69e02031:	e8 3a db 01 00       	call   69e1fb70 <__Unwind_SjLj_Register>
 69e02036:	8b 5d a4             	mov    ebx,DWORD PTR [ebp-0x5c]
 69e02039:	85 db                	test   ebx,ebx
-69e0203b:	0f 84 7f 04 00 00    	je     69e024c0 <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x4d0>
+69e0203b:	0f 84 7f 04 00 00    	je     69e024c0 <__ZN4urwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x4d0>
 69e02041:	8d 45 ec             	lea    eax,[ebp-0x14]
 69e02044:	89 04 24             	mov    DWORD PTR [esp],eax
 69e02047:	c7 45 ac ff ff ff ff 	mov    DWORD PTR [ebp-0x54],0xffffffff
-69e0204e:	e8 1d db 00 00       	call   69e0fb70 <__ZN4uwcn7adapter14native_targets4saveEv>
+69e0204e:	e8 1d db 00 00       	call   69e0fb70 <__ZN4urwcn7adapter14native_targets4saveEv>
 69e02053:	a1 24 70 e4 69       	mov    eax,ds:0x69e47024
 69e02058:	8b 4d f0             	mov    ecx,DWORD PTR [ebp-0x10]
 69e0205b:	2b 05 20 70 e4 69    	sub    eax,DWORD PTR ds:0x69e47020
@@ -45,16 +45,16 @@ Disassembly of section .text:
 69e02079:	8b 4d a0             	mov    ecx,DWORD PTR [ebp-0x60]
 69e0207c:	89 55 98             	mov    DWORD PTR [ebp-0x68],edx
 69e0207f:	85 c9                	test   ecx,ecx
-69e02081:	0f 84 19 03 00 00    	je     69e023a0 <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x3b0>
+69e02081:	0f 84 19 03 00 00    	je     69e023a0 <__ZN4urwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x3b0>
 69e02087:	8b 5d a4             	mov    ebx,DWORD PTR [ebp-0x5c]
 69e0208a:	39 13                	cmp    DWORD PTR [ebx],edx
-69e0208c:	0f 82 0e 03 00 00    	jb     69e023a0 <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x3b0>
+69e0208c:	0f 82 0e 03 00 00    	jb     69e023a0 <__ZN4urwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x3b0>
 69e02092:	8b 5d a0             	mov    ebx,DWORD PTR [ebp-0x60]
 69e02095:	89 c2                	mov    edx,eax
 69e02097:	c1 fa 05             	sar    edx,0x5
 69e0209a:	89 13                	mov    DWORD PTR [ebx],edx
 69e0209c:	85 c0                	test   eax,eax
-69e0209e:	0f 85 28 04 00 00    	jne    69e024cc <__ZN4uwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x4dc>
+69e0209e:	0f 85 28 04 00 00    	jne    69e024cc <__ZN4urwcn7adapter12_GLOBAL__N_1L10save_stateEPvPj+0x4dc>
 69e020a4:	8b 45 a0             	mov    eax,DWORD PTR [ebp-0x60]
 69e020a7:	03 45 94             	add    eax,DWORD PTR [ebp-0x6c]
 69e020aa:	c7 00 48 44 41 32    	mov    DWORD PTR [eax],0x32414448

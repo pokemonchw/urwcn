@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace uwcn::adapter::native_link_flow_component {
+namespace urwcn::adapter::native_link_flow_component {
 using Handle=u32;
 using MenuHandle=native_menu_component::Handle;
 

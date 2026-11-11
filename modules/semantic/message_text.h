@@ -2,5 +2,5 @@
 #include "sdk/host_abi.h"
 #include "sdk/text_services.h"
 
-uwcn::Status translate_message(const uwcn::HostApi*,const uwcn::TextRequest&,
-                              void*,uwcn::u32*);
+urwcn::Status translate_message(const urwcn::HostApi*,const urwcn::TextRequest&,
+                              void*,urwcn::u32*);

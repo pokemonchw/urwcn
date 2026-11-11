@@ -14,4 +14,4 @@
 
 源码、编译和正式发布分别完成。根 build.ps1 按 MinGW / adapter / Publish / Reload 提交，请求 `5a825de4183d426cb17171f14a6bcbb7`，批次 `caf741fc91db4ff1a3a572eed64bf76a`。已读取对应 results JSON、完整 batches 日志及事务 `c8f51c83882e4f85af6a7df86901c8bd` 的 publication-result.json，全部成功；一次配置、一次增量构建，保留既有编译警告。
 
-正式 `package/modules/uwcn_adapter.dll` 与 `package/release.json` 已替换；旧件先按原路径移入 `回收/20261110-111523-c8f51c83882e4f85af6a7df86901c8bd/`。本机只读进程枚举确认游戏 Windows PID 368，正式模块热发布返回 `ReadyToPublish` 与 `Applied`，Adapter 第2代、哈希 `53dcc87b158a7d8009a1f1a8baf169069a3701d85b2331eb960dfe086cf0b75e`。未创建平行运行副本，没有启动、关闭或重启游戏、注入、模拟输入或运行测试。Applied 仅证明模块交接，画面效果待用户验收。
+正式 `package/modules/urwcn_adapter.dll` 与 `package/release.json` 已替换；旧件先按原路径移入 `回收/20261110-111523-c8f51c83882e4f85af6a7df86901c8bd/`。本机只读进程枚举确认游戏 Windows PID 368，正式模块热发布返回 `ReadyToPublish` 与 `Applied`，Adapter 第2代、哈希 `53dcc87b158a7d8009a1f1a8baf169069a3701d85b2331eb960dfe086cf0b75e`。未创建平行运行副本，没有启动、关闭或重启游戏、注入、模拟输入或运行测试。Applied 仅证明模块交接，画面效果待用户验收。

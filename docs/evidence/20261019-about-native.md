@@ -64,8 +64,8 @@ About 接入本身不改变 Host ABI、Active 保存布局或其他业务模块�
 
 | 正式文件（相对 `package/`） | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `cbb25374c24988bb68b13fa6dfaeabafc7fb078cb5d17185263f733ba9bab785` |
-| `modules/uwcn_semantic.dll` | `4f9ab09511183d48fea1788df12f6ccfba90f61aec0e83a4771d59fae72b91e0` |
+| `modules/urwcn_adapter.dll` | `cbb25374c24988bb68b13fa6dfaeabafc7fb078cb5d17185263f733ba9bab785` |
+| `modules/urwcn_semantic.dll` | `4f9ab09511183d48fea1788df12f6ccfba90f61aec0e83a4771d59fae72b91e0` |
 | `catalog/zh-CN/main_menu.tsv` | `34de25d2078b8ac627811b12a6277cd2bad275ed14ac634b1d9d65cea3394ed5` |
 | `profiles/urw-3.89-steam-25939378.json` | `c5596630890e827ef470d3905c1eb13ba105392858207bbe456fa51d29f41e34` |
 

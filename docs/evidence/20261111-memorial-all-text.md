@@ -77,7 +77,7 @@
 | 完整日志 | `build/.compile-queue/batches/4976348e95c340b0ae66fdea8f8e659d.log`，已完整读取 |
 | 正式事务 | `84f7495233654fa4a62eb75b27db0030`，2026-11-11 14:15:36（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/84f7495233654fa4a62eb75b27db0030/publication-result.json`，`success=true`，目标 `applied=true`，已读取 |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv`、`package/profiles/urw-3.89.1-steam-26139145.json`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv`、`package/profiles/urw-3.89.1-steam-26139145.json`、`package/release.json` |
 | 旧件回收 | `回收/20261111-141534-84f7495233654fa4a62eb75b27db0030/package/`，四件旧文件先归档后替换，保留原相对路径，均已只读确认存在 |
 | 当前进程交接 | 原宿主 PID `3275331 urw.exe` 对应同一 Windows PID `364`；`ReadyToPublish` 后返回 Catalog 第6代、Adapter 第7代 `Applied` |
 
@@ -87,6 +87,6 @@
 | messages.tsv：正式件／源码词库一致 | `3e0626de031eabfc1c95334ef0cd8a01c66adc3b408f20b6b3d27aeba2756415` |
 | 3.89.1 profile：正式件／源码一致 | `68329b5cf3fabc3436802f1211e7396646ca4c68be5418dd6f828dda14c857e3` |
 
-上述文件身份与正式 `package/release.json` 对应条目一致。根 `uwcn_launcher.exe` 继续消费同一正式包，未创建平行运行副本，未要求用户手动卸载或重启。原 PE SHA-256仍为本记录首段值。
+上述文件身份与正式 `package/release.json` 对应条目一致。根 `urwcn_launcher.exe` 继续消费同一正式包，未创建平行运行副本，未要求用户手动卸载或重启。原 PE SHA-256仍为本记录首段值。
 
 源码修改、产物编译、正式文件发布及当前进程兼容交接分别完成。`Applied` 仅证明模块交接；未运行画面测试、模拟操作或自行启动游戏，未创建测试用例、测试脚本或断言。实际画面待用户查看。

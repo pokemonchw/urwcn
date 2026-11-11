@@ -23,7 +23,7 @@ Status paragraph_status{};
 bool restoring_first_hud() {return restoring_first_background;}
 void restore_first_hud() {
     restoring_first_background=true;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10DA60)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10DA60)();
     restoring_first_background=false;
 }
 enum Hook:u32 {
@@ -136,7 +136,7 @@ void append_hooks(std::vector<HookSpec>& hooks) {
 
 struct PositionedCall {u32 target,title,x,y;};
 struct QuantityCall {u32 target,maximum,format,x,y;};
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_quantity(const QuantityCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_parent_quantity(const QuantityCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tmovl 8(%esp),%ebx\n\t"
         "pushl 16(%ebx)\n\tpushl 12(%ebx)\n\t"
@@ -147,7 +147,7 @@ struct QuantityPrompt {u32 target,frame,first,second;};
 // The two original More fragments use a native scratch string and balanced
 // argument pushes. Only FBF8E's real EBP and its accepted scalar registers
 // are borrowed; neither fragment enters getst or copies its editing buffer.
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_quantity_prompt(const QuantityPrompt*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_parent_quantity_prompt(const QuantityPrompt*) {
     __asm__ __volatile__(
         "pushl %ebp\n\tpushl %ebx\n\tpushl %esi\n\tpushl %edi\n\t"
         "subl $128,%esp\n\tmovl 148(%esp),%eax\n\t"
@@ -156,7 +156,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_quantity_prompt(con
 }
 // 1008F0 takes ECX, EDX and a caller-cleaned stack argument. Its plain RET
 // differs from a compiler fastcall with three arguments.
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_positioned_command(const PositionedCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_parent_positioned_command(const PositionedCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -170,7 +170,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_positioned_command(
 struct InventoryCall {u32 target,parent;};
 // The seven original stack arguments remain live in the suspended owner.
 // 55084 supplies the accepted drawing inputs after its own original prologue.
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_inventory(const InventoryCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_parent_inventory(const InventoryCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\t"
         "movl 12(%esp),%ebx\n\t"
@@ -182,16 +182,16 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_inventory(const Inv
 }
 // B04E5..B058B has no EBP operands. Its own two input coordinates, item
 // record offset and measured outputs occupy a small native scratch frame.
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_item_paragraph(const native_component_calls::NoArgumentCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_parent_item_paragraph(const native_component_calls::NoArgumentCall*) {
     __asm__ __volatile__(
         "pushl %ebp\n\tpushl %ebx\n\tpushl %esi\n\tpushl %edi\n\t"
         "subl $128,%esp\n\tmovl 148(%esp),%eax\n\tcall *(%eax)\n\t"
         "addl $128,%esp\n\tpopl %edi\n\tpopl %esi\n\tpopl %ebx\n\tpopl %ebp\n\tret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_paragraph_return() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_parent_paragraph_return() {
     __asm__ __volatile__("addl $16,%esp\n\tret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_parent_preview_return() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_parent_preview_return() {
     __asm__ __volatile__("addl $4,%esp\n\tret\n\t");
 }
 u32 continuation(const void* target) {
@@ -214,10 +214,10 @@ Status culture(u32 accepted_preview) {
     // The native enclosing hut/title is independent of the accepted culture.
     native_full_language::constructing=native_full_language::Construction::profile_frame;
     const native_component_calls::NoArgumentCall frame{address(at<void>(0x12ED1))};
-    native_component_calls::uwcn_component_skill_help(&frame);
+    native_component_calls::urwcn_component_skill_help(&frame);
     native_full_language::constructing=native_full_language::Construction::none;
     preview=accepted_preview;constructing=Construction::culture;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xF4F0)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xF4F0)();
     constructing=Construction::none;return Status::ok;
 }
 Status command(u32 title,u32 accepted_preview,u32 source_menu) {
@@ -228,12 +228,12 @@ Status command(u32 title,u32 accepted_preview,u32 source_menu) {
 Status positioned_command(u32 title,u32 x,u32 y,u32 accepted_preview,u32 source_menu) {
     preview=accepted_preview;command_menu=source_menu;constructing=Construction::positioned_command;
     const PositionedCall input{address(at<void>(0x1008F0)),title,x,y};
-    uwcn_parent_positioned_command(&input);
+    urwcn_parent_positioned_command(&input);
     constructing=Construction::none;command_menu=0;return Status::ok;
 }
 Status injuries() {
     constructing=Construction::injuries;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xD79F0)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xD79F0)();
     constructing=Construction::none;return Status::ok;
 }
 Status armour(u32 mode,u32 filter,u32 page) {
@@ -244,7 +244,7 @@ Status armour(u32 mode,u32 filter,u32 page) {
 Status inventory(u32 parent,u32 body,u32 accepted_preview) {
     inventory_body=body;inventory_preview=accepted_preview;constructing=Construction::inventory;
     const InventoryCall input{address(at<void>(0x55060)),parent};
-    uwcn_parent_inventory(&input);
+    urwcn_parent_inventory(&input);
     constructing=Construction::none;inventory_body=0;return Status::ok;
 }
 Status family(u32 caller,u32 parent,u32 body,u32 selected,u32 mode,u32 last_preview,u32 source_menu) {
@@ -260,7 +260,7 @@ Status family(u32 caller,u32 parent,u32 body,u32 selected,u32 mode,u32 last_prev
         restore_first_hud();
         status=game_parent();
         if(status!=Status::ok) return status;
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10DA10)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10DA10)();
         status=command(*ptr<const u32>(body+0x24),*ptr<const u32>(body+0x14),source_menu);break;
     case 0x100CBA:case 0x100C26:
         restoring_positioned_background=true;
@@ -276,7 +276,7 @@ Status family(u32 caller,u32 parent,u32 body,u32 selected,u32 mode,u32 last_prev
         restore_first_hud();
         status=game_parent();
         if(status!=Status::ok) return status;
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10DA10)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10DA10)();
         status=injuries();break;
     case 0xFCF5D:case 0xFCE95:
         status=armour(*ptr<const u32>(parent-0x78),*ptr<const u32>(parent-0x7C),*ptr<const u32>(parent-0x74));break;
@@ -286,7 +286,7 @@ Status family(u32 caller,u32 parent,u32 body,u32 selected,u32 mode,u32 last_prev
         restore_first_hud();
         status=game_parent();
         if(status!=Status::ok) return status;
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10DA10)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10DA10)();
         reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0x10C540)(address(at<void>(0x195AFC)),0);
         status=inventory(parent,body,accepted_preview);break;
     }
@@ -374,10 +374,10 @@ Status paragraph(const NativeEvent& event,bool item) {
             // Its original B0539 save renews infoview before any foreground
             // pixel is drawn. Neither the item producer nor input runs again.
             const native_component_calls::NoArgumentCall body{address(at<void>(0xB04E5))};
-            uwcn_parent_item_paragraph(&body);
+            urwcn_parent_item_paragraph(&body);
             if(*at<u32>(0x619F924)==1) {
                 const native_component_calls::NoArgumentCall preview_call{address(at<void>(0xB0698))};
-                native_component_calls::uwcn_component_skill_help(&preview_call);
+                native_component_calls::urwcn_component_skill_help(&preview_call);
             }
         } else {
             reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0x10C540)(name,0);
@@ -385,7 +385,7 @@ Status paragraph(const NativeEvent& event,bool item) {
             // Execute the original MOV EBX input and parser reset, then the
             // confirmed gate consumes the same accepted neutral paragraph.
             const native_component_calls::NoArgumentCall body{address(at<void>(0x3A711))};
-            native_component_calls::uwcn_component_skill_help(&body);
+            native_component_calls::urwcn_component_skill_help(&body);
         }
         constructing=Construction::none;paragraph_source=nullptr;paragraph_body=0;
         status=paragraph_status;
@@ -393,14 +393,14 @@ Status paragraph(const NativeEvent& event,bool item) {
     native_root_component::activate(current_root);
     *at<u32>(0x61BBA5C)=flip;
     if(status!=Status::ok) return status;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
     return Status::ok;
 }
 Status course_reward(u32 selected) {
     auto status=game_parent();
     if(status!=Status::ok) return status;
     constructing=Construction::course_reward;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x15D2C0)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x15D2C0)();
     constructing=Construction::none;
     select(selected);
     return Status::ok;
@@ -439,7 +439,7 @@ Status quantity_page(u32 owner,u32 body,u32 minimum,bool bounded,u32 selected,bo
         const QuantityCall input{address(at<void>(0xFBD80)),maximum,format,
             *ptr<const u32>(owner+8),*ptr<const u32>(owner+12)};
         constructing=Construction::quantity;
-        uwcn_parent_quantity(&input);
+        urwcn_parent_quantity(&input);
     }
     constructing=Construction::none;
     select(selected);
@@ -447,7 +447,7 @@ Status quantity_page(u32 owner,u32 body,u32 minimum,bool bounded,u32 selected,bo
         constructing=bounded ? Construction::quantity_bounded_prompt : Construction::quantity_prompt;
         const QuantityPrompt input{address(at<void>(bounded ? 0xFC3C8 : 0xFBF8E)),owner,
             bounded ? minimum : maximum,bounded ? maximum : *ptr<const u32>(owner+8)};
-        uwcn_parent_quantity_prompt(&input);
+        urwcn_parent_quantity_prompt(&input);
         constructing=Construction::none;
     }
     return Status::ok;
@@ -592,19 +592,19 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         *ptr<u32>(paragraph_body+0x18)=*ptr<const u32>(event.frame->esp+0x28);
         *ptr<u32>(paragraph_body+0x40)=*ptr<const u32>(event.frame->esp+0x50);
         *ptr<u32>(paragraph_body+0x44)=*ptr<const u32>(event.frame->esp+0x54);
-        result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_parent_paragraph_return));
+        result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_parent_paragraph_return));
     }
     if(event.id==item_preview_finished && constructing==Construction::item_paragraph)
-        result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_parent_preview_return));
+        result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_parent_preview_return));
     if(event.id==herb_paragraph_body && constructing==Construction::herb_paragraph) {
         paragraph_status=native_component_binding::replace_paragraph_builder(*paragraph_source);
         result.resume_rva=0x3AAB7;
     }
     if(event.id==herb_paragraph_finished && constructing==Construction::herb_paragraph)
-        result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_parent_paragraph_return));
+        result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_parent_paragraph_return));
     if(event.id==reward_entry && constructing==Construction::course_reward) result.resume_rva=0x15D390;
     if(event.id==reward_input && constructing==Construction::course_reward) {
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xCFFB0)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xCFFB0)();
         result.skip_original=1;
     }
     if(event.id==reward_result) {
@@ -617,7 +617,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
        (event.id==quantity_bounded_save && constructing==Construction::quantity_bounded)) result.skip_original=1;
     if((event.id==quantity_input && constructing==Construction::quantity) ||
        (event.id==quantity_bounded_input && constructing==Construction::quantity_bounded)) {
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xCFFB0)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xCFFB0)();
         result.skip_original=1;
     }
     if(event.id==quantity_result) result.resume_rva=constructing==Construction::quantity ? 0xFC0E7 :
@@ -628,7 +628,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
        (event.id==quantity_bounded_getst && constructing==Construction::quantity_bounded_prompt)) result.skip_original=1;
     if((event.id==quantity_prompt_end && constructing==Construction::quantity_prompt) ||
        (event.id==quantity_bounded_prompt_end && constructing==Construction::quantity_bounded_prompt))
-        result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::uwcn_component_fragment_return));
+        result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::urwcn_component_fragment_return));
     if(event.id==native_full_language::culture_save && constructing==Construction::culture) {
         *at<u32>(0x5F54ABC)=*at<u32>(0x5F54A34);
         *at<u32>(0x5F54AB0)=preview;
@@ -657,7 +657,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     if(event.id==injuries_music && constructing==Construction::injuries) result.skip_original=1;
     if(event.id==injuries_seed && constructing==Construction::injuries) result.resume_rva=0xD759E;
     if(event.id==injuries_input && constructing==Construction::injuries) {
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xCFFB0)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xCFFB0)();
         result.skip_original=1;
     }
     if(event.id==injuries_result && constructing==Construction::injuries) result.resume_rva=0xD7C93;
@@ -692,7 +692,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     }
     if(event.id==inventory_count && constructing==Construction::inventory) result.skip_original=1;
     if(event.id==inventory_input && constructing==Construction::inventory) {
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xCFFB0)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xCFFB0)();
         result.skip_original=1;
     }
     if(event.id==inventory_result && constructing==Construction::inventory) result.resume_rva=0x554F9;

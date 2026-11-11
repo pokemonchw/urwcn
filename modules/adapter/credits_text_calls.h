@@ -1,7 +1,7 @@
 #pragma once
 #include "../../sdk/text_services.h"
 
-namespace uwcn::adapter {
+namespace urwcn::adapter {
 // The 24 semantic append calls in native 1244F0. No positions, row slots or
 // cached page text are kept here. The two original standalone <br> calls remain.
 // Evidence: docs/evidence/credits-disassembly.txt and credits-string-bytes.txt.

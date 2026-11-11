@@ -1,4 +1,4 @@
-UWCN main-menu translation version: static implementation record
+URWCN main-menu translation version: static implementation record
 Date: 2026-10-18
 
 Historical record, superseded by 20261019-footer-branding-native.md and
@@ -15,9 +15,9 @@ version reader in src\credits.inc (lines 4-12). DFCN hashes its normalized
 linked core and encodes that SHA-256 as five uppercase Base36 characters.
 Its final adjustment ensures that the version contains letters and digits.
 
-UWCN package identity
+URWCN package identity
 ---------------------
-UWCN uses the six-module ABI 3 framework: Catalog, Semantic, Render, Layout,
+URWCN uses the six-module ABI 3 framework: Catalog, Semantic, Render, Layout,
 MainMenu and Adapter, plus the current translation catalog. Its loader holds
 each loaded module's validated source SHA-256 and the catalog bytes. This
 version service adds no file reads, embedded mutable version slots, ABI
@@ -32,7 +32,7 @@ terminating NUL, allocated by copy_bytes. The loader does not hash that
 identity or calculate the five-character display version.
 
 The identity input is UTF-8/ASCII text with LF delimiters and a final LF:
-  UWCN_PACKAGE_IDENTITY_V1
+  URWCN_PACKAGE_IDENTITY_V1
   module/1:<Catalog source SHA-256>
   module/2:<Semantic source SHA-256>
   module/3:<Render source SHA-256>

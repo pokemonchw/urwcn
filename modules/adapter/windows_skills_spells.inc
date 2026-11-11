@@ -119,7 +119,7 @@ Status dispatch_windows_skills(const NativeEvent& e,DispatchResult& result,bool&
     case ws_help_end:
         if(native_component_model::painting_skill_help())
             result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(
-                native_component_calls::uwcn_component_fragment_return)-host->image_base);
+                native_component_calls::urwcn_component_fragment_return)-host->image_base);
         return Status::ok;
     case ws_remaining:
         return windows_skill_lend(e,TextComponent::skills_text,"remaining",e.arguments[0],Scope::text);

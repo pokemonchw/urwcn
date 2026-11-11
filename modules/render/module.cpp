@@ -6,7 +6,7 @@
 #include <vector>
 
 namespace {
-using namespace uwcn;
+using namespace urwcn;
 const HostApi* host{};
 render::FontEngine fonts;
 bool initialized{};
@@ -28,12 +28,12 @@ bool ready() {
     initialized=true;
     return true;
 }
-Status UWCN_CALL initialize(const HostApi* api) {
+Status URWCN_CALL initialize(const HostApi* api) {
     if(!api || api->size!=sizeof(HostApi) || api->abi!=kHostAbi) return Status::invalid;
     host=api;
     return Status::ok;
 }
-Status UWCN_CALL invoke(u32 operation,const void* input,u32 input_bytes,void* result,u32* result_bytes) {
+Status URWCN_CALL invoke(u32 operation,const void* input,u32 input_bytes,void* result,u32* result_bytes) {
     if(operation==kModuleDependenciesChanged) {
         if(!input || input_bytes!=sizeof(u32)) return Status::invalid;
         if((*static_cast<const u32*>(input)&1u) && initialized) {
@@ -81,12 +81,12 @@ Status UWCN_CALL invoke(u32 operation,const void* input,u32 input_bytes,void* re
     }
     return Status::invalid;
 }
-Status UWCN_CALL save_state(void*,u32* bytes) {
+Status URWCN_CALL save_state(void*,u32* bytes) {
     if(!bytes) return Status::invalid;
     *bytes=0; // Only font-owned derived data exists; native UI owns its pixels.
     return Status::ok;
 }
-Status UWCN_CALL restore_state(const void* data,u32 bytes) {
+Status URWCN_CALL restore_state(const void* data,u32 bytes) {
     // The published predecessor's schema 1 contains derived Paint history.
     // It is deliberately retired, not reconstructed into a new UI cache.
     if(!bytes) return Status::ok;
@@ -94,11 +94,11 @@ Status UWCN_CALL restore_state(const void* data,u32 bytes) {
     u32 schema{}; std::memcpy(&schema,data,sizeof(schema));
     return schema==1 ? Status::ok : Status::invalid;
 }
-void UWCN_CALL shutdown() {
+void URWCN_CALL shutdown() {
     if(initialized) fonts.shutdown();
     initialized=false; host=nullptr;
 }
 const ModuleApi api{sizeof(ModuleApi),kHostAbi,ModuleId::render,initialize,invoke,save_state,restore_state,shutdown};
 }
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor{uwcn::kDescriptorMagic,uwcn::kHostAbi,static_cast<uwcn::u32>(uwcn::ModuleId::render),uwcn::kModuleMachine,1};
-UWCN_EXPORT const uwcn::ModuleApi* UWCN_CALL uwcn_get_module_api() { return &api; }
+URWCN_EXPORT const urwcn::ModuleDescriptor urwcn_module_descriptor{urwcn::kDescriptorMagic,urwcn::kHostAbi,static_cast<urwcn::u32>(urwcn::ModuleId::render),urwcn::kModuleMachine,1};
+URWCN_EXPORT const urwcn::ModuleApi* URWCN_CALL urwcn_get_module_api() { return &api; }

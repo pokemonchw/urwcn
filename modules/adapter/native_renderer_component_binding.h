@@ -3,7 +3,7 @@
 #include "native_culture_legend.h"
 #include <vector>
 
-namespace uwcn::adapter::native_renderer_component_binding {
+namespace urwcn::adapter::native_renderer_component_binding {
 using Handle=u32;
 using MenuHandle=native_menu_model::Handle;
 enum class PaintDestination:u32 { active_native_owner,native_surface_cache };

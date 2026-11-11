@@ -3,7 +3,7 @@
 #include <cstring>
 #include <utility>
 
-namespace uwcn::adapter::native_message_source {
+namespace urwcn::adapter::native_message_source {
 namespace {
 template<class T> std::string number(const std::string& conversion,T value) {
     const auto count=std::snprintf(nullptr,0,conversion.c_str(),value);

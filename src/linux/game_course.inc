@@ -1,7 +1,7 @@
 // Linux 3.89 game_course: complete native display calls. No page geometry,
 // task state, English source data or input actions are owned by this adapter.
-extern "C" void uwcn_linux_redraw_game_course_fragment(std::uintptr_t);
-extern "C" void uwcn_linux_redraw_game_course_return();
+extern "C" void urwcn_linux_redraw_game_course_fragment(std::uintptr_t);
+extern "C" void urwcn_linux_redraw_game_course_return();
 
 bool game_course_refresh=true;
 bool game_course_chinese;
@@ -64,7 +64,7 @@ void game_course_draw(Frame& frame) {
     game_course_chinese=chinese;
     // End the display-only fragment before LIST_Go and the A/B/ESC actions.
     if(rebuilding_game_course)
-        frame.resume=reinterpret_cast<std::uintptr_t>(uwcn_linux_redraw_game_course_return);
+        frame.resume=reinterpret_cast<std::uintptr_t>(urwcn_linux_redraw_game_course_return);
 }
 void game_course_input_return(std::uintptr_t caller) {
     // LIST_Go's unchanged native return identity includes already-open pages.
@@ -75,7 +75,7 @@ void game_course_input_return(std::uintptr_t caller) {
         // Begin after grabscr and the player-name copy. The native background,
         // images, current completion branches, buttons and footer rebuild;
         // the saved pre-page screen and task creation are never re-entered.
-        uwcn_linux_redraw_game_course_fragment(host->image_base+0x1d5e3);
+        urwcn_linux_redraw_game_course_fragment(host->image_base+0x1d5e3);
         rebuilding_game_course=false;
         native<void (*)(int)>(0xf6110)(selection);
         native<void (*)()>(0x13d5a0)();

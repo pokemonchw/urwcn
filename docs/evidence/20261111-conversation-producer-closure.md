@@ -58,7 +58,7 @@
 | 完整日志 | `build/.compile-queue/batches/b6fa8e6f9af140399d74f0568f220cb6.log`，已读取 |
 | 正式事务 | `c320ea274f3847958e5f8c401815a9ec`，2026-11-11 11:41:18（Asia/Shanghai）完成 |
 | 正式清单 | `package/release.json`，事务及批次均对应本批 |
-| 正式模块 | `package/modules/uwcn_adapter.dll`，12228138 字节，SHA-256 `13f6c58a6aaecaff70cb6c6b61a2a632580179e0ce3da8b92b7628872c8a6f5b`，与本批构建产物相同 |
+| 正式模块 | `package/modules/urwcn_adapter.dll`，12228138 字节，SHA-256 `13f6c58a6aaecaff70cb6c6b61a2a632580179e0ce3da8b92b7628872c8a6f5b`，与本批构建产物相同 |
 | 正式词库 | `package/catalog/zh-CN/messages.tsv`，7347788 字节，SHA-256 `0cfbe2f2a4b78b417eda099b6017dc516c3af246853b4451c0078d195ce27385`，与源码词库相同 |
 | 旧文件回收 | `回收/20261111-114116-c320ea274f3847958e5f8c401815a9ec/package/` 下保留原相对路径的 Adapter DLL、messages.tsv、release.json |
 | 驻留交接 | Windows PID 468，Catalog / Adapter 均为第 6 代 `Applied` |

@@ -51,7 +51,7 @@ Windows 3.89.1 原始 PE SHA-256：`c6ed73642c1b1cb1f86b818c7586224398c2f0554f61
 | 完整批次日志 | `build/.compile-queue/batches/e32fd31af72c4cea8d5662f738669d70.log` |
 | 正式事务 | `817b6b45379749dfaa5783184b09708d`，2026-11-10 17:03:09（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/817b6b45379749dfaa5783184b09708d/publication-result.json`，`success=true`、`applied=true` |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/modules/uwcn_catalog.dll`、`package/modules/uwcn_semantic.dll`、`package/catalog/zh-CN/main_menu.tsv`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/modules/urwcn_catalog.dll`、`package/modules/urwcn_semantic.dll`、`package/catalog/zh-CN/main_menu.tsv`、`package/release.json` |
 | 旧件归档 | `回收/20261110-170307-817b6b45379749dfaa5783184b09708d/package/`，先归档再替换，保留原相对路径 |
 | 当前进程 | 宿主PID `2974827`、Windows PID `364`，未重启 |
 | 兼容交接 | `ReadyToPublish` 后 `Applied`；Catalog、Adapter为第11代，Semantic为第6代 |
@@ -63,4 +63,4 @@ Windows 3.89.1 原始 PE SHA-256：`c6ed73642c1b1cb1f86b818c7586224398c2f0554f61
 | Semantic，正式件／构建件／Applied一致 | `7c12021ae5e19b23f75f9fb7d95cc763224fb3c0ae658ecc4025fff42ede0ae8` |
 | main_menu.tsv，源码／正式件一致 | `7af9fa17d8bccab0ac06d1a368fc96bc243c42a5de710e36efb2aee40f70f393` |
 
-源码修改、产物编译、正式位置发布与当前进程兼容交接均已完成，根 `uwcn_launcher.exe` 使用同一正式包。未启动、关闭、重启、注入或模拟操作游戏，未运行测试、创建测试用例或断言。画面未自行验收，Applied仅证明模块交接。
+源码修改、产物编译、正式位置发布与当前进程兼容交接均已完成，根 `urwcn_launcher.exe` 使用同一正式包。未启动、关闭、重启、注入或模拟操作游戏，未运行测试、创建测试用例或断言。画面未自行验收，Applied仅证明模块交接。

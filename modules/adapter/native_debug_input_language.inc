@@ -15,7 +15,7 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
     const auto status=native_parent_cache_language::game_parent();
     if(status!=Status::ok) return status;
     native_language_redraw::completed(native_language_redraw::View::hud);
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
     event.frame->eax=0;
     return Status::ok;
 }

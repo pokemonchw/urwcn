@@ -9,7 +9,7 @@
 - systemd-coredump：PID `3666934`，时间 `2026-10-19 10:49:23 +08:00`，信号 `SIGABRT`。
 - 主程序 SHA256：`4bbbef363fe64678ae9674ff9330f3cb0bec813d94379483813de152c164aabe`，与 Linux profile 一致。
 - 崩溃时正式 Adapter SHA256：`9b3743f19f2f1344fc461fe20ba3748cab0f0a866c2ccfdbbe08d91a1d56ab26`。
-- 离线调用栈：`std::__throw_out_of_range_fmt` → `startup_message(Frame&) [clone .cold]`（Adapter RVA `0x2521`）→ `uwcn_linux_gateway`（Loader RVA `0x6178`）。没有执行 GDB 的 run、continue 或 call。
+- 离线调用栈：`std::__throw_out_of_range_fmt` → `startup_message(Frame&) [clone .cold]`（Adapter RVA `0x2521`）→ `urwcn_linux_gateway`（Loader RVA `0x6178`）。没有执行 GDB 的 run、continue 或 call。
 - 网关帧地址 `0x7ffee3d03860`，原生 RDI 为 `0x7ffee3d03d60`，该地址保存完整字符串 `Loading audio: ambience`。
 - 帧中的 resume 为 `0x5555ab51a018`；主 ELF 基址 `0x5555ab503000`，对应被替换 CALL RVA `0x17013`，位于 `Lataa_Sample(char*)`。
 - core 解包和离线摘录保存在本地 `build/analysis/startup-crash-20261019/`，不作为运行交付。
@@ -49,7 +49,7 @@
 
 - 请求 `68521a0948a641bea2a57aafdd46b201`，批次 `e8b330c3929e4707b2a798e93b7f481e`，发布事务 `602aa18487ca4a868d2db3ab92defbc7`。
 - 已读取 `build/.compile-queue/results/68521a0948a641bea2a57aafdd46b201.json`、完整批次 `.log` 及事务 `publication-result.json`；编译、发布均成功，`ReloadRequested=false`。
-- 仅进行一次配置和一次 Adapter 增量构建。正式更新 `package/modules/uwcn_adapter.dll` 与 `package/release.json`；根 `uwcn_launcher` 继续加载该正式模块。
+- 仅进行一次配置和一次 Adapter 增量构建。正式更新 `package/modules/urwcn_adapter.dll` 与 `package/release.json`；根 `urwcn_launcher` 继续加载该正式模块。
 - 旧 Adapter、旧清单及发布脚本维护的旧应用菜单链接先移入 `回收/20261019-105225-602aa18487ca4a868d2db3ab92defbc7/`，保留原相对路径。
 - 正式 Adapter 与构建产物 SHA256 均为 `15220fa8c0b766fe860709d8ab3817769281f576f9731258bcc4ff2dfc4c9139`，与正式清单一致。回收 Adapter 的哈希与上述崩溃时旧文件一致。
 - 根启动器和驻留库哈希保持原值，分别为 `83e27dcf4534c98cb8bc23379be79a507664442c6cea3305999c61a8ea19d2f1`、`91b0a8a5be949bd1874421ea4ff03452bc502230c3c5694d378279d851257173`。

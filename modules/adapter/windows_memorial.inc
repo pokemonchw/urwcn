@@ -40,7 +40,7 @@ Status title(const NativeEvent& event) {
         static_cast<std::int32_t>(event.arguments[0]),encoded.data(),5};
     begin(event,Scope::titled_panel,1);
     native_component_binding::begin_native_owner();
-    native_component_calls::uwcn_component_title_strip(&heading);
+    native_component_calls::urwcn_component_title_strip(&heading);
     native_component_binding::end_native_owner();
     end(event.token);
     return Status::ok;

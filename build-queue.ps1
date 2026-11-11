@@ -40,8 +40,8 @@ $configurationText = $configuration | ConvertTo-Json -Compress
 $sha = [Security.Cryptography.SHA256]::Create()
 $queueKey = ([BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes($PSScriptRoot.ToLowerInvariant())))).Replace('-','').Substring(0,24)
 $sha.Dispose()
-$stateMutex = [Threading.Mutex]::new($false, "Local\UWCnQueueState-$queueKey")
-$runnerMutex = [Threading.Mutex]::new($false, "Local\UWCnQueueRunner-$queueKey")
+$stateMutex = [Threading.Mutex]::new($false, "Local\URWCNQueueState-$queueKey")
+$runnerMutex = [Threading.Mutex]::new($false, "Local\URWCNQueueRunner-$queueKey")
 $configurationFile = Join-Path $queue 'configuration.json'
 $request = [ordered]@{ RequestId=$requestId; Modules=@($Module | Sort-Object -Unique); FullGraph=(!$Module); Configuration=$configuration; SubmittedAt=[DateTimeOffset]::UtcNow.ToString('o') }
 $stateMutex.WaitOne() | Out-Null
@@ -80,7 +80,7 @@ try {
             $log = Join-Path $queue "batches/$batchId.log"
             $success = $false
             $failure = ''
-            $env:UWCN_COMPILE_BATCH = $batchId
+            $env:URWCN_COMPILE_BATCH = $batchId
             try {
                 $options = @{
                     Toolchain=$Toolchain; CMakePath=$configuration.CMakePath; CompilerPath=$configuration.CompilerPath
@@ -95,7 +95,7 @@ try {
             } catch {
                 $failure = $_.ToString()
                 $failure | Out-File -LiteralPath $log -Append -Encoding utf8
-            } finally { Remove-Item Env:UWCN_COMPILE_BATCH }
+            } finally { Remove-Item Env:URWCN_COMPILE_BATCH }
             foreach ($entry in $requests) {
                 $result = [ordered]@{ RequestId=$entry.RequestId; BatchId=$batchId; Success=$success; Error=$failure; Modules=$modules; FullGraph=$fullGraph; Toolchain=$Toolchain; CompilerPath=$configuration.CompilerPath; BuildDirectory=$configuration.BuildDirectory; ModuleSourceDirectory=$configuration.ModuleSourceDirectory; Log=$log; PublishRequested=[bool]$Publish; ReloadRequested=[bool]$Reload; TargetPid=$TargetPid; WinePrefix=$configuration.WinePrefix; WinePath=$configuration.WinePath; CompletedAt=[DateTimeOffset]::UtcNow.ToString('o') }
                 $resultPath=Join-Path $queue "results/$($entry.RequestId).json"

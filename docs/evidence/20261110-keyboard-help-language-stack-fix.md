@@ -30,7 +30,7 @@
 
 ## 修正与静态复审
 
-新增单一 naked 续接入口 `uwcn_keyboard_help_reconstruct`：先 `SUB ESP,10h`，再间接跳转到已确认的 `103AA2`。16字节是前述已完成 blit 的待清理空间，仅用于恢复栈深度；该区间后续不再读取这些旧参数。普通原生打开路径不经过该续接入口。
+新增单一 naked 续接入口 `urwcn_keyboard_help_reconstruct`：先 `SUB ESP,10h`，再间接跳转到已确认的 `103AA2`。16字节是前述已完成 blit 的待清理空间，仅用于恢复栈深度；该区间后续不再读取这些旧参数。普通原生打开路径不经过该续接入口。
 
 `rebuild` 在原有资源退役、滚动位置与颜色/速度输入恢复后，将原生续点交给该入口。原 `103AC4` 保持不变，仍清理52字节，回到 `EBP-448`。中文切英文、英文切中文及同入口的兼容模块更新共用这一真实栈契约，没有语言专用兜底或跳过重建。
 
@@ -50,11 +50,11 @@
 | 批次日志 | `build/.compile-queue/batches/9c6e6d5ee1ac4886935dc0ba72aaf9af.log` |
 | 正式事务 | `e1c8d8c67b7b46568b22d3deac425436`，2026-11-10 15:58:25（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/e1c8d8c67b7b46568b22d3deac425436/publication-result.json`：`success=true`、`runtime_requested=false`、无运行时回执 |
-| 正式更新 | `package/modules/uwcn_adapter.dll`、`package/release.json` |
+| 正式更新 | `package/modules/urwcn_adapter.dll`、`package/release.json` |
 | 旧件归档 | `回收/20261110-155825-e1c8d8c67b7b46568b22d3deac425436/package/`，保留原相对路径 |
 | 新 Adapter SHA-256 | `bd0508d45e40937ea993b2810f2ddf871f0e02b80670cc2823752b8569386cd4`，正式件、构建件和清单一致 |
 | 旧 Adapter SHA-256 | `92e043dcbc92d0846330a1afa1c7c04094d7ffdfd1c70ef9f782e1a4e1da3e75`，已从回收件读取确认 |
 
-只读反汇编最终构建件的 `uwcn_keyboard_help_reconstruct`，`6446F43F` 为 `83 EC 10`（`SUB ESP,10h`），`6446F442` 为 `FF 25 5C F0 66 64`（跳到真实目标变量的间接 `JMP`），没有函数序言或额外返回地址。目标变量由 Hook 登记过程设置为当前游戏基址加 `103AA2`。这项检查读取产物指令，没有运行产物。
+只读反汇编最终构建件的 `urwcn_keyboard_help_reconstruct`，`6446F43F` 为 `83 EC 10`（`SUB ESP,10h`），`6446F442` 为 `FF 25 5C F0 66 64`（跳到真实目标变量的间接 `JMP`），没有函数序言或额外返回地址。目标变量由 Hook 登记过程设置为当前游戏基址加 `103AA2`。这项检查读取产物指令，没有运行产物。
 
-源码修改、产物编译与正式位置发布均已完成。发布前后只读进程表没有游戏进程，因此未请求 Reload、未取得 Applied，也没有自行启动、关闭或重启游戏。下一次从根 `uwcn_launcher.exe` 正常启动将加载这份正式文件，无独立修复包。没有自行运行测试或进行崩溃重现验收。
+源码修改、产物编译与正式位置发布均已完成。发布前后只读进程表没有游戏进程，因此未请求 Reload、未取得 Applied，也没有自行启动、关闭或重启游戏。下一次从根 `urwcn_launcher.exe` 正常启动将加载这份正式文件，无独立修复包。没有自行运行测试或进行崩溃重现验收。

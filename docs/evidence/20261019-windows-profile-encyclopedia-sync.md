@@ -4,7 +4,7 @@
 
 目标为 Windows x86《不真实的世界》3.89 / Steam Build 25939378。原 PE SHA-256 为 `e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9`，首选基址 `0x400000`。本机 `GAME.NFO` SHA-256 为 `071f384ad992d0a688833693f207a5cf8a969b4811e5e6603597d189087a4d5d`，与 Linux 译文来源完全相同，原生二进制读取偏移的词库键可以共用。
 
-仅运行 objdump、文件哈希与 Ghidra 的只读 `-process urw.exe -readOnly -noanalysis` 反编译。Ghidra 使用既有 `build/load-saved-ghidra/uwcn-load-saved.gpr` 和独立 settings/cache；提取脚本为 `windows_sync_extract.java`。本地完整指令和反编译位于 `build/windows-sync-pe.asm`、`build/windows-sync-profile-encyclopedia.c`，不纳入源码仓库。不启动游戏、不注入、不模拟输入、不运行产物或测试、不创建测试或断言。
+仅运行 objdump、文件哈希与 Ghidra 的只读 `-process urw.exe -readOnly -noanalysis` 反编译。Ghidra 使用既有 `build/load-saved-ghidra/urwcn-load-saved.gpr` 和独立 settings/cache；提取脚本为 `windows_sync_extract.java`。本地完整指令和反编译位于 `build/windows-sync-pe.asm`、`build/windows-sync-profile-encyclopedia.c`，不纳入源码仓库。不启动游戏、不注入、不模拟输入、不运行产物或测试、不创建测试或断言。
 
 ## 季节、肖像和属性
 

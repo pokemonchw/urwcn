@@ -54,7 +54,7 @@
 
 ## 交付记录
 
-源码修改、统一队列编译及正式文件发布均已完成。最终产物位于 `package/modules/uwcn_adapter.dll`，最终词库位于 `package/catalog/zh-CN/`，正常根启动器使用这些正式文件。
+源码修改、统一队列编译及正式文件发布均已完成。最终产物位于 `package/modules/urwcn_adapter.dll`，最终词库位于 `package/catalog/zh-CN/`，正常根启动器使用这些正式文件。
 
 | 阶段 | 请求／批次／结果 |
 | --- | --- |

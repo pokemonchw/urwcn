@@ -2,7 +2,7 @@
 #include "native_component_model.h"
 #include "native_image_component.h"
 
-namespace uwcn::adapter::native_footer_component {
+namespace urwcn::adapter::native_footer_component {
 using Handle=u32;
 using native_text_resource::SourceKey;
 using native_text_resource::TextSource;

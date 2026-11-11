@@ -1,5 +1,5 @@
 {
-  "format": "uwcn-native-message-resource-catalog-v1",
+  "format": "urwcn-native-message-resource-catalog-v1",
   "language": "zh-CN",
   "scope": "All non-comment, non-key display records from installed messages/urw_*.txt",
   "game_files_modified": false,

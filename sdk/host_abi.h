@@ -3,14 +3,14 @@
 #include <cstddef>
 
 #if defined(_WIN32)
-#define UWCN_CALL __cdecl
-#define UWCN_EXPORT extern "C" __declspec(dllexport)
+#define URWCN_CALL __cdecl
+#define URWCN_EXPORT extern "C" __declspec(dllexport)
 #else
-#define UWCN_CALL
-#define UWCN_EXPORT extern "C" __attribute__((visibility("default")))
+#define URWCN_CALL
+#define URWCN_EXPORT extern "C" __attribute__((visibility("default")))
 #endif
 
-namespace uwcn {
+namespace urwcn {
 using u32 = std::uint32_t;
 using u64 = std::uint64_t;
 #if defined(__linux__)
@@ -72,27 +72,27 @@ struct HostApi {
     u32 abi;
     std::uintptr_t image_base;
     const wchar_t* package_path;
-    Status (UWCN_CALL *invoke)(ModuleId,u32,const void*,u32,void*,u32*);
-    Status (UWCN_CALL *install_hooks)(const HookSpec*,u32);
-    void* (UWCN_CALL *allocate)(u32);
-    void (UWCN_CALL *release)(void*);
-    void (UWCN_CALL *log)(const wchar_t*);
+    Status (URWCN_CALL *invoke)(ModuleId,u32,const void*,u32,void*,u32*);
+    Status (URWCN_CALL *install_hooks)(const HookSpec*,u32);
+    void* (URWCN_CALL *allocate)(u32);
+    void (URWCN_CALL *release)(void*);
+    void (URWCN_CALL *log)(const wchar_t*);
     // Execute a statically confirmed, stack-balanced native drawing fragment.
     // It must not enter input/animation waits or read an enclosing stack frame.
     // end_rva is the return address of an already registered CALL hook.
-    Status (UWCN_CALL *native_fragment)(u32 begin_rva,u32 end_rva);
+    Status (URWCN_CALL *native_fragment)(u32 begin_rva,u32 end_rva);
 };
 struct ModuleApi {
     u32 size;
     u32 abi;
     ModuleId id;
-    Status (UWCN_CALL *initialize)(const HostApi*);
-    Status (UWCN_CALL *invoke)(u32,const void*,u32,void*,u32*);
-    Status (UWCN_CALL *save_state)(void*,u32*);
-    Status (UWCN_CALL *restore_state)(const void*,u32);
-    void (UWCN_CALL *shutdown)();
+    Status (URWCN_CALL *initialize)(const HostApi*);
+    Status (URWCN_CALL *invoke)(u32,const void*,u32,void*,u32*);
+    Status (URWCN_CALL *save_state)(void*,u32*);
+    Status (URWCN_CALL *restore_state)(const void*,u32);
+    void (URWCN_CALL *shutdown)();
 };
-using GetModuleApi = const ModuleApi* (UWCN_CALL *)();
+using GetModuleApi = const ModuleApi* (URWCN_CALL *)();
 
 // Present in each module's PE export table; readable without loading the DLL.
 struct ModuleDescriptor { u32 magic,abi,module_id,machine,state_schema; };

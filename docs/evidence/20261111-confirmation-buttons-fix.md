@@ -60,7 +60,7 @@
 | 完整批次日志 | `build/.compile-queue/batches/b977a39a0d0b4998bb7486b0a3f45be4.log`，已完整读取 |
 | 正式事务 | `9c4b14b4fc2643c78a435fe419767b0a`，2026-11-11 13:09:42（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/9c4b14b4fc2643c78a435fe419767b0a/publication-result.json`，`success=true`、`applied=true`，已读取 |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/release.json` |
 | 旧件回收 | `回收/20261111-130940-9c4b14b4fc2643c78a435fe419767b0a/package/`，两件先归档后替换，保留原相对路径 |
 | 进程身份 | 宿主 PID `3275331`，既有 Proton Mono 解释器只读枚举得到 Windows PID `364` |
 | 兼容交接 | `ReadyToPublish` 后返回 Adapter 第3代 `Applied` |
@@ -73,4 +73,4 @@
 
 对新 Adapter 只读反汇编确认两条普通输入裸桥均为 `push [原返回地址]` 后 `jmp [D1120目标]`，没有执行额外 CALL、寄存器运算或 flags 运算；未运行该产物。
 
-源码修改、产物编译、正式文件发布及当前进程兼容交接均已完成，根 `uwcn_launcher.exe` 使用同一正式包，没有平行修复目录。未启动或操作游戏，未运行测试或自行验收画面；`Applied` 仅表示模块交接。
+源码修改、产物编译、正式文件发布及当前进程兼容交接均已完成，根 `urwcn_launcher.exe` 使用同一正式包，没有平行修复目录。未启动或操作游戏，未运行测试或自行验收画面；`Applied` 仅表示模块交接。

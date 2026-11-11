@@ -109,12 +109,12 @@
 - 正式发布：事务 `b01cab8072d74e979b3d72c572993698` 完成。`build/mingw-x86/stage/b01cab8072d74e979b3d72c572993698/publication-result.json` 记录五项正式文件替换：adapter DLL、semantic DLL、中文词库、构建适配 profile 和 `package/release.json`。被替换旧件先按原相对路径移入 `回收/20261019-022426-b01cab8072d74e979b3d72c572993698/`。Catalog DLL 虽重新编译，但内容哈希未变，不需要替换；词库变化仍触发 catalog 模块交接。没有平行修复包或独立运行目录。
 - 运行时应用：同一回执记录 `Applied b01cab8072d74e979b3d72c572993698`，catalog、semantic 和 adapter 均为第 2 代，哈希分别与正式清单一致。主代理已只读核对正式清单全部十项的磁盘 SHA-256 一致。此回执证明授权事务已应用到原 PID 45376，不证明当前已显示画面的译文或视觉效果；已进入旧诗文调用的范围限制仍按前节保留。
 
-根目录 `uwcn_launcher.exe` 仍是正常启动入口，`package/uwcn_loader.dll` 和 `package/modules/` 仍是唯一正式交付位置。本轮没有启动或重启游戏、重新注入、模拟操作、执行测试或编写测试用例与断言。
+根目录 `urwcn_launcher.exe` 仍是正常启动入口，`package/urwcn_loader.dll` 和 `package/modules/` 仍是唯一正式交付位置。本轮没有启动或重启游戏、重新注入、模拟操作、执行测试或编写测试用例与断言。
 
 | 正式文件（相对 `package/`） | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `1f08d54b8e27cc354728f7f8bc0fdf755a50f4f8bd33046f74eeda901ddb2d97` |
-| `modules/uwcn_semantic.dll` | `7996aeb72a0f4cb1c815152b1034499567361e218271418f4a1a24ddac6153d6` |
-| `modules/uwcn_catalog.dll`（内容未变） | `81b8407f805727e23de31f4f71800e8362619474c77ac48bb1bc52324d7c1c98` |
+| `modules/urwcn_adapter.dll` | `1f08d54b8e27cc354728f7f8bc0fdf755a50f4f8bd33046f74eeda901ddb2d97` |
+| `modules/urwcn_semantic.dll` | `7996aeb72a0f4cb1c815152b1034499567361e218271418f4a1a24ddac6153d6` |
+| `modules/urwcn_catalog.dll`（内容未变） | `81b8407f805727e23de31f4f71800e8362619474c77ac48bb1bc52324d7c1c98` |
 | `catalog/zh-CN/main_menu.tsv` | `446de7946716d49e1727209f8579ce8738ce5594fc7db16f000c1355c951e8c5` |
 | `profiles/urw-3.89-steam-25939378.json` | `94e04f938f5fab07553f59b1cfab6e80b66bc8c3dc5765d46b953e2e7b488cf8` |

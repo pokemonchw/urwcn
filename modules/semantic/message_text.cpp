@@ -13,9 +13,9 @@ std::string identity(const char* value) {
 }
 }
 
-uwcn::Status translate_message(const uwcn::HostApi* host,const uwcn::TextRequest& request,
-                              void* output,uwcn::u32* capacity) {
-    using namespace uwcn;
+urwcn::Status translate_message(const urwcn::HostApi* host,const urwcn::TextRequest& request,
+                              void* output,urwcn::u32* capacity) {
+    using namespace urwcn;
     std::string key="message.";
     switch(request.component) {
     case TextComponent::message_literal:

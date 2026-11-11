@@ -11,7 +11,7 @@
 #include <cstring>
 #include <cwchar>
 
-namespace uwcn::host {
+namespace urwcn::host {
 HMODULE self=nullptr;
 HostApi api{};
 static std::wstring package_path;
@@ -35,9 +35,9 @@ static std::vector<HANDLE> candidate_files;
 struct CandidateFile { std::wstring relative,hash; };
 static std::vector<CandidateFile> candidate_identity;
 
-void UWCN_CALL log(const wchar_t* message) {
-    OutputDebugStringW(L"[UWCn] "); OutputDebugStringW(message); OutputDebugStringW(L"\n");
-    const std::wstring path=package_path+L"\\uwcn.log";
+void URWCN_CALL log(const wchar_t* message) {
+    OutputDebugStringW(L"[URWCN] "); OutputDebugStringW(message); OutputDebugStringW(L"\n");
+    const std::wstring path=package_path+L"\\urwcn.log";
     HANDLE file=CreateFileW(path.c_str(),FILE_APPEND_DATA,FILE_SHARE_READ|FILE_SHARE_WRITE,nullptr,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,nullptr);
     if(file!=INVALID_HANDLE_VALUE) {
         int length=WideCharToMultiByte(CP_UTF8,0,message,-1,nullptr,0,nullptr,nullptr);
@@ -47,9 +47,9 @@ void UWCN_CALL log(const wchar_t* message) {
         DWORD written=0; WriteFile(file,bytes.data(),static_cast<DWORD>(bytes.size()),&written,nullptr); CloseHandle(file);
     }
 }
-static void* UWCN_CALL allocate(u32 size) { return HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,size); }
-static void UWCN_CALL release(void* value) { if(value) HeapFree(GetProcessHeap(),0,value); }
-Status UWCN_CALL invoke(ModuleId module,u32 operation,const void* request,u32 size,void* response,u32* capacity) {
+static void* URWCN_CALL allocate(u32 size) { return HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,size); }
+static void URWCN_CALL release(void* value) { if(value) HeapFree(GetProcessHeap(),0,value); }
+Status URWCN_CALL invoke(ModuleId module,u32 operation,const void* request,u32 size,void* response,u32* capacity) {
     std::lock_guard<std::recursive_mutex> lock(gate);
     const u32 index=static_cast<u32>(module)-1;
     if(index>=modules.size() || !enabled || !modules[index].table) return Status::unavailable;
@@ -64,7 +64,7 @@ void dispatch(NativeEvent& event,DispatchResult& result) {
     if(status!=Status::ok && status!=Status::unavailable) log((L"Native dispatch rejected id "+std::to_wstring(event.id)+L" with status "+std::to_wstring(static_cast<u32>(status))).c_str());
 }
 
-static std::wstring module_path(const std::wstring& base,u32 index) { return base+L"\\modules\\uwcn_"+names[index]+L".dll"; }
+static std::wstring module_path(const std::wstring& base,u32 index) { return base+L"\\modules\\urwcn_"+names[index]+L".dll"; }
 struct ReadPin {
     HANDLE file;
     explicit ReadPin(const std::wstring& path):file(CreateFileW(path.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr)) {}
@@ -123,8 +123,9 @@ static bool inspect_module(const std::vector<std::uint8_t>& bytes,u32 id) {
     const auto* functions=reinterpret_cast<const u32*>(address(exports->AddressOfFunctions,exports->NumberOfFunctions*4));
     if(!names_rva || !ordinals || !functions) return false;
     for(u32 i=0;i<exports->NumberOfNames;++i) {
-        const auto* name=address(names_rva[i],23);
-        if(!name || std::memcmp(name,"uwcn_module_descriptor",23)!=0 || ordinals[i]>=exports->NumberOfFunctions) continue;
+        constexpr char descriptor_name[]="urwcn_module_descriptor";
+        const auto* name=address(names_rva[i],sizeof(descriptor_name));
+        if(!name || std::memcmp(name,descriptor_name,sizeof(descriptor_name))!=0 || ordinals[i]>=exports->NumberOfFunctions) continue;
         const auto* description=reinterpret_cast<const ModuleDescriptor*>(address(functions[ordinals[i]],sizeof(ModuleDescriptor)));
         return description && description->magic==kDescriptorMagic && description->abi==kHostAbi && description->module_id==id && description->machine==IMAGE_FILE_MACHINE_I386 && description->state_schema==1;
     }
@@ -151,13 +152,13 @@ static bool load_module(u32 index,bool restore) {
     if(!read_bytes(release_path,manifest_bytes)) { error_text=L"Cannot read formal release manifest."; return false; }
     const std::string manifest(manifest_bytes.begin(),manifest_bytes.end());
     const std::string name(names[index],names[index]+std::wcslen(names[index]));
-    const std::string identity=manifest_value(manifest,"modules/uwcn_"+name+".dll");
+    const std::string identity=manifest_value(manifest,"modules/urwcn_"+name+".dll");
     const auto digest=hash_bytes(bytes);
-    if(manifest_value(manifest,"format")!="uwcn-release-v1" || identity.size()!=64 || std::wstring(identity.begin(),identity.end())!=digest) { error_text=L"Formal module hash differs from release manifest: "+path; return false; }
+    if(manifest_value(manifest,"format")!="urwcn-release-v1" || identity.size()!=64 || std::wstring(identity.begin(),identity.end())!=digest) { error_text=L"Formal module hash differs from release manifest: "+path; return false; }
     auto& module=modules[index];
     module.image=LoadLibraryExW(path.c_str(),nullptr,LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR|LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
     if(!module.image) { error_text=L"LoadLibrary failed: "+path; return false; }
-    const auto get=reinterpret_cast<GetModuleApi>(GetProcAddress(module.image,"uwcn_get_module_api"));
+    const auto get=reinterpret_cast<GetModuleApi>(GetProcAddress(module.image,"urwcn_get_module_api"));
     module.table=get ? get() : nullptr;
     if(!module.table || module.table->size!=sizeof(ModuleApi) || module.table->abi!=kHostAbi || static_cast<u32>(module.table->id)!=index+1) {
         error_text=L"Invalid module function table: "+path; module.table=nullptr; FreeLibrary(module.image); module.image=nullptr; return false;
@@ -245,7 +246,7 @@ static bool prepare_transaction() {
     std::string line;
     if(!std::getline(listing,line)) { error_text=L"Missing candidate file manifest."; return false; }
     if(!line.empty() && line.back()=='\r') line.pop_back();
-    if(line!="UWCN_CANDIDATE_V1") { error_text=L"Invalid candidate file manifest."; return false; }
+    if(line!="URWCN_CANDIDATE_V1") { error_text=L"Invalid candidate file manifest."; return false; }
     while(std::getline(listing,line)) {
         if(!line.empty() && line.back()=='\r') line.pop_back();
         const auto tab=line.find('\t');
@@ -262,7 +263,7 @@ static bool prepare_transaction() {
     }
     for(u32 i=0;i<modules.size();++i) if(change_mask&(1u<<i)) {
         const auto path=module_path(stage_path,i);
-        const std::wstring relative=L"modules/uwcn_"+std::wstring(names[i])+L".dll";
+        const std::wstring relative=L"modules/urwcn_"+std::wstring(names[i])+L".dll";
         bool listed=false;
         for(const auto& identity:candidate_identity) if(identity.relative==relative) listed=true;
         if(!listed) { error_text=L"Selected module absent from candidate file manifest."; return false; }
@@ -341,7 +342,7 @@ static std::wstring wide(const std::string& value) {
     std::wstring result(static_cast<std::size_t>(size),0); MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,value.data(),static_cast<int>(value.size()),result.data(),size); return result;
 }
 static DWORD WINAPI control_thread(void*) {
-    const std::wstring pipe_name=L"\\\\.\\pipe\\uwcn-"+std::to_wstring(GetCurrentProcessId());
+    const std::wstring pipe_name=L"\\\\.\\pipe\\urwcn-"+std::to_wstring(GetCurrentProcessId());
     for(;;) {
         HANDLE pipe=CreateNamedPipeW(pipe_name.c_str(),PIPE_ACCESS_DUPLEX,PIPE_TYPE_BYTE|PIPE_READMODE_BYTE|PIPE_WAIT|PIPE_REJECT_REMOTE_CLIENTS,1,8192,8192,0,nullptr);
         if(pipe==INVALID_HANDLE_VALUE) return 0;
@@ -379,15 +380,15 @@ static DWORD WINAPI control_thread(void*) {
 void start_control_server() { control_done=CreateEventW(nullptr,TRUE,FALSE,nullptr); HANDLE thread=CreateThread(nullptr,0,control_thread,nullptr,0,nullptr); if(thread) CloseHandle(thread); }
 }
 
-extern "C" __declspec(dllexport) DWORD WINAPI uwcn_initialize(void* main_thread) {
-    using namespace uwcn::host;
+extern "C" __declspec(dllexport) DWORD WINAPI urwcn_initialize(void* main_thread) {
+    using namespace urwcn::host;
     wchar_t path[32768]{}; GetModuleFileNameW(self,path,32768);
     package_path=std::filesystem::path(path).parent_path().wstring();
     game_thread=static_cast<DWORD>(reinterpret_cast<std::uintptr_t>(main_thread));
-    api={sizeof(uwcn::HostApi),uwcn::kHostAbi,reinterpret_cast<std::uintptr_t>(GetModuleHandleW(nullptr)),package_path.c_str(),invoke,install_hooks,allocate,release,log,native_fragment};
+    api={sizeof(urwcn::HostApi),urwcn::kHostAbi,reinterpret_cast<std::uintptr_t>(GetModuleHandleW(nullptr)),package_path.c_str(),invoke,install_hooks,allocate,release,log,native_fragment};
     const auto crash_status=crash_report::initialize(package_path);
-    if(crash_status!=uwcn::Status::ok) {log((L"Crash reporter initialization failed: status="+std::to_wstring(static_cast<uwcn::u32>(crash_status))).c_str());return 0;}
+    if(crash_status!=urwcn::Status::ok) {log((L"Crash reporter initialization failed: status="+std::to_wstring(static_cast<urwcn::u32>(crash_status))).c_str());return 0;}
     if(!initialize_modules() || !install_control_imports()) return 0;
-    start_control_server(); log(L"UWCn reconstruction ABI 1 initialized."); return 1;
+    start_control_server(); log(L"URWCN reconstruction ABI 1 initialized."); return 1;
 }
-BOOL WINAPI DllMain(HINSTANCE instance,DWORD reason,LPVOID) { if(reason==DLL_PROCESS_ATTACH) { uwcn::host::self=instance; DisableThreadLibraryCalls(instance); } return TRUE; }
+BOOL WINAPI DllMain(HINSTANCE instance,DWORD reason,LPVOID) { if(reason==DLL_PROCESS_ATTACH) { urwcn::host::self=instance; DisableThreadLibraryCalls(instance); } return TRUE; }

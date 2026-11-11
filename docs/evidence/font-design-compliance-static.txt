@@ -36,7 +36,7 @@
 保留原相对路径。该次发布的 Render 文件、构建产物和清单 SHA256 相同：
 7365db6612ffa835f876738d465eb42a5eb865ecb8cc0f5da9dab0b6bae99de4。
 
-用户随后反馈启动器启动闪退，现有 package/uwcn.log 在 23:35:25、23:35:31
+用户随后反馈启动器启动闪退，现有 package/urwcn.log 在 23:35:25、23:35:31
 记录 Initial module lifecycle failed: 6。静态审查发现新 10E700 游标宽度
 接入点的 MOV 绝对地址仍写为 PE 首选地址 065BBB3C；EXE 支持 ASLR，
 PE .reloc 明确包含 10E702 的 type 3 (HIGHLOW)；该操作数必须使用实际
@@ -48,7 +48,7 @@ base+61BBB3C。固定字节既会导致 activate_inline
 启动修复请求 640ac0a6e5d04c8eb3abdbcd9757dfec，批次
 82e1476e697d47f0b9fdb3840327ff0a，adapter 一次配置、一次增量构建成功，
 无编译警告。回执与批次完整日志均已读取。正式事务
-e6a29dacdd804cc48d91609f5994ceda 已替换 package/modules/uwcn_adapter.dll
+e6a29dacdd804cc48d91609f5994ceda 已替换 package/modules/urwcn_adapter.dll
 与清单；旧文件先移入 回收/20261018-234030-e6a29dacdd804cc48d91609f5994ceda/。
 当前 adapter 正式文件、构建产物和发布清单 SHA256 相同：
 95e488409a21c2bbff2fbb00d82f2047812fd3534da388edd1e056d40849b257。

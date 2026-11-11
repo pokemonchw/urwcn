@@ -6,7 +6,7 @@
 
 上次 `windows_encyclopedia.inc::windows_map_control` 在 CFDF6 和 CFECB 读取原 CFD10 帧的 `[EBP+4]`，按 E5D06 等游戏返回地址识别六个按钮。帮助同样在 162627 比较原 read_info 的 `[EBP+4] == E3E31`。
 
-但同一版本已分别给六个外层 CFD10 CALL 及 `E3E2C → 162530` 安装 CALL Hook。`src/loader/hook_host.cpp::uwcn_before_route` 将原返回地址存入驻留 Pending，再将游戏栈槽写为 `uwcn_after_bridge`。上述条件不会成立。这是上一实现遗漏的静态桥接语义，不能用源码有译文或 Applied 回执证明翻译已完整进入画面。最新用户截图直接说明图例和缩放的直接调用已经消费了中文，而这两条基于栈返回槽的路径没有消费。
+但同一版本已分别给六个外层 CFD10 CALL 及 `E3E2C → 162530` 安装 CALL Hook。`src/loader/hook_host.cpp::urwcn_before_route` 将原返回地址存入驻留 Pending，再将游戏栈槽写为 `urwcn_after_bridge`。上述条件不会成立。这是上一实现遗漏的静态桥接语义，不能用源码有译文或 Applied 回执证明翻译已完整进入画面。最新用户截图直接说明图例和缩放的直接调用已经消费了中文，而这两条基于栈返回槽的路径没有消费。
 
 修正复用已安装的完整原 CALL Before/After：六个按钮以 `Scope::known_map_control_first + 实际调用身份` 标识同步作用域；帮助以既有 `native_renderer_component_binding` 的 `map_help=7D9D` 开启同步作用域。CFDF6 绘制、CFECB 字宽及162627帮助记录读取同一真实作用域，After 通过原 token 结束。没有第二次安装同一 Hook，不扫描父帧或祖先，不改变驻留桥。
 
@@ -57,7 +57,7 @@ F95C3 和90588仍绑定同一中性原始表达式，随后直接解析同一语
 
 两个 `build/.compile-queue/results/<请求>.json` 均为 `Success=true`；日志位于 `build/.compile-queue/batches/<批次>.log`。两个 `build/mingw-x86/stage/<正式事务>/publication-result.json` 均为 `success=true`、`runtime_requested=true`、`applied=true`。
 
-最终事务于2026-11-10 17:50:44（Asia/Shanghai）完成，Windows PID `364` 返回 `ReadyToPublish`，随后 Adapter 第23代 `Applied`。正式替换为 `package/modules/uwcn_adapter.dll`、`package/release.json`。旧两件先移入各自批次归档：`回收/20261110-174956-41f2b2f9e6ed44448811701ae9abe9be/package/`、`回收/20261110-175043-55b64d64f8db469086f64e61b99703cf/package/`，保留原相对路径，已只读确认存在。
+最终事务于2026-11-10 17:50:44（Asia/Shanghai）完成，Windows PID `364` 返回 `ReadyToPublish`，随后 Adapter 第23代 `Applied`。正式替换为 `package/modules/urwcn_adapter.dll`、`package/release.json`。旧两件先移入各自批次归档：`回收/20261110-174956-41f2b2f9e6ed44448811701ae9abe9be/package/`、`回收/20261110-175043-55b64d64f8db469086f64e61b99703cf/package/`，保留原相对路径，已只读确认存在。
 
 | 文件 | SHA-256 |
 | --- | --- |
@@ -65,4 +65,4 @@ F95C3 和90588仍绑定同一中性原始表达式，随后直接解析同一语
 | 第一批 Adapter，Applied | `5939d587af10deeb9549d43a32c1f07fd089fc3e291e5fc7e48842b58ceda9e4` |
 | 地图词库，源码／正式件一致，沿用上一批资源 | `a3718a942156d9518eb990f0230b4d810a758110b8b5863a47dfd2f1d49f0e2c` |
 
-根 `uwcn_launcher.exe` 继续使用同一正式包，无平行运行副本。本次没有新增词条、启动或操作游戏、运行测试、写测试或断言。Applied只证明模块交接，用户画面尚待验收；不再次用构建成功替代完整视觉结论。
+根 `urwcn_launcher.exe` 继续使用同一正式包，无平行运行副本。本次没有新增词条、启动或操作游戏、运行测试、写测试或断言。Applied只证明模块交接，用户画面尚待验收；不再次用构建成功替代完整视觉结论。

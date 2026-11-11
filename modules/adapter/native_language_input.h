@@ -2,7 +2,7 @@
 #include "../../sdk/host_abi.h"
 #include <vector>
 
-namespace uwcn::adapter::native_language_input {
+namespace urwcn::adapter::native_language_input {
 // This is only the current keyboard press, not UI or translated text state.
 struct State { u32 f10_consumed{}; };
 struct Result { bool handled; bool toggle; };

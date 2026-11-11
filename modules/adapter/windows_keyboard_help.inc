@@ -11,13 +11,13 @@ enum class Kind { text,words,dot,period,alternatives,bracket,scroll,direction,di
 constexpr u32 section_panels[]{0x103CC0,0x1046DC,0x1048C5,0x104A9F};
 constexpr const char* section_keys[]{"movement","looking","picking","inventory"};
 extern "C" {
-std::uintptr_t uwcn_keyboard_help_construct_target{};
+std::uintptr_t urwcn_keyboard_help_construct_target{};
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_keyboard_help_reconstruct() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_keyboard_help_reconstruct() {
     // 103AA2 is entered with the four completed 103A97 blit arguments still
     // on the stack. 103AC4 removes them together with the new SDL arguments.
     // The balanced 10539B input continuation must establish that same depth.
-    __asm__ __volatile__("subl $16,%esp\n\tjmp *_uwcn_keyboard_help_construct_target\n\t");
+    __asm__ __volatile__("subl $16,%esp\n\tjmp *_urwcn_keyboard_help_construct_target\n\t");
 }
 struct TextCall {u32 site,target;const char* key;Kind kind;};
 constexpr TextCall text_calls[]{
@@ -172,7 +172,7 @@ Status rebuild(const NativeEvent& e,DispatchResult& result) {
     // Release exactly the resources released by 1054BA..1054EC, then let the
     // original construction and scrolling loop run again in this same frame.
     native_targets::destroy_component_texture(e.frame->ebx);
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x113400)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x113400)();
     if(e.frame->edi) (*at<void (__cdecl *)(void*)>(0x18C218))(ptr<void>(e.frame->edi));
     if(const auto surface=*ptr<u32>(e.frame->ebp-0x43C)) native_targets::destroy_component_surface(surface);
     *ptr<u32>(e.frame->ebp-0x43C)=0;
@@ -184,11 +184,11 @@ Status rebuild(const NativeEvent& e,DispatchResult& result) {
     e.frame->edi=*at<u32>(0x1E87A4);
     *ptr<u32>(e.frame->ebp-0x434)=e.frame->edi;
     result.resume_rva=static_cast<u32>(
-        reinterpret_cast<std::uintptr_t>(&uwcn_keyboard_help_reconstruct)-host->image_base);
+        reinterpret_cast<std::uintptr_t>(&urwcn_keyboard_help_reconstruct)-host->image_base);
     return Status::ok;
 }
 void append_hooks(std::vector<HookSpec>& hooks) {
-    uwcn_keyboard_help_construct_target=host->image_base+0x103AA2;
+    urwcn_keyboard_help_construct_target=host->image_base+0x103AA2;
     for(u32 i=0;i<std::size(text_calls);++i) {
         const auto& c=text_calls[i];
         hooks.push_back(call(text_first+i,c.site,c.target,
@@ -229,7 +229,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result,bool& handled) {
             static_cast<u32>(host->image_base+0x115AD0),e.frame->ecx,
             static_cast<std::int32_t>(e.frame->edx),static_cast<std::int32_t>(e.arguments[0]),
             static_cast<std::int32_t>(e.arguments[1]),title.data(),5};
-        native_renderer_component_calls::uwcn_renderer_section(&section);
+        native_renderer_component_calls::urwcn_renderer_section(&section);
         result.skip_original=1;return Status::ok;
     }
     switch(e.id) {

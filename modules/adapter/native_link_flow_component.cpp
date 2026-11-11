@@ -5,7 +5,7 @@
 #include <map>
 #include <utility>
 
-namespace uwcn::adapter::native_link_flow_component {
+namespace urwcn::adapter::native_link_flow_component {
 namespace {
 constexpr u32 header_rva=0x5F54A20,rows_rva=0x5F4EF10;
 constexpr u32 row_count=0x14,selection=0x90,row_action=0xC8;

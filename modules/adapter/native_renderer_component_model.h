@@ -4,7 +4,7 @@
 #include "native_text_resource.h"
 #include <variant>
 
-namespace uwcn::adapter::native_renderer_component_model {
+namespace urwcn::adapter::native_renderer_component_model {
 using native_text_resource::SourceKey;
 using native_text_resource::TextSource;
 using native_component_model::LayoutValue;

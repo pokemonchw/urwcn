@@ -1,4 +1,4 @@
-UWCn 主界面重建：文本读取、度量、绘制边界
+URWCN 主界面重建：文本读取、度量、绘制边界
 日期：2026-10-19
 范围：UnReal World 3.89 / Steam Build 25939378，主菜单八个已确认动作槽
 （其中 BONUS MATERIAL 条件显示）、原生版本、出品、版权、作者及网站。
@@ -212,7 +212,7 @@ BLEND，10D958 设置 alpha，10D96B 是同 rect 的 SDL_UpperBlit，随后恢�
   汇编桥 FXSAVE/FXRSTOR 与 PUSHFD/POPFD 保留 x87/XMM/原 flags。
 - 同文件:83、166 的 native_fragment 保存 EBP/EBX/ESI/EDI 后调用入口，
   驻留 TLS 中的结束返回地址仅把最后一个 CALL 的 After 续接改为 RET；
-  RET 取出 uwcn_enter_fragment 的调用返回地址，callee-save 随后恢复。
+  RET 取出 urwcn_enter_fragment 的调用返回地址，callee-save 随后恢复。
   此片段不用外层 EBP，且没有等待；不会留下指向 adapter 的跨等待帧。
 - src/loader/host.cpp:53、249 用短 invoke lease 和递归门阻止模块代码
   仍在执行时交接；:207-218 在退役前保存状态并逆序卸载；:240 向全部

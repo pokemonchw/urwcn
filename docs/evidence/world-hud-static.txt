@@ -24,7 +24,7 @@ The initial Ghidra invocation with default user preferences failed in Felix
 initialization. The successful invocation used JAVA_HOME at the local
 jdk-25.0.4.1+1 and GHIDRA_HEADLESS_JAVA_OPTIONS pointing application.settingsdir
 and java.io.tmpdir to build/load-saved-ghidra/settings and /cache. It processed
-the existing uwcn-load-saved project with -process urw.exe -readOnly -noanalysis.
+the existing urwcn-load-saved project with -process urw.exe -readOnly -noanalysis.
 No executable code from the target was run.
 
 Native location component and exact displayed text consumers

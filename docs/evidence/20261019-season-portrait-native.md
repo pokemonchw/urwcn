@@ -44,7 +44,7 @@ Linux 驻留桥没有运行中业务退役与重新加载协议，根队列拒�
 - 请求：`f3f7180efe3f4ee9bcd7423923deae52`；批次：`19a32af82e5840af9db84c3b3460f12d`。已读取对应 `build/.compile-queue/results/` JSON 和 `batches/` 完整日志，`Success=true`。
 - 发布事务：`050a7d78bc1948288365ecf970ad8568`。已读取 `build/linux-x86_64/stage/050a7d78bc1948288365ecf970ad8568/publication-result.json`，`success=true`、`runtime_requested=false`。
 - 正式替换：Adapter、Semantic、`package/catalog/zh-CN/main_menu.tsv`、Linux profile、`package/release.json` 共五件；旧件先按原相对路径移入 `回收/20261019-135238-050a7d78bc1948288365ecf970ad8568/`。Catalog 编译完成且二进制身份未变，词库实际已更新。
-- 已只读核对构建/正式 Adapter、Semantic，以及源码/正式词库、profile 的 SHA-256，分别一致并与正式清单相符。根 `uwcn_launcher` 和驻留桥未变，没有平行运行包。
+- 已只读核对构建/正式 Adapter、Semantic，以及源码/正式词库、profile 的 SHA-256，分别一致并与正式清单相符。根 `urwcn_launcher` 和驻留桥未变，没有平行运行包。
 - 编译存在原有 Semantic `key()` 的 HUD/world 枚举 `-Wswitch` 警告；这些组件由现有独立分派处理，无本轮新增组件遗漏或编译错误。
 
 | 正式内容 | SHA-256 |

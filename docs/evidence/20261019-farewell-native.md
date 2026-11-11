@@ -53,8 +53,8 @@ Linux 运行中模块退役和加载协议尚未实现，本次不使用 `-Reloa
 
 - 请求 `c63f8e01b3f946eca686ea2c46f0ed8d`；批次 `c6e0b6954b364227bec10a2ee04f6fdf`；发布事务 `a50eb7c87a744ae3be8370ae694af18a`。
 - 已读取 `build/.compile-queue/results/c63f8e01b3f946eca686ea2c46f0ed8d.json`、完整批次日志 `build/.compile-queue/batches/c6e0b6954b364227bec10a2ee04f6fdf.log` 及该事务的 `publication-result.json`；编译结果 `Success=true`，发布结果 `success=true`，`ReloadRequested=false`。
-- 正式更新 `package/modules/uwcn_adapter.dll`、`package/modules/uwcn_semantic.dll`、`package/catalog/zh-CN/main_menu.tsv`、Linux profile 和 `package/release.json`。catalog 模块也已重新编译，但二进制内容与原正式文件相同，未替换。上述三个模块、词库和 profile 的五项 SHA-256 均与正式清单一致。
-- 五件被替换的正式文件先移入 `回收/20261019-125249-a50eb7c87a744ae3be8370ae694af18a/`，保留原相对路径，再放入新文件。发布脚本同步既有应用菜单链接；根正式入口仍为 `uwcn_launcher`，启动器与驻留库未重新编译。
+- 正式更新 `package/modules/urwcn_adapter.dll`、`package/modules/urwcn_semantic.dll`、`package/catalog/zh-CN/main_menu.tsv`、Linux profile 和 `package/release.json`。catalog 模块也已重新编译，但二进制内容与原正式文件相同，未替换。上述三个模块、词库和 profile 的五项 SHA-256 均与正式清单一致。
+- 五件被替换的正式文件先移入 `回收/20261019-125249-a50eb7c87a744ae3be8370ae694af18a/`，保留原相对路径，再放入新文件。发布脚本同步既有应用菜单链接；根正式入口仍为 `urwcn_launcher`，启动器与驻留库未重新编译。
 - 编译保留原有 HUD/world 前置分发相关的 15 条 switch 枚举警告；本次新增的告别页语义均已显式映射，没有添加默认语义或兜底分支来消除警告。
 - Linux 尚无运行中热加载协议。本次正式发布未更新正在运行的进程，没有运行时 Applied 回执；下次由根启动器正常启动时加载正式文件。
 

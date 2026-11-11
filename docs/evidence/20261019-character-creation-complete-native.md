@@ -70,8 +70,8 @@
 
 | 正式文件（相对 package/） | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `e55fa878111ff1257c8231bbd819ee9c6f9e80c1230cee98df7d9f400fc0fb32` |
-| `modules/uwcn_semantic.dll` | `439c4b3be82d1a0f0484f0862bac4a763974ad62357ff9b463ac35246668c78f` |
+| `modules/urwcn_adapter.dll` | `e55fa878111ff1257c8231bbd819ee9c6f9e80c1230cee98df7d9f400fc0fb32` |
+| `modules/urwcn_semantic.dll` | `439c4b3be82d1a0f0484f0862bac4a763974ad62357ff9b463ac35246668c78f` |
 | `catalog/zh-CN/main_menu.tsv` | `af7b11ec8eb35090ab94e4bc52f703cc0d67f2da40721a356a2a751c802489e7` |
 | `profiles/urw-3.89-steam-25939378.json` | `752b372a66b1e61f21d17263f4ea65756008446a7d2aa9b82568acd405691cd2` |
 

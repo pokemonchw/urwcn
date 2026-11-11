@@ -20,7 +20,7 @@
 #include <thread>
 #include <vector>
 
-namespace uwcn::linux_host {
+namespace urwcn::linux_host {
 namespace {
 using Main=int (*)(int,char**,char**);
 Main native_main;
@@ -55,7 +55,7 @@ struct Lease {
     Lease() { enter_business(); }
     ~Lease() { leave_business(); }
 };
-std::string relative_module(u32 index) { return "modules/uwcn_"+std::string(names[index])+".dll"; }
+std::string relative_module(u32 index) { return "modules/urwcn_"+std::string(names[index])+".dll"; }
 void require(Status status,const std::string& operation) {
     if(status!=Status::ok) throw std::runtime_error(operation+": status "+std::to_string(static_cast<u32>(status)));
 }
@@ -72,7 +72,7 @@ void load_module(u32 index,bool restore) {
     auto& module=modules[index];
     module.image=dlopen(file.c_str(),RTLD_NOW|RTLD_LOCAL);
     if(!module.image) throw std::runtime_error(dlerror());
-    const auto get=reinterpret_cast<GetModuleApi>(dlsym(module.image,"uwcn_get_module_api"));
+    const auto get=reinterpret_cast<GetModuleApi>(dlsym(module.image,"urwcn_get_module_api"));
     if(!get) throw std::runtime_error("Missing module API: "+file.string());
     const auto* table=get();
     if(!table || table->size!=sizeof(ModuleApi) || table->abi!=kHostAbi || static_cast<u32>(table->id)!=index+1)
@@ -112,14 +112,14 @@ void inspect_candidates() {
         if(!line.empty() && line.back()=='\r') line.pop_back();
         return true;
     };
-    if(!read_line() || line!="UWCN_CANDIDATE_V1") throw std::runtime_error("Invalid candidate file manifest");
+    if(!read_line() || line!="URWCN_CANDIDATE_V1") throw std::runtime_error("Invalid candidate file manifest");
     while(read_line()) {
         const auto tab=line.find('\t');
         if(tab!=64) throw std::runtime_error("Invalid candidate hash record");
         const auto relative=line.substr(tab+1),hash=line.substr(0,tab);
         const std::filesystem::path path(relative);
         if(relative.empty() || path.has_root_path() || path.lexically_normal()!=path ||
-           relative.starts_with("../") || relative==".." || relative=="uwcn_loader.dll")
+           relative.starts_with("../") || relative==".." || relative=="urwcn_loader.dll")
             throw std::runtime_error("Invalid business candidate path: "+relative);
         if(!candidates.emplace(relative,hash).second) throw std::runtime_error("Duplicate candidate: "+relative);
         if(file_sha256(std::filesystem::path(stage_path)/path)!=hash)
@@ -170,7 +170,7 @@ void complete(TransactionPhase result,const std::string& receipt) {
 void initialize() {
     if(file_sha256("/proc/self/exe")!=game_sha256)
         throw std::runtime_error("The resident requires the recorded Linux ELF identity");
-    package=std::filesystem::canonical(std::getenv("UWCN_PACKAGE"));
+    package=std::filesystem::canonical(std::getenv("URWCN_PACKAGE"));
     package_wide=package.wstring();
     std::uintptr_t base{};
     dl_iterate_phdr([](dl_phdr_info* information,std::size_t,void* result) {
@@ -253,7 +253,7 @@ std::string control_command(const std::string& line) {
     input>>command;
     std::unique_lock lock(control_lock);
     if(control_stopped) return response;
-    if(command=="STATUS") return "UWCN_LINUX_CONTROL_V1 ABI=2 "+std::string(suspended ? "Suspended " : "Running ")+response;
+    if(command=="STATUS") return "URWCN_LINUX_CONTROL_V1 ABI=2 "+std::string(suspended ? "Suspended " : "Running ")+response;
     input>>id;
     if(command=="PREPARE") {
         u32 mask{};
@@ -274,8 +274,8 @@ std::string control_command(const std::string& line) {
     return response;
 }
 }
-extern "C" int __libc_start_main(uwcn::linux_host::Main main,int argc,char** argv,void (*init)(),void (*fini)(),void (*rtld_fini)(),void* stack_end) {
-    using namespace uwcn::linux_host;
+extern "C" int __libc_start_main(urwcn::linux_host::Main main,int argc,char** argv,void (*init)(),void (*fini)(),void (*rtld_fini)(),void* stack_end) {
+    using namespace urwcn::linux_host;
     using Start=int (*)(Main,int,char**,void (*)(),void (*)(),void (*)(),void*);
     native_main=main;
     const auto start=reinterpret_cast<Start>(dlsym(RTLD_NEXT,"__libc_start_main"));

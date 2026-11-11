@@ -4,7 +4,7 @@
 #include <cstring>
 #include <iterator>
 
-namespace uwcn::adapter::windows_build {
+namespace urwcn::adapter::windows_build {
 // The launcher admits only the two exact PE fingerprints in profiles/.
 // Build 26139145's native version getter reads this seven-byte string.
 inline bool newer_build{};

@@ -56,7 +56,7 @@
 
 ## 交付状态
 
-源码及词库修改、统一队列编译、正式文件发布均完成。最终发布时间为2026-10-19 19:04:56（Asia/Shanghai）；发布时游戏已不在运行，下次从根 `uwcn_launcher` 正常启动加载，本轮没有运行时 Applied 回执。
+源码及词库修改、统一队列编译、正式文件发布均完成。最终发布时间为2026-10-19 19:04:56（Asia/Shanghai）；发布时游戏已不在运行，下次从根 `urwcn_launcher` 正常启动加载，本轮没有运行时 Applied 回执。
 
 两次均使用 Linux 默认 `/usr/bin/cmake`、`/usr/bin/g++`、`build/linux-x86_64` 和正式 `package/`，模块集合为 catalog、semantic、adapter。每批一次配置及一次增量构建，不清理构建树；提交后至所属批次结束未修改源码。
 

@@ -4,7 +4,7 @@
 
 ## 本次现场
 
-- `package/uwcn.log` 最新异常：`C0000005`，EIP=`00525260`，ESP=`0AD7F3C0`，EBP=`0AD7F3D4`，EAX=0、EBX=1、ECX=2、EDX=0；最后原生事件 ID125、phase=1、token=3442456。
+- `package/urwcn.log` 最新异常：`C0000005`，EIP=`00525260`，ESP=`0AD7F3C0`，EBP=`0AD7F3D4`，EAX=0、EBX=1、ECX=2、EDX=0；最后原生事件 ID125、phase=1、token=3442456。
 - `package/crashes/20261111-063319-762-p364-t368.dmp` 为北京时间14:33:19.762开始记录的现场，Windows PID364、线程368；转储异常参数确认读取地址 `00000001`。转储头时间为06:33:20 UTC。
 - 转储 SHA-256：`250e816d09705938df70a6d3eaae239715328179b17b2c6439fe9ecaf0154a9d`。
 - 转储 EBP 链的首个返回地址为 `52544A`，对应原 `125445 -> 125240` 单行诗文淡入调用。后续两帧返回 `796E614E`，位于本次加载的正式驻留库 `796E0000` 内，是原生 CALL 的既有 After 桥；不能把它解释为原 EXE 调用地址。
@@ -76,7 +76,7 @@
 | 编译结果 | 重新编译 `module.cpp.obj` 并链接Adapter成功；有既有函数指针转换、extern初始化、未使用声明及缩进警告，没有编译错误 |
 | 正式事务 | `60d922d474d64cc084d79a8cf2b46877`，北京时间14:36:14完成 |
 | 发布回执 | `build/mingw-x86/stage/60d922d474d64cc084d79a8cf2b46877/publication-result.json`：`success=true`、`runtime_requested=false`，已读取 |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/profiles/urw-3.89.1-steam-26139145.json`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/profiles/urw-3.89.1-steam-26139145.json`、`package/release.json` |
 | 旧文件回收 | `回收/20261111-143614-60d922d474d64cc084d79a8cf2b46877/package/`，三件旧文件先归档后替换，保留原相对路径 |
 
 | 文件身份 | SHA-256 |
@@ -85,6 +85,6 @@
 | 旧Adapter，已从回收件读取 | `09e754c7b19974fba89aa65dd1f9bb04a8b2d01d39fbbfd71a1c2625834e39da` |
 | 新3.89.1适配，源码／正式件／清单一致 | `ff3215a85c926fe72526adf213abe53622f432a6120f3abc119d8f8320f792b7` |
 
-对新正式DLL的只读反汇编确认：`append_hooks` 的 `6445E401` 传入125260，后续传入ID5212h及长度5；`6472BB6C` 保存 `8A C3 C0 E0 02`。驻留 `_uwcn_after_bridge` 在.text内偏移514Eh，加节RVA1000h即614Eh，与现场 `796E614E` 的返回地址一致。没有加载或执行DLL。
+对新正式DLL的只读反汇编确认：`append_hooks` 的 `6445E401` 传入125260，后续传入ID5212h及长度5；`6472BB6C` 保存 `8A C3 C0 E0 02`。驻留 `_urwcn_after_bridge` 在.text内偏移514Eh，加节RVA1000h即614Eh，与现场 `796E614E` 的返回地址一致。没有加载或执行DLL。
 
-正式根 `uwcn_launcher.exe` 下次正常启动使用更新后的同一 `package/`。本批不请求Reload、不取得Applied，没有启动或测试游戏；编译成功、静态字节一致及正式发布回执不代表运行验收。
+正式根 `urwcn_launcher.exe` 下次正常启动使用更新后的同一 `package/`。本批不请求Reload、不取得Applied，没有启动或测试游戏；编译成功、静态字节一致及正式发布回执不代表运行验收。

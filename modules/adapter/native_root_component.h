@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace uwcn::adapter::native_root_component {
+namespace urwcn::adapter::native_root_component {
 using RootRevision=u64;
 
 enum class SourceKind : u32 { filename=1, native_surface_owner=2, native_clear=3 };

@@ -61,7 +61,7 @@ boundaries draw the same plan. No SDL hook is used to identify UI text.
 
 Delivery
 The resident Host's fixed metadata/package-identity service returns generic
-raw bytes headed by UWCN_PACKAGE_IDENTITY_V1, followed by all six current
+raw bytes headed by URWCN_PACKAGE_IDENTITY_V1, followed by all six current
 module hashes and the current catalog hash. MainMenu owns the display-version
 business rule, so later compatible changes to that rule reload with MainMenu.
 The six-module ABI 3 migration requires one full offline publication of the

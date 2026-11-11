@@ -6,7 +6,7 @@
 #include "message_text.h"
 
 namespace {
-using namespace uwcn;
+using namespace urwcn;
 const HostApi* host_api=nullptr;
 const char* key(TextComponent component) {
     switch(component) {
@@ -252,7 +252,7 @@ bool has_value(TextComponent component) {
            component==TextComponent::startup_audio || component==TextComponent::startup_audio_failed ||
            is_setup_value(component);
 }
-Status UWCN_CALL initialize(const HostApi* host) {
+Status URWCN_CALL initialize(const HostApi* host) {
     if(!host || host->abi!=kHostAbi || host->size!=sizeof(HostApi)) return Status::invalid;
     host_api=host;
     // Check the complete component vocabulary before making this generation visible.
@@ -356,7 +356,7 @@ Status UWCN_CALL initialize(const HostApi* host) {
     }
     return Status::ok;
 }
-Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* capacity) {
+Status URWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* capacity) {
     if(op==kModuleDependenciesChanged) {
         if(!input || bytes!=sizeof(u32)) return Status::invalid;
         return (*static_cast<const u32*>(input)&1u) ? initialize(host_api) : Status::ok;
@@ -455,8 +455,8 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
     }
     return copy_text(text,output,capacity);
 }
-void UWCN_CALL shutdown() { host_api=nullptr; }
+void URWCN_CALL shutdown() { host_api=nullptr; }
 const ModuleApi api={sizeof(ModuleApi),kHostAbi,ModuleId::semantic,initialize,invoke,empty_save,empty_restore,shutdown};
 }
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor={uwcn::kDescriptorMagic,uwcn::kHostAbi,2,uwcn::kModuleMachine,1};
-UWCN_EXPORT const uwcn::ModuleApi* UWCN_CALL uwcn_get_module_api() { return &api; }
+URWCN_EXPORT const urwcn::ModuleDescriptor urwcn_module_descriptor={urwcn::kDescriptorMagic,urwcn::kHostAbi,2,urwcn::kModuleMachine,1};
+URWCN_EXPORT const urwcn::ModuleApi* URWCN_CALL urwcn_get_module_api() { return &api; }

@@ -1,7 +1,7 @@
 #pragma once
 #include "../../sdk/text_services.h"
 
-namespace uwcn::adapter {
+namespace urwcn::adapter {
 // Confirmed 10E5A0 call sites inside 105700. This is a semantic call inventory,
 // not a page layout: positions, colors, visibility and values stay in the game.
 struct SetupTextCall {

@@ -27,7 +27,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-namespace uwcn::adapter::scoped {
+namespace urwcn::adapter::scoped {
 namespace {
 int edge(int value,int numerator,int denominator) {
     const auto product=static_cast<std::int64_t>(value)*numerator;

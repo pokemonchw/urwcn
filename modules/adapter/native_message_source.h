@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace uwcn::adapter::native_message_source {
+namespace urwcn::adapter::native_message_source {
 enum class Kind:u32 { original,lookup,scalar,format,replace_first,concat,before_separator,without_initial_marker };
 enum class Scalar:u32 { signed32,signed_long32,unsigned32,real64,character };
 // These are original English input expressions, not translated message text,

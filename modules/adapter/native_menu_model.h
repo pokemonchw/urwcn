@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace uwcn::adapter::native_menu_model {
+namespace urwcn::adapter::native_menu_model {
 using Handle=u32;
 inline constexpr u32 header_bytes=0x190;
 inline constexpr u32 rows_bytes=0x5AA0;

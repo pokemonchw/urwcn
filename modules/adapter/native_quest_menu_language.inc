@@ -10,7 +10,7 @@ enum Hook:u32 {
     title_panel,title_text,empty_text_first
 };
 struct Detail {u32 target,frame,origin,recreate,set_target;};
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_quest_detail(const Detail*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_quest_detail(const Detail*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%eax\n\tmovl 4(%eax),%ebp\n\t"
@@ -20,7 +20,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_quest_detail(const Detail*
 }
 u32 component_return() {
     return static_cast<u32>(reinterpret_cast<std::uintptr_t>(
-        native_component_calls::uwcn_component_fragment_return)-host->image_base);
+        native_component_calls::urwcn_component_fragment_return)-host->image_base);
 }
 void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(inline_hook(detail_finished,0x1586D5,{0x8B,0xC8,0x83,0xF9,0xD6}));
@@ -50,7 +50,7 @@ Status heading(const NativeEvent& event) {
         static_cast<std::int32_t>(event.arguments[0]),
         static_cast<std::int32_t>(event.arguments[1]),encoded.data(),5};
     begin(event,Scope::hud_renderer_text,1);
-    native_renderer_component_calls::uwcn_renderer_section(&call);
+    native_renderer_component_calls::urwcn_renderer_section(&call);
     end(event.token);
     return Status::ok;
 }
@@ -70,12 +70,12 @@ Status construct(u32 page,Construction kind) {
         const Detail detail{address(at<void>(0x157D75)),page,
             *ptr<const u32>(page-0x1EFD4),*ptr<const u32>(page-0x1EFE0),
             *at<u32>(0x18C288)};
-        uwcn_quest_detail(&detail);
+        urwcn_quest_detail(&detail);
     } else {
         // 158D3F is the complete original texture reconstruction loop after
         // the native FIRST save and initial page/selection initialization.
         const native_full_language::BorrowedFrame list{address(at<void>(0x158D3F)),page};
-        native_full_language::uwcn_full_language_frame(&list);
+        native_full_language::urwcn_full_language_frame(&list);
     }
     constructing=Construction::none;
     std::memcpy(at<void>(0x5DF9DB8),npc.data(),npc.size());

@@ -16,53 +16,53 @@ enum Hook:u32 {query_finished=0x51E0,query_second_finished,history_entry,
     query_panel,query_second_panel,field_input,
     field_text=0x5265,field_cursor_width,field_detail_finished,
     query_input,query_second_input};
-extern "C" std::uintptr_t uwcn_generic_history_capacity_target{};
-extern "C" std::uintptr_t uwcn_generic_history_body_target{};
-extern "C" std::uintptr_t uwcn_generic_history_eof{};
-extern "C" std::uintptr_t uwcn_generic_history_eof_return{};
+extern "C" std::uintptr_t urwcn_generic_history_capacity_target{};
+extern "C" std::uintptr_t urwcn_generic_history_body_target{};
+extern "C" std::uintptr_t urwcn_generic_history_eof{};
+extern "C" std::uintptr_t urwcn_generic_history_eof_return{};
 extern "C" {
-std::uintptr_t uwcn_generic_query_input_target{},uwcn_generic_query_input_return{},
-    uwcn_generic_query_second_input_return{};
+std::uintptr_t urwcn_generic_query_input_target{},urwcn_generic_query_input_return{},
+    urwcn_generic_query_second_input_return{};
 }
 
 struct Query {u32 target,frame,text;};
 struct KnownDetail {u32 target,frame,self;};
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_known_detail(const KnownDetail*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_known_detail(const KnownDetail*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%eax\n\tmovl 4(%eax),%ebp\n\t"
         "movl 8(%eax),%ebx\n\tcall *(%eax)\n\t"
         "popl %ebp\n\tpopl %edi\n\tpopl %esi\n\tpopl %ebx\n\tret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_query(const Query*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_query(const Query*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%eax\n\tmovl 4(%eax),%ebp\n\t"
         "movl 8(%eax),%esi\n\tcall *(%eax)\n\t"
         "popl %ebp\n\tpopl %edi\n\tpopl %esi\n\tpopl %ebx\n\tret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_query_input() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_query_input() {
     // Preserve D1120's actual native caller at EBP+4. A phased CALL hook
     // would replace it with the resident After bridge and hide its owner.
-    __asm__ __volatile__("pushl _uwcn_generic_query_input_return\n\tjmp *_uwcn_generic_query_input_target\n\t");
+    __asm__ __volatile__("pushl _urwcn_generic_query_input_return\n\tjmp *_urwcn_generic_query_input_target\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_query_second_input() {
-    __asm__ __volatile__("pushl _uwcn_generic_query_second_input_return\n\tjmp *_uwcn_generic_query_input_target\n\t");
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_query_second_input() {
+    __asm__ __volatile__("pushl _urwcn_generic_query_second_input_return\n\tjmp *_urwcn_generic_query_input_target\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_history_capacity() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_history_capacity() {
     // FE3C7's original capacity calculation begins with the three pending
     // memset arguments; FE3DF owns their ADD ESP,0Ch cleanup.
-    __asm__ __volatile__("subl $12,%esp\n\tjmp *_uwcn_generic_history_capacity_target\n\t");
+    __asm__ __volatile__("subl $12,%esp\n\tjmp *_urwcn_generic_history_capacity_target\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_history_body() {
-    __asm__ __volatile__("addl $36,%esp\n\tjmp *_uwcn_generic_history_body_target\n\t");
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_history_body() {
+    __asm__ __volatile__("addl $36,%esp\n\tjmp *_urwcn_generic_history_body_target\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_history_file() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_history_file() {
     // The ordinary native path still runs its exact pending argument cleanup
     // and feof(FILE*) call. No relative CALL or ESP operation is replayed.
     __asm__ __volatile__(
         "addl $36,%esp\n\tpushl %ebx\n\t"
-        "call *_uwcn_generic_history_eof\n\tjmp *_uwcn_generic_history_eof_return\n\t");
+        "call *_urwcn_generic_history_eof\n\tjmp *_urwcn_generic_history_eof_return\n\t");
 }
 u32 continuation(const void* target) {
     return static_cast<u32>(reinterpret_cast<std::uintptr_t>(target)-host->image_base);
@@ -104,13 +104,13 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(field_text,0x10FA4D,0x10E260,4));
     hooks.push_back(inline_hook(field_cursor_width,0x10FA77,{0x8D,0x14,0xD5,2,0,0,0}));
     hooks.push_back(inline_hook(field_detail_finished,0xE4673,{0x80,0xFB,2,0x75,0x2F}));
-    uwcn_generic_history_capacity_target=host->image_base+0xFE3C7;
-    uwcn_generic_history_body_target=host->image_base+0xFE673;
-    uwcn_generic_history_eof=*at<u32>(0x18C4E0);
-    uwcn_generic_history_eof_return=host->image_base+0xFE487;
-    uwcn_generic_query_input_target=host->image_base+0xD1120;
-    uwcn_generic_query_input_return=host->image_base+0xFBA2A;
-    uwcn_generic_query_second_input_return=host->image_base+0xFBC98;
+    urwcn_generic_history_capacity_target=host->image_base+0xFE3C7;
+    urwcn_generic_history_body_target=host->image_base+0xFE673;
+    urwcn_generic_history_eof=*at<u32>(0x18C4E0);
+    urwcn_generic_history_eof_return=host->image_base+0xFE487;
+    urwcn_generic_query_input_target=host->image_base+0xD1120;
+    urwcn_generic_query_input_return=host->image_base+0xFBA2A;
+    urwcn_generic_query_second_input_return=host->image_base+0xFBC98;
 }
 
 Status query(const NativeEvent& event,bool second) {
@@ -133,7 +133,7 @@ Status query(const NativeEvent& event,bool second) {
     // CFAF0 paints these kind-100 buttons immediately; CFFB0 returns on
     // their empty title and cannot reconstruct the buttons from NOTEXTSPOT.
     // Skip only this synchronous copy's D1120; the real wait stays suspended.
-    uwcn_generic_query(&input);
+    urwcn_generic_query(&input);
     constructing=Construction::none;
     return Status::ok;
 }
@@ -145,7 +145,7 @@ Status history(const NativeEvent& event) {
     history_body=(owner&~u32{7})-0xD58;
     const auto fade=*at<u32>(0x61BBCD8);
     constructing=Construction::history;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xFE2B0)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xFE2B0)();
     constructing=Construction::none;
     *at<u32>(0x61BBCD8)=fade;
     history_body=0;
@@ -160,8 +160,8 @@ Status known_map(const NativeEvent& event,bool detail,bool field=false) {
         const auto owner=*ptr<const u32>(event.frame->ebp);
         const KnownDetail input{address(at<void>(0xE413B)),owner,
             *ptr<const std::uint8_t>(owner-0xA31)};
-        uwcn_generic_known_detail(&input);
-    } else reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xE4960)();
+        urwcn_generic_known_detail(&input);
+    } else reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xE4960)();
     constructing=Construction::none;
     return Status::ok;
 }
@@ -226,11 +226,11 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
             // All native arguments are balanced here. Return only from the
             // borrowed construction, before interpreting an input result.
             result.resume_rva=continuation(reinterpret_cast<const void*>(
-                native_component_calls::uwcn_component_fragment_return));
+                native_component_calls::urwcn_component_fragment_return));
         } else {
             result.resume_rva=continuation(event.id==query_input ?
-                reinterpret_cast<const void*>(uwcn_generic_query_input) :
-                reinterpret_cast<const void*>(uwcn_generic_query_second_input));
+                reinterpret_cast<const void*>(urwcn_generic_query_input) :
+                reinterpret_cast<const void*>(urwcn_generic_query_second_input));
         }
         return Status::ok;
     }
@@ -288,7 +288,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         // complete. Stop before the accepted mode=2 automatically starts its
         // second field; the actual 10F950 input remains the sole live editor.
         result.resume_rva=constructing==Construction::known_field ?
-            continuation(reinterpret_cast<const void*>(native_component_calls::uwcn_component_fragment_return)) :
+            continuation(reinterpret_cast<const void*>(native_component_calls::urwcn_component_fragment_return)) :
             ((event.frame->ebx&0xFF)==2 ? 0xE4678 : 0xE46A7);
         return Status::ok;
     }
@@ -301,7 +301,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=true;
     if(event.id==known_detail_finished) {
         result.resume_rva=constructing==Construction::known_detail ?
-            continuation(reinterpret_cast<const void*>(native_component_calls::uwcn_component_fragment_return)) :
+            continuation(reinterpret_cast<const void*>(native_component_calls::urwcn_component_fragment_return)) :
             (event.frame->eax==static_cast<u32>(-42) ? 0xE470C : 0xE46B1);
         return Status::ok;
     }
@@ -347,8 +347,8 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
             event.frame->ecx=event.frame->ebx;
             // Panel arguments are still pending at this original boundary.
             event.frame->edi=*ptr<const u32>(event.frame->esp+36+0x28);
-            result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_generic_history_body));
-        } else result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_generic_history_file));
+            result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_generic_history_body));
+        } else result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_generic_history_file));
         return Status::ok;
     }
     if(constructing!=Construction::history) return Status::ok;
@@ -356,7 +356,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         for(const auto field:{0x14u,0x18u,0x20u})
             *ptr<u32>(event.frame->esp+field)=*ptr<const u32>(history_body+field);
         event.frame->esi=0;
-        result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_generic_history_capacity));
+        result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_generic_history_capacity));
     } else if(event.id==history_cache) result.resume_rva=0xFE442;
     else if(event.id==history_finished) {
         // The original constructor supplies the line capacity used by its

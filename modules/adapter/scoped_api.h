@@ -1,7 +1,7 @@
 #pragma once
 #include "../render/sdl_api.h"
 
-namespace uwcn::adapter::scoped {
+namespace urwcn::adapter::scoped {
 using Rect = render::Rect;
 using Surface = render::Surface;
 

@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <cstdint>
 
-namespace uwcn::adapter::native_raster {
+namespace urwcn::adapter::native_raster {
 // The caller has identified the supported game image and retired the former
 // Host pixel hooks. It owns the native main surface at image + 61BBB10, whose
 // 800 x 600 logical domain has physical dimensions of at least 800 x 600.

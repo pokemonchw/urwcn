@@ -76,4 +76,4 @@
 | 正式 cultures.tsv／源码词库 SHA-256 | `8fceaa6511e79cb470ca85f57101c0877a0565d43c46b5834bd09afd8be36ee1` |
 | 旧文件回收 | `回收/20261111-115748-72084f736f944ddba87ccfa28ffc73b7/package/`，按原相对路径保留 Adapter DLL、cultures.tsv、release.json |
 
-正式更新 `package/modules/uwcn_adapter.dll`、`package/catalog/zh-CN/cultures.tsv` 和 `package/release.json`。根 `uwcn_launcher.exe` 继续加载同一正式包，无需重启，没有平行修复包。`Applied` 只证明业务交接完成；没有自行运行输入法、搜索或画面测试，实际交互效果待用户验收。
+正式更新 `package/modules/urwcn_adapter.dll`、`package/catalog/zh-CN/cultures.tsv` 和 `package/release.json`。根 `urwcn_launcher.exe` 继续加载同一正式包，无需重启，没有平行修复包。`Applied` 只证明业务交接完成；没有自行运行输入法、搜索或画面测试，实际交互效果待用户验收。

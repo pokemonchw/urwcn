@@ -61,19 +61,19 @@
 | 完整批次日志 | `build/.compile-queue/batches/d2fd0757e1bd430b95ef1b0af44a5170.log`，已完整读取 |
 | 正式事务 | `44f76f8afae1485d89813831f052eb60`，2026-11-11 13:23:44（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/44f76f8afae1485d89813831f052eb60/publication-result.json`，`success=true`、当前目标 `applied=true`，已读取 |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`uwcn_catalog.dll`、`uwcn_semantic.dll`，`package/catalog/zh-CN/main_menu.tsv`、新版构建适配及 `package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`urwcn_catalog.dll`、`urwcn_semantic.dll`，`package/catalog/zh-CN/main_menu.tsv`、新版构建适配及 `package/release.json` |
 | 旧件回收 | `回收/20261111-132342-44f76f8afae1485d89813831f052eb60/package/`，六件先归档后替换，保留原相对路径；六件实际存在 |
 | 进程身份 | 只读宿主进程表为原 PID `3275331 urw.exe`；既有 Proton Mono 解释器只读枚举为 Windows PID `364 urw` |
 | 兼容交接 | `ReadyToPublish` 后返回 Catalog 第5代、Semantic 第4代、Adapter 第6代 `Applied` |
 
 | 正式文件 | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `13d35a89f33c79353016faefc1320df28151e791787401176d135f334f0d5f89` |
-| `modules/uwcn_catalog.dll` | `800163383c47b5be9d3e33b36ba067b264dd89d9d169abf59f035bb4837b9bb2` |
-| `modules/uwcn_semantic.dll` | `df9e91dd0d77d88f01a856c20b49a6b893fcfc05e288173ca146f11b50ce7517` |
+| `modules/urwcn_adapter.dll` | `13d35a89f33c79353016faefc1320df28151e791787401176d135f334f0d5f89` |
+| `modules/urwcn_catalog.dll` | `800163383c47b5be9d3e33b36ba067b264dd89d9d169abf59f035bb4837b9bb2` |
+| `modules/urwcn_semantic.dll` | `df9e91dd0d77d88f01a856c20b49a6b893fcfc05e288173ca146f11b50ce7517` |
 | `catalog/zh-CN/main_menu.tsv` | `cd950ea9c051e56d4c55cf8ef23ff762c9b59c57c6339482804961752a6cf064` |
 | `profiles/urw-3.89.1-steam-26139145.json` | `51afdfda839305ea1d2ab6adc81b20485f33fb738aae0fb02fde7d744e18f371` |
 
-只读核对三份正式库与构建输出一致，正式词库和新版构建适配与源码一致，发布清单全部16项身份与磁盘一致。根 `uwcn_launcher.exe` 继续使用同一正式包，启动器及驻留库不需要替换，没有平行运行副本。
+只读核对三份正式库与构建输出一致，正式词库和新版构建适配与源码一致，发布清单全部16项身份与磁盘一致。根 `urwcn_launcher.exe` 继续使用同一正式包，启动器及驻留库不需要替换，没有平行运行副本。
 
 源码修改、产物编译、正式文件发布和当前进程兼容交接均完成。无需重启，译文由下一次正常地图加载进度绘制消费；没有强制重入加载业务。`Applied` 只证明模块交接，实际画面待用户验收，本轮未自行测试。

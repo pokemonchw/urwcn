@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace uwcn::render {
+namespace urwcn::render {
 struct Image { int w{},h{}; std::vector<std::uint32_t> pixels; };
 struct Raster {
     Image image;

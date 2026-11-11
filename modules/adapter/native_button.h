@@ -4,7 +4,7 @@
 #include <cstring>
 #include <string>
 
-namespace uwcn::adapter::native_button {
+namespace urwcn::adapter::native_button {
 // Native 114680 keeps its cap/tile blits, highlight markup and flow. Extend
 // its complete glyphs for translated plain and <Y>/<N> query button labels.
 // Evidence: credits-button-disassembly.txt and 20261110-inventory-all-text.asm.

@@ -77,9 +77,9 @@
 
 - 请求 `e2b3e92899af420780c5e5c2936bb7bb`，批次 `3db9387e76884db7aa457f3eb65b1700`，发布事务 `ea183e2e62c94045ab2a32f24243e63c`。
 - 已读取请求结果 JSON、完整批次日志和 `build/linux-x86_64/stage/ea183e2e62c94045ab2a32f24243e63c/publication-result.json`；编译与正式发布均成功。本批次一次配置、一次增量构建，复用上一批次已编译的 Adapter 产物。
-- 正式替换 `package/modules/uwcn_adapter.dll`、Linux profile 和 `package/release.json`。旧三件先移入 `回收/20261019-112527-ea183e2e62c94045ab2a32f24243e63c/package/`，保留相对路径；应用菜单旧链接也随发布脚本归档。
+- 正式替换 `package/modules/urwcn_adapter.dll`、Linux profile 和 `package/release.json`。旧三件先移入 `回收/20261019-112527-ea183e2e62c94045ab2a32f24243e63c/package/`，保留相对路径；应用菜单旧链接也随发布脚本归档。
 - 正式 Adapter SHA256 为 `d8658b96afc7d3c48a91a55d1b6c5b5e172c9ad5c0fb9e7cca70cbb3138bf60d`，与构建产物和正式清单一致。正式 profile SHA256 为 `2e4446cd04e35705fc5832d9dd8be52106799e6616adf3e6fa0ee8d816b1fe4f`，与源码 profile 和清单一致。
-- 归档旧 Adapter SHA256 为 `15220fa8c0b766fe860709d8ab3817769281f576f9731258bcc4ff2dfc4c9139`，旧件未覆盖或删除。根入口仍为 `uwcn_launcher`，未建立平行运行副本。
-- 发布前只读进程列表未发现 `urw3-bin` 或 `uwcn_launcher`。本次没有请求 Reload，没有运行时 Applied 回执；Linux 尚不具备原位热更新协议。正常启动会从正式位置加载本次文件。
+- 归档旧 Adapter SHA256 为 `15220fa8c0b766fe860709d8ab3817769281f576f9731258bcc4ff2dfc4c9139`，旧件未覆盖或删除。根入口仍为 `urwcn_launcher`，未建立平行运行副本。
+- 发布前只读进程列表未发现 `urw3-bin` 或 `urwcn_launcher`。本次没有请求 Reload，没有运行时 Applied 回执；Linux 尚不具备原位热更新协议。正常启动会从正式位置加载本次文件。
 
 源码修改、产物编译和正式文件发布均已完成。没有自行运行或测试，不宣称已经视觉验收；上节剩余边界继续保持待整改状态。

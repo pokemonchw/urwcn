@@ -79,7 +79,7 @@ Status restore(const NativeEvent& event) {
     } else {
         status=owner==Parent::statistics ? pause_parent() : native_parent_cache_language::game_parent();
         if(status==Status::ok)
-            reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10DA10)();
+            reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10DA10)();
     }
     *at<u32>(0x61BBA5C)=flip;
     // The real 10DA10 copy has committed this same first owner's language

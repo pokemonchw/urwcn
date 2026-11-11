@@ -2,7 +2,7 @@
 #include "hooks.h"
 #include "state.h"
 
-namespace uwcn::linux_targets {
+namespace urwcn::linux_targets {
 // Install at startup, before initgr creates any native drawing resources.
 void install(const linux_host::Hooks&);
 void save(linux_host::StateWriter&);

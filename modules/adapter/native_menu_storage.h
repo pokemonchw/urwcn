@@ -2,7 +2,7 @@
 #include "../../sdk/host_abi.h"
 #include <vector>
 
-namespace uwcn::adapter::native_menu_storage {
+namespace urwcn::adapter::native_menu_storage {
 // MENULIST.SAV is the original game's single native menu storage resource.
 // Its real fwrite/fread protocol owns source identity independently of pixel
 // caches. Only the statically confirmed header/row calls participate here.

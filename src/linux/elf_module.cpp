@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace uwcn::linux_host {
+namespace urwcn::linux_host {
 ModuleDescriptor inspect_module(const std::filesystem::path& path,u32 id) {
     std::ifstream stream(path,std::ios::binary|std::ios::ate);
     if(!stream) throw std::runtime_error("Cannot open candidate ELF: "+path.string());
@@ -42,7 +42,7 @@ ModuleDescriptor inspect_module(const std::filesystem::path& path,u32 id) {
             const auto& symbol=symbols[j];
             if(ELF64_ST_BIND(symbol.st_info)==STB_GNU_UNIQUE)
                 throw std::runtime_error("GNU_UNIQUE prevents module retirement: "+path.string());
-            constexpr char name[]="uwcn_module_descriptor";
+            constexpr char name[]="urwcn_module_descriptor";
             if(symbol.st_name>strings.sh_size || strings.sh_size-symbol.st_name<sizeof(name) ||
                std::memcmp(names+symbol.st_name,name,sizeof(name))!=0) continue;
             if(symbol.st_shndx>=header.e_shnum || symbol.st_shndx==SHN_UNDEF || symbol.st_size!=sizeof(ModuleDescriptor))

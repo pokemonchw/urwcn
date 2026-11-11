@@ -6,7 +6,7 @@
 
 - systemd-coredump：PID `3671260`，时间 `2026-10-19 10:54:05 +08:00`，信号 `SIGABRT`。
 - 当前正式 Adapter SHA256 为上一批的 `15220fa8c0b766fe860709d8ab3817769281f576f9731258bcc4ff2dfc4c9139`。
-- 栈为 `require(Status)`（Adapter RVA `0x2309`）→ `translated`（`0x51cf`）→ `startup_draw`（`0x71a9`）→ `uwcn_linux_gateway`。这是后续中文资源名查询失败，不是上一份 core 的 `erase(npos)` 越界。
+- 栈为 `require(Status)`（Adapter RVA `0x2309`）→ `translated`（`0x51cf`）→ `startup_draw`（`0x71a9`）→ `urwcn_linux_gateway`。这是后续中文资源名查询失败，不是上一份 core 的 `erase(npos)` 越界。
 - 离线 core 中 `translated` 的 R14 为 `2`，对应 `Status::unavailable`。栈上 TextRequest 为组件 `0x204`（`startup_audio`），原文地址 `0x7ffef72d79d0`，value 地址 `0x7ffef72d79df`；内容分别为 `Loading audio: ritual` 与 `ritual`。
 - `modules/semantic/semantic.cpp` 为该组件查询 `startup.resource.ritual`；原正式 `catalog/zh-CN/main_menu.tsv` 没有此键，`modules/catalog/catalog.cpp` 返回 unavailable，随后 Adapter 的 require 抛出异常。
 - 游戏自身 `init_log.txt` 记录已载入 `music_ritual.ogg`、开门音、雨声，随后 `audio/ritual.ogg` 已加载成功，最后为 `Loading audio: ritual`。这也将音频文件加载成功与显示词库缺项区分开来。
@@ -48,6 +48,6 @@
 - 一次配置、一次 Catalog 增量构建。C++ 源码本轮未改，Catalog 二进制沿用已有文件；正式更新的是 `package/catalog/zh-CN/main_menu.tsv` 和 `package/release.json`。不能把此批描述为重新编译了 Adapter 或换了启动器。
 - 正式词库与源词库 SHA256 同为 `9f60f42f7f458d701c0f7748ececfc2c5b89c061be1fdfc835b75fbfbcd8db58`，与发布清单一致；正式文件中已包含全部四项。
 - 旧词库、旧清单和发布脚本维护的旧应用菜单链接已先移入 `回收/20261019-105638-8676727767384a8e907d211540e4e643/`，保留原相对路径。回收词库 SHA256 为 `ea54375a733665d28e542b2b68471bbf830620cb4da4a42965c03263c9cb1cd7`。
-- 仍使用根 `uwcn_launcher` 与相邻正式 `package/`，没有新建平行运行目录。
+- 仍使用根 `urwcn_launcher` 与相邻正式 `package/`，没有新建平行运行目录。
 
 没有运行游戏或测试，不能据静态清点、增量构建和发布成功声称实际启动已通过。

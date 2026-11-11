@@ -25,7 +25,7 @@
 - 源码：原生绘制链与稳定入口交接已接入。
 - 编译：统一入口 `build.ps1 -Module render,adapter` 已成功。请求 `467214b0b1e04abdaf9682382bcc6b4a`，批次 `7e0bc794bb724f2f93e2ffa4e5867bf4`；已读取请求 JSON 与批次日志。首批请求 `e5b4e53150ac42b28ca1054533155a8c` / 批次 `a29f7468c83c4ef593dc5297dab45a93` 因工具链不接受函数 target 属性 `soft-float` 失败，移除该属性参数后通过。保留 no-sse/no-sse2/no-mmx；不触及浮点状态还须以编译后指令核查为依据。日志中的 FARPROC 到已确认 SDL/TTF cdecl 导出类型转换警告不影响本次编译结果。
 - 编译后静态核查：11 个 naked 入口、11 个 helper、4 个内核及其可达 `__divdi3` / `__udivdi3` 未发现 FP/SIMD/FXSAVE；七个 inline helper 不调用 SDL 或 Host。原生寄存器、标志与栈重放核查见 [机器码审查](native-raster-compiled-review-7e0bc794.txt)。Adapter SHA-256 为 `9266c55edb1ed8832995150b64688c2af96f7ab7666d54d20cc8d97d28fb6753`，Render 为 `b231c7117a2fbf6d418ce9e6f971214421163e0e3af8dd8e07dc127dc568d68f`。
-- 正式发布：请求 `ff526bd50ade44beb663eaa92ca314ad` / 批次 `3eb7fe79e79d400e903a55595b2291c2` 完成，事务 `70e97bed31a04ea1a4096ae67ebfa897`。已读取队列 JSON、批次日志与 `build/mingw-x86/stage/70e97bed31a04ea1a4096ae67ebfa897/publication-result.json`。正式 `package/modules/uwcn_adapter.dll`、`uwcn_render.dll` 及 `package/release.json` 已替换；旧三文件先按相对路径移入 `回收/20261019-021416-70e97bed31a04ea1a4096ae67ebfa897/`。正式清单十个文件的 SHA-256 均与磁盘匹配。根启动器和驻留 DLL 沿用原文件，不存在备用运行目录。
+- 正式发布：请求 `ff526bd50ade44beb663eaa92ca314ad` / 批次 `3eb7fe79e79d400e903a55595b2291c2` 完成，事务 `70e97bed31a04ea1a4096ae67ebfa897`。已读取队列 JSON、批次日志与 `build/mingw-x86/stage/70e97bed31a04ea1a4096ae67ebfa897/publication-result.json`。正式 `package/modules/urwcn_adapter.dll`、`urwcn_render.dll` 及 `package/release.json` 已替换；旧三文件先按相对路径移入 `回收/20261019-021416-70e97bed31a04ea1a4096ae67ebfa897/`。正式清单十个文件的 SHA-256 均与磁盘匹配。根启动器和驻留 DLL 沿用原文件，不存在备用运行目录。
 - 运行时应用：首次热发布在旧模块退役前崩溃，随后游戏进程已不存在；最终正式发布没有请求 Reload，因此没有 Applied 回执。没有自行重启或运行新产物。
 - 运行：没有启动游戏、注入、模拟输入、运行产物或测试，没有创建测试用例或断言；不提供未经测量的帧率或响应时间结论。
 
@@ -33,7 +33,7 @@
 
 请求 `6850be278210403b9894d03df9d18513` / 批次 `9414bd8644bc499a93fb4ad9540e62f3` 使用 `-Publish -Reload -TargetPid 119880`。编译成功，但事务 `618b6f806617492d93322a6c7fa3f0f7` 在旧模块 Prepare 阶段退出，未取得 ReadyToPublish。原正式清单和 DLL 哈希未改变，也尚未创建所列归档目录；新的 Adapter/Render 没有载入该进程。没有 Applied 回执。
 
-系统事件记录旧 `uwcn_render.dll` 在 RVA `4FB58` 发生 `C000001D`，该地址属于 `__gnu_cxx::__trap_terminate_handler()`；现有转储为 `C:/Users/WIN11/AppData/Local/CrashDumps/urw.exe.119880.dmp`。转储中异常类型为 `std::bad_alloc`，已还原旧模块 `save_state(+6028) → NativeCache::save(+FC28) → Resource 序列化(+8D2C) → vector<uint8_t> 扩容 → operator new(+4E67C) → __cxa_throw(+4EF39) → terminate → UD2(+4FB58)`。Host 返回点 `+14F6D` 是第二次、非空输出缓冲区的状态保存。这次热交接触发了旧文字/像素记录序列化的分配失败；不是新绘制桥执行。新 Render 已移除 NativeCache，`save_state` 返回零字节，既不保存也不重建该绘制历史。
+系统事件记录旧 `urwcn_render.dll` 在 RVA `4FB58` 发生 `C000001D`，该地址属于 `__gnu_cxx::__trap_terminate_handler()`；现有转储为 `C:/Users/WIN11/AppData/Local/CrashDumps/urw.exe.119880.dmp`。转储中异常类型为 `std::bad_alloc`，已还原旧模块 `save_state(+6028) → NativeCache::save(+FC28) → Resource 序列化(+8D2C) → vector<uint8_t> 扩容 → operator new(+4E67C) → __cxa_throw(+4EF39) → terminate → UD2(+4FB58)`。Host 返回点 `+14F6D` 是第二次、非空输出缓冲区的状态保存。这次热交接触发了旧文字/像素记录序列化的分配失败；不是新绘制桥执行。新 Render 已移除 NativeCache，`save_state` 返回零字节，既不保存也不重建该绘制历史。
 
 发布脚本原 `StreamWriter.Dispose()` 再次 flush 已断开的管道，将无回执错误掩盖为 Dispose 错误。已改为直接写入完整 UTF-8 命令后读取回执，不重复 flush；未添加重试、回退或重新启动操作。错误消息也不再声称尚未创建的目录中已有归档文件。
 

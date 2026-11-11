@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace uwcn {
+namespace urwcn {
 // A component identifies a confirmed native consumer, never an English match.
 enum class TextComponent : std::uint32_t {
     load_character = 0, create_character = 1, setup = 2, ancestors = 3,

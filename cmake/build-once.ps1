@@ -4,7 +4,7 @@ param(
     [switch]$Publish,[switch]$Reload,[int[]]$TargetPid = 0,[string]$WinePrefix,[string]$WinePath,[string]$PackageDirectory,[string]$BatchId
 )
 $ErrorActionPreference = 'Stop'
-if (!$BatchId -or $env:UWCN_COMPILE_BATCH -ne $BatchId) { throw 'Compilation must be submitted through root build.ps1 or build-queue.ps1.' }
+if (!$BatchId -or $env:URWCN_COMPILE_BATCH -ne $BatchId) { throw 'Compilation must be submitted through root build.ps1 or build-queue.ps1.' }
 $buildHour = (Get-Date).ToString('yyyy.MM.dd.HH',[Globalization.CultureInfo]::InvariantCulture)
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $compilerDirectory = Split-Path -Parent $CompilerPath
@@ -28,7 +28,7 @@ try {
     }
     $generator = if ($IsLinux) { 'Unix Makefiles' } else { 'MinGW Makefiles' }
     $moduleSourceCMake = $ModuleSourceDirectory.Replace('\','/')
-    $configureArguments = @('-S',$projectRoot,'-B',$BuildDirectory,'-G',$generator,"-DCMAKE_CXX_COMPILER=$CompilerPath","-DCMAKE_MAKE_PROGRAM=$makePath","-DUWCN_MODULE_SOURCE_ROOT:PATH=$moduleSourceCMake",'-DCMAKE_BUILD_TYPE=Release')
+    $configureArguments = @('-S',$projectRoot,'-B',$BuildDirectory,'-G',$generator,"-DCMAKE_CXX_COMPILER=$CompilerPath","-DCMAKE_MAKE_PROGRAM=$makePath","-DURWCN_MODULE_SOURCE_ROOT:PATH=$moduleSourceCMake",'-DCMAKE_BUILD_TYPE=Release')
     if ($crossCompile) {
         $configureArguments += "-DCMAKE_TOOLCHAIN_FILE=$(Join-Path $PSScriptRoot 'windows-x86.cmake')"
     }
@@ -36,7 +36,7 @@ try {
     & $CMakePath @configureArguments
     if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed with exit code $LASTEXITCODE" }
     $buildArguments = @('--build',$BuildDirectory,'--parallel')
-    if ($Module) { $buildArguments += '--target'; $buildArguments += @($Module | ForEach-Object { "uwcn_$_" }) }
+    if ($Module) { $buildArguments += '--target'; $buildArguments += @($Module | ForEach-Object { "urwcn_$_" }) }
     & $CMakePath @buildArguments
     if ($LASTEXITCODE -ne 0) { throw "Incremental compilation failed with exit code $LASTEXITCODE" }
     [IO.File]::WriteAllText((Join-Path $BuildDirectory 'out/build-hour.txt'),($buildHour+"`n"),[Text.UTF8Encoding]::new($false))

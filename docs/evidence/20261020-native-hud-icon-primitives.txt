@@ -18,7 +18,7 @@ FB115..FB133 compares elapsed activity age and can zero 61A8CC4[record];
 FB258..FB279 writes player/viewport fields.
 
 Direction ABI
-  void uwcn_hud_invoke_direction(void), adapter C ABI.
+  void urwcn_hud_invoke_direction(void), adapter C ABI.
   Preserves EBP, EBX, ESI, EDI. Allocates 96 bytes of fresh scratch.
   Its nested body allocates another 24 bytes and jumps to original FAF04.
   FAF04 A1 [619F97C] reads original logical width.
@@ -31,7 +31,7 @@ Direction ABI
   FAFB3 MOV EBX,[18C1D0] supplies the native RenderCopyEx API.
   FAFBD..FAFE0 pushes exactly 32 bytes for native cdecl RenderCopyEx.
   FAFE2 Hook is the complete software direction constructor exit. During this
-  synchronous constructor only, it resumes uwcn_hud_direction_return, which
+  synchronous constructor only, it resumes urwcn_hud_direction_return, which
   removes these 32 bytes and returns to the fresh caller. Outer scratch and
   saved callee registers are then removed/restored normally.
   Ordinary execution continues original FAFE2 onward.
@@ -52,7 +52,7 @@ Overlay direction ABI
   background materialization scope is dispatched before icon construction.
 
 Activity ABI
-  void uwcn_hud_invoke_activity(u32 actual_native_record), adapter C ABI.
+  void urwcn_hud_invoke_activity(u32 actual_native_record), adapter C ABI.
   Preserves EBP, EBX, ESI, EDI. ESI receives the actual source record ID.
   Allocates 1280 bytes of fresh scratch, which includes the original error
   string's destination ESP+B8..; it does not borrow FAA30's frame.

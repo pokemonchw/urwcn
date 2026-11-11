@@ -1,6 +1,6 @@
 # 文化图例启动闪退：文字参数索引修正
 
-用户在上一批修正后手动启动并报告闪退。`package/uwcn.log` 新增 `UWCn reconstruction ABI 1 initialized.`，说明此前 Hook 安装拒绝已越过；Windows Application 事件和用户产生的 `urw.exe.185504.dmp` 则记录新的访问异常。本轮只离线读取该转储、日志和原始 PE，没有启动游戏、注入、模拟输入、运行产物或测试，没有写测试、断言、保护或回退。
+用户在上一批修正后手动启动并报告闪退。`package/urwcn.log` 新增 `URWCN reconstruction ABI 1 initialized.`，说明此前 Hook 安装拒绝已越过；Windows Application 事件和用户产生的 `urw.exe.185504.dmp` 则记录新的访问异常。本轮只离线读取该转储、日志和原始 PE，没有启动游戏、注入、模拟输入、运行产物或测试，没有写测试、断言、保护或回退。
 
 ## 转储和实际根因
 
@@ -35,6 +35,6 @@
 
 新 DLL 的静态分支 `69E6F10D..69E6F116` 选择 11 个 renderer 行，`69E6F2C0` 取 NativeEvent.arguments，`69E6F2CD` 已生成 `ADD EBX,4`，传入实际 `arguments[1]` 的引用。该机器码也确认正式产物包含索引修正。
 
-正式事务为 `567b54e02ab54b27afae4f84c29ae7ca`，仅替换 `package/modules/uwcn_adapter.dll` 与 `package/release.json`；旧两件先归档至 `回收/20261020-015333-567b54e02ab54b27afae4f84c29ae7ca/package/`。正式 Adapter 与本批构建产物的 SHA-256 均为 `c6c51ba647059f18c4ff987085f51ca5378aa42e678b97fe9a02f711398abdba`。词库、根启动器、驻留层及其他业务库未替换。
+正式事务为 `567b54e02ab54b27afae4f84c29ae7ca`，仅替换 `package/modules/urwcn_adapter.dll` 与 `package/release.json`；旧两件先归档至 `回收/20261020-015333-567b54e02ab54b27afae4f84c29ae7ca/package/`。正式 Adapter 与本批构建产物的 SHA-256 均为 `c6c51ba647059f18c4ff987085f51ca5378aa42e678b97fe9a02f711398abdba`。词库、根启动器、驻留层及其他业务库未替换。
 
 发布前只读清单未发现运行中的 `urw.exe`，本批没有运行时控制事务或 Applied 回执。原根启动器的正常加载路径已更新到该 DLL；没有自行启动、关闭或重启游戏，没有运行产物或测试，也不以编译或发布成功代替启动及画面验收。

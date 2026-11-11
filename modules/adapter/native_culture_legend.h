@@ -3,7 +3,7 @@
 #include <array>
 #include <vector>
 
-namespace uwcn::adapter::native_culture_legend {
+namespace urwcn::adapter::native_culture_legend {
 // This complete native resource constructor has no caller parameters. Its
 // original E3A50 template owns the panel, eleven literal culture resources,
 // their layout and its local software target. Only actual native style inputs

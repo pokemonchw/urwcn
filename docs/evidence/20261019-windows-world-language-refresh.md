@@ -41,7 +41,7 @@
 
 - 调用根 `build.ps1 -Module adapter -Publish -Reload -TargetPid 121728`；使用默认 MinGW、项目 `.toolchains/x86/w64devkit/bin/cmake.exe`、同目录 `g++.exe`、`build/mingw-x86` 和正式 `package`。本次 Adapter 源码提交后至批次结束保持冻结。
 - 请求 `c3ee1607252141edb7852323d4994b17`，批次 `13ea90c136d94ce594eb7e4687ed6e54`。已读取对应 `build/.compile-queue/results/<request>.json` 和完整批次日志，`Success=true`；一次配置、一次增量构建。保留既有 SDL 函数地址类型转换警告，无编译错误。
-- 正式发布事务 `559148cf474448cc8d925a41f28b47bf`，已读取 `build/mingw-x86/stage/559148cf474448cc8d925a41f28b47bf/publication-result.json`，`success=true`。替换正式 `package/modules/uwcn_adapter.dll` 与 `package/release.json`；旧两件先按原相对路径移入 `回收/20261019-214918-559148cf474448cc8d925a41f28b47bf/`。
+- 正式发布事务 `559148cf474448cc8d925a41f28b47bf`，已读取 `build/mingw-x86/stage/559148cf474448cc8d925a41f28b47bf/publication-result.json`，`success=true`。替换正式 `package/modules/urwcn_adapter.dll` 与 `package/release.json`；旧两件先按原相对路径移入 `回收/20261019-214918-559148cf474448cc8d925a41f28b47bf/`。
 - 当前 PID `121728` 返回 `ReadyToPublish` 及 `Applied ... adapter:babdf354c2672146bfa9100d6045de940d888d4bdeef169d7ce56303a772e8c6:3`。正式 Adapter、构建产物及事务暂存三者 SHA-256 相同，且与运行时回执及正式清单一致。
 
 根启动器和驻留桥保持原正式文件，没有建立平行运行副本，也没有要求退出、重启或手动卸载。热发布事务的 Applied 只证明模块交接完成；世界页画面在下一次真实原生输入返回边界消费 pending，本次没有主动触发该边界或进行视觉验收。

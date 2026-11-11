@@ -5,7 +5,7 @@
 #include <map>
 #include <utility>
 
-namespace uwcn::adapter::native_message_flow {
+namespace urwcn::adapter::native_message_flow {
 namespace {
 struct LinePhase {u64 last_scroll;bool complete;};
 struct Instance {
@@ -109,7 +109,7 @@ Status paint_background(Handle handle) {
     native_component_style::PanelScope style(panel.style);
     const native_component_calls::PanelCall call{static_cast<u32>(base)+0x116270,
         panel.x,panel.y,panel.width,panel.height,panel.native_title.c_str(),panel.flags,panel.color};
-    native_component_calls::uwcn_component_panel(&call);return Status::ok;
+    native_component_calls::urwcn_component_panel(&call);return Status::ok;
 }
 Handle append(SourceKey key,u32 frame,const char* input,const char* english,bool sound,const native_message_source::Text& text) {
     const auto prior=current_sources.find(key);

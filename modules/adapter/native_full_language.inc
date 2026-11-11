@@ -18,14 +18,14 @@ enum Hook:u32 { skills_entry=0x5120,skills_classify,skills_save,skills_input,ski
     ancestor_mode,ancestor_detail_end,ancestor_detail_wait,ancestor_name_text,ancestor_death_text,keyword_prompt_end,
     attributes_wait };
 struct BorrowedFrame {u32 target,frame;};
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_full_language_frame(const BorrowedFrame*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_full_language_frame(const BorrowedFrame*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%ebx\n\tmovl 4(%ebx),%ebp\n\tcall *(%ebx)\n\t"
         "popl %ebp\n\tpopl %edi\n\tpopl %esi\n\tpopl %ebx\n\tret\n\t");
 }
 struct KeywordFragment {u32 target,map_rgb;};
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_full_keyword_prompt(const KeywordFragment*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_full_keyword_prompt(const KeywordFragment*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%eax\n\tmovl 4(%eax),%ebx\n\tcall *(%eax)\n\t"
@@ -137,7 +137,7 @@ Status parent_main() {
     const auto status=main(parent_root);
     if(status==Status::ok) {
         reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0xD0650)(*at<u32>(0x5F54AB0),0);
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10DA10)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10DA10)();
     }
     native_menu_component::activate(current);
     native_root_component::activate(current_root);
@@ -150,10 +150,10 @@ Status profile_before_sex() {
     // distinct from the 1127C0 root that preceded character creation. Begin
     // after the unused PUSH ECX local and stop before uploads/cursor handling.
     const native_component_calls::NoArgumentCall frame{address(at<void>(0x12ED1))};
-    native_component_calls::uwcn_component_skill_help(&frame);
+    native_component_calls::urwcn_component_skill_help(&frame);
     constructing=Construction::none;
     constructing=Construction::completed_culture;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xF4F0)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xF4F0)();
     constructing=Construction::none;
     return Status::ok;
 }
@@ -161,9 +161,9 @@ Status profile_before_portrait() {
     const auto status=profile_before_sex();
     if(status!=Status::ok) return status;
     constructing=Construction::completed_sex;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xF300)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xF300)();
     constructing=Construction::completed_name;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x11870)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x11870)();
     constructing=Construction::none;
     return Status::ok;
 }
@@ -176,12 +176,12 @@ Status profile_before_season() {
     while(std::strcmp(at<char>(0x217AC0+index*100),at<char>(0xA32AC1D))!=0) ++index;
     portrait={index,address(at<void>(0x217AC0+index*100)),address(at<void>(0x217B24+index*100))};
     constructing=Construction::completed_portrait;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x125D0)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x125D0)();
     constructing=Construction::none;
     return Status::ok;
 }
 Status popup(Construction kind) {
-    using Native=void (UWCN_CALL *)();
+    using Native=void (URWCN_CALL *)();
     // The original About/Credits caller owns this exact first background.
     auto status=parent_main();
     if(status!=Status::ok) return status;
@@ -203,7 +203,7 @@ Status wait(const NativeEvent& event) {
         constructing=Construction::none;
         *at<u32>(0x61BBA5C)=flip;
         native_language_redraw::completed(View::attributes);
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
         return Status::ok;
     }
     if(native_language_redraw::pending(View::hud) &&
@@ -211,7 +211,7 @@ Status wait(const NativeEvent& event) {
         const auto status=native_parent_cache_language::game_parent();
         if(status!=Status::ok) return status;
         native_language_redraw::completed(View::hud);
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
         return Status::ok;
     }
     if(native_language_redraw::pending(View::about) && in(Scope::about)) return popup(Construction::about);
@@ -223,18 +223,18 @@ Status wait(const NativeEvent& event) {
         const auto flip=*at<u32>(0x61BBA5C);*at<u32>(0x61BBA5C)=1;
         constructing=Construction::ancestor_detail_base;
         const native_component_calls::NoArgumentCall background{address(at<void>(0xDE9DE))};
-        native_component_calls::uwcn_component_skill_help(&background);
+        native_component_calls::urwcn_component_skill_help(&background);
         // DEBB3's original MOV operand identifies this exact native named
         // background. No Menu or detail text belongs to that cache.
         reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0x10C540)(*at<u32>(0xDEBB4),0);
         constructing=Construction::ancestor_detail;
         const BorrowedFrame detail{address(at<void>(0xDF360)),*ptr<const u32>(event.frame->ebp)};
-        uwcn_full_language_frame(&detail);
+        urwcn_full_language_frame(&detail);
         status=host->native_fragment(0xDF3C3,0xDF3FF);
         constructing=Construction::none;*at<u32>(0x61BBA5C)=flip;
         if(status!=Status::ok) return status;
         native_language_redraw::completed(View::ancestors);
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
         return Status::ok;
     }
     if(native_language_redraw::pending(View::ancestors) &&
@@ -247,7 +247,7 @@ Status wait(const NativeEvent& event) {
         reinterpret_cast<void (__fastcall *)(u32)>(host->image_base+0xDE990)(record);
         constructing=Construction::none;
         native_language_redraw::completed(View::ancestors);
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
         return Status::ok;
     }
     if(native_language_redraw::pending(View::load) && *ptr<const u32>(event.frame->ebp+4)==host->image_base+0x125061) {
@@ -258,14 +258,14 @@ Status wait(const NativeEvent& event) {
         constructing=Construction::none;
         if(status!=Status::ok) return status;
         native_language_redraw::completed(View::load);
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
         return Status::ok;
     }
     return Status::ok;
 }
 Status menu(const NativeEvent& event,bool& rebuilt,u32& selection_index) {
     const auto caller=*ptr<const u32>(event.frame->ebp+4)-static_cast<u32>(host->image_base);
-    using Native=void (UWCN_CALL *)();
+    using Native=void (URWCN_CALL *)();
     if((native_language_redraw::pending(View::setup) && caller==0x106B25) ||
        (native_language_redraw::pending(View::ancestors) && caller==0xDF187)) {
         const auto status=parent_main();
@@ -394,7 +394,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     }
     if(event.id==keyword_prompt_end && constructing==Construction::encyclopedia_keyword) {
         result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(
-            native_component_calls::uwcn_component_fragment_return)-host->image_base);
+            native_component_calls::urwcn_component_fragment_return)-host->image_base);
         handled=true;return Status::ok;
     }
     if(event.id==name_input_result && native_language_redraw::pending(View::encyclopedia) &&
@@ -409,7 +409,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         // The original prompt fragment has no enclosing local reads. Its
         // EBX is exactly the original SDL_MapRGB import loaded at 3E2F5.
         const KeywordFragment prompt{address(at<void>(0x3E4F0)),*at<u32>(0x18C1F8)};
-        uwcn_full_keyword_prompt(&prompt);
+        urwcn_full_keyword_prompt(&prompt);
         constructing=Construction::none;
         *at<u32>(0x61BBA5C)=flip;
         event.frame->esi=*ptr<u32>(event.frame->ebp-0xA4);
@@ -431,9 +431,9 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         auto status=profile_before_sex();
         if(status!=Status::ok) return status;
         constructing=Construction::completed_sex;
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xF300)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xF300)();
         constructing=Construction::active_name;
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x11870)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x11870)();
         constructing=Construction::none;
         // Resume the real getst frame at its own complete text/cursor draw,
         // retaining the original buffer, byte capacity, IME and continuation.
@@ -465,7 +465,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         // 1196B..119A9 immediately before this actual native input boundary.
         const native_component_calls::TextBlockCall text{address(at<void>(0x10E5A0)),
             *at<std::int32_t>(0xA1C1CB4),*at<std::int32_t>(0x61BBB3C),name.data(),event.frame->ecx,0};
-        native_component_calls::uwcn_component_text_block(&text);
+        native_component_calls::urwcn_component_text_block(&text);
         // This is getst's confirmed normal-return write at 10F930, paired
         // with Choose_Name's input flag setup at 1197F.
         *at<u32>(0x61BBA58)=0;
@@ -503,12 +503,12 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     switch(event.id) {
     case ancestor_mode:
         result.resume_rva=constructing==Construction::ancestor_detail_base ?
-            static_cast<u32>(reinterpret_cast<std::uintptr_t>(native_component_calls::uwcn_component_fragment_return)-host->image_base) :
+            static_cast<u32>(reinterpret_cast<std::uintptr_t>(native_component_calls::urwcn_component_fragment_return)-host->image_base) :
             event.frame->esi==static_cast<u32>(-1) ? 0xDEB84 : 0xDEA2A;
         break;
     case ancestor_detail_end:
         if(constructing==Construction::ancestor_detail)
-            result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(native_component_calls::uwcn_component_fragment_return)-host->image_base);
+            result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(native_component_calls::urwcn_component_fragment_return)-host->image_base);
         break;
     case ancestor_detail_wait:
         if(constructing==Construction::ancestor_detail) {result.skip_original=1;handled=true;return Status::ok;}
@@ -555,7 +555,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     case profile_frame_end:
         if(constructing==Construction::profile_frame)
             result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(
-                native_component_calls::uwcn_component_fragment_return)-host->image_base);
+                native_component_calls::urwcn_component_fragment_return)-host->image_base);
         break;
     case culture_save:
         if(constructing==Construction::completed_culture) {

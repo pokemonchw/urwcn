@@ -1,6 +1,6 @@
 #include "native_component_style.h"
 
-namespace uwcn::adapter::native_component_style {
+namespace urwcn::adapter::native_component_style {
 namespace {
 std::uintptr_t base{};
 constexpr u32 button_suffix_color=0x61BBAC4;

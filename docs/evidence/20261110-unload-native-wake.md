@@ -18,7 +18,7 @@
 
 ## 驻留更新限制
 
-现有兼容热发布事务只能替换六个业务模块；build-queue.ps1 明确拒绝对 loader/launcher 使用 -Reload。当前进程已加载的旧 uwcn_loader.dll 无法通过现框架原位迁移。本次更新正式磁盘文件供后续正常启动使用，不能将磁盘发布报告为当前驻留桥已更新；不关闭或重启用户游戏，不另建修复包。
+现有兼容热发布事务只能替换六个业务模块；build-queue.ps1 明确拒绝对 loader/launcher 使用 -Reload。当前进程已加载的旧 urwcn_loader.dll 无法通过现框架原位迁移。本次更新正式磁盘文件供后续正常启动使用，不能将磁盘发布报告为当前驻留桥已更新；不关闭或重启用户游戏，不另建修复包。
 
 没有启动游戏、运行产物验收、模拟操作、测试、测试脚本或断言。编译只生成交付产物。
 
@@ -26,4 +26,4 @@
 
 源码修改完成。根 build.ps1 的 MinGW loader,adapter 请求 `d27bbfb4bf014bd6aac16e4b9f743ab6`，批次 `8d75c3090db44edf8e0f5b6d54b8ee2f` 已成功；已读取对应结果 JSON、批次日志及发布事务 JSON。编译存在既有函数指针转换、未使用函数及缩进警告。
 
-正式磁盘发布事务 `721202d2608c401ba29554b9e2ac7f2b` 更新 `package/uwcn_loader.dll`、`package/modules/uwcn_adapter.dll`、`package/release.json`；旧文件在 `回收/20261110-112447-721202d2608c401ba29554b9e2ac7f2b/` 保留原相对路径。此次没有请求 Runtime Applied，当前游戏进程仍使用旧驻留库；修正于后续从根正式启动器正常启动时加载。没有关闭或重启游戏，也不声称当前进程已经修复。
+正式磁盘发布事务 `721202d2608c401ba29554b9e2ac7f2b` 更新 `package/urwcn_loader.dll`、`package/modules/urwcn_adapter.dll`、`package/release.json`；旧文件在 `回收/20261110-112447-721202d2608c401ba29554b9e2ac7f2b/` 保留原相对路径。此次没有请求 Runtime Applied，当前游戏进程仍使用旧驻留库；修正于后续从根正式启动器正常启动时加载。没有关闭或重启游戏，也不声称当前进程已经修复。

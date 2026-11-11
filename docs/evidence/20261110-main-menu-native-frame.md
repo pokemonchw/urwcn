@@ -14,7 +14,7 @@
 
 - 新增 `menu_frame`（ID 6），登记 `125BC5 → 116270`、五个栈参数。通用 `native_component_binding` 捕获实际原生参数和 PanelStyle，标题保持原生空串；面板图片、纹理、布局、背景和绘制仍由完整的原生函数消费。没有把原生坐标复制到 Mod 绘制代码。
 - 已运行旧 Scene 的来源不含该组件，单在旧列表末尾追加会令面板覆盖 Logo、文字。`module.cpp` 在真实 `Scope::menu_input` 且来源缺少该面板时，通过原生背景构造与完整 `125BA3..125BE1` 片段取得实际来源顺序；该片段包含页脚、面板、版本和菜单构造，不进入 `D1120` 输入等待、不重入业务。`native_ui_scene.cpp::rebuild_native_source/restore_native_source` 按真实后继组件身份，将唯一缺失面板插入既有父源、缓存区源及同根缓存来源；保留原有菜单快照、选择和其他实例。临时构造容器随后释放。最后 `invalidate(true)` 通过实际原生缓存 owner 重建缓存及当前界面，没有另建页面布局或只修之后的新窗口。
-- 本机游戏由 Proton/Wine 运行。统一发布入口原先在 Linux 用宿主 `.NET NamedPipeClientStream` 访问 Windows 管道，不能到达 Wine 的 `\\.\pipe\uwcn-<Windows PID>`。本次增加显式 `WinePrefix`、`WinePath` 队列参数，以当前 Proton 已有的 Wine Mono 11.3.0 `csharp.exe` 解释器收发原 PREPARE/COMMIT/ABORT 协议；没有编译或执行新的控制二进制。只读进程枚举取得宿主 PID `2788603` 对应 Windows PID `368`。
+- 本机游戏由 Proton/Wine 运行。统一发布入口原先在 Linux 用宿主 `.NET NamedPipeClientStream` 访问 Windows 管道，不能到达 Wine 的 `\\.\pipe\urwcn-<Windows PID>`。本次增加显式 `WinePrefix`、`WinePath` 队列参数，以当前 Proton 已有的 Wine Mono 11.3.0 `csharp.exe` 解释器收发原 PREPARE/COMMIT/ABORT 协议；没有编译或执行新的控制二进制。只读进程枚举取得宿主 PID `2788603` 对应 Windows PID `368`。
 - Wine 暂存路径使用已确认 `z: → /` 映射，PREPARE 消费 `Z:\home\...`。译文、配置保存、选择动作和游戏业务不因此改变。
 
 ## 交付状态
@@ -29,7 +29,7 @@
 - 批次 ID：`ca4100a2489e49f3a64695862209f461`。
 - 发布事务：`5f47ba2ce89344f38893f48abd7d836c`，2026-11-10 10:58:04（Asia/Shanghai）完成。
 - 已读取请求结果 JSON、对应批次日志和 `build/mingw-x86/stage/5f47ba2ce89344f38893f48abd7d836c/publication-result.json`：`Success=true`、`PublishRequested=true`、`ReloadRequested=true`。编译保留既有函数指针转换、未使用符号、缩进和成员初始化警告。
-- 驻留层先返回 `ReadyToPublish 5f47ba2ce89344f38893f48abd7d836c`，旧 `package/modules/uwcn_adapter.dll` 与 `package/release.json` 再按原相对路径移入 `回收/20261110-105803-5f47ba2ce89344f38893f48abd7d836c/`，随后替换正式文件并 COMMIT。
+- 驻留层先返回 `ReadyToPublish 5f47ba2ce89344f38893f48abd7d836c`，旧 `package/modules/urwcn_adapter.dll` 与 `package/release.json` 再按原相对路径移入 `回收/20261110-105803-5f47ba2ce89344f38893f48abd7d836c/`，随后替换正式文件并 COMMIT。
 - 当前 Windows PID `368` 的真实回执：`Applied 5f47ba2ce89344f38893f48abd7d836c adapter:168133b18b2b9355179863eca2f8732750f59af10fae629f35b89db84027e959:4`。发布记录 `applied=true`，游戏日志追加 `Compatible module transaction applied.`。没有要求手动卸载、返回菜单或重启。
 - 正式 Adapter、构建输出与 Applied 回执均为 SHA-256 `168133b18b2b9355179863eca2f8732750f59af10fae629f35b89db84027e959`；正式清单 SHA-256 为 `1851fd3f8f40ba59b898d861d9ab97ee15e74e0f82f909005a744bf75e27f91c`。根启动器和驻留 Loader 沿用正式路径，没有平行运行包。
 

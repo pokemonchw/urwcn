@@ -3,7 +3,7 @@
 #include "native_component_style.h"
 #include <variant>
 
-namespace uwcn::adapter::native_component_model {
+namespace urwcn::adapter::native_component_model {
 using native_text_resource::SourceKey;
 using native_text_resource::TextSource;
 using Handle=u32;

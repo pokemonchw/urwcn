@@ -2,7 +2,7 @@
 #include "../../sdk/service_helpers.h"
 #include <string>
 
-namespace uwcn {
+namespace urwcn {
 Status translate_hud(const HostApi* host,const TextRequest& request,void* output,u32* capacity) {
     std::string original=request.original;
     // These are already selected native HUD display values. Percentages and

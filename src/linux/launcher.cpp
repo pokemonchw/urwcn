@@ -18,15 +18,15 @@ int main(int argc,char** argv) {
         int first_argument=1;
         if(argc>=3 && std::strcmp(argv[1],"--game")==0) { game=argv[2]; first_argument=3; }
         const auto executable=std::filesystem::canonical(game);
-        if(uwcn::linux_host::file_sha256(executable)!=uwcn::linux_host::game_sha256)
+        if(urwcn::linux_host::file_sha256(executable)!=urwcn::linux_host::game_sha256)
             throw std::runtime_error("Game identity differs from the Linux 3.89 Steam profile: "+executable.string());
         const std::string package=(root/"package").string();
         const std::string font=(root/"package/fonts/SourceHanSans.ttc").string();
-        std::string preload=(root/"package/uwcn_loader.dll").string();
+        std::string preload=(root/"package/urwcn_loader.dll").string();
         if(const char* existing=std::getenv("LD_PRELOAD"); existing && *existing) preload+=' '+std::string(existing);
         std::string libraries=(root/"package/lib").string();
         if(const char* existing=std::getenv("LD_LIBRARY_PATH"); existing && *existing) libraries+=':'+std::string(existing);
-        if(setenv("UWCN_PACKAGE",package.c_str(),1)!=0 || setenv("UWCN_FONT",font.c_str(),1)!=0 ||
+        if(setenv("URWCN_PACKAGE",package.c_str(),1)!=0 || setenv("URWCN_FONT",font.c_str(),1)!=0 ||
            setenv("LD_PRELOAD",preload.c_str(),1)!=0 || setenv("LD_LIBRARY_PATH",libraries.c_str(),1)!=0)
             throw std::runtime_error(std::strerror(errno));
         std::filesystem::current_path(executable.parent_path());

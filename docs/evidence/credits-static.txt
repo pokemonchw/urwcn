@@ -256,7 +256,7 @@ Ghidra tool:
 C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
 JAVA_HOME:
 C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
-Options: build/intro-ghidra uwcn-intro -process urw.exe -readOnly -noanalysis
+Options: build/intro-ghidra urwcn-intro -process urw.exe -readOnly -noanalysis
  -scriptPath docs/evidence -postScript credits_Decompile.java credits-ghidra.c
 Settings/cache use build/intro-ghidra/settings and build/intro-ghidra/cache
 through GHIDRA_HEADLESS_JAVA_OPTIONS application.settingsdir/java.io.tmpdir.

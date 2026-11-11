@@ -54,10 +54,10 @@
 | 完整批次日志 | `build/.compile-queue/batches/983967fd1bc24b609462077ffc68d208.log` |
 | 正式事务 | `c120ecf5458a483bb625c7af502d452b`，2026-11-10 17:15:37（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/c120ecf5458a483bb625c7af502d452b/publication-result.json`，`success=true`，运行时 `applied=true` |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/release.json` |
 | 旧件归档 | `回收/20261110-171536-c120ecf5458a483bb625c7af502d452b/package/`，旧 DLL 与清单先归档再替换，保留原相对路径，已只读确认存在 |
 | 兼容交接 | 当前 Windows PID `364` 返回 `ReadyToPublish` 后返回 Adapter 第14代 `Applied` |
 | Adapter SHA-256 | 正式件、构建件及 Applied 回执一致：`54c4beb8bb5703ba3cce6a39b785e9bc08c3da884950c2aecd1f942cf6c21f75` |
 | 归档旧 Adapter SHA-256 | `a270b2b9ce0d32d4c6df236e3df1753765601287b79015d14f249c2ce476fed2` |
 
-源码修改、产物编译、正式位置发布及当前进程兼容交接均完成，根 `uwcn_launcher.exe` 使用同一正式包，没有独立修复包或平行启动目录。未启动、关闭、重启、注入或模拟操作游戏，没有运行测试或自行验收画面。Applied 仅证明模块交接完成。
+源码修改、产物编译、正式位置发布及当前进程兼容交接均完成，根 `urwcn_launcher.exe` 使用同一正式包，没有独立修复包或平行启动目录。未启动、关闭、重启、注入或模拟操作游戏，没有运行测试或自行验收画面。Applied 仅证明模块交接完成。

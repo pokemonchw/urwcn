@@ -5,7 +5,7 @@
 ## 确切适用对象
 
 - 游戏 EXE SHA-256：`e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9`，PE32，首选基址 `0x400000`。实际补丁地址由传入的游戏映像基址加下表 RVA 得到。
-- 已发布驻留 DLL：`package/uwcn_loader.dll`，SHA-256 `60553ff6db99e03af1030c9b1e1017a7fac648f3a3c1075c01396d055cda1d8f`，首选基址 `0x63DC0000`。对正式 PE 的静态符号及反汇编确认 `uwcn_call_bridge` RVA 为 `0x198D0`，`uwcn_after_bridge` 为 `0x19910`，`uwcn_inline_bridge` 为 `0x19940`。
+- 已发布驻留 DLL：`package/urwcn_loader.dll`，SHA-256 `60553ff6db99e03af1030c9b1e1017a7fac648f3a3c1075c01396d055cda1d8f`，首选基址 `0x63DC0000`。对正式 PE 的静态符号及反汇编确认 `urwcn_call_bridge` RVA 为 `0x198D0`，`urwcn_after_bridge` 为 `0x19910`，`urwcn_inline_bridge` 为 `0x19940`。
 - 当前 Host ABI 1 只有 `install_hooks`，没有注销入口。此实现是 adapter 内针对上述已发布格式的单向迁移，不是已有 Host 卸载能力，也不适用于任意 ABI 1 驻留 DLL。
 - `src/loader/hook_host.cpp` 中该版 `Slot` 的 x86 字节布局为 `HookSpec[40] + code[4] + original[4]`；thunk 前十字节为 `68 <Slot地址> E9 <bridge相对位移>`。inline 的原指令回放位于 thunk `+16`，随后为跳回原位置的 `E9`。
 
@@ -42,16 +42,16 @@
 私有函数为：
 
 ```cpp
-uwcn::adapter::abi1_retirement::retire_tracking_hooks(
+urwcn::adapter::abi1_retirement::retire_tracking_hooks(
     std::uintptr_t image_base, HMODULE resident_loader, HMODULE sdl,
     RetirementRoutes* routes = nullptr);
 ```
 
-由新 adapter `initialize` 在 `install_hooks` 之前调用；传入 Host 的 `image_base`、已经加载的 `uwcn_loader.dll` 和 `SDL2.dll` 模块句柄。此次热事务必须同时替换 render 与 adapter。新 adapter 的安装清单不再包含上述 17 个 ID，新 render 也不再返回它们。
+由新 adapter `initialize` 在 `install_hooks` 之前调用；传入 Host 的 `image_base`、已经加载的 `urwcn_loader.dll` 和 `SDL2.dll` 模块句柄。此次热事务必须同时替换 render 与 adapter。新 adapter 的安装清单不再包含上述 17 个 ID，新 render 也不再返回它们。
 
 对旧 inline，恢复整条原指令序列，停止后续逐像素跳转。对旧 IAT，先将其旧 thunk 的前五字节改为直接跳转原 SDL 导出的 `E9 rel32`，再将原 IAT DWORD 原子替换为 SDL 导出地址。游戏确实会把 IAT 函数地址保存至寄存器后复用，例如游戏 VA `0x4FF3F6` 读取 `SDL_RenderCopy` IAT；所以只恢复 IAT 不能去掉已缓存旧 thunk 的桥开销。直接跳转不修改通用寄存器、flags、参数或返回地址，不进入 Host 的 Before/After 分发。
 
-驻留 `Slot`、原分配的 thunk 地址、inline 回放块、`uwcn_after_bridge` 和在途 `Pending` 全部保留。已经进入原 SDL 函数的旧调用仍按原来的 After 返回；新 adapter 须明确接收这 13 个旧 ID 的在途 After，并且不再发给已移除的 Paint 业务。不能把所有旧事件一律返回成功当作热路径成本已消除。本 helper 不改 adapter 的 Active/token/Host 堆字符串状态。
+驻留 `Slot`、原分配的 thunk 地址、inline 回放块、`urwcn_after_bridge` 和在途 `Pending` 全部保留。已经进入原 SDL 函数的旧调用仍按原来的 After 返回；新 adapter 须明确接收这 13 个旧 ID 的在途 After，并且不再发给已移除的 Paint 业务。不能把所有旧事件一律返回成功当作热路径成本已消除。本 helper 不改 adapter 的 Active/token/Host 堆字符串状态。
 
 Host `install_hooks` 对已经存在的同 ID 只比对原 HookSpec 后跳过，不会重新写入恢复后的入口。因此这些 ID 在该进程中永久退役，不能被重新登记来恢复旧机制。保留的 Slot 不等于可卸载后重装；新功能若有独立确认的边界，应使用新的 ID。
 

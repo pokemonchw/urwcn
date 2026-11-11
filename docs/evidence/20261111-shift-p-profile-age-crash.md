@@ -63,7 +63,7 @@
 | 完整日志 | `build/.compile-queue/batches/e51662e4ee8a458885ca237945dd67a4.log`，已完整读取；一次配置及一次增量构建，Adapter和Catalog均编译完成；警告来自既有函数指针转换、未使用函数／参数、缩进和初始化项 |
 | 正式事务 | `e26692be43ca4c26b88fede938659c7f`，2026-11-11 12:44:27（Asia/Shanghai）完成 |
 | 发布回执 | `build/mingw-x86/stage/e26692be43ca4c26b88fede938659c7f/publication-result.json`，`success=true`、`runtime_requested=false` |
-| 正式更新 | `package/modules/uwcn_adapter.dll`、`package/modules/uwcn_catalog.dll`、`package/catalog/zh-CN/messages.tsv`、`package/release.json` |
+| 正式更新 | `package/modules/urwcn_adapter.dll`、`package/modules/urwcn_catalog.dll`、`package/catalog/zh-CN/messages.tsv`、`package/release.json` |
 | 旧件回收 | `回收/20261111-124427-e26692be43ca4c26b88fede938659c7f/package/`，四件均保留原相对路径 |
 
 已只读计算正式件、构建件／源词库和回收件的SHA-256；正式清单与新文件一致：

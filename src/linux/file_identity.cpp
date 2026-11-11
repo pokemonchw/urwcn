@@ -4,7 +4,7 @@
 #include <fstream>
 #include <stdexcept>
 
-namespace uwcn::linux_host {
+namespace urwcn::linux_host {
 std::string file_sha256(const std::filesystem::path& path) {
     std::ifstream stream(path,std::ios::binary);
     if(!stream) throw std::runtime_error("Cannot read "+path.string());

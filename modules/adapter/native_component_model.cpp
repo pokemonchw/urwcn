@@ -8,7 +8,7 @@
 #include <map>
 #include <utility>
 
-namespace uwcn::adapter::native_component_model {
+namespace urwcn::adapter::native_component_model {
 namespace {
 std::uintptr_t base{};
 Handle next_handle=1;
@@ -307,7 +307,7 @@ void paint_action(const ActionButtonInputs& input,const TextSource& source,const
     // both current-language dimensions and input/hit fields.
     const native_component_calls::ActionButtonCall call{static_cast<u32>(base+0xCFAF0),
         input.action,value(input.origin.x),value(input.origin.y),label};
-    native_component_calls::uwcn_component_action_button(&call);
+    native_component_calls::urwcn_component_action_button(&call);
     count=total;duplicate_mode=previous_mode;suffix_color=previous_color;suffix_outline=previous_outline;
     native_menu_component::commit_row(input.menu,row,source);
     native_menu_model::capture_into(input.menu);
@@ -421,8 +421,8 @@ Handle snapshot_menu_owner(Handle handle,u32 menu) {
     return snapshot(handle,menu);
 }
 void parse_prepared_paragraph(const ParagraphSource& source,const std::vector<std::vector<char>>& fragments) {
-    using Reset=void (UWCN_CALL *)();using Parse=void (__fastcall *)(u32,const char*);
-    using Grammar=void (__fastcall *)(u32,u32);using Compose=const char* (UWCN_CALL *)();
+    using Reset=void (URWCN_CALL *)();using Parse=void (__fastcall *)(u32,const char*);
+    using Grammar=void (__fastcall *)(u32,u32);using Compose=const char* (URWCN_CALL *)();
     reinterpret_cast<Reset>(base+0x1620C0)();
     const auto parse=reinterpret_cast<Parse>(base+0x162300);
     const auto grammar=reinterpret_cast<Grammar>(base+0x161E90);
@@ -520,34 +520,34 @@ Status paint(Handle handle,const PaintServices& services) {
         const native_component_style::PanelScope style(input.style);
         const PanelCall call{static_cast<u32>(base+0x116270),value(input.origin.x),value(input.origin.y),
             value(input.width),value(input.height),prepared.fragments.front().data(),input.flags,input.color};
-        uwcn_component_panel(&call);break;
+        urwcn_component_panel(&call);break;
     }
     case Kind::legacy_panel: {
         const auto& input=std::get<LegacyPanelInputs>(component.inputs);
         const native_component_style::PanelScope style(input.style);
         const LegacyPanelCall call{static_cast<u32>(base+0x115E70),value(input.origin.x),value(input.origin.y),
             value(input.width),value(input.height),prepared.fragments.front().data(),input.flags};
-        uwcn_component_legacy_panel(&call);break;
+        urwcn_component_legacy_panel(&call);break;
     }
     case Kind::button: {
         const auto& input=std::get<ButtonInputs>(component.inputs);
         const native_component_style::ButtonScope style(input.style);
         const ButtonCall call{static_cast<u32>(base+0x114680),value(input.origin.x),value(input.origin.y),
             prepared.fragments.front().data()};
-        uwcn_component_button(&call);break;
+        urwcn_component_button(&call);break;
     }
     case Kind::paragraph: {
         parse_prepared_paragraph(component.paragraph,prepared.fragments);
         const auto& input=std::get<ParagraphInputs>(component.inputs);
         const NativeParagraphCall call{static_cast<u32>(base+0x10EB40),value(input.origin.x),value(input.origin.y),
             value(input.width),value(input.height),input.color,input.outline};
-        uwcn_draw_native_paragraph(&call);break;
+        urwcn_draw_native_paragraph(&call);break;
     }
     case Kind::centered_text: {
         const auto& input=std::get<CenteredTextInputs>(component.inputs);
         const CenteredTextCall call{static_cast<u32>(base+0x10E910),value(input.origin.x),value(input.origin.y),
             value(input.width),prepared.fragments.front().data(),input.color,input.outline};
-        uwcn_component_centered_text(&call);break;
+        urwcn_component_centered_text(&call);break;
     }
     case Kind::text_block: {
         const auto& input=std::get<TextBlockInputs>(component.inputs);
@@ -558,13 +558,13 @@ Status paint(Handle handle,const PaintServices& services) {
         }
         const TextBlockCall call{static_cast<u32>(base+0x10E5A0),value(input.anchor.x,width),value(input.anchor.y),
             prepared.fragments.front().data(),input.color,input.outline};
-        uwcn_component_text_block(&call);break;
+        urwcn_component_text_block(&call);break;
     }
     case Kind::statistic_label: {
         const auto& input=std::get<StatisticLabelInputs>(component.inputs);
         const StatisticLabelCall call{static_cast<u32>(base+0xE10F0),value(input.y),
             prepared.fragments.front().data(),input.value};
-        uwcn_component_statistic_label(&call);break;
+        urwcn_component_statistic_label(&call);break;
     }
     case Kind::action_button: {
         const auto& input=std::get<ActionButtonInputs>(component.inputs);
@@ -575,34 +575,34 @@ Status paint(Handle handle,const PaintServices& services) {
         const native_component_style::PanelScope style(input.style);
         const NativeHeadingCall call{static_cast<u32>(base+
             (component.kind==Kind::native_heading_band?0xF8F80:0xF9030)),prepared.fragments.front().data()};
-        uwcn_component_native_heading(&call);break;
+        urwcn_component_native_heading(&call);break;
     }
     case Kind::compound_hint: {
         const auto& input=std::get<CompoundHintInputs>(component.inputs);
         const native_component_style::ButtonScope style(input.style);
         const CompoundHintCall call{static_cast<u32>(base+0x10E720),value(input.origin.x),value(input.origin.y),
             prepared.fragments.front().data(),input.color};
-        uwcn_component_compound_hint(&call);break;
+        urwcn_component_compound_hint(&call);break;
     }
     case Kind::title_strip: {
         const auto& input=std::get<TitleStripInputs>(component.inputs);
         const native_component_style::PanelScope style(input.style);
         const TitleStripCall call{static_cast<u32>(base+0x1157B0),value(input.origin.x),value(input.origin.y),
             value(input.width),prepared.fragments.front().data(),input.mode};
-        uwcn_component_title_strip(&call);break;
+        urwcn_component_title_strip(&call);break;
     }
     case Kind::scale_ruler: {
         const auto& input=std::get<ScaleRulerInputs>(component.inputs);
         const ScaleRulerCall call{static_cast<u32>(base+0x8FE90),value(input.origin.x),value(input.origin.y),
             value(input.line_length),prepared.fragments.front().data()};
-        uwcn_component_scale_ruler(&call);break;
+        urwcn_component_scale_ruler(&call);break;
     }
     case Kind::world_map: {
         const auto& input=std::get<WorldMapInputs>(component.inputs);
         auto& large=*reinterpret_cast<std::uint8_t*>(base+0x2F7FD3);const auto previous=large;
         large=static_cast<std::uint8_t>(input.large_tiles);
         const WorldMapCall call{static_cast<u32>(base+0x605B0),input.world_x,input.world_y,input.step,input.mode};
-        uwcn_component_world_map(&call);large=previous;break;
+        urwcn_component_world_map(&call);large=previous;break;
     }
     case Kind::world_map_marker: {
         const auto& input=std::get<WorldMapMarkerInputs>(component.inputs);
@@ -611,7 +611,7 @@ Status paint(Handle handle,const PaintServices& services) {
         std::int32_t previous[4];
         for(u32 i=0;i<4;++i) {auto& value=*reinterpret_cast<std::int32_t*>(base+fields[i]);previous[i]=value;value=values[i];}
         const WorldMapMarkerCall call{static_cast<u32>(base+0x60360),input.step};
-        uwcn_component_world_map_marker(&call);
+        urwcn_component_world_map_marker(&call);
         for(u32 i=0;i<4;++i) *reinterpret_cast<std::int32_t*>(base+fields[i])=previous[i];
         break;
     }
@@ -620,7 +620,7 @@ Status paint(Handle handle,const PaintServices& services) {
         auto& step=*reinterpret_cast<std::uint8_t*>(base+0x2EEC17);const auto previous_step=step;
         auto& color=*reinterpret_cast<u32*>(base+0xA211068);const auto previous_color=color;
         step=static_cast<std::uint8_t>(input.step);color=input.color;
-        const NoArgumentCall call{static_cast<u32>(base+0x60450)};uwcn_component_no_argument(&call);
+        const NoArgumentCall call{static_cast<u32>(base+0x60450)};urwcn_component_no_argument(&call);
         step=previous_step;color=previous_color;break;
     }
     case Kind::hud_status_cell: {
@@ -630,7 +630,7 @@ Status paint(Handle handle,const PaintServices& services) {
         frame=input.frame_color;shade=input.shade_color;
         const HudStatusCellCall call{static_cast<u32>(base+0xF8E20),input.column,input.row,
             prepared.fragments[0].data(),prepared.fragments[1].data(),input.label_color,input.native_record};
-        uwcn_component_hud_status_cell(&call);frame=previous_frame;shade=previous_shade;
+        urwcn_component_hud_status_cell(&call);frame=previous_frame;shade=previous_shade;
         // The complete constructor has just published this record's native
         // geometry. Updates consume those actual original fields, not a Mod
         // layout or a saved old-language final text position.
@@ -639,10 +639,10 @@ Status paint(Handle handle,const PaintServices& services) {
         if(input.display==HudStatusValue::text) {
             const CompoundHintCall update{static_cast<u32>(base+0xFEE50),x,y,
                 prepared.fragments[2].data(),input.value_color};
-            uwcn_component_compound_hint(&update);
+            urwcn_component_compound_hint(&update);
         } else if(input.display==HudStatusValue::bar) {
             const HudStatusBarCall update{static_cast<u32>(base+0xFEF00),x,y,input.amount,input.maximum};
-            uwcn_component_hud_status_bar(&update);
+            urwcn_component_hud_status_bar(&update);
         }
         break;
     }
@@ -654,19 +654,19 @@ Status paint(Handle handle,const PaintServices& services) {
         frame=input.frame_color;shade=input.shade_color;summary_paint_source=&input;
         // Original mode zero is this UI object's complete constructor; mode
         // one is its ordinary update phase. Reconstruct the complete object.
-        const NoArgumentCall call{static_cast<u32>(base+0xF9910)};uwcn_component_no_argument(&call);
+        const NoArgumentCall call{static_cast<u32>(base+0xF9910)};urwcn_component_no_argument(&call);
         summary_paint_source=nullptr;frame=previous_frame;shade=previous_shade;break;
     }
     case Kind::skill_info: {
         const auto& input=std::get<SkillInfoInputs>(component.inputs);
         const SkillInfoCall call{static_cast<u32>(base+0xE03D0),value(input.y),input.skill};
-        uwcn_component_skill_info(&call);break;
+        urwcn_component_skill_info(&call);break;
     }
     case Kind::skill_options: {
         const auto& input=std::get<SkillOptionsInputs>(component.inputs);
         const native_component_style::PanelScope panel(input.panel);
         const NoArgumentCall call{static_cast<u32>(base+0x11D20)};
-        uwcn_component_no_argument(&call);break;
+        urwcn_component_no_argument(&call);break;
     }
     case Kind::skill_help: {
         parse_prepared_paragraph(component.paragraph,prepared.fragments);
@@ -677,7 +677,7 @@ Status paint(Handle handle,const PaintServices& services) {
         // Its confirmed end hook returns after both caller-cleaned stacks.
         const NoArgumentCall call{static_cast<u32>(base+0xE0CA9)};
         skill_help_painting=true;
-        uwcn_component_skill_help(&call);
+        urwcn_component_skill_help(&call);
         skill_help_painting=false;break;
     }
     }

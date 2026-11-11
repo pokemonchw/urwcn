@@ -6,7 +6,7 @@
 
 ## 静态原始资料
 
-- `windows-creation-ghidra.c`：从已有 `build/load-saved-ghidra/uwcn-load-saved.gpr` 以 `-process urw.exe -readOnly -noanalysis` 导出 `get_camp`、`draw_campselgfx`、`SelectCampaign`、`game_course`、`NaytaMittakaava`、`kartta_main`、地图重绘、`endgame`、`LIST_ButtonSpotEntry`、`LIST_Go` 与 `crtplr_info`。脚本为 `windows_creation_Decompile.java`；脚本不创建函数、不修改 Program。
+- `windows-creation-ghidra.c`：从已有 `build/load-saved-ghidra/urwcn-load-saved.gpr` 以 `-process urw.exe -readOnly -noanalysis` 导出 `get_camp`、`draw_campselgfx`、`SelectCampaign`、`game_course`、`NaytaMittakaava`、`kartta_main`、地图重绘、`endgame`、`LIST_ButtonSpotEntry`、`LIST_Go` 与 `crtplr_info`。脚本为 `windows_creation_Decompile.java`；脚本不创建函数、不修改 Program。
 - `windows-creation-selection-disassembly.txt`：完整 `105C0..11145`，包括情境生成、选择列表、确认控件、游戏进程与各个原生 epilogue。
 - `windows-creation-world-disassembly.txt`、`windows-creation-world-titles-disassembly.txt`：比例尺、世界初次生成业务、显示片段和原有循环。
 - `windows-creation-button-disassembly.txt`、`windows-creation-keyed-button-disassembly.txt`：完整按钮绘制、键帽／高亮标记和原生登记宽度。

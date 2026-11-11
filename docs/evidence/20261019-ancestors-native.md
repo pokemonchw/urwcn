@@ -40,7 +40,7 @@
 - 根入口命令：`build.ps1 -Module adapter,semantic,catalog -Publish -Reload -TargetPid 65412`。使用默认 MinGW、`.toolchains/x86/w64devkit/bin/cmake.exe`、同目录 `g++.exe`、`build/mingw-x86` 及正式 `package`。提交后本任务源码保持冻结至批次完成。
 - 请求 ID：`332a1669776c48559b41f0ceeeb1306f`；批次 ID：`22ac1ead4ed94d49bbcafcfffe5bed5c`。已读取对应 `build/.compile-queue/results/332a1669776c48559b41f0ceeeb1306f.json` 和 `build/.compile-queue/batches/22ac1ead4ed94d49bbcafcfffe5bed5c.log`，`Success=true`。该批次一次配置、一次增量构建；Adapter 的两个源文件重新编译，Catalog/Semantic 目标已是最新。仅保留既有 SDL `GetProcAddress` 转换警告。
 - 正式事务：`a3cb9e6df32c47f7985f0cc73ae2dd41`。已读取 `build/mingw-x86/stage/a3cb9e6df32c47f7985f0cc73ae2dd41/publication-result.json`，`success=true`。本事务实际更新 Adapter、构建适配与清单三件；旧件先按原相对路径移入 `回收/20261019-081709-a3cb9e6df32c47f7985f0cc73ae2dd41/`。
-- PID `65412` 返回 `ReadyToPublish`、`Applied`，Adapter 第 7 代；正式 `package/modules/uwcn_adapter.dll` 的 SHA-256 为 `f106a36555b7528cf0e5aa6f22966b25bdd5d7417fbc489e92038c0d5d2252b3`，与 Applied 一致。
+- PID `65412` 返回 `ReadyToPublish`、`Applied`，Adapter 第 7 代；正式 `package/modules/urwcn_adapter.dll` 的 SHA-256 为 `f106a36555b7528cf0e5aa6f22966b25bdd5d7417fbc489e92038c0d5d2252b3`，与 Applied 一致。
 - 先祖文本服务和词库已随并行前批次 `3a8077d74baf4b8c81163a6d107dec37` 的事务 `47b3089b3f5a48fdb39bc09ef77963a3` 正式发布；其发布记录显示 Semantic/Catalog 第 3 代 Applied，旧件已回收到该事务目录。本批次选择同样三个模块后，只有新 Adapter 内容需要替换，不能将该前批次的编译算作本批次重新编译。当前正式 Semantic SHA-256 为 `2d826d31f2a07d6d93386d2e8ab0327496926f237ad34426983d7d2a469bc218`；词库为 `558d5e2f38b5d03774faa158cb84e59f6168598a20c66d7551ec9dea35af20f7`，包含全部 13 个 `ancestors.*` 条目。两件均与本次正式清单一致。
 - 当前正式构建适配 SHA-256 为 `90a7f95be8a4a5d4656892c842105ad97ac9b59517839d38ed4e6d8dbbf5dc75`，与本次清单一致。启动器和驻留桥保持正式路径；没有并行运行包、手动卸载或关闭/重启游戏操作。
 

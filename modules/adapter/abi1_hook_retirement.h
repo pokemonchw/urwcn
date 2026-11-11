@@ -9,7 +9,7 @@
 // One-way migration of the published tracking hooks, not a Host ABI service.
 // See docs/evidence/20261019-abi1-hook-retirement.md for the exact binary and
 // main-thread commit boundary to which this private layout belongs.
-namespace uwcn::adapter::abi1_retirement {
+namespace urwcn::adapter::abi1_retirement {
 // Process-local entry handles, not module pointers or text drawing records.
 // Persist count entries across adapter reloads; these resident allocations stay
 // alive until process exit. A fresh process has no retired thunk aliases.

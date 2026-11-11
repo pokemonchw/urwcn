@@ -42,10 +42,10 @@
 #include <string>
 #include <vector>
 
-namespace uwcn::adapter {
+namespace urwcn::adapter {
 namespace {
 const HostApi* host{};
-using GetRGB = void (UWCN_CALL *)(u32, const void*, unsigned char*, unsigned char*, unsigned char*);
+using GetRGB = void (URWCN_CALL *)(u32, const void*, unsigned char*, unsigned char*, unsigned char*);
 GetRGB get_rgb{};
 abi1_retirement::RetirementRoutes retired_routes{};
 bool retired_for_publication{};
@@ -1664,7 +1664,7 @@ void initialization_failure(const wchar_t* boundary,Status status) {
         std::to_wstring(static_cast<u32>(status));
     host->log(message.c_str());
 }
-Status UWCN_CALL initialize(const HostApi* api) {
+Status URWCN_CALL initialize(const HostApi* api) {
     if(!api || api->size<sizeof(HostApi) || api->abi!=kHostAbi) return Status::invalid;
     host=api;
     windows_build::initialize(api->image_base);
@@ -1702,7 +1702,7 @@ Status UWCN_CALL initialize(const HostApi* api) {
     if(name_status!=Status::ok) { initialization_failure(L"native name input API",name_status);return name_status; }
     auto encyclopedia_status=initialize_windows_encyclopedia();
     if(encyclopedia_status!=Status::ok) { initialization_failure(L"encyclopedia link catalog",encyclopedia_status);return encyclopedia_status; }
-    auto status=abi1_retirement::retire_tracking_hooks(api->image_base,GetModuleHandleW(L"uwcn_loader.dll"),sdl,&retired_routes);
+    auto status=abi1_retirement::retire_tracking_hooks(api->image_base,GetModuleHandleW(L"urwcn_loader.dll"),sdl,&retired_routes);
     if(status!=Status::ok) { initialization_failure(L"retired native bridge",status);return status; }
     status=native_targets::initialize(api->image_base,sdl);
     if(status!=Status::ok) { initialization_failure(L"native target API",status);return status; }
@@ -1913,7 +1913,7 @@ Status UWCN_CALL initialize(const HostApi* api) {
     if(status!=Status::ok) initialization_failure(L"native text hook installation",status);
     return status;
 }
-Status UWCN_CALL invoke(u32 operation,const void* input,u32 bytes,void* output,u32* output_bytes) {
+Status URWCN_CALL invoke(u32 operation,const void* input,u32 bytes,void* output,u32* output_bytes) {
     if(operation==kNativeInputReturn) {
         if(!input || bytes!=sizeof(u32) || !output_bytes) return Status::invalid;
         if(!output || *output_bytes<sizeof(u32)) {
@@ -1949,7 +1949,7 @@ Status UWCN_CALL invoke(u32 operation,const void* input,u32 bytes,void* output,u
     *output_bytes=sizeof(DispatchResult);
     return dispatch(*static_cast<const NativeEvent*>(input),*static_cast<DispatchResult*>(output));
 }
-Status UWCN_CALL save_state(void* output,u32* bytes) {
+Status URWCN_CALL save_state(void* output,u32* bytes) {
     if(!bytes) return Status::invalid;
     const auto native=native_targets::save();
     const auto redraw=native_language_redraw::save();
@@ -2001,7 +2001,7 @@ Status UWCN_CALL save_state(void* output,u32* bytes) {
     retired_for_publication=true;
     return Status::ok;
 }
-Status UWCN_CALL restore_state(const void* input,u32 bytes) {
+Status URWCN_CALL restore_state(const void* input,u32 bytes) {
     if(!input || bytes<sizeof(u32)) return Status::invalid;
     u32 count{}; std::memcpy(&count,input,sizeof(count));
     const auto active_bytes=sizeof(u32)+static_cast<std::size_t>(count)*sizeof(Active);
@@ -2056,7 +2056,7 @@ Status UWCN_CALL restore_state(const void* input,u32 bytes) {
     if(status!=Status::ok) return status;
     return Status::ok;
 }
-void UWCN_CALL shutdown() {
+void URWCN_CALL shutdown() {
     if(!retired_for_publication) {
         std::vector<abi1_retirement::RouteBinding> originals;
         for(u32 i=0;i<retired_routes.count;++i) originals.push_back({retired_routes.entries[i].id,retired_routes.entries[i].original});
@@ -2086,6 +2086,6 @@ const ModuleApi api{sizeof(ModuleApi),kHostAbi,ModuleId::adapter,initialize,invo
 }
 }
 
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor{
-    uwcn::kDescriptorMagic,uwcn::kHostAbi,static_cast<uwcn::u32>(uwcn::ModuleId::adapter),0x14C,1};
-UWCN_EXPORT const uwcn::ModuleApi* UWCN_CALL uwcn_get_module_api() { return &uwcn::adapter::api; }
+URWCN_EXPORT const urwcn::ModuleDescriptor urwcn_module_descriptor{
+    urwcn::kDescriptorMagic,urwcn::kHostAbi,static_cast<urwcn::u32>(urwcn::ModuleId::adapter),0x14C,1};
+URWCN_EXPORT const urwcn::ModuleApi* URWCN_CALL urwcn_get_module_api() { return &urwcn::adapter::api; }

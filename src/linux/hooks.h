@@ -2,7 +2,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace uwcn::linux_host {
+namespace urwcn::linux_host {
 // Saved at an inspected, non-leaf native instruction boundary. original_rsp
 // is immediately after this structure. Native stack arguments stay in place.
 struct Frame {
@@ -42,4 +42,4 @@ void enter_business();
 void leave_business();
 void service_control();
 }
-extern "C" const uwcn::linux_host::Hooks* uwcn_linux_hooks_v2();
+extern "C" const urwcn::linux_host::Hooks* urwcn_linux_hooks_v2();

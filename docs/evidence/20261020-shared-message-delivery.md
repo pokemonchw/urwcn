@@ -34,9 +34,9 @@
 
 已读取上述请求结果和对应批次日志。成功批次仍有函数指针转换、缩进、聚合尾部初始化、枚举 switch 与未使用声明警告，没有把编译成功写成零警告或运行通过。
 
-正式事务 `5a9ab4384220425c8b4d4e0387ca1876` 替换 `package/modules/uwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv` 和 `package/release.json`。其余五个 DLL 的编译内容与正式文件相同，没有重复替换。旧三件已先按原相对路径移入 `回收/20261020-015121-5a9ab4384220425c8b4d4e0387ca1876/package/`，已读取 `publication-result.json` 并确认 `success=true`。
+正式事务 `5a9ab4384220425c8b4d4e0387ca1876` 替换 `package/modules/urwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv` 和 `package/release.json`。其余五个 DLL 的编译内容与正式文件相同，没有重复替换。旧三件已先按原相对路径移入 `回收/20261020-015121-5a9ab4384220425c8b4d4e0387ca1876/package/`，已读取 `publication-result.json` 并确认 `success=true`。
 
-本事务正式 Adapter SHA-256：`dbdf812df83ce1589521beea7a16a85b62fcd3abde29bfa2b4f9a6c908c694ac`；正式消息词库 SHA-256：`492fb40253fe34d433d0b8e1e73d21a61d3245662a7280cb2fe5e9427a311261`。这些摘要记录本事务产物，后续其他修正发布不追溯改变本批记录。根 `uwcn_launcher.exe` 的正常路径加载 `package/`；本轮没有 Runtime Applied 回执。
+本事务正式 Adapter SHA-256：`dbdf812df83ce1589521beea7a16a85b62fcd3abde29bfa2b4f9a6c908c694ac`；正式消息词库 SHA-256：`492fb40253fe34d433d0b8e1e73d21a61d3245662a7280cb2fe5e9427a311261`。这些摘要记录本事务产物，后续其他修正发布不追溯改变本批记录。根 `urwcn_launcher.exe` 的正常路径加载 `package/`；本轮没有 Runtime Applied 回执。
 
 01:53 的并行文化图例修复先从较早的消息快照发布，因此最后一个批次在完整消息快照中合入其唯一源码修正（`windows_encyclopedia.inc` 的文字参数由 `arguments[2]` 改为 `arguments[1]`），修正依据见 `20261020-culture-legend-text-argument-fix.md`。最终事务 **`c5ae157f4561453b9dec245fc11c9f14`** 的 `publication-result.json` 为 `success=true`，替换 Adapter 与发布清单，旧两件先移入 `回收/20261020-015507-c5ae157f4561453b9dec245fc11c9f14/package/`。最终正式 Adapter SHA-256 为 **`1de3989a321e392eb691af3230ec136ae36e043bfbc8bf9ee246f5cf8db5abbf`**，消息词库仍为上述 67,647 项及 `492fb4…1261` 摘要。该批同样没有 Reload 或 Runtime Applied。
 

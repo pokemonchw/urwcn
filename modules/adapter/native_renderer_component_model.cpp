@@ -5,7 +5,7 @@
 #include <map>
 #include <utility>
 
-namespace uwcn::adapter::native_renderer_component_model {
+namespace urwcn::adapter::native_renderer_component_model {
 namespace {
 std::uintptr_t base{};
 Handle next_handle=1;
@@ -286,7 +286,7 @@ Status paint(Handle handle,const PaintServices& services) {
         services.enter(handle,component.kind,text_style(component));
         const MarkedButtonCall call{static_cast<u32>(base+0xCFD10),target.texture,input.row.action,
             evaluate(input.origin.x),evaluate(input.origin.y),prepared.fragments.front().data()};
-        uwcn_renderer_marked_button(&call);commit_native_row(handle);
+        urwcn_renderer_marked_button(&call);commit_native_row(handle);
         services.leave(handle,component.kind);return Status::ok;
     }
     services.enter(handle,component.kind,text_style(component));
@@ -297,14 +297,14 @@ Status paint(Handle handle,const PaintServices& services) {
         const PanelCall call{static_cast<u32>(base+0x1166C0),target.renderer,
             evaluate(input.origin.x),evaluate(input.origin.y),evaluate(input.width),evaluate(input.height),
             prepared.fragments.front().data(),input.flags,input.color};
-        uwcn_renderer_panel(&call);break;
+        urwcn_renderer_panel(&call);break;
     }
     case Kind::paragraph: {
         native_component_model::parse_prepared_paragraph(component.paragraph,prepared.fragments);
         const auto& input=std::get<ParagraphInputs>(component.inputs);
         const ParagraphCall call{static_cast<u32>(base+0x10EFD0),target.renderer,
             evaluate(input.origin.x),evaluate(input.origin.y),evaluate(input.width),evaluate(input.height),input.color,input.style};
-        uwcn_renderer_paragraph(&call);break;
+        urwcn_renderer_paragraph(&call);break;
     }
     case Kind::text_block: {
         const auto& input=std::get<TextBlockInputs>(component.inputs);std::int32_t width{};
@@ -314,17 +314,17 @@ Status paint(Handle handle,const PaintServices& services) {
         }
         const TextBlockCall call{static_cast<u32>(base+0x10E260),target.renderer,
             evaluate(input.anchor.x,width),evaluate(input.anchor.y),prepared.fragments.front().data(),input.color,input.style};
-        uwcn_renderer_text_block(&call);break;
+        urwcn_renderer_text_block(&call);break;
     }
     case Kind::heading: {
         const HeadingCall call{static_cast<u32>(base+0x113430),target.texture,prepared.fragments.front().data()};
-        uwcn_renderer_heading(&call);break;
+        urwcn_renderer_heading(&call);break;
     }
     case Kind::label_box: {
         const auto& input=std::get<LabelBoxInputs>(component.inputs);
         const LabelBoxCall call{static_cast<u32>(base+0x111560),target.renderer,
             evaluate(input.origin.x),evaluate(input.origin.y),evaluate(input.width),prepared.fragments.front().data(),input.color};
-        uwcn_renderer_label_box(&call);break;
+        urwcn_renderer_label_box(&call);break;
     }
     case Kind::marked_button: break;
     }

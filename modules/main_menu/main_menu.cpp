@@ -11,7 +11,7 @@
 #include <vector>
 
 namespace {
-using namespace uwcn;
+using namespace urwcn;
 const HostApi* host_api=nullptr;
 std::string translation_version;
 
@@ -45,13 +45,13 @@ Status generate_translation_version(std::string& version) {
     // in ModuleId order. Paths and lowercase digests are part of the hash input;
     // neither the loader nor a runtime UI value participates in this version.
     constexpr const char* files[]={
-        "modules/uwcn_catalog.dll", "modules/uwcn_semantic.dll",
-        "modules/uwcn_render.dll", "modules/uwcn_layout.dll",
-        "modules/uwcn_main_menu.dll", "modules/uwcn_adapter.dll",
+        "modules/urwcn_catalog.dll", "modules/urwcn_semantic.dll",
+        "modules/urwcn_render.dll", "modules/urwcn_layout.dll",
+        "modules/urwcn_main_menu.dll", "modules/urwcn_adapter.dll",
         "catalog/zh-CN/main_menu.tsv", "catalog/zh-CN/hud.tsv", "catalog/zh-CN/world_hud.tsv",
         "catalog/zh-CN/cultures.tsv", "catalog/zh-CN/messages.tsv"
     };
-    std::string identity="uwcn-package-version-v1\n";
+    std::string identity="urwcn-package-version-v1\n";
     constexpr char hexadecimal[]="0123456789abcdef";
     std::array<std::uint8_t,32> digest;
     for(const char* file:files) {
@@ -90,11 +90,11 @@ Status generate_translation_version(std::string& version) {
     return Status::ok;
 }
 
-Status UWCN_CALL initialize(const HostApi* host) {
+Status URWCN_CALL initialize(const HostApi* host) {
     if(!host || host->abi!=kHostAbi || host->size!=sizeof(HostApi)) return Status::invalid;
     host_api=host;return Status::ok;
 }
-Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* capacity) {
+Status URWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* capacity) {
     if(op==kModuleDependenciesChanged) {
         translation_version.clear();
         return input && bytes==sizeof(u32) ? Status::ok : Status::invalid;
@@ -112,10 +112,10 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
     }
     return host_api->invoke(ModuleId::semantic,text_op::translate,&request,sizeof(request),output,capacity);
 }
-Status UWCN_CALL save(void*,u32* bytes) { if(!bytes)return Status::invalid;*bytes=0;return Status::ok; }
-Status UWCN_CALL restore(const void*,u32 bytes) { return bytes?Status::invalid:Status::ok; }
-void UWCN_CALL shutdown() { translation_version.clear();host_api=nullptr; }
+Status URWCN_CALL save(void*,u32* bytes) { if(!bytes)return Status::invalid;*bytes=0;return Status::ok; }
+Status URWCN_CALL restore(const void*,u32 bytes) { return bytes?Status::invalid:Status::ok; }
+void URWCN_CALL shutdown() { translation_version.clear();host_api=nullptr; }
 const ModuleApi api={sizeof(ModuleApi),kHostAbi,ModuleId::main_menu,initialize,invoke,save,restore,shutdown};
 }
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor={uwcn::kDescriptorMagic,uwcn::kHostAbi,5,0x14c,1};
-UWCN_EXPORT const uwcn::ModuleApi* UWCN_CALL uwcn_get_module_api() { return &api; }
+URWCN_EXPORT const urwcn::ModuleDescriptor urwcn_module_descriptor={urwcn::kDescriptorMagic,urwcn::kHostAbi,5,0x14c,1};
+URWCN_EXPORT const urwcn::ModuleApi* URWCN_CALL urwcn_get_module_api() { return &api; }

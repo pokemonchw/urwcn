@@ -67,15 +67,15 @@ Linux 分支及 HDA4 等旧驻留 ABI 不包含本轮 Windows 改动；不宣称
 | 请求ID | `893a7ad2de0744089f3effbd524d4a97` |
 | 批次ID | `ff8e5a6a13144baa9043907cb70041ff` |
 | 队列结果 | `build/.compile-queue/results/893a7ad2de0744089f3effbd524d4a97.json`，`Success=true` |
-| 批次日志 | `build/.compile-queue/batches/ff8e5a6a13144baa9043907cb70041ff.log`，`Built target uwcn_adapter` |
+| 批次日志 | `build/.compile-queue/batches/ff8e5a6a13144baa9043907cb70041ff.log`，`Built target urwcn_adapter` |
 | 编译对象 | MinGW x86 Adapter；一次配置、一次增量构建，无清理构建树 |
 | 正式发布事务 | `c7b8d414dcaa4e5b95613f8243837b0c`，`publication-result.json success=true` |
-| 正式更新 | `package/modules/uwcn_adapter.dll`、`package/release.json` |
+| 正式更新 | `package/modules/urwcn_adapter.dll`、`package/release.json` |
 | 正式Adapter SHA-256 | `a71c5165fa65c008b7d369d51253d7f4b2bfcbca79b6d5da8aa5cbdadf19e07a`，与构建产物及正式清单一致 |
-| 旧件归档 | `回收/20261110-150410-c7b8d414dcaa4e5b95613f8243837b0c/package/`，保留原`modules/uwcn_adapter.dll`和`release.json`相对路径 |
+| 旧件归档 | `回收/20261110-150410-c7b8d414dcaa4e5b95613f8243837b0c/package/`，保留原`modules/urwcn_adapter.dll`和`release.json`相对路径 |
 | 旧Adapter SHA-256 | `eea7881b0c52896992ec9de701f06a3ef52c029e8704c9a2af59b52630f1741b`，归档文件仍匹配上一正式版本 |
 | 运行时应用 | `ReloadRequested=false`，`runtime_requested=false`，`runtime_receipts=[]`；没有Applied回执 |
 
 已读取请求结果、完整批次日志、发布结果及正式清单，并读取正式件、构建件和旧归档件哈希。编译包含函数指针转换、未使用项、缩进及extern初始化警告，没有编译或链接错误；没有以编译代替运行画面验收。
 
-正式启动路径已更新，不需要独立修复包或改用构建目录启动器。当前旧HDA7进程未应用本轮HDA8，原因及不可恢复输入见前文；下次从根`uwcn_launcher.exe`正常启动加载本轮正式Adapter。没有关闭、重启游戏或要求返回任何特定页面。
+正式启动路径已更新，不需要独立修复包或改用构建目录启动器。当前旧HDA7进程未应用本轮HDA8，原因及不可恢复输入见前文；下次从根`urwcn_launcher.exe`正常启动加载本轮正式Adapter。没有关闭、重启游戏或要求返回任何特定页面。

@@ -197,14 +197,14 @@ Reproducible decompilation archive
 ---------------------------------
 Tool: C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
 JAVA_HOME: C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
-Independent project: build/intro-ghidra/uwcn-intro, imported from the original
+Independent project: build/intro-ghidra/urwcn-intro, imported from the original
 urw.exe. It does not open or modify setup/startup-audio project databases.
 Settings/temp paths: build/intro-ghidra/settings and build/intro-ghidra/cache.
 Headless options: -analysisTimeoutPerFile300 -max-cpu4
- -scriptPath D:\workspace\uwcn\docs\evidence
- -postScript intro_Decompile.java D:\workspace\uwcn\docs\evidence\intro-ghidra.c
- -log D:\workspace\uwcn\docs\evidence\intro-ghidra.log
- -scriptlog D:\workspace\uwcn\docs\evidence\intro-ghidra-script.log
+ -scriptPath D:\workspace\urwcn\docs\evidence
+ -postScript intro_Decompile.java D:\workspace\urwcn\docs\evidence\intro-ghidra.c
+ -log D:\workspace\urwcn\docs\evidence\intro-ghidra.log
+ -scriptlog D:\workspace\urwcn\docs\evidence\intro-ghidra-script.log
 
 intro_Decompile.java requests actual Ghidra C output for the entire sequence,
 all11-line story control, fade/text helper, version/logo, both image consumers,

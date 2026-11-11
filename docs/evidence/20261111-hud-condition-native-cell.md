@@ -49,7 +49,7 @@
 | 结果 | `build/.compile-queue/results/094ae1df0d2946c8a5133abe78ee43c5.json`，`Success=true`、`PublishRequested=true`、`ReloadRequested=true` |
 | 完整日志 | `build/.compile-queue/batches/d8c7ff9a412b4cbbbeeb4881c4159d75.log`，已完整读取 |
 | 正式事务 | `a0d546fc14f741f0abd977736303e76d`，2026-11-11 12:14:25（Asia/Shanghai）完成 |
-| 正式文件 | `package/modules/uwcn_adapter.dll`、`package/release.json` |
+| 正式文件 | `package/modules/urwcn_adapter.dll`、`package/release.json` |
 | Adapter SHA-256 | `ec17fb9d1dceefd74d4469ba77353fc76f07b090920ff36ebf1455ea3685bcc3`，与构建件、清单及 Applied 回执相同 |
 | 旧件回收 | `回收/20261111-121424-a0d546fc14f741f0abd977736303e76d/package/`，保留 Adapter 与清单原相对路径 |
 | 旧 Adapter SHA-256 | `706e49aa5bebbf39bbb7f52cbe5f2572eda39462dee65b72b773392fcc787ec3` |

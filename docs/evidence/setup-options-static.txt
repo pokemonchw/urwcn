@@ -232,7 +232,7 @@ Ghidra executable:
  C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\ghidra_12.1.4_PUBLIC\support\analyzeHeadless.bat
 JAVA_HOME:
  C:\Users\WIN11\AppData\Local\Programs\dfcn-analysis-tools\jdk-25.0.4.1+1
-Use project directory build/setup-ghidra, project uwcn-setup; import original
+Use project directory build/setup-ghidra, project urwcn-setup; import original
 urw.exe and use -scriptPath docs/evidence -postScript setup_options_Decompile.java
 with absolute output setup-options-ghidra.c. The separate analysis settings/cache
 are inside build/setup-ghidra. This analyzes disk bytes only; it executes no code

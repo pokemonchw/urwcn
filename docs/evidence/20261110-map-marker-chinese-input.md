@@ -60,4 +60,4 @@
 
 已读取最终 `build/.compile-queue/results/5e8c415107af4910a6cdf7ea9865a540.json`、`batches/4f9f78c701cc47f9ba8693e68f6801d4.log` 和 `build/mingw-x86/stage/dbd496d6f5494eabab8b5281b8490ffc/publication-result.json`。重试没有源码变更，沿用首批已编译 DLL；没有重复提交等待中的请求或另开构建树。首批保留既有函数指针转换、未初始化成员、extern 初始化、未使用项与缩进警告，无编译错误。
 
-正式更新 `package/modules/uwcn_adapter.dll` 和 `package/release.json`；替换前的旧件已先按原相对路径移入 `回收/20261110-183800-dbd496d6f5494eabab8b5281b8490ffc/package/`。旧 Adapter 的 SHA-256 为 `e6bd92a5a1a7a80c7f29b54e177a16278227bbcbdcd13e041bf92b0d7730d361`；新正式文件与构建输出哈希一致，且与 Applied 回执一致。根启动器的正式加载路径已更新，没有平行修复包或重启要求。Applied 仅证明业务交接成功，实际输入效果由用户验收。
+正式更新 `package/modules/urwcn_adapter.dll` 和 `package/release.json`；替换前的旧件已先按原相对路径移入 `回收/20261110-183800-dbd496d6f5494eabab8b5281b8490ffc/package/`。旧 Adapter 的 SHA-256 为 `e6bd92a5a1a7a80c7f29b54e177a16278227bbcbdcd13e041bf92b0d7730d361`；新正式文件与构建输出哈希一致，且与 Applied 回执一致。根启动器的正式加载路径已更新，没有平行修复包或重启要求。Applied 仅证明业务交接成功，实际输入效果由用户验收。

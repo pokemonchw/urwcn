@@ -3,7 +3,7 @@
 #include "sdk/utf8.h"
 #include <string_view>
 
-namespace uwcn {
+namespace urwcn {
 namespace {
 struct Lexeme { const char* english; const char* key; };
 // Original 0A3E70 initializer and 0A8F50 join rules are recorded in

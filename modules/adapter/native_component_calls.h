@@ -2,7 +2,7 @@
 #include "../../sdk/host_abi.h"
 #include <cstdint>
 
-namespace uwcn::adapter::native_component_calls {
+namespace urwcn::adapter::native_component_calls {
 // These are the complete, confirmed x86 native function ABIs. All origins and
 // extents are native component inputs, before that component lays out text.
 struct PanelCall {
@@ -50,24 +50,24 @@ struct HudStatusCellCall {
 };
 struct HudStatusBarCall {u32 target;std::int32_t x,y,amount,maximum;};
 struct SkillInfoCall {u32 target;std::int32_t y;u32 skill;};
-extern "C" void UWCN_CALL uwcn_component_panel(const PanelCall*);
-extern "C" void UWCN_CALL uwcn_component_legacy_panel(const LegacyPanelCall*);
-extern "C" void UWCN_CALL uwcn_component_button(const ButtonCall*);
-extern "C" void UWCN_CALL uwcn_component_centered_text(const CenteredTextCall*);
-extern "C" void UWCN_CALL uwcn_component_text_block(const TextBlockCall*);
-extern "C" void UWCN_CALL uwcn_component_statistic_label(const StatisticLabelCall*);
-extern "C" void UWCN_CALL uwcn_component_action_button(const ActionButtonCall*);
-extern "C" void UWCN_CALL uwcn_component_native_heading(const NativeHeadingCall*);
-extern "C" void UWCN_CALL uwcn_component_compound_hint(const CompoundHintCall*);
-extern "C" void UWCN_CALL uwcn_component_title_strip(const TitleStripCall*);
-extern "C" void UWCN_CALL uwcn_component_selector_renderer(const SelectorRendererCall*);
-extern "C" void UWCN_CALL uwcn_component_scale_ruler(const ScaleRulerCall*);
-extern "C" void UWCN_CALL uwcn_component_world_map(const WorldMapCall*);
-extern "C" void UWCN_CALL uwcn_component_world_map_marker(const WorldMapMarkerCall*);
-extern "C" void UWCN_CALL uwcn_component_no_argument(const NoArgumentCall*);
-extern "C" void UWCN_CALL uwcn_component_hud_status_cell(const HudStatusCellCall*);
-extern "C" void UWCN_CALL uwcn_component_hud_status_bar(const HudStatusBarCall*);
-extern "C" void UWCN_CALL uwcn_component_skill_info(const SkillInfoCall*);
-extern "C" void UWCN_CALL uwcn_component_skill_help(const NoArgumentCall*);
-extern "C" void UWCN_CALL uwcn_component_fragment_return();
+extern "C" void URWCN_CALL urwcn_component_panel(const PanelCall*);
+extern "C" void URWCN_CALL urwcn_component_legacy_panel(const LegacyPanelCall*);
+extern "C" void URWCN_CALL urwcn_component_button(const ButtonCall*);
+extern "C" void URWCN_CALL urwcn_component_centered_text(const CenteredTextCall*);
+extern "C" void URWCN_CALL urwcn_component_text_block(const TextBlockCall*);
+extern "C" void URWCN_CALL urwcn_component_statistic_label(const StatisticLabelCall*);
+extern "C" void URWCN_CALL urwcn_component_action_button(const ActionButtonCall*);
+extern "C" void URWCN_CALL urwcn_component_native_heading(const NativeHeadingCall*);
+extern "C" void URWCN_CALL urwcn_component_compound_hint(const CompoundHintCall*);
+extern "C" void URWCN_CALL urwcn_component_title_strip(const TitleStripCall*);
+extern "C" void URWCN_CALL urwcn_component_selector_renderer(const SelectorRendererCall*);
+extern "C" void URWCN_CALL urwcn_component_scale_ruler(const ScaleRulerCall*);
+extern "C" void URWCN_CALL urwcn_component_world_map(const WorldMapCall*);
+extern "C" void URWCN_CALL urwcn_component_world_map_marker(const WorldMapMarkerCall*);
+extern "C" void URWCN_CALL urwcn_component_no_argument(const NoArgumentCall*);
+extern "C" void URWCN_CALL urwcn_component_hud_status_cell(const HudStatusCellCall*);
+extern "C" void URWCN_CALL urwcn_component_hud_status_bar(const HudStatusBarCall*);
+extern "C" void URWCN_CALL urwcn_component_skill_info(const SkillInfoCall*);
+extern "C" void URWCN_CALL urwcn_component_skill_help(const NoArgumentCall*);
+extern "C" void URWCN_CALL urwcn_component_fragment_return();
 }

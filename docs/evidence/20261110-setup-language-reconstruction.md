@@ -42,6 +42,6 @@
 
 源码修改完成。根 build.ps1 MinGW Adapter 请求 `3e032215fac74a7b85b2d7ee88caa56d`，批次 `baba5b06374e49d5a20bee591860a231` 成功；已读取请求结果 JSON、批次日志和发布事务 JSON。编译保留既有函数指针转换、初始化、缩进和未使用项警告。
 
-正式发布事务 `56abb975f20e4b0ab08d1bbe027b07d4` 更新 `package/modules/uwcn_adapter.dll` 与 `package/release.json`。旧文件先移入 `回收/20261110-113348-56abb975f20e4b0ab08d1bbe027b07d4/`，保留相对路径。通过现有 Proton 解释器只读枚举确认 Windows PID 为364，使用既有控制事务获得 `ReadyToPublish`、`Applied ... adapter:fbced7dd549dd1d47e3e6108c419a568b5a7724b2a30ae03d4b782b1b41ca07b:3` 回执。
+正式发布事务 `56abb975f20e4b0ab08d1bbe027b07d4` 更新 `package/modules/urwcn_adapter.dll` 与 `package/release.json`。旧文件先移入 `回收/20261110-113348-56abb975f20e4b0ab08d1bbe027b07d4/`，保留相对路径。通过现有 Proton 解释器只读枚举确认 Windows PID 为364，使用既有控制事务获得 `ReadyToPublish`、`Applied ... adapter:fbced7dd549dd1d47e3e6108c419a568b5a7724b2a30ae03d4b782b1b41ca07b:3` 回执。
 
 产物编译、正式位置发布及当前进程兼容模块交接已完成，没有改驻留库或重启游戏；原生页面重建后的视觉效果仍须用户验收。

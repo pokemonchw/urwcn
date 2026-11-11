@@ -8,11 +8,11 @@
 // compares complete instructions, including relocated absolute operands.
 // Compiled helpers and their integer division dependencies still require the
 // parent's static no-FP instruction inspection before this module is enabled.
-#define UWCN_NR_INTEGER __attribute__((target("no-sse,no-sse2,no-mmx")))
-#define UWCN_NR_HELPER UWCN_NR_INTEGER __attribute__((used,noinline))
-#define UWCN_NR_ENTRY __attribute__((naked,used))
+#define URWCN_NR_INTEGER __attribute__((target("no-sse,no-sse2,no-mmx")))
+#define URWCN_NR_HELPER URWCN_NR_INTEGER __attribute__((used,noinline))
+#define URWCN_NR_ENTRY __attribute__((naked,used))
 
-namespace uwcn::adapter::native_raster {
+namespace urwcn::adapter::native_raster {
 namespace {
 // Raw PUSHFD/PUSHAD stack, intentionally separate from normalized Host frames.
 // saved_esp is the value after PUSHFD; original native ESP is saved_esp + 4.
@@ -29,27 +29,27 @@ struct Bindings {
 };
 Bindings bindings{};
 
-UWCN_NR_INTEGER Target current_target() {
+URWCN_NR_INTEGER Target current_target() {
     return {*bindings.main_surface,800,600};
 }
-UWCN_NR_INTEGER Target register_target(u32 surface) {
+URWCN_NR_INTEGER Target register_target(u32 surface) {
     return {reinterpret_cast<render::Surface*>(surface),800,600};
 }
-UWCN_NR_INTEGER bool logical_point(int x,int y) {
+URWCN_NR_INTEGER bool logical_point(int x,int y) {
     return x>=0 && x<800 && y>=0 && y<600;
 }
-UWCN_NR_INTEGER const u32* native_stack(const Registers* registers) {
+URWCN_NR_INTEGER const u32* native_stack(const Registers* registers) {
     return reinterpret_cast<const u32*>(registers->saved_esp+4);
 }
-UWCN_NR_INTEGER int gradient_edge(int coordinate,int physical,int logical) {
+URWCN_NR_INTEGER int gradient_edge(int coordinate,int physical,int logical) {
     return static_cast<int>((std::int64_t(coordinate)*physical+logical/2)/logical);
 }
-UWCN_NR_INTEGER int gradient_last(int coordinate,int physical,int logical) {
+URWCN_NR_INTEGER int gradient_last(int coordinate,int physical,int logical) {
     // The original gradient includes its last logical row/column. Extend its
     // complete half-open physical cell, using the native canvas edge rule.
     return gradient_edge(coordinate+1,physical,logical)-1;
 }
-UWCN_NR_INTEGER Target lock_target() {
+URWCN_NR_INTEGER Target lock_target() {
     Target target=current_target();
     // Original 10BAD8/10BCC4/10BE07 check bit 2 and ignore the lock result.
     if(target.surface->flags&2u) {
@@ -58,29 +58,29 @@ UWCN_NR_INTEGER Target lock_target() {
     }
     return target;
 }
-UWCN_NR_INTEGER void unlock_target(Target target) {
+URWCN_NR_INTEGER void unlock_target(Target target) {
     // Preserve the original post-write/read flags check, not a guessed flag.
     if(target.surface->flags&2u) bindings.unlock(target.surface);
 }
 }
 
 extern "C" {
-std::uintptr_t uwcn_nr_resume_606c3{};
-std::uintptr_t uwcn_nr_resume_607e4{};
-std::uintptr_t uwcn_nr_resume_11454f{};
-std::uintptr_t uwcn_nr_resume_d7aa9{};
-std::uintptr_t uwcn_nr_resume_fc98f{};
-render::Surface** uwcn_nr_main_surface{};
-std::uintptr_t uwcn_nr_gradient_rows{},uwcn_nr_gradient_end{};
-std::uintptr_t uwcn_nr_gradient_columns{},uwcn_nr_gradient_next_row{};
-std::uintptr_t uwcn_nr_resume_gradient_row{},uwcn_nr_resume_gradient_shade{};
-std::uintptr_t uwcn_nr_resume_gradient_read_x{},uwcn_nr_resume_gradient_read_y{};
-std::uintptr_t uwcn_nr_resume_gradient_write_x{},uwcn_nr_resume_gradient_write_y{};
+std::uintptr_t urwcn_nr_resume_606c3{};
+std::uintptr_t urwcn_nr_resume_607e4{};
+std::uintptr_t urwcn_nr_resume_11454f{};
+std::uintptr_t urwcn_nr_resume_d7aa9{};
+std::uintptr_t urwcn_nr_resume_fc98f{};
+render::Surface** urwcn_nr_main_surface{};
+std::uintptr_t urwcn_nr_gradient_rows{},urwcn_nr_gradient_end{};
+std::uintptr_t urwcn_nr_gradient_columns{},urwcn_nr_gradient_next_row{};
+std::uintptr_t urwcn_nr_resume_gradient_row{},urwcn_nr_resume_gradient_shade{};
+std::uintptr_t urwcn_nr_resume_gradient_read_x{},urwcn_nr_resume_gradient_read_y{};
+std::uintptr_t urwcn_nr_resume_gradient_write_x{},urwcn_nr_resume_gradient_write_y{};
 
 // Whole native functions: ECX/EDX are coordinates, stack arguments remain
 // caller-cleaned. Pixel/line/glyph have no consumed return value. Read returns
 // its packed pixel in EAX (10BD00); all nonvolatile registers remain intact.
-UWCN_NR_HELPER void __cdecl uwcn_nr_pixel(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_pixel(Registers* registers) {
     const int x=static_cast<int>(registers->ecx);
     const int y=static_cast<int>(registers->edx);
     if(!logical_point(x,y)) return;
@@ -88,7 +88,7 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_pixel(Registers* registers) {
     pixel(target,x,y,native_stack(registers)[1]);
     unlock_target(target);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_read(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_read(Registers* registers) {
     const int x=static_cast<int>(registers->ecx);
     const int y=static_cast<int>(registers->edx);
     if(!logical_point(x,y)) {
@@ -99,7 +99,7 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_read(Registers* registers) {
     registers->eax=read_pixel(target,x,y);
     unlock_target(target);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_line(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_line(Registers* registers) {
     const auto* stack=native_stack(registers);
     const int x1=static_cast<int>(registers->ecx);
     const int y1=static_cast<int>(registers->edx);
@@ -110,7 +110,7 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_line(Registers* registers) {
     line(target,x1,y1,x2,y2,stack[3]);
     unlock_target(target);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_glyph(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_glyph(Registers* registers) {
     const int x=static_cast<int>(registers->ecx);
     const int y=static_cast<int>(registers->edx);
     const auto code=static_cast<std::uint8_t>(native_stack(registers)[1]);
@@ -135,45 +135,45 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_glyph(Registers* registers) {
 
 // Inline helpers run between the game's own lock and unlock. They call only
 // the pure integer kernels, never SDL, Host dispatch, font services or logging.
-UWCN_NR_HELPER void __cdecl uwcn_nr_write_606c3(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_write_606c3(Registers* registers) {
     // 606BB consumes logical y; 606BE replaces ECX with pixels. The loop keeps
     // y in [EBP-8], explicitly reloaded at 606AC after SDL_LockSurface.
     const int y=*reinterpret_cast<const int*>(registers->ebp-8);
     pixel(register_target(registers->esi),static_cast<int>(registers->edi),y,0);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_write_607e4(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_write_607e4(Registers* registers) {
     const Target target=current_target();
     pixel(target,static_cast<int>(registers->esi),static_cast<int>(registers->edi),registers->ecx);
     // Replay the covered MOV ECX,[image+61BBB10], which changes no flags.
     registers->ecx=reinterpret_cast<u32>(target.surface);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_write_11454f(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_write_11454f(Registers* registers) {
     pixel(register_target(registers->esi),static_cast<int>(registers->ebx),
           static_cast<int>(registers->edi),registers->edx);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_read_d7aa9(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_read_d7aa9(Registers* registers) {
     // Native address is pixels + (pitch/4)*400 + 0xA70, without another *4.
     // It samples (668,100), not row 400. The prior TEST flags feed D7AB0 JZ.
     registers->edi=read_pixel(register_target(registers->esi),668,100);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_read_fc98f(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_read_fc98f(Registers* registers) {
     // pixels + (pitch/4)*364 + 0xA70 samples (668,91); flags feed FC996 JZ.
     registers->edi=read_pixel(register_target(registers->esi),668,91);
 }
 // These helpers only extend the actual F6510 gradient's loop operands. The
 // original F68D5 read, color comparisons, F69C7 write and SDL lock/unlock run
 // unchanged, once per physical pixel. No Mod pixel scan or retained draw data.
-UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_begin(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_gradient_begin(Registers* registers) {
     const auto* surface=*bindings.main_surface;
     registers->ebx=gradient_edge(static_cast<int>(registers->ebx),surface->h,600);
     registers->eax=gradient_last(static_cast<int>(registers->eax),surface->h,600);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_row(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_gradient_row(Registers* registers) {
     const auto* surface=*bindings.main_surface;
     registers->edi=gradient_edge(static_cast<int>(registers->edx)+5,surface->w,800);
     registers->eax=gradient_last(static_cast<int>(registers->eax+registers->edx),surface->w,800);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_shade(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_gradient_shade(Registers* registers) {
     const auto* surface=*bindings.main_surface;
     // Invert rounded physical cell edges. F684A..F6869 still calculate and
     // clamp the original logical-row tint, even at a fractional output scale.
@@ -181,10 +181,10 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_shade(Registers* registers) {
                                         (std::uint64_t(surface->h)*2));
     registers->eax=logical_y-bindings.message_rectangle->y-4;
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_column_end(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_gradient_column_end(Registers* registers) {
     registers->eax=gradient_last(static_cast<int>(registers->eax),(*bindings.main_surface)->w,800);
 }
-UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_row_end(Registers* registers) {
+URWCN_NR_HELPER void __cdecl urwcn_nr_gradient_row_end(Registers* registers) {
     registers->eax=gradient_last(static_cast<int>(registers->eax),(*bindings.main_surface)->h,600);
 }
 }
@@ -193,88 +193,88 @@ UWCN_NR_HELPER void __cdecl uwcn_nr_gradient_row_end(Registers* registers) {
 // by value on the stack; EBX keeps that stack address across its cdecl call.
 // ESP is 16-byte aligned immediately before CALL. No FP/SIMD state is touched
 // by these entries. POPFD preserves flags even where a native JZ follows MOV.
-#define UWCN_NR_ENTER(helper) \
+#define URWCN_NR_ENTER(helper) \
     "pushfl\n\tpushal\n\tmovl %esp,%ebx\n\t" \
     "andl $-16,%esp\n\tsubl $12,%esp\n\tpushl %ebx\n\t" \
     "call _" #helper "\n\tmovl %ebx,%esp\n\tpopal\n\tpopfl\n\t"
 
 extern "C" {
-UWCN_NR_ENTRY void uwcn_nr_entry_pixel() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_pixel) "ret\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_pixel() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_pixel) "ret\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_read() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_read) "ret\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_read() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_read) "ret\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_line() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_line) "ret\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_line() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_line) "ret\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_glyph() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_glyph) "ret\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_glyph() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_glyph) "ret\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_606c3() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_write_606c3)
-                         "jmp *_uwcn_nr_resume_606c3\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_606c3() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_write_606c3)
+                         "jmp *_urwcn_nr_resume_606c3\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_607e4() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_write_607e4)
-                         "jmp *_uwcn_nr_resume_607e4\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_607e4() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_write_607e4)
+                         "jmp *_urwcn_nr_resume_607e4\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_11454f() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_write_11454f)
+URWCN_NR_ENTRY void urwcn_nr_entry_11454f() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_write_11454f)
                          // Covered TEST must produce the flags for 114555 JZ.
-                         "testb $2,(%esi)\n\tjmp *_uwcn_nr_resume_11454f\n\t");
+                         "testb $2,(%esi)\n\tjmp *_urwcn_nr_resume_11454f\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_d7aa9() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_read_d7aa9)
-                         "jmp *_uwcn_nr_resume_d7aa9\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_d7aa9() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_read_d7aa9)
+                         "jmp *_urwcn_nr_resume_d7aa9\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_fc98f() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_read_fc98f)
-                         "jmp *_uwcn_nr_resume_fc98f\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_fc98f() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_read_fc98f)
+                         "jmp *_urwcn_nr_resume_fc98f\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_gradient_begin() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_begin)
+URWCN_NR_ENTRY void urwcn_nr_entry_gradient_begin() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_gradient_begin)
                          "cmpl %eax,%ebx\n\tja 1f\n\t"
-                         "jmp *_uwcn_nr_gradient_rows\n\t"
-                         "1: jmp *_uwcn_nr_gradient_end\n\t");
+                         "jmp *_urwcn_nr_gradient_rows\n\t"
+                         "1: jmp *_urwcn_nr_gradient_end\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_gradient_row() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_row)
-                         "jmp *_uwcn_nr_resume_gradient_row\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_gradient_row() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_gradient_row)
+                         "jmp *_urwcn_nr_resume_gradient_row\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_gradient_shade() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_shade)
-                         "cltd\n\tjmp *_uwcn_nr_resume_gradient_shade\n\t");
+URWCN_NR_ENTRY void urwcn_nr_entry_gradient_shade() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_gradient_shade)
+                         "cltd\n\tjmp *_urwcn_nr_resume_gradient_shade\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_gradient_column_end() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_column_end)
+URWCN_NR_ENTRY void urwcn_nr_entry_gradient_column_end() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_gradient_column_end)
                          "cmpl %eax,%edi\n\tjbe 1f\n\t"
-                         "jmp *_uwcn_nr_gradient_next_row\n\t"
-                         "1: jmp *_uwcn_nr_gradient_columns\n\t");
+                         "jmp *_urwcn_nr_gradient_next_row\n\t"
+                         "1: jmp *_urwcn_nr_gradient_columns\n\t");
 }
-UWCN_NR_ENTRY void uwcn_nr_entry_gradient_row_end() {
-    __asm__ __volatile__(UWCN_NR_ENTER(uwcn_nr_gradient_row_end)
+URWCN_NR_ENTRY void urwcn_nr_entry_gradient_row_end() {
+    __asm__ __volatile__(URWCN_NR_ENTER(urwcn_nr_gradient_row_end)
                          "cmpl %eax,%ebx\n\tjbe 1f\n\t"
-                         "jmp *_uwcn_nr_gradient_end\n\t"
-                         "1: jmp *_uwcn_nr_gradient_rows\n\t");
+                         "jmp *_urwcn_nr_gradient_end\n\t"
+                         "1: jmp *_urwcn_nr_gradient_rows\n\t");
 }
 }
 
 // The four original signed bounds checks use this same native surface's
 // physical dimensions. PUSH/POP preserve EAX and the CMP flags reach the
 // original JL/JGE. The original negative-coordinate checks remain in place.
-#define UWCN_NR_GRADIENT_BOUND(name,offset,coordinate) \
-    extern "C" UWCN_NR_ENTRY void uwcn_nr_entry_gradient_##name() { \
+#define URWCN_NR_GRADIENT_BOUND(name,offset,coordinate) \
+    extern "C" URWCN_NR_ENTRY void urwcn_nr_entry_gradient_##name() { \
         __asm__ __volatile__( \
-            "pushl %eax\n\tmovl _uwcn_nr_main_surface,%eax\n\t" \
+            "pushl %eax\n\tmovl _urwcn_nr_main_surface,%eax\n\t" \
             "movl (%eax),%eax\n\tcmpl " #offset "(%eax),%" #coordinate "\n\t" \
-            "popl %eax\n\tjmp *_uwcn_nr_resume_gradient_" #name "\n\t"); \
+            "popl %eax\n\tjmp *_urwcn_nr_resume_gradient_" #name "\n\t"); \
     }
-UWCN_NR_GRADIENT_BOUND(read_x,8,edi)
-UWCN_NR_GRADIENT_BOUND(read_y,12,ebx)
-UWCN_NR_GRADIENT_BOUND(write_x,8,edi)
-UWCN_NR_GRADIENT_BOUND(write_y,12,ebx)
-#undef UWCN_NR_GRADIENT_BOUND
+URWCN_NR_GRADIENT_BOUND(read_x,8,edi)
+URWCN_NR_GRADIENT_BOUND(read_y,12,ebx)
+URWCN_NR_GRADIENT_BOUND(write_x,8,edi)
+URWCN_NR_GRADIENT_BOUND(write_y,12,ebx)
+#undef URWCN_NR_GRADIENT_BOUND
 
 namespace {
 struct Patch {
@@ -289,30 +289,30 @@ struct Patch {
 // Whole functions replace the entire function, so their covered prologue is
 // restored on removal but never replayed by a replacement entry.
 Patch patches[]={
-    {0x10BAB0,6,0,uwcn_nr_entry_pixel,{0x55,0x8B,0xEC,0x53,0x8B,0xD9}},
-    {0x10BC90,5,0,uwcn_nr_entry_read,{0x53,0x8B,0xD9,0x33,0xC9}},
-    {0x114340,6,0,uwcn_nr_entry_line,{0x55,0x8B,0xEC,0x83,0xEC,0x20}},
-    {0x10BD90,6,0,uwcn_nr_entry_glyph,{0x55,0x8B,0xEC,0x83,0xEC,0x18}},
+    {0x10BAB0,6,0,urwcn_nr_entry_pixel,{0x55,0x8B,0xEC,0x53,0x8B,0xD9}},
+    {0x10BC90,5,0,urwcn_nr_entry_read,{0x53,0x8B,0xD9,0x33,0xC9}},
+    {0x114340,6,0,urwcn_nr_entry_line,{0x55,0x8B,0xEC,0x83,0xEC,0x20}},
+    {0x10BD90,6,0,urwcn_nr_entry_glyph,{0x55,0x8B,0xEC,0x83,0xEC,0x18}},
     // MOV [ECX+EAX*4],0; resume at the native TEST [ESI],2.
-    {0x606C3,7,0,uwcn_nr_entry_606c3,{0xC7,0x04,0x81,0,0,0,0}},
+    {0x606C3,7,0,urwcn_nr_entry_606c3,{0xC7,0x04,0x81,0,0,0,0}},
     // MOV [EDX+EAX*4],ECX; MOV ECX,[absolute main owner].
-    {0x607E4,9,5,uwcn_nr_entry_607e4,{0x89,0x0C,0x82,0x8B,0x0D,0x10,0xBB,0x5B,0x06}},
+    {0x607E4,9,5,urwcn_nr_entry_607e4,{0x89,0x0C,0x82,0x8B,0x0D,0x10,0xBB,0x5B,0x06}},
     // MOV [ECX+EAX*4],EDX; TEST BYTE [ESI],2; resume at JZ.
-    {0x11454F,6,0,uwcn_nr_entry_11454f,{0x89,0x14,0x81,0xF6,0x06,0x02}},
+    {0x11454F,6,0,urwcn_nr_entry_11454f,{0x89,0x14,0x81,0xF6,0x06,0x02}},
     // MOV EDI,[ECX+EAX+0xA70]; prior TEST flags must survive to JZ.
-    {0xD7AA9,7,0,uwcn_nr_entry_d7aa9,{0x8B,0xBC,0x01,0x70,0x0A,0,0}},
-    {0xFC98F,7,0,uwcn_nr_entry_fc98f,{0x8B,0xBC,0x01,0x70,0x0A,0,0}},
+    {0xD7AA9,7,0,urwcn_nr_entry_d7aa9,{0x8B,0xBC,0x01,0x70,0x0A,0,0}},
+    {0xFC98F,7,0,urwcn_nr_entry_fc98f,{0x8B,0xBC,0x01,0x70,0x0A,0,0}},
     // Complete native message-gradient loop geometry; its original physical
     // pixel reads/writes are no longer replaced with logical-cell samples.
-    {0xF67FD,8,0,uwcn_nr_entry_gradient_begin,{0x3B,0xD8,0x0F,0x87,0x16,0x02,0,0}},
-    {0xF682D,5,0,uwcn_nr_entry_gradient_row,{0x8D,0x7A,0x05,0x03,0xC2}},
-    {0xF6845,5,0,uwcn_nr_entry_gradient_shade,{0x8B,0x44,0x24,0x30,0x99}},
-    {0xF6889,6,0,uwcn_nr_entry_gradient_read_x,{0x81,0xFF,0x20,0x03,0,0}},
-    {0xF6899,6,0,uwcn_nr_entry_gradient_read_y,{0x81,0xFB,0x58,0x02,0,0}},
-    {0xF6984,6,0,uwcn_nr_entry_gradient_write_x,{0x81,0xFF,0x20,0x03,0,0}},
-    {0xF698C,6,0,uwcn_nr_entry_gradient_write_y,{0x81,0xFB,0x58,0x02,0,0}},
-    {0xF69F6,8,0,uwcn_nr_entry_gradient_column_end,{0x3B,0xF8,0x0F,0x86,0x72,0xFE,0xFF,0xFF}},
-    {0xF6A13,8,0,uwcn_nr_entry_gradient_row_end,{0x3B,0xD8,0x0F,0x86,0x05,0xFE,0xFF,0xFF}}
+    {0xF67FD,8,0,urwcn_nr_entry_gradient_begin,{0x3B,0xD8,0x0F,0x87,0x16,0x02,0,0}},
+    {0xF682D,5,0,urwcn_nr_entry_gradient_row,{0x8D,0x7A,0x05,0x03,0xC2}},
+    {0xF6845,5,0,urwcn_nr_entry_gradient_shade,{0x8B,0x44,0x24,0x30,0x99}},
+    {0xF6889,6,0,urwcn_nr_entry_gradient_read_x,{0x81,0xFF,0x20,0x03,0,0}},
+    {0xF6899,6,0,urwcn_nr_entry_gradient_read_y,{0x81,0xFB,0x58,0x02,0,0}},
+    {0xF6984,6,0,urwcn_nr_entry_gradient_write_x,{0x81,0xFF,0x20,0x03,0,0}},
+    {0xF698C,6,0,urwcn_nr_entry_gradient_write_y,{0x81,0xFB,0x58,0x02,0,0}},
+    {0xF69F6,8,0,urwcn_nr_entry_gradient_column_end,{0x3B,0xF8,0x0F,0x86,0x72,0xFE,0xFF,0xFF}},
+    {0xF6A13,8,0,urwcn_nr_entry_gradient_row_end,{0x3B,0xD8,0x0F,0x86,0x05,0xFE,0xFF,0xFF}}
 };
 constexpr std::size_t patch_count=sizeof(patches)/sizeof(patches[0]);
 std::uintptr_t installed_image{};
@@ -385,22 +385,22 @@ Status install_raster_patches(std::uintptr_t image_base,HMODULE sdl) {
               reinterpret_cast<const render::Rect*>(image_base+0x61A8CE4),
               reinterpret_cast<const std::uint8_t*>(image_base+0xA1BBD28),
               reinterpret_cast<const u32*>(image_base+0xA211068),lock,unlock};
-    uwcn_nr_resume_606c3=image_base+0x606CA;
-    uwcn_nr_resume_607e4=image_base+0x607ED;
-    uwcn_nr_resume_11454f=image_base+0x114555;
-    uwcn_nr_resume_d7aa9=image_base+0xD7AB0;
-    uwcn_nr_resume_fc98f=image_base+0xFC996;
-    uwcn_nr_main_surface=bindings.main_surface;
-    uwcn_nr_gradient_rows=image_base+0xF6805;
-    uwcn_nr_gradient_end=image_base+0xF6A1B;
-    uwcn_nr_gradient_columns=image_base+0xF6870;
-    uwcn_nr_gradient_next_row=image_base+0xF69FE;
-    uwcn_nr_resume_gradient_row=image_base+0xF6832;
-    uwcn_nr_resume_gradient_shade=image_base+0xF684A;
-    uwcn_nr_resume_gradient_read_x=image_base+0xF688F;
-    uwcn_nr_resume_gradient_read_y=image_base+0xF689F;
-    uwcn_nr_resume_gradient_write_x=image_base+0xF698A;
-    uwcn_nr_resume_gradient_write_y=image_base+0xF6992;
+    urwcn_nr_resume_606c3=image_base+0x606CA;
+    urwcn_nr_resume_607e4=image_base+0x607ED;
+    urwcn_nr_resume_11454f=image_base+0x114555;
+    urwcn_nr_resume_d7aa9=image_base+0xD7AB0;
+    urwcn_nr_resume_fc98f=image_base+0xFC996;
+    urwcn_nr_main_surface=bindings.main_surface;
+    urwcn_nr_gradient_rows=image_base+0xF6805;
+    urwcn_nr_gradient_end=image_base+0xF6A1B;
+    urwcn_nr_gradient_columns=image_base+0xF6870;
+    urwcn_nr_gradient_next_row=image_base+0xF69FE;
+    urwcn_nr_resume_gradient_row=image_base+0xF6832;
+    urwcn_nr_resume_gradient_shade=image_base+0xF684A;
+    urwcn_nr_resume_gradient_read_x=image_base+0xF688F;
+    urwcn_nr_resume_gradient_read_y=image_base+0xF689F;
+    urwcn_nr_resume_gradient_write_x=image_base+0xF698A;
+    urwcn_nr_resume_gradient_write_y=image_base+0xF6992;
     installed_image=image_base;
     return write_all(true)?Status::ok:Status::failed;
 }
@@ -420,7 +420,7 @@ Status remove_raster_patches() {
 }
 }
 
-#undef UWCN_NR_ENTER
-#undef UWCN_NR_ENTRY
-#undef UWCN_NR_HELPER
-#undef UWCN_NR_INTEGER
+#undef URWCN_NR_ENTER
+#undef URWCN_NR_ENTRY
+#undef URWCN_NR_HELPER
+#undef URWCN_NR_INTEGER

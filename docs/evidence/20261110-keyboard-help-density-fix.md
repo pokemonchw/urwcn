@@ -42,11 +42,11 @@
 | 批次日志 | `build/.compile-queue/batches/3f68874e07c047a09cb427f9ed598908.log`，已读取全部249行，保留40条既有 SDL 函数指针转换警告，0条编译错误 |
 | 正式事务 | `a45c8345ef5a43e8b12a63e009cc4dcb`，2026-11-10 15:48:53（Asia/Shanghai）完成 |
 | 正式结果 | `build/mingw-x86/stage/a45c8345ef5a43e8b12a63e009cc4dcb/publication-result.json`：`success=true`、`applied=true` |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/release.json` |
 | 旧件归档 | `回收/20261110-154851-a45c8345ef5a43e8b12a63e009cc4dcb/package/`，保留原相对路径 |
 | 旧 Adapter SHA-256 | `d08b987f054114903cb19de30f8a593e8140aae393345af47cdddd196ca4a7d0` |
 | 新 Adapter SHA-256 | `92e043dcbc92d0846330a1afa1c7c04094d7ffdfd1c70ef9f782e1a4e1da3e75`，构建件、正式件与 Applied 身份一致 |
 | 当前进程 | 宿主 PID `2970998`，Windows PID `368`；使用既有 Proton Mono 解释器只读枚举确认 |
 | 兼容交接 | `ReadyToPublish` 后 `Applied ... adapter:92e043dcbc92d0846330a1afa1c7c04094d7ffdfd1c70ef9f782e1a4e1da3e75:2`，第2代完成 |
 
-已读取上述请求结果、完整批次日志、正式发布结果、新旧文件身份和末条 `Compatible module transaction applied.` 日志。源码修改、产物编译、正式文件发布和当前进程交接均已完成，无平行交付包；根 `uwcn_launcher.exe` 消费同一正式包，无需退出或重启。没有运行游戏产物、测试、输入模拟或自行画面验收。Applied 证明交接，不作为视觉效果已正确的证明。
+已读取上述请求结果、完整批次日志、正式发布结果、新旧文件身份和末条 `Compatible module transaction applied.` 日志。源码修改、产物编译、正式文件发布和当前进程交接均已完成，无平行交付包；根 `urwcn_launcher.exe` 消费同一正式包，无需退出或重启。没有运行游戏产物、测试、输入模拟或自行画面验收。Applied 证明交接，不作为视觉效果已正确的证明。

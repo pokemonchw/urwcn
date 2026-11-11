@@ -3,7 +3,7 @@
 #include <memory>
 #include <optional>
 
-namespace uwcn::adapter::native_culture_legend {
+namespace urwcn::adapter::native_culture_legend {
 namespace {
 constexpr u32 factory=0xE3A50,owner=0x5F8FA78;
 constexpr u32 ordinary_constructor=0x5B00;
@@ -70,7 +70,7 @@ Status language_changed() {
     // run, or after its genuine SDL owner has retired it.
     if(!active) return Status::ok;
     const Construction inputs(*active);building=true;
-    using Construct=void (UWCN_CALL *)();
+    using Construct=void (URWCN_CALL *)();
     reinterpret_cast<Construct>(base+factory)();
     native_resource=native<u32>(owner);resource_language=language_revision;building=false;
     return native_resource ? Status::ok : Status::failed;

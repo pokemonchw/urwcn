@@ -1,7 +1,7 @@
 // Linux 3.89 kartta_main / rndworld_screen / NaytaMittakaava.
 // The original owners supply layout, button actions and all numeric values.
-extern "C" void uwcn_linux_redraw_world_fragment(std::uintptr_t,unsigned);
-extern "C" void uwcn_linux_redraw_world_return();
+extern "C" void urwcn_linux_redraw_world_fragment(std::uintptr_t,unsigned);
+extern "C" void urwcn_linux_redraw_world_return();
 
 std::string world_generation_text(const char* key) {
     return translated(C::world_generation_text,"",key);
@@ -38,12 +38,12 @@ void world_generation_list_style(Frame& frame) {
     world_generation_refresh=false;
     world_generation_chinese=chinese;
     if(rebuilding_world_generation)
-        frame.resume=reinterpret_cast<std::uintptr_t>(uwcn_linux_redraw_world_return);
+        frame.resume=reinterpret_cast<std::uintptr_t>(urwcn_linux_redraw_world_return);
 }
 void world_generation_map_flip(Frame& frame) {
     frame.rax=call(frame,0x13fe50);
     if(rebuilding_world_generation)
-        frame.resume=reinterpret_cast<std::uintptr_t>(uwcn_linux_redraw_world_return);
+        frame.resume=reinterpret_cast<std::uintptr_t>(urwcn_linux_redraw_world_return);
 }
 void world_generation_controls_begin(Frame& frame) {
     if(world_generation_refresh || world_generation_chinese!=chinese) {
@@ -52,10 +52,10 @@ void world_generation_controls_begin(Frame& frame) {
         native<void (*)()>(0x7e7f0)();
         // 7ED00..7ED30 redraws the current map and optional culture legend.
         // R15 is kartta_main's native legend-toggle value at this boundary.
-        uwcn_linux_redraw_world_fragment(host->image_base+0x7ed00,frame.r15);
+        urwcn_linux_redraw_world_fragment(host->image_base+0x7ed00,frame.r15);
         // 7EC18..7EC61 repeats only the original list reset and style.
         // Subsequent original button calls rebuild their own hit geometry.
-        uwcn_linux_redraw_world_fragment(host->image_base+0x7ec18,0);
+        urwcn_linux_redraw_world_fragment(host->image_base+0x7ec18,0);
         rebuilding_world_generation=false;
         world_generation_restore_selection=true;
     }

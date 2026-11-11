@@ -93,10 +93,10 @@
 | 编译请求 | `eacb35700ff048fc8839d557904fbe86` |
 | 编译批次 | `fb635bf0bd8647978ae47f79e3c44576`，一次配置及增量编译，`Success=true`，既有警告保留 |
 | 正式事务 | `06a2fe28463743a6b97665b7a4978359`，18:51:15完成，`success=true` |
-| 正式位置 | 替换 `package/modules/uwcn_adapter.dll` 与 `package/release.json`；74条词库沿用首批已正式写入的 `package/catalog/zh-CN/main_menu.tsv` |
+| 正式位置 | 替换 `package/modules/urwcn_adapter.dll` 与 `package/release.json`；74条词库沿用首批已正式写入的 `package/catalog/zh-CN/main_menu.tsv` |
 | 旧件 | 先移入 `回收/20261110-185115-06a2fe28463743a6b97665b7a4978359/package/`，保持原相对路径 |
 | 当前进程 | 首批热更后已退出；第二批 `ReloadRequested=false`、`runtime_requested=false`、`runtime_receipts=[]`，没有新的 Applied |
-| 正常启动路径 | 根 `uwcn_launcher.exe` 仍加载同一正式 `package/`，无平行修复包；代理未启动游戏 |
+| 正常启动路径 | 根 `urwcn_launcher.exe` 仍加载同一正式 `package/`，无平行修复包；代理未启动游戏 |
 
 已完整读取两批的 `build/.compile-queue/results/<request-id>.json`、`batches/<batch-id>.log` 与各正式暂存事务的 `publication-result.json`。
 

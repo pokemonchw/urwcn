@@ -2,7 +2,7 @@
 #include <cstring>
 #include <algorithm>
 
-namespace uwcn::host {
+namespace urwcn::host {
 using Poll=int (__cdecl *)(void*);
 using WaitTimeout=int (__cdecl *)(void*,int);
 using Peep=int (__cdecl *)(void*,int,int,u32,u32);

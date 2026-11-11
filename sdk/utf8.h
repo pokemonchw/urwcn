@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace uwcn {
+namespace urwcn {
 // Strict scalar decoding. Invalid input is rejected at the service boundary.
 inline bool decode_utf8(const char* text,std::size_t size,std::vector<std::uint32_t>& result) {
     result.clear();

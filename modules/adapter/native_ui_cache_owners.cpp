@@ -3,7 +3,7 @@
 #include <cstring>
 #include <optional>
 
-namespace uwcn::adapter::native_ui_cache_owners {
+namespace urwcn::adapter::native_ui_cache_owners {
 namespace {
 std::uintptr_t base{};
 Callbacks callbacks{};

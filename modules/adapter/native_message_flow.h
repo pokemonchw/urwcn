@@ -4,7 +4,7 @@
 #include "native_component_style.h"
 #include <array>
 
-namespace uwcn::adapter::native_message_flow {
+namespace urwcn::adapter::native_message_flow {
 using Handle=u32;
 using SourceKey=native_text_resource::SourceKey;
 struct NativeState {

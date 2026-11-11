@@ -5,7 +5,7 @@
 #include <tuple>
 #include <vector>
 
-namespace uwcn::adapter::native_text_resource {
+namespace urwcn::adapter::native_text_resource {
 // These are new UI resource identifiers, not offsets in a native structure.
 // The producer supplies its actual owner and native record/semantic field ID.
 // A call token, draw ordinal and a computed text position are not source IDs.

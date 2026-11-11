@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace uwcn::linux_host {
+namespace urwcn::linux_host {
 // Private versioned module-state bytes, never code addresses or UI content.
 struct StateWriter {
     std::vector<std::uint8_t> bytes;

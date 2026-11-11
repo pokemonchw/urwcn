@@ -1,7 +1,7 @@
 #include "native_language_input.h"
 #include <cstring>
 
-namespace uwcn::adapter::native_language_input {
+namespace urwcn::adapter::native_language_input {
 namespace {
 constexpr u32 normal_input=0x5000,animation_input=0x5001;
 constexpr u32 native_event_rva=0x5F555F8;

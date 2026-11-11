@@ -44,7 +44,7 @@ Linux `src/linux/host.cpp` 只在正常启动时加载模块，没有运行中�
 - 请求：`d044f737c0fe4106be294062a4381d64`；批次：`92387b46b82e404784325996296c8c91`。
 - 已读取对应 `build/.compile-queue/results/d044f737c0fe4106be294062a4381d64.json` 和完整 `build/.compile-queue/batches/92387b46b82e404784325996296c8c91.log`，`Success=true`、`PublishRequested=true`、`ReloadRequested=false`；本批次无编译警告。
 - 发布事务：`01a9c57cdc464d03a02a569b6090fd02`；已读取 `build/linux-x86_64/stage/01a9c57cdc464d03a02a569b6090fd02/publication-result.json`，`success=true`，`runtime_requested=false`，无运行时回执。
-- 正式更新 `package/modules/uwcn_adapter.dll`、Linux profile、`package/release.json`。旧三件先移入 `回收/20261019-130932-01a9c57cdc464d03a02a569b6090fd02/package/`，保留相对路径；发布脚本也归档并更新已有应用菜单链接。根启动入口仍为原 `uwcn_launcher`。
+- 正式更新 `package/modules/urwcn_adapter.dll`、Linux profile、`package/release.json`。旧三件先移入 `回收/20261019-130932-01a9c57cdc464d03a02a569b6090fd02/package/`，保留相对路径；发布脚本也归档并更新已有应用菜单链接。根启动入口仍为原 `urwcn_launcher`。
 - 正式 Adapter SHA256：`fa07a8cba80cc18b66f4973908f77cca314ecf7dd5183aec5eb45da2c3d448f0`，与本次构建产物和发布清单一致；归档旧 Adapter 为 `04c838db3469080b708da0de89cd7b5f039b96b07fc7e69e884ddfebeecc1b5c`。
 - 正式 Linux profile SHA256：`f9ba2b7cb0b6e0d0c280cad53d280378538625e131e405f0a46b6e18e84bbb23`，与源码 profile 和发布清单一致。
 

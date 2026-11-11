@@ -62,12 +62,12 @@
 
 - 源码：`sdk/text_services.h` 新增六个组件标识；`modules/semantic/semantic.cpp` 处理启动模板及资源显示名称；`catalog/zh-CN/main_menu.tsv` 增加六个模板和 109 个资源词条；`modules/adapter/module.cpp` 增加 12 个已确认调用 Hook。共享结构大小、Host ABI、启动器及驻留 DLL 均未变更。
 - 编译：统一入口 `build.ps1 -Module adapter,semantic,catalog -Publish` 成功，请求 ID `b242afcb62004547b0b4653d96b37e3b`，批次 ID `75b21b81284a422da34824c07db04ce6`。已读取 `build/.compile-queue/results/b242afcb62004547b0b4653d96b37e3b.json` 和对应批次日志，均记录成功。既有 GetProcAddress 到已确认 SDL_GetRGB 函数类型的转换警告仍存在，无编译错误。Catalog DLL 重新编译后的哈希与正式文件相同，无需替换该 DLL。
-- 正式发布：事务 `649f861069a24a958405a43de02d553e` 已完成，已读取 `build/mingw-x86/stage/649f861069a24a958405a43de02d553e/publication-result.json`。五个旧文件先按原相对路径移入 `回收/20261019-021949-649f861069a24a958405a43de02d553e/`，随后替换正式 `package/modules/uwcn_adapter.dll`、`package/modules/uwcn_semantic.dll`、词库、构建适配和 `package/release.json`。正式清单全部十项的 SHA-256 与磁盘文件相符；根 `uwcn_launcher.exe` 仍是正常启动入口，无平行交付包。
+- 正式发布：事务 `649f861069a24a958405a43de02d553e` 已完成，已读取 `build/mingw-x86/stage/649f861069a24a958405a43de02d553e/publication-result.json`。五个旧文件先按原相对路径移入 `回收/20261019-021949-649f861069a24a958405a43de02d553e/`，随后替换正式 `package/modules/urwcn_adapter.dll`、`package/modules/urwcn_semantic.dll`、词库、构建适配和 `package/release.json`。正式清单全部十项的 SHA-256 与磁盘文件相符；根 `urwcn_launcher.exe` 仍是正常启动入口，无平行交付包。
 - 运行时应用：发布前只读进程列表未发现 `urw`，未请求 Reload，发布回执为 `Runtime Applied was not requested.`。没有运行时 Applied 或视觉验收结果。本轮未启动游戏、注入运行中的游戏、模拟输入、执行产物或测试，也未编写测试用例或断言。
 
 | 正式替换文件（相对 package） | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `cf0a916907deb28e7332e9f08d27a0db4b848f44e967050f44c4a6c413cd7f7b` |
-| `modules/uwcn_semantic.dll` | `7281dc1e38bdcdbee702b91d4cf24f3dfdcfd557e148e6819afb7dd5636a94dd` |
+| `modules/urwcn_adapter.dll` | `cf0a916907deb28e7332e9f08d27a0db4b848f44e967050f44c4a6c413cd7f7b` |
+| `modules/urwcn_semantic.dll` | `7281dc1e38bdcdbee702b91d4cf24f3dfdcfd557e148e6819afb7dd5636a94dd` |
 | `catalog/zh-CN/main_menu.tsv` | `65a879001f96bb2fd555310e164b3eb7f56698f3ce1a8ab7731fc70a3a626202` |
 | `profiles/urw-3.89-steam-25939378.json` | `3835078d8ea4a92f8869d59282ec10558a6f46d0cfebe2cd3ad76a42d69c5241` |

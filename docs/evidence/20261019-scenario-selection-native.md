@@ -70,14 +70,14 @@ Adapter 新代初始请求刷新，依赖变化也请求刷新；语言与上次
 - 请求 `846e89b3d9014f7fa3ac5026a37ca426`，批次 `29750974d1e540b7b6d083a6126f5e32`。`Success=true`；一次配置、一次增量构建，未清理构建树。提交后至批次结束未修改本次源码。
 - 使用队列默认 `/usr/bin/cmake`、`/usr/bin/g++`、`build/linux-x86_64` 和正式 `package/`；没有绕过队列或创建平行运行目录。
 - 发布事务 `19ab47e7a30c45219a0f9e06ee10036d`，`success=true`、`runtime_requested=true`。PID `3968932` 返回 `ReadyToPublish` 后，先归档再替换，最后返回 `Applied`；Catalog、Semantic、Adapter 均为第3代。
-- 正式更新五件：`package/modules/uwcn_adapter.dll`、`package/modules/uwcn_semantic.dll`、`package/catalog/zh-CN/main_menu.tsv`、Linux profile 和 `package/release.json`。Catalog 二进制内容未改变，仍按请求重新加载词库。启动器和驻留库无需更换。
+- 正式更新五件：`package/modules/urwcn_adapter.dll`、`package/modules/urwcn_semantic.dll`、`package/catalog/zh-CN/main_menu.tsv`、Linux profile 和 `package/release.json`。Catalog 二进制内容未改变，仍按请求重新加载词库。启动器和驻留库无需更换。
 - 旧五件按原相对路径移入 `回收/20261019-174810-19ab47e7a30c45219a0f9e06ee10036d/`，没有覆盖或永久删除旧交付。
 - 已读取完整请求结果 `build/.compile-queue/results/846e89b3d9014f7fa3ac5026a37ca426.json`、批次日志 `build/.compile-queue/batches/29750974d1e540b7b6d083a6126f5e32.log` 及事务 `publication-result.json`。编译只有 Semantic 既有 HUD/world 枚举另行分派的 `-Wswitch` 警告，没有编译错误或新增组件警告。
 
 | 正式文件（相对 package） | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `73cd34fc1fe30b9528e4b7fa2698e4aae4ecd4c76bb876ece267b1a3c4853c2c` |
-| `modules/uwcn_semantic.dll` | `7ad719e2887557a183234c4d0d89fe54b2dd534a0a321562c202cc423d19a88d` |
+| `modules/urwcn_adapter.dll` | `73cd34fc1fe30b9528e4b7fa2698e4aae4ecd4c76bb876ece267b1a3c4853c2c` |
+| `modules/urwcn_semantic.dll` | `7ad719e2887557a183234c4d0d89fe54b2dd534a0a321562c202cc423d19a88d` |
 | `catalog/zh-CN/main_menu.tsv` | `ea1c28c7b35c0453dabad4fb84bb0c29c61e4461eba3f59524bb9f3f79e8f93e` |
 | `profiles/urw-3.89-steam-25939378-linux-x86_64.json` | `95d70c8ebf5597b95478f0363f76d0b75afac9083b74e275d053c435bf78ac45` |
 

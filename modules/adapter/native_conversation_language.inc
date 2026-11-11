@@ -30,14 +30,14 @@ void prune() {
 u32 continuation(const void* function) {
     return static_cast<u32>(reinterpret_cast<std::uintptr_t>(function)-host->image_base);
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_conversation_advance() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_conversation_advance() {
     __asm__ __volatile__("pushl $1024\n\tpushl $0\n\tjmp *%edx\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_conversation_emote_continue() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_conversation_emote_continue() {
     __asm__ __volatile__("addl $36,%esp\n\tjmp *%eax\n\t");
 }
 struct Frame {u32 target,frame;};
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_conversation_frame(const Frame*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_conversation_frame(const Frame*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%eax\n\tmovl 4(%eax),%ebp\n\tcall *(%eax)\n\t"
@@ -147,8 +147,8 @@ Status rebuild() {
     const auto flip=*at<u32>(0x61BBA5C);
     *at<u32>(0x61BBA5C)=1;constructing=true;actor=source.actor;
     constructing_root=root;construction_status=Status::ok;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x1342C0)();
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x134330)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x1342C0)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x134330)();
     auto status=construction_status;
     if(status==Status::ok) status=host->native_fragment(0x1421B7,0x1421D5);
     for(u32 speaker=0;status==Status::ok && speaker<2;++speaker) {
@@ -157,7 +157,7 @@ Status rebuild() {
                 // The original complete conditional paragraph boundary owns
                 // its own cursor comparison, line step and left origin.
                 const native_component_calls::NoArgumentCall boundary{address(at<void>(0x13867B))};
-                native_component_calls::uwcn_component_skill_help(&boundary);
+                native_component_calls::urwcn_component_skill_help(&boundary);
             }
             for(const auto& sentence:source.speech[speaker][index].sentences) {
                 // Parser input remains an ordinary native string: byte Nordic
@@ -177,7 +177,7 @@ Status rebuild() {
         const auto mode=*at<u32>(0xA213AB8),trade=*at<u32>(0xA220634);
         if((mode==3 && trade==0) || trade==2 ||
            ((mode==2 || mode==3 || mode==10 || mode==11) && trade==1))
-            reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x134790)();
+            reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x134790)();
     }
     sources.insert_or_assign(root,source);
     constructing=false;actor=0;constructing_root=0;
@@ -202,13 +202,13 @@ Status wait(const NativeEvent& event) {
         reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0x10C540)(name,rect);
         emote_constructing=true;
         const Frame body{address(at<void>(0x134DC7)),owner};
-        uwcn_conversation_frame(&body);
+        urwcn_conversation_frame(&body);
         emote_constructing=false;
     }
     *at<u32>(0x61BBA5C)=flip;
     if(status!=Status::ok) return status;
     native_language_redraw::completed(native_language_redraw::View::hud);
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
     return Status::ok;
 }
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
@@ -266,7 +266,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         return Status::ok;
     }
     if(event.id==paragraph_break_end && constructing) {
-        result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::uwcn_component_fragment_return));
+        result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::urwcn_component_fragment_return));
         handled=true;return Status::ok;
     }
     if(event.id==emote_text) {
@@ -326,7 +326,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
             event.frame->eax=*at<u32>(player?0x1E979C:0x1E97A0)+measured;
             if(event.id==npc_advance) {
                 event.frame->edx=address(at<void>(0x133AE9));
-                result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_conversation_advance));
+                result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_conversation_advance));
             } else if(event.id==npc_tail_advance) result.resume_rva=0x133B92;
             else if(event.id==player_advance) {
                 *ptr<char>(event.frame->ebp-0x68)=0;result.resume_rva=0x134465;
@@ -341,11 +341,11 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     }
     if(event.id==emote_cleanup && emote_constructing) {
         event.frame->eax=address(at<void>(0x134E3F));
-        result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_conversation_emote_continue));
+        result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_conversation_emote_continue));
     }
     if(event.id==emote_input && emote_constructing) result.skip_original=1;
     if(event.id==emote_end && emote_constructing)
-        result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::uwcn_component_fragment_return));
+        result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::urwcn_component_fragment_return));
     handled=result.skip_original || result.resume_rva;return Status::ok;
 }
 template<class T> void append(std::vector<std::uint8_t>& output,const T& value) {

@@ -2,7 +2,7 @@
 
 后续运行边界：用户下一次启动已成功记录初始化完成，但随后在文化图例构造时发生独立的文字参数索引错误；转储根因及新的正式事务见 [文化图例文字参数修正](20261020-culture-legend-text-argument-fix.md)。本记录的事务是该次运行之前的交付，不代表启动画面已验收。
 
-用户手动启动后提供了“Mod 初始化未完成，新建的挂起进程已结束”的截图。读取 `package/uwcn.log`，末尾两次均为 `Adapter initialization failed at native text hook installation; status=1`，随后是 Adapter 模块初始化失败。没有自行启动游戏、注入、模拟输入、运行产物或测试，没有新增测试脚本、断言、保护或回退逻辑。
+用户手动启动后提供了“Mod 初始化未完成，新建的挂起进程已结束”的截图。读取 `package/urwcn.log`，末尾两次均为 `Adapter initialization failed at native text hook installation; status=1`，随后是 Adapter 模块初始化失败。没有自行启动游戏、注入、模拟输入、运行产物或测试，没有新增测试脚本、断言、保护或回退逻辑。
 
 此前正式 Adapter SHA-256 为 `67d9627d0920a83462ac538999658b6a0d29696918eb6727f384fcdf6b1b762a`。以下问题已同时在源码、该正式 DLL 的静态反汇编和原始 EXE 中确认。原 EXE SHA-256 为 `e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9`，地址均为 RVA。
 
@@ -43,8 +43,8 @@ AE5DB  2B F9                SUB EDI,ECX
 
 对新产物的只读反汇编确认：`append_builder_hooks` 在 VA `69E2EEA5` 提供 `site=AE5D6`，其 helper 在 `69E08DD1` 写入 `expected[0]=B9`，同时使用 `kind=inline_code`、`byte_count=5` 和实际 image base 重定位。没有加载或运行 DLL。
 
-正式事务 `108be69c6a744d15a13a227e21322faf` 替换 `package/modules/uwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv`、`package/release.json`。旧三件先移入 `回收/20261020-014619-108be69c6a744d15a13a227e21322faf/package/`，发布回执 `success=true`。Catalog DLL 内容未变，没有替换；根启动器与驻留库未改动。
+正式事务 `108be69c6a744d15a13a227e21322faf` 替换 `package/modules/urwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv`、`package/release.json`。旧三件先移入 `回收/20261020-014619-108be69c6a744d15a13a227e21322faf/package/`，发布回执 `success=true`。Catalog DLL 内容未变，没有替换；根启动器与驻留库未改动。
 
 最终正式 Adapter SHA-256：`598e0052f133ec10df8fa7140b29cf6fd329662658b02535877d2844efef5748`；正式消息词库 SHA-256：`06abded32b1ca7c9433c5de8f988ba385244e83b7b48f91da84f340b2d30be21`。正式文件与本批构建/生成文件摘要一致。
 
-发布前只读进程清单未发现 `urw.exe`。没有发送热加载控制命令，没有 Runtime Applied 回执，没有关闭或重启游戏。修正由根 `uwcn_launcher.exe` 的正常加载路径使用；启动与画面结果仍由用户实际运行提供，不用编译或发布成功代替运行验收。
+发布前只读进程清单未发现 `urw.exe`。没有发送热加载控制命令，没有 Runtime Applied 回执，没有关闭或重启游戏。修正由根 `urwcn_launcher.exe` 的正常加载路径使用；启动与画面结果仍由用户实际运行提供，不用编译或发布成功代替运行验收。

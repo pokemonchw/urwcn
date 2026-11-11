@@ -2,7 +2,7 @@
 #include "native_menu_component.h"
 #include <cstring>
 
-namespace uwcn::adapter::native_language_redraw {
+namespace urwcn::adapter::native_language_redraw {
 namespace {
 std::uintptr_t base{};
 const HostApi* host{};

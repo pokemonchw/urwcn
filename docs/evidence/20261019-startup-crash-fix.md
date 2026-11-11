@@ -24,9 +24,9 @@ SDL 原 UpperBlit 在解引用前拒绝空源/空目标并返回参数错误。�
 
 统一入口 `build.ps1 -Module render -Publish` 已完成一次配置和一次增量编译，无编译错误或警告。本次请求 ID 为 `840882315a9e48b183b2ee0fd8eddf3b`，批次 ID 为 `479b8470fec547d5bf956095f10b8da5`。已读取该请求的 results JSON 与对应 batches 日志，Success=true，PublishRequested=true，ReloadRequested=false。
 
-正式发布事务为 `f393468595b449258265890ebf6f5f37`。只替换 package/modules/uwcn_render.dll 和 package/release.json；旧文件先按原相对路径移入 `回收/20261019-011330-f393468595b449258265890ebf6f5f37/`。已读取 publication-result.json，确认正式发布完成；正式清单十个条目的 SHA-256 与磁盘文件全部一致。
+正式发布事务为 `f393468595b449258265890ebf6f5f37`。只替换 package/modules/urwcn_render.dll 和 package/release.json；旧文件先按原相对路径移入 `回收/20261019-011330-f393468595b449258265890ebf6f5f37/`。已读取 publication-result.json，确认正式发布完成；正式清单十个条目的 SHA-256 与磁盘文件全部一致。
 
 - 新 Render SHA-256：`0cefb5e1d2e7b19d55db4598e6666af49225e5ec3b39a5accf1eb11ae52f5cf1`。
 - 回收旧 Render SHA-256：`f0de1a009d159e8a937bd9377cf3c9de4e4de0a9877fe2a470b245dcc9740578`，与初版清单一致。
 
-正常入口仍为根 uwcn_launcher.exe。没有另建运行副本。本次无运行时 Applied 回执；代理未启动游戏、未执行产物或测试，未创建测试与断言。修复后实际运行效果尚未确认。
+正常入口仍为根 urwcn_launcher.exe。没有另建运行副本。本次无运行时 Applied 回执；代理未启动游戏、未执行产物或测试，未创建测试与断言。修复后实际运行效果尚未确认。

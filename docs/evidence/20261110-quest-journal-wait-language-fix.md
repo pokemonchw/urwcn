@@ -4,11 +4,11 @@
 
 ## 根因
 
-`package/uwcn.log` 已记录用户触发的 `Shift+F5: translation unloaded ...` 与 `latest translation modules ... reloaded`。这证明日志中的卸载／重载动作执行过，不能将画面仍为中文直接判为没有识别按键。现有日志没有这些行的独立时间戳，不将其作为逐次按键或本次画面验收的证明。
+`package/urwcn.log` 已记录用户触发的 `Shift+F5: translation unloaded ...` 与 `latest translation modules ... reloaded`。这证明日志中的卸载／重载动作执行过，不能将画面仍为中文直接判为没有识别按键。现有日志没有这些行的独立时间戳，不将其作为逐次按键或本次画面验收的证明。
 
 `modules/adapter/native_quest_menu_language.inc` 原 `wait` 在共同 `D3D05 → D3BF0` 的 Before 回调读取 `[D3C80.EBP+4]`，要求等于游戏原返回地址 `159335`。
 
-但同一文件早已给 `159330 → D3C80` 安装完整 CALL Hook。`src/loader/hook_host.cpp:46` 起的 `uwcn_before_route` 将真实返回地址保存到驻留 Pending，并将游戏栈的该返回地址改成 `uwcn_after_bridge`。因此原 `wait` 的识别条件不成立，F10、F5 和兼容发布产生的语言 pending 无法在空任务页消费。此前证据记录中将此栈字段当作未被桥接的游戏地址，结论有误。
+但同一文件早已给 `159330 → D3C80` 安装完整 CALL Hook。`src/loader/hook_host.cpp:46` 起的 `urwcn_before_route` 将真实返回地址保存到驻留 Pending，并将游戏栈的该返回地址改成 `urwcn_after_bridge`。因此原 `wait` 的识别条件不成立，F10、F5 和兼容发布产生的语言 pending 无法在空任务页消费。此前证据记录中将此栈字段当作未被桥接的游戏地址，结论有误。
 
 ## 静态依据与修正
 
@@ -53,10 +53,10 @@
 | 完整批次日志 | `build/.compile-queue/batches/9f603b7badc94cd5974fd23f9e5c13d2.log` |
 | 正式事务 | `c7055a3e3eb94eeaa867913bbdde73af`，2026-11-10 17:32:02（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/c7055a3e3eb94eeaa867913bbdde73af/publication-result.json`，`success=true`、运行时 `applied=true` |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/release.json` |
 | 旧件归档 | `回收/20261110-173201-c7055a3e3eb94eeaa867913bbdde73af/package/`，两件旧文件先归档再替换，保留原相对路径，已只读确认存在 |
 | 兼容交接 | Windows PID `364` 返回 `ReadyToPublish`，随后 Adapter 第18代 `Applied` |
 | Adapter，正式件／构建件／Applied 一致 | `daa6f5ad248980c95120e73e55ce5cc44d522df5e3711de6c2fa73213b08141a` |
 | 归档旧 Adapter | `84ae4c2b5090485bbb55c72ddf035445658fbc674db31767bb7bd2fd663d4203` |
 
-源码修改、产物编译、正式文件发布及当前进程兼容交接均已完成。根 `uwcn_launcher.exe` 继续使用同一正式包，没有独立修复包或平行启动目录，无需重启。未启动、关闭、重启、模拟操作游戏，未运行测试或创建测试用例、断言；Applied 仅证明模块交接完成，快捷键行为和画面由用户验收。
+源码修改、产物编译、正式文件发布及当前进程兼容交接均已完成。根 `urwcn_launcher.exe` 继续使用同一正式包，没有独立修复包或平行启动目录，无需重启。未启动、关闭、重启、模拟操作游戏，未运行测试或创建测试用例、断言；Applied 仅证明模块交接完成，快捷键行为和画面由用户验收。

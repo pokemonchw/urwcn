@@ -1,7 +1,7 @@
 #include "native_renderer_component_calls.h"
 
-namespace uwcn::adapter::native_renderer_component_calls {
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_section(const SectionCall*) {
+namespace urwcn::adapter::native_renderer_component_calls {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_renderer_section(const SectionCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -16,7 +16,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_section(const Sec
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_paragraph(const ParagraphCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_renderer_paragraph(const ParagraphCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -32,7 +32,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_paragraph(const P
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_panel(const PanelCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_renderer_panel(const PanelCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -49,7 +49,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_panel(const Panel
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_text_block(const TextBlockCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_renderer_text_block(const TextBlockCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -64,7 +64,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_text_block(const 
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_heading(const HeadingCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_renderer_heading(const HeadingCall*) {
     __asm__ __volatile__(
         "movl 4(%esp),%eax\n\t"
         "movl 4(%eax),%ecx\n\t"
@@ -72,7 +72,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_heading(const Hea
         "call *(%eax)\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_label_box(const LabelBoxCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_renderer_label_box(const LabelBoxCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t" "movl 8(%esp),%ebx\n\t"
         "pushl 24(%ebx)\n\t" "pushl 20(%ebx)\n\t"
@@ -81,7 +81,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_label_box(const L
         "call *(%ebx)\n\t" "addl $16,%esp\n\t"
         "popl %ebx\n\t" "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_renderer_marked_button(const MarkedButtonCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_renderer_marked_button(const MarkedButtonCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"

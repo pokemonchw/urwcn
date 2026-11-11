@@ -11,38 +11,38 @@
 // native direction switch and current HUD owner dimensions. No rectangle,
 // native output pixels or SDL drawing contribution is retained by this model.
 extern "C" {
-uwcn::u32 uwcn_hud_direction_native_entry{};
-uwcn::u32 uwcn_hud_activity_native_entry{};
-__attribute__((naked)) void __cdecl uwcn_hud_direction_body() {
-    __asm__ __volatile__("subl $24,%esp\n\tjmp *_uwcn_hud_direction_native_entry\n\t");
+urwcn::u32 urwcn_hud_direction_native_entry{};
+urwcn::u32 urwcn_hud_activity_native_entry{};
+__attribute__((naked)) void __cdecl urwcn_hud_direction_body() {
+    __asm__ __volatile__("subl $24,%esp\n\tjmp *_urwcn_hud_direction_native_entry\n\t");
 }
-__attribute__((naked)) void __cdecl uwcn_hud_activity_body() {
-    __asm__ __volatile__("jmp *_uwcn_hud_activity_native_entry\n\t");
+__attribute__((naked)) void __cdecl urwcn_hud_activity_body() {
+    __asm__ __volatile__("jmp *_urwcn_hud_activity_native_entry\n\t");
 }
-__attribute__((naked)) void __cdecl uwcn_hud_invoke_direction() {
+__attribute__((naked)) void __cdecl urwcn_hud_invoke_direction() {
     __asm__ __volatile__(
         "pushl %ebp\n\tpushl %ebx\n\tpushl %esi\n\tpushl %edi\n\t"
-        "subl $96,%esp\n\tcall _uwcn_hud_direction_body\n\taddl $96,%esp\n\t"
+        "subl $96,%esp\n\tcall _urwcn_hud_direction_body\n\taddl $96,%esp\n\t"
         "popl %edi\n\tpopl %esi\n\tpopl %ebx\n\tpopl %ebp\n\tret\n\t");
 }
-__attribute__((naked)) void __cdecl uwcn_hud_invoke_activity(uwcn::u32) {
+__attribute__((naked)) void __cdecl urwcn_hud_invoke_activity(urwcn::u32) {
     __asm__ __volatile__(
         "pushl %ebp\n\tpushl %ebx\n\tpushl %esi\n\tpushl %edi\n\t"
-        "movl 20(%esp),%esi\n\tsubl $1280,%esp\n\tcall _uwcn_hud_activity_body\n\taddl $1280,%esp\n\t"
+        "movl 20(%esp),%esi\n\tsubl $1280,%esp\n\tcall _urwcn_hud_activity_body\n\taddl $1280,%esp\n\t"
         "popl %edi\n\tpopl %esi\n\tpopl %ebx\n\tpopl %ebp\n\tret\n\t");
 }
-__attribute__((naked)) void __cdecl uwcn_hud_direction_return() {
+__attribute__((naked)) void __cdecl urwcn_hud_direction_return() {
     __asm__ __volatile__("addl $32,%esp\n\tret\n\t");
 }
-__attribute__((naked)) void __cdecl uwcn_hud_overlay_return() {
+__attribute__((naked)) void __cdecl urwcn_hud_overlay_return() {
     __asm__ __volatile__("ret\n\t");
 }
-__attribute__((naked)) void __cdecl uwcn_hud_activity_return() {
+__attribute__((naked)) void __cdecl urwcn_hud_activity_return() {
     __asm__ __volatile__("addl $8,%esp\n\tret\n\t");
 }
 }
 
-namespace uwcn::adapter::native_hud_icons {
+namespace urwcn::adapter::native_hud_icons {
 namespace {
 constexpr u32 hud_surface=0x61BBB04,overlay_texture=0x61BBAF4;
 constexpr u32 direction_field=0xA384110,activity_records=0x61A8CC4;
@@ -107,8 +107,8 @@ void configure(std::uintptr_t image_base,OwnerSource owner,Constructed callback)
     base=image_base;owner_source=owner;constructed=callback;next_handle=1;
     icons.clear();current_sources.clear();painting.reset();direction_current=overlay_current=activity_current=0;
     borrowed_direction=nullptr;
-    uwcn_hud_direction_native_entry=static_cast<u32>(base+0xFAF04);
-    uwcn_hud_activity_native_entry=static_cast<u32>(base+0xFB06F);
+    urwcn_hud_direction_native_entry=static_cast<u32>(base+0xFAF04);
+    urwcn_hud_activity_native_entry=static_cast<u32>(base+0xFB06F);
 }
 void borrow_direction(const u32* input) {borrowed_direction=input;}
 void append_hooks(std::vector<HookSpec>& hooks) {
@@ -133,15 +133,15 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
             result.resume_rva=0xFB01C;
         }
         else if(event.id==direction_end && value.kind==Kind::direction)
-            result.resume_rva=exit_rva(uwcn_hud_direction_return);
+            result.resume_rva=exit_rva(urwcn_hud_direction_return);
         else if(event.id==overlay_end && value.kind==Kind::overlay_direction)
-            result.resume_rva=exit_rva(uwcn_hud_overlay_return);
+            result.resume_rva=exit_rva(urwcn_hud_overlay_return);
         else if(event.id==activity_age && value.kind==Kind::activity) {
             // FB115..FB133 consumes/clears business ages. The accepted alpha
             // has already become this icon's source in its ordinary constructor.
             event.frame->eax=value.alpha;result.resume_rva=0xFB15E;
         } else if(event.id==activity_end && value.kind==Kind::activity)
-            result.resume_rva=exit_rva(uwcn_hud_activity_return);
+            result.resume_rva=exit_rva(urwcn_hud_activity_return);
         return Status::ok;
     }
     switch(event.id) {
@@ -201,13 +201,13 @@ Status paint(Handle handle) {
         if(get_blend(image,&previous_blend)!=0 || get_alpha(image,&previous_alpha)!=0 || set_blend(image,1)!=0) {
             painting.reset();set_target(renderer,previous_target);return Status::failed;
         }
-        uwcn_hud_invoke_activity(value.native_record);
+        urwcn_hud_invoke_activity(value.native_record);
         if(set_blend(image,previous_blend)!=0 || set_alpha(image,previous_alpha)!=0) {
             painting.reset();set_target(renderer,previous_target);return Status::failed;
         }
     } else {
         auto& direction=native<u32>(direction_field);const auto previous=direction;direction=value.native_record;
-        uwcn_hud_invoke_direction();direction=previous;
+        urwcn_hud_invoke_direction();direction=previous;
     }
     painting.reset();
     return !texture || set_target(renderer,previous_target)==0 ? Status::ok:Status::failed;

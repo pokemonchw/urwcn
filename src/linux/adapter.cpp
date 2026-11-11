@@ -17,10 +17,10 @@
 #include <string>
 #include <vector>
 
-extern "C" void uwcn_linux_redraw_main_fragment(std::uintptr_t);
-extern "C" void uwcn_linux_redraw_main_return();
+extern "C" void urwcn_linux_redraw_main_fragment(std::uintptr_t);
+extern "C" void urwcn_linux_redraw_main_return();
 namespace {
-using namespace uwcn;
+using namespace urwcn;
 using linux_host::Frame;
 using linux_host::Phase;
 using linux_host::CallState;
@@ -806,7 +806,7 @@ void rebuild_main_menu() {
     // previous text. Re-enter the native background/footer fragment and
     // panel/logo builder before drawing rows in the selected language.
     redrawing_main_background=true;
-    uwcn_linux_redraw_main_fragment(host->image_base+0x15ceeb);
+    urwcn_linux_redraw_main_fragment(host->image_base+0x15ceeb);
     redrawing_main_background=false;
     native<void (*)()>(0x15cbe0)();
     redraw_list();
@@ -846,7 +846,7 @@ void main_background(Frame& frame) {
 }
 void main_background_end(Frame& frame) {
     if(redrawing_main_background)
-        frame.resume=reinterpret_cast<std::uintptr_t>(uwcn_linux_redraw_main_return);
+        frame.resume=reinterpret_cast<std::uintptr_t>(urwcn_linux_redraw_main_return);
     else
         frame.rdi=host->image_base+0x2016a5; // Covered native LEA RDI.
 }
@@ -859,7 +859,7 @@ void resize_native_targets(Frame& frame) {
 }
 Status initialize(const HostApi* api) {
     host=api;
-    const auto get=reinterpret_cast<const linux_host::Hooks* (*)()>(dlsym(RTLD_DEFAULT,"uwcn_linux_hooks_v2"));
+    const auto get=reinterpret_cast<const linux_host::Hooks* (*)()>(dlsym(RTLD_DEFAULT,"urwcn_linux_hooks_v2"));
     hooks=get();
     install_name_input();
     install_culture_info();
@@ -975,5 +975,5 @@ Status restore_state(const void* input,u32 bytes) {
 void shutdown() { glyphs.clear(); culture_words.clear(); }
 const ModuleApi api{sizeof(ModuleApi),kHostAbi,ModuleId::adapter,initialize,invoke,save_state,restore_state,shutdown};
 }
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor{uwcn::kDescriptorMagic,uwcn::kHostAbi,6,uwcn::kModuleMachine,1};
-UWCN_EXPORT const uwcn::ModuleApi* uwcn_get_module_api() { return &api; }
+URWCN_EXPORT const urwcn::ModuleDescriptor urwcn_module_descriptor{urwcn::kDescriptorMagic,urwcn::kHostAbi,6,urwcn::kModuleMachine,1};
+URWCN_EXPORT const urwcn::ModuleApi* urwcn_get_module_api() { return &api; }

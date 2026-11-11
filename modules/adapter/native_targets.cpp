@@ -10,8 +10,8 @@
 
 // 10BBE0 receives x/y in ECX/EDX and the native image surface on the stack;
 // unlike compiler fastcall, its caller removes that stack argument.
-extern "C" __attribute__((naked)) uwcn::u32 __cdecl uwcn_hud_image_key(
-    uwcn::u32,uwcn::render::Surface*) {
+extern "C" __attribute__((naked)) urwcn::u32 __cdecl urwcn_hud_image_key(
+    urwcn::u32,urwcn::render::Surface*) {
     __asm__ __volatile__(
         "movl 4(%esp),%eax\n\t"
         "pushl 8(%esp)\n\t"
@@ -22,7 +22,7 @@ extern "C" __attribute__((naked)) uwcn::u32 __cdecl uwcn_hud_image_key(
         "ret\n\t");
 }
 
-namespace uwcn::adapter::native_targets {
+namespace urwcn::adapter::native_targets {
 namespace {
 using namespace render;
 using Scale=scoped::SurfaceScale;
@@ -338,7 +338,7 @@ Status hud_image(Renderer* renderer,u32 filename,Texture*& result) {
     const auto load=global<LoadImage>(0x18C294);
     auto* image=load(reinterpret_cast<const char*>(base+filename));
     if(!image) return Status::failed;
-    const auto key=uwcn_hud_image_key(static_cast<u32>(base+0x10BBE0),image);
+    const auto key=urwcn_hud_image_key(static_cast<u32>(base+0x10BBE0),image);
     const int keyed=api.SetColorKey(image,1,key);
     result=keyed==0 ? api.CreateTextureFromSurface(renderer,image) : nullptr;
     api.FreeSurface(image);

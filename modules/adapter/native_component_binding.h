@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace uwcn::adapter::native_component_binding {
+namespace urwcn::adapter::native_component_binding {
 using native_text_resource::TextSource;
 using native_component_model::ParagraphSource;
 using DecodeParserSource=Status (*)(const char*,std::string&);

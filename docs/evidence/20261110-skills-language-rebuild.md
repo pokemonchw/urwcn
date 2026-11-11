@@ -34,9 +34,9 @@
 3. `E0D1A → 10EB40` 按同一 `ESI` 绘制正文，保留原颜色及描边。
 4. `E0CE9` 的 `ADD ESP,20h` 平衡此前测量和面板累计栈参数；`E0D1F` 的 `ADD ESP,10h` 平衡正文的四个参数，包括原 `SDL_MapRGBA` 调用留下供正文消费的描边值。
 
-片段不读取外层 `EBP` 局部变量，不进入菜单初始化、等待、技能使用、加减点或文件写入路径。`E0D22` 原本开始设置后续菜单显式行开关，位于纯绘制片段之外。本次仅当 `painting_skill_help()` 为真时，在此边界转入 `uwcn_component_fragment_return()`，从片段的已平衡栈返回；普通原生进入仍执行原指令。
+片段不读取外层 `EBP` 局部变量，不进入菜单初始化、等待、技能使用、加减点或文件写入路径。`E0D22` 原本开始设置后续菜单显式行开关，位于纯绘制片段之外。本次仅当 `painting_skill_help()` 为真时，在此边界转入 `urwcn_component_fragment_return()`，从片段的已平衡栈返回；普通原生进入仍执行原指令。
 
-`SkillHelpInputs` 保留原窗口样式，`ParagraphSource` 保留原帮助文件输入的中立语义记录。重建时通过既有中文词元、原生段落解析和度量接口重新生成词表，再执行上述原片段。`uwcn_component_skill_help` 保留 `EBX/ESI/EDI/EBP`，不会依赖任意外层页面局部变量。窗口高度继续来自本次原生测量，没有冻结上次语言的高度或最终文字坐标。
+`SkillHelpInputs` 保留原窗口样式，`ParagraphSource` 保留原帮助文件输入的中立语义记录。重建时通过既有中文词元、原生段落解析和度量接口重新生成词表，再执行上述原片段。`urwcn_component_skill_help` 保留 `EBX/ESI/EDI/EBP`，不会依赖任意外层页面局部变量。窗口高度继续来自本次原生测量，没有冻结上次语言的高度或最终文字坐标。
 
 ## 登记、序列化及范围
 
@@ -54,7 +54,7 @@
 
 - 首批请求 `858f044ab2d54043922a78151c61bff1`，批次 `bbaf4a2439974da890fa0cdc0d04240b`，发布事务 `d97beb4ee159419cb709f5f4942051f7`。完成后，最终静态审查确认上述点数窗口背景样式依赖，补齐样式后提交第二批。
 - 最终请求 `3bba3d109a38428eb0a98ac59c7a16ad`，批次 `678fb28c378c443c9f56fb5aa4921fd0`，发布事务 `3fbabbb336f24674adc04ca15d6ab29d`，完成时间 `2026-11-10 11:11:38`（Asia/Shanghai）。已读取两次 `build/.compile-queue/results/<请求>.json`、对应 `batches/<批次>.log` 和各自暂存目录的 `publication-result.json`；均为成功，每批一次配置、一次增量编译。编译存在既有函数指针转换、缺少成员初始化、未使用项等警告，没有编译错误。
-- 最终正式文件 `package/modules/uwcn_adapter.dll` 与构建产物 SHA-256 一致：`d7eb0b2fe79fd8afbcf7a8cda07fc58f549218345df3e74446979ded28468443`。同时更新正式 `package/release.json`。正常根启动器的正式模块位置已经更新，没有创建平行运行包。
+- 最终正式文件 `package/modules/urwcn_adapter.dll` 与构建产物 SHA-256 一致：`d7eb0b2fe79fd8afbcf7a8cda07fc58f549218345df3e74446979ded28468443`。同时更新正式 `package/release.json`。正常根启动器的正式模块位置已经更新，没有创建平行运行包。
 - 两次被替换的旧 Adapter 和清单，分别先移入 `回收/20261110-111034-d97beb4ee159419cb709f5f4942051f7/package/` 与 `回收/20261110-111138-3fbabbb336f24674adc04ca15d6ab29d/package/`，保留原相对路径；已读取归档目录确认旧 DLL 存在。
 - 只读进程列表未发现本项目游戏进程，本次没有执行 `-Reload`。发布回执 `runtime_requested=false`、`runtime_receipts=[]`；不宣称运行中旧技能页已经恢复。本次新增控件来源由其原生构建调用登记，不补造旧版已丢失的来源快照。
 

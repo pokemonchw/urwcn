@@ -39,5 +39,5 @@
 - 请求 `9277202f52b749008c2415b24e9b209d`，批次 `af352daa346946b3b1a7b46642ccde82`。已读取对应 `build/.compile-queue/results/<request>.json` 和完整 `batches/<batch>.log`，`Success=true`、`PublishRequested=true`、`ReloadRequested=true`；仅一次配置和一次增量构建。
 - Adapter 编译成功。日志包含既有 `native_name_input.inc:81` 五项及 `module.cpp` 的 `SDL_GetRGB` 一项 `-Wcast-function-type` 警告；本次底栏代码没有新增编译警告或错误。
 - 正式事务 `9c0b8acc4c9640568e9fe1a3165430eb`。已读取 `build/mingw-x86/stage/9c0b8acc4c9640568e9fe1a3165430eb/publication-result.json`，`success=true`、`runtime_requested=true`。PID `169784` 返回 `ReadyToPublish` 和 `Applied`，Adapter 第2代。
-- 正式替换 `package/modules/uwcn_adapter.dll`、`package/profiles/urw-3.89-steam-25939378.json` 和 `package/release.json`。旧三件已先按原相对路径移入 `回收/20261019-210048-9c0b8acc4c9640568e9fe1a3165430eb/package/`，已只读确认存在；根启动器和驻留桥未替换，未建立平行运行包。
+- 正式替换 `package/modules/urwcn_adapter.dll`、`package/profiles/urw-3.89-steam-25939378.json` 和 `package/release.json`。旧三件已先按原相对路径移入 `回收/20261019-210048-9c0b8acc4c9640568e9fe1a3165430eb/package/`，已只读确认存在；根启动器和驻留桥未替换，未建立平行运行包。
 - 编译 Adapter 与正式 Adapter 的 SHA-256 一致，为 `38ecdf34ddd8bceac454e959a31a549903fc745210e282cb4e981a108eb86c24`，同值见 Applied 回执。根 profile 与正式 profile 一致，为 `e1390566f1b6d6e3d9c812a3d27d245fbe629225bd004db1922a0f5b9fb8249b`；两值亦见正式发布清单。

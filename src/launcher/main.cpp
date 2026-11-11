@@ -122,7 +122,7 @@ static bool remote_call(HANDLE process,std::uintptr_t function,void* argument,DW
 int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int) {
     wchar_t own_path[32768]{}; GetModuleFileNameW(nullptr,own_path,32768);
     const auto launcher_directory=std::filesystem::path(own_path).parent_path();
-    const auto configuration=(launcher_directory/L"uwcn_launcher.ini").wstring();
+    const auto configuration=(launcher_directory/L"urwcn_launcher.ini").wstring();
     wchar_t configured_directory[32768]{};
     GetPrivateProfileStringW(L"launcher",L"game_directory",L"",configured_directory,32768,configuration.c_str());
     std::wstring game;
@@ -131,33 +131,33 @@ int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int) {
     if(!arguments) return 1;
     if(count==3 && std::wstring(arguments[1])==L"--game") game=arguments[2];
     else if(count==3 && std::wstring(arguments[1])==L"--game-dir") game=(std::filesystem::path(arguments[2])/L"urw.exe").wstring();
-    else if(count!=1) { LocalFree(arguments); MessageBoxW(nullptr,L"用法：uwcn_launcher.exe [--game 游戏完整路径 | --game-dir 游戏目录]",L"UWCn",MB_ICONERROR); return 1; }
+    else if(count!=1) { LocalFree(arguments); MessageBoxW(nullptr,L"用法：urwcn_launcher.exe [--game 游戏完整路径 | --game-dir 游戏目录]",L"URWCN",MB_ICONERROR); return 1; }
     LocalFree(arguments);
     while(game.empty() || GetFileAttributesW(game.c_str())==INVALID_FILE_ATTRIBUTES || (GetFileAttributesW(game.c_str())&FILE_ATTRIBUTE_DIRECTORY)) {
         std::wstring directory;
         const HRESULT selected=choose_game_directory(directory);
         if(selected==HRESULT_FROM_WIN32(ERROR_CANCELLED)) return 0;
-        if(FAILED(selected)) { MessageBoxW(nullptr,L"无法打开游戏目录选择框。",L"UWCn",MB_ICONERROR); return 1; }
+        if(FAILED(selected)) { MessageBoxW(nullptr,L"无法打开游戏目录选择框。",L"URWCN",MB_ICONERROR); return 1; }
         game=(std::filesystem::path(directory)/L"urw.exe").wstring();
     }
     game=std::filesystem::absolute(game).wstring();
     const auto game_directory=std::filesystem::path(game).parent_path().wstring();
     if(!WritePrivateProfileStringW(L"launcher",L"game_directory",game_directory.c_str(),configuration.c_str())) {
-        MessageBoxW(nullptr,L"无法保存启动器旁的 uwcn_launcher.ini 游戏目录配置。",L"UWCn",MB_ICONERROR); return 1;
+        MessageBoxW(nullptr,L"无法保存启动器旁的 urwcn_launcher.ini 游戏目录配置。",L"URWCN",MB_ICONERROR); return 1;
     }
     const auto game_hash=sha256(game);
     if(game_hash!=expected_hash && game_hash!=expected_hash_3891) {
         const auto message=L"游戏文件指纹不符合已确认的不真实的世界版本。\n已适配：3.89（Build 25939378）、3.89.1（Build 26139145）。\n游戏文件："+game+
             L"\n读取的 SHA-256："+game_hash+L"\n未启动游戏。";
-        MessageBoxW(nullptr,message.c_str(),L"UWCn",MB_ICONERROR); return 1;
+        MessageBoxW(nullptr,message.c_str(),L"URWCN",MB_ICONERROR); return 1;
     }
     const DWORD game_entry=entry_rva(game);
-    if(!game_entry) { MessageBoxW(nullptr,L"游戏 PE32 入口无效。未启动游戏。",L"UWCn",MB_ICONERROR); return 1; }
-    const std::wstring loader=(std::filesystem::path(own_path).parent_path()/L"package"/L"uwcn_loader.dll").wstring();
+    if(!game_entry) { MessageBoxW(nullptr,L"游戏 PE32 入口无效。未启动游戏。",L"URWCN",MB_ICONERROR); return 1; }
+    const std::wstring loader=(std::filesystem::path(own_path).parent_path()/L"package"/L"urwcn_loader.dll").wstring();
     HMODULE mapped=LoadLibraryExW(loader.c_str(),nullptr,DONT_RESOLVE_DLL_REFERENCES);
-    if(!mapped) { MessageBoxW(nullptr,L"无法读取正式 package/uwcn_loader.dll。",L"UWCn",MB_ICONERROR); return 1; }
-    auto bootstrap=GetProcAddress(mapped,"uwcn_initialize");
-    if(!bootstrap) { FreeLibrary(mapped); MessageBoxW(nullptr,L"驻留 DLL 缺少初始化导出。",L"UWCn",MB_ICONERROR); return 1; }
+    if(!mapped) { MessageBoxW(nullptr,L"无法读取正式 package/urwcn_loader.dll。",L"URWCN",MB_ICONERROR); return 1; }
+    auto bootstrap=GetProcAddress(mapped,"urwcn_initialize");
+    if(!bootstrap) { FreeLibrary(mapped); MessageBoxW(nullptr,L"驻留 DLL 缺少初始化导出。",L"URWCN",MB_ICONERROR); return 1; }
     const auto bootstrap_rva=reinterpret_cast<std::uintptr_t>(bootstrap)-reinterpret_cast<std::uintptr_t>(mapped); FreeLibrary(mapped);
     STARTUPINFOW startup{}; startup.cb=sizeof(startup); PROCESS_INFORMATION process{};
     std::wstring command=L"\""+game+L"\""; const auto directory=std::filesystem::path(game).parent_path().wstring();
@@ -165,12 +165,12 @@ int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int) {
     // SDL_CreateWindow call. Keep SDL's pixel coordinates and let the native
     // HD targets use the real output density without Windows bitmap scaling.
     if(!SetEnvironmentVariableW(L"SDL_WINDOWS_DPI_AWARENESS",L"permonitorv2")) {
-        MessageBoxW(nullptr,L"无法设置高清显示启动参数。未启动游戏。",L"UWCn",MB_ICONERROR); return 1;
+        MessageBoxW(nullptr,L"无法设置高清显示启动参数。未启动游戏。",L"URWCN",MB_ICONERROR); return 1;
     }
-    if(!CreateProcessW(game.c_str(),command.data(),nullptr,nullptr,FALSE,CREATE_SUSPENDED|DEBUG_ONLY_THIS_PROCESS,nullptr,directory.c_str(),&startup,&process)) { MessageBoxW(nullptr,L"无法创建游戏进程。",L"UWCn",MB_ICONERROR); return 1; }
+    if(!CreateProcessW(game.c_str(),command.data(),nullptr,nullptr,FALSE,CREATE_SUSPENDED|DEBUG_ONLY_THIS_PROCESS,nullptr,directory.c_str(),&startup,&process)) { MessageBoxW(nullptr,L"无法创建游戏进程。",L"URWCN",MB_ICONERROR); return 1; }
     if(!stop_at_initialized_entry(process,game_entry)) {
         TerminateProcess(process.hProcess,1); DebugActiveProcessStop(process.dwProcessId); CloseHandle(process.hThread); CloseHandle(process.hProcess);
-        MessageBoxW(nullptr,L"无法完成 Windows 加载阶段的入口交接。新建进程已结束，游戏入口未被恢复。",L"UWCn",MB_ICONERROR); return 1;
+        MessageBoxW(nullptr,L"无法完成 Windows 加载阶段的入口交接。新建进程已结束，游戏入口未被恢复。",L"URWCN",MB_ICONERROR); return 1;
     }
     const auto local_load=GetProcAddress(GetModuleHandleW(L"kernel32.dll"),"LoadLibraryW"); HMODULE owner=nullptr;
     GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,reinterpret_cast<LPCWSTR>(local_load),&owner);
@@ -186,6 +186,6 @@ int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int) {
     if(remote_text) VirtualFreeEx(process.hProcess,remote_text,0,MEM_RELEASE);
     if(ok) ok=remote_call(process.hProcess,static_cast<std::uintptr_t>(loaded)+bootstrap_rva,reinterpret_cast<void*>(static_cast<std::uintptr_t>(process.dwThreadId)),initialized) && initialized==1;
     if(ok) ok=ResumeThread(process.hThread)!=static_cast<DWORD>(-1);
-    if(!ok) { TerminateProcess(process.hProcess,1); MessageBoxW(nullptr,L"Mod 初始化未完成，新建的挂起进程已结束。请查看 package/uwcn.log。",L"UWCn",MB_ICONERROR); }
+    if(!ok) { TerminateProcess(process.hProcess,1); MessageBoxW(nullptr,L"Mod 初始化未完成，新建的挂起进程已结束。请查看 package/urwcn.log。",L"URWCN",MB_ICONERROR); }
     CloseHandle(process.hThread); CloseHandle(process.hProcess); return ok ? 0 : 1;
 }

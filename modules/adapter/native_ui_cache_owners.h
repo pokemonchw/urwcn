@@ -3,7 +3,7 @@
 #include "../render/sdl_api.h"
 #include <vector>
 
-namespace uwcn::adapter::native_ui_cache_owners {
+namespace urwcn::adapter::native_ui_cache_owners {
 enum class Slot : u32 { first=0,second=1,named0=2,named1=3,named2=4,named3=5,menu=6 };
 
 // Complete original cache-copy inputs, borrowed only to observe source

@@ -12,7 +12,7 @@
 #include <optional>
 #include <utility>
 
-namespace uwcn::adapter::native_renderer_component_binding {
+namespace urwcn::adapter::native_renderer_component_binding {
 namespace {
 namespace model=native_renderer_component_model;
 using native_text_resource::SourceKey;
@@ -293,28 +293,28 @@ Status construct(const NativeEvent& event,const HookSpec& hook,const EventInput&
 }
 struct BackgroundCall {u32 function,surface,texture;std::int32_t width,height;};
 struct HudFrameCall {u32 function,color_import;};
-extern "C" __attribute__((naked)) void UWCN_CALL renderer_hud_frame(const HudFrameCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL renderer_hud_frame(const HudFrameCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t" "movl 8(%esp),%eax\n\t"
         "movl 4(%eax),%ebx\n\t" "call *(%eax)\n\t"
         "popl %ebx\n\t" "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL renderer_hud_frame_return() {
+extern "C" __attribute__((naked)) void URWCN_CALL renderer_hud_frame_return() {
     __asm__ __volatile__("addl $8,%esp\n\tret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL renderer_overlay_body() {
+extern "C" __attribute__((naked)) void URWCN_CALL renderer_overlay_body() {
     __asm__ __volatile__("subl $32,%esp\n\tjmp *%eax\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL renderer_overlay_background(u32) {
+extern "C" __attribute__((naked)) void URWCN_CALL renderer_overlay_background(u32) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%eax\n\tcall _renderer_overlay_body\n\t"
         "popl %ebp\n\tpopl %edi\n\tpopl %esi\n\tpopl %ebx\n\tret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL renderer_overlay_return() {
+extern "C" __attribute__((naked)) void URWCN_CALL renderer_overlay_return() {
     __asm__ __volatile__("ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL renderer_background(const BackgroundCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL renderer_background(const BackgroundCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t" "movl 8(%esp),%ebx\n\t"
         "pushl 16(%ebx)\n\t" "pushl 12(%ebx)\n\t"
@@ -444,7 +444,7 @@ Status finish_event(const NativeEvent& event,DispatchResult& result,Status statu
         // E3EE0 consumes 5F8FA80. Rebuild that dependency with its original
         // E3020 factory; the game replaces the old texture and owns all pixels.
         // This same native construction runs on entry and language wakeup.
-        if(windows_build::is_3891()) reinterpret_cast<void (UWCN_CALL *)()>(base+0xE3020)();
+        if(windows_build::is_3891()) reinterpret_cast<void (URWCN_CALL *)()>(base+0xE3020)();
         if(map_paint_source) return prepare_map_title(event,map_paint_source->map.title);
         auto& owner=owners.find(writable(known_map_owner))->second.owner;
         owner.map.title=native_text_resource::from_request({TextComponent::culture_text,
@@ -587,7 +587,7 @@ Status paint_hud(const Owner& owner,PaintDestination destination) {
 Status paint_known_map(const Owner& owner,PaintDestination destination) {
     using GetTarget=u32 (__cdecl *)(u32);
     using SetTarget=int (__cdecl *)(u32,u32);
-    using NativeFactory=void (UWCN_CALL *)();
+    using NativeFactory=void (URWCN_CALL *)();
     const auto renderer=native<u32>(main_renderer),previous=native<u32>(known_map_owner);
     const auto caller_target=native<GetTarget>(0x18C26C)(renderer);
     const auto set_target=native<SetTarget>(0x18C288);
@@ -629,7 +629,7 @@ void paint_heading_copy(PaintDestination destination,u32 renderer,u32& caller_ta
     // The native factory finds its own 'headingicons' record by the original
     // literal. Its selected existing slot, rather than a remembered ordinal,
     // supplies the old resource at the confirmed 116EA3 owner read.
-    using Copy=u32 (UWCN_CALL *)();
+    using Copy=u32 (URWCN_CALL *)();
     heading_copy={true,0};const auto slot=reinterpret_cast<Copy>(base+0x116E20)();heading_copy.building=false;
     const auto field=0xA3849F8+slot*0xC48;const auto replacement=native<u32>(field);
     if(destination==PaintDestination::native_surface_cache)

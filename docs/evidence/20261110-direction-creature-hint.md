@@ -54,11 +54,11 @@
 | 请求 ID | `001e077bfae64a2fa8c2fd4462437bf9` |
 | 批次 ID | `1b3b8affce504ce98eac8e04e26c63ba`，`Success=true`，一次配置及增量编译；既有函数指针转换、extern 初始化、未使用项与缩进警告保留，无错误 |
 | 正式事务 | `8284aabf6b5540d38d43b9dc96a843b7`，2026-11-10 18:57:41完成，`success=true` |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/catalog/zh-CN/main_menu.tsv`、`package/release.json`；Catalog DLL沿用原编译件 |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/catalog/zh-CN/main_menu.tsv`、`package/release.json`；Catalog DLL沿用原编译件 |
 | 旧件归档 | `回收/20261110-185741-8284aabf6b5540d38d43b9dc96a843b7/package/`，按原相对路径先移动旧件，再放新件 |
 | 运行中交接 | `ReloadRequested=false`、`runtime_requested=false`、`runtime_receipts=[]`，没有请求或取得 Applied |
 
-已完整读取该请求 JSON、完整批次日志和正式 `publication-result.json`。根 `uwcn_launcher.exe` 仍使用同一正式包，没有平行修复目录。
+已完整读取该请求 JSON、完整批次日志和正式 `publication-result.json`。根 `urwcn_launcher.exe` 仍使用同一正式包，没有平行修复目录。
 
 | 文件 | SHA-256 |
 | --- | --- |

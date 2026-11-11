@@ -33,7 +33,7 @@
 
 - 请求 `45824ee3dbde4f669be81e93b8118274`，批次 `b66e2889c81f4b9aa71cffa8a0421ed8`。已读取对应 `build/.compile-queue/results/45824ee3dbde4f669be81e93b8118274.json` 和完整 `build/.compile-queue/batches/b66e2889c81f4b9aa71cffa8a0421ed8.log`：`Success=true`，一次配置、一次增量构建，无编译警告。提交后至批次结束没有修改请求范围源码。
 - 事务 `97e9ca724cee46ac9d33a98b17328397`，已读取 `build/linux-x86_64/stage/97e9ca724cee46ac9d33a98b17328397/publication-result.json`：`success=true`。PID `3968932` 返回同一事务的 `ReadyToPublish` 和 `Applied`，Adapter 第4代已加载。
-- 正式更新 `package/modules/uwcn_adapter.dll`、Linux profile 与 `package/release.json`。旧三件先按原相对路径移入 `回收/20261019-175332-97e9ca724cee46ac9d33a98b17328397/`；发布器同时归档应用菜单旧链接。旧 Adapter SHA-256 为 `73cd34fc1fe30b9528e4b7fa2698e4aae4ecd4c76bb876ece267b1a3c4853c2c`。
+- 正式更新 `package/modules/urwcn_adapter.dll`、Linux profile 与 `package/release.json`。旧三件先按原相对路径移入 `回收/20261019-175332-97e9ca724cee46ac9d33a98b17328397/`；发布器同时归档应用菜单旧链接。旧 Adapter SHA-256 为 `73cd34fc1fe30b9528e4b7fa2698e4aae4ecd4c76bb876ece267b1a3c4853c2c`。
 - 新正式 Adapter SHA-256 为 `bf3207cc2c0cd61beb21ed891732d1f50b27cd4dbd6cf5eaf9c83396f0dcb334`，与构建产物、正式清单和 Applied 回执一致；正式 Linux profile SHA-256 为 `8a01df9948a8c815b473ef9b62bd62d984670c3a1c746492f4b1cc95d68aa331`，与源码和正式清单一致。
 
 Applied 证明正式文件和兼容业务模块交接完成，不能替代实际画面验收。当前情境选择页在下一次正常原生输入返回时消费已有刷新标记；没有模拟事件、读取运行画面、关闭或重启游戏，也没有自行运行测试。

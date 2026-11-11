@@ -7,7 +7,7 @@
 #include <map>
 #include <utility>
 
-namespace uwcn::adapter::native_footer_component {
+namespace urwcn::adapter::native_footer_component {
 namespace {
 std::uintptr_t base{};
 Services services{};
@@ -85,7 +85,7 @@ Status paint_text(const Source& source,const std::string& text) {
     const native_component_calls::CenteredTextCall call{
         static_cast<u32>(base+0x10E910),x,logo.y+byayoi_sprite::height+gap,
         width,native_text.c_str(),production.color,production.outline};
-    native_component_calls::uwcn_component_centered_text(&call);
+    native_component_calls::urwcn_component_centered_text(&call);
     return Status::ok;
 }
 }

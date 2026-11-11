@@ -1,7 +1,7 @@
 #include "native_component_calls.h"
 
-namespace uwcn::adapter::native_component_calls {
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_panel(const PanelCall*) {
+namespace urwcn::adapter::native_component_calls {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_panel(const PanelCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -17,7 +17,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_panel(const Pane
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_legacy_panel(const LegacyPanelCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_legacy_panel(const LegacyPanelCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -32,7 +32,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_legacy_panel(con
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_button(const ButtonCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_button(const ButtonCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -44,7 +44,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_button(const But
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_centered_text(const CenteredTextCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_centered_text(const CenteredTextCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -59,7 +59,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_centered_text(co
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_text_block(const TextBlockCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_text_block(const TextBlockCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -73,7 +73,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_text_block(const
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_statistic_label(const StatisticLabelCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_statistic_label(const StatisticLabelCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -85,7 +85,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_statistic_label(
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_action_button(const ActionButtonCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_action_button(const ActionButtonCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -98,7 +98,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_action_button(co
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_native_heading(const NativeHeadingCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_native_heading(const NativeHeadingCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -107,7 +107,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_native_heading(c
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_compound_hint(const CompoundHintCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_compound_hint(const CompoundHintCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -120,7 +120,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_compound_hint(co
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_title_strip(const TitleStripCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_title_strip(const TitleStripCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -134,7 +134,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_title_strip(cons
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_selector_renderer(const SelectorRendererCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_selector_renderer(const SelectorRendererCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -146,7 +146,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_selector_rendere
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_scale_ruler(const ScaleRulerCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_scale_ruler(const ScaleRulerCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -159,7 +159,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_scale_ruler(cons
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_world_map(const WorldMapCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_world_map(const WorldMapCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -172,7 +172,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_world_map(const 
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_world_map_marker(const WorldMapMarkerCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_world_map_marker(const WorldMapMarkerCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -184,7 +184,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_world_map_marker
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_no_argument(const NoArgumentCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_no_argument(const NoArgumentCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -194,7 +194,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_no_argument(cons
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_hud_status_cell(const HudStatusCellCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_hud_status_cell(const HudStatusCellCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -210,7 +210,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_hud_status_cell(
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_hud_status_bar(const HudStatusBarCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_hud_status_bar(const HudStatusBarCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -223,7 +223,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_hud_status_bar(c
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_skill_info(const SkillInfoCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_skill_info(const SkillInfoCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -234,7 +234,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_skill_info(const
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_skill_help(const NoArgumentCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_skill_help(const NoArgumentCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "pushl %esi\n\t"
@@ -248,7 +248,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_skill_help(const
         "popl %ebx\n\t"
         "ret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_component_fragment_return() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_component_fragment_return() {
     __asm__ __volatile__("ret\n\t");
 }
 }

@@ -12,7 +12,7 @@
 #include <cstring>
 #include <set>
 
-namespace uwcn::render {
+namespace urwcn::render {
 namespace {
 template<class T> bool symbol(HMODULE lib,const char* name,T& result) {
 #if defined(_WIN32)
@@ -146,7 +146,7 @@ bool FontEngine::initialize(const std::string& repertoire) {
     const int length=WideCharToMultiByte(CP_UTF8,0,file.c_str(),-1,nullptr,0,nullptr,nullptr);
     std::vector<char> path(length); WideCharToMultiByte(CP_UTF8,0,file.c_str(),-1,path.data(),length,nullptr,nullptr); path_=path.data();
 #else
-    path_=std::getenv("UWCN_FONT");
+    path_=std::getenv("URWCN_FONT");
     if(!sha256(path_,identity_)) return false;
 #endif
     reference_="国田永高汉翻译Agjpqy0123456789_|()[]，。！？：；、（）【】《》“”‘’·—…";

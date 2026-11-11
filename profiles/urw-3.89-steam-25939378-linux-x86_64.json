@@ -14,9 +14,9 @@
   "format": "ELF64 PIE",
   "load_base": "dl_iterate_phdr main executable dlpi_addr",
   "delivery_names": {
-    "launcher": "uwcn_launcher",
-    "resident": "package/uwcn_loader.dll",
-    "modules": "package/modules/uwcn_*.dll",
+    "launcher": "urwcn_launcher",
+    "resident": "package/urwcn_loader.dll",
+    "modules": "package/modules/urwcn_*.dll",
     "note": "The launcher is an extensionless native ELF64 executable; library filenames retain .dll. No Wine dependency."
   },
   "font": {
@@ -80,8 +80,8 @@
   ],
   "hot_reload": {
     "host_abi": 2,
-    "control_protocol": "UWCN_LINUX_CONTROL_V1",
-    "transport": "Linux abstract AF_UNIX stream: NUL + uwcn-<effective UID>-<PID>; same-UID SO_PEERCRED",
+    "control_protocol": "URWCN_LINUX_CONTROL_V1",
+    "transport": "Linux abstract AF_UNIX stream: NUL + urwcn-<effective UID>-<PID>; same-UID SO_PEERCRED",
     "publication": "PREPARE -> ReadyToPublish -> archive old formal files -> replace formal files -> COMMIT -> Applied with SHA-256 and generation",
     "dispatch": "Short Before / resident native call / short After; stable slot lookup after native input and animation waits",
     "state": "Language, input scopes, native glyph alphabet, semantic invocation state and native resource density metadata; no retained UI pixels or text replay",

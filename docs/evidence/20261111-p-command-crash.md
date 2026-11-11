@@ -10,7 +10,7 @@
 - 最近一批业务事务 `a0d546fc14f741f0abd977736303e76d` 于12:14:25完成 Adapter 第8代 Applied。时间相邻不构成根因证据。
 - 退出时正式 Adapter SHA-256 为 `ec17fb9d1dceefd74d4469ba77353fc76f07b090920ff36ebf1455ea3685bcc3`；Loader 为 `88bec8e73214b31e8f840aabe5afaf9853df60f8378feeff9d64a5dbfeae67ed`。
 - 角色 `msglog.txt` 修改时间为12:18:32.949，末尾两组消息为 `PUSH_INFO` 对应的搬运提示和 `MOVE_NOTHING` 对应的脚边无物品提示。消息没有现实时间戳，不能断言末条就是本次 P 的最后一个执行点。
-- `package/uwcn.log` 尾部只有此前模块交接记录，没有异常码、EIP或回溯。已查看系统日志／core目录、`/tmp/dumps`、Wine prefix用户目录及游戏目录，没有取得本次转储。其他时间、其他程序的转储未用于推断本次原因。
+- `package/urwcn.log` 尾部只有此前模块交接记录，没有异常码、EIP或回溯。已查看系统日志／core目录、`/tmp/dumps`、Wine prefix用户目录及游戏目录，没有取得本次转储。其他时间、其他程序的转储未用于推断本次原因。
 
 记录上述现场时尚未确认是否同时按Shift，当时的结论为根因待定位。后续按用户明确说明转入Shift+P资料页，结论与修正见文首链接；没有通过这些旧日志补造异常地址。
 
@@ -62,7 +62,7 @@
 
 异常记录源码、Loader产物编译及正式文件发布均已完成。执行根 `.toolchains/powershell/pwsh -NoLogo -NoProfile -NonInteractive -File ./build.ps1 -Toolchain MinGW -Module loader -Publish`；源文件在所属批次运行期间未修改，没有运行任何产物。
 
-首次请求 `99bca1faec434f848b5191d175f3a5f4`、批次 `a73d2107b2ee4e3b9c3ee533dd087d83` 编译失败：全局初始化函数中的两处类型名漏写 `uwcn::`。该失败未进入发布；已读取请求 JSON与完整日志，在该批次结束后修正命名空间再提交。不是以编译运行游戏或验证崩溃。
+首次请求 `99bca1faec434f848b5191d175f3a5f4`、批次 `a73d2107b2ee4e3b9c3ee533dd087d83` 编译失败：全局初始化函数中的两处类型名漏写 `urwcn::`。该失败未进入发布；已读取请求 JSON与完整日志，在该批次结束后修正命名空间再提交。不是以编译运行游戏或验证崩溃。
 
 | 项目 | 实际回执 |
 | --- | --- |
@@ -72,7 +72,7 @@
 | 完整日志 | `build/.compile-queue/batches/d63f907a9ee748688dd1b50229ff0cfc.log`，已读取，只有既有 GetModuleApi函数指针转换警告 |
 | 正式事务 | `e702cb85189141c1b34ac4acc9609452`，2026-11-11 12:29:30（Asia/Shanghai）完成 |
 | 发布回执 | `build/mingw-x86/stage/e702cb85189141c1b34ac4acc9609452/publication-result.json`，`success=true`、`runtime_requested=false` |
-| 正式更新 | `package/uwcn_loader.dll`、`package/release.json` |
+| 正式更新 | `package/urwcn_loader.dll`、`package/release.json` |
 | 新 Loader SHA-256 | `c3ab78a96396ae0a480455554cd2b12cdb158094ff89caf17cc123f0fadc0414`，正式件、构建件与清单一致 |
 | 旧件回收 | `回收/20261111-122930-e702cb85189141c1b34ac4acc9609452/package/`，保留 Loader和清单原相对路径 |
 | 旧 Loader SHA-256 | `88bec8e73214b31e8f840aabe5afaf9853df60f8378feeff9d64a5dbfeae67ed`，已从回收件读取 |
@@ -89,11 +89,11 @@
 | 完整日志 | `build/.compile-queue/batches/6249cc89e17e4eeeadab8af402f92e59.log`，已完整读取，Loader编译完成 |
 | 正式事务 | `c207b2a3f11a407d891bba5ec41eedb2`，2026-11-11 12:37:08（Asia/Shanghai）完成 |
 | 发布回执 | `build/mingw-x86/stage/c207b2a3f11a407d891bba5ec41eedb2/publication-result.json`，`success=true`、`runtime_requested=false` |
-| 正式更新 | `package/uwcn_loader.dll`、`package/release.json` |
+| 正式更新 | `package/urwcn_loader.dll`、`package/release.json` |
 | 新 Loader SHA-256 | `94a86b0c97e7a8ea35f728b8f9f1d6465d4f5c7b2eaebc4093d7864ab3255434`，正式件、构建件与清单一致 |
 | 旧件回收 | `回收/20261111-123708-c207b2a3f11a407d891bba5ec41eedb2/package/`，保留Loader和清单原相对路径 |
 | 旧 Loader SHA-256 | `c3ab78a96396ae0a480455554cd2b12cdb158094ff89caf17cc123f0fadc0414`，已从回收件读取 |
 
-只读检查第二批Loader的PE导入表，已链接 `MiniDumpWriteDump` 与 `AddVectoredExceptionHandler`，不再导入本项目原先调用的 `SetUnhandledExceptionFilter`；没有执行该DLL。此驻留层改动不支持现有进程原位替换；发布时游戏已经退出，不请求Reload、不宣称取得Applied，也不自行启动游戏。根 `uwcn_launcher.exe` 下次正常使用时加载正式 `package/uwcn_loader.dll`。转储记录功能尚未运行验收。
+只读检查第二批Loader的PE导入表，已链接 `MiniDumpWriteDump` 与 `AddVectoredExceptionHandler`，不再导入本项目原先调用的 `SetUnhandledExceptionFilter`；没有执行该DLL。此驻留层改动不支持现有进程原位替换；发布时游戏已经退出，不请求Reload、不宣称取得Applied，也不自行启动游戏。根 `urwcn_launcher.exe` 下次正常使用时加载正式 `package/urwcn_loader.dll`。转储记录功能尚未运行验收。
 
 这两批诊断没有确认故障指令，也未修改小写p的业务路径。后续根据用户明确的Shift+P转入资料页、修正年龄来源并正式发布的记录单列于文首链接，不把本文件的诊断产物交付作为修复依据。

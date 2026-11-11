@@ -6,7 +6,7 @@
 
 `F6510` 在 `F67DF` 消费原生 gradient 标志；开启时，`F67EC..F6A1B` 对旧消息执行逐行淡化。原循环在 `F68D5` 读取目标像素，经两次原 `SDL_MapRGB` 与 `F6972/F6976` 比较排除背景和目标色，再由 `F69C7` 写回。循环、背景判定、色阶、条件锁定及标志清零均属于游戏自己的消息组件。
 
-本次修改前，`modules/adapter/native_raster_patches.cpp` 的 `uwcn_nr_read_f68d5` 将原读取改成一个逻辑格的中心采样，`uwcn_nr_write_f69c7` 则把这个单色填入整个物理格。高清中文已在真实目标密度绘入；这对采样/填充会不可逆地抹掉格内字形细节。新行尚未淡化，因此仍然完整。此静态破坏路径与截图吻合；不能据此认定英文历史记录或存档内容也被删除。
+本次修改前，`modules/adapter/native_raster_patches.cpp` 的 `urwcn_nr_read_f68d5` 将原读取改成一个逻辑格的中心采样，`urwcn_nr_write_f69c7` 则把这个单色填入整个物理格。高清中文已在真实目标密度绘入；这对采样/填充会不可逆地抹掉格内字形细节。新行尚未淡化，因此仍然完整。此静态破坏路径与截图吻合；不能据此认定英文历史记录或存档内容也被删除。
 
 既有 `20261019-native-raster-sampling-static.txt` 将 gradient 也列为中心采样的适用路径，该结论对已绘入的高清文字不成立；`native-raster-compiled-review-7e0bc794.txt` 只证明其历史产物的指令与 ABI，不证明字形保真。上述源码两处补丁本轮已退役，不把既有编译或发布视为符合高清原生 UI 要求。
 
@@ -63,14 +63,14 @@ native_row_ordinal = logical_row - native_message_rectangle.y - 4
 | 请求ID | `1ff5324e52ad4a87b35772a129956ef1` |
 | 批次ID | `996b90201e06475b97efae6515529be6` |
 | 队列结果 | `build/.compile-queue/results/1ff5324e52ad4a87b35772a129956ef1.json`，`Success=true`、`PublishRequested=true`、`ReloadRequested=true` |
-| 批次日志 | `build/.compile-queue/batches/996b90201e06475b97efae6515529be6.log`，`Built target uwcn_adapter` |
+| 批次日志 | `build/.compile-queue/batches/996b90201e06475b97efae6515529be6.log`，`Built target urwcn_adapter` |
 | 正式事务 | `f5a6376c22824995b6b7e6acf218db42`，`publication-result.json success=true` |
-| 正式更新 | `package/modules/uwcn_adapter.dll` 与 `package/release.json` |
+| 正式更新 | `package/modules/urwcn_adapter.dll` 与 `package/release.json` |
 | 新Adapter SHA-256 | `5eca8500fa333867506a491889b474228c936e81d30482f2b5c4c74b46ec0261`，构建件、正式件、清单与Applied回执一致 |
 | 旧件归档 | `回收/20261110-151358-f5a6376c22824995b6b7e6acf218db42/package/`，保留原相对路径 |
 | 旧Adapter SHA-256 | `a71c5165fa65c008b7d369d51253d7f4b2bfcbca79b6d5da8aa5cbdadf19e07a` |
 | 运行时交接 | Windows PID `364`，`ReadyToPublish` 后 `Applied ... adapter:5eca8500fa333867506a491889b474228c936e81d30482f2b5c4c74b46ec0261:2`，`applied=true` |
 
-只读进程表、Wine进程枚举与 `/proc/2944694/maps` 确认，该进程在发布前加载的 Adapter inode 与当前正式HDA8文件一致；没有向HDA7提交不兼容迁移。旧模块经已有 PREPARE 事务释放后，旧文件先移入回收目录，再复制正式位置，最后 COMMIT。根 `uwcn_launcher.exe` 的正常启动路径已经更新，无独立修复包。
+只读进程表、Wine进程枚举与 `/proc/2944694/maps` 确认，该进程在发布前加载的 Adapter inode 与当前正式HDA8文件一致；没有向HDA7提交不兼容迁移。旧模块经已有 PREPARE 事务释放后，旧文件先移入回收目录，再复制正式位置，最后 COMMIT。根 `urwcn_launcher.exe` 的正常启动路径已经更新，无独立修复包。
 
 已读取两批请求结果与日志、正式发布结果、正式清单以及新旧文件哈希。源码修改、产物编译、正式文件发布与当前进程兼容交接均已完成；未启动、关闭、重启或模拟操作游戏，没有运行测试、创建测试用例或断言。Applied 仅证明交接，不作为画面验收。

@@ -6,7 +6,7 @@
 #include <map>
 #include <tuple>
 
-namespace uwcn::adapter::native_menu_storage {
+namespace urwcn::adapter::native_menu_storage {
 namespace {
 std::uintptr_t base{};
 native_menu_model::Handle saved_source{},writing_source{};

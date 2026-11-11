@@ -64,7 +64,7 @@
 | 完整批次日志 | `build/.compile-queue/batches/814155b390b44cf3aae239521fef7dc2.log` |
 | 正式事务 | `68dc45f3a59142b0a46496cc8a0ad96f`，2026-11-10 17:43:40（Asia/Shanghai）完成 |
 | 正式发布结果 | `build/mingw-x86/stage/68dc45f3a59142b0a46496cc8a0ad96f/publication-result.json`，`success=true`、运行时 `applied=true` |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/catalog/zh-CN/cultures.tsv`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/catalog/zh-CN/cultures.tsv`、`package/release.json` |
 | 旧件归档 | `回收/20261110-174338-68dc45f3a59142b0a46496cc8a0ad96f/package/`，三件旧正式文件先归档再替换，保留原相对路径，已只读确认存在 |
 | 当前进程交接 | Windows PID `364` 返回 `ReadyToPublish`，随后 Catalog 第18代／Adapter 第20代 `Applied` |
 
@@ -74,4 +74,4 @@
 | Catalog DLL，Applied | `cd5ea4f63e239691176f6bf1e38a1b4c232a0c9c5f8182eb80aacefbfa8e6719` |
 | cultures.tsv，源码／正式件一致 | `a3718a942156d9518eb990f0230b4d810a758110b8b5863a47dfd2f1d49f0e2c` |
 
-源码修改、产物编译、正式包发布和当前进程兼容交接均已完成。根 `uwcn_launcher.exe` 继续使用同一正式包，无平行运行副本。未启动或操作游戏，未运行测试、创建测试用例或断言；Applied 仅证明模块交接，画面由用户验收。
+源码修改、产物编译、正式包发布和当前进程兼容交接均已完成。根 `urwcn_launcher.exe` 继续使用同一正式包，无平行运行副本。未启动或操作游戏，未运行测试、创建测试用例或断言；Applied 仅证明模块交接，画面由用户验收。

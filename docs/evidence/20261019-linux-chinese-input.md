@@ -66,8 +66,8 @@ Linux 取名帮助使用两个新增词库键，仍进入原来的段落追加�
 - 请求 `61a95de4c76241dbbcb708ede52f1d07`；批次 `0c9e7c4c79684724b3d33d334284ed2f`；发布事务 `e08183efefbc4730932a853298c0f5e1`。
 - 已读取对应 `build/.compile-queue/results/61a95de4c76241dbbcb708ede52f1d07.json`、完整 `batches/0c9e7c4c79684724b3d33d334284ed2f.log` 以及该事务的 `publication-result.json`，两份回执均为成功。一次配置、一次增量构建；Adapter、Semantic 重新编译，Catalog 产物已是最新。
 - 编译保留 Semantic 原有15项 HUD/world switch 警告，没有新增默认语义或兜底分支来消警告。静态读取 ELF 符号确认新增回调及原模块导出存在，没有执行 ELF。
-- 正式替换 `package/modules/uwcn_adapter.dll`、`uwcn_semantic.dll`、词库、Linux profile 和发布清单五件。旧五件已先移入 `回收/20261019-131635-e08183efefbc4730932a853298c0f5e1/package/` 对应相对路径；应用菜单链接亦由原发布流程归档并更新，仍指向同一根启动器。
+- 正式替换 `package/modules/urwcn_adapter.dll`、`urwcn_semantic.dll`、词库、Linux profile 和发布清单五件。旧五件已先移入 `回收/20261019-131635-e08183efefbc4730932a853298c0f5e1/package/` 对应相对路径；应用菜单链接亦由原发布流程归档并更新，仍指向同一根启动器。
 - 正式 Adapter SHA256：`8d8bb1f383da9f6d0fe67e3216eebb110602e5d5c92a14a3100e8062c995e8db`；Semantic：`7d51cd959860504831e70a8d6773633ea822cf9351854556c494dfc1f18b1cf7`；词库：`2c5644f0b0a3a71c361ea6589c25b02edc05dbcfbd136869864e9d5038a32983`；profile：`160a666bc6b1bdb1609be5a8915cc4adc2b9759c2586336e035c68ab458e2410`。分别与构建产物或源文件、正式清单相符；旧五件已只读确认存在。
-- 发布前只读进程列表未发现游戏/启动器。本次没有请求 Reload，无运行时 Applied 回执。下次正常通过根 `uwcn_launcher` 启动加载正式新文件；没有平行运行包。
+- 发布前只读进程列表未发现游戏/启动器。本次没有请求 Reload，无运行时 Applied 回执。下次正常通过根 `urwcn_launcher` 启动加载正式新文件；没有平行运行包。
 
 没有启动游戏、运行产物或测试，输入法交互与画面效果仍待用户实际使用反馈；编译和发布成功不等于运行验收。

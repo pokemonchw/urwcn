@@ -34,12 +34,12 @@ u32 counter(const NativeEvent& event,IntroStage stage) {
     return 0;
 }
 u32 component_return() {
-    return static_cast<u32>(reinterpret_cast<std::uintptr_t>(native_component_calls::uwcn_component_fragment_return)-host->image_base);
+    return static_cast<u32>(reinterpret_cast<std::uintptr_t>(native_component_calls::urwcn_component_fragment_return)-host->image_base);
 }
 // E6E90 has a noreturn business tail rather than an epilogue. At E71CC all
 // native arguments are balanced and ESI is the sole saved register; this
 // synchronous construction return unwinds exactly that confirmed fresh frame.
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_wait_farewell_return() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_wait_farewell_return() {
     __asm__ __volatile__("popl %esi\n\tmovl %ebp,%esp\n\tpopl %ebp\n\tret\n\t");
 }
 void append_hooks(std::vector<HookSpec>& hooks) {
@@ -79,11 +79,11 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     for(u32 i=0;i<std::size(polls);++i)
         hooks.push_back(call(intro_poll_first+i,polls[i].site,0xD25E0,0));
 }
-void present() {reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();}
+void present() {reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();}
 Status startup_page(u64 token) {
     constructing=Construction::startup_frame;
     const native_component_calls::NoArgumentCall frame{address(at<void>(0x180842))};
-    native_component_calls::uwcn_component_skill_help(&frame);
+    native_component_calls::urwcn_component_skill_help(&frame);
     constructing=Construction::none;
     // 1808F8 -> 18094B is the original audio-disabled path: no progress
     // constructor has run. This dedicated source then retains its real
@@ -117,7 +117,7 @@ Status intro(const NativeEvent& event,IntroStage stage,u32 position) {
     if(status==Status::ok) {
         intro_stage=stage;intro_counter=position;
         constructing=Construction::intro;
-        reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x1254C0)();
+        reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x1254C0)();
         constructing=Construction::none;
         intro_stage={};intro_counter=0;
     }
@@ -156,7 +156,7 @@ Status wait(const NativeEvent& event) {
     const auto flip=*at<u32>(0x61BBA5C);
     *at<u32>(0x61BBA5C)=1;
     constructing=kind;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+target)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+target)();
     constructing=Construction::none;
     *at<u32>(0x61BBA5C)=flip;
     native_language_redraw::completed(view);
@@ -204,7 +204,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         break;
     case farewell_return:
         if(constructing==Construction::farewell) {
-            result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(uwcn_wait_farewell_return)-host->image_base);
+            result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(urwcn_wait_farewell_return)-host->image_base);
         }
         break;
     case startup_fade:

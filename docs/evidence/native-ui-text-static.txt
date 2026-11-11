@@ -130,7 +130,7 @@ semantic 7c7e91fe625b335a42eb01cc8d73180d911aabfb346e4164c9031d15efa519b3
 loader 未变化：cd2e5bee332da354e605c029fbfd7818bdeb9dd1bbec447a4f3bd89baa4bb677
 launcher 未变化：0b9ef0b28dba6e41465f3a549311eff7df5a80ab620a311bd2a10dd47c07ae69
 
-发布时未发现运行中的 urw 进程或 uwcn 管道，脚本执行正式文件发布，未取得
+发布时未发现运行中的 urw 进程或 urwcn 管道，脚本执行正式文件发布，未取得
 运行时 Applied。没有由代理启动游戏、注入、模拟输入、运行产物、测试或
 创建测试/断言，不能宣称已运行或视觉验收。现有 profile 中旧坐标说明属
 历史静态资料，运行补丁与原生文字适配由可重载 adapter 提交。

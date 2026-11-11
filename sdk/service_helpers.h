@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace uwcn {
+namespace urwcn {
 inline Status copy_output(const void* data, u32 bytes, void* output, u32* capacity) {
     if (!capacity) return Status::invalid;
     const u32 available = *capacity;
@@ -28,10 +28,10 @@ inline Status invoke_text(const HostApi* host, ModuleId module, u32 op,
     result.assign(buffer.data(),bytes-1);
     return Status::ok;
 }
-inline Status UWCN_CALL empty_save(void* output,u32* bytes) {
+inline Status URWCN_CALL empty_save(void* output,u32* bytes) {
     return copy_output(nullptr,0,output,bytes);
 }
-inline Status UWCN_CALL empty_restore(const void*,u32 bytes) {
+inline Status URWCN_CALL empty_restore(const void*,u32 bytes) {
     return bytes ? Status::invalid : Status::ok;
 }
 }

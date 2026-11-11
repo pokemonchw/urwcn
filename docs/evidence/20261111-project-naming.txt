@@ -1,0 +1,92 @@
+URWCN 全项目名称统一
+日期：2026-11-11，Asia/Shanghai
+
+源码修改
+========
+按用户要求统一项目拼写：小写标识为 urwcn，宏、环境变量和显示缩写为 URWCN。
+范围包含源码命名空间、C/汇编符号、构建目标、导出定义、环境变量、编译队列
+互斥名称、控制通道、候选清单与发布清单格式、平台适配、词库注释和文档。
+AGENTS.md 与 .gitignore 中的正式路径同步更新。
+
+Windows PE 导出检查原来用固定 23 字节读取、比较描述符名称。
+src/loader/host.cpp::inspect_module 改用新名称数组及 sizeof(descriptor_name)，
+包含结尾 NUL 共 24 字节；没有修改原描述符结构、ABI 数值或游戏业务。
+
+源码与文档已静态检索，正式运行目录的文本与文件名已同步更名。
+历史文档中的名称采用当前拼写；原始日志、转储、历史构建记录和回收文件
+保留原始字节与原始名称，定位旧件仍以原始批次和 SHA-256 为准。
+未改动用户原有未跟踪文件 20261019-crop-growth-analysis.md。
+
+产物编译
+========
+全部请求由根 build.ps1 提交至既有队列，先 Linux、后 MinGW，均为全图。
+复用已有构建树，每批一次配置、一次增量构建；入队至完成未修改对应源码。
+
+Linux：
+  请求：7b77cb760d3149759d8299b2ff91e1ad
+  批次：1fbca08c824645b8ba68d81ec858e329
+  结果：成功；Publish=false；Reload=false
+  结果文件：build/.compile-queue/results/7b77cb760d3149759d8299b2ff91e1ad.json
+  日志：build/.compile-queue/batches/1fbca08c824645b8ba68d81ec858e329.log
+  无扩展名启动器由 file 静态识别为 ELF64 x86-64，未执行。
+
+Windows：
+  请求：5c8ee6c0914740568c878ba2edd08ba0
+  批次：912d481ee62b4bf584238299632466bd
+  结果：成功；Publish=true；Reload=false
+  结果文件：build/.compile-queue/results/5c8ee6c0914740568c878ba2edd08ba0.json
+  日志：build/.compile-queue/batches/912d481ee62b4bf584238299632466bd.log
+
+已读取两份请求结果与完整批次日志。编译器仍报告枚举分支、函数指针转换、
+缩进、成员初始化和未使用函数/参数警告，本轮没有扩改相关业务。
+
+正式文件发布
+============
+更名归档事务：10905491636e467c9c12f25bb8e4643c
+  回收/20261111-160506-rename-10905491636e467c9c12f25bb8e4643c/
+  已先按原相对路径移入旧启动器、配置、驻留库、六个业务库、日志、发布清单、
+  过期 Linux desktop 文件；旧应用菜单链接保存在 home/ 对应相对位置。
+  原配置原样复制到根 urwcn_launcher.ini，保留 game_directory。
+  迁移清单位于上述归档的 migration.json，未覆盖或永久删除旧交付。
+
+队列内正式发布事务：9c658f7bda424fada15b1c47d92be739
+  回收/20261111-160512-9c658f7bda424fada15b1c47d92be739/
+  发布结果：build/mingw-x86/stage/9c658f7bda424fada15b1c47d92be739/publication-result.json
+  已读取 success=true、runtime_requested=false，无 Applied 回执。
+
+正式入口：根 urwcn_launcher.exe
+正式配置：根 urwcn_launcher.ini
+正式驻留库：package/urwcn_loader.dll
+正式业务库：package/modules/urwcn_{catalog,semantic,render,layout,main_menu,adapter}.dll
+正式清单：package/release.json，格式 urwcn-release-v1；无旧模块路径条目。
+同时更新 build-hour、main_menu.tsv 和 Linux profile；正式包保持 Windows PE32。
+本轮未正式发布 Linux 产物，未建立平行运行目录或独立修复包。
+
+已只读查看 PE/ELF 导出：urwcn_initialize、urwcn_get_module_api、
+urwcn_module_descriptor；已读取正式文件和编译输出 SHA-256，对应八项一致：
+  launcher  dbf7a2464f6da022c932e7dbb2b88503bf71bf5f98fad941e090e32f91c99182
+  loader    7342e826539dc75f1254c4c266442a0f231c832adef526592a3b89ce3729d07d
+  catalog   bf126890ba7042524fd8a606e94d5390d74bed7b633449f2512c05cd7aa501c0
+  semantic  54efea32d3c4754ae8632fdee789f3c9681012bf73c74f1818bae2e05a19535b
+  render    70466caa4444928f39cc2189dec9fc731a9da2482d42211d77a49aedc091cdfd
+  layout    ea9f6e3381a89df2ffaa06ef0196a002cb7c9199cd40391292325c41f6e8c6bf
+  main_menu 43ffcc2237b366eae5af645536304ce662ab7970e274d57b6f3935374e2e9a82
+  adapter   704c447631e8442c9e5fb5d5bf947e1154e5478d95268c3c2b7dfd10579303c8
+
+只读进程枚举未见运行中的游戏。现有驻留桥不能在运行中替换自身，也不能
+把旧导出/控制通道自动迁移到新名称；本轮未请求热加载或宣称运行时交接。
+没有启动、关闭、重启、注入或模拟操作游戏，没有执行产物或测试，没有新增
+测试脚本、测试用例、断言、推测性分支、保护、回退或兜底逻辑。
+
+既有 UI 所有权问题：仍待整改
+==========================
+本轮只统一名称，编译与发布不改变既有问题的状态：
+- modules/adapter/module.cpp:1117 起 intro_story_fade_text / intro_story_settled_text：
+  Mod 从来源取回文字后重新计算居中 x，原生布局所有权仍待整改。
+- modules/adapter/native_component_binding.cpp:56 的 fields/构建集合，以及
+  modules/adapter/native_ui_scene.cpp 的 Child/Container：仍持有历史来源与组件
+  集合，原生 UI 和缓存所有权审查、退役待办。
+- modules/adapter/native_renderer_component_binding.cpp:42 的 Owner.children 和
+  paint_hud，以及 module.cpp::enter_component_paint 的 About 居中例外：
+  历史组件遍历、重建与 Mod 排版仍待交回原生生命周期和布局。
+详见 20261111-startup-intro-loop-crash.md 和 20261111-culture-branch-crash.md。

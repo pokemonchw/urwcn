@@ -18,13 +18,13 @@
 
 ## 汉化版本
 
-`MainMenu` 首次处理版本字段时，读取正式包的六个业务 DLL 和中文词库，对每个文件取 SHA-256。身份文本以 `uwcn-package-version-v1` 加 LF 开头，按 catalog、semantic、render、layout、main_menu、adapter、中文词库的固定次序追加 `相对路径<TAB>小写SHA256<LF>`。再取整体 SHA-256，按大端数对 `36^5` 取模，编码为五位 `0-9A-Z`，沿 dfcn 的规则确保包含字母和数字。
+`MainMenu` 首次处理版本字段时，读取正式包的六个业务 DLL 和中文词库，对每个文件取 SHA-256。身份文本以 `urwcn-package-version-v1` 加 LF 开头，按 catalog、semantic、render、layout、main_menu、adapter、中文词库的固定次序追加 `相对路径<TAB>小写SHA256<LF>`。再取整体 SHA-256，按大端数对 `36^5` 取模，编码为五位 `0-9A-Z`，沿 dfcn 的规则确保包含字母和数字。
 
 该五位值是内容短指纹，不是唯一发布编号。初始化不读取文件；首次显示请求生成后只缓存五位版本，任何依赖变化通知都会清空。文件读取发生在当前宿主的同步调用和正式文件交接边界内。主菜单不保存 UI 位置、文本段落或整页内容，Host ABI、启动器和驻留桥无需变更。
 
 ## 交付所需的实际双进程范围
 
-发布前只读模块清单确认 PID `45376` 与 `102320` 都加载了本项目 `package/uwcn_loader.dll` 及六个正式业务 DLL。单目标事务不能释放另一进程持有的同一文件。因此统一构建/发布入口的 `TargetPid` 扩为显式 PID 集合，同一批次规范化排序去重；所有指定目标先 Ready，再进行一次旧文件回收和正式替换，最后逐目标 COMMIT 并记录 Applied。没有自动发现或追加目标，也不关闭、重启、重新注入游戏。
+发布前只读模块清单确认 PID `45376` 与 `102320` 都加载了本项目 `package/urwcn_loader.dll` 及六个正式业务 DLL。单目标事务不能释放另一进程持有的同一文件。因此统一构建/发布入口的 `TargetPid` 扩为显式 PID 集合，同一批次规范化排序去重；所有指定目标先 Ready，再进行一次旧文件回收和正式替换，最后逐目标 COMMIT 并记录 Applied。没有自动发现或追加目标，也不关闭、重启、重新注入游戏。
 
 ## 审查发现与状态
 
@@ -42,15 +42,15 @@
 - 调用：根 `build.ps1 -Module adapter,main_menu,render,semantic,catalog -Publish -Reload -TargetPid 45376,102320`。沿用 MinGW、`.toolchains/x86/w64devkit/bin/cmake.exe`、同目录 `g++.exe`、`build/mingw-x86` 和正式 `package`。
 - 编译请求：`f43d42b725714136b1a735d66a3b82a1`；批次：`fb72ae7ebb1541b7a6085e2ff6358e7b`。已读取 `build/.compile-queue/results/f43d42b725714136b1a735d66a3b82a1.json` 及对应批次完整日志，结果为成功；只执行一次配置和一次增量构建。既有 SDL/TTF `GetProcAddress` 函数指针类型转换警告仍存在，没有编译错误。
 - 正式发布事务：`82446395ac7d4cd0ace5ddcf673dcad1`。已读取 `build/mingw-x86/stage/82446395ac7d4cd0ace5ddcf673dcad1/publication-result.json`，记录 `success=true`。正式替换四个 DLL（Adapter、MainMenu、Render、Semantic）、词库、构建适配和 `package/release.json` 共七项。Catalog DLL 内容未变，词库变化触发其重新加载。
-- 七个旧文件先按原相对路径移入 `回收/20261019-023345-82446395ac7d4cd0ace5ddcf673dcad1/`；已只读核对回收清单和正式发布清单。正式清单十项文件的磁盘 SHA-256 全部一致。根 `uwcn_launcher.exe`、驻留桥及 Layout 沿用原文件，没有平行修复包。
+- 七个旧文件先按原相对路径移入 `回收/20261019-023345-82446395ac7d4cd0ace5ddcf673dcad1/`；已只读核对回收清单和正式发布清单。正式清单十项文件的磁盘 SHA-256 全部一致。根 `urwcn_launcher.exe`、驻留桥及 Layout 沿用原文件，没有平行修复包。
 - 两个目标均记录 `ReadyToPublish 82446395ac7d4cd0ace5ddcf673dcad1` 及 `Applied 82446395ac7d4cd0ace5ddcf673dcad1`。PID 45376 的 Catalog/Semantic/Adapter 为第 3 代，Render/MainMenu 为第 2 代；PID 102320 的五个交接模块均为第 2 代。回执里的模块哈希与正式清单一致。
 
 | 正式文件（相对 `package/`） | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `fc75cdf95b57276d6d6ba0092407bd3d4398af9236e60f5e9995e6b533a24f04` |
-| `modules/uwcn_main_menu.dll` | `b0cfb9e5f913ad3c028addbe5ba1855b64fc00e1f18c08d27a98f94e02339114` |
-| `modules/uwcn_render.dll` | `894366d203897346df382886ae896dd8cd46fe5dc8cf690c6bb33f988527a050` |
-| `modules/uwcn_semantic.dll` | `ab0e6ead1c1f3d5690dc4351bc5f279eca5b44e2946e55e8504964390ea7c25e` |
+| `modules/urwcn_adapter.dll` | `fc75cdf95b57276d6d6ba0092407bd3d4398af9236e60f5e9995e6b533a24f04` |
+| `modules/urwcn_main_menu.dll` | `b0cfb9e5f913ad3c028addbe5ba1855b64fc00e1f18c08d27a98f94e02339114` |
+| `modules/urwcn_render.dll` | `894366d203897346df382886ae896dd8cd46fe5dc8cf690c6bb33f988527a050` |
+| `modules/urwcn_semantic.dll` | `ab0e6ead1c1f3d5690dc4351bc5f279eca5b44e2946e55e8504964390ea7c25e` |
 | `catalog/zh-CN/main_menu.tsv` | `8fe162a26090aa3911bc1d71d6824d6740b92f004c36e76faee9a6f309599e0f` |
 | `profiles/urw-3.89-steam-25939378.json` | `3502b7289ecd6a409644765301b2533e6de5098850a383325c38ed6091be9141` |
 
@@ -62,5 +62,5 @@
 
 - 源码已保存并完成静态审查；没有增加测试、断言或回退。位置改为读取原生 panel 右边界，上图下文；原生 token 和绘制生命周期继续沿用。
 - 根入口 `build.ps1 -Module adapter -Publish -Reload -TargetPid 65412` 于 2026-10-19 02:38（Asia/Shanghai）完成。请求 `00ddf1ed1b5144e49fc5cc6ff8e83627`，批次 `6199b8acaf554f0da99daa5eef7a434c`，一次配置和一次增量构建，结果成功。已读取该请求 JSON 和完整批次日志；只有既有 `GetProcAddress` 转换警告。
-- 正式发布事务 `d9d38d74655f416da630db68edd3001b` 替换 `package/modules/uwcn_adapter.dll` 与 `package/release.json`。旧两件先移入 `回收/20261019-023810-d9d38d74655f416da630db68edd3001b/`，保留原相对路径。正式 Adapter SHA-256 为 `50505b80fce7d4c004758d96f3ec0758ea4abf863979030dbb3add188b6133de`；只读核对正式清单十项哈希全部一致。
+- 正式发布事务 `d9d38d74655f416da630db68edd3001b` 替换 `package/modules/urwcn_adapter.dll` 与 `package/release.json`。旧两件先移入 `回收/20261019-023810-d9d38d74655f416da630db68edd3001b/`，保留原相对路径。正式 Adapter SHA-256 为 `50505b80fce7d4c004758d96f3ec0758ea4abf863979030dbb3add188b6133de`；只读核对正式清单十项哈希全部一致。
 - 已读取 `build/mingw-x86/stage/d9d38d74655f416da630db68edd3001b/publication-result.json`：PID 65412 返回 `Applied d9d38d74655f416da630db68edd3001b adapter:50505b80fce7d4c004758d96f3ec0758ea4abf863979030dbb3add188b6133de:2`。源码修改、编译和正式热发布均完成；没有启动游戏、注入、模拟操作或运行测试。视觉效果未自行验收。

@@ -1,8 +1,8 @@
 .text
-.globl uwcn_linux_gateway
-.hidden uwcn_linux_gateway
-.type uwcn_linux_gateway,@function
-uwcn_linux_gateway:
+.globl urwcn_linux_gateway
+.hidden urwcn_linux_gateway
+.type urwcn_linux_gateway,@function
+urwcn_linux_gateway:
     pushfq
     pushq %rax
     pushq %rcx
@@ -25,7 +25,7 @@ uwcn_linux_gateway:
     subq $512,%rsp
     fxsave64 (%rsp)
     cld
-    call uwcn_linux_dispatch
+    call urwcn_linux_dispatch
     fxrstor64 (%rsp)
     movq %r12,%rsp
     popq %r15
@@ -46,5 +46,5 @@ uwcn_linux_gateway:
     popfq
     leaq 8(%rsp),%rsp
     ret
-.size uwcn_linux_gateway,.-uwcn_linux_gateway
+.size urwcn_linux_gateway,.-urwcn_linux_gateway
 .section .note.GNU-stack,"",@progbits

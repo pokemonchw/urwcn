@@ -8,10 +8,10 @@
 #include <set>
 
 namespace {
-using namespace uwcn;
+using namespace urwcn;
 std::map<std::string,std::string> entries;
 std::string repertoire;
-Status UWCN_CALL initialize(const HostApi* host) {
+Status URWCN_CALL initialize(const HostApi* host) {
     if (!host || host->abi!=kHostAbi || host->size!=sizeof(HostApi)) return Status::invalid;
     std::map<std::string,std::string> parsed;
     std::set<std::uint32_t> scalars;
@@ -38,7 +38,7 @@ Status UWCN_CALL initialize(const HostApi* host) {
     repertoire.swap(characters);
     return Status::ok;
 }
-Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* capacity) {
+Status URWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* capacity) {
     if(op==kModuleDependenciesChanged) return input && bytes==sizeof(u32) ? Status::ok : Status::invalid;
     if(op==catalog_op::repertoire) return copy_text(repertoire,output,capacity);
     if(op!=catalog_op::lookup || !input || bytes!=sizeof(CatalogRequest)) return Status::invalid;
@@ -47,8 +47,8 @@ Status UWCN_CALL invoke(u32 op,const void* input,u32 bytes,void* output,u32* cap
     auto it=entries.find(request.key);
     return it==entries.end() ? Status::unavailable : copy_text(it->second,output,capacity);
 }
-void UWCN_CALL shutdown() { entries.clear();repertoire.clear(); }
+void URWCN_CALL shutdown() { entries.clear();repertoire.clear(); }
 const ModuleApi api={sizeof(ModuleApi),kHostAbi,ModuleId::catalog,initialize,invoke,empty_save,empty_restore,shutdown};
 }
-UWCN_EXPORT const uwcn::ModuleDescriptor uwcn_module_descriptor={uwcn::kDescriptorMagic,uwcn::kHostAbi,1,uwcn::kModuleMachine,1};
-UWCN_EXPORT const uwcn::ModuleApi* UWCN_CALL uwcn_get_module_api() { return &api; }
+URWCN_EXPORT const urwcn::ModuleDescriptor urwcn_module_descriptor={urwcn::kDescriptorMagic,urwcn::kHostAbi,1,urwcn::kModuleMachine,1};
+URWCN_EXPORT const urwcn::ModuleApi* URWCN_CALL urwcn_get_module_api() { return &api; }

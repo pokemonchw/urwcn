@@ -1,7 +1,7 @@
 #pragma once
 #include "native_renderer_component_model.h"
 
-namespace uwcn::adapter::native_hud_icons {
+namespace urwcn::adapter::native_hud_icons {
 using Handle=u32;
 using TargetSource=native_renderer_component_model::TargetSource;
 using SourceKey=native_text_resource::SourceKey;

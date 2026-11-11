@@ -32,8 +32,8 @@ Host ABI、ModuleDescriptor schema 和 `Active` 布局保持现有值。Adapter 
 
 - 调用根 `build.ps1 -Module adapter -Publish -Reload -TargetPid 65412`，使用默认 MinGW、项目 `.toolchains/x86/w64devkit/bin/cmake.exe`、同目录 `g++.exe`、`build/mingw-x86` 和正式 `package`。本次提交的 Adapter 源码在批次完成前保持冻结。
 - 请求 `7094f2ee64d4467f89fb89e7f4c7c5ac`，批次 `7c017d006dec426f82e3fdaf46c3ac29`。已读取 `build/.compile-queue/results/7094f2ee64d4467f89fb89e7f4c7c5ac.json` 和完整对应日志；`Success=true`，一次配置、一次增量构建。保留既有 SDL `GetProcAddress` 函数类型转换警告，无编译错误。
-- 正式发布事务 `ce5e595dfecb4c8abbb5950d8b005e73`，已读取 `build/mingw-x86/stage/ce5e595dfecb4c8abbb5950d8b005e73/publication-result.json`，`success=true`。替换正式 `package/modules/uwcn_adapter.dll`、构建适配和清单三件；旧件先按原相对路径移入 `回收/20261019-024726-ce5e595dfecb4c8abbb5950d8b005e73/`。没有独立修复包或平行启动目录。
+- 正式发布事务 `ce5e595dfecb4c8abbb5950d8b005e73`，已读取 `build/mingw-x86/stage/ce5e595dfecb4c8abbb5950d8b005e73/publication-result.json`，`success=true`。替换正式 `package/modules/urwcn_adapter.dll`、构建适配和清单三件；旧件先按原相对路径移入 `回收/20261019-024726-ce5e595dfecb4c8abbb5950d8b005e73/`。没有独立修复包或平行启动目录。
 - 当前 PID `65412` 返回 `ReadyToPublish` 和 `Applied`，Adapter 第 5 代。正式 Adapter 的 SHA-256 为 `fdfb8e412106050444d98ba9a4572ffe87da1b6c271d7bad0765a699dd76a5ca`，与 Applied 一致；构建适配 SHA-256 为 `f09d198e00a6c47353c89f7e474fc1e322e0db8cb2a98d11c9ece2ae0a5d5de8`。正式清单十项文件均已只读核对磁盘 SHA-256 一致。
-- 根 `uwcn_launcher.exe`、驻留桥和其余业务 DLL 沿用正式文件；并行工作已发布的关于和设置接入被保留。未要求用户关闭、重启或手动卸载。
+- 根 `urwcn_launcher.exe`、驻留桥和其余业务 DLL 沿用正式文件；并行工作已发布的关于和设置接入被保留。未要求用户关闭、重启或手动卸载。
 
 未启动游戏、重新注入、模拟输入、运行测试或交付产物；未创建测试用例和断言。这里的 Applied 仅确认已授权兼容模块交接，不代替快捷键、画面与视觉效果验收。

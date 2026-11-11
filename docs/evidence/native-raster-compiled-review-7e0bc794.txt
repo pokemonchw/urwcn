@@ -3,7 +3,7 @@
 Build request: 467214b0b1e04abdaf9682382bcc6b4a
 Build batch:   7e0bc794bb724f2f93e2ffa4e5867bf4
 Queue result: success=true, PublishRequested=false, ReloadRequested=false.
-Reviewed DLL: build/mingw-x86/out/uwcn_adapter.dll
+Reviewed DLL: build/mingw-x86/out/urwcn_adapter.dll
 SHA256: 9266C55EDB1ED8832995150B64688C2AF96F7AB7666D54D20CC8D97D28FB6753
 Preferred image base: 69E00000. Linked .text starts at 69E01000.
 
@@ -30,7 +30,7 @@ calls, returns, padding and compiler-emitted UD2 after terminal naked transfers.
 Those UD2 instructions follow unconditional RET/JMP and are not source asserts.
 
 The linked call graph is closed for each inline path:
-  native entry -> corresponding uwcn_nr_* helper -> pixel/read_pixel
+  native entry -> corresponding urwcn_nr_* helper -> pixel/read_pixel
   pixel -> __divdi3 (four edge divisions)
   read_pixel -> __udivdi3 (two exact center divisions)
 Both division implementations are integer leaf routines with no further calls.

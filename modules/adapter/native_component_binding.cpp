@@ -16,22 +16,22 @@
 // Exact replacements for the native UI operand instructions below. These
 // synchronous scalar loans do not name or modify a player's original fields.
 extern "C" {
-uwcn::u32 uwcn_summary_operand_resume{},uwcn_summary_layout{},uwcn_summary_thirst{},uwcn_summary_warmth{};
-__attribute__((naked)) void UWCN_CALL uwcn_summary_compare_zero() {
-    __asm__ __volatile__("cmpl $0,_uwcn_summary_layout\n\tjmp *_uwcn_summary_operand_resume\n\t");
+urwcn::u32 urwcn_summary_operand_resume{},urwcn_summary_layout{},urwcn_summary_thirst{},urwcn_summary_warmth{};
+__attribute__((naked)) void URWCN_CALL urwcn_summary_compare_zero() {
+    __asm__ __volatile__("cmpl $0,_urwcn_summary_layout\n\tjmp *_urwcn_summary_operand_resume\n\t");
 }
-__attribute__((naked)) void UWCN_CALL uwcn_summary_compare_ebx() {
-    __asm__ __volatile__("cmpl %ebx,_uwcn_summary_layout\n\tjmp *_uwcn_summary_operand_resume\n\t");
+__attribute__((naked)) void URWCN_CALL urwcn_summary_compare_ebx() {
+    __asm__ __volatile__("cmpl %ebx,_urwcn_summary_layout\n\tjmp *_urwcn_summary_operand_resume\n\t");
 }
-__attribute__((naked)) void UWCN_CALL uwcn_summary_multiply_thirst() {
-    __asm__ __volatile__("imull _uwcn_summary_thirst\n\tjmp *_uwcn_summary_operand_resume\n\t");
+__attribute__((naked)) void URWCN_CALL urwcn_summary_multiply_thirst() {
+    __asm__ __volatile__("imull _urwcn_summary_thirst\n\tjmp *_urwcn_summary_operand_resume\n\t");
 }
-__attribute__((naked)) void UWCN_CALL uwcn_summary_load_warmth() {
-    __asm__ __volatile__("movss _uwcn_summary_warmth,%xmm2\n\tjmp *_uwcn_summary_operand_resume\n\t");
+__attribute__((naked)) void URWCN_CALL urwcn_summary_load_warmth() {
+    __asm__ __volatile__("movss _urwcn_summary_warmth,%xmm2\n\tjmp *_urwcn_summary_operand_resume\n\t");
 }
 }
 
-namespace uwcn::adapter::native_component_binding {
+namespace urwcn::adapter::native_component_binding {
 namespace {
 using namespace native_component_model;
 using namespace native_text_resource;
@@ -199,8 +199,8 @@ bool observing_builder() {
     return !restoring_builder && !parser_owner_depth && !native_ui_scene::materializing();
 }
 Status restore_native_builder() {
-    using Reset=void (UWCN_CALL *)();using Parse=void (__fastcall *)(u32,const char*);
-    using Grammar=void (__fastcall *)(u32,u32);using Compose=const char* (UWCN_CALL *)();
+    using Reset=void (URWCN_CALL *)();using Parse=void (__fastcall *)(u32,const char*);
+    using Grammar=void (__fastcall *)(u32,u32);using Compose=const char* (URWCN_CALL *)();
     restoring_builder=true;
     reinterpret_cast<Reset>(base+0x1620C0)();
     std::vector<u32> counts(builder.fragments.size()+1);
@@ -634,24 +634,24 @@ Status finish_event(const NativeEvent& event,DispatchResult& result,Status nativ
         if(const auto* source=summary_source()) {
             const auto& read=summary_reads[event.id-hud_summary_operand_first];
             const auto next=read.site+metadata.at(event.id).byte_count;
-            uwcn_summary_operand_resume=static_cast<u32>(base+next);
+            urwcn_summary_operand_resume=static_cast<u32>(base+next);
             const auto branch=[&](auto function) {
                 result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(function)-base);
             };
             switch(read.operand) {
             case SummaryOperand::layout_zero:
-                uwcn_summary_layout=source->layout;branch(uwcn_summary_compare_zero);break;
+                urwcn_summary_layout=source->layout;branch(urwcn_summary_compare_zero);break;
             case SummaryOperand::layout_ebx:
-                uwcn_summary_layout=source->layout;branch(uwcn_summary_compare_ebx);break;
+                urwcn_summary_layout=source->layout;branch(urwcn_summary_compare_ebx);break;
             case SummaryOperand::nutrition_esi:event.frame->esi=source->nutrition;result.resume_rva=next;break;
             case SummaryOperand::nutrition_ecx:event.frame->ecx=source->nutrition;result.resume_rva=next;break;
             case SummaryOperand::hunger_ecx:event.frame->ecx=source->hunger;result.resume_rva=next;break;
             case SummaryOperand::thirst_multiply:
-                uwcn_summary_thirst=source->thirst;branch(uwcn_summary_multiply_thirst);break;
+                urwcn_summary_thirst=source->thirst;branch(urwcn_summary_multiply_thirst);break;
             case SummaryOperand::thirst_eax:event.frame->eax=source->thirst;result.resume_rva=next;break;
             case SummaryOperand::vigour_edx:event.frame->edx=source->vigour;result.resume_rva=next;break;
             case SummaryOperand::warmth_xmm:
-                uwcn_summary_warmth=source->warmth_bits;branch(uwcn_summary_load_warmth);break;
+                urwcn_summary_warmth=source->warmth_bits;branch(urwcn_summary_load_warmth);break;
             }
         }
         return Status::ok;

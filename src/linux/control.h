@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-namespace uwcn::linux_host {
+namespace urwcn::linux_host {
 void start_control();
 void stop_control();
 void end_control_requests();

@@ -7,7 +7,7 @@
 #include <map>
 #include <utility>
 
-namespace uwcn::adapter::native_image_component {
+namespace urwcn::adapter::native_image_component {
 namespace {
 std::uintptr_t base{};
 Handle next_handle=1;
@@ -69,7 +69,7 @@ struct Reader {
 
 // 112980: ECX=descriptor, EDX=native image x, one caller-cleaned y argument;
 // plain RET at 112A61. The native descriptor parser calls complete 112260.
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_paint_native_image(const NativeImageCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_paint_native_image(const NativeImageCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"
@@ -163,7 +163,7 @@ Status paint(Handle handle) {
     const auto source=prepare(handle);
     const BorderScope border(source.border);
     const NativeImageCall call{static_cast<u32>(base+source.constructor),source.descriptor,source.x,source.y};
-    uwcn_paint_native_image(&call);
+    urwcn_paint_native_image(&call);
     return Status::ok;
 }
 std::vector<std::uint8_t> save() {

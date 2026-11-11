@@ -4,7 +4,7 @@
 #include <cstring>
 #include <utility>
 
-namespace uwcn::adapter::native_menu_component {
+namespace urwcn::adapter::native_menu_component {
 namespace {
 std::uintptr_t base{};
 const HostApi* host{};
@@ -333,7 +333,7 @@ Status paint(Handle handle) {
     std::memcpy(reinterpret_cast<void*>(base+0x5F54A20),records.header.data(),records.header.size());
     std::memcpy(reinterpret_cast<void*>(base+rows_rva),records.rows.data(),records.rows.size());
     paint_result=Status::ok;
-    using Paint=void (UWCN_CALL *)();
+    using Paint=void (URWCN_CALL *)();
     const auto& style=native_menu_model::style(handle);
     painting_source=handle;
     painting=true;

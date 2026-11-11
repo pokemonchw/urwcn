@@ -1,7 +1,7 @@
 #include "native_paragraph.h"
 
-namespace uwcn::adapter {
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_draw_native_paragraph(const NativeParagraphCall*) {
+namespace urwcn::adapter {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_draw_native_paragraph(const NativeParagraphCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\t"
         "movl 8(%esp),%ebx\n\t"

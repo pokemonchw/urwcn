@@ -30,7 +30,7 @@
 
 - 请求 `00df2c84190c4e568fd4e59791b52d84`；批次 `bdddd308f57c4355ab0bf22b04012c98`；事务 `505ad6d25ab34266b432b3f36c306e1c`。
 - 已读取对应请求结果 JSON、完整批次日志和 `publication-result.json`，`Success=true`、`success=true`、`ReloadRequested=false`。
-- 正式更新 `package/modules/uwcn_adapter.dll`、`uwcn_catalog.dll`、`uwcn_semantic.dll`，新增 `package/catalog/zh-CN/cultures.tsv`，更新 Linux profile 及 `package/release.json`。五个内容文件 SHA-256 均与正式清单一致。
+- 正式更新 `package/modules/urwcn_adapter.dll`、`urwcn_catalog.dll`、`urwcn_semantic.dll`，新增 `package/catalog/zh-CN/cultures.tsv`，更新 Linux profile 及 `package/release.json`。五个内容文件 SHA-256 均与正式清单一致。
 - 旧三模块、profile、清单先移入 `回收/20261019-124122-505ad6d25ab34266b432b3f36c306e1c/`，保留原相对路径；新词库此前不存在。发布脚本同步既有应用菜单链接，根正式启动器及驻留库未重新编译。
 - 编译日志保留既有 HUD/world 分发的 15 条 switch 枚举警告，不影响本批构建；没有为消除警告添加默认语义分支。
 
@@ -39,7 +39,7 @@
 - 请求 `0c08f4c8eb44413e9b5897a180af9d71`；批次 `62827032da7343ab855f26eed65d41b3`；事务 `2e3e2bfbfdf740b49f6615e514ba5248`。
 - 已读取对应结果 JSON、完整批次日志与发布回执；编译和发布均成功，未请求运行中应用。第二批编译没有警告。
 - 正式更新 adapter、文化词库、Linux profile 与发布清单；catalog 增量目标无须重新编译，semantic 沿用第一批正式文件。五个文化相关内容文件 SHA-256 均与最终 `package/release.json` 一致。
-- 被替换文件先移入 `回收/20261019-124632-2e3e2bfbfdf740b49f6615e514ba5248/`，保留原相对路径。正常启动入口仍为根目录 `uwcn_launcher`，没有另建交付目录或更换启动器。
+- 被替换文件先移入 `回收/20261019-124632-2e3e2bfbfdf740b49f6615e514ba5248/`，保留原相对路径。正常启动入口仍为根目录 `urwcn_launcher`，没有另建交付目录或更换启动器。
 
 Linux 暂无运行中应用协议，下一次正常启动会加载本次正式文件；本次未关闭或重启游戏。
 

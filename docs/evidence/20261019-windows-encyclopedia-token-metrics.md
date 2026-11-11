@@ -38,5 +38,5 @@
 - 请求 `78fd1e0c8c954233b25798cc7adcea4c`，批次 `b5dd03bc0c3442bf897d8500e22bc413`。已读取对应请求结果 JSON 和完整批次日志，`Success=true`、`PublishRequested=true`、`ReloadRequested=true`；一次配置及一次增量构建完成。
 - Adapter 编译成功，仅有既有 `native_name_input.inc` 与 `module.cpp::initialize` 的六项 `GetProcAddress` 函数类型转换警告，本次百科修改没有新增编译警告或错误。
 - 正式事务 `218abb3dc99f4a3f885236cd7fe083d9`；已读取其 `publication-result.json`，`success=true`、`runtime_requested=true`。PID `121728` 返回 `ReadyToPublish` 和 `Applied`，Adapter 第2代。
-- 正式替换 `package/modules/uwcn_adapter.dll` 和 `package/release.json`。旧两件先按原相对路径移入 `回收/20261019-214055-218abb3dc99f4a3f885236cd7fe083d9/package/`，已只读确认存在。正式启动路径仍为根启动器及相邻 `package/`。
+- 正式替换 `package/modules/urwcn_adapter.dll` 和 `package/release.json`。旧两件先按原相对路径移入 `回收/20261019-214055-218abb3dc99f4a3f885236cd7fe083d9/package/`，已只读确认存在。正式启动路径仍为根启动器及相邻 `package/`。
 - 新 Adapter SHA-256 为 `dddef2ee5076287ee40e6872f60c8df6d7d0bf3a8b451fe182d861c029ada8a9`，正式清单及 Applied 回执均记录此值。

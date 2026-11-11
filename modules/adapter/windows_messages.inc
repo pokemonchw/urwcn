@@ -44,11 +44,11 @@ enum FlowHook:u32 { flow_input=0x5900,flow_accept,flow_gradient,flow_wait,
 #include "native_message_counter_writers.inc"
 u32 generated_waits{};
 Status generated_status=Status::ok;
-extern "C" std::uintptr_t uwcn_message_finish_target{};
+extern "C" std::uintptr_t urwcn_message_finish_target{};
 // Used only during synchronous materialization, which never enters native
 // input. The suspended ordinary game wait retains executable game addresses.
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_message_stop_wait() {
-    __asm__ __volatile__("addl $8,%esp\n\tjmp *_uwcn_message_finish_target\n\t");
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_message_stop_wait() {
+    __asm__ __volatile__("addl $8,%esp\n\tjmp *_urwcn_message_finish_target\n\t");
 }
 struct Display {
     u32 frame;
@@ -130,7 +130,7 @@ void transfer_display(u32 generated_frame,u32 ordinary_frame) {
 }
 Status consume_flow(native_message_flow::Handle,const native_message_flow::Record& record) {
     generated_waits=0;generated_status=Status::ok;
-    uwcn_message_finish_target=reinterpret_cast<std::uintptr_t>(at<void>(0xf6ebb));
+    urwcn_message_finish_target=reinterpret_cast<std::uintptr_t>(at<void>(0xf6ebb));
     using NativeMessage=void (__fastcall *)(const char*);
     reinterpret_cast<NativeMessage>(at<void>(0xf6510))(record.native_input.c_str());
     return generated_status;
@@ -314,7 +314,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
                     transfer_display(parent,waiting->parent_frame);
                     native_message_flow::install_continuation(continuation);
                     }
-                    *ptr<u32>(wait_frame+4)=address(reinterpret_cast<const void*>(&uwcn_message_stop_wait));
+                    *ptr<u32>(wait_frame+4)=address(reinterpret_cast<const void*>(&urwcn_message_stop_wait));
                 }
                 ++generated_waits;result.resume_rva=0xf5c3b;
             } else if(native_message_flow::owns_frame(parent)) native_message_flow::waiting(parent,wait_frame);

@@ -1,7 +1,7 @@
 #pragma once
 #include "native_text_resource.h"
 
-namespace uwcn::adapter::native_image_component {
+namespace urwcn::adapter::native_image_component {
 using Handle=u32;
 using native_text_resource::SourceKey;
 // The entire neutral 112980 image descriptor remains native input. The native

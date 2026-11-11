@@ -4,7 +4,7 @@
 #include "native_text_resource.h"
 #include <vector>
 
-namespace uwcn::adapter::native_menu_component {
+namespace urwcn::adapter::native_menu_component {
 // Native CF790 creates a menu instance; CFFB0 consumes that same instance.
 // These hooks extend the shared native API, not its callers' page functions.
 void initialize(std::uintptr_t image_base);

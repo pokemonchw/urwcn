@@ -23,7 +23,7 @@ enum Hook:u32 {
 // 3E4F0..3E582 constructs the original keyword field and returns the actual
 // MapRGB result in EAX. Its original body uses EBX's MapRGB import, with no
 // enclosing local access; Full's keyword_prompt_end supplies the balanced RET.
-extern "C" __attribute__((naked)) u32 UWCN_CALL uwcn_encyclopedia_wait_prompt(
+extern "C" __attribute__((naked)) u32 URWCN_CALL urwcn_encyclopedia_wait_prompt(
         const native_full_language::KeywordFragment*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
@@ -35,7 +35,7 @@ struct KeywordText {u32 target,text,color,x,y;};
 // The inner CALL below installs our continuation beneath those three native
 // arguments. The 10F6B1 gate then discards exactly those arguments and RETurns
 // here. The original text hook still owns its Unicode/text scope lifecycle.
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_encyclopedia_wait_text(const KeywordText*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_encyclopedia_wait_text(const KeywordText*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%ebx\n\tcall 1f\n\t"
@@ -43,7 +43,7 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_encyclopedia_wait_text(con
         "1:\n\tpushl $0\n\tpushl 8(%ebx)\n\tpushl 4(%ebx)\n\t"
         "movl 12(%ebx),%ecx\n\tmovl 16(%ebx),%edx\n\tjmp *(%ebx)\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_encyclopedia_wait_text_return() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_encyclopedia_wait_text_return() {
     __asm__ __volatile__("addl $12,%esp\n\tret\n\t");
 }
 
@@ -73,7 +73,7 @@ Status keyword(const char* query) {
     native_full_language::constructing=native_full_language::Construction::encyclopedia_keyword;
     const native_full_language::KeywordFragment prompt{
         address(at<void>(0x3E4F0)),*at<u32>(0x18C1F8)};
-    const auto color=uwcn_encyclopedia_wait_prompt(&prompt);
+    const auto color=urwcn_encyclopedia_wait_prompt(&prompt);
     native_full_language::constructing=native_full_language::Construction::none;
     // These positions were just produced by that original field constructor.
     // Only its accepted completed text is redrawn; the edit loop and caret
@@ -81,7 +81,7 @@ Status keyword(const char* query) {
     const KeywordText text{address(at<void>(0x10F6AC)),address(query),color,
         *at<u32>(0xA1C1CB4),*at<u32>(0x61BBB3C)};
     constructing=Construction::keyword_text;
-    uwcn_encyclopedia_wait_text(&text);
+    urwcn_encyclopedia_wait_text(&text);
     constructing=Construction::none;
     return Status::ok;
 }
@@ -133,7 +133,7 @@ Status wait(const NativeEvent& event) {
     *at<u32>(0x61BBA5C)=flip;
     if(status!=Status::ok) return status;
     native_language_redraw::completed(View::encyclopedia);
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
     return Status::ok;
 }
 
@@ -174,7 +174,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     case keyword_text_finished:
         if(constructing==Construction::keyword_text)
             result.resume_rva=static_cast<u32>(reinterpret_cast<std::uintptr_t>(
-                uwcn_encyclopedia_wait_text_return)-host->image_base);
+                urwcn_encyclopedia_wait_text_return)-host->image_base);
         break;
     default:break;
     }

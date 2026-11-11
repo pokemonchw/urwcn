@@ -54,12 +54,12 @@
 - 请求 `a5ccf43f77b4480993ca5f3693b4817d`，批次 `3a8077d74baf4b8c81163a6d107dec37`。已读取 `build/.compile-queue/results/a5ccf43f77b4480993ca5f3693b4817d.json` 和对应批次完整日志，`Success=true`。
 - 正式事务 `47b3089b3f5a48fdb39bc09ef77963a3`；已读取 `build/mingw-x86/stage/47b3089b3f5a48fdb39bc09ef77963a3/publication-result.json`，`success=true`。Adapter、Semantic、词库、构建适配和发布清单五件旧文件先移入 `回收/20261019-081505-47b3089b3f5a48fdb39bc09ef77963a3/`，再放入正式位置。Catalog DLL 编译后内容与正式版相同，保持原文件，但因词库变化参与热交接。
 - 发布前只读模块清单确认 PID `65412` 加载本项目正式驻留桥和六个业务模块。事务收到 `ReadyToPublish` 和 `Applied`；Catalog 第3代、Semantic 第3代、Adapter 第6代，回执身份与正式文件一致。
-- 只读核对正式清单10项 SHA-256，全部一致；正式词库包含26条 `credits.*`。启动器仍为根 `uwcn_launcher.exe`，业务 DLL 和词库位于正式 `package/`，没有平行修复包。
+- 只读核对正式清单10项 SHA-256，全部一致；正式词库包含26条 `credits.*`。启动器仍为根 `urwcn_launcher.exe`，业务 DLL 和词库位于正式 `package/`，没有平行修复包。
 
 | 正式文件（相对 `package/`） | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `62d2e6fb77372ab83b06450793bee65326cafe562b9865c32a54b17b778a30d9` |
-| `modules/uwcn_semantic.dll` | `2d826d31f2a07d6d93386d2e8ab0327496926f237ad34426983d7d2a469bc218` |
+| `modules/urwcn_adapter.dll` | `62d2e6fb77372ab83b06450793bee65326cafe562b9865c32a54b17b778a30d9` |
+| `modules/urwcn_semantic.dll` | `2d826d31f2a07d6d93386d2e8ab0327496926f237ad34426983d7d2a469bc218` |
 | `catalog/zh-CN/main_menu.tsv` | `558d5e2f38b5d03774faa158cb84e59f6168598a20c66d7551ec9dea35af20f7` |
 | `profiles/urw-3.89-steam-25939378.json` | `e51c6308dbf87e14979f7ad90daa94011a8bf19af900f8375c804adf64fa46ef` |
 

@@ -50,7 +50,7 @@
 
 - 根入口 `.toolchains/powershell/pwsh -NoProfile -File ./build.ps1 -Toolchain MinGW -Module adapter -Publish -Reload -TargetPid 364`；显式使用 `/usr/bin/cmake`、`/home/lulika/.local/share/dfcn-toolchains/mingw-w64-16.2.0/usr/bin/i686-w64-mingw32-g++`、原 `build/mingw-x86`、正式 `package/`，并指定当前 Proton WinePrefix 与 WinePath。一次配置、一次增量编译，没有清理构建树。
 - 请求 `d30613bdff80418bb33a75361966c415`，批次 `b3d9d6fa7c1a4ca1850b0caf426bb375`。已读取对应 `build/.compile-queue/results` JSON 和完整批次日志，`Success=true`、`PublishRequested=true`、`ReloadRequested=true`。保留既有函数指针转换、extern 初始化、未使用项和缩进警告，无编译错误。
-- 正式事务 `d5d19db8795d463f98a06b0c1ab2c977`；已读取暂存目录 `publication-result.json`，`success=true`。更新 `package/modules/uwcn_adapter.dll` 与 `package/release.json`；旧两件先按原相对路径移入 `回收/20261110-120029-d5d19db8795d463f98a06b0c1ab2c977/`，已只读确认归档存在。没有平行运行包。
+- 正式事务 `d5d19db8795d463f98a06b0c1ab2c977`；已读取暂存目录 `publication-result.json`，`success=true`。更新 `package/modules/urwcn_adapter.dll` 与 `package/release.json`；旧两件先按原相对路径移入 `回收/20261110-120029-d5d19db8795d463f98a06b0c1ab2c977/`，已只读确认归档存在。没有平行运行包。
 - 正式 Adapter 与构建输出 SHA-256 相同：`117efe76a7cd282b8db2d02bce8640d63ac3001946c5920f7611b72c5211c27b`。正常根启动器使用的正式位置已更新。
 - 系统进程表显示原 Linux PID `2832305` 已结束，新运行实例为 Linux PID `2836649`。只读其 WinePrefix 并经现有 Proton Mono 解释器枚举得 Windows PID `364`；未启动或关闭游戏。既有驻留事务返回 `ReadyToPublish`、`Applied ... adapter:117efe76a7cd282b8db2d02bce8640d63ac3001946c5920f7611b72c5211c27b:2`，当前实例 Adapter 第2代交接完成；没有修改驻留桥或重启游戏。
 

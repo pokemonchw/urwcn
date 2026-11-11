@@ -1,7 +1,7 @@
 #pragma once
 #include "../../sdk/host_abi.h"
 
-namespace uwcn::adapter::native_component_style {
+namespace urwcn::adapter::native_component_style {
 // Values are captured while the ordinary native constructor consumes them.
 // These are raw, native-mapped color/style values, never UI geometry or pixels.
 struct ButtonStyle {

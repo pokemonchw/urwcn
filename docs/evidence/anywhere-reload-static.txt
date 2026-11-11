@@ -47,7 +47,7 @@ HostApi 内存布局和 Host ABI 仍为 3。adapter 服务版本、状态模式�
 2/2；旧桥只接受 1/1，新旧调度语义不能混用。新版驻留桥严格核对该
 版本，其余五模块仍为 1/1。
 
-本次迁移前进程中已装载的旧 uwcn_loader.dll 没有升级自身的接口。磁盘上的
+本次迁移前进程中已装载的旧 urwcn_loader.dll 没有升级自身的接口。磁盘上的
 新版 loader 不会替换旧进程正在执行的驻留代码，单独热更新新版 adapter
 也无法补上旧桥缺失的协议。这是本次真实通用桥迁移的实际限制，不是
 “以后只能回主菜单重载”的规则。不得伪称当前旧进程已取得新版能力。
@@ -68,9 +68,9 @@ HostApi 内存布局和 Host ABI 仍为 3。adapter 服务版本、状态模式�
 均已读取；没有请求该批正式发布，没有运行这些产物。
 
 最终构建产物 SHA256：
-uwcn_loader.dll
+urwcn_loader.dll
 cd2e5bee332da354e605c029fbfd7818bdeb9dd1bbec447a4f3bd89baa4bb677
-uwcn_adapter.dll
+urwcn_adapter.dll
 90d7eec503be7d345785e4bed9550570cdf64571426b0e6da4f4edc2d212e70e
 
 正式交付状态

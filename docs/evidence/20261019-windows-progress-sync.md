@@ -54,9 +54,9 @@
 
 - 请求 `c07aa98d9adc4c278f14ab4c8a0d6fea`；批次 `bd846ae1a64241938b2c3ce6c3761601`。
 - 事务 `696047838c75427b85d0abd25aea02f3`，`Success=true`、`PublishRequested=true`、`ReloadRequested=false`；已读取对应请求结果、完整批次日志和 `publication-result.json`，发布 `success=true`。
-- 本批次确认六业务模块及驻留库均为最新构建产物，并更新正式 `package/uwcn_loader.dll`、`package/release.json`。旧两件先移入 `回收/20261019-204113-696047838c75427b85d0abd25aea02f3/`，保留原相对路径。
+- 本批次确认六业务模块及驻留库均为最新构建产物，并更新正式 `package/urwcn_loader.dll`、`package/release.json`。旧两件先移入 `回收/20261019-204113-696047838c75427b85d0abd25aea02f3/`，保留原相对路径。
 - 最终驻留库 SHA-256：`5435d04443eb4884d04cf8e6dec4d18e69dfc931c0e2023db8dca693f85f89b5`；Adapter：`decbfab96979a0df64ab788c363f4fb2beb8a985d66700ed86b8e302f306d02b`。
 - Catalog：`d628893d4582eb8419cb1379ffcc9ef2419392ac2a24a8b919c0de73071cee44`；Semantic：`c343e6bc82382666e615338481cdfb10750830e72e41c5fccf545a08985ea482`；Main menu：`1a0c92855e4ca0a7d77e6fef411da8a5028a921a8ba0de705c796bcd4e0b0ce5`。
 - 中文主词库：`5fe18b13641ea0d838fdc941f998d51f14654110e02be147b6649bf5d4c9bf27`；百科词库：`740fb9747ae06bb8f80d7b10a0a11eedbb7018947de94d97652a654aaa24b86b`；Windows profile：`baeff94016aa0859d55dd066b697e67b9df55d9b5f60008e7f464772284be38c`。
 
-编译保留既有的 Windows `GetProcAddress` 函数类型转换及 Semantic 动态组件 switch 警告；最终发布批次没有编译错误。源码同步、产物编译和正式文件发布均已完成；正式启动路径仍为根 `uwcn_launcher.exe` 与相邻 `package/`。没有平行修复包。用户关闭进程后没有请求或声称 Applied，亦未自行重新启动或测试；下一次正常启动才会加载最终正式文件。
+编译保留既有的 Windows `GetProcAddress` 函数类型转换及 Semantic 动态组件 switch 警告；最终发布批次没有编译错误。源码同步、产物编译和正式文件发布均已完成；正式启动路径仍为根 `urwcn_launcher.exe` 与相邻 `package/`。没有平行修复包。用户关闭进程后没有请求或声称 Applied，亦未自行重新启动或测试；下一次正常启动才会加载最终正式文件。

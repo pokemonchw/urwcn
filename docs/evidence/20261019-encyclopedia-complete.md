@@ -52,7 +52,7 @@ GAME.NFO 的 313 处主题记录已逐段翻译，其中 RINGED SEAL 重复出�
 - 请求 `6ed8389c1e084851adcfe40037a7bddd`，批次 `931761f724724daabc44927a2b541694`，事务 `0dad871b26a14272a5876a06fb28c497`，完成时间2026-10-19 14:57:32（Asia/Shanghai）。
 - 根队列构建 adapter、semantic、catalog，配置一次、增量构建一次。已读取请求结果JSON、完整批次日志与 `build/linux-x86_64/stage/0dad871b26a14272a5876a06fb28c497/publication-result.json`；编译与发布均成功。
 - 正式更新 adapter、semantic、两份词库、Linux profile、release.json。catalog 已编译，二进制与既有正式文件相同，不重复替换；三模块均由 PID 3820329 返回第2代 Applied。
-- 旧正式文件先移入 `回收/20261019-145732-0dad871b26a14272a5876a06fb28c497/`，保留相对路径；启动器仍为根目录 `uwcn_launcher`，未建立平行交付。
+- 旧正式文件先移入 `回收/20261019-145732-0dad871b26a14272a5876a06fb28c497/`，保留相对路径；启动器仍为根目录 `urwcn_launcher`，未建立平行交付。
 - 编译只有既有 HUD/world 分发的15条 switch 警告，未添加默认分支消除警告。空续读记录的TSV末尾制表符是必要字段分隔，不按普通源代码尾部空白删除。
 
 补充硬编码说明也已完成编译、正式发布及热加载：

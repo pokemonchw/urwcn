@@ -63,7 +63,7 @@
 | 完整批次日志 | `build/.compile-queue/batches/def00531ce004dfda542034759e2b9e9.log` |
 | 正式事务 | `24d811f7471c49a586b33b6a5e872a3c`，2026-11-11 09:35:49（Asia/Shanghai）完成 |
 | 发布结果 | `build/mingw-x86/stage/24d811f7471c49a586b33b6a5e872a3c/publication-result.json`，`success=true`，`applied=true` |
-| 正式替换 | `package/modules/uwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv`、`package/release.json` |
+| 正式替换 | `package/modules/urwcn_adapter.dll`、`package/catalog/zh-CN/messages.tsv`、`package/release.json` |
 | 旧件归档 | `回收/20261111-093548-24d811f7471c49a586b33b6a5e872a3c/package/`，三件先归档再替换，保留原相对路径 |
 | 当前进程 | 只读进程表取得宿主 PID `3145474`，已有 Proton Mono 解释器只读枚举得到 Windows PID `468` |
 | 兼容交接 | PID `468` 返回 `ReadyToPublish` 后返回 Catalog 第2代和 Adapter 第2代 `Applied` |
@@ -76,4 +76,4 @@
 | messages.tsv，源词库／正式件／清单一致 | `c8b670d7fc349fd346ef323da6e8d3be09a67af78f56e8e87fe537549aec6d53` |
 | 已归档旧 Adapter | `b255665b40c9efec848e07cca11b5771176f1932f20a81a7eaeed0342c46f17d` |
 
-源码修改、产物编译、正式位置发布和当前进程兼容交接均完成。根 `uwcn_launcher.exe` 使用同一正式包，没有平行修复目录。没有启动、关闭、重启或操作游戏，没有运行测试或自行验收画面；`Applied` 证明模块交接完成，实际文字和画面由用户验收。
+源码修改、产物编译、正式位置发布和当前进程兼容交接均完成。根 `urwcn_launcher.exe` 使用同一正式包，没有平行修复目录。没有启动、关闭、重启或操作游戏，没有运行测试或自行验收画面；`Applied` 证明模块交接完成，实际文字和画面由用户验收。

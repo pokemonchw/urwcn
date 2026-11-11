@@ -16,4 +16,4 @@ Adapter 只对已静态确认的 D1C94（Poll）和 D1CFA（Wait）在 pending b
 
 源码修改完成。根 build.ps1 请求 `e3e380797c9a47f49ed797c9fd7593c5`，批次 `ed8542abbad5442ea83477e3f4c8fbae`，MinGW loader,adapter 编译成功，已读取结果 JSON、批次日志及发布事务 JSON。编译包含既有函数指针转换、初始化、缩进和未使用项警告。
 
-正式磁盘事务 `3ba67415e2214d51a0b29933af3bb3fc` 更新 `package/uwcn_loader.dll`、`package/modules/uwcn_adapter.dll` 和 `package/release.json`；被替换文件归档至 `回收/20261110-112610-3ba67415e2214d51a0b29933af3bb3fc/`。没有 Runtime Applied 回执，当前进程驻留库未迁移。
+正式磁盘事务 `3ba67415e2214d51a0b29933af3bb3fc` 更新 `package/urwcn_loader.dll`、`package/modules/urwcn_adapter.dll` 和 `package/release.json`；被替换文件归档至 `回收/20261110-112610-3ba67415e2214d51a0b29933af3bb3fc/`。没有 Runtime Applied 回执，当前进程驻留库未迁移。

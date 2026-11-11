@@ -4,7 +4,7 @@
 
 ## 本机原始文件与根因
 
-启动器旁 `uwcn_launcher.ini` 已保存 `Z:\home\lulika\.local\share\Steam\steamapps\common\UnRealWorld`，实际文件存在。只读安装目录和 Steam 清单确认：
+启动器旁 `urwcn_launcher.ini` 已保存 `Z:\home\lulika\.local\share\Steam\steamapps\common\UnRealWorld`，实际文件存在。只读安装目录和 Steam 清单确认：
 
 | 项目 | 本机证据 |
 | --- | --- |
@@ -43,12 +43,12 @@
 - 批次 ID：`d6c8601e49094735ba3946ae893c9d19`。
 - 发布事务：`96cb3aa039a248c3a9f13aa55386d34e`，2026-11-10 10:18:08（Asia/Shanghai）完成。
 - 已读取 `build/.compile-queue/results/026e9aa9a5f542cd8956c99f6907900f.json`，`Success=true`、`PublishRequested=true`、`ReloadRequested=false`；对应批次日志包含两个目标构建成功及正式发布成功回执。编译保留既有函数指针转换、未用符号等警告，没有借此修改无关代码。
-- 正式替换根 `uwcn_launcher.exe` 与 `package/modules/uwcn_adapter.dll`，新增正式 `package/profiles/urw-3.89.1-steam-26139145.json` 并更新 `package/release.json`。旧启动器、适配模块和发布清单已先按原路径移入 `回收/20261110-101808-96cb3aa039a248c3a9f13aa55386d34e/`，只读目录记录确认旧件存在。未建立平行运行包。
+- 正式替换根 `urwcn_launcher.exe` 与 `package/modules/urwcn_adapter.dll`，新增正式 `package/profiles/urw-3.89.1-steam-26139145.json` 并更新 `package/release.json`。旧启动器、适配模块和发布清单已先按原路径移入 `回收/20261110-101808-96cb3aa039a248c3a9f13aa55386d34e/`，只读目录记录确认旧件存在。未建立平行运行包。
 - 发布前只读进程列表未发现 `urw.exe`、`urw` 或 `urw3-bin`，没有请求 Reload。驻留桥未修改；回执为 `Runtime Applied was not requested.`。本轮不宣称运行时应用或启动/画面验收。
 
 | 正式文件 | SHA-256 |
 | --- | --- |
-| `uwcn_launcher.exe` | `78695f0440a8edda7d3fba7374d98cc5e9007ec904af8fe44de8ee766528afd0` |
-| `package/modules/uwcn_adapter.dll` | `2b1f88b944b467fc114916763f8883b56dd0138ed4a1df30cfc90a967b3c35d0` |
+| `urwcn_launcher.exe` | `78695f0440a8edda7d3fba7374d98cc5e9007ec904af8fe44de8ee766528afd0` |
+| `package/modules/urwcn_adapter.dll` | `2b1f88b944b467fc114916763f8883b56dd0138ed4a1df30cfc90a967b3c35d0` |
 | `package/profiles/urw-3.89.1-steam-26139145.json` | `d6768bb730ffbb07bc98e9452c92c723d8a2a053665cf7cf0b00c2c203e2c235` |
 | `package/release.json` | `09120f34a4861ba9f5b6d2b8616f83197ad9e06426060635b09b81e488c2717c` |

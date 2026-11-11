@@ -47,19 +47,19 @@ enum WidgetHook:u32 {
     widget_direction_icon,widget_activity,widget_publication=0x529D,widget_rect,
     widget_target
 };
-extern "C" std::uintptr_t uwcn_hud_widget_prefix_end{};
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_hud_widget_prefix_return() {
+extern "C" std::uintptr_t urwcn_hud_widget_prefix_end{};
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_hud_widget_prefix_return() {
     // Both confirmed prefix cuts have eight original native arguments pending.
-    __asm__ __volatile__("addl $8,%esp\n\tjmp *_uwcn_hud_widget_prefix_end\n\t");
+    __asm__ __volatile__("addl $8,%esp\n\tjmp *_urwcn_hud_widget_prefix_end\n\t");
 }
 
 void adopt_command(const char* original) {command=original;command_constructed=true;}
 void adopt_main_wait() {adopt_command(at<char>(0x18C616));}
 u32 fragment_return() {
-    return static_cast<u32>(reinterpret_cast<std::uintptr_t>(native_component_calls::uwcn_component_fragment_return)-host->image_base);
+    return static_cast<u32>(reinterpret_cast<std::uintptr_t>(native_component_calls::urwcn_component_fragment_return)-host->image_base);
 }
 struct BorrowedFrame {u32 target,frame;};
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_hud_borrow_frame(const BorrowedFrame*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_hud_borrow_frame(const BorrowedFrame*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%ebx\n\tmovl 4(%ebx),%ebp\n\tcall *(%ebx)\n\t"
@@ -134,7 +134,7 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(inline_hook(widget_publication,0xFB247,{0x69,0xC8,0x48,0x0C,0,0}));
     operand(widget_rect,0xFB258,{0x89,0x81,0,0,0,0},2,0xA38521C);
     operand(widget_target,0x10C400,{0xA3,0,0,0,0},1,0x61BBB0C);
-    uwcn_hud_widget_prefix_end=host->image_base+0xFB250;
+    urwcn_hud_widget_prefix_end=host->image_base+0xFB250;
 }
 
 Status messages(u32 wait_frame=0,NativeFrame* input=nullptr) {
@@ -158,7 +158,7 @@ Status messages(u32 wait_frame=0,NativeFrame* input=nullptr) {
         *at<std::uint8_t>(0x478E0E9)=continue_control ? 100 : 0;
         prompt_constructing=true;
         const BorrowedFrame fragment{address(at<void>(0xF5B7F)),wait_frame};
-        uwcn_hud_borrow_frame(&fragment);
+        urwcn_hud_borrow_frame(&fragment);
         prompt_constructing=false;
     }
     if(status==Status::ok) native_language_redraw::completed(messages_view);
@@ -171,7 +171,7 @@ Status rebuild() {
     std::array<std::uint8_t,0x568> item_name_record;
     std::memcpy(item_name_record.data(),at<void>(0x5DF9DB8),item_name_record.size());
     constructing=true;
-    using Native=void (UWCN_CALL *)();
+    using Native=void (URWCN_CALL *)();
     reinterpret_cast<Native>(host->image_base+0xFA2A0)();
     reinterpret_cast<void (__fastcall *)(const char*)>(host->image_base+0xF90D0)(command.c_str());
     reinterpret_cast<Native>(host->image_base+0x102D10)();
@@ -200,7 +200,7 @@ Status save_second() {
     // 10D340 owns this original cache and its flag. Only its initial cache-hit
     // decision is bypassed; its native rectangle/copy/flag lifecycle runs whole.
     second_constructing=true;
-    reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10D340)();
+    reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10D340)();
     second_constructing=false;
     return Status::ok;
 }
@@ -328,10 +328,10 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
             if(status!=Status::ok) return status;
             if(event.id==modal_input) {
                 modal_constructing=true;
-                reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0xF5A30)();
+                reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0xF5A30)();
                 modal_constructing=false;
             }
-            reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x10B720)();
+            reinterpret_cast<void (URWCN_CALL *)()>(host->image_base+0x10B720)();
             // The language event has been consumed. 17D0BD otherwise treats
             // -2 as a request for 99BE0's world/visibility business rebuild;
             // its ordinary continuation already uses the no-action value 0.
@@ -365,7 +365,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     case item_debug:if(constructing) result.skip_original=1;break;
     case speed_stack:
         if(widget_input && widget_phase==1) result.resume_rva=static_cast<u32>(
-            reinterpret_cast<std::uintptr_t>(uwcn_hud_widget_prefix_return)-host->image_base);
+            reinterpret_cast<std::uintptr_t>(urwcn_hud_widget_prefix_return)-host->image_base);
         else if(widget_input && widget_phase==2) result.resume_rva=0xFAD3C;
         break;
     case speed_value:
@@ -379,7 +379,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         break;
     case speed_color:
         if(widget_input && widget_phase==2) result.resume_rva=static_cast<u32>(
-            reinterpret_cast<std::uintptr_t>(uwcn_hud_widget_prefix_return)-host->image_base);
+            reinterpret_cast<std::uintptr_t>(urwcn_hud_widget_prefix_return)-host->image_base);
         break;
     case message_prompt_end:if(prompt_constructing) result.resume_rva=fragment_return();break;
     case map_result:

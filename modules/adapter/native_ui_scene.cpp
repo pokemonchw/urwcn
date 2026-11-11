@@ -6,7 +6,7 @@
 #include <cstring>
 #include <map>
 
-namespace uwcn::adapter::native_ui_scene {
+namespace urwcn::adapter::native_ui_scene {
 namespace {
 enum class ComponentKind:u32 { component,menu,image,flow,renderer,footer,cache_region,message };
 struct Child {

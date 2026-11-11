@@ -5,7 +5,7 @@ font-design-compliance-static.txt中的内容跟踪与重放方案已撤销，�
 
 UnReal World 3.89：Mod 自有字体与最终字形 Hook
 日期：2026-10-18
-项目：D:\workspace\uwcn
+项目：D:\workspace\urwcn
 
 用户最新要求
 ============

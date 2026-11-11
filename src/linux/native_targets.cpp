@@ -6,7 +6,7 @@
 #include <cmath>
 #include <unordered_map>
 
-namespace uwcn::linux_targets {
+namespace urwcn::linux_targets {
 namespace {
 using namespace render;
 namespace scoped=adapter::scoped;

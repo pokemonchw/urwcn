@@ -2,7 +2,7 @@
 #include "../../sdk/host_abi.h"
 #include <cstdint>
 
-namespace uwcn::adapter::native_renderer_component_calls {
+namespace urwcn::adapter::native_renderer_component_calls {
 // Complete native component entry points. These functions use register
 // arguments and caller-cleaned stack arguments, rather than C++ fastcall.
 struct ParagraphCall {
@@ -46,11 +46,11 @@ struct MarkedButtonCall {
     std::int32_t x,y;
     const char* text;
 };
-extern "C" void UWCN_CALL uwcn_renderer_paragraph(const ParagraphCall*);
-extern "C" void UWCN_CALL uwcn_renderer_panel(const PanelCall*);
-extern "C" void UWCN_CALL uwcn_renderer_text_block(const TextBlockCall*);
-extern "C" void UWCN_CALL uwcn_renderer_label_box(const LabelBoxCall*);
-extern "C" void UWCN_CALL uwcn_renderer_section(const SectionCall*);
-extern "C" void UWCN_CALL uwcn_renderer_heading(const HeadingCall*);
-extern "C" void UWCN_CALL uwcn_renderer_marked_button(const MarkedButtonCall*);
+extern "C" void URWCN_CALL urwcn_renderer_paragraph(const ParagraphCall*);
+extern "C" void URWCN_CALL urwcn_renderer_panel(const PanelCall*);
+extern "C" void URWCN_CALL urwcn_renderer_text_block(const TextBlockCall*);
+extern "C" void URWCN_CALL urwcn_renderer_label_box(const LabelBoxCall*);
+extern "C" void URWCN_CALL urwcn_renderer_section(const SectionCall*);
+extern "C" void URWCN_CALL urwcn_renderer_heading(const HeadingCall*);
+extern "C" void URWCN_CALL urwcn_renderer_marked_button(const MarkedButtonCall*);
 }

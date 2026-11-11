@@ -59,7 +59,7 @@
 
 - 请求 `bbe3778896c149cdb46c4f1db83feec9`，批次 `97195fea02d04a98982a858d42d08e9d`。已读取对应 `results/<请求>.json` 和 `batches/<批次>.log`，结果为 `Success=true`。一次配置、一次增量构建，无清理或重复入队。日志含既有函数指针转换、初始化、未使用项、缩进及 extern 警告，无编译错误。
 - 发布事务 `6f72917539324bd481ae0f5f75b79328`，2026-11-10 12:07:17（Asia/Shanghai）完成。已读取 `build/mingw-x86/stage/6f72917539324bd481ae0f5f75b79328/publication-result.json`，`success=true`、`runtime_requested=true`。
-- 正式替换 `package/modules/uwcn_adapter.dll` 与 `package/release.json`；旧两件先移入 `回收/20261110-120716-6f72917539324bd481ae0f5f75b79328/package/`，保留原相对路径，已读取文件身份。正常根 `uwcn_launcher.exe` 加载路径已更新，无平行修复包。
+- 正式替换 `package/modules/urwcn_adapter.dll` 与 `package/release.json`；旧两件先移入 `回收/20261110-120716-6f72917539324bd481ae0f5f75b79328/package/`，保留原相对路径，已读取文件身份。正常根 `urwcn_launcher.exe` 加载路径已更新，无平行修复包。
 - 原有 Proton 游戏进程 Windows PID `364` 返回 `ReadyToPublish 6f72917539324bd481ae0f5f75b79328`，随后返回 `Applied 6f72917539324bd481ae0f5f75b79328 adapter:b0a57ce64b3c4d5e146aad30f4eca0950956a75941400063013047c3603d09dd:3`；事务记录 `applied=true`。这是授权的兼容业务模块交接，没有要求用户卸载、重启或切换界面。
 - 正式 Adapter 与构建输出 SHA-256 均为 `b0a57ce64b3c4d5e146aad30f4eca0950956a75941400063013047c3603d09dd`，与 Applied 回执一致。
 

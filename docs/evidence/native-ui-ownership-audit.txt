@@ -5,7 +5,7 @@ font-design-compliance-static.txt中的内容跟踪与重放方案已撤销，�
 
 UnReal World 3.89 汉化实现：原生 UI 所有权与兼容发布静态审查
 日期：2026-10-18
-项目：D:\workspace\uwcn
+项目：D:\workspace\urwcn
 
 当前整改状态（后续补记）
 ========================
@@ -115,7 +115,7 @@ set_main_menu_plan 从 DisplayPlan.logical_slot 反推几何。游戏交互布�
 ================================================================
 原位置：publish.ps1:154-165，核心为 157-160（以下均为修改前行号）。
 
-证据与影响：非 Reload 发布只要发现任何 uwcn-* 管道且 TargetPid=0
+证据与影响：非 Reload 发布只要发现任何 urwcn-* 管道且 TargetPid=0
 就拒绝。业务模块通过用户 Shift+F5 卸载后，驻留桥和管道本来就应保留；
 因此该条件阻断了不操作运行中游戏的兼容业务原位发布。
 现有 Suspend 实现并非空壳：loader/host.cpp:429-434 进入六模块退役；
@@ -127,7 +127,7 @@ set_main_menu_plan 从 DisplayPlan.logical_slot 反推几何。游戏交互布�
 修正要求：兼容业务发布不应仅因驻留管道存在而拒绝；保留身份核对、实际
 变化文件集、归档前整批独占检查、旧文件回收及正式位置发布。用户随后已
 明确要求不等待其手动卸载，故应使用现有 PREPARE/ReadyToPublish/COMMIT
-事务自动退役与加载。选择进程须精确核对其已加载 uwcn_loader.dll 的
+事务自动退役与加载。选择进程须精确核对其已加载 urwcn_loader.dll 的
 完整路径和同 PID 管道，不能仅凭“唯一管道”或相同包哈希猜测项目归属。
 未释放的 DLL 仍由实际占用检查阻止替换；完整启动器/通用驻留桥实际更新
 的离线约束继续保留。仅使用全图发布模式不等于实际修改了驻留文件。
@@ -260,10 +260,10 @@ docs/evidence/{startup_audio_Decompile.java,setup_options_Decompile.java,
 3. 此前请求 d0e42a2a98cd44da8197bf37a866d410、批次
    c58005ebe9d848a8868b1bec205e5b7c 编译了该已撤回方案，随后发布因
    驻留检查停止。回执与批次日志均已读取，正式文件没有因此更新。
-   当时 build/mingw-x86/out/uwcn_adapter.dll 是撤回前的产物，不能
+   当时 build/mingw-x86/out/urwcn_adapter.dll 是撤回前的产物，不能
    继续发布；该产物随后已在第 7 项重新编译覆盖。
 4. publish.ps1 已按用户后续授权改为自动确认本项目 Host 并使用既有热
-   发布事务；候选进程必须有同 PID 管道且已加载的 uwcn_loader.dll
+   发布事务；候选进程必须有同 PID 管道且已加载的 urwcn_loader.dll
    完整路径与本项目正式 package 相同。显式 PID 同样核对，不能只凭
    管道存在或相同内容哈希选择另一个安装目录。
 5. 日常业务更新只按实际 launcher/loader 变化决定是否需要离线；原有
@@ -283,10 +283,10 @@ docs/evidence/{startup_audio_Decompile.java,setup_options_Decompile.java,
    编译完成；用户返回主菜单后，事务在既有安全边界自动完成，取得
    Applied 12730e11b8f347c2a71abde60f6895a6。该请求的 JSON 回执
    和完整批次日志均已读取，succeeded=true。
-   package/modules/uwcn_adapter.dll 已实际先归档再写入；旧清单也已
+   package/modules/urwcn_adapter.dll 已实际先归档再写入；旧清单也已
    回收，新 release.json 已提交该事务。回收位置为：
    回收/20261018-200723-12730e11b8f347c2a71abde60f6895a6/
-     package/modules/uwcn_adapter.dll
+     package/modules/urwcn_adapter.dll
      package/release.json
    归档 DLL 和归档清单的 SHA-256 与发布前记录一致；正式 DLL 与本次
    编译产物及 release.json 一致。DLL 内容未改变，adapter 运行时代次

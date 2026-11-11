@@ -4,7 +4,7 @@
 #include <cmath>
 #include <vector>
 
-namespace uwcn::render {
+namespace urwcn::render {
 namespace {
 int edge(double value) { return static_cast<int>(std::lround(value)); }
 }

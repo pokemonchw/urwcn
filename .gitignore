@@ -4,8 +4,8 @@
 /回收/
 /package/
 /*_launcher.exe
-/uwcn_launcher
-/uwcn_launcher.ini
+/urwcn_launcher
+/urwcn_launcher.ini
 *.o
 *.obj
 *.dll

@@ -34,6 +34,6 @@
 - 正式发布事务 `f39646159d51475da114beb3a7bea9c5`。已读取 `build/mingw-x86/stage/<事务>/publication-result.json`：`success=true`，包含四个业务模块、三份词库、构建适配及发布清单。旧正式文件先按相对路径移至 `回收/20261019-083605-f39646159d51475da114beb3a7bea9c5/`；其中旧 Adapter SHA-256 与两份故障转储所对应的正式版本一致。
 - 当前正式 Adapter SHA-256：`a70a27724ddc3c5e279398818f658cd6566cf0abe25fd49f3daa06ad0c32a57f`。正式清单12项哈希均与磁盘一致。已静态反汇编正式 DLL：RVA `1EE85/1EE92/1EE9F/1EEAC` 分别比较原生四个名字首字节，仅非零才进入迁移；见 [正式机器码](20261019-retired-background-published-disassembly.txt)。这证明正式产物包含本次修复，不是仅修改源码。
 - 前一并行请求 `e92b0043ec6b4a8b9729aa0369e5fc18` / 批次 `3c8c4679427048a99afec79af849014c` 编译成功，但在发布前的独占打开检查中发现旧正式 Adapter 被占用，事务 `5b27641d71854e819c7ed3bcb67df4e6` 未开始移动正式文件。后续上述最终事务成功，不将中间失败算作已发布；当时具体占用者未由本聊天确认。
-- 本次正式发布未请求 Reload，无运行时 Applied 回执。根 `uwcn_launcher.exe` 与驻留桥沿用原正式文件；用户正常启动路径已能取得新 Adapter。没有独立修复包或平行运行目录。
+- 本次正式发布未请求 Reload，无运行时 Applied 回执。根 `urwcn_launcher.exe` 与驻留桥沿用原正式文件；用户正常启动路径已能取得新 Adapter。没有独立修复包或平行运行目录。
 
 未启动游戏、运行产物或测试，未创建测试脚本、用例或断言；实际运行效果尚未验证。

@@ -78,6 +78,6 @@ first、second、menu 及四个 named 缓存的语言 revision 跟随原 save/re
 
 所有构建请求进入根 `build.ps1` / `build-queue.ps1`。批次开始冻结请求集合，兼容的后续请求合并为下一批；模块取并集，任一全图请求即全图。统一工具链与发布参数，批次只配置和增量构建各一次。源码提交后保持冻结至回执完成。
 
-正式入口为根 `uwcn_launcher.exe`，驻留 DLL 为 `package/uwcn_loader.dll`，业务 DLL 位于 `package/modules/`，数据和适配文件也在 package。被替换文件先按原相对路径移入根 `回收/` 的事务目录，再放新文件。不生成平行运行包。
+正式入口为根 `urwcn_launcher.exe`，驻留 DLL 为 `package/urwcn_loader.dll`，业务 DLL 位于 `package/modules/`，数据和适配文件也在 package。被替换文件先按原相对路径移入根 `回收/` 的事务目录，再放新文件。不生成平行运行包。
 
 兼容模块事务是 Prepare、ReadyToPublish、文件归档替换、Commit、Applied；Ready 与构建成功均不能冒充 Applied。通用驻留桥自身或 ABI 迁移不宣称热更。源码、编译、正式发布和运行时应用分别记录。当前待办及真实完成范围以 README 和本轮交付记录为准，历史证据中的旧完成状态不继承。

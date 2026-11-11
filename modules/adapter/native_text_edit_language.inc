@@ -47,25 +47,25 @@ u32 continuation(const void* function) {
     return static_cast<u32>(reinterpret_cast<std::uintptr_t>(function)-host->image_base);
 }
 struct Setup {u32 target,frame,color,capacity;};
-extern "C" std::uintptr_t uwcn_text_edit_initial_target{};
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_text_edit_initial() {
+extern "C" std::uintptr_t urwcn_text_edit_initial_target{};
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_text_edit_initial() {
     // 10F68E cleans the second memset's original three arguments. The native
     // initial-buffer clearing call is skipped, but its stack shape remains.
-    __asm__ __volatile__("subl $12,%esp\n\tjmp *_uwcn_text_edit_initial_target\n\t");
+    __asm__ __volatile__("subl $12,%esp\n\tjmp *_urwcn_text_edit_initial_target\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_text_edit_setup_return() {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_text_edit_setup_return() {
     // The borrowed 10F5C5 setup still executes its original PUSH EDI at
     // 10F5CD. The two original earlier saves belong to the suspended frame.
     __asm__ __volatile__("popl %edi\n\tret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_text_edit_setup(const Setup*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_text_edit_setup(const Setup*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%eax\n\tmovl 4(%eax),%ebp\n\t"
         "movl 8(%eax),%ecx\n\tmovl 12(%eax),%edx\n\tcall *(%eax)\n\t"
         "popl %ebp\n\tpopl %edi\n\tpopl %esi\n\tpopl %ebx\n\tret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_text_edit_history(const native_component_calls::NoArgumentCall*) {
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_text_edit_history(const native_component_calls::NoArgumentCall*) {
     __asm__ __volatile__(
         "pushl %ebx\n\tpushl %esi\n\tpushl %edi\n\tpushl %ebp\n\t"
         "movl 20(%esp),%eax\n\tsubl $128,%esp\n\tcall *(%eax)\n\taddl $128,%esp\n\t"
@@ -85,7 +85,7 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(inline_hook(history_end,0xFECCA,{0xBA,0x5F,0,0,0}));
     auto affirmative=inline_hook(affirmative_end,0xFBAAE,{0x83,0x3D,0,0,0,0,0});
     field=address(at<void>(0x61BBA5C));std::memcpy(affirmative.expected+2,&field,4);hooks.push_back(affirmative);
-    uwcn_text_edit_initial_target=host->image_base+0x10F687;
+    urwcn_text_edit_initial_target=host->image_base+0x10F687;
 }
 Status history(const NativeEvent& event) {
     const auto current=native_menu_component::active();native_menu_component::retain(current);
@@ -100,7 +100,7 @@ Status history(const NativeEvent& event) {
         reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0xD0650)(selected,0);
         constructing=Construction::history;
         const native_component_calls::NoArgumentCall prompt{address(at<void>(0xFEBCB))};
-        uwcn_text_edit_history(&prompt);constructing=Construction::none;
+        urwcn_text_edit_history(&prompt);constructing=Construction::none;
     }
     native_menu_component::release(current);return status;
 }
@@ -117,7 +117,7 @@ Status after_message(Flow owner,const native_message_flow::Record& record) {
         // Yes echo at FBA91 using the flow's actual completed cursor output.
         constructing=Construction::affirmative;
         const native_component_calls::NoArgumentCall echo{address(at<void>(0xFBA91))};
-        native_component_calls::uwcn_component_skill_help(&echo);constructing=Construction::none;
+        native_component_calls::urwcn_component_skill_help(&echo);constructing=Construction::none;
     }
     for(const auto& value:prompt->second.values) {
         constructing=Construction::completed;completed_value=&value;construction_status=Status::ok;
@@ -146,7 +146,7 @@ Status redraw(const NativeEvent& event,DispatchResult& result,bool& handled,u32 
         constructing=Construction::origin;
         const Setup setup{address(at<void>(0x10F5C5)),event.frame->ebp,
             *ptr<const u32>(event.frame->ebp-0xAC),*ptr<const u32>(event.frame->ebp-0xB4)};
-        uwcn_text_edit_setup(&setup);constructing=Construction::none;
+        urwcn_text_edit_setup(&setup);constructing=Construction::none;
         event.frame->esi=*ptr<const u32>(event.frame->ebp-0xA4);
         event.frame->edi=*ptr<const u32>(event.frame->ebp-0xB8);
         event.frame->ebx=*ptr<const u32>(event.frame->ebp-0xAC);
@@ -213,9 +213,9 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         break;
     case initial_branch:
         if(constructing==Construction::completed)
-            result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_text_edit_initial));
+            result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_text_edit_initial));
         else if(constructing==Construction::origin)
-            result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_text_edit_setup_return));
+            result.resume_rva=continuation(reinterpret_cast<const void*>(urwcn_text_edit_setup_return));
         break;
     case input:
         if(constructing==Construction::completed) {event.frame->eax=13;result.skip_original=1;}
@@ -234,11 +234,11 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         break;
     case history_end:
         if(constructing==Construction::history)
-            result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::uwcn_component_fragment_return));
+            result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::urwcn_component_fragment_return));
         break;
     case affirmative_end:
         if(constructing==Construction::affirmative)
-            result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::uwcn_component_fragment_return));
+            result.resume_rva=continuation(reinterpret_cast<const void*>(native_component_calls::urwcn_component_fragment_return));
         break;
     }
     handled=result.skip_original || result.resume_rva;return Status::ok;

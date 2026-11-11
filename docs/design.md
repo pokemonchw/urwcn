@@ -10,13 +10,13 @@
 
 2026-10-18 用户最新要求优先：汉化须进入游戏原生 UI 的排版、绘制与缓存链，固定行槽和最终 present 叠字已撤除，上一阶段采用原生字体表供字（已由最新字形 Hook 取代），源码、编译和正式交付见 [文字链交付记录](evidence/native-ui-text-static.txt)，未运行验收；热重载须在任何游戏界面完成，不要求关闭当前窗口或返回主菜单。此前 Footer 限制和跨原生等待保留 adapter 调用帧的说明已撤销。当前通用桥整改及真实迁移限制见 [热重载设计](hot-reload.md)，既有实现的逐项问题见 [全量静态审查](evidence/native-ui-ownership-audit.txt)。
 
-2026-10-18 当前架构修订将热重载管理与汉化业务隔离，采用 Host ABI `3`、通用驻留 `uwcn_loader.dll` 与六个独立可重载业务 DLL。新增 `adapter`（ID `6`、掩码 `32`）接管所有已确认界面的原生作用域、字段读取、显示调用适配、输入规则与补丁描述；字段组织、词库、中文语义、字号与排版、字体与 SDL 绘制分别归属既有五模块。驻留层只管理模块、稳定 x86 thunk / slot、控制 Hook、原函数透传、租约和发布交接，不再含各窗口汉化逻辑。
+2026-10-18 当前架构修订将热重载管理与汉化业务隔离，采用 Host ABI `3`、通用驻留 `urwcn_loader.dll` 与六个独立可重载业务 DLL。新增 `adapter`（ID `6`、掩码 `32`）接管所有已确认界面的原生作用域、字段读取、显示调用适配、输入规则与补丁描述；字段组织、词库、中文语义、字号与排版、字体与 SDL 绘制分别归属既有五模块。驻留层只管理模块、稳定 x86 thunk / slot、控制 Hook、原函数透传、租约和发布交接，不再含各窗口汉化逻辑。
 
 adapter 采用短 Before / 驻留原函数 / 短 After 调度，原生输入等待期间不保留业务调用帧或租约；其他五模块保持同步短调用。请求通过通用驻留事件与等待泵处理，不依赖当前窗口或主菜单。驻留 thunk / slot 进程期稳定，游戏不持久保存 adapter 函数指针。兼容的窗口汉化、字号、字体和补丁规则更新均热更相应业务模块；真实通用桥迁移限制须单独说明，不得冒充用户的界面使用限制。
 
 五模块 / ABI `2` 到六模块 / ABI `3` 的迁移属于历史交付。本次任意界面重载桥已在用户退出旧进程后完成源码、统一队列编译及正式发布，未运行验收；详细回执见 [新桥交付记录](evidence/anywhere-reload-static.txt)。用户要求这是本轮整改最后一次退出，后续兼容更新使用统一编译队列和任意界面发布事务，原生 UI 所有权整改须在业务层完成。以下逐窗口接入段落保留迁移前历史与静态证据，涉及“新增驻留桥”的更新说明不再作为日常要求；仍不运行游戏、交付产物或测试。
 
-2026-10-18 用户新增主菜单汉化组标识：启用汉化时，在原制作组标志左侧绘制与 dfcn 相同的 Byayoi 像素 logo，下方两行依次为“Byayoi同人社区汉化”和自动版本号。原制作组图像及文字保留。新增 `TranslationCredit=0x300` 与 `TranslationVersion` 两个字段，仍沿用语义、词库、布局和 SDL 流水线；本功能不扩展公共结构，随并行框架迁移采用 Host ABI `3`。logo 随 Render 显示计划持有和释放，以整数像素单元缩放；署名、版本中心为逻辑 x540，行槽分别为 `{480,566,120,12}`、`{480,578,120,12}`。Host 仅通过 `metadata/package-identity` 提供以 `UWCN_PACKAGE_IDENTITY_V1` 开头的六模块与词库身份原字节，`main_menu` 参考 dfcn 的 SHA-256 五位混合字母数字规则计算显示版本；旧 `metadata/translation-version` 入口移除。详见 [标识静态记录](evidence/main-menu-branding-static.txt) 与 [版本规则](evidence/main-menu-branding-version-static.txt)。本次只作静态实现与交付编译，不启动游戏或执行测试。
+2026-10-18 用户新增主菜单汉化组标识：启用汉化时，在原制作组标志左侧绘制与 dfcn 相同的 Byayoi 像素 logo，下方两行依次为“Byayoi同人社区汉化”和自动版本号。原制作组图像及文字保留。新增 `TranslationCredit=0x300` 与 `TranslationVersion` 两个字段，仍沿用语义、词库、布局和 SDL 流水线；本功能不扩展公共结构，随并行框架迁移采用 Host ABI `3`。logo 随 Render 显示计划持有和释放，以整数像素单元缩放；署名、版本中心为逻辑 x540，行槽分别为 `{480,566,120,12}`、`{480,578,120,12}`。Host 仅通过 `metadata/package-identity` 提供以 `URWCN_PACKAGE_IDENTITY_V1` 开头的六模块与词库身份原字节，`main_menu` 参考 dfcn 的 SHA-256 五位混合字母数字规则计算显示版本；旧 `metadata/translation-version` 入口移除。详见 [标识静态记录](evidence/main-menu-branding-static.txt) 与 [版本规则](evidence/main-menu-branding-version-static.txt)。本次只作静态实现与交付编译，不启动游戏或执行测试。
 
 本次新增截图所示主菜单“先祖”列表页，完整反编译及静态调用依据见 [先祖列表记录](evidence/ancestors-static.txt) 与 [反编译输出](evidence/ancestors-ghidra.c)。`menu_op::ancestors` 沿既有五模块处理十一类固定字段及两种记录统计模板，每页最多七条；年龄、冒险天数、原生取整后的公里数和页数均在已确认格式化调用处复制，不解析英文句子。姓名、存档死亡描述、肖像、排序、分页、键帽和输入动作保留。独立纪念页及其他入口的死亡分支保持原生显示；列表计划在原重建调用更新，进入纪念页时暂停合成，返回后随原列表重建恢复。本次驻留桥需完整离线发布后由用户正常重启，不新增重载边界，亦不表示已运行验证。
 
@@ -155,7 +155,7 @@ UI 语义 ID、对象 ID 和字段角色分别建模。`inventory.group_heading`
 
 内部 inline Hook 首选支持 x86 指令搬移的 MinHook，固定依赖版本并检查安装结果；它不会自动解决自定义 ABI、字段布局或 UI 生命周期。[MinHook 官方仓库](https://github.com/TsudaKageyu/minhook)
 
-启动器提供原版、只读诊断和汉化模式；进程内采用驻留 `uwcn_loader.dll` 和可替换 `uwcn_core.dll`。启动器和驻留层职责分开，验证目标进程和模块指纹，不覆盖游戏 SDL DLL。若需在首次 UI 数据生成前加载，再实现并验证启动加载、Steam 环境、工作目录及参数传递。
+启动器提供原版、只读诊断和汉化模式；进程内采用驻留 `urwcn_loader.dll` 和可替换 `urwcn_core.dll`。启动器和驻留层职责分开，验证目标进程和模块指纹，不覆盖游戏 SDL DLL。若需在首次 UI 数据生成前加载，再实现并验证启动加载、Steam 环境、工作目录及参数传递。
 
 ## 模块和数据契约
 

@@ -63,7 +63,7 @@
 - `load-saved-character-parent-disassembly.txt`：主菜单保存、进入、恢复路径。
 - `load_saved_character_Decompile.java` 与 `load-saved-character-ghidra.c`：离线 Ghidra 提取脚本与完整函数输出。反编译推断的函数原型不替代机器指令中的寄存器/栈契约。
 
-本次独立项目 `build/load-saved-ghidra/uwcn-load-saved` 使用 Ghidra 12.1.4 PUBLIC 和 JDK 25.0.4.1+1，以专用 settings/cache 导入磁盘 EXE。自动分析耗时123秒并成功，七个指定函数均导出，后续分析、项目保存和导入也成功，进程退出码0。日志为 `load-saved-character-ghidra.log`，提取没有编译或运行游戏代码。
+本次独立项目 `build/load-saved-ghidra/urwcn-load-saved` 使用 Ghidra 12.1.4 PUBLIC 和 JDK 25.0.4.1+1，以专用 settings/cache 导入磁盘 EXE。自动分析耗时123秒并成功，七个指定函数均导出，后续分析、项目保存和导入也成功，进程退出码0。日志为 `load-saved-character-ghidra.log`，提取没有编译或运行游戏代码。
 
 完整反编译对照确认：`load-saved-character-ghidra.c:8` 的 `124E90` 保留目录读取和无存档/列表双分支；`:238` 的 `CFFB0` 明确 kind=8 选择 `115E70(flags=4)`；`:379` 的 `115E70` 根据该 flags 选择 mode=2；`:505` 的 `1157B0` 在 mode=2 不执行字符串计数分支；`:645` 的主菜单 case0 使用原背景保存、窗口调用与恢复。Ghidra 个别调用显示省略了寄存器参数，例如 `124E90` 对 `CF790` 的反编译调用没有列出标题寄存器，正文 `10E5A0` 原型也缺坐标/outline；这些参数已由同目录原始指令核对，未把不完整的推断原型用于Hook ABI。
 
@@ -91,8 +91,8 @@
 
 | 本轮正式文件（相对 `package/`） | SHA-256 |
 | --- | --- |
-| `modules/uwcn_adapter.dll` | `f106a36555b7528cf0e5aa6f22966b25bdd5d7417fbc489e92038c0d5d2252b3` |
-| `modules/uwcn_semantic.dll` | `2d826d31f2a07d6d93386d2e8ab0327496926f237ad34426983d7d2a469bc218` |
+| `modules/urwcn_adapter.dll` | `f106a36555b7528cf0e5aa6f22966b25bdd5d7417fbc489e92038c0d5d2252b3` |
+| `modules/urwcn_semantic.dll` | `2d826d31f2a07d6d93386d2e8ab0327496926f237ad34426983d7d2a469bc218` |
 | `catalog/zh-CN/main_menu.tsv` | `558d5e2f38b5d03774faa158cb84e59f6168598a20c66d7551ec9dea35af20f7` |
 
 本请求在08:17:11的失败事务为 `cc67068d4cee4db3ad31895d8a90ecfd`，其 `changed_files` 仅有其它并行新增的 profile 元数据和清单，业务 DLL 及词库已与正式文件一致。`publish.ps1:103–107` 在 `Reload` 且业务变更集为空时仍发出 mask=0 的 PREPARE；`src/loader/host.cpp:305` 明确拒绝 mask=0，所以返回 `Failed invalid request`。这是已观察到的发布入口缺陷，待单独整改；本轮未添加回退、不重发同一请求、不替换驻留桥，也没有为它另外创建修复包。拒绝发生在文件移动和 COMMIT 之前，此失败事务未改动正式文件、未退役模块、未创建所打印的回收目录。本页所需的源码、产物和正式文件已由以上前序批次交付；不将后续其它页面元数据归为本轮成果。

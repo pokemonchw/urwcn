@@ -54,4 +54,4 @@
 
 最终正式 Adapter SHA-256：`67d9627d0920a83462ac538999658b6a0d29696918eb6727f384fcdf6b1b762a`；最终消息词库 SHA-256：`d34102bcac8257c48074f5140c3b1078e7d1806339689925b5de63d8f3d412f2`；Windows profile SHA-256：`5fa3ea344633d038fbd58b47e58a4489c738152dbce5fd5bc99a820743f3c1d7`。源码目录词库/profile 与正式词库/profile、构建 Adapter 与正式 Adapter 的文件摘要分别一致。
 
-发布前只读进程清单未发现 `urw.exe`。没有发送 PREPARE/COMMIT、没有 Runtime Applied 回执；新版本供下一次从根 `uwcn_launcher.exe` 正常启动加载。根启动器和驻留库未替换。没有启动、关闭或重启游戏，没有注入或模拟输入，未测试或宣称已验收画面。
+发布前只读进程清单未发现 `urw.exe`。没有发送 PREPARE/COMMIT、没有 Runtime Applied 回执；新版本供下一次从根 `urwcn_launcher.exe` 正常启动加载。根启动器和驻留库未替换。没有启动、关闭或重启游戏，没有注入或模拟输入，未测试或宣称已验收画面。

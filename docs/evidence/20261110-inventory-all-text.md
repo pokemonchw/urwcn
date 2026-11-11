@@ -97,4 +97,4 @@ catalog:cd5ea4f63e239691176f6bf1e38a1b4c232a0c9c5f8182eb80aacefbfa8e6719:3
 adapter:f8dd56f302f9bb0bd01bd81e1d190b2110e6c9e4152ac6e7c39b28afb3e56ee1:3
 ```
 
-新 Adapter 已放入正式 `package/modules/uwcn_adapter.dll` 并更新正式 `release.json`；替换前的旧件保存在 `回收/20261110-181502-65d0729aef4c42a59a2667cb46aa8ad8/`，未生成平行运行副本。词库沿用首次事务已放入的正式版本。编译有既有函数指针转换、extern 初始化及未使用函数警告，无编译错误。Applied 证明模块热交接完成；本任务没有运行测试或进行游戏视觉、操作验收，闪退根因仍待实际触发信息或异常转储确认。
+新 Adapter 已放入正式 `package/modules/urwcn_adapter.dll` 并更新正式 `release.json`；替换前的旧件保存在 `回收/20261110-181502-65d0729aef4c42a59a2667cb46aa8ad8/`，未生成平行运行副本。词库沿用首次事务已放入的正式版本。编译有既有函数指针转换、extern 初始化及未使用函数警告，无编译错误。Applied 证明模块热交接完成；本任务没有运行测试或进行游戏视觉、操作验收，闪退根因仍待实际触发信息或异常转储确认。
