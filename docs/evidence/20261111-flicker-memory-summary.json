@@ -1,0 +1,386 @@
+{
+  "date": "2026-11-11",
+  "timezone": "Asia/Shanghai",
+  "pid": 7980,
+  "image_base": "0x00810000",
+  "adapter_base": "0x50EC0000",
+  "catalog_base": "0x52720000",
+  "scope": "OpenProcess(0x410)/ReadProcessMemory only. No memory writes, suspension, injection, inputs, pixels, tests or product execution.",
+  "first_capture": {
+    "first_time": "2026-11-11T20:02:48.637396+08:00",
+    "last_time": "2026-11-11T20:02:56.671918+08:00",
+    "samples": 160,
+    "surface_state_variants": 1,
+    "texture_state_variants": 1,
+    "language_revisions": [
+      5
+    ],
+    "first_snapshot": {
+      "time": "2026-11-11T20:02:48.637396+08:00",
+      "globals": {
+        "disable_flip": 0,
+        "map_enabled": 1,
+        "transition": 0,
+        "map_mode": 0,
+        "color_a": 0,
+        "color_b": 0,
+        "color_c": 0,
+        "event_type": 32512
+      },
+      "event_hex": "007f00004ba82d00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "adapter": {
+        "redraw": [
+          536854459,
+          0
+        ],
+        "revision": 5,
+        "chinese": 1,
+        "canvas": [
+          800,
+          600,
+          2735,
+          2050
+        ],
+        "hud_constructing": 0
+      },
+      "surfaces": {
+        "main": {
+          "ptr": "0xb6a0d08",
+          "whp": [
+            2738,
+            2054,
+            10952
+          ]
+        },
+        "hud": {
+          "ptr": "0x20cf9508",
+          "whp": [
+            424,
+            547,
+            1696
+          ]
+        },
+        "back1": {
+          "ptr": "0xf7e3b18",
+          "whp": [
+            2738,
+            2054,
+            10952
+          ]
+        },
+        "back2": {
+          "ptr": "0xf7e3d98",
+          "whp": [
+            2738,
+            2054,
+            10952
+          ]
+        },
+        "back3": {
+          "ptr": "0xf7e4018",
+          "whp": [
+            2738,
+            2054,
+            10952
+          ]
+        },
+        "back4": {
+          "ptr": "0xf7e4e00",
+          "whp": [
+            2738,
+            2054,
+            10952
+          ]
+        }
+      },
+      "textures": {
+        "upload": {
+          "ptr": "0xb6aa6b0",
+          "format_access_wh": [
+            372645892,
+            0,
+            2738,
+            2054
+          ],
+          "metadata": "f085ac520420361600000000b20a000006080000000000000000000002000000ffffffff281b6a0b000000000000000000000000000000000000000000000000"
+        },
+        "map_target": {
+          "ptr": "0x20b37990",
+          "format_access_wh": [
+            372645892,
+            2,
+            1800,
+            1800
+          ],
+          "metadata": "f085ac5204203616020000000807000008070000000000000000000002000000ffffffff281b6a0b000000000000000000000000000000000000000000000000"
+        },
+        "map_source": {
+          "ptr": "0x20b378a0",
+          "format_access_wh": [
+            372645892,
+            2,
+            1800,
+            1800
+          ],
+          "metadata": "f085ac5204203616020000000807000008070000000000000000000002000000ffffffff281b6a0b000000000000000000000000000000000000000000000000"
+        }
+      },
+      "renderer": {
+        "ptr": "0xb6a1b28",
+        "logical": [
+          800,
+          600
+        ],
+        "viewport": [
+          547.7333450317383,
+          0.0,
+          2735.243391752243,
+          2050.57671046257
+        ],
+        "scale": [
+          3.4233334064483643,
+          3.4233334064483643
+        ],
+        "target": "0x0",
+        "clip_enabled": 0
+      }
+    }
+  },
+  "second_capture": {
+    "capture_end": "2026-11-11T20:05:41.251364+08:00",
+    "elapsed_ms": 8403.52,
+    "samples": 2400,
+    "status_counts": {
+      "2": 2368,
+      "0": 32
+    },
+    "pending_values": [
+      "0x1fffbfbb"
+    ],
+    "text_edit_status_counts": {
+      "0": 2400
+    },
+    "timer_events_observed": 25,
+    "timer_interval_ms": {
+      "333": 19,
+      "334": 5
+    },
+    "hud_rebuild_starts_observed": 25,
+    "first_rebuild_phases": [
+      {
+        "ms": 256.098,
+        "event": [
+          32768,
+          3156664,
+          1000,
+          3156331
+        ],
+        "pending": 536854459,
+        "status": 2,
+        "painting": 0,
+        "record": 0,
+        "constructing": 1,
+        "map_mode": 0,
+        "generation": 7501635
+      },
+      {
+        "ms": 287.739,
+        "event": [
+          32768,
+          3156664,
+          1000,
+          3156331
+        ],
+        "pending": 536854459,
+        "status": 2,
+        "painting": 0,
+        "record": 0,
+        "constructing": 1,
+        "map_mode": 1,
+        "generation": 7501640
+      },
+      {
+        "ms": 291.288,
+        "event": [
+          32768,
+          3156664,
+          1000,
+          3156331
+        ],
+        "pending": 536854459,
+        "status": 2,
+        "painting": 0,
+        "record": 0,
+        "constructing": 1,
+        "map_mode": 0,
+        "generation": 7501640
+      },
+      {
+        "ms": 294.835,
+        "event": [
+          32768,
+          3156664,
+          1000,
+          3156331
+        ],
+        "pending": 536854459,
+        "status": 2,
+        "painting": 22,
+        "record": 0,
+        "constructing": 0,
+        "map_mode": 0,
+        "generation": 7501643
+      },
+      {
+        "ms": 298.386,
+        "event": [
+          32768,
+          3156664,
+          1000,
+          3156331
+        ],
+        "pending": 536854459,
+        "status": 0,
+        "painting": 22,
+        "record": 923327872,
+        "constructing": 0,
+        "map_mode": 0,
+        "generation": 7501643
+      },
+      {
+        "ms": 301.847,
+        "event": [
+          32768,
+          3156664,
+          1000,
+          3156331
+        ],
+        "pending": 536854459,
+        "status": 2,
+        "painting": 0,
+        "record": 0,
+        "constructing": 0,
+        "map_mode": 0,
+        "generation": 7501643
+      }
+    ],
+    "render_command_generation_start": 7501635,
+    "render_command_generation_end": 7539935,
+    "note": "SDL render command generations count command flushes, not presented frames. Raw live-2 start field was written after collection, so it is recorded here as capture_end."
+  },
+  "message_flow": {
+    "handle": 22,
+    "records": 13,
+    "first_unavailable_record": {
+      "address": "0x3708e0f0",
+      "identity": 8,
+      "native_input": "You try to swing Herppa with your kaumolais spear.",
+      "english": "You try to swing Herppa with your kaumolais spear.",
+      "text": {
+        "address": "0x3708e128",
+        "kind": 1,
+        "component": "0x10200",
+        "original": "You try to swing Herppa with your kaumolais spear.",
+        "key": "",
+        "children": [],
+        "syntax": [],
+        "catalog_key": "message.literal.596f752074727920746f207377696e6720486572707061207769746820796f7572206b61756d6f6c6169732073706561722e",
+        "present_in_formal_catalog": false
+      },
+      "missing": [
+        {
+          "original": "You try to swing Herppa with your kaumolais spear.",
+          "key": "message.literal.596f752074727920746f207377696e6720486572707061207769746820796f7572206b61756d6f6c6169732073706561722e"
+        }
+      ]
+    }
+  },
+  "loaded_catalog": {
+    "lookups": 29,
+    "missing": [
+      {
+        "record": 8,
+        "key": "message.literal.596f752074727920746f207377696e6720486572707061207769746820796f7572206b61756d6f6c6169732073706561722e",
+        "found": false,
+        "value": null,
+        "search_path": [
+          {
+            "node": "0xdc3fd50",
+            "key": "message.value.geography.region.696e206e6f7274682d6561737465726e205265656d69"
+          },
+          {
+            "node": "0xd74d160",
+            "key": "message.value.conversation.place.5374696c6c77696465"
+          },
+          {
+            "node": "0xed56aa8",
+            "key": "message.value.conversation.place.4461792077696c6473"
+          },
+          {
+            "node": "0xd5c9148",
+            "key": "message.value.conversation.form.4974206d69676874206265207769736520746f206b6565702067756172642061726f756e6420686572652e"
+          },
+          {
+            "node": "0xdea10f0",
+            "key": "message.literal.5f4e6f74696365207468617420796f752063616e206f6e6c792064697363617264206974656d7320746861742061726520636f6e7369646572656420746f20626520796f7572732e"
+          },
+          {
+            "node": "0xee34540",
+            "key": "message.format.0059cedc"
+          },
+          {
+            "node": "0xdc09b48",
+            "key": "message.literal.2142756720696e204c6f79646574747954617276696b6528292066756e6374696f6e2e205265706f727421"
+          },
+          {
+            "node": "0xd6a4710",
+            "key": "message.literal.2b4f6b2e20546865206261697420686173206265656e207365742e"
+          },
+          {
+            "node": "0xedeb5b0",
+            "key": "message.literal.4569"
+          },
+          {
+            "node": "0xd5f52a8",
+            "key": "message.literal.526f736d6f613f"
+          },
+          {
+            "node": "0xd525e60",
+            "key": "message.literal.57697a6172643a20436c6f616b696e67206f6e"
+          },
+          {
+            "node": "0xd64ac00",
+            "key": "message.literal.59727474697661696b7574756b7365742061736574657461616e"
+          },
+          {
+            "node": "0xd525f38",
+            "key": "message.literal.596f7520686561722074686520726976657220666c6f77696e6720706561636566756c6c7920616865616420617320"
+          },
+          {
+            "node": "0xd64aa30",
+            "key": "message.literal.596f75207468696e6b20796f7520686561726420736f6d6520727573746c652e"
+          },
+          {
+            "node": "0xd64ad20",
+            "key": "message.literal.596f752077616b6520757020746f20736f6d656f6e652074616c6b696e6720746f20796f752e2e2e"
+          },
+          {
+            "node": "0xd5267f0",
+            "key": "message.literal.596f75207468696e6b20796f752073617720736f6d657468696e67206d6f766520696e207468652064697374616e63652e"
+          }
+        ]
+      }
+    ]
+  },
+  "formal_sha256": {
+    "package\\modules\\urwcn_adapter.dll": "b712d15ec0df459d61f7557fdcd0eb39012e57230c380de7f85bfe09239548df",
+    "package\\modules\\urwcn_catalog.dll": "6bbf0f17ac1614429c8c020629746154e08906e17041c1dc1feb183977bc4aa5",
+    "package\\catalog\\zh-CN\\messages.tsv": "41ebf056879554168f0f1a2392732710b4349d87b3f0f3621dda709da166d202"
+  },
+  "raw_files": [
+    "build/analysis/20261111-flicker-live-1.json",
+    "build/analysis/20261111-flicker-live-2.json",
+    "build/analysis/20261111-flicker-message-records.json",
+    "build/analysis/20261111-flicker-live-catalog.json"
+  ]
+}

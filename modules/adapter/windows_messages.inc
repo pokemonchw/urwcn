@@ -386,19 +386,24 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         const auto& neutral=painting ? native_message_flow::painting_record().text :
             native_message_flow::record(event.frame->ebp).text;
         std::string projected;
-        auto status=chinese_enabled ? message_project_source(neutral,true,projected) :
-            decode_parser_original(at<char>(0x61a84b8),projected);
-        if(status!=Status::ok) {
-            if(painting) {generated_status=status;result.resume_rva=0xf6ebb;return Status::ok;}
-            return status;
-        }
         std::vector<char> encoded;
-        // An original player/name field can contain actual UTF-8 while the
-        // surrounding message is English. Decide from that complete accepted
-        // semantic input, before producing the native display transport.
-        const bool unicode=!chinese_enabled && native_name_input::requires_unicode(projected.c_str());
-        const native_name_input::UnicodeMeasure encoding(unicode ? projected.c_str() : "");
-        status=codec(layout_op::encode_native,projected.c_str(),encoded);
+        auto status=Status::ok;
+        bool translated=false,unicode=false;
+        if(chinese_enabled) {
+            status=message_project_source(neutral,true,projected);
+            if(status==Status::ok) status=codec(layout_op::encode_native,projected.c_str(),encoded);
+            translated=status==Status::ok;
+        }
+        if(!translated) {
+            // The user requires failed translations to display the accepted
+            // original. F6510 has already consumed its sound field here;
+            // this same body belongs to both live and rebuilt messages.
+            projected.clear();
+            status=decode_parser_original(at<char>(0x61a84b8),projected);
+            unicode=native_name_input::requires_unicode(projected.c_str());
+            const native_name_input::UnicodeMeasure encoding(unicode ? projected.c_str() : "");
+            if(status==Status::ok) status=codec(layout_op::encode_native,projected.c_str(),encoded);
+        }
         if(status!=Status::ok) {
             if(painting) {generated_status=status;result.resume_rva=0xf6ebb;return Status::ok;}
             return status;
@@ -408,7 +413,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         // exact consumer, so remove only the actually consumed sound field.
         const bool sound=painting ? native_message_flow::painting_record().sound_field :
             native_message_flow::record(event.frame->ebp).sound_field;
-        if(chinese_enabled && sound) {
+        if(translated && sound) {
             const auto* body=std::strchr(encoded.data(),'}')+1;
             encoded.erase(encoded.begin(),encoded.begin()+(body-encoded.data()));
         }

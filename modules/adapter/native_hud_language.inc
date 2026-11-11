@@ -170,6 +170,11 @@ Status rebuild() {
     // formatter scratch record while the original complete wielded UI runs.
     std::array<std::uint8_t,0x568> item_name_record;
     std::memcpy(item_name_record.data(),at<void>(0x5DF9DB8),item_name_record.size());
+    // FA2FB replaces the right-panel background before messages are rebuilt.
+    // 10388C otherwise presents that intermediate state through 10B720.
+    // Retain the caller's native flip state across the complete construction.
+    const auto flip=*at<u32>(0x61BBA5C);
+    *at<u32>(0x61BBA5C)=1;
     constructing=true;
     using Native=void (URWCN_CALL *)();
     reinterpret_cast<Native>(host->image_base+0xFA2A0)();
@@ -193,6 +198,7 @@ Status rebuild() {
     constructing=false;
     std::memcpy(at<void>(0x5DF9DB8),item_name_record.data(),item_name_record.size());
     const auto status=messages();
+    *at<u32>(0x61BBA5C)=flip;
     if(status==Status::ok) native_language_redraw::completed(hud_view);
     return status;
 }
