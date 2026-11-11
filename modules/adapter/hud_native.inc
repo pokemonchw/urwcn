@@ -158,6 +158,16 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
         return Status::ok;
     case hud_center_fit:
         if(in(Scope::hud_centered)) {
+            auto* next_word=ptr<char>(e.frame->ebp-0x804);
+            if(in(Scope::footer_centered) && std::strcmp(next_word,"<br>")==0) {
+                // 10EA01..10EACB flushes and centers the current line,
+                // advances by the native line pitch, then copies this next
+                // word. A semantic break contributes an empty next line.
+                next_word[0]=0;
+                e.frame->eax=*ptr<u32>(e.frame->ebp+8)+1;
+                result.skip_original=1;
+                return Status::ok;
+            }
             render::Metrics line{},word{};
             auto status=metrics(ptr<char>(e.frame->ebp-0x404),line);
             if(status!=Status::ok) return status;

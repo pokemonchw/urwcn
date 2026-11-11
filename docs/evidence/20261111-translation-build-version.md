@@ -2,6 +2,8 @@
 
 2026-11-11。用户要求与 dfcn 一致，在现有汉化版本前增加编译的年、月、日、小时。显示格式为 `yyyy.MM.dd.HH.XXXXX`，其中 `XXXXX` 保留现有五位大写字母数字内容指纹。月份、日期和小时补零。
 
+后续错位修正：用户要求版本标签与号码分行、仍放右侧。版本来源和格式保留，署名文字链改为原生逐行居中；布局修改与仍待整改的外层所有权边界见 [页脚错位记录](20261111-footer-alignment.md)。
+
 ## 静态依据与修改
 
 - 本机 `/home/lulika/workspace/dfcn/tools/build.py:715` 的 `stamp_core_version` 将 `build_hour + '.' + 五位指纹` 写入版本槽；`:858`、`:1103` 使用本地 `datetime.now().strftime("%Y.%m.%d.%H")` 取得编译小时。`src/credits.inc:4` 的占位格式为 `0000.00.00.00.00000`。

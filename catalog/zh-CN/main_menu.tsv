@@ -110,7 +110,7 @@ menu.quit	退出
 menu.bonus_material	额外内容
 main.version	版本 {value}
 main.translation_credit	Byayoi同人社区
-main.translation_version	汉化版本：{value}
+main.translation_version	汉化版本<br>{value}
 main.production	Enormous Elk<br>出品
 main.copyright	版权所有 (c) {value}<br>    Sami Maaranen
 main.authors	创作与编程：Sami Maaranen。<br>追加编程与共同设计：Erkka Lehmus。<br>Linux 与 MacOSX 移植主要由 Tuukka Pasanen 完成。<br><br>www.unrealworld.fi

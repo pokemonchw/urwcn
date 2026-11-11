@@ -4,11 +4,14 @@ u64 footer_component_token(native_footer_component::Handle handle) {
     return 0xFFFFFFFD00000000ull|handle;
 }
 Status paint_footer_sprite(std::int32_t x,std::int32_t y) {
-    const render::SpriteRequest sprite{*at<void*>(0x61BBB10),x,y,800,600};
+    auto* surface=*at<void*>(0x61BBB10);
+    const auto domain=native_targets::component_surface_source(surface);
+    const render::SpriteRequest sprite{surface,x,y,domain.width,domain.height};
     return host->invoke(ModuleId::render,render::op::sprite,&sprite,sizeof(sprite),nullptr,nullptr);
 }
 void enter_footer_component(native_footer_component::Handle handle,u32 outline) {
-    active.push_back({footer_component_token(handle),Scope::paragraph,0,0,0,0,outline});
+    active.push_back({footer_component_token(handle),Scope::footer_centered,0,0,0,0,outline});
+    active.push_back({footer_component_token(handle),Scope::hud_centered,0,0,0,0,outline});
     native_component_binding::begin_parser_owner();
 }
 Status leave_footer_component(native_footer_component::Handle handle) {
@@ -20,7 +23,7 @@ Status leave_footer_component(native_footer_component::Handle handle) {
 }
 native_footer_component::Services footer_services() {
     return {resolve_display_text,encode_component_original,measure_component_text,
-        encode_component_words,paint_footer_sprite,enter_footer_component,leave_footer_component};
+        paint_footer_sprite,enter_footer_component,leave_footer_component};
 }
 void footer_native_panel(const NativeEvent& e) {
     native_component_binding::note_original_for_consumer(e,ptr<char>(e.arguments[2]));

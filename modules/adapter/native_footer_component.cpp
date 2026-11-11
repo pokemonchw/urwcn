@@ -1,5 +1,6 @@
 #include "native_footer_component.h"
-#include "native_paragraph.h"
+#include "native_component_calls.h"
+#include "native_root_component.h"
 #include "../render/byayoi_sprite.h"
 #include <algorithm>
 #include <cstring>
@@ -54,6 +55,39 @@ struct Reader {
         return {component,std::move(original),std::move(value),has_value,policy,std::move(prefix),std::move(suffix)};
     }
 };
+Status paint_text(const Source& source,const std::string& text) {
+    // Measure semantic <br> fragments with the same outline scope as the
+    // complete native centered-text call. Markup is not printable text.
+    std::int32_t width{};
+    std::string native_text;
+    std::size_t begin=0;
+    for(;;) {
+        const auto end=text.find("<br>",begin);
+        const auto fragment=text.substr(begin,end==std::string::npos ? end : end-begin);
+        std::int32_t fragment_width{};
+        const auto status=services.measure(fragment.c_str(),fragment_width);
+        if(status!=Status::ok) return status;
+        width=std::max(width,fragment_width);
+        native_text+=fragment;
+        if(end==std::string::npos) break;
+        // D4430, called by 10E910, consumes space-delimited input records.
+        native_text+=" <br> ";begin=end+4;
+    }
+    const auto& panel=std::get<native_component_model::PanelInputs>(native_component_model::get(source.panel).inputs);
+    const auto& production=std::get<native_component_model::ParagraphInputs>(native_component_model::get(source.production).inputs);
+    const auto& logo=native_image_component::get(source.logo);
+    const auto gap=logo.y-panel.origin.y.input;
+    // This added sibling uses the current native root's right edge. The
+    // original developer paragraph and its panel are not its right boundary.
+    const auto x=native_root_component::source(source.source.owner).width-gap-width;
+    const auto status=services.sprite(x+(width-byayoi_sprite::width)/2,logo.y);
+    if(status!=Status::ok) return status;
+    const native_component_calls::CenteredTextCall call{
+        static_cast<u32>(base+0x10E910),x,logo.y+byayoi_sprite::height+gap,
+        width,native_text.c_str(),production.color,production.outline};
+    native_component_calls::uwcn_component_centered_text(&call);
+    return Status::ok;
+}
 }
 void initialize(std::uintptr_t image_base) {
     base=image_base;services={};next_handle=1;models.clear();current_sources.clear();
@@ -95,29 +129,11 @@ Status paint(Handle handle) {
     // The explicitly authored English resources are empty. Their sprite and
     // paragraph exist exactly when the shared semantic resources have content.
     if(credit.front()==0 && version.front()==0) return Status::ok;
-    std::int32_t credit_width{},version_width{};
-    status=services.measure(credit.data(),credit_width);if(status!=Status::ok) return status;
-    status=services.measure(version.data(),version_width);if(status!=Status::ok) return status;
-    const auto width=std::max(credit_width,version_width);
-    const auto& panel=std::get<native_component_model::PanelInputs>(native_component_model::get(source.panel).inputs);
     const auto& production=std::get<native_component_model::ParagraphInputs>(native_component_model::get(source.production).inputs);
-    const auto& logo=native_image_component::get(source.logo);
-    // 12510E supplies native_input x/y/width; 125125 supplies the sibling
-    // image's original y. Their actual separation is the footer's own gap.
-    const auto gap=logo.y-panel.origin.y.input;
-    const auto x=panel.origin.x.input+panel.width.input-gap-width;
-    status=services.sprite(x+(width-byayoi_sprite::width)/2,logo.y);
-    if(status!=Status::ok) return status;
-    const std::string paragraph=std::string(credit.data())+"<br>"+version.data();
-    std::vector<char> words(paragraph.begin(),paragraph.end());words.push_back(0);
-    status=services.paragraph_words(words);if(status!=Status::ok) return status;
     services.enter(handle,production.outline);
-    using Parse=void (__fastcall *)(u32,const char*);
-    reinterpret_cast<Parse>(base+0x162300)(1,words.data());
-    const NativeParagraphCall call{static_cast<u32>(base+0x10EB40),x,
-        logo.y+byayoi_sprite::height+gap,width,byayoi_sprite::height,production.color,production.outline};
-    uwcn_draw_native_paragraph(&call);
-    return services.leave(handle);
+    status=paint_text(source,std::string(credit.data())+"<br>"+version.data());
+    const auto leave_status=services.leave(handle);
+    return status==Status::ok ? leave_status : status;
 }
 std::vector<std::uint8_t> save() {
     Writer output;output.scalar(next_handle);output.scalar(static_cast<u32>(models.size()));

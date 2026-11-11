@@ -19,7 +19,6 @@ struct Services {
     native_text_resource::Resolve resolve;
     native_text_resource::EncodeOriginal encode_original;
     Status (*measure)(const char*,std::int32_t&);
-    Status (*paragraph_words)(std::vector<char>&);
     Status (*sprite)(std::int32_t x,std::int32_t y);
     void (*enter)(Handle,u32 outline);
     Status (*leave)(Handle);
