@@ -23,7 +23,8 @@ enum Hook:u32 {
     text_first=0x18200,name_copy=0x18300,row_format,partial_row_format,item_button,
     viewing_all,viewing_category,all_types_format,viewing_width,all_types_width,
     enter_origin,remaining_format,
-    extra_text_first=0x18320,weight_copy=0x18340,quantity_format,quantity_more_format,cancel_source
+    extra_text_first=0x18320,weight_copy=0x18340,quantity_format,quantity_more_format,cancel_source,
+    confirmation_text_first=0x18360
 };
 struct TextCall {u32 site,target;const char* domain;};
 constexpr TextCall text_calls[]{
@@ -66,6 +67,16 @@ constexpr TextCall extra_text_calls[]{
     {0xFC05F,0x10E5A0,"inventory.ui"},
     {0xFBC54,0xCFAF0,"inventory.ui"},
     {0xFBC6D,0xCFAF0,"inventory.ui"}
+};
+// Additional full confirmation calls recovered from the 3.89.1 PE.
+// Existing inventory and confirmation Hook IDs remain unchanged.
+constexpr TextCall confirmation_text_calls[]{
+    {0xFB9F5,0xCFAF0,"inventory.ui"},
+    {0xFBA0E,0xCFAF0,"inventory.ui"},
+    {0xFBA71,0x10E5A0,"confirmation.ui"},
+    {0xFBAA6,0x10E5A0,"confirmation.ui"},
+    {0xFBCDE,0x10E5A0,"confirmation.ui"},
+    {0xFBD12,0x10E5A0,"confirmation.ui"}
 };
 
 std::string expression_key(const MessageText& source) {
@@ -129,7 +140,7 @@ Status bind_text(const NativeEvent& e,const TextCall& c) {
         return consume_source(e,expression(original,message_source_bound(original)),argument,
             c.target==0x116270 ? Scope::titled_panel : Scope::text);
     }
-    if(c.site==0xFBC54 || c.site==0xFBC6D) {
+    if(c.site==0xFBC54 || c.site==0xFBC6D || c.site==0xFB9F5 || c.site==0xFBA0E) {
         // These actual labels are <Y>es / <N>o, with native highlight
         // delimiters, rather than the dotted keycap syntax used below.
         return consume_source(e,native_text_resource::from_request(
@@ -182,6 +193,10 @@ void append_hooks(std::vector<HookSpec>& hooks) {
         hooks.push_back(call(extra_text_first+i,c.site,c.target,c.target==0x116270 ? 5 :
             c.target==0xCFAF0 ? 2 : 3));
     }
+    if(windows_build::is_3891()) for(u32 i=0;i<std::size(confirmation_text_calls);++i) {
+        const auto& c=confirmation_text_calls[i];
+        hooks.push_back(call(confirmation_text_first+i,c.site,c.target,c.target==0xCFAF0 ? 2 : 3));
+    }
     // 4BD15..4BD1F prepares the exact 4B2F0 return's native copy. The loop
     // backedge starts at 4BD20, after this single source association.
     hooks.push_back(inline_hook(weight_copy,0x4BD15,{0x8B,0xD3,0x2B,0xD0,0x0F,0x1F,0x80,0,0,0,0}));
@@ -192,10 +207,13 @@ void append_hooks(std::vector<HookSpec>& hooks) {
 Status dispatch(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=(e.id>=text_first && e.id<=remaining_format) ||
         (e.id>=extra_text_first && e.id<extra_text_first+std::size(extra_text_calls)) ||
+        (e.id>=confirmation_text_first && e.id<confirmation_text_first+std::size(confirmation_text_calls)) ||
         (e.id>=weight_copy && e.id<=cancel_source);
     if(!handled) return Status::ok;
     if(e.id>=extra_text_first && e.id<extra_text_first+std::size(extra_text_calls))
         return e.phase==NativePhase::before ? bind_text(e,extra_text_calls[e.id-extra_text_first]) : Status::ok;
+    if(e.id>=confirmation_text_first && e.id<confirmation_text_first+std::size(confirmation_text_calls))
+        return e.phase==NativePhase::before ? bind_text(e,confirmation_text_calls[e.id-confirmation_text_first]) : Status::ok;
     if(e.id==weight_copy) {
         if(e.phase==NativePhase::inline_before) {
             const auto* original=ptr<char>(e.frame->eax);

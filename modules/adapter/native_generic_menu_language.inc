@@ -1,6 +1,10 @@
 // Remaining current D1120 owners from the complete 36-call census. Each
 // branch names an actual original owner; there is no default HUD parent.
 namespace native_conversation_language {Status rebuild();}
+namespace windows_inventory {
+native_text_resource::TextSource expression(const char*,const MessageText&,TextComponent);
+Status consume_source(const NativeEvent&,const native_text_resource::TextSource&,u32,Scope);
+}
 namespace native_generic_menu_language {
 using View=native_language_redraw::View;
 enum class Construction {none,query,history,known_detail,known_list,known_field};
@@ -10,11 +14,16 @@ enum Hook:u32 {query_finished=0x51E0,query_second_finished,history_entry,
     history_cache,history_body_entry,history_finished,known_detail_finished,known_list_finished,
     known_list_cleanup,history_line_width,history_append,history_paragraph,history_footer,
     query_panel,query_second_panel,field_input,
-    field_text=0x5265,field_cursor_width,field_detail_finished};
+    field_text=0x5265,field_cursor_width,field_detail_finished,
+    query_input,query_second_input};
 extern "C" std::uintptr_t uwcn_generic_history_capacity_target{};
 extern "C" std::uintptr_t uwcn_generic_history_body_target{};
 extern "C" std::uintptr_t uwcn_generic_history_eof{};
 extern "C" std::uintptr_t uwcn_generic_history_eof_return{};
+extern "C" {
+std::uintptr_t uwcn_generic_query_input_target{},uwcn_generic_query_input_return{},
+    uwcn_generic_query_second_input_return{};
+}
 
 struct Query {u32 target,frame,text;};
 struct KnownDetail {u32 target,frame,self;};
@@ -32,9 +41,13 @@ extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_query(const Query*
         "movl 8(%eax),%esi\n\tcall *(%eax)\n\t"
         "popl %ebp\n\tpopl %edi\n\tpopl %esi\n\tpopl %ebx\n\tret\n\t");
 }
-extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_query_return() {
-    // FB988/FBBE7 precede the original ADD ESP,24h panel argument cleanup.
-    __asm__ __volatile__("addl $36,%esp\n\tret\n\t");
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_query_input() {
+    // Preserve D1120's actual native caller at EBP+4. A phased CALL hook
+    // would replace it with the resident After bridge and hide its owner.
+    __asm__ __volatile__("pushl _uwcn_generic_query_input_return\n\tjmp *_uwcn_generic_query_input_target\n\t");
+}
+extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_query_second_input() {
+    __asm__ __volatile__("pushl _uwcn_generic_query_second_input_return\n\tjmp *_uwcn_generic_query_input_target\n\t");
 }
 extern "C" __attribute__((naked)) void UWCN_CALL uwcn_generic_history_capacity() {
     // FE3C7's original capacity calculation begins with the three pending
@@ -83,6 +96,10 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(history_footer,0xFEA3C,0x10E5A0,3));
     hooks.push_back(call(query_panel,0xFB983,0x116270,5));
     hooks.push_back(call(query_second_panel,0xFBBE2,0x116270,5));
+    // The original relative CALL is always continued explicitly, never
+    // replayed from an inline trampoline at a different instruction address.
+    hooks.push_back(inline_hook(query_input,0xFBA25,{0xE8,0xF6,0x56,0xFD,0xFF}));
+    hooks.push_back(inline_hook(query_second_input,0xFBC93,{0xE8,0x88,0x54,0xFD,0xFF}));
     hooks.push_back(call(field_input,0x10FB17,0xD3BF0,0));
     hooks.push_back(call(field_text,0x10FA4D,0x10E260,4));
     hooks.push_back(inline_hook(field_cursor_width,0x10FA77,{0x8D,0x14,0xD5,2,0,0,0}));
@@ -91,6 +108,9 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     uwcn_generic_history_body_target=host->image_base+0xFE673;
     uwcn_generic_history_eof=*at<u32>(0x18C4E0);
     uwcn_generic_history_eof_return=host->image_base+0xFE487;
+    uwcn_generic_query_input_target=host->image_base+0xD1120;
+    uwcn_generic_query_input_return=host->image_base+0xFBA2A;
+    uwcn_generic_query_second_input_return=host->image_base+0xFBC98;
 }
 
 Status query(const NativeEvent& event,bool second) {
@@ -108,26 +128,14 @@ Status query(const NativeEvent& event,bool second) {
     if(status!=Status::ok) return status;
     constructing=Construction::query;
     const Query input{address(at<void>(second ? 0xFBB97 : 0xFB938)),owner,address(text.c_str())};
-    // Begin after the original F6510 echo. The complete original formatter,
-    // FIRST save and 116270 query panel run; the accepted Menu stays alive.
+    // Begin after the original F6510 echo. Continue through the original
+    // Panel, CF790, both CFAF0 buttons and the empty native input actions.
+    // CFAF0 paints these kind-100 buttons immediately; CFFB0 returns on
+    // their empty title and cannot reconstruct the buttons from NOTEXTSPOT.
+    // Skip only this synchronous copy's D1120; the real wait stays suspended.
     uwcn_generic_query(&input);
     constructing=Construction::none;
     return Status::ok;
-}
-void bind_query_buttons(u32 menu) {
-    const auto& records=native_menu_model::paint_records(menu);
-    u32 count{};std::memcpy(&count,records.header.data()+0x14,sizeof(count));
-    for(u32 row=0;row<count;++row) {
-        u32 action{};
-        std::memcpy(&action,records.rows.data()+row*native_menu_model::row_stride+0xC8,sizeof(action));
-        // FBC54/FBC6D construct these exact visible actions; FBC7F/FBC8E
-        // are the original empty ESC/SPACE actions. No row index is assumed.
-        if(action=='Y' || action=='N') {
-            const auto* original=action=='Y' ? "<Y>es" : "<N>o";
-            native_menu_model::bind_row(menu,row,native_text_resource::from_request(
-                {TextComponent::message_value,original,"inventory.ui"}),{});
-        }
-    }
 }
 Status history(const NativeEvent& event) {
     const auto owner=*ptr<const u32>(event.frame->ebp);
@@ -173,7 +181,7 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
        caller!=0x1427FA && caller!=0x14705A) return Status::ok;
     const auto current=native_menu_component::active();
     native_menu_component::retain(current);
-    if(caller==0xFBC98) bind_query_buttons(current);
+    const bool query_owner=caller==0xFBA2A || caller==0xFBC98;
     if(caller==0x14705A && windows_build::is_3891()) bind_chat_mode_menu(current);
     if(caller==0x1427FA && windows_build::is_3891()) {
         const auto status=bind_chat_lines_menu(current);
@@ -182,7 +190,7 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
     const auto flip=*at<u32>(0x61BBA5C);
     *at<u32>(0x61BBA5C)=1;
     Status status;
-    if(caller==0xFBA2A || caller==0xFBC98) status=query(event,caller==0xFBC98);
+    if(query_owner) status=query(event,caller==0xFBC98);
     else if(caller==0xFEB7C) status=history(event);
     else {
         status=native_conversation_language::rebuild();
@@ -194,11 +202,16 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
                 address(at<void>(0x1B61FC)),owner-0x880);
         }
     }
-    native_menu_component::activate(current);
-    if(status==Status::ok) status=native_menu_component::paint(current);
+    if(!query_owner) {
+        native_menu_component::activate(current);
+        if(status==Status::ok) status=native_menu_component::paint(current);
+    }
     if(status==Status::ok) {
         *at<u32>(0x5F54AB0)=selected;
-        reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0xD0650)(selected,0);
+        // D1167 saves the complete new query pixels, then D1217 selects from
+        // that cache. Leave that ordering with its original suspended D1120.
+        if(!query_owner)
+            reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0xD0650)(selected,0);
     }
     *at<u32>(0x61BBA5C)=flip;
     native_menu_component::release(current);
@@ -207,6 +220,20 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
 }
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=false;
+    if(event.id==query_input || event.id==query_second_input) {
+        handled=true;
+        if(constructing==Construction::query) {
+            // All native arguments are balanced here. Return only from the
+            // borrowed construction, before interpreting an input result.
+            result.resume_rva=continuation(reinterpret_cast<const void*>(
+                native_component_calls::uwcn_component_fragment_return));
+        } else {
+            result.resume_rva=continuation(event.id==query_input ?
+                reinterpret_cast<const void*>(uwcn_generic_query_input) :
+                reinterpret_cast<const void*>(uwcn_generic_query_second_input));
+        }
+        return Status::ok;
+    }
     if(event.id==field_input) {
         handled=true;
         if(windows_build::is_3891()) {
@@ -299,26 +326,18 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         event.frame->eax=static_cast<u32>(measured.logical_width);result.resume_rva=0xFE601;
         return Status::ok;
     }
-    if(event.id==query_second_panel) {
+    if(event.id==query_panel || event.id==query_second_panel) {
         const auto* original=ptr<char>(event.arguments[2]);
-        if(std::strcmp(original,"Are you sure to cancel?")==0) {
-            const auto source=native_text_resource::from_request(
-                {TextComponent::message_value,original,"inventory.ui"});
-            native_component_binding::bind_source(event,source);
-            if(!chinese_enabled) return Status::ok;
-            std::vector<char> encoded;
-            const auto status=native_text_resource::resolve_source(source,
-                resolve_display_text,encode_component_original,encoded);
-            if(status!=Status::ok) return status;
-            return lend_text(event,encoded,event.arguments[2],Scope::titled_panel);
-        }
-        return Status::ok;
+        // FB942/FBBA1 only copy ESI through sprintf("%s"). Resolve the
+        // accepted prompt's complete producer expression, including dynamic
+        // NPC/resource operands, before borrowing this native Panel title.
+        return windows_inventory::consume_source(event,windows_inventory::expression(
+            original,message_source_bound(ptr<char>(event.frame->esi)),
+            TextComponent::native_message_expression),2,Scope::titled_panel);
     }
-    if(event.id==history_append || event.id==history_paragraph || event.id==history_footer || event.id==query_panel)
+    if(event.id==history_append || event.id==history_paragraph || event.id==history_footer)
         return Status::ok;
     if(event.id==query_finished || event.id==query_second_finished) {
-        if(constructing==Construction::query)
-            result.resume_rva=continuation(reinterpret_cast<const void*>(uwcn_generic_query_return));
         return Status::ok;
     }
     if(event.id==history_body_entry) {

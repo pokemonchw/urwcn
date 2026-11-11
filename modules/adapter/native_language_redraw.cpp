@@ -1,4 +1,5 @@
 #include "native_language_redraw.h"
+#include "native_menu_component.h"
 #include <cstring>
 
 namespace uwcn::adapter::native_language_redraw {
@@ -188,6 +189,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         return Status::ok;
     }
     if(event.id!=native_menu_input_result) {handled=false;return Status::ok;}
+    native_menu_component::input_returned();
     if(event.frame->eax==static_cast<u32>(-2)) state.pending&=~input_exit_pending;
     if(event.frame->eax==static_cast<u32>(-2)) {
         auto selection=*reinterpret_cast<const u32*>(base+0x5F54AB0);

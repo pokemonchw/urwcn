@@ -49,6 +49,8 @@
 
 ## Yes/no 的完整 query panel
 
+2026-11-11 更正：本节早先仅重建 Panel 后调用 CFFB0 的路径会丢失按钮。kind=100、空标题的 CFFB0 不画按钮，NOTEXTSPOT 行也不是可见标签；现已按[按钮生命周期修正](20261111-confirmation-buttons-fix.md)重建至两个实际 CFAF0 和空动作完成、原输入开始之前。本节后文保留为历史分析，不能继续作为完整按钮构建的依据。
+
 两个原函数的 CF790 title 都是空串，真正 query 是 `FB983` / `FBBE2 -> 116270` 的独立原生 Panel。`D1120` 的原 `PUSH ESI` 把完整已接受 query 指针保存在 `EBP-43Ch`。Generic 同步借用该原文，保留当前实际 Menu，先恢复真实 FIRST 父并经 Parent 的实际 Root 所有权选择完整 HUD / Conversation 构造。
 
 随后分别执行原 `FB938..FB988` / `FBB97..FBBE7`：原 sprintf、原 FIRST save、完整 116270 query panel。开始位置在原 F6510 echo 之后，不重复提交业务消息。结束 hook 在 Panel 原 `ADD ESP,24h` 之前，由明确的原 36 字节参数清理返回同步桥。原 Menu 再经完整 CFFB0 consumer、原选择构造消费；没有只刷新空 Menu title 的缺口。两个真实 Panel CALL 也登记完整文本元数据，英文模式的真实 UTF-8 姓名进入相同原生测量/字形生命周期。

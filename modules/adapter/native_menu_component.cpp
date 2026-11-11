@@ -280,6 +280,12 @@ void release(Handle handle) { native_menu_model::release(handle); }
 void activate(Handle handle) { native_menu_model::activate(handle); }
 void deactivate() { native_menu_model::deactivate(); }
 bool consuming() { return native_consuming; }
+void input_returned() {
+    // D1120 -> getkey has returned at D12B4, after native Menu construction.
+    // End the preceding paint scope here, including the old kind-100 path
+    // that returned before D03F3 and left this value in its saved state.
+    native_consuming=false;
+}
 void bind_constructor_title(u64 token,const native_text_resource::TextSource& source) { title_sources.push_back({token,source}); }
 void bind_constructor_row(u64 token,const native_text_resource::TextSource& source) { row_sources.push_back({token,source}); }
 void unbind_constructor_source(u64 token) {
@@ -336,6 +342,9 @@ Status paint(Handle handle) {
         native_component_style::ButtonScope button_style(style.button);
         reinterpret_cast<Paint>(base+0xCFFB0)();
     }
+    // Kind 100 with an empty title returns directly to CFFB0's epilogue,
+    // bypassing D03F3. This synchronous invocation ends at its real return.
+    native_consuming=false;
     painting=false;
     painting_source=0;
     std::memcpy(reinterpret_cast<void*>(base+0x5F54A20),live.header.data(),live.header.size());

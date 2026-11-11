@@ -35,6 +35,13 @@ foreach($name in @('direct','branches','branches_remaining','direct_dispatch','d
         $entries['message.literal.'+(Hex-Text $literal)]=$fields[1]
     }
 }
+foreach($file in Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'messages_embedded') -Filter 'literals*.zh-CN.tsv') {
+    foreach($line in [IO.File]::ReadAllLines($file.FullName)) {
+        if(!$line -or $line.StartsWith('#')) {continue}
+        $fields=$line.Split("`t",2)
+        $entries['message.literal.'+(Hex-Text $fields[0])]=$fields[1]
+    }
+}
 foreach($file in Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'messages_embedded') -Filter 'formats*.zh-CN.tsv') {
     foreach($line in [IO.File]::ReadAllLines($file.FullName)) {
         if(!$line -or $line.StartsWith('#')) {continue}

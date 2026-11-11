@@ -36,6 +36,8 @@ void release(Handle handle);
 void activate(Handle handle);
 void deactivate();
 bool consuming();
+// Confirmed D1120/getkey return boundary; native Menu construction has ended.
+void input_returned();
 
 // The original CF790/CF990 constructor keeps its English input. A semantic
 // producer lends this neutral resource only until that same CALL's After; the
