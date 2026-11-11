@@ -1,0 +1,4 @@
+# 53053E..530546 writes this skill token; 5305C2 consumes it for display.
+skill	MOVEDODGE	移动闪避
+# 560AE7 / 560B44 / 560BB0 directly emit the player-target pronoun.
+npc	you	你

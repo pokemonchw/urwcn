@@ -4,6 +4,11 @@
 namespace windows_message_combat_body {
 constexpr u32 first_copy=0xf400,first_append=0xf440,first_punctuation=0xf480;
 constexpr u32 projectile_copy=0xf490,attack_result=0xf491;
+constexpr u32 declaration_copy_first=0xf492;
+// 52FCB0 selects the resource, then copies its complete return into the
+// same native message buffer. All four LEAs precede their byte-copy loops.
+// Evidence: docs/evidence/20261111-combat-narrative-branches.md.
+const u32 declaration_copies[]={0x12ff01,0x12ff29,0x12ff4b,0x12ff6d};
 struct Copy {u32 site,offset;};
 const Copy copies[]={
     {0x126fd0,0x474},{0x126ff9,0x474},{0x12701a,0x474},{0x12703b,0x474},
@@ -47,6 +52,9 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     auto result=instruction(attack_result,0x127b30,{0x0f,0xb6,0x05,0,0,0,0});
     const auto flag=address(at<unsigned char>(0x4d8f4f2));
     std::memcpy(result.expected+3,&flag,4);hooks.push_back(result);
+    for(u32 index=0;index<std::size(declaration_copies);++index)
+        hooks.push_back(instruction(declaration_copy_first+index,declaration_copies[index],
+            {0x8d,0x94,0x24,0x68,0x02,0x00,0x00}));
 }
 void append(char* destination,const char* input,MessageText tail) {
     const auto prior=message_source_bound(destination);
@@ -58,8 +66,18 @@ Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
     handled=(event.id>=first_copy && event.id<first_copy+std::size(copies)) ||
         (event.id>=first_append && event.id<first_append+std::size(appends)) ||
         (event.id>=first_punctuation && event.id<first_punctuation+std::size(punctuation)) ||
-        event.id==projectile_copy || event.id==attack_result;
+        event.id==projectile_copy || event.id==attack_result ||
+        (event.id>=declaration_copy_first &&
+         event.id<declaration_copy_first+std::size(declaration_copies));
     if(!handled || event.phase!=NativePhase::inline_before)return Status::ok;
+    if(event.id>=declaration_copy_first) {
+        // EAX is the already-expanded BOW/THROW/WEAPON/UNARMED resource.
+        // 52FFD2 passes this ESP+268 buffer to the native visibility/hearing
+        // dispatcher. Preserve the selected expression through that copy.
+        const auto* input=ptr<char>(event.frame->eax);
+        message_bind_copy(ptr<char>(event.frame->esp+0x268),input,message_source_bound(input));
+        return Status::ok;
+    }
     auto* body=ptr<char>(event.frame->ebp-0x474);
     if(event.id>=first_copy && event.id<first_copy+std::size(copies)) {
         const auto& copy=copies[event.id-first_copy];

@@ -1359,6 +1359,8 @@ message.literal.70696c766961	云量
 message.literal.706c7261646472657373	人物称呼
 message.literal.706c726964656e7469747920737472696e67	人物身份文本
 message.literal.706f6f70	排便
+message.literal.70726f6e65206d6f6469666965723a2041747461636b6572202b3230	倒地修正：攻击方 +20
+message.literal.70726f6e65206d6f6469666965723a20446566656e646572202b3230	倒地修正：防御方 +20
 message.literal.70756b657564753f	穿衣？
 message.literal.716b696c6c6564	qkilled
 message.literal.726175686f6974753f	平静下来？
@@ -94962,6 +94964,8 @@ message.value.message.history.5072657373205b46325d20746f207669657720717565737420
 message.value.message.history.507265747479	漂亮的
 message.value.message.history.5072696d617279	主手
 message.value.message.history.50726f6e65206c79696e67	伏地不起
+message.value.message.history.50726f6e65206d6f6469666965723a2041747461636b6572202b3230	倒地修正：攻击方 +20
+message.value.message.history.50726f6e65206d6f6469666965723a20446566656e646572202b3230	倒地修正：防御方 +20
 message.value.message.history.5075666679	鼓胀的
 message.value.message.history.50756b657564753f	穿衣？
 message.value.message.history.50756c6c20746865206974656d7320746f20796f7572206c6f636174696f6e3f	要把物品拉到你所在的位置吗？
@@ -95865,6 +95869,8 @@ message.value.message.history.706c726964656e7469747920737472696e67	人物身份�
 message.value.message.history.706f6f70	排便
 message.value.message.history.707265747479	漂亮的
 message.value.message.history.7072696d617279	主手
+message.value.message.history.70726f6e65206d6f6469666965723a2041747461636b6572202b3230	倒地修正：攻击方 +20
+message.value.message.history.70726f6e65206d6f6469666965723a20446566656e646572202b3230	倒地修正：防御方 +20
 message.value.message.history.7075666679	鼓胀的
 message.value.message.history.70756b657564753f	穿衣？
 message.value.message.history.70756e6368	拳击
@@ -96933,6 +96939,7 @@ message.value.npc.77696c6c6f772067726f75736520637562	柳雷鸟幼崽
 message.value.npc.776f6c66	狼
 message.value.npc.776f6c6620637562	狼幼崽
 message.value.npc.776f6d616e	女子
+message.value.npc.796f75	你
 message.value.object-description.626c6f6f647363617065	血迹
 message.value.object-description.6275726e742d6f75742066697265	燃尽的火堆
 message.value.object-description.6275726e742d6f75742066697265207769746820676c6f77696e6720656d62657273	余烬仍在发光的火堆
@@ -97067,6 +97074,7 @@ message.value.skill.46495348494e47	捕鱼
 message.value.skill.484552424c4f5245	草药知识
 message.value.skill.48494445574f524b494e47	制革
 message.value.skill.4b4e494645	刀
+message.value.skill.4d4f5645444f444745	移动闪避
 message.value.skill.4e45544d414b494e47	织网
 message.value.skill.50485953494349414e	医术
 message.value.skill.534849454c44	盾牌
