@@ -1,0 +1,197 @@
+# Memorial/death grammar; generated from memorial.zh-CN.json and native season/month values.
+memorial.form.D.D	on {0}	{0}
+memorial.form.D.Ov	{0} of month:{1}	{1}月{0}日
+memorial.form.D.SM	in {0}, during {1}	{0}，{1}
+memorial.form.D.SM	{0}, {1}	{0}，{1}
+memorial.form.D.SMD	in {0}, during {1}, on {2}	{0}，{1}，{2}
+memorial.form.D.SMD	{0}, {1}, {2}	{0}，{1}，{2}
+memorial.form.D.vOS	day {0} of {1} week before {2}	{2}前的{1}周，第{0}天
+memorial.form.J	Burned by fire	火烧伤
+memorial.form.J	deadly poisoning	致命中毒
+memorial.form.J	nausea	恶心症状
+memorial.form.J	poisoning	中毒
+memorial.form.J	stomach burning poisoning	引起腹部灼痛的中毒
+memorial.form.J.v	Hurt after {0} meters fall	从{0}米高处坠落的伤势
+memorial.form.L.gg	{0} at {1}	{0}，位于{1}
+memorial.form.L.kgg	{0} {1} at {2}	{0}{1}，位于{2}
+memorial.form.M	Center month	中月
+memorial.form.M	Dead month	亡月
+memorial.form.M	Dirt month	泥月
+memorial.form.M	Fall month	秋月
+memorial.form.M	Fallow month	休耕月
+memorial.form.M	Harvest month	收获月
+memorial.form.M	Hay month	干草月
+memorial.form.M	Pearl month	珠月
+memorial.form.M	Seedtime month	播种月
+memorial.form.M	Soil month	土月
+memorial.form.M	Swidden month	烧垦月
+memorial.form.M	Unknown month	未知月份
+memorial.form.M	Winter month	冬月
+memorial.form.M	beginning of Center month	中月初
+memorial.form.M	beginning of Dead month	亡月初
+memorial.form.M	beginning of Dirt month	泥月初
+memorial.form.M	beginning of Fall month	秋月初
+memorial.form.M	beginning of Fallow month	休耕月初
+memorial.form.M	beginning of Harvest month	收获月初
+memorial.form.M	beginning of Hay month	干草月初
+memorial.form.M	beginning of Pearl month	珠月初
+memorial.form.M	beginning of Seedtime month	播种月初
+memorial.form.M	beginning of Soil month	土月初
+memorial.form.M	beginning of Swidden month	烧垦月初
+memorial.form.M	beginning of Unknown month	未知月份初
+memorial.form.M	beginning of Winter month	冬月初
+memorial.form.M	early Center month	中月上旬
+memorial.form.M	early Dead month	亡月上旬
+memorial.form.M	early Dirt month	泥月上旬
+memorial.form.M	early Fall month	秋月上旬
+memorial.form.M	early Fallow month	休耕月上旬
+memorial.form.M	early Harvest month	收获月上旬
+memorial.form.M	early Hay month	干草月上旬
+memorial.form.M	early Pearl month	珠月上旬
+memorial.form.M	early Seedtime month	播种月上旬
+memorial.form.M	early Soil month	土月上旬
+memorial.form.M	early Swidden month	烧垦月上旬
+memorial.form.M	early Unknown month	未知月份上旬
+memorial.form.M	early Winter month	冬月上旬
+memorial.form.M	end of Center month	中月末
+memorial.form.M	end of Dead month	亡月末
+memorial.form.M	end of Dirt month	泥月末
+memorial.form.M	end of Fall month	秋月末
+memorial.form.M	end of Fallow month	休耕月末
+memorial.form.M	end of Harvest month	收获月末
+memorial.form.M	end of Hay month	干草月末
+memorial.form.M	end of Pearl month	珠月末
+memorial.form.M	end of Seedtime month	播种月末
+memorial.form.M	end of Soil month	土月末
+memorial.form.M	end of Swidden month	烧垦月末
+memorial.form.M	end of Unknown month	未知月份末
+memorial.form.M	end of Winter month	冬月末
+memorial.form.M	late Center month	中月下旬
+memorial.form.M	late Dead month	亡月下旬
+memorial.form.M	late Dirt month	泥月下旬
+memorial.form.M	late Fall month	秋月下旬
+memorial.form.M	late Fallow month	休耕月下旬
+memorial.form.M	late Harvest month	收获月下旬
+memorial.form.M	late Hay month	干草月下旬
+memorial.form.M	late Pearl month	珠月下旬
+memorial.form.M	late Seedtime month	播种月下旬
+memorial.form.M	late Soil month	土月下旬
+memorial.form.M	late Swidden month	烧垦月下旬
+memorial.form.M	late Unknown month	未知月份下旬
+memorial.form.M	late Winter month	冬月下旬
+memorial.form.O	10th	第10
+memorial.form.O	11th	第11
+memorial.form.O	12th	第12
+memorial.form.O	13th	第13
+memorial.form.O	1st	第1
+memorial.form.O	2nd	第2
+memorial.form.O	3rd	第3
+memorial.form.O	4th	第4
+memorial.form.O	5th	第5
+memorial.form.O	6th	第6
+memorial.form.O	7th	第7
+memorial.form.O	8th	第8
+memorial.form.O	9th	第9
+memorial.form.O	last	最后一
+memorial.form.S	latter summer	夏末
+memorial.form.S	latter winter	冬末
+memorial.form.S	midsummer	仲夏
+memorial.form.S	midsummer point	仲夏时节
+memorial.form.S	midwinter	仲冬
+memorial.form.S	midwinter point	仲冬时节
+memorial.form.S	summer season	夏季
+memorial.form.S	winter season	冬季
+memorial.form.X	her	她
+memorial.form.X	his	他
+memorial.form.Y	He	他
+memorial.form.Y	She	她
+memorial.form.Y	he	他
+memorial.form.Y	she	她
+memorial.form.Z	 and fainted from the bloodloss	因失血而昏迷
+memorial.form.Z	A misfortunate climbing attempt	攀爬失足
+memorial.form.Z	Being burned by fire	被火烧伤
+memorial.form.Z	Being hurt	受伤
+memorial.form.Z	Bled to death	失血而死
+memorial.form.Z	Burned to death	被火烧死
+memorial.form.Z	Died from a fall	坠落身亡
+memorial.form.Z	Died from lack of water	因缺水而死
+memorial.form.Z	Died from severe injuries	因重伤而死
+memorial.form.Z	Drowned	溺水身亡
+memorial.form.Z	Drowned after fainting in the freezing water	在冰冷的水中昏迷后溺亡
+memorial.form.Z	Felling into a trap	落入陷阱
+memorial.form.Z	Froze to death	冻死
+memorial.form.Z	Getting a frostbite	遭到冻伤
+memorial.form.Z	Got a fatal wound	身受致命伤
+memorial.form.Z	Having started to bleed	开始出血
+memorial.form.Z	Killed by a trap	死于陷阱
+memorial.form.Z	Killed by death	死去
+memorial.form.Z	Quit living	结束了自己的生命
+memorial.form.Z	Starved to death	饿死
+memorial.form.Z	Treating a wound	治疗伤口
+memorial.form.Z	Was bleeding	流血不止
+memorial.form.Z	Was bleeding from the wound	伤口流血不止
+memorial.form.Z	Was burned by fire	被火烧伤
+memorial.form.Z	Was freezing	遭受严寒
+memorial.form.Z	Was hurt	受了伤
+memorial.form.Z	Was hurt by a trap	被陷阱所伤
+memorial.form.Z	Was hurt while falling	在坠落时受伤
+memorial.form.Z	a misfortunate climbing attempt	攀爬失足
+memorial.form.Z	being burned by fire	被火烧伤
+memorial.form.Z	being hurt	受伤
+memorial.form.Z	bled to death	失血而死
+memorial.form.Z	burned to death	被火烧死
+memorial.form.Z	died from a fall	坠落身亡
+memorial.form.Z	died from lack of water	因缺水而死
+memorial.form.Z	died from severe injuries	因重伤而死
+memorial.form.Z	drowned	溺水身亡
+memorial.form.Z	drowned after fainting in the freezing water	在冰冷的水中昏迷后溺亡
+memorial.form.Z	felling into a trap	落入陷阱
+memorial.form.Z	froze to death	冻死
+memorial.form.Z	getting a frostbite	遭到冻伤
+memorial.form.Z	got a fatal wound	身受致命伤
+memorial.form.Z	having started to bleed	开始出血
+memorial.form.Z	killed by a trap	死于陷阱
+memorial.form.Z	killed by death	死去
+memorial.form.Z	quit living	结束了自己的生命
+memorial.form.Z	starved to death	饿死
+memorial.form.Z	treating a wound	治疗伤口
+memorial.form.Z	was bleeding	流血不止
+memorial.form.Z	was bleeding from the wound	伤口流血不止
+memorial.form.Z	was burned by fire	被火烧伤
+memorial.form.Z	was freezing	遭受严寒
+memorial.form.Z	was hurt	受了伤
+memorial.form.Z	was hurt by a trap	被陷阱所伤
+memorial.form.Z	was hurt while falling	在坠落时受伤
+memorial.form.Z.J	Died from {0}	死于{0}
+memorial.form.Z.J	Starting to suffer from {0}	开始遭受{0}
+memorial.form.Z.J	Was suffering from {0}	遭受{0}
+memorial.form.Z.J	died from {0}	死于{0}
+memorial.form.Z.J	starting to suffer from {0}	开始遭受{0}
+memorial.form.Z.J	was suffering from {0}	遭受{0}
+memorial.form.Z.YZ	{0} {1}	{0}{1}
+memorial.form.Z.Z	Fainted after {0}	{0}后昏迷
+memorial.form.Z.Z	Started to bleed after {0}	{0}后开始出血
+memorial.form.Z.Z	fainted after {0}	{0}后昏迷
+memorial.form.Z.Z	started to bleed after {0}	{0}后开始出血
+memorial.form.Z.Z	{0} and fainted from the bloodloss	{0}，随后因失血而昏迷
+memorial.form.Z.Z	{0} while unconscious	昏迷期间{0}
+memorial.form.Z.ZYZ	{0}. While unconscious {1} {2}	{0}。昏迷期间，{1}{2}
+memorial.form.Z.ZZ	{0} after {1}	{1}后{0}
+memorial.form.Z.ZZ	{0} and {1}	{0}，随后{1}
+memorial.form.Z.c	Being hit by {0}	遭到{0}攻击
+memorial.form.Z.c	Killed by {0}	被{0}杀死
+memorial.form.Z.c	Was hit by {0}	遭到{0}攻击
+memorial.form.Z.c	being hit by {0}	遭到{0}攻击
+memorial.form.Z.c	killed by {0}	被{0}杀死
+memorial.form.Z.c	was hit by {0}	遭到{0}攻击
+memorial.form.t	Memorial Page	纪念页
+memorial.form.t	Press a key to continue	按任意键继续
+memorial.form.t	The remains of your earthly body leaves behind	你尘世的躯壳留在了这里，
+memorial.form.t	You are dead.	你已经死了。
+memorial.form.t	as your spirit starts its journey to the otherworld - the place where the dead live.	你的灵魂则踏上了前往彼岸的旅途——那里是亡者的居所。
+memorial.form.t.LgX	{0} {1} became the place of {2} death.	{0}（{1}）成了{2}的长眠之地。
+memorial.form.t.YXD	{0} faced {1} end {2}.	{0}于{2}走到了生命的尽头。
+memorial.form.t.Yv	{0} journeyed a total distance of {1} kilometers.	{0}一生共行走了{1}公里。
+memorial.form.t.Yvv	{0} died at {1} winters old, having spent {2} days of adventuring life.	{0}去世时享年{1}岁，度过了{2}天冒险生涯。
+memorial.form.t.Z	There {0}.	在这里，{0}。
+memorial.form.t.Z	{0}.	{0}。

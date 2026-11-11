@@ -43,6 +43,7 @@ bool preparing{};
 bool restoring_builder{};
 bool builder_exists{};
 u32 parser_owner_depth{};
+u32 native_owner_depth{};
 u32 source_resolution_depth{};
 ParagraphSource builder;
 // The native parser is a source-language builder as well as a UI scratch
@@ -237,7 +238,14 @@ Status restore_native_builder() {
     restoring_builder=false;return Status::ok;
 }
 Status construct(const NativeEvent& event,const HookSpec& hook,const EventInputs& input) {
-    if(consuming_component()) return Status::ok;
+    // DD400's record/detail and DE990's death footer have complete native
+    // reconstruction at DEB7F / DF3FF. Their native pixels and cursor-return
+    // values must not become another collection of per-field UI components.
+    if(windows_build::is_3891() && ((hook.site_rva>=0xDD400 && hook.site_rva<0xDDA70) ||
+       hook.site_rva==0xDEA82 || hook.site_rva==0xDEB40 ||
+       hook.site_rva==0xDEB72 || hook.site_rva==0xDF3F2))
+        return Status::ok;
+    if(native_owner_depth || consuming_component()) return Status::ok;
     const auto target=hook.target_rva;
     const auto& args=input.arguments;
     Handle handle{};
@@ -445,7 +453,7 @@ struct Reader {
 
 void configure(std::uintptr_t image_base,const PaintServices& paint_services) {
     base=image_base;services=paint_services;preparing=false;restoring_builder=false;
-    parser_owner_depth=0;source_resolution_depth=0;
+    parser_owner_depth=0;native_owner_depth=0;source_resolution_depth=0;
     builder_exists=false;builder={};builder_nodes.clear();fields.clear();metadata.clear();
     calls.clear();parser_bindings.clear();event_inputs.clear();grammar_starts_at.clear();
 }
@@ -613,6 +621,8 @@ void unbind_parser_source(u64 token) {
 }
 void begin_parser_owner() { ++parser_owner_depth; }
 void end_parser_owner() { --parser_owner_depth; }
+void begin_native_owner() { ++native_owner_depth; }
+void end_native_owner() { --native_owner_depth; }
 Status finish_event(const NativeEvent& event,DispatchResult& result,Status native_dispatch_status) {
     const auto input=std::move(event_inputs.back());event_inputs.pop_back();
     if(native_dispatch_status!=Status::ok) {
@@ -812,11 +822,11 @@ void restore(const void* payload) {
         const auto owner=input.scalar<u64>();const auto component=static_cast<TextComponent>(input.scalar<u32>());
         fields.emplace(std::make_pair(owner,component),input.text());
     }
-    calls.clear();parser_bindings.clear();event_inputs.clear();preparing=false;restoring_builder=false;parser_owner_depth=0;source_resolution_depth=0;
+    calls.clear();parser_bindings.clear();event_inputs.clear();preparing=false;restoring_builder=false;parser_owner_depth=0;native_owner_depth=0;source_resolution_depth=0;
 }
 void shutdown() {
     base=0;services={};decode_parser_source=nullptr;encode_parser_source=nullptr;fields.clear();metadata.clear();builder={};builder_nodes.clear();
-    builder_exists=false;calls.clear();parser_bindings.clear();event_inputs.clear();preparing=false;restoring_builder=false;parser_owner_depth=0;source_resolution_depth=0;
+    builder_exists=false;calls.clear();parser_bindings.clear();event_inputs.clear();preparing=false;restoring_builder=false;parser_owner_depth=0;native_owner_depth=0;source_resolution_depth=0;
     grammar_starts_at.clear();
 }
 }

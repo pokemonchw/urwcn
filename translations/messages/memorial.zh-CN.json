@@ -1,0 +1,1113 @@
+{
+  "native_build": "Windows 3.89.1 / Steam Build 26139145",
+  "evidence": "docs/evidence/20261111-memorial-all-text.md",
+  "forms": [
+    {
+      "source": "Memorial Page",
+      "target": "纪念页",
+      "slots": "",
+      "kind": "t",
+      "origins": [
+        "4DD400 complete native display input"
+      ]
+    },
+    {
+      "source": "You are dead.",
+      "target": "你已经死了。",
+      "slots": "",
+      "kind": "t",
+      "origins": [
+        "4DD400 complete native display input"
+      ]
+    },
+    {
+      "source": "Press a key to continue",
+      "target": "按任意键继续",
+      "slots": "",
+      "kind": "t",
+      "origins": [
+        "4DD400 complete native display input"
+      ]
+    },
+    {
+      "source": "The remains of your earthly body leaves behind",
+      "target": "你尘世的躯壳留在了这里，",
+      "slots": "",
+      "kind": "t",
+      "origins": [
+        "4DD400 complete native display input"
+      ]
+    },
+    {
+      "source": "as your spirit starts its journey to the otherworld - the place where the dead live.",
+      "target": "你的灵魂则踏上了前往彼岸的旅途——那里是亡者的居所。",
+      "slots": "",
+      "kind": "t",
+      "origins": [
+        "4DD400 complete native display input"
+      ]
+    },
+    {
+      "source": "he",
+      "target": "他",
+      "slots": "",
+      "kind": "Y",
+      "origins": [
+        "561B00 PP_SUBJ:MASC/FEM; 4DD400 / 4DDC60 capitalization"
+      ]
+    },
+    {
+      "source": "she",
+      "target": "她",
+      "slots": "",
+      "kind": "Y",
+      "origins": [
+        "561B00 PP_SUBJ:MASC/FEM; 4DD400 / 4DDC60 capitalization"
+      ]
+    },
+    {
+      "source": "He",
+      "target": "他",
+      "slots": "",
+      "kind": "Y",
+      "origins": [
+        "561B00 PP_SUBJ:MASC/FEM; 4DD400 / 4DDC60 capitalization"
+      ]
+    },
+    {
+      "source": "She",
+      "target": "她",
+      "slots": "",
+      "kind": "Y",
+      "origins": [
+        "561B00 PP_SUBJ:MASC/FEM; 4DD400 / 4DDC60 capitalization"
+      ]
+    },
+    {
+      "source": "his",
+      "target": "他",
+      "slots": "",
+      "kind": "X",
+      "origins": [
+        "561B00 PP_GEN:MASC/FEM"
+      ]
+    },
+    {
+      "source": "her",
+      "target": "她",
+      "slots": "",
+      "kind": "X",
+      "origins": [
+        "561B00 PP_GEN:MASC/FEM"
+      ]
+    },
+    {
+      "source": "drowned",
+      "target": "溺水身亡",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Drowned",
+      "target": "溺水身亡",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "froze to death",
+      "target": "冻死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Froze to death",
+      "target": "冻死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "drowned after fainting in the freezing water",
+      "target": "在冰冷的水中昏迷后溺亡",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Drowned after fainting in the freezing water",
+      "target": "在冰冷的水中昏迷后溺亡",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "starved to death",
+      "target": "饿死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Starved to death",
+      "target": "饿死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "died from lack of water",
+      "target": "因缺水而死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Died from lack of water",
+      "target": "因缺水而死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "quit living",
+      "target": "结束了自己的生命",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Quit living",
+      "target": "结束了自己的生命",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "bled to death",
+      "target": "失血而死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Bled to death",
+      "target": "失血而死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "died from severe injuries",
+      "target": "因重伤而死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Died from severe injuries",
+      "target": "因重伤而死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "got a fatal wound",
+      "target": "身受致命伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Got a fatal wound",
+      "target": "身受致命伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "being hurt",
+      "target": "受伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Being hurt",
+      "target": "受伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "was hurt",
+      "target": "受了伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Was hurt",
+      "target": "受了伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "killed by death",
+      "target": "死去",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Killed by death",
+      "target": "死去",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "felling into a trap",
+      "target": "落入陷阱",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Felling into a trap",
+      "target": "落入陷阱",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "was hurt by a trap",
+      "target": "被陷阱所伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Was hurt by a trap",
+      "target": "被陷阱所伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "killed by a trap",
+      "target": "死于陷阱",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Killed by a trap",
+      "target": "死于陷阱",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "having started to bleed",
+      "target": "开始出血",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Having started to bleed",
+      "target": "开始出血",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "was bleeding",
+      "target": "流血不止",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Was bleeding",
+      "target": "流血不止",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "being burned by fire",
+      "target": "被火烧伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Being burned by fire",
+      "target": "被火烧伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "was burned by fire",
+      "target": "被火烧伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Was burned by fire",
+      "target": "被火烧伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "burned to death",
+      "target": "被火烧死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Burned to death",
+      "target": "被火烧死",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "getting a frostbite",
+      "target": "遭到冻伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Getting a frostbite",
+      "target": "遭到冻伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "was freezing",
+      "target": "遭受严寒",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Was freezing",
+      "target": "遭受严寒",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "a misfortunate climbing attempt",
+      "target": "攀爬失足",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "A misfortunate climbing attempt",
+      "target": "攀爬失足",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "was hurt while falling",
+      "target": "在坠落时受伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Was hurt while falling",
+      "target": "在坠落时受伤",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "died from a fall",
+      "target": "坠落身亡",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Died from a fall",
+      "target": "坠落身亡",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "treating a wound",
+      "target": "治疗伤口",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Treating a wound",
+      "target": "治疗伤口",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "was bleeding from the wound",
+      "target": "伤口流血不止",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "Was bleeding from the wound",
+      "target": "伤口流血不止",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DDC60 death code branches; 4DCF10 modes 0/1/10"
+      ]
+    },
+    {
+      "source": "nausea",
+      "target": "恶心症状",
+      "slots": "",
+      "kind": "J",
+      "origins": [
+        "433026/4330CB/433175/4331C7/56C205 -> A72BD68"
+      ]
+    },
+    {
+      "source": "stomach burning poisoning",
+      "target": "引起腹部灼痛的中毒",
+      "slots": "",
+      "kind": "J",
+      "origins": [
+        "433026/4330CB/433175/4331C7/56C205 -> A72BD68"
+      ]
+    },
+    {
+      "source": "deadly poisoning",
+      "target": "致命中毒",
+      "slots": "",
+      "kind": "J",
+      "origins": [
+        "433026/4330CB/433175/4331C7/56C205 -> A72BD68"
+      ]
+    },
+    {
+      "source": "poisoning",
+      "target": "中毒",
+      "slots": "",
+      "kind": "J",
+      "origins": [
+        "433026/4330CB/433175/4331C7/56C205 -> A72BD68"
+      ]
+    },
+    {
+      "source": "Burned by fire",
+      "target": "火烧伤",
+      "slots": "",
+      "kind": "J",
+      "origins": [
+        "433026/4330CB/433175/4331C7/56C205 -> A72BD68"
+      ]
+    },
+    {
+      "source": "Hurt after {0} meters fall",
+      "target": "从{0}米高处坠落的伤势",
+      "slots": "v",
+      "kind": "J",
+      "origins": [
+        "4D6CAD -> A72BD68"
+      ]
+    },
+    {
+      "source": "being hit by {0}",
+      "target": "遭到{0}攻击",
+      "slots": "c",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "Being hit by {0}",
+      "target": "遭到{0}攻击",
+      "slots": "c",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "was hit by {0}",
+      "target": "遭到{0}攻击",
+      "slots": "c",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "Was hit by {0}",
+      "target": "遭到{0}攻击",
+      "slots": "c",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "killed by {0}",
+      "target": "被{0}杀死",
+      "slots": "c",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "Killed by {0}",
+      "target": "被{0}杀死",
+      "slots": "c",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "starting to suffer from {0}",
+      "target": "开始遭受{0}",
+      "slots": "J",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "Starting to suffer from {0}",
+      "target": "开始遭受{0}",
+      "slots": "J",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "was suffering from {0}",
+      "target": "遭受{0}",
+      "slots": "J",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "Was suffering from {0}",
+      "target": "遭受{0}",
+      "slots": "J",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "died from {0}",
+      "target": "死于{0}",
+      "slots": "J",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "Died from {0}",
+      "target": "死于{0}",
+      "slots": "J",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "{0} after {1}",
+      "target": "{1}后{0}",
+      "slots": "ZZ",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "{0} while unconscious",
+      "target": "昏迷期间{0}",
+      "slots": "Z",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "started to bleed after {0}",
+      "target": "{0}后开始出血",
+      "slots": "Z",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "Started to bleed after {0}",
+      "target": "{0}后开始出血",
+      "slots": "Z",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "fainted after {0}",
+      "target": "{0}后昏迷",
+      "slots": "Z",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "Fainted after {0}",
+      "target": "{0}后昏迷",
+      "slots": "Z",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "{0} and fainted from the bloodloss",
+      "target": "{0}，随后因失血而昏迷",
+      "slots": "Z",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": " and fainted from the bloodloss",
+      "target": "因失血而昏迷",
+      "slots": "",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "{0} and {1}",
+      "target": "{0}，随后{1}",
+      "slots": "ZZ",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "{0} {1}",
+      "target": "{0}{1}",
+      "slots": "YZ",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "{0}. While unconscious {1} {2}",
+      "target": "{0}。昏迷期间，{1}{2}",
+      "slots": "ZYZ",
+      "kind": "Z",
+      "origins": [
+        "4DCF10 actor/illness formats; 4DDC60 native append grammar"
+      ]
+    },
+    {
+      "source": "{0}.",
+      "target": "{0}。",
+      "slots": "Z",
+      "kind": "t",
+      "origins": [
+        "4DD7DC summary punctuation"
+      ]
+    },
+    {
+      "source": "There {0}.",
+      "target": "在这里，{0}。",
+      "slots": "Z",
+      "kind": "t",
+      "origins": [
+        "4DD992 persisted detail after native tolower"
+      ]
+    },
+    {
+      "source": "{0} died at {1} winters old, having spent {2} days of adventuring life.",
+      "target": "{0}去世时享年{1}岁，度过了{2}天冒险生涯。",
+      "slots": "Yvv",
+      "kind": "t",
+      "origins": [
+        "4DD400 complete native display input"
+      ]
+    },
+    {
+      "source": "{0} journeyed a total distance of {1} kilometers.",
+      "target": "{0}一生共行走了{1}公里。",
+      "slots": "Yv",
+      "kind": "t",
+      "origins": [
+        "4DD400 complete native display input"
+      ]
+    },
+    {
+      "source": "{0} faced {1} end {2}.",
+      "target": "{0}于{2}走到了生命的尽头。",
+      "slots": "YXD",
+      "kind": "t",
+      "origins": [
+        "4DD400 complete native display input"
+      ]
+    },
+    {
+      "source": "{0} {1} became the place of {2} death.",
+      "target": "{0}（{1}）成了{2}的长眠之地。",
+      "slots": "LgX",
+      "kind": "t",
+      "origins": [
+        "4DD400 complete native display input"
+      ]
+    },
+    {
+      "source": "{0} {1} at {2}",
+      "target": "{0}{1}，位于{2}",
+      "slots": "kgg",
+      "kind": "L",
+      "origins": [
+        "48E4F0 village culture + terrain + 48E420 place"
+      ]
+    },
+    {
+      "source": "{0} at {1}",
+      "target": "{0}，位于{1}",
+      "slots": "gg",
+      "kind": "L",
+      "origins": [
+        "48E4F0 terrain + 48E420 place"
+      ]
+    },
+    {
+      "source": "1st",
+      "target": "第1",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "2nd",
+      "target": "第2",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "3rd",
+      "target": "第3",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "4th",
+      "target": "第4",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "5th",
+      "target": "第5",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "6th",
+      "target": "第6",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "7th",
+      "target": "第7",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "8th",
+      "target": "第8",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "9th",
+      "target": "第9",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "10th",
+      "target": "第10",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "11th",
+      "target": "第11",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "12th",
+      "target": "第12",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "13th",
+      "target": "第13",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native ordinal construction"
+      ]
+    },
+    {
+      "source": "last",
+      "target": "最后一",
+      "slots": "",
+      "kind": "O",
+      "origins": [
+        "48A310 native week-one branch"
+      ]
+    },
+    {
+      "source": "day {0} of {1} week before {2}",
+      "target": "{2}前的{1}周，第{0}天",
+      "slots": "vOS",
+      "kind": "D",
+      "origins": [
+        "48A4A3"
+      ]
+    },
+    {
+      "source": "{0} of month:{1}",
+      "target": "{1}月{0}日",
+      "slots": "Ov",
+      "kind": "D",
+      "origins": [
+        "48A4CC original debug spelling"
+      ]
+    },
+    {
+      "source": "in {0}, during {1}, on {2}",
+      "target": "{0}，{1}，{2}",
+      "slots": "SMD",
+      "kind": "D",
+      "origins": [
+        "48A310 original date flags and format branches"
+      ]
+    },
+    {
+      "source": "{0}, {1}, {2}",
+      "target": "{0}，{1}，{2}",
+      "slots": "SMD",
+      "kind": "D",
+      "origins": [
+        "48A310 original date flags and format branches"
+      ]
+    },
+    {
+      "source": "in {0}, during {1}",
+      "target": "{0}，{1}",
+      "slots": "SM",
+      "kind": "D",
+      "origins": [
+        "48A310 original date flags and format branches"
+      ]
+    },
+    {
+      "source": "{0}, {1}",
+      "target": "{0}，{1}",
+      "slots": "SM",
+      "kind": "D",
+      "origins": [
+        "48A310 original date flags and format branches"
+      ]
+    },
+    {
+      "source": "on {0}",
+      "target": "{0}",
+      "slots": "D",
+      "kind": "D",
+      "origins": [
+        "48A310 original date flags and format branches"
+      ]
+    }
+  ]
+}

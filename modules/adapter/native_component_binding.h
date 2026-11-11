@@ -57,6 +57,10 @@ void unbind_parser_source(u64 token);
 // paragraph resources and are materialized by that component's own model.
 void begin_parser_owner();
 void end_parser_owner();
+// A complete native constructor already owns its layout and reconstruction.
+// Nested text calls only measure/paint; do not create coordinate components.
+void begin_native_owner();
+void end_native_owner();
 bool has_paragraph_builder();
 void clear_paragraph_builder();
 Status restore_paragraph_builder();

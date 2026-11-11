@@ -6,6 +6,7 @@ struct Form {const char* source;const char* slots;char kind;const char* order;co
 struct Lexeme {const char* source;const char* domain;const char* key;char kind;};
 const Form forms[]{
 #include "windows_conversation_forms.inc"
+#include "windows_memorial_forms.inc"
 };
 const Lexeme lexemes[]{
 #include "windows_conversation_lexemes.inc"
@@ -48,6 +49,9 @@ const Grammar& grammar() {static const Grammar value;return value;}
 bool parse(const std::string&,char,Text&);
 bool accepts(char input,char source) {
     if(input=='t') return true;
+    // 48E4F0's persisted memorial location is either a plain generated place
+    // or its native terrain/culture prefix followed by that same place.
+    if(input=='L') return source=='L' || source=='g';
     if(input=='l') return source=='l' || source=='i' || source=='c';
     if(input=='g') return source=='g' || source=='d' || source=='k';
     return input==source;

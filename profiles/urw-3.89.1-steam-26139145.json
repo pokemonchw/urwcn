@@ -7,7 +7,7 @@
   "machine": "I386",
   "exe_sha256": "c6ed73642c1b1cb1f86b818c7586224398c2f0554f6114ced31bc40ff071806d",
   "preferred_image_base": "0x400000",
-  "scope": "Windows native display consumers: startup/intro/main menu/About/Credits/settings/load/ancestors/creation/HUD; season/portrait/attributes, all encyclopedia topics and culture legends, skills and spells, world generation, all thirteen scenarios and game-course selection, farewell, and UTF-8 character names.",
+  "scope": "Windows native display consumers: startup/intro/main menu/About/Credits/settings/load/ancestors/creation/HUD; season/portrait/attributes, all encyclopedia topics and culture legends, skills and spells, world generation, all thirteen scenarios and game-course selection, farewell, and UTF-8 character names. Memorial/death page, all native cause/history, date/place and life/journey branches.",
   "evidence": [
     "docs/evidence/main-menu-static.txt",
     "docs/evidence/static-disassembly.txt",
@@ -343,5 +343,30 @@
     },
     "baseline_metadata": "Unqualified addresses and historical entries below retain baseline semantic identities. Physical migrated data references and CALL sites are resolved by the build adapter; historical source_commit/target fields describe their original implementation.",
     "validation": "Read-only PE/manifest/resource inspection and source review; no game execution or tests."
+  },
+  "memorial": {
+    "entry_rvas": [
+      "0xDD400",
+      "0xDE990"
+    ],
+    "source_producers": [
+      "0xDDC60",
+      "0xDCF10",
+      "0x8A310",
+      "0x8A600",
+      "0x8E4F0",
+      "0x8E420",
+      "0xA8F50",
+      "0x9B040",
+      "0x9AD00",
+      "0xAD4F0"
+    ],
+    "scope": "Complete memorial: native centered heading; original personal name and localized culture; saved short/full death cause with bleeding/fainting history; native date, generated place/gloss and cultural region; sex-specific life/journey statistics; death footer and both continue controls. Existing ancestor records keep their original English fields.",
+    "native_ownership": "DD400 and DE990 reconstruct their own pixels and consume the native paragraph height/cursor results. Display-only loans; no page fields, coordinates, pixel tracking or deferred text replay.",
+    "evidence": [
+      "docs/evidence/20261111-memorial-all-text.md",
+      "docs/evidence/memorial_Decompile.java",
+      "translations/messages/memorial.zh-CN.json"
+    ]
   }
 }
