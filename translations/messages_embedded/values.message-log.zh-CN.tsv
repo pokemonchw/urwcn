@@ -1,0 +1,8 @@
+domain	source	target
+message.log.ui	Message log	消息日志
+message.log.ui	%d-%d (of %d)	%d-%d（共%d条）
+message.log.ui	Exit	退出
+message.log.ui	Enter a note to log	向日志添加备注
+message.log.ui	You can now write a note which will be added to message log.	现在可以输入一条备注，将其添加到消息日志。
+message.history	HELP AND GAME OPTIONS: Setup options	帮助与游戏选项：设置选项
+message.history	HELP AND GAME OPTIONS: Keyboard commands	帮助与游戏选项：键盘指令

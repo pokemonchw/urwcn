@@ -1,6 +1,8 @@
-param([string]$GameBinary='D:/program/steam/steamapps/common/UnRealWorld/urw.exe')
+param([string]$GameBinary='D:/program/steam/steamapps/common/UnRealWorld/urw.exe',
+      [switch]$ExistingLiterals)
 $ErrorActionPreference='Stop'
 $taskRoot=Split-Path $PSScriptRoot -Parent
+if(!$ExistingLiterals) {
 $pe=[IO.File]::ReadAllBytes($GameBinary)
 $peHeader=[BitConverter]::ToInt32($pe,0x3c)
 $sectionCount=[BitConverter]::ToUInt16($pe,$peHeader+6)
@@ -10,6 +12,7 @@ $sections=@()
 for($index=0;$index -lt $sectionCount;$index++) {
     $offset=$peHeader+24+$optionalBytes+$index*40
     $sections+=@{Rva=[BitConverter]::ToUInt32($pe,$offset+12);Size=[BitConverter]::ToUInt32($pe,$offset+16);Raw=[BitConverter]::ToUInt32($pe,$offset+20)}
+}
 }
 function Read-LiteralBytes([string]$address) {
     $rva=[Convert]::ToUInt32($address,16)-$imageBase
@@ -24,6 +27,16 @@ function Hex-Text([string]$text) { return Hex-Bytes ([Text.Encoding]::UTF8.GetBy
 $entries=[Collections.Generic.SortedDictionary[string,string]]::new([StringComparer]::Ordinal)
 $entries['message.continue']='按 [空格] 继续'
 $entries['message.more']='[空格] 查看后续 -- [ESC] 跳过'
+if($ExistingLiterals) {
+    # Use the already-authored neutral literal identities when deriving a new
+    # display consumer; their legacy addresses do not index a newer game PE.
+    foreach($line in [IO.File]::ReadAllLines((Join-Path $taskRoot 'catalog/zh-CN/messages.tsv'))) {
+        if($line.StartsWith('message.literal.')) {
+            $fields=$line.Split("`t",2)
+            $entries[$fields[0]]=$fields[1]
+        }
+    }
+} else {
 foreach($name in @('direct','branches','branches_remaining','direct_dispatch','direct_copied','direct_appended')) {
     foreach($line in [IO.File]::ReadAllLines((Join-Path $PSScriptRoot "messages_embedded/$name.zh-CN.tsv"))) {
         if(!$line -or $line.StartsWith('#')) {continue}
@@ -34,6 +47,7 @@ foreach($name in @('direct','branches','branches_remaining','direct_dispatch','d
         $literal=[Text.Encoding]::Latin1.GetString((Read-LiteralBytes $fields[0]))
         $entries['message.literal.'+(Hex-Text $literal)]=$fields[1]
     }
+}
 }
 foreach($file in Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'messages_embedded') -Filter 'literals*.zh-CN.tsv') {
     foreach($line in [IO.File]::ReadAllLines($file.FullName)) {
@@ -59,6 +73,24 @@ foreach($line in [IO.File]::ReadAllLines($valueFile.FullName)) {
     $fields=$line.Split("`t",3)
     $entries['message.value.'+$fields[0]+'.'+(Hex-Text $fields[1])]=$fields[2]
 }
+}
+# F6510's native history body omits the initial colour marker and every @,
+# and its F6A68 branch skips the second space in a run. FE2B0 reads that
+# unchanged English body from msglog.txt, rather than the original literal.
+# Derive exact history identities from the existing literal translations.
+function History-Body([string]$text) {
+    $body=[Text.StringBuilder]::new()
+    for($i=0;$i -lt $text.Length;$i++) {
+        if($i -gt 1 -and $text[$i] -eq ' ' -and $text[$i-1] -eq ' ') { $i++ }
+        if($i -eq $text.Length) { break }
+        if(($i -eq 0 -and '!#&+:=>?_'.Contains($text[$i])) -or $text[$i] -eq '@') { continue }
+        [void]$body.Append($text[$i])
+    }
+    return $body.ToString()
+}
+foreach($key in @($entries.Keys | Where-Object { $_.StartsWith('message.literal.') })) {
+    $literal=[Text.Encoding]::UTF8.GetString([Convert]::FromHexString($key.Substring(16)))
+    $entries['message.value.message.history.'+(Hex-Text (History-Body $literal))]=History-Body $entries[$key]
 }
 $catalog=[Collections.Generic.List[string]]::new()
 $catalog.Add('# Generated from decompiled native message sources and selected resource templates.')

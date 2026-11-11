@@ -15,14 +15,14 @@ enum Hook:u32 {query_finished=0x51E0,query_second_finished,history_entry,
     known_list_cleanup,history_line_width,history_append,history_paragraph,history_footer,
     query_panel,query_second_panel,field_input,
     field_text=0x5265,field_cursor_width,field_detail_finished,
-    query_input,query_second_input};
+    query_input,query_second_input,history_input};
 extern "C" std::uintptr_t urwcn_generic_history_capacity_target{};
 extern "C" std::uintptr_t urwcn_generic_history_body_target{};
 extern "C" std::uintptr_t urwcn_generic_history_eof{};
 extern "C" std::uintptr_t urwcn_generic_history_eof_return{};
 extern "C" {
 std::uintptr_t urwcn_generic_query_input_target{},urwcn_generic_query_input_return{},
-    urwcn_generic_query_second_input_return{};
+    urwcn_generic_query_second_input_return{},urwcn_generic_history_input_return{};
 }
 
 struct Query {u32 target,frame,text;};
@@ -48,6 +48,9 @@ extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_query_input() {
 }
 extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_query_second_input() {
     __asm__ __volatile__("pushl _urwcn_generic_query_second_input_return\n\tjmp *_urwcn_generic_query_input_target\n\t");
+}
+extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_history_input() {
+    __asm__ __volatile__("pushl _urwcn_generic_history_input_return\n\tjmp *_urwcn_generic_query_input_target\n\t");
 }
 extern "C" __attribute__((naked)) void URWCN_CALL urwcn_generic_history_capacity() {
     // FE3C7's original capacity calculation begins with the three pending
@@ -100,6 +103,7 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     // replayed from an inline trampoline at a different instruction address.
     hooks.push_back(inline_hook(query_input,0xFBA25,{0xE8,0xF6,0x56,0xFD,0xFF}));
     hooks.push_back(inline_hook(query_second_input,0xFBC93,{0xE8,0x88,0x54,0xFD,0xFF}));
+    hooks.push_back(inline_hook(history_input,0xFEB77,{0xE8,0xA4,0x25,0xFD,0xFF}));
     hooks.push_back(call(field_input,0x10FB17,0xD3BF0,0));
     hooks.push_back(call(field_text,0x10FA4D,0x10E260,4));
     hooks.push_back(inline_hook(field_cursor_width,0x10FA77,{0x8D,0x14,0xD5,2,0,0,0}));
@@ -111,6 +115,7 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     urwcn_generic_query_input_target=host->image_base+0xD1120;
     urwcn_generic_query_input_return=host->image_base+0xFBA2A;
     urwcn_generic_query_second_input_return=host->image_base+0xFBC98;
+    urwcn_generic_history_input_return=host->image_base+0xFEB7C;
 }
 
 Status query(const NativeEvent& event,bool second) {
@@ -182,6 +187,7 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
     const auto current=native_menu_component::active();
     native_menu_component::retain(current);
     const bool query_owner=caller==0xFBA2A || caller==0xFBC98;
+    const bool complete_constructor=query_owner || caller==0xFEB7C;
     if(caller==0x14705A && windows_build::is_3891()) bind_chat_mode_menu(current);
     if(caller==0x1427FA && windows_build::is_3891()) {
         const auto status=bind_chat_lines_menu(current);
@@ -202,7 +208,7 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
                 address(at<void>(0x1B61FC)),owner-0x880);
         }
     }
-    if(!query_owner) {
+    if(!complete_constructor) {
         native_menu_component::activate(current);
         if(status==Status::ok) status=native_menu_component::paint(current);
     }
@@ -210,7 +216,7 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
         *at<u32>(0x5F54AB0)=selected;
         // D1167 saves the complete new query pixels, then D1217 selects from
         // that cache. Leave that ordering with its original suspended D1120.
-        if(!query_owner)
+        if(!complete_constructor)
             reinterpret_cast<void (__fastcall *)(u32,u32)>(host->image_base+0xD0650)(selected,0);
     }
     *at<u32>(0x61BBA5C)=flip;
@@ -220,6 +226,19 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
 }
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=false;
+    // Keep the existing history Hook identities while the 3.89.1 complete
+    // consumer handles both phases, its semantic source and actual widths.
+    if(windows_build::is_3891() && (event.id==history_line_width || event.id==history_append ||
+       event.id==history_paragraph || event.id==history_footer)) return Status::ok;
+    if(event.id==history_input) {
+        handled=true;
+        // FE2B0 has now constructed its complete native kind-100 footer.
+        // Stop only this borrowed construction before it reads a new action.
+        result.resume_rva=continuation(constructing==Construction::history ?
+            reinterpret_cast<const void*>(native_component_calls::urwcn_component_fragment_return) :
+            reinterpret_cast<const void*>(urwcn_generic_history_input));
+        return Status::ok;
+    }
     if(event.id==query_input || event.id==query_second_input) {
         handled=true;
         if(constructing==Construction::query) {
@@ -362,7 +381,8 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         // The original constructor supplies the line capacity used by its
         // ordinary next/previous-page business after the current real wait.
         *ptr<u32>(history_body+0x28)=*ptr<const u32>(event.frame->esp+0x28);
-        result.resume_rva=0xFEE19;
+        // Continue through CF790 and all six native CFAF0 buttons. The empty
+        // kind-100 Menu cannot redraw these buttons through CFFB0 alone.
     }
     return Status::ok;
 }

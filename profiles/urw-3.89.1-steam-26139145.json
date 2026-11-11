@@ -7,7 +7,7 @@
   "machine": "I386",
   "exe_sha256": "c6ed73642c1b1cb1f86b818c7586224398c2f0554f6114ced31bc40ff071806d",
   "preferred_image_base": "0x400000",
-  "scope": "Windows native display consumers: startup/intro/main menu/About/Credits/settings/load/ancestors/creation/HUD; season/portrait/attributes, all encyclopedia topics and culture legends, skills and spells, world generation, all thirteen scenarios and game-course selection, farewell, and UTF-8 character names. Memorial/death page, all native cause/history, date/place and life/journey branches. In-game game-course/task information, all stock task records, related key commands and completion/reward text.",
+  "scope": "Windows native display consumers: startup/intro/main menu/About/Credits/settings/load/ancestors/creation/HUD; season/portrait/attributes, all encyclopedia topics and culture legends, skills and spells, world generation, all thirteen scenarios and game-course selection, farewell, and UTF-8 character names. Memorial/death page, all native cause/history, date/place and life/journey branches. In-game game-course/task information, all stock task records, related key commands and completion/reward text. Message log native UI, fixed-literal history bodies and the two reported help/options echoes.",
   "evidence": [
     "docs/evidence/main-menu-static.txt",
     "docs/evidence/static-disassembly.txt",
@@ -41,7 +41,8 @@
     "docs/evidence/20261110-windows-3891-hook-review.md",
     "docs/evidence/20261110-windows-3891-native-contracts.md",
     "docs/evidence/20261110-windows-3891-resources.md",
-    "docs/evidence/20261111-game-task-native.md"
+    "docs/evidence/20261111-game-task-native.md",
+    "docs/evidence/20261111-message-log-native.md"
   ],
   "ownership": {
     "text_translation": "component-specific adapter and text services",

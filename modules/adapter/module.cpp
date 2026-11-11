@@ -1355,17 +1355,19 @@ Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Con
     // Other Menu families already own their retained semantic sources. Their
     // previous materialization path did not re-enter these ambient binders.
     if(native_menu_component::materializing()) return Status::ok;
-    // 108730 builds English upper rows; 1002B0 copies them through CF990
+    // 108730 / 47B00 build the help / handcraft English upper rows;
+    // 1002B0 copies them through CF990
     // into the real Menu. Bind at CFFB0's complete native text consumers so
     // its title, row metrics, selection and cached source share one language.
     // The unchanged native header also identifies a menu adopted on reload.
-    if(std::strcmp(at<char>(0x5F54A38),"HELP AND GAME OPTIONS")==0) {
+    if(std::strcmp(at<char>(0x5F54A38),"HELP AND GAME OPTIONS")==0 ||
+       std::strcmp(at<char>(0x5F54A38),"HANDCRAFT OPTIONS")==0) {
         if(consumer==Consumer::plain_title || consumer==Consumer::title_panel) {
             native_menu_component::bind_title(TextComponent::message_value,
                 at<char>(0x5F54A38),"menu.title");
         } else if(consumer==Consumer::button_row) {
             // D031F is reached only for an action row containing '.'.
-            // Keep the actual ?, Q, O, F1, CTRL+s and ESC key-cap prefix.
+            // Keep each actual key-cap prefix, including the native ESC row.
             const auto* suffix=std::strchr(ptr<char>(e.arguments[0]),'.')+1;
             native_menu_component::bind_row(e.frame->esi,TextComponent::message_value,
                 suffix,"menu.label",true);
@@ -1514,6 +1516,7 @@ Status lend_conversation_display(const NativeEvent&,u32&,Scope,u32);
 #include "windows_wounds.inc"
 #include "windows_memorial.inc"
 #include "windows_game_tasks.inc"
+#include "windows_message_log.inc"
 
 Status bind_hud_location(const NativeEvent& e) {
     const auto* original=ptr<char>(e.arguments[1]);
@@ -1551,7 +1554,8 @@ Status dispatch_windows_messages(const NativeEvent& event,DispatchResult& result
             windows_message_debug_sources::dispatch,windows_message_combat_body::dispatch,
             windows_message_audit_copies::dispatch,windows_message_late_sources::dispatch,
             windows_wielded::dispatch,windows_hud_map_text::dispatch,windows_wounds::dispatch,
-            windows_conversation_text::dispatch,windows_memorial::dispatch,windows_game_tasks::dispatch}) {
+            windows_conversation_text::dispatch,windows_memorial::dispatch,windows_game_tasks::dispatch,
+            windows_message_log::dispatch}) {
         const auto status=dispatch(event,result,handled);
         if(handled) return status;
     }
@@ -1588,6 +1592,7 @@ void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
     windows_wounds::append_hooks(hooks);
     windows_memorial::append_hooks(hooks);
     windows_game_tasks::append_hooks(hooks);
+    windows_message_log::append_hooks(hooks);
 }
 std::vector<unsigned char> save_windows_message_state() {
     std::vector<unsigned char> state;
