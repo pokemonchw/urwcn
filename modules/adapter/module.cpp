@@ -1513,6 +1513,7 @@ Status lend_conversation_display(const NativeEvent&,u32&,Scope,u32);
 #include "windows_hud_map_text.inc"
 #include "windows_wounds.inc"
 #include "windows_memorial.inc"
+#include "windows_game_tasks.inc"
 
 Status bind_hud_location(const NativeEvent& e) {
     const auto* original=ptr<char>(e.arguments[1]);
@@ -1550,7 +1551,7 @@ Status dispatch_windows_messages(const NativeEvent& event,DispatchResult& result
             windows_message_debug_sources::dispatch,windows_message_combat_body::dispatch,
             windows_message_audit_copies::dispatch,windows_message_late_sources::dispatch,
             windows_wielded::dispatch,windows_hud_map_text::dispatch,windows_wounds::dispatch,
-            windows_conversation_text::dispatch,windows_memorial::dispatch}) {
+            windows_conversation_text::dispatch,windows_memorial::dispatch,windows_game_tasks::dispatch}) {
         const auto status=dispatch(event,result,handled);
         if(handled) return status;
     }
@@ -1586,6 +1587,7 @@ void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
     windows_hud_map_text::append_hooks(hooks);
     windows_wounds::append_hooks(hooks);
     windows_memorial::append_hooks(hooks);
+    windows_game_tasks::append_hooks(hooks);
 }
 std::vector<unsigned char> save_windows_message_state() {
     std::vector<unsigned char> state;

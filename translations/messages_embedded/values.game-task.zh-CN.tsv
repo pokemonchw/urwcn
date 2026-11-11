@@ -1,0 +1,350 @@
+domain	source	target
+game_task.text	Water is essential. Explore your surroundings until you find a source of fresh water like a lake or even a pond, then take a big gulp of fresh water and start out again	水是生存之本。探索周围，找到湖泊或池塘等淡水来源，痛饮一番，再精神饱满地
+game_task.text	with new strength. In the winter, it won't be so easy - you'll need to use your fishing skill to make a hole in the ice. If you're wondering what's in a certain location	重新出发。冬天取水就没这么容易了，需要使用捕鱼技能在冰上凿洞。如果想知道某处有什么，
+game_task.text	you can take a look and examine it if it's within your field of vision.	只要它在视野内，就可以观察并仔细查看。
+game_task.text	You can stay alive without food for weeks, but unless you have water you will die of dehydration in days.	不吃东西还能活上几周，但如果没有水，几天内就会因脱水而死。
+game_task.text	A CLOSER LOOK	仔细观察
+game_task.text	You can zoom in and out between the large scale wilderness map and a smaller scale local terrain map. Now zoom in to a local map to explore the area you are in more closely.	你可以在大范围的荒野地图与较小范围的局部地形地图之间切换。现在切换到局部地图，仔细探索所在地区。
+game_task.text	The zoomed in map reflects the wilderness location accurately, so if there's a lake to the north on the wilderness map, you can find it by traveling north on the zoomed in map	局部地图会准确反映荒野地图上的位置。例如，荒野地图北面有湖泊，在局部地图上向北走
+game_task.text	as well. You may want to look in a given direction or investigate the location you are at more closely to see what's around you.	同样能找到它。你也可以朝某个方向观察，或仔细查看脚下的位置，了解周围的情况。
+game_task.text	You are now on a zoomed in local terrain map. Take some time to explore your surroundings a bit. In general, long distance travel is performed on the wilderness map, and	你已进入局部地形地图。花些时间探索周围吧。一般来说，远途旅行在荒野地图上进行；
+game_task.text	encountering animals or people, living a settled daily life, fishing, trapping, gathering berries and such takes place on the zoomed in map.	遇见动物或人、定居生活、捕鱼、设陷阱、采浆果等活动，则在局部地图上进行。
+game_task.text	PICKING UP	拾取物品
+game_task.text	On the zoomed in maps you can find items such as branches, fallen trees, stones etc. lying around. Depending on the season and the terrain type you may also find natural food	在局部地图上，你能找到散落的树枝、倒木和石头等物品。根据季节和地形，还可能发现蘑菇、
+game_task.text	like mushrooms and berries. All of this is picked up the same way. Now try and pick up something you find nearby on the ground. To see what you are already carrying check out	浆果等天然食物，它们都以相同方式拾取。现在试着拾取附近地上的东西。想知道已经带了什么，就查看
+game_task.text	your inventory.	物品栏。
+game_task.text	Alright, you've picked up something. Remember that carrying heavy loads slows down your physical skill activities, makes movement slower and combat more challenging.	很好，你已拾起物品。记住，负重过大会拖慢需要体力的技能活动和移动，也会让战斗更加困难。
+game_task.text	MAKE A FIRE	生火
+game_task.text	To survive in the wilderness, especially in the winter, you need to learn how to make a fire. That's your next task. You can find and pick up several branches and drop them	想在荒野生存，尤其是熬过冬天，就得学会生火。这就是下一个任务。你可以拾取几根树枝，放在
+game_task.text	where you wish to build a fire, use your timbercraft skill to cut branches from a tree, or you can even set fire to a dry fallen tree. To place heavy trunks or a pile of firewood	想生火的地方，也可以用伐木技能从树上砍下枝条，甚至直接点燃干燥的倒木。要把沉重的树干或一堆柴火
+game_task.text	to a location where you wish to build a fire you can use the push items-command. Finally, use start a fire command to light up the firewood.	移到生火处，可以使用推移物品命令。最后，使用生火命令点燃燃料。
+game_task.text	Fire keeps you warm during cold weather, and will burn as long as it has enough fuel. To feed the burning fire you need to occasionally move some wood, or other burnable items,	火能在寒冷时为你取暖，只要燃料充足就会继续燃烧。为了维持火势，需要不时将木头或其他可燃物
+game_task.text	into the fire.	移进火里。
+game_task.text	As you probably will need to fish and hunt for your livelihood, you also need to learn to cook what you catch or kill. Now use your cookery skill to prepare some food. The most	你很可能需要靠捕鱼和狩猎谋生，因此也得学会烹制猎获的食物。现在用烹饪技能做些吃的。最
+game_task.text	simple recipe is just to roast raw fish or meat over the campfire. While the food is being cooked and if you don't have anything else to do, you can use the wait or rest commands	简单的方法是在篝火上烤生鱼或生肉。食物烹制期间，如果没别的事，可以用等待或休息命令
+game_task.text	to kill some time. Your nose will tell you when the food is ready so be ready to cancel your lazy time or you will burn the food.	打发时间。香味会告诉你食物何时做好，记得及时结束休息，以免把食物烧焦。
+game_task.text	Raw meat and fish will spoil pretty quickly if not cooked. Recipes vary in nutrition as well as in preservation time. It's worthwhile to take some time to learn more about them at some point.	生肉和生鱼不经烹制很快就会腐坏。不同食谱的营养和保存时间各不相同，值得找时间了解。
+game_task.text	TIMBERWORK	伐木加工
+game_task.text	Your task is to fell a tree - for which you need to zoom in to a local map. You'll need an axe to fell bigger trees but only a knife is required for slender trunks or small trees. Now check out	你的任务是砍倒一棵树，需要先进入局部地图。砍大树需要斧头，细树干或小树则只需一把刀。查看
+game_task.text	your inventory, stand by the tree you wish to cut down and fell it by using your timbercraft skill. You can wield your chosen tool/weapon to get through the required equipment selection	物品栏，站到要砍的树旁，使用伐木技能。事先握持选好的工具或武器，可以更快地通过所需装备的选择
+game_task.text	list faster.	列表。
+game_task.text	The wood from trees in all its various forms is a very useful material which can be used for many different purposes. You can continue processing the tree you just felled with your	树木的各种形态都是用途广泛的材料。如果愿意，你可以继续用伐木技能加工刚砍倒的树。
+game_task.text	timbercraft skill if you like. Notice that not every felled tree is suitable for every purpose. The main difference is whether the trunk is a slender one, from a young or small tree,	并非每棵倒木都适合所有用途：幼树或小树的细树干，
+game_task.text	or a big, fully grown one. When working with lumber, the type of axe used often has a major influence on the required working time and the quality of the result.	与成熟大树的粗树干有明显差别。加工木材时，斧头的类型往往会显著影响耗时和成品质量。
+game_task.text	DO IT YOURSELF	亲手制作
+game_task.text	You can make various items by yourself; tools, weapons, clothes, even buildings. Go ahead and try to make yourself an item. You may want to check out your inventory first to see	你能亲手制作各种物品，包括工具、武器、衣服，甚至建筑。试着做一件物品吧。先查看物品栏，了解
+game_task.text	what you have and what you need - you might want to try an easy piece of woodwork as your first attempt.	自己拥有什么、还需要什么；第一次不妨从简单的木工作品开始。
+game_task.text	You can equip yourself pretty well with only self-made items. Sometimes, when you are unable to buy or trade for the equipment you need you will have to do with items you can	仅靠自制物品也能把自己装备得相当齐全。有时买不到或换不到所需装备，就得用自己
+game_task.text	make yourself. This can actually be very rewarding and great fun if you want to live the life of a hermit or wandering adventurer.	制作的东西。对隐居者或四处漂泊的冒险者来说，这既有成就感，也很有乐趣。
+game_task.text	Next you need to try out fishing, a good and relatively easy way to keep yourself fed. You can fish with a fishing rod, a spear or even a club. These are active fishing methods. You	接下来尝试捕鱼，这是一种不错且较容易果腹的方法。你可以用钓竿、矛，甚至棍棒主动捕鱼，
+game_task.text	can fish passively by using nets. Now find a suitable body of water, like a lake or river, and use your fishing skill. Before going fishing you may want to eat some food if you have	也能用渔网被动捕鱼。现在找到湖泊或河流等合适水域，使用捕鱼技能。出发前若有食物，不妨先吃一些，
+game_task.text	any as it's more comfortable to wait for a catch on a full stomach.	毕竟吃饱后等鱼上钩会更舒服。
+game_task.text	There are many factors that define how many and what kind of fish you'll catch - if you do catch anything. The fishing method and equipment used and your fishing skill do affect your	能否捕到鱼、捕到多少以及什么鱼，都取决于很多因素。捕鱼方式、装备和捕鱼技能当然会影响
+game_task.text	luck of course. Different types of fish are found at different depths of water and some only live in lakes and others in rivers. Your chances of catching certain fish will also depend	收获。不同鱼类生活在不同水深，有些只在湖里，有些只在河里。捕到特定鱼类的机会还与
+game_task.text	on the time of the day. These are things you'll learn as you gain experience with various equipment and tactics.	一天中的时段有关。随着尝试不同装备和方法，你会逐渐积累经验。
+game_task.text	SHELTER IN THE WOODS	林中庇护所
+game_task.text	Sometimes it's useful to build yourself a shelter if you are planning to stay in a certain region for a long time or even just want to sleep one night more comfortably - or to stay dry	如果打算在某地多待一阵，或只是想睡得舒服些、下雨时不被
+game_task.text	when it's raining. Therefore, your next task is to find a good place (you may want to wander around a bit to find a pleasant one) and make a shelter by using your building skill. After	淋湿，搭建庇护所都很有用。下一个任务就是找个合适的地方，用建造技能搭一处庇护所；你可以先四处看看，选个喜欢的位置。
+game_task.text	your shelter is finished you may want to sleep there a night or two.	建好后，不妨在里面住上一两晚。
+game_task.text	You may want to collect some firewood or food near the shelter for later use. Generally it's useful to build your shelter near water - if you don't have some with you. It also wouldn't	可以在庇护所附近收集柴火和食物以备日后使用。如果没有随身带水，营地通常最好靠近水源。傍晚也不妨
+game_task.text	hurt to spend part of the evening gathering some food, fish or berries for example, for the next few days - as you now have a camp to return to when the night falls.	花些时间捕鱼或采浆果，为接下来几天储备食物；现在夜幕降临时，你已有营地可归。
+game_task.text	SPELL	施展法术
+game_task.text	You should be aware that there are supernatural spirits, guardians and dwellers in The Unreal World. Your way of communicating with and affecting the spirit world are the spells and	在《不真实的世界》中，存在超自然的精灵、守护者和其他居民。你学到的法术与
+game_task.text	incantations that you learn. Now review your spells and magic means profile and perform one of those, but don't select it randomly. The spells, sacrifices and incantations you perform	咒语，是与灵界沟通并影响它的方式。现在查看法术与巫术列表，施展其中一种，但不要随意挑选。所用的法术、祭品和咒语
+game_task.text	should always be chosen to reflect your recent deeds or the present situation.	应当符合你最近的行为或眼下的处境。
+game_task.text	It is adviced that you familiarize yourself with the mythology information and spell descriptions at some point. You will learn more spells during the game in	建议找时间熟悉神话知识和法术说明。除了开局就会的法术，游戏过程中
+game_task.text	addition to the ones you start the game with.	还能学到更多。
+game_task.text	THE SEARCH FOR WILDLIFE	寻找野生动物
+game_task.text	Man is not the only being roaming The Unreal World; there are also wide variety of animals which you can't avoid encountering from time to time, and which you need to learn to hunt down	《不真实的世界》中，四处活动的并不只有人，还有形形色色的动物。你不时会遇到它们，需要学会狩猎
+game_task.text	or defend yourself against. Your task now is to wander until you encounter an animal in the wilderness. You may wander around the wilderness map and try out your tracking skill here and	或自卫。现在的任务是在荒野旅行，直到遇见动物。你可以在荒野地图上探索，并在各处尝试使用追踪
+game_task.text	there. With skill, luck and patience you may be able to track down an animal, but bumping unexpectedly into wildlife while walking through the wilderness is also common. People also	技能。凭借技术、运气和耐心，你或许能找到动物；在野外行走时意外撞见它们也很常见。人们有时还会
+game_task.text	sometimes share news about sightings, especially of bigger animals. If your expedition takes you far away, refer to your map of known areas to find your way in the world.	告诉你目击动物的消息，尤其是大型动物。如果走得很远，可以查看已知区域地图来辨认方向。
+game_task.text	You have encountered something in the wild. If the animal encountered is not in your sight from the start, you will need to move around on the zoomed in map to find it. If you can locate	你已在荒野遇见动物。如果一开始看不到它，就要在局部地图上四处寻找。找到后，
+game_task.text	the animal (they may also escape from you very quickly) you can stalk it if you're hungry or run away if it's dangerous to you. Different animals behave in different ways, are active at	若正饿着，可以潜行接近；若它很危险，也可以逃走。动物可能很快跑开。不同动物的行为和
+game_task.text	different times of the day etc., and knowing their habits is very important. If you are an inexperienced hunter, not disturbing predators that are potentially aggressive may be wise.	活动时段各不相同，了解习性非常重要。缺乏经验的猎人，最好别惊扰可能具有攻击性的猛兽。
+game_task.text	A KILL	猎杀
+game_task.text	Now you need to hunt down and kill an animal. If the animal you have encountered is too challenging for you, back away and go track down something else, and this time make sure you are	现在需要追猎并杀死一只动物。如果遇到的动物太难对付，就先退开，另寻目标。这次务必
+game_task.text	properly prepared and equipped for the encounter. Sometimes you may need to hide and sneak (stalk) so as not to alarm a dangerous or skittish animal. Sometimes a quick rush and some running	做好准备并带齐装备。有时需要隐藏、潜行接近，以免惊动危险或警觉的动物；有时则要迅速冲上去，奔跑
+game_task.text	after escaping prey is required. It's up to you whether you choose close combat or ranged weapons such as a bow and arrow to bring down the animal.	追赶逃走的猎物。你可以选择近身搏斗，也可以用弓箭等远程武器将其击倒。
+game_task.text	Slain animals provide meat and skin. If the animal you killed was a large one, a rare species or sacred (for example a bear) it might be justified to sacrife some of the meat	猎物能提供肉和皮。如果杀死的是大型、稀有或神圣的动物，例如熊，可以考虑拿出一些肉
+game_task.text	to the supernatural guardians. If you were injured during the fight you can take care of your wounds by using your physician skill.	献给超自然守护者。若在战斗中受伤，可以用医术处理伤口。
+game_task.text	You can use the skins of the animals you've hunted to make clothes or to trade away, especially if it's a valuable fur. However, the fresh skin needs to be tanned before it's useable	猎获的兽皮可以做衣服，也能交易，尤其是珍贵毛皮。不过，鲜皮必须经过鞣制，才能成为可用的
+game_task.text	as fur or leather, and that is your next task. First use your hideworking skill to skin the carcass. After this you may want to cut up the carcass for the meat and fat. When you have	毛皮或皮革，这就是下一个任务。先用制皮技能剥下兽皮，再考虑分割尸体，取得肉和脂肪。当物品栏中有了
+game_task.text	the fresh hide in your inventory, use your hideworking skill again to tan the skin; you'll need either the animal fat or some bark and some water during the process.	鲜皮，就再次使用制皮技能进行鞣制；加工时需要动物脂肪，或树皮和水。
+game_task.text	The tanned skin is called fur or leather depending on the skin type. Leather is useful for making clothes and other items. Fur is valuable even if not processed into a piece of clothing.	鞣制后的兽皮根据种类称为毛皮或皮革。皮革可以制作衣服和其他物品；毛皮即使不做成衣服，也很有价值。
+game_task.text	The value of the fur depends on the animal species you got it from and the season when it was obtained. In the wintertime the animals' furs are at their thickest and are much more valuable.	毛皮的价值取决于动物种类和获取季节。动物冬季的皮毛最厚，因此也值钱得多。
+game_task.text	Skins can also be cured which preserves them until you have the time to tan them. If the fresh skin isn't cured nor tanned within a couple of days it will begin to rot and lose its value.	兽皮也可以先行防腐，留到有时间再鞣制。鲜皮若在几天内既不防腐也不鞣制，就会开始腐烂，失去价值。
+game_task.text	WATERCOURSE	水路旅行
+game_task.text	Rafts and punts are watercrafts used for traveling on the water. Sestas and paddles are used to pole or row them ahead. Your next task is to get yourself a watercraft of some kind and a sesta	木筏和独木舟用于水上旅行，撑篙和桨用于推动它们。下一个任务是弄到某种船只，再配上一根撑篙
+game_task.text	or a paddle - then row across a lake. Notice that you can make a raft, a sesta and a paddle yourself. It's a good idea to find a lake before starting to make a raft. When you have obtained or	或桨，划过一片湖泊。木筏、撑篙和桨都能自己制作。开始做木筏前，最好先找到湖泊。取得或
+game_task.text	made a watercraft, place it on the shore, step in and wield a sesta or a paddle to move your watercraft. If you do contruct a raft further from the shore you can use move items-command to drag it	造好船只后，把它放在岸边，踏上去，再握持撑篙或桨来移动。如果在远离岸边的地方造木筏，可以用拖运物品命令把它拖到
+game_task.text	by the water.	水边。
+game_task.text	Travelling along watercourses is very convenient - keep this in mind. If you find a waterway connecting two regions important to you, you might leave a raft there for easy travel. With a sesta	沿水路旅行十分方便，值得记住。若发现连接两处常去地点的水道，可以留一艘木筏在那里，方便往返。撑篙
+game_task.text	you can only travel on shallow water, so you'll want to make a paddle if you plan to travel on deeper water. You can also transport loads with the watercraft by dropping the items you wish to	只能用于浅水，打算进入深水时应制作船桨。船只也能运输货物，把要运输的物品丢在
+game_task.text	transport on it.	船上即可。
+game_task.text	A SETTLEMENT	聚落
+game_task.text	Even if you can survive on your own it's useful to know where you can find other people. Your next task is to find a village or settlement and enter it to see what it can offer you. There	即使能独自生存，知道哪里有人也很有用。下一个任务是找到村庄或聚落，进入其中看看能得到什么。荒野
+game_task.text	is a vast wilderness and villages are rather rare, so you may want to equip yourself carefully for this expedition. When you are ready start roaming across the wilderness map. Settlements	辽阔，村落稀少，因此出发前最好仔细准备装备。准备好后，就在荒野地图上开始探索。聚落
+game_task.text	usually tend to be near water and watercourses. Checking cultural regions from the map of known areas helps you to know when you are wandering in an inhabitated region. If you encounter some	通常靠近水源和水道。查看已知区域地图中的文化分布，有助于判断是否已进入有人居住的区域。如果遇到
+game_task.text	wandering people you can talk to them and ask for directions to the nearest village.	行人，可以和他们交谈，询问最近的村庄在哪。
+game_task.text	Feel free to explore this settlement to see what the area and people around here can offer you. Settlements vary greatly depending on the culture of the people, from the small kota-villages of	尽情探索这处聚落，了解周围环境和居民能提供什么。不同文化的聚落差别很大，从北方的小型帐篷村，
+game_task.text	the North to the large bustling villages of the Driik. From the larger villages you can find stores with varying goods for trade. In the small settlements of Kaumo for example you can only	到德里克热闹的大村庄，各有特色。较大的村庄有商店，能换到各式货物。而考莫等地的小聚落，通常只能
+game_task.text	trade with the people directly. All of the equipment that people carry, gather and produce - weapons, tools, food etc. are also culture-dependent.	直接与居民交易。人们携带、采集和制作的武器、工具、食物等，也都因文化而异。
+game_task.text	TRADING	交易
+game_task.text	You can trade for items with people you meet, and also trade for goods you may find from the villages. Your next task is to trade something with somebody. If you want to trade	你可以和遇见的人交易物品，也能交换村庄里的货物。下一个任务是与某个人完成一次交易。如果想换取
+game_task.text	goods from a village first pick up the the items you are interested in and then talk to somebody when you are done. To trade with individual people just talk to them. Remember that not everyone	村中的货物，先拿起感兴趣的物品，挑选完再找人交谈。想与个人交易，直接交谈即可。记住，并非所有人
+game_task.text	is willing to trade with you, and they won't trade away all of their possessions.	都愿意交易，也并非所有随身物品都肯出售。
+game_task.text	Then there are wandering foreign traders who have expensive and rare armours and weapons they brought with them from far away. If you ever meet some foreign traders remember that they are after	还有远道而来的异国商人，携带昂贵稀有的护甲和武器。若遇到他们，记住他们主要收购
+game_task.text	furs, the higher quality the better.	毛皮，而且品质越高越好。
+game_task.text	At some point you may want to settle down more properly and build your own house. Your next task is to get a feeling for this. Now find a place where you would like to live for some time - feel	终有一天，你可能想安定下来，盖一间自己的房屋。下一个任务就是初步体验建房。找一处想住上一阵的地方；
+game_task.text	free to travel further from the populated areas or select a cultural territory where you feel at home - and start constructing a house of your own. It all starts by felling trees and carving	可以远离人群，也可以选择让你感到自在的文化区域，然后开始建造。首先砍树，再用伐木技能把
+game_task.text	them into logs with your timbercraft skill. When you have the required materials construct a section of wall to get started.	树干加工成原木。材料齐备后，先造一段墙。
+game_task.text	Logs are heavy to carry, but you can easily move a pile of them by your building site using the move items-command.	原木很重，但可以用拖运物品命令把整堆原木搬到工地旁。
+game_task.text	Building a house is a lengthy process and the proper tools play a sigficant role in the time it takes to reach your goal. The log walls will stand waiting for you to continue the building later	建房耗时很长，合适的工具会显著影响进度。如果需要外出狩猎，已建好的原木墙会一直等着你
+game_task.text	on if you need to go on a hunting trip etc. for awhile. Take note that there are other contructions you can also build to make your settlement and surroundings look and work just the way you want.	回来继续施工。还可以建造其他设施，让营地和周围环境按你的心意发挥作用。
+game_task.text	In addition to hunting, fishing and gathering berries etc. agriculture is a source of independent livelihood which you need to try out now by planting something. You can spend some time looking	除了狩猎、捕鱼和采集，农业也是自给自足的谋生方式。现在试着种点东西。你可以花些时间
+game_task.text	for a nice place for your field and then use your agriculture skill to first prepare the soil and then plant some seeds or vegetables. Remember that the ground needs to be fertilized first by	选一块合适的田地，再用农耕技能整地、播种或栽种蔬菜。地面需要先通过
+game_task.text	burning some wood, but you will be reminded of this when using the agriculture skill.	焚烧木材施肥，使用农耕技能时也会提醒你。
+game_task.text	Seeds are hard to obtain, but preserving some of the harvested plants over the winter to be planted next spring will keep your field alive for years to come. It's a good idea to change the	种子不容易弄到，但把部分收获的植物保存过冬，来年春天再种，就能让田地年复一年延续。每过几年，最好更换
+game_task.text	location of your field after a few years to let the ground rest and grow fertile again for the future.	田地位置，让土地休养，恢复肥力。
+game_task.text	A DOMESTIC ANIMAL	家畜
+game_task.text	From many villages you can trade the items you've found or made to obtain your own animals. Animals are very useful as pack animals to carry loads and some of them can be milked. Use extended	在许多村庄，你可以用找到或制作的物品换取动物。动物能驮运重物，有些还能挤奶。使用扩展
+game_task.text	commands to milk an animal. To pack the animal you have, use push items command to its direction. For unpacking your pack animal, use picking up items from a direction.	命令挤奶；朝动物所在方向使用推移物品命令，能给它装载货物；卸货则使用朝指定方向拾取物品的命令。
+game_task.text	Having livestock also naturally secures your source of fresh meat. Your next task is to get yourself an animal, either from a village or by leashing a tame animal	饲养牲畜自然也能保障鲜肉来源。下一个任务是拥有一只动物，可以在村中换取，也可以拴住偶尔
+game_task.text	you may occasionally encounter. Leash an animal by applying a rope to it. Talk to villagers for animal trading possibilities.	遇到的驯养动物。对动物使用绳子即可牵住它。与村民交谈，了解动物交易的机会。
+game_task.text	You may want to build a fence to keep your animals where you want. When the rope that is used as an animal leash is applied again the animal will be freed, but naturally can be leashed again	你可以建围栏，把动物留在指定地方。再次使用牵引动物的绳子就能解开它，之后只要它没走远，
+game_task.text	so long as it hasn't wandered off. Traveling with a big bunch animals is not a wise maneuver for a hunter since wild animals will naturally avoid such a party. Dogs can be very valuable	仍可重新拴住。猎人带着一大群牲畜旅行并不明智，野生动物通常会避开这样的队伍。不过，猎熊或猎狼等危险狩猎中，狗是很有价值的
+game_task.text	companions when hunting more dangerous game like bears or wolves.	伙伴。
+game_task.text	A COMPANION	同伴
+game_task.text	For more safety while wandering in the wilderness you can ask some people to join you. Together it's a lot easier to face the setbacks and dangers of the world. Your next task is to get	为了在荒野旅行时更安全，可以邀请别人同行。一起面对挫折和危险会轻松许多。下一个任务是为短途旅行找一位
+game_task.text	yourself a companion for a short journey. Find some people and talk to them asking them to join you by selecting the "Ask for help" chat option. Besides of hiring people only to hunt	同伴。找到人并与其交谈，选择“请求帮助”，邀请对方加入。除了雇人一起狩猎
+game_task.text	or go adventuring with you, they can help you in your daily life - for example if you need some extra hand at your building site.	或冒险，也能让他们帮忙处理日常事务，例如在工地上搭把手。
+game_task.text	Now that you have a companion feel free to carry on adventuring, hunting or whatever as you like. When you talk to your companion now, pay attention to the special command options which	你已有同伴，可以继续冒险、狩猎或做其他想做的事。与同伴交谈时，留意特别的命令选项，
+game_task.text	can be used to give little tasks and duties to your companion.	可以借此给同伴安排简单的任务与职责。
+game_task.text	SETTING A TRAP	设置陷阱
+game_task.text	Various traps are used in passive hunting to catch different animals. Your task now is to try this out and set a trap anywhere you like. You must zoom into the local terrain, set a trap	各种陷阱能被动捕获不同动物。现在试着在喜欢的地方设一个陷阱。进入局部地图后，
+game_task.text	either with the apply command if you have a single item trap, or by using the TRAPPING skill to make one of the various trap constructions by yourself. After the trap is set zoom back out	如果是单件式陷阱，就用使用命令放置；也可以用陷阱技能建造各种陷阱设施。设好后，切回
+game_task.text	to the wilderness map. You can freely decide the trap location and form based on what kind of animals you want to catch. If you are after carnivores, baiting the trap after it has been	荒野地图。根据想捕捉的动物，自行决定陷阱位置与种类。陷阱需要妥善
+game_task.text	set is required to make it effective at all.	设置，才会有效。
+game_task.text	Different traps are designed for different species of animals. Reading the game-info on traps is recommended.	不同陷阱针对不同动物。建议阅读游戏百科中的陷阱说明。
+game_task.text	Passive hunting using traps can be an efficient way to keep yourself warm and well-fed.	用陷阱被动狩猎，是获取食物和保暖材料的有效途径。
+game_task.text	CHECKING THE TRAP	检查陷阱
+game_task.text	Your next task is to check the trap you have set. You usually need to wait at least for a day before it's	下一个任务是检查已设置的陷阱。通常至少等上一天，
+game_task.text	worthwhile to check your traps. Continue with other activities until your trap has been set for a day or	再去查看才有意义。先做些别的事，等陷阱放置一两
+game_task.text	two, then find its location and zoom in to check it out.	天后，再找到它，进入局部地图检查。
+game_task.text	You can locate your set traps from the map of known areas even if you've traveled far away from your hunting grounds.	即使已经远离猎场，也能通过已知区域地图找到设置过的陷阱。
+game_task.text	If something has gotten caught into the trap you can deal with it as you please. If the trap hasn't been triggered and	如果抓到动物，可以自行决定如何处理。如果陷阱没有触发，
+game_task.text	you wish to set it elsewhere disassemble it first. Then you can either pick up the single item trap or the raw materials	而你想把它设到别处，就先拆除，再拾起单件式陷阱或建造时使用的
+game_task.text	used. If you find the trap triggered but no animal is caught in it, the animal which entered the trap may have been strong enough	材料。如果陷阱已触发却没有动物，可能是闯入的动物力气够大，
+game_task.text	to free itself from the trap. To set a triggered trap again, pick up and apply a single item trap again or use reset a trap construction option.	挣脱了。要重新设置，拾起并再次使用单件式陷阱，或选择重置陷阱设施。
+game_task.text	NO MAN'S LAND	无人之地
+game_task.text	You can view cultural regions from the map of known areas. Your task now is to pick up your things and travel to any area that doesn't belong to any	你能在已知区域地图查看文化分布。现在收拾行装，前往不属于任何
+game_task.text	cultural region (appears in black color). Check out your destination first and equip yourself properly for the expedition, maybe make yourself some items or tools you might find necessary.	文化的区域，即地图上的黑色区域。先选好目的地，为远征准备装备，必要时制作可能用到的物品或工具。
+game_task.text	On your journey you may need to fill in supplies, so feel free to try out your tracking and fishing skills for example. And feel free to explore	途中可能需要补给，不妨尝试追踪和捕鱼；沿途遇见
+game_task.text	villages or interact with people if they come in your way. When you've reached the no man's land, settle down and use your building skill to make a shelter.	村庄或行人，也可以探索和交谈。抵达无人之地后，安顿下来，用建造技能搭一处庇护所。
+game_task.text	There are differences in peoples' equipment and settlements depending on what culture they belong to.	不同文化的人拥有不同的装备，聚落也各不相同。
+game_task.text	The more you visit the settlements of different cultures, the more you'll find what a certain culture	多走访各种文化的聚落，便能更清楚地知道各地
+game_task.text	can offer to you. If you walk to the very border of the known map you can choose and randomize another region to continue playing in.	能提供什么。走到已知地图的最边缘时，可以选择并随机生成另一片地区，继续游戏。
+game_task.text	You can find signs of wandering animals by using your tracking skill, and that is your next task. Tracks are easiest to find on the zoomed-in maps as they are shown graphically, but the	使用追踪技能寻找动物活动的迹象，就是下一个任务。在局部地图上最容易发现足迹，因为它们会直接显示出来，不过追踪
+game_task.text	skill can also be used on the zoomed out wilderness map. You will probably need to search for tracks in several places to find a trail, unless an animal is encountered face to face and	技能也能用于荒野地图。除非迎面遇见动物并看到明显足迹，否则通常需要搜索好几个地方，
+game_task.text	a visible trail is spotted. Not all animals will leave tracks on any surface, except in the wintertime and on fresh snow. Reading the in game info about tracking is recommended, as there are	才能找到踪迹。除冬天的新雪外，并非所有动物都会在各种地面上留痕。建议阅读游戏中的追踪说明，因为其中涉及
+game_task.text	many factors involved. If it seems to take a long time to locate some tracks there's no need to rush. Keep yourself fed, take a break and continue the next day.	许多因素。如果一直找不到足迹，也不必着急。先吃饱，休息一下，第二天再继续。
+game_task.text	If you feel like it, you can try to track down the creature whose tracks you found. Use tracking again on the most recent track locations if you can't figure out the animal's direction	如果愿意，可以循迹寻找留下足印的动物。不清楚它往哪走时，就在最新的足迹处再次使用追踪
+game_task.text	otherwise. If you are tracking on the wilderness scale map, an encounter will happen when you reach your prey. Although it's usually more fruitful to zoom-in to the local map if you think	技能。在荒野地图上追踪，追上猎物时便会触发相遇。不过，若觉得已接近猎物，或需要详细观察足迹，通常最好
+game_task.text	you are closing in on your prey or need detailed visual information about the trail.	进入局部地图。
+game_task.text	A CATCH	捕到鱼
+game_task.text	Now you need to catch some fish, by using any fishing technique you want. If you are lacking fishing equipment you need to go find yourself some first. Spears and clubs	现在用任意捕鱼方法捕到一条鱼。缺少捕鱼装备，就先想办法弄到。矛和棍棒
+game_task.text	can be used to catch pike from shallow waters but that's not too common - especially if you aren't a skilled fisherman. The islanders and the people of the Driik surely	能在浅水中捕狗鱼，但并不容易，尤其对不熟练的渔夫而言。岛民和德里克人通常
+game_task.text	possess some fishing equipment if you wish to to take this task seriously, but even a little perch from a lake nearby will be counted as a catch. So check out, make or	有捕鱼装备，可以去那里准备；不过，即使附近湖里的一条小河鲈也算完成。检查、制作或
+game_task.text	trade your fishing equipment, go by the water and then use your fishing skill. The map of known areas reveals the waters nearby if you have visited them already.	交易取得装备，去水边使用捕鱼技能。已知区域地图会显示你曾到过的附近水域。
+game_task.text	If you did get a big catch and do know the fisher's sacrifice for a catch-ritual, the supernatural guardians of the water may be expecting some favours in return for their generosity.	若收获丰厚，又懂得“渔获献祭”仪式，慷慨赐予渔获的水域守护者，可能正期待你的回报。
+game_task.text	SALMON AND TROUT	鲑鱼与鳟鱼
+game_task.text	Salmon and trout are large, valuable fish that that can be caught from the rivers and especially from the rapids. Now you need to go after these desirable fish and use all of your	鲑鱼和鳟鱼体型大、价值高，能在河流，尤其是急流中捕到。现在施展全部捕鱼本领，捕到其中一种。
+game_task.text	fishing ability to catch one. To make your fishing succesful you need to go further from the river bank, so a watercraft like a punt or a raft will be necessary.	为了顺利捕鱼，需要离岸远一些，因此必须准备独木舟或木筏等船只。
+game_task.text	A good salmon river may also require some exploring, the best ones are said to be found in the north.	寻找良好的鲑鱼河流也需要探索，据说北方的河流最好。
+game_task.text	If it seems like you are catching a lot of salmon now you may want to keep on fishing. The young salmon migrate from the rivers to the sea in the spring and and after a few years they	如果眼下鲑鱼很多，不妨继续捕。幼鲑春天从河流迁入大海，几年后
+game_task.text	travel back to the rivers to reproduce - and at times like these the salmon fishing is very productive.	返回河流繁殖；这时捕鲑往往收获颇丰。
+game_task.text	A CAVE	洞穴
+game_task.text	In the north of The Unreal World, and occasionally inland, you can find mountains. And in the mountains there are sometimes caves. Caves can provide a shelter for an adventurer during	《不真实的世界》北方多山，内陆偶尔也有山地，山中有时能找到洞穴。洞穴能让冒险者在雨夜避风，
+game_task.text	a rainy night, but they can also be a lynx or bear den. Your next task is to find a cave and explore it to see what's inside. You can ask directions from any people you meet, but boldly	也可能是猞猁或熊的巢穴。下一个任务是找一处洞穴，进去探索。可以向路人问路，也可以大胆
+game_task.text	heading to northern regions will surely bring some mountains into view - but remember that not every mountain has a cave. Since the caves are dark, find or make some torches first. To	北行，总会遇见山地，但并非每座山都有洞穴。洞中漆黑，先找些或制作几支火把。要
+game_task.text	light a torch you need to apply it to a burning campfire.	点燃火把，需要在燃烧的篝火上使用它。
+game_task.text	Most of the caves are empty, but sometimes you can find an animal lurking inside. You can turn a cave into a relatively secure camp or a hiding place for yourself if you don't mind the	大多数洞穴空无一物，但有时有动物藏在里面。如果不介意
+game_task.text	constant need of campfire or torches for a light source.	持续用篝火或火把照明，洞穴也能成为相对安全的营地或藏身处。
+game_task.text	ARCHERY	弓术
+game_task.text	A bow can be a very efficient weapon in hunting and in combat. Your task now is to practice archery and improve your skills as a bowman. Find or make yourself a bow and practice your archery	弓在狩猎和战斗中都非常有效。现在的任务是练习射箭，提高弓术。找一把或自制一把弓，向活的目标
+game_task.text	with a live target. This can take some time but eventually, and especially after skilled shots, you will improve - as with every skill you use. You may want to spend some time making arrows	练习。进步需要时间，但持续练习，尤其是命中漂亮的射击后，终会有所提高，其他技能也是如此。也要花些时间制作箭矢，
+game_task.text	also since they do break sometimes. To shoot with a bow, have it wielded and use throw command to shoot an arrow. When you have some decent archery equipment, go bowhunting and don't expect	因为箭有时会折断。握持弓，再使用投掷命令射箭。备好合适的弓箭后，就去狩猎吧；不要指望很快见效，通常需要数日，
+game_task.text	to see results before days, sometimes even weeks, of shooting practice.	甚至数周的射击练习。
+game_task.text	Your archery skill has improved a bit now. Being a skilled bowman is very useful sometimes. You may want to continue experimenting with the bows to find the one that's right for you.	你的弓术已有进步。精湛的弓术有时非常有用。不妨继续尝试各种弓，找到最适合自己的一把。
+game_task.text	Crossbows are the most powerful type of bow, but they are rare and used mostly among the Driikiläiset.	弩是威力最大的弓类武器，但很稀少，主要由德里克人使用。
+game_task.text	THE SPIRIT WORLD	灵界
+game_task.text	You already know some spells and incantations, and should use them to communicate with the spirit world, the supernatural guardians and the otherwordly creatures. There are spirits	你已经掌握一些法术和咒语，应该用它们与灵界、超自然守护者及异界生灵交流。例如，森林和水域都有
+game_task.text	that live in and take care of the forest and water, for example. You will learn more spells from other people, usually within the quests or as quest rewards. Your task now is to live	居住其中并照看它们的精灵。你能从别人那里学到更多法术，通常是在任务中或作为任务奖励。现在的任务是继续
+game_task.text	your life until you learn a spell. This requires meeting people and getting involved in quests that provide you with new magic means.	生活，直到学会一个新法术。你需要结识别人，参与能传授新巫术的任务。
+game_task.text	It is never a good idea to perform a spell without truly feeling an urge to do it. And it's never a good idea to constantly ask favours from the supernatural world without giving anything	没有发自内心的意愿就施法，从来不是好主意。只向超自然世界不断索取，却不给予任何
+game_task.text	in return. Use your newly gained spell wisely.	回报，同样不妥。明智地使用新学的法术吧。
+game_task.text	THE GREAT MAN OF THE FOREST	森林之主
+game_task.text	Your task is to go against the greatest being of the forest - the Bear. Be prepared!	你的任务是挑战森林中最强大的生灵——熊。做好准备！
+game_task.text	You may want to get some people to help you in this task. Traps, tracking, exploring caves -	可以请人帮忙。陷阱、追踪、探索洞穴，
+game_task.text	use all the ways you have learned to find and to kill the great man of the forest.	运用你学过的各种方法，找到并杀死森林之主。
+game_task.text	The bear has been killed. Now it's time for some rituals and sacrifices to thank the spirits. And remember to utilize the bear hide and the meat.	熊已被杀死。现在应举行仪式和献祭，感谢精灵。也别忘了利用熊皮和熊肉。
+game_task.text	WARFARE	征战
+game_task.text	Njerpez warriors, foreigners from the east, have been making raids in this region. Your next task is to find their camp and kill all of them. When you find the camp you can make plans for	来自东方的涅尔佩茨战士一直在这一带劫掠。下一个任务是找到他们的营地，杀死所有战士。发现营地后，计划好
+game_task.text	how and when to attack them. You'd better be prepared and properly armed too. Wandering Njerpez warriors are encountered from time to time, but in the wilderness the conflicts are easier to	何时、如何进攻，并做好准备，携带合适武器。你不时也会遇见游荡的涅尔佩茨战士，但在荒野更容易
+game_task.text	avoid. In their camp you can expect to find numerous warriors so hiding and sneaking could be a very useful tactic.	避开冲突。他们的营地通常有多名战士，隐藏和潜行可能是很有用的战术。
+game_task.text	Remember to take care of your wounds by using your physician skill and see if the Njerpez warriors had some useful equipment.	记得用医术照料伤口，并看看涅尔佩茨战士身上有没有有用的装备。
+game_task.text	LARGE-SCALE PASSIVE HUNTING	大规模陷阱狩猎
+game_task.text	Trap-fences are effective especially for catching big animals that move in herds, for example wild reindeers. Your task now is to build a trap-fence of your own. Find a good place, zoom into	陷阱围栏尤其适合捕捉野生驯鹿等成群活动的大型动物。现在的任务是建造自己的陷阱围栏。选好地方，进入
+game_task.text	the terrain and start building the fence, and maybe read the hunting and fences section of the game-info browser for more information that can be useful. The shape of the fence is up to you,	局部地图，开始搭围栏。也可以阅读游戏百科中狩猎与围栏的章节，了解有用的知识。围栏形状由你决定，
+game_task.text	but the idea here is to make a fence that an animal will start to follow and leave an opening here and there. In the openings you need to dig pits by using a shovel. When your fence is ready,	关键是让动物沿围栏行走，并在沿途留下缺口，在缺口处用铲子挖坑。围栏建好后，
+game_task.text	turn pits into a trap-pits and zoom back out to the wilderness map to finish the task. The fence needs to be rather long to be effective.	把坑改成陷坑，再回到荒野地图即可完成任务。围栏要足够长才有效。
+game_task.text	Your trap fence is now finished and you can leave it to hopefully catch something. You can also use regular traps instead of pits and also bait your traps to attract carnivores. Trap-fences	陷阱围栏已经建好，可以留在那里等候猎物。也能用普通陷阱代替陷坑，并放置诱饵吸引食肉动物。陷阱围栏
+game_task.text	are a long-term passive hunting construction. Just remember to reset the traps that got triggered during use and set fresh baits (if you are after carnivores) whenever you check your traplines.	属于长期使用的被动狩猎设施。每次巡视时，记得重置已触发的陷阱；若捕食肉动物，还要更换新鲜诱饵。
+game_task.text	CLOTHING	衣物
+game_task.text	Your clothes wear out as time goes by so you'll need to get or make new clothes eventually. You can make some clothes by yourself and that's your next task: to make yourself some fur clothing.	衣服会随时间磨损，终究需要买换或制作。你能自己做衣服，而下一个任务就是制作一件毛皮衣物。
+game_task.text	A hunter wearing a wolf or bear fur cloak for example is an impressive sight, but any fur and piece of clothing will do for now. To get fur you first need to find and kill a fur-bearing animal	猎人披着狼皮或熊皮斗篷很有气势，不过这次任意毛皮和衣物都可以。先找到并杀死有毛皮的动物，
+game_task.text	(a fox, hare, glutton, or bear for example) and then use your hideworking skill to skin the animal and to tan the skin. After the skin is tanned you can make clothing out of it. Naturally the	例如狐狸、野兔、狼獾或熊，再用制皮技能剥皮和鞣制。鞣制完成后，就能做衣服。通常
+game_task.text	bigger the cloth the more fur you will need, but smaller pieces of fur can be used to complete an item if you have enough of them to put together.	衣物越大，需要的毛皮越多；小块毛皮只要数量足够，也能拼成一件衣物。
+game_task.text	In addition to providing material for clothing, some furs are very valuable in trading. You can also make clothes out of leather, but the fur provides more protection and warmth.	有些毛皮除了能做衣服，也很适合交易。皮革同样可以制衣，但毛皮更保暖，防护也更好。
+game_task.text	SOURCE OF LIVELIHOOD	谋生之道
+game_task.text	First of all you must now secure your source of livelihood and gather yourself something to eat for the next few days. Check out your inventory to see what you already carry and fill your	首先需要保障生计，储备未来几天的食物。查看物品栏已有的东西，再按喜欢的方法补充
+game_task.text	supplies the way you want: use your fishing skill, or tracking skill to track down and hunt animals, or if it's a suitable time of the year zoom into the terrain to gather berries or mushrooms.	储备：捕鱼，追踪并猎杀动物，或在适宜的季节进入局部地图采浆果和蘑菇。
+game_task.text	Or trade food from the people you meet if that's what suits you best. When you think you have enough food for at least five days eat something - and if you have plenty of food, the task is	也可以向遇见的人换取食物。当觉得食物至少够吃五天时，吃点东西；如果储备确实充足，任务就会
+game_task.text	completed and you are ready to move on.	完成，你便能继续前进。
+game_task.text	When one hunts down a big elk or other large animal, there's no need to worry about food for weeks. But sometimes even if you feel your supplies are sufficient some extra won't hurt -	猎到一头大驼鹿或其他大型动物，就能数周不愁吃喝。但即使觉得储备够用，多备一点也无妨，
+game_task.text	especially if there's a longer expedition planned up ahead. Then again a very skilled hunter or fisherman can wander around carrying barely more than a bow or a fishing rod and catch himself a	尤其是打算远征时。反过来，技艺精湛的猎人或渔夫，可能只带一张弓或一根钓竿就能四处旅行，饿了再获取
+game_task.text	meal when feeling hungry.	一顿饭。
+game_task.text	WEAPONS OF THE NORTH	北方武器
+game_task.text	The northern people are well known for their unique supernatural powers and sorcery. It is commonly held that they can drive supernatural powers into the weapons they make, especially knives	北方民族以独特的超自然力量和巫术闻名。人们普遍相信，他们能把超自然力量注入亲手制作的武器，尤其是刀
+game_task.text	and bows. And with no doubt northern knives and bows are strong and effective weapons, with or without the use of sorcery. Your next task is to obtain a northern bow or a northern knife. Travel	和弓。无论是否施过法，北方刀和北方弓确实都坚固有效。下一个任务是取得一把北方弓或北方刀。前往
+game_task.text	to the northern reaches of the world, and find someone willing to trade you one of these items. Then, get a feeling for your new and unique piece of northern weaponry by wielding it.	世界的北部，找到愿意交易的人，换取其中一种武器，再握持它，感受这件独特的北方兵器。
+game_task.text	If you master the oath of iron ritual you can drive supernatural powers into your metal weapons by yourself. To get a better feel for your new weapon you can try to use it the next time	若掌握“铁之誓约”仪式，你也能亲自把超自然力量注入金属武器。下次需要时，不妨用一用
+game_task.text	there's a need for it.	新武器，进一步熟悉它。
+game_task.text	SALT FROM THE COAST	海岸之盐
+game_task.text	Salt is rare, valuable, and very useful. Salt production generally takes place on an archipelago. Driik and the regions of the Islanders are the main areas where you can obtain salt.	盐稀少、珍贵，也非常有用。制盐通常在群岛进行，德里克和岛民地区是主要产地。
+game_task.text	Salt is rarely found inland, but may be brought in by foreign traders and tradesmen of the inland. Your task is to travel to an archipelago of The Unreal World to find and trade for	内陆很少有盐，但异国商人或内陆商贩有时会带来。现在的任务是前往《不真实的世界》的群岛地区，通过交易换取
+game_task.text	some bags of salt. Remember that you need to get the salt	几袋盐。记住，你必须通过
+game_task.text	by trading, and only by trading. Be sure to bring something along that you can trade for the salt.	交易取得盐，其他方式不算。务必带上可以换盐的货物。
+game_task.text	If you haven't tried salting meat or fish before, now would be a good time. The hardship of obtaining salt is compensated when you can make yourself a decent supply of salted meat or fish.	如果还没试过腌肉或腌鱼，现在正是时候。能为自己准备充足的腌肉或腌鱼储备，就不枉费力寻盐。
+game_task.text	A HOUSE	房屋
+game_task.text	Your next task is to build yourself a house - a complete house. So don't rush! Find a territory and terrain which suits you. You want a place that you can call home for some time.	下一个任务是建成一座完整的房屋，不必着急！选择喜欢的地区和地形，找一处能住上一段时间、称之为家的地方。
+game_task.text	You can also build yourself a hunting cottage somewhere. The shape and size of the house is up you, as is its usage. The task isn't complete until your house has all the walls up	也可以在别处建一间狩猎小屋。房屋的形状、大小和用途都由你决定。只有墙全部建好，
+game_task.text	and you've started working on ceiling and floor. Be sure to equip yourself with the proper axes - like having a carving axe and broad axe for making logs and log walls properly.	并开始铺设屋顶和地板，任务才算完成。准备合适的斧头，例如用雕刻斧和宽斧加工原木、修筑原木墙。
+game_task.text	Move items-command is very useful when working with heavy lumber and organizing your piles of raw material like boards etc.	处理沉重木材、整理木板等原料堆时，拖运物品命令非常有用。
+game_task.text	Your house is coming along nicely. If this is to be your home, you may also want to build a storehouse or a cellar nearby. Perhaps in the future you might have some animals in a fenced	你的房屋已初具规模。如果打算在此安家，也可以在附近建储藏室或地窖。以后或许还能在围起的
+game_task.text	pen, or in a little field nearby.	畜栏或附近的小田地里养些动物。
+game_task.text	SAUNA	桑拿
+game_task.text	The sauna is a place for cleaning up, but also for physical and mental relaxation, healing, and giving birth. Your task now is to find a sauna, which exist in nearly every settled	桑拿不仅能清洁身体，还能放松身心、疗养和助产。现在的任务是找到一间桑拿房。几乎每个定居
+game_task.text	village - and sometimes even in vagabond settlements. You will recognize the sauna as being a small building with a fireplace alike sauna stove, and a tub of water. Heat up the sauna	村庄都有，有时流浪者聚落也有。桑拿房通常是一座小建筑，里面有类似壁炉的桑拿炉和一桶水。先在桑拿炉内生火，
+game_task.text	for several hours by building a fire in the sauna stove. Then take off your clothes, pick up the tub of water and apply it beside the sauna stove to throw water on top of it for steam.	加热数小时，再脱去衣物，拿起水桶，在炉旁使用，将水泼到炉上，产生蒸汽。
+game_task.text	Loading firewood into the sauna stove before making a fire is easiest by having a pile of firewood beside your feet and using push items-commands.	生火前给桑拿炉添柴，最方便的方法是把一堆柴火放在脚边，再用推移物品命令送进炉里。
+game_task.text	If you are feeling ill, exhausted, or even wounded, taking a sauna bath can be a source of relief for your ailments.	生病、疲惫甚至受伤时，洗桑拿都可能缓解不适。
+game_task.text	Taking a sauna bath can also be a spiritual experience. There are supernatural beings taking care of and living in the sauna,	桑拿也可以是一种精神体验，因为有超自然生灵居住在桑拿房中并照看它，
+game_task.text	so enjoy your bath with a grateful attitude.	因此请怀着感激之心享受沐浴。
+game_task.text	BIG ELK	大驼鹿
+game_task.text	Elk are the biggest animals in The Unreal World, and thus the most wanted prey when one is after a large amount of meat at once. Your next task is to hunt down an elk,	驼鹿是《不真实的世界》中最大的动物，想一次获取大量肉食时，它们自然是最理想的猎物。下一个任务是猎到一头驼鹿，
+game_task.text	but it must also be a big one. When you encounter an animal you can look at it to see if it's a small or a big individual - or an average one if no size is 	而且必须是大个体。遇见动物后，观察它便能知道个头大小；说明中若没有标明体型，
+game_task.text	indicated in the description. But now you are after big game. After finding and bringing the animal down, cut it for meat and the task will be completed. Of course you may skin it first by using	就是普通个体。这次要找的是大型猎物。找到并猎杀后，分割取肉即可完成任务。当然，也可以先用
+game_task.text	your hideworking skill. Use any hunting techniques you have mastered or find useful to find and catch your elk. You should expect to encounter several elks before finding a large one.	制皮技能剥皮。运用熟悉或觉得有效的方法寻找、捕杀驼鹿，找到大个体前，可能需要遇见好几头。
+game_task.text	The amount of meat, and also the size of the skin you get from the slain animals is dependent of the animal size. In case of smaller animals the difference isn't that much, but when it comes	猎物能提供多少肉、皮有多大，都取决于体型。小动物的差别不大，但对于
+game_task.text	to elks for example you may get tens of pounds more meat from a big individual than what you would get from a smaller one.	驼鹿，大个体可能比小个体多出几十磅肉。
+game_task.text	BURIED INTO THE BOG	沼泽埋祭
+game_task.text	Swamps and bogs are a strange and intimidating terrain feature. There are stories about rare occasions when both people and animals have been sacrificed and buried into peat bogs. Weapons and	湿地和泥炭沼泽神秘而令人敬畏。传说过去偶尔有人和动物被献祭、埋入泥炭沼泽。武器和
+game_task.text	other items are sometimes hidden or sacrificially buried into bogs. Your task now is to sacrificially bury some sort of metal weapon. A knife, a sword or an axe. Bogs are also a source of ore	其他物品有时也会被藏入或作为祭品埋入沼泽。现在的任务是献祭一件金属武器：刀、剑或斧头皆可。沼泽还是炼铁矿石的
+game_task.text	which is used to make iron, and thus the very origin of the iron. Go to the swamp or bog at night, build a fire, and then throw the weapon into the waters of the open bog. This is a gesture of	来源，也就是铁的源头。夜晚前往湿地或沼泽，生一堆火，再把武器投入开阔沼泽的水中。这既是向沼泽
+game_task.text	respect for the bog and a way to ritually bond yourself with the iron more closely.	致敬，也是通过仪式加深自身与铁的联系。
+game_task.text	When there's need for you to sacrifice meat for the supernatural guardians, coming to butcher an animal at the swamp is the way to do it with utmost dedication.	需要向超自然守护者献肉时，特意到沼泽屠宰动物，是最虔诚的做法。
+game_task.text	Certain bog types are also a source of tasty berries in the autumn.	某些沼泽在秋天还能提供美味的浆果。
+game_task.text	LEARNING BY DOING	熟能生巧
+game_task.text	All of the skills your character has will improve with use. The improvement is a lengthy process though, and relative to how often you use a certain skill. You'll learn fishing by fishing, and	角色的技能会随使用而进步，但这是漫长的过程，也取决于使用频率。捕鱼能练捕鱼，
+game_task.text	you'll learn timbercrafting by felling trees and carving logs, and so on. Weapon skills also improve by using those weapons for hunting or in combat. No special notification is given	砍树和加工原木能练伐木，其他技能也一样。用某种武器狩猎或战斗，也会提高相应武器技能。技能进步时，
+game_task.text	when a skill improves. Check out your skill profile and mastery levels from time to time to see if there's any improvement. Your task now is to improve one of your skills a bit. You can live your	不会有特别提示。时常查看技能和熟练程度，就能知道有无长进。现在的任务是让某项技能略有提高。你可以照常
+game_task.text	life normally and use skills in an ordinary manner and eventually this will happen. You can also extensively use a particular skill to improve it faster.	生活、使用技能，进步终会到来；也可以集中练习某项技能，加快提高。
+game_task.text	One of your skills has improved a bit! See your skill profile to check out what it was. The lower the skill level the faster it will improve. As you start to master a skill, improving it gets	你的一项技能进步了！查看技能列表，看看是哪一项。技能越低，提高越快；掌握得越熟练，进步就越
+game_task.text	slower and harder.	缓慢、困难。
+game_task.text	KAUMO FURS	考莫毛皮
+game_task.text	Furs from the Kaumo region are of very high quality and hunters from far away places regularly go to Kaumo to hunt for beavers, squirrels, and foxes. Your task now is to travel to Kaumo to hunt	考莫地区的毛皮品质极高，远方猎人常到那里猎取海狸、松鼠和狐狸。现在的任务是前往考莫，猎取
+game_task.text	for some high quality fur. When you are at Kaumo your task is to	优质毛皮。抵达考莫后，你需要
+game_task.text	hunt for a valued fur bearing animal and use your hideworking skill to skin it. The animal can be for example a fox, a lynx, a beaver, and so on. Feel free to use any hunting technique you like.	猎杀一种珍贵毛皮兽，再用制皮技能剥皮，例如狐狸、猞猁或海狸。可以使用喜欢的狩猎方式。
+game_task.text	Trying to use a fox-trap could be good choice here. And remember: you need to hunt, kill and skin the animal in the Kaumo region.	捕狐陷阱是不错的选择。记住：猎杀和剥皮都必须在考莫地区完成。
+game_task.text	Feel free to continue your hunt for the fur now that you are at the esteemed hunting grounds. If you ever encounter foreign traders, carrying valuable furs with you may provide you with something	既然已到著名的猎场，不妨继续获取毛皮。如果以后遇见异国商人，珍贵毛皮便可用来
+game_task.text	to trade for metal armours and swords. Even if furs from squirrels, polecats and other small animals aren't big enough for making clothes easily, there's a reason to keep hunting them. Especially	换取金属护甲和剑。松鼠、艾鼬等小动物的毛皮虽然不便直接做衣服，仍有继续猎取的价值，尤其
+game_task.text	if you find yourself in an area that has lots of them.	是在它们数量很多的地方。
+game_task.text	FOREIGN TRADERS	异国商人
+game_task.text	Traders from far away countries come to the north, to The Unreal World, after furs. They are willing to trade their metal armours and weapons for these high quality furs. Foreign traders are now	远方商人为了毛皮来到北方，来到《不真实的世界》。他们愿用金属护甲和武器交换优质毛皮。异国商人现在就在
+game_task.text	in this region. Your task is to find them and to trade with them. If you aren't carrying any furs with, trying to trade with them will be rather fruitless. If this is the case you must first	这片地区，任务是找到他们并完成交易。没有带毛皮，往往就换不到东西；这种情况下，先
+game_task.text	get yourself some furs. Then wander around, or you can also try to find their tracks, until you find them and then make a succesful trade with some of them.	弄到毛皮，再四处寻找商人，也可以追踪他们的足迹，直到找到并成功交易。
+game_task.text	You can also get news about foreign traders by talking to the people in the villages.	与村民交谈，也能打听到异国商人的消息。
+game_task.text	Metal armour is especially hard to obtain from anywhere else but the foreign traders. Driikiläiset sometimes have metal armours, since the Driik is near the sea and most often in contact	除异国商人外，很难从别处取得金属护甲。德里克人有时也有，因为德里克靠海，经常与
+game_task.text	with foreigners.	外国人往来。
+game_task.text	PREY IN A TRAP	陷阱中的猎物
+game_task.text	As you probably now have some experience with traps, your next task is not only to successfully set or make traps but to actually have an animal visit, and hopefully get caught	现在你大概已有一些陷阱经验。下一个任务不仅是成功制作、设置陷阱，还要真正等到动物来过，最好能落入
+game_task.text	in your trap. Take some time to make and set traps, and then check them out regularly in the hope of finding prey in one. You can use trap-fences, traps for specific animals, or	陷阱。花些时间制作和布设，再定期巡视，期待发现猎物。可以用陷阱围栏、针对特定动物的陷阱，或
+game_task.text	whatever you'd like. Be sure to use bait if you are after predators. When using pit-traps you also may want to try making the ones with sharp wooden stakes, which is a very lethal	其他喜欢的办法。捕食肉动物时记得放诱饵。使用陷坑时，也可以做带尖木桩的类型，这是一种杀伤力很强的
+game_task.text	form of a trap-pit.	陷坑。
+game_task.text	An animal has now either visited or gotten caught in your trap. Bigger animal can get rid of small traps, and smaller animals can run over trap-pits without dropping in.	已有动物来过或落入你的陷阱。大动物能挣脱小陷阱，小动物也可能跑过陷坑而不掉下去。
+game_task.text	Go beside the trap at this area now to see what the situation is - only a trigger or an actual catch - and deal with the animal as you like. If it was a false alarm, reset	现在走到这一带的陷阱旁，看看只是触发了机关，还是真抓到了猎物，然后自行处置。如果扑了空，而你还想继续使用，
+game_task.text	the triggered trap if you want to continue using it.	就重置已触发的陷阱。
+game_task.text	A HARVEST	收获
+game_task.text	The wilderness carries berries and mushrooms from early spring to late winter, and people grow crops on their fields. Your task now is to harvest some of the gifts the earth produces,	从早春到冬末，荒野都有浆果或蘑菇，人们也在田里种庄稼。现在的任务是收获大地的馈赠，
+game_task.text	either from a field of your own, or someone elses - or to pick berries or mushrooms. If the season is now winter in its darkest and coldest phase, you need to wait for spring. If it's autumn,	可以从自己的田里或别人的田里收割，也可以采浆果或蘑菇。如果正值寒冷黑暗的深冬，就得等春天；如果是秋天，
+game_task.text	it should be easy to find something to harvest. To harvest a plant you need to just simply pick it up. The herblore skill can be used to recognize unknown plants and identify their properties.	应该很容易找到可收获的东西。拾取植物即可收获；草药知识技能能辨认陌生植物及其特性。
+game_task.text	or mushrooms in the area.	或这一带的蘑菇。
+game_task.text	The type of berries or mushrooms found in the wilderness depends on the terrain type and the season. You can find mushrooms suprisingly late in the autumn, even after the first snow has come.	荒野中的浆果和蘑菇种类取决于地形和季节。深秋甚至初雪后，仍可能找到蘑菇。
+game_task.text	With mushrooms some caution may be required, since some of them are very poisonous.	有些蘑菇毒性很强，采食时要留心。
+game_task.text	AN ISLAND	岛屿
+game_task.text	Now you need to travel over the water. Find an island and make your way to it by travelling on the wilderness map. This way you'll spot any nearby islands from a good distance away. There are	现在需要渡水，找到一座岛，并在荒野地图上前往。这样能从远处发现附近的岛屿。内陆虽然有
+game_task.text	some big lakes in the inland, and but an island may not be easy to find. If you are at the archipelago or near the sea, there are lots of bigger and smaller islands. In this task we're after	一些大湖，却未必容易找岛；群岛和海边则有许多大小岛屿。这次要找的是
+game_task.text	a small, cosy island. You of course need to get or make yourself a watercraft also, and a paddle. A punt is a convenient watercraft since it can be carried with you. If you're going to make a	一座舒适的小岛。当然，还需要取得或制作船只与船桨。独木舟方便随身携带；若打算制作
+game_task.text	raft, it's best to wait until you've already spotted an island to do so. Rafts are heavy, and having to move it to another lake if you don't find an island here may prove to be a difficult task.	木筏，最好先找到岛再动手。木筏沉重，如果这个湖里没有岛，再把它搬到别的湖会很麻烦。
+game_task.text	Now that you are on an island, and if it's not too big, it's possible to spend your time there securely and without being disturbed. Islands are also good places to hide some of your most precious	现在你已登岛。如果岛不太大，可以安心住一阵，不受打扰。岛屿也是隐藏珍贵
+game_task.text	goods. If you have animals, herding them onto an island will help protect them from wolves and other predators.	物品的好地方。如果养了动物，把它们赶上岛有助于防范狼和其他猛兽。
+game_task.text	CHANGE OF THE SEASON	季节更替
+game_task.text	There are four different times of the year. The seasons are spring, summer, autumn and the winter. Seasons have a great influence on daily life. The winters are cold and dark, and the lakes get	一年分为春、夏、秋、冬四季，季节深刻影响日常生活。冬季寒冷黑暗，湖面会
+game_task.text	covered with thick ice - a decent food supply collected in the autumn will help you to survive in the colder months. In the spring nature wakes up and begins a new life as vegetation starts to	结上厚冰。秋天备足食物，有助于熬过寒冷的月份。春天大自然苏醒，植物开始
+game_task.text	grow, mostly peaking in the late summer and then dying off in the late autumn. Your task now is to experience a little of this change of the seasons and survive until next month. You won't see a	生长，通常在夏末最繁茂，再于深秋凋零。现在的任务是体验季节变化，活到下个月。一个月内不会看到
+game_task.text	large seasonal change in a single month, but each and every day means the next season is just a bit closer. Spend your days as you please.	翻天覆地的变化，但每一天都离下一个季节更近。按喜欢的方式度过这些日子吧。
+game_task.text	It can be of great use to follow the marks of nature while living your life in The Unreal World, especially knowing what season certain berries or mushrooms grow in, and so on. Hunting and	在《不真实的世界》中生活，观察自然的迹象很有用，尤其要知道各种浆果和蘑菇在哪个季节生长。狩猎和
+game_task.text	fishing are regularly practiced throughout the year, but the shorter, frozen days of winter make these activities more difficult.	捕鱼全年都能进行，但冬天白昼短、水面结冰，会让这些活动更加困难。
+game_task.text	PLEASE THE FOREST	取悦森林
+game_task.text	Your task now is to please the spirits of the forest by some spell or a sacrifice. Notice that the spell must be performed according to a deed you have done - otherwise it may be	现在的任务是通过法术或献祭取悦森林精灵。注意，法术应当对应你做过的事情，否则可能
+game_task.text	meaningless. If you have just recently done something that you feel is worthy of a certain spell or a sacrifice, perform it now. Otherwise wait for an opportunity to please the spirits of the forest.	毫无意义。如果近期刚做过值得施法或献祭的事，就立即举行；否则等待合适的时机，再向森林精灵致意。
+game_task.text	The forest has been pleased, and your travels will feel just a bit safer and more secure now.	森林已得到安抚，你的旅途也会因此多一分平安。
+game_task.text		
+game_task.text	WATER	饮水
+game_task.text	COOKERY	烹饪
+game_task.text	FISHING	捕鱼
+game_task.text	HIDEWORKING	制皮
+game_task.text	TRACKING	追踪
+game_task.text	BUILDING	建造
+game_task.text	AGRICULTURE	农耕
+game_task.text	GAME COURSE & TASK INFORMATION	游戏进程与任务信息
+game_task.text	CURRENT TASK:	当前任务：
+game_task.text	RELATED KEY-COMMANDS	相关快捷键
+game_task.text	There are several ways to accomplish each task. Sometimes	完成每个任务都有多种方法。有时，
+game_task.text	you need to find a proper place or get specific equipment	需要先找到合适的地方，或取得特定装备，
+game_task.text	before it's even possible to accomplish the task. 	才能着手完成任务。
+game_task.text	Therefore you should be aware of the possibilities the game	因此，你应该了解游戏提供的各种可能。
+game_task.text	has got to offer. Use your creativity and find alternative	发挥想象，寻找不同的办法，
+game_task.text	ways to get the tasks done. Sometimes it may take some	把任务完成。有时需要等待一阵，
+game_task.text	time before circumstances are correct for the task to be	才能遇上适合完成任务的条件。
+game_task.text	done. Some extra work and patience will be also needed	额外的劳作和耐心也常常不可少。
+game_task.text	regularly. But as you advance - you will be rewarded...	但随着进程推进，你终会获得回报……
+game_task.text	Shows this screen during the game	游戏中按此键查看本页
+game_task.text	TASK COMPLETED!	任务完成！
+game_task.text	Congratulations! You have successfully completed this task.	恭喜！你已成功完成这项任务。
+game_task.text	Exit and continue the game	退出并继续游戏
+game_task.text	LIST OF TASKS TO COMPLETE	待完成任务列表
+game_task.text	GAME-COURSE COMPLETED!	游戏进程完成！
+game_task.text	You have now successfully lived through a complete game-course!	你已成功完成整个游戏进程！
+game_task.text	As a reward, you can choose one of the following ways to improve your character:	作为奖励，你可以选择以下一种方式提升角色：
+game_task.text	You can select another game-course to complete anytime you like, or	你随时可以选择另一个游戏进程继续挑战，
+game_task.text	you can now carry on a free, plotless game-play.	也可以自由游玩，不再受预设进程约束。
+game_task.text	Improve your skills	提高技能
+game_task.text	Attribute increase (strength, endurance etc.)	提高属性（力量、耐力等）
+game_task.text	Learn two new spells	学习两种新法术
+hud.command	Push/pack -- push items at your feet to an adjacen..	推移物品或装到动物身上
+hud.command	Pick up from adjacent tile, pack animal o..	从相邻位置、驮畜或同伴处拾取
+hud.command		
+game_task.command	 or 	 或 

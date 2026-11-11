@@ -7,7 +7,7 @@
   "machine": "I386",
   "exe_sha256": "c6ed73642c1b1cb1f86b818c7586224398c2f0554f6114ced31bc40ff071806d",
   "preferred_image_base": "0x400000",
-  "scope": "Windows native display consumers: startup/intro/main menu/About/Credits/settings/load/ancestors/creation/HUD; season/portrait/attributes, all encyclopedia topics and culture legends, skills and spells, world generation, all thirteen scenarios and game-course selection, farewell, and UTF-8 character names. Memorial/death page, all native cause/history, date/place and life/journey branches.",
+  "scope": "Windows native display consumers: startup/intro/main menu/About/Credits/settings/load/ancestors/creation/HUD; season/portrait/attributes, all encyclopedia topics and culture legends, skills and spells, world generation, all thirteen scenarios and game-course selection, farewell, and UTF-8 character names. Memorial/death page, all native cause/history, date/place and life/journey branches. In-game game-course/task information, all stock task records, related key commands and completion/reward text.",
   "evidence": [
     "docs/evidence/main-menu-static.txt",
     "docs/evidence/static-disassembly.txt",
@@ -40,7 +40,8 @@
     "docs/evidence/20261110-windows-3891-delivery.md",
     "docs/evidence/20261110-windows-3891-hook-review.md",
     "docs/evidence/20261110-windows-3891-native-contracts.md",
-    "docs/evidence/20261110-windows-3891-resources.md"
+    "docs/evidence/20261110-windows-3891-resources.md",
+    "docs/evidence/20261111-game-task-native.md"
   ],
   "ownership": {
     "text_translation": "component-specific adapter and text services",
@@ -381,5 +382,15 @@
       "docs/evidence/memorial_Decompile.java",
       "translations/messages/memorial.zh-CN.json"
     ]
+  },
+  "game_course_task_information": {
+    "owner_rva": "0x15DC70",
+    "detail_rva": "0x15D770",
+    "reward_rva": "0x15D2C0",
+    "record_bytes": "0xA08",
+    "source": "Unchanged taskdata.urw: native title, four objective/completion records and command strings; display-only message value translation.",
+    "calls": "docs/evidence/20261111-game-task-calls.tsv",
+    "ownership": "Complete native CALLs, original paragraph and button metrics, native physical-density surface; no page fields, positions or draw sequence retained.",
+    "refresh_boundary": "Newly constructed native page consumes the selected language. Pure reconstruction of an already-open page and final-reward branch is not implemented; owner performs task/reward business writes and cannot be reentered as a redraw."
   }
 }
