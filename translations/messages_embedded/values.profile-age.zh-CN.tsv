@@ -1,0 +1,5 @@
+domain	source	target
+profile.age	%d winters old, and have lived %d days of adventuring life	%d 岁，已经历 %d 天的冒险生活
+profile.age	%d winters old, this being the first day of your adventures	%d 岁，今天是冒险的第一天
+profile.age	%d winters old, and have lived one day of adventuring life	%d 岁，已经历一天的冒险生活
+profile.age	You are %s.	你今年 %s。

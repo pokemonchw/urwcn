@@ -72,6 +72,7 @@ enum class TextComponent : std::uint32_t {
     profile_confirm_background = 0xB43, profile_confirm_attributes = 0xB44,
     profile_continue = 0xB45, profile_reroll = 0xB46,
     profile_attributes_ready = 0xB47, profile_attributes_press_key = 0xB48,
+    profile_current_age = 0xB49,
     scenario_village_title = 0xC00,
     scenario_introduction_1 = 0xC01, scenario_introduction_2 = 0xC02,
     scenario_introduction_3 = 0xC03, scenario_introduction_4 = 0xC04,

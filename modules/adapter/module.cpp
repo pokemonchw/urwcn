@@ -229,7 +229,8 @@ Status resolve_display_text(TextComponent component,const char* original,const c
     // The same neutral native component resolves against the global language.
     if(!chinese_enabled)
         return encode_component_original(original,encoded);
-    if(component==TextComponent::native_message_expression || component==TextComponent::inventory_item_text)
+    if(component==TextComponent::native_message_expression || component==TextComponent::inventory_item_text ||
+       component==TextComponent::profile_current_age)
         return resolve_native_message_expression(component,value,encoded);
     if(component==TextComponent::hud_wielded_item_text || component==TextComponent::hud_wielded_shield_text)
         return resolve_hud_wielded_text(component,value,encoded);
@@ -1475,6 +1476,7 @@ Status lend_conversation_display(const NativeEvent&,u32&,Scope,u32);
 #include "windows_message_audit_copies.inc"
 #include "windows_message_late_sources.inc"
 #include "windows_inventory.inc"
+#include "windows_profile_age.inc"
 #include "windows_conversation_sources.inc"
 #include "windows_conversation_text.inc"
 #include "windows_wielded.inc"

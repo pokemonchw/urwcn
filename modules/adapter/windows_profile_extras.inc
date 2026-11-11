@@ -9,8 +9,11 @@ enum WindowsProfileHook : u32 {
     wp_attribute_ready,wp_attribute_press,wp_attribute_background,
     wp_attribute_confirm,wp_attribute_paragraph_first=0x7840,
     wp_attribute_draw=0x7850,wp_attribute_identity_width,wp_attribute_identity_draw,
-    wp_portrait_footer,wp_title_width_first,wp_title_width_second
+    wp_portrait_footer,wp_title_width_first,wp_title_width_second,
+    wp_life_age_first=0x7860
 };
+Status bind_profile_life_age(const NativeEvent&,bool);
+Status format_profile_current_age(const NativeEvent&);
 constexpr u32 wp_name_error_parser=0x57F2;
 // The three confirmed literal-copy constructors select this neutral display
 // resource. ESI is only success/failure at the later 118EE parser consumer.
@@ -68,6 +71,8 @@ Status windows_profile_append(const NativeEvent& e,TextComponent component) {
 }
 Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
+    if(e.id>=wp_life_age_first && e.id<wp_life_age_first+3)
+        return e.phase==NativePhase::after ? bind_profile_life_age(e,e.id==wp_life_age_first) : Status::ok;
     if(e.phase==NativePhase::after) {
         if(e.id==wp_season_draw) { windows_season_drawing=false;return Status::ok; }
         if(e.id==wp_attribute_draw) { windows_attributes_drawing=false;return Status::ok; }
@@ -80,6 +85,7 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
             e.frame->eax=static_cast<u32>(encoded.size()-1);
             return Status::ok;
         }
+        if(e.id==wp_attribute_age && e.frame->edi==0) return format_profile_current_age(e);
         handled=false;return Status::ok;
     }
     if(e.id>=wp_attribute_panel_first && e.id<wp_attribute_panel_first+std::size(windows_attribute_panels))
@@ -187,7 +193,8 @@ Status dispatch_windows_profile(const NativeEvent& e,DispatchResult& result,bool
         result.skip_original=1;return Status::ok;
     }
     case wp_attribute_age_text:
-        native_component_binding::note_source_for_consumer(e,TextComponent::profile_start_age);
+        native_component_binding::note_source_for_consumer(e,e.frame->edi==0 ?
+            TextComponent::profile_current_age : TextComponent::profile_start_age);
         return centered_text(e);
     case wp_attribute_height:return windows_profile_text(e,TextComponent::profile_height,e.arguments[0],Scope::text);
     case wp_attribute_weight:return windows_profile_text(e,TextComponent::profile_weight,e.arguments[0],Scope::text);
@@ -223,6 +230,11 @@ void append_windows_profile_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(inline_hook(wp_title_width_first,0x115849,{0x8D,0x04,0xCD,0,0,0,0}));
     hooks.push_back(inline_hook(wp_title_width_second,0x1159C9,{0x8D,0x04,0xCD,0,0,0,0}));
     hooks.push_back(call(wp_attribute_age,0xE67AF,0x10D0,3));
+    // E6610's three real age/day formatters. Their English results remain
+    // native; E67AF's mode-0 display copy consumes the same typed sources.
+    hooks.push_back(call(wp_life_age_first,0xE6658,0x10D0,4));
+    hooks.push_back(call(wp_life_age_first+1,0xE6678,0x10D0,3));
+    hooks.push_back(call(wp_life_age_first+2,0xE6698,0x10D0,3));
     hooks.push_back(inline_hook(wp_attribute_age_width,0xE67F6,{0x8D,0x04,0xCD,0,0,0,0}));
     hooks.push_back(call(wp_attribute_age_text,0xE680E,0x10E5A0,3));
     hooks.push_back(call(wp_attribute_height,0xE6995,0x10E5A0,3));

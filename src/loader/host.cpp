@@ -1,4 +1,5 @@
 #include "internal.h"
+#include "crash_report.h"
 #include <bcrypt.h>
 #include <array>
 #include <vector>
@@ -56,6 +57,8 @@ Status UWCN_CALL invoke(ModuleId module,u32 operation,const void* request,u32 si
     return modules[index].table->invoke(operation,request,size,response,capacity);
 }
 void dispatch(NativeEvent& event,DispatchResult& result) {
+    if(crash_report::dispatch(event)) return;
+    crash_report::native_event(event);
     u32 capacity=sizeof(result);
     const auto status=invoke(ModuleId::adapter,kNativeDispatch,&event,sizeof(event),&result,&capacity);
     if(status!=Status::ok && status!=Status::unavailable) log((L"Native dispatch rejected id "+std::to_wstring(event.id)+L" with status "+std::to_wstring(static_cast<u32>(status))).c_str());
@@ -382,6 +385,8 @@ extern "C" __declspec(dllexport) DWORD WINAPI uwcn_initialize(void* main_thread)
     package_path=std::filesystem::path(path).parent_path().wstring();
     game_thread=static_cast<DWORD>(reinterpret_cast<std::uintptr_t>(main_thread));
     api={sizeof(uwcn::HostApi),uwcn::kHostAbi,reinterpret_cast<std::uintptr_t>(GetModuleHandleW(nullptr)),package_path.c_str(),invoke,install_hooks,allocate,release,log,native_fragment};
+    const auto crash_status=crash_report::initialize(package_path);
+    if(crash_status!=uwcn::Status::ok) {log((L"Crash reporter initialization failed: status="+std::to_wstring(static_cast<uwcn::u32>(crash_status))).c_str());return 0;}
     if(!initialize_modules() || !install_control_imports()) return 0;
     start_control_server(); log(L"UWCn reconstruction ABI 1 initialized."); return 1;
 }
