@@ -17,7 +17,8 @@ enum Hook:u32 {
     player_text,player_tail_text,normalize,npc_flip,player_flip,delay,present,
     player_reset_end,emote_cleanup,emote_input,emote_end,title,
     title_actor,panel_actor,portrait_actor,emote_text,
-    paragraph_break_first=0x5260,paragraph_break_end=paragraph_break_first+4
+    paragraph_break_first=0x5260,paragraph_break_end=paragraph_break_first+4,
+    npc_boundary=0x18810,player_boundary,npc_finished,player_finished
 };
 bool owns(Root root) {return sources.find(root)!=sources.end();}
 void prune() {
@@ -96,6 +97,12 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     }
     auto boundary_end=inline_hook(paragraph_break_end,0x138695,{0xB9,0,0,0,0});
     field=address(at<void>(0x1B2960));std::memcpy(boundary_end.expected+1,&field,4);hooks.push_back(boundary_end);
+    if(windows_build::is_3891()) {
+        hooks.push_back(inline_hook(npc_boundary,0x133A5D,{0x83,0xC4,8,0x85,0xC0}));
+        hooks.push_back(inline_hook(player_boundary,0x1343EC,{0x83,0xC4,8,0x85,0xC0}));
+        hooks.push_back(inline_hook(npc_finished,0x133B9A,{0x8B,0x4D,0xFC,0x5F,0x5E}));
+        hooks.push_back(call(player_finished,0x1344C4,0x18A0AE,0));
+    }
 }
 Status unicode_title(const NativeEvent& event,u32& input) {
     const auto original=ptr<const char>(input);
@@ -106,7 +113,10 @@ Status unicode_title(const NativeEvent& event,u32& input) {
     return status==Status::ok ? lend_text(event,encoded,input,Scope::titled_panel) : status;
 }
 Status accepted(const NativeEvent& event,u32 speaker) {
-    if(constructing || !owns(native_root_component::current())) return Status::ok;
+    if(constructing) {
+        construction_status=lend_conversation_sentence(event);return construction_status;
+    }
+    if(!owns(native_root_component::current())) return Status::ok;
     std::string original;
     const auto status=decode_parser_original(ptr<const char>(event.frame->ecx),original);
     if(status!=Status::ok) return status;
@@ -119,7 +129,7 @@ Status accepted(const NativeEvent& event,u32 speaker) {
     auto& speech=sources.find(native_root_component::current())->second.speech[speaker];
     if(speech.empty()) speech.emplace_back();
     speech.back().sentences.push_back(std::move(original));
-    return Status::ok;
+    return lend_conversation_sentence(event);
 }
 const char* raw(const NativeEvent& event,bool player) {
     return ptr<const char>(*ptr<const u32>(event.frame->ebp-(player?0xD0:0x80C)));
@@ -156,8 +166,18 @@ Status rebuild() {
                 status=encode_parser_original(sentence.c_str(),original);
                 if(status!=Status::ok) break;
                 reinterpret_cast<void (__fastcall *)(const char*)>(host->image_base+(speaker?0x134350:0x1339B0))(original.data());
+                status=construction_status;
             }
         }
+    }
+    if(status==Status::ok && windows_build::is_3891()) {
+        // 141F70's exact native sidebar branches at 1422B5/14248E/
+        // 1424D4/142542/1425DB. 134790 draws the accepted trade state;
+        // it does not accept items, regenerate offers or run an input loop.
+        const auto mode=*at<u32>(0xA213AB8),trade=*at<u32>(0xA220634);
+        if((mode==3 && trade==0) || trade==2 ||
+           ((mode==2 || mode==3 || mode==10 || mode==11) && trade==1))
+            reinterpret_cast<void (UWCN_CALL *)()>(host->image_base+0x134790)();
     }
     sources.insert_or_assign(root,source);
     constructing=false;actor=0;constructing_root=0;
@@ -193,6 +213,19 @@ Status wait(const NativeEvent& event) {
 }
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=false;
+    if(event.id>=npc_boundary && event.id<=player_finished) {
+        handled=true;
+        if(event.id==npc_finished || event.id==player_finished) {
+            if(event.phase==NativePhase::after) return Status::ok;
+            end(0xFFFFFFF600000000ull|event.frame->ebp);return Status::ok;
+        }
+        const auto* scalar=ptr<const unsigned char>(event.frame->ebp-(event.id==npc_boundary?0x808:0xCC));
+        // The original strchr has already classified the ASCII delimiter.
+        // A complete non-ASCII display glyph is also a native word boundary.
+        // ADD ESP,8 and the original TEST/branch still run in the game.
+        if(native_name_input::transport(scalar)) event.frame->eax=1;
+        return Status::ok;
+    }
     if(event.id<background || event.id>paragraph_break_end) return Status::ok;
     if(event.phase==NativePhase::after) {
         if(event.id==background && !constructing) {
@@ -215,11 +248,14 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
             const auto speaker=event.id==player_panel?1u:0u;
             source.speech[speaker].clear();
         }
-        const auto status=unicode_title(event,event.arguments[2]);
+        const auto status=event.id==npc_panel && windows_build::is_3891()
+            ? bind_conversation_text(event,event.arguments[2]) : unicode_title(event,event.arguments[2]);
         handled=status!=Status::ok;return status;
     }
     if(event.id==title) {
-        const auto status=unicode_title(event,event.frame->ecx);handled=status!=Status::ok;return status;
+        const auto status=windows_build::is_3891()
+            ? bind_conversation_text(event,event.frame->ecx) : unicode_title(event,event.frame->ecx);
+        handled=status!=Status::ok;return status;
     }
     if(event.id>=paragraph_break_first && event.id<paragraph_break_end) {
         if(!constructing && owns(native_root_component::current())) {
@@ -234,6 +270,8 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         handled=true;return Status::ok;
     }
     if(event.id==emote_text) {
+        if(windows_build::is_3891())
+            return lend_conversation_display(event,event.arguments[1],Scope::hud_centered,event.arguments[3]);
         const auto original=ptr<const char>(event.arguments[1]);
         if(native_name_input::requires_unicode(original)) {
             begin(event,Scope::profile_identity_unicode);
@@ -247,7 +285,9 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         event.frame->ecx=event.id==portrait_actor ? actor*0x568 : actor;
         result.skip_original=1;handled=true;return Status::ok;
     }
-    if(event.id==npc_input || event.id==player_input) return accepted(event,event.id==player_input?1:0);
+    if(event.id==npc_input || event.id==player_input) {
+        handled=true;return accepted(event,event.id==player_input?1:0);
+    }
     if(event.id==npc_scalar || event.id==player_scalar) {
         const bool player=event.id==player_scalar;
         const auto* input=reinterpret_cast<const unsigned char*>(raw(event,player))+event.frame->ebx;

@@ -174,6 +174,11 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
     const auto current=native_menu_component::active();
     native_menu_component::retain(current);
     if(caller==0xFBC98) bind_query_buttons(current);
+    if(caller==0x14705A && windows_build::is_3891()) bind_chat_mode_menu(current);
+    if(caller==0x1427FA && windows_build::is_3891()) {
+        const auto status=bind_chat_lines_menu(current);
+        if(status!=Status::ok) {native_menu_component::release(current);return status;}
+    }
     const auto flip=*at<u32>(0x61BBA5C);
     *at<u32>(0x61BBA5C)=1;
     Status status;

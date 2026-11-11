@@ -1284,8 +1284,39 @@ Status rebuild_native_menu(const NativeEvent& event,bool& rebuilt,u32& selection
     status=native_generic_menu_language::menu(event,rebuilt,selection);
     return status==Status::ok && !rebuilt ? native_quest_menu_language::menu(event,rebuilt,selection) : status;
 }
+Status bind_chat_lines_menu(native_menu_component::Handle);
+Status bind_chat_line_record(const NativeEvent&);
+void bind_chat_mode_menu(native_menu_component::Handle menu) {
+    // 146F80 constructs this native Menu; its accepted records remain English.
+    // Rebind the same sources both on ordinary CFFB0 and on a live handover.
+    const auto& records=native_menu_model::paint_records(menu);
+    const auto* title=reinterpret_cast<const char*>(records.header.data()+0x18);
+    native_menu_model::bind_title(menu,native_text_resource::from_request(
+        {TextComponent::message_value,title,"menu.title"}));
+    u32 count{};std::memcpy(&count,records.header.data()+0x14,sizeof(count));
+    for(u32 row=0;row<count;++row) {
+        const auto* label=reinterpret_cast<const char*>(records.rows.data()+row*native_menu_model::row_stride);
+        // 147037 -> CF990 installs the actual empty separator before ESC.
+        if(!*label) continue;
+        const auto* suffix=std::strchr(label,'.')+1;
+        native_menu_model::bind_row(menu,row,native_text_resource::from_request(
+            {TextComponent::message_value,suffix,"menu.label"}),std::string(label,suffix));
+    }
+}
 Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Consumer consumer) {
     using Consumer=native_menu_component::Consumer;
+    if(windows_build::is_3891() && std::strcmp(at<char>(0x5F54A38),"Choose a line / reaction:")==0) {
+        if(consumer==Consumer::button_row) return bind_chat_line_record(e);
+        return Status::ok;
+    }
+    if(windows_build::is_3891() && std::strcmp(at<char>(0x5F54A38),"Chat mode")==0) {
+        if(consumer==Consumer::plain_title || consumer==Consumer::title_panel)
+            bind_chat_mode_menu(native_menu_component::source());
+        return Status::ok;
+    }
+    // Other Menu families already own their retained semantic sources. Their
+    // previous materialization path did not re-enter these ambient binders.
+    if(native_menu_component::materializing()) return Status::ok;
     // 108730 builds English upper rows; 1002B0 copies them through CF990
     // into the real Menu. Bind at CFFB0's complete native text consumers so
     // its title, row metrics, selection and cached source share one language.
@@ -1404,6 +1435,9 @@ Status translate_culture_back(const char*,const char* topic,std::vector<char>& e
 #include "native_hud_command_migration.inc"
 #include "native_parent_cache_language.inc"
 #include "native_first_cache_language.inc"
+Status bind_conversation_text(const NativeEvent&,u32&);
+Status lend_conversation_sentence(const NativeEvent&);
+Status lend_conversation_display(const NativeEvent&,u32&,Scope,u32);
 #include "native_conversation_language.inc"
 #include "native_generic_menu_language.inc"
 #include "native_debug_input_language.inc"
@@ -1434,6 +1468,8 @@ Status translate_culture_back(const char*,const char* topic,std::vector<char>& e
 #include "windows_message_audit_copies.inc"
 #include "windows_message_late_sources.inc"
 #include "windows_inventory.inc"
+#include "windows_conversation_sources.inc"
+#include "windows_conversation_text.inc"
 #include "windows_wielded.inc"
 #include "windows_hud_map_text.inc"
 #include "windows_wounds.inc"
@@ -1473,7 +1509,8 @@ Status dispatch_windows_messages(const NativeEvent& event,DispatchResult& result
             windows_message_hearing::dispatch,windows_message_weather::dispatch,
             windows_message_debug_sources::dispatch,windows_message_combat_body::dispatch,
             windows_message_audit_copies::dispatch,windows_message_late_sources::dispatch,
-            windows_wielded::dispatch,windows_hud_map_text::dispatch,windows_wounds::dispatch}) {
+            windows_wielded::dispatch,windows_hud_map_text::dispatch,windows_wounds::dispatch,
+            windows_conversation_text::dispatch}) {
         const auto status=dispatch(event,result,handled);
         if(handled) return status;
     }
@@ -1503,6 +1540,7 @@ void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
     windows_message_combat_body::append_hooks(hooks);
     windows_message_audit_copies::append_hooks(hooks);
     windows_message_late_sources::append_hooks(hooks);
+    windows_conversation_text::append_hooks(hooks);
     windows_inventory::append_hooks(hooks);
     windows_wielded::append_hooks(hooks);
     windows_hud_map_text::append_hooks(hooks);

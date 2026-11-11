@@ -1,0 +1,11 @@
+domain	source	target
+conversation.format	Chatting with %s	正在与%s交谈
+menu.title	Chat mode	交谈方式
+menu.label	Greet	打招呼
+menu.label	Ask for directions	问路
+menu.label	Command	下达命令
+menu.label	Ask help/company	请求帮助或结伴
+menu.label	Deliver an item	交付物品
+menu.label	Trade items	交易物品
+menu.label	Buy an animal	购买动物
+menu.label	Exit	退出

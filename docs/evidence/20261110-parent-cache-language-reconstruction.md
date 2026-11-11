@@ -156,6 +156,6 @@ HUD 纯构造由 `native_hud_language::rebuild()` 提供，静态确认其不调
 
 `restore_hud_named(event)` 供上表普通游戏业务共享父调用：从真实 name 取得 slot 和原 `A1C1CA0[index]` 矩形指针，按独立 revision 激活真实 savedRoot，原 flip=1 恢复既有像素底，原局部上传 CALL 在这次同步构造期间不显示，`game_parent()` 按实际完整 NPC 构造建立的 owner 分派 conversation/HUD，随后原 `10C540(name,original_rect)` 保存。最终真实原恢复、矩形与释放继续。它不以缺源建空页或猜测未知父族。即使别的窗口先消费全局 pending，每个 cache 自身仍更新。
 
-`chatopt/emotescr` 不能使用 HUD 构造：实际父已经由 `1342C0` 建立独立 NPC Root，后方正文在 `1339B0/134350` 两个原生整句 word-flow 中生成。两处改用同一真实 named 协议，但构造函数明确为 `native_conversation_language::rebuild()`。该独立语义 owner 持有原生已接受的双 speaker 正文输入，完整 NPC 背景、双方 Panel、原始布局游标和 word-flow 自己重新消费正文；不执行 `134790/134B60/134C70` 的业务生成，也不从 Scene 的文字输出块恢复页面。原静态调用边界与输入来源见独立 conversation 证据。
+`chatopt/emotescr` 不能使用 HUD 构造：实际父已经由 `1342C0` 建立独立 NPC Root，后方正文在 `1339B0/134350` 两个原生整句 word-flow 中生成。两处改用同一真实 named 协议，但构造函数明确为 `native_conversation_language::rebuild()`。该独立语义 owner 持有原生已接受的双 speaker 正文输入，完整 NPC 背景、双方 Panel、原始布局游标和 word-flow 自己重新消费正文；不执行 `134B60/134C70` 的业务生成，也不从 Scene 的文字输出块恢复页面。2026-11-11 更正：`134790` 是纯交易侧栏构造，并非业务生成，现按原条件参与完整重建，详见 [全部对话文本记录](20261111-conversation-all-text.md)。原静态调用边界与输入来源见独立 conversation 证据。
 
 FIRST 复制全引用另核对为 33 处（23 保存、10 恢复），现登记无缺。其 10 个实际恢复由独立 FIRST owner 协议消费 revision。本文件三处已确认 HUD 背景的主动 `10DA60` 调用以同步 `restoring_first_hud()` phase 明确归属，避免从 Mod 调用栈推测；它不持久化，不持有页面字段。

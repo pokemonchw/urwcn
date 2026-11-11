@@ -237,17 +237,13 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         return Status::ok;
     case menu_panel:case plain_title: {
         const auto consumer=event.id==menu_panel?Consumer::title_panel:Consumer::plain_title;
-        if(!painting) {
-            const auto status=before_consume(event,consumer);if(status!=Status::ok) return status;
-        }
+        const auto status=before_consume(event,consumer);if(status!=Status::ok) return status;
         const auto& binding=native_menu_model::title(source_handle());
         return lend(event,binding,event.arguments[event.id==menu_panel?2:0],consumer);
     }
     case menu_text:case menu_button: {
         const auto consumer=event.id==menu_button?Consumer::button_row:Consumer::plain_row;
-        if(!painting) {
-            const auto status=before_consume(event,consumer);if(status!=Status::ok) return status;
-        }
+        const auto status=before_consume(event,consumer);if(status!=Status::ok) return status;
         const auto& binding=native_menu_model::row(source_handle(),row_index(event.frame->esi));
         return lend(event,binding,event.arguments[0],consumer);
     }
@@ -275,6 +271,8 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
 }
 
 Handle active() { return native_menu_model::active(); }
+Handle source() { return source_handle(); }
+bool materializing() { return painting; }
 Handle snapshot(Handle handle) { return native_menu_model::snapshot(handle); }
 Handle input_owner(Handle handle) { return native_menu_model::input_owner(handle); }
 void retain(Handle handle) { native_menu_model::retain(handle); }

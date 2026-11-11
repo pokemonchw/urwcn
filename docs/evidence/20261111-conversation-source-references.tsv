@@ -1,0 +1,1707 @@
+caller_va	site_va	string_va	text
+004846c0	0048475a	0058e38c	\u0094\u0007Y
+004846c0	00484779	0059c68c	n
+004846c0	0048477f	0059c684	tribesman
+004846c0	0048478d	0059c698	man
+004846c0	00484792	0059c690	tribeswoman
+004846c0	0048491d	0059c62c	stranger
+004846c0	00484937	0059c69c	unfamiliar %s
+004846c0	0048494e	0059c6ac	annoying stranger
+004846c0	00484955	0059c6bc	r
+004846c0	004849de	0059c76c	 man
+004846c0	004849f6	0059c638	traveller
+004846c0	004849fe	0059c640	r
+004846c0	00484a15	0059c6c0	%s traveller
+004846c0	00484a3a	0058c670	%s
+004846c0	00484a41	0059c6d0	travelling %s
+004846c0	00484a5c	0059c6e0	disreputable traveller
+004846c0	00484a63	0059c6f0	veller
+004846c0	00484a6e	0059c6f4	er
+004846c0	00484a89	0059c6f8	frequent guest
+004846c0	00484a91	0059c700	 guest
+004846c0	00484a9d	0059c704	st
+004846c0	00484ab8	0059c708	%s guest
+004846c0	00484ad3	0059c714	fellow %s
+004846c0	00484aee	0059c720	frequent nuisance
+004846c0	00484af5	0059c730	e
+004846c0	00484b0a	0059c654	familiar visitor
+004846c0	00484b22	0059c714	fellow %s
+004846c0	00484b3d	0059c734	familiar nuisance
+004846c0	00484b44	0059c744	e
+004846c0	00484b67	0059c748	%s fellow
+004846c0	00484b7d	0059c668	fellow
+004846c0	00484b84	0059c66c	ow
+004846c0	00484baa	0059c754	%s nuisance
+004846c0	00484bba	0059c760	nuisance
+004846c0	00484bfa	0059c774	 woman
+004846c0	00484c01	0059c778	an
+004846c0	00484c42	0058c51c	\u0012\r\u001e
+004846c0	00484c54	0058c51c	\u0012\r\u001e
+004846c0	00484c88	0059c78c	good %s
+004846c0	00484cd5	0059c77c	%s my friend
+004846c0	00484d01	0059c794	%s friend
+004846c0	00484d24	0058c51c	\u0012\r\u001e
+004846c0	00484d36	0058c51c	\u0012\r\u001e
+004846c0	00484d5f	0059c7ac	dear fellow
+004846c0	00484d67	0059c7b4	low
+004846c0	00484d86	0059c670	friend
+004846c0	00484d8d	0059c674	nd
+004846c0	00484db2	0059c7a0	my friend
+004846c0	00484dba	0059c7a8	d
+005337f0	00533820	005b1618	I would like you to pay for the goods you've got.
+005337f0	00533827	005b1648	.
+005337f0	00533839	005b1628	 to pay for the goods you've got.
+005337f0	00533844	005b1638	goods you've got.
+005337f0	005338a3	005b1680	You need to pay your debt right now.
+005337f0	005338aa	005b16a0	now.
+005337f0	005338b2	005b1690	your debt right now.
+005337f0	005338cc	005b164c	You've got some goods you want, so let's barter.
+005337f0	005338dc	005b165c	goods you want, so let's barter.
+005337f0	005338e7	005b166c	so let's barter.
+005339b0	00533a0b	0058d6dc	%c
+005339b0	00533a52	005b16a8	 .,!?
+005339b0	00533a57	0058c348	\u0008\u000b\u001e
+005339b0	00533aff	0058c268	\u0084ô\u001d
+00533c20	00533c69	005ddb20	\u0018üÿÿ\u0018üÿÿ\u0018üÿÿ\u0018üÿÿ\u0001
+00533ca0	00533cd5	005b16ec	This is strange region to me too.
+00533ca0	00533cdc	005b170c	.
+00533ca0	00533cf4	005b16fc	region to me too.
+00533ca0	00533d03	005b1710	But I really haven't wandered too far from here.
+00533ca0	00533d20	005b1720	en't wandered too far from here.
+00533ca0	00533d2e	005b1730	o far from here.
+00533ca0	00533d3d	005b1744	It might be that someone else would know better.
+00533ca0	00533d5a	005b1754	 someone else would know better.
+00533ca0	00533d68	005b1764	uld know better.
+00533ca0	00533d77	005b1778	And I've been wandering around here a lot.
+00533ca0	00533d7e	005b17a0	t.
+00533ca0	00533da0	005b1788	ndering around here a lot.
+00533ca0	00533dae	005b1798	ere a lot.
+00533ca0	00533dbf	005b17a4	I'm familiar with this region and I'm pretty sure of it.
+00533ca0	00533ddc	005b17b4	h this region and I'm pretty sure of it.
+00533ca0	00533dea	005b17c4	d I'm pretty sure of it.
+00533ca0	00533df8	005b17d4	e of it.
+00533e20	00533ec0	005b17e0	Give our %s back! It's not for trade!
+00533ef0	00533f03	005b1808	You've got 
+00533ef0	00533f11	005b1810	ot 
+00533ef0	00533fa4	00594200	%s,
+00533ef0	0053401c	005b1814	so on,
+00533ef0	00534032	0059285c	.
+00533ef0	005340cc	005b181c	That's what you have to pay for.
+00533ef0	00534102	005b1840	#%d %d*%d
+00533ef0	00534124	005b184c	[PAY DEBT]
+00533ef0	00534129	005b1858	"I would like to pay my debt."
+00534150	00534196	005b1880	npcchatportrait
+00534150	005341a8	005b1878	chat
+00534200	00534255	0058f470	%s/portrait.png
+00534200	00534263	005b1890	plrchatportrait
+00534200	0053426b	005b1878	chat
+005342c0	005342e0	005954c8	bg-heritage.jpg
+005342c0	00534301	005b18a0	Chatting with %s
+00534350	0053439b	0058d6dc	%c
+00534350	005343e1	005b16a8	 .,!?
+00534350	005343e6	0058c348	\u0008\u000b\u001e
+005344d0	0053451d	005dd300	ÍÌÌÌÌÌì?\u0014®Gáz\u0014î?ffffffî?\n×£p=\nï?
+005344d0	0053452e	005b18b4	almost all
+005344d0	00534536	005b18bc	ll
+005344d0	00534555	005b18c0	close to all
+005344d0	0053455d	005b18c8	 all
+005344d0	00534571	005dd2f0	\u009a\u0099\u0099\u0099\u0099\u0099é?333333ë?ÍÌÌÌÌÌì?\u0014®Gáz\u0014î?ffffffî?\n×£p=\nï?
+005344d0	00534582	005b18d0	more than two thirds
+005344d0	00534589	005b18e0	irds
+005344d0	0053459c	005dd2d8	ffffffæ?\n×£p=\nç?
+005344d0	005345ad	005b18e8	two thirds
+005344d0	005345b5	005b18f0	ds
+005344d0	005345cb	005dd2b0	333333ã?\u008aå\u0096VCâã?ÍÌÌÌÌÌä?\u001f\u0085ëQ¸\u001eå?ffæ?
+005344d0	005345dc	005b18f4	more than half
+005344d0	005345e4	005b18fc	n half
+005344d0	005345f0	005b1900	lf
+005344d0	0053460f	005b1904	about a half
+005344d0	00534617	005b190c	half
+005344d0	0053462b	005dd290	\u009a\u0099\u0099\u0099\u0099\u0099Ù?\u009a\u0099Ù?
+005344d0	0053463c	005b1914	less than half
+005344d0	00534644	005b191c	n half
+005344d0	00534650	005b1920	lf
+005344d0	00534662	005dd280	333333Ó?c\u009d>Ã\u001auÙ?\u009a\u0099\u0099\u0099\u0099\u0099Ù?\u009a\u0099Ù?
+005344d0	00534673	005b1924	one third
+005344d0	0053467b	005b192c	d
+005344d0	00534689	005dd250	\u009a\u0099\u0099\u0099\u0099\u0099É?ÍÌÌ?
+005344d0	0053469a	005b1930	one fifth
+005344d0	005346a2	005b1938	h
+005344d0	005346b0	005dd248	333333Ã?\u009a\u0099\u0099\u0099\u0099\u0099É?ÍÌÌ?
+005344d0	005346c1	005b193c	about one tenth
+005344d0	005346cb	005dd228	\u009a\u0099\u0099\u0099\u0099\u0099¹?)\\u008fÂõ(¼?
+005344d0	005346dc	005b194c	just a little
+005344d0	005346e4	005b1954	ittle
+005344d0	005346f0	005b1958	e
+005344d0	005346fa	005dd208	\u009a\u0099\u0099\u0099\u0099\u0099©?\u001f\u0085«?
+005344d0	0053470d	005b195c	very, very little
+005344d0	00534714	005b196c	e
+00534730	0053475a	005b1a00	Your reward covers %s of this. The rest of it you have to pay.
+00534790	005347b0	0058c1f8	T÷\u001d
+00534790	0053483d	005b1a40	You are bargaining about
+00534790	00534870	005b1a5c	animals.
+00534790	0053488a	005b1a68	companionship services.
+00534790	00534897	005b1a80	some goods.
+00534790	005348cf	005b1a40	You are bargaining about
+00534790	00534951	005b1a8c	and are willing to trade your
+00534790	005349b6	005b1aac	(no items selected yet)
+00534790	005349fe	0058c670	%s
+00534790	00534aa8	005b1ac4	for it.
+00534790	00534ade	0058c1e8	¢÷\u001d
+00534790	00534ae4	005dda40	\u0003\u0002
+00534790	00534aee	0058c200	\u001c÷\u001d
+00534790	00534b05	0058c20c	Þö\u001d
+00534790	00534b29	0058c204	\u000c÷\u001d
+00534c70	00534cdb	005b1acc	TALKLINE
+00534c70	00534ce1	0058c350	þ\n\u001e
+00534c70	00534cf2	0058c350	þ\n\u001e
+00534c70	00534d47	00595a08	%c.%s
+00534d90	00534da3	005dd9b0	\u000f
+00534d90	00534db6	005b1ad8	emotescr
+00534d90	00534dd5	0058c1f8	T÷\u001d
+00534d90	00534e1a	0058c680	%s %s
+00534d90	00534e55	0058c1f8	T÷\u001d
+00534d90	00534e7a	005b1ae4	 Press [SPACE] or click mouse to continue. 
+00534d90	00534e96	005b1ad8	emotescr
+00534d90	00534ea0	005b1ad8	emotescr
+00534ec0	00534fe8	005b445c	I'm happy to leave with my current equipment.
+00534ec0	00534ffa	005b4548	I expect you to hand out some decent goods at once to pay for my services.
+00534ec0	00535004	005b45ac	What I have now is
+00534ec0	00535024	005b45c0	to make me happy.
+00534ec0	0053509e	005b1b10	It was nice to know you.
+00534ec0	005350a8	005b1b2c	Bye now and take care of yourself!
+005350d0	0053519a	005911e0	ROPE
+00535200	005352de	005b1b50	[LOOKING FOR WELL]
+00535200	005352e3	005b1b64	"Where is your village water supply?"
+00535200	00535305	005b1b8c	Sorry, but I can't help you with any directions.
+00535200	0053531d	005b1bc0	[LOOKING FOR VILLAGE]
+00535200	00535322	005b1bd8	"I'm looking for a village."
+00535200	0053532f	005b1c0c	"I need to find a lake."
+00535200	00535334	005b1bf8	[LOOKING FOR LAKE]
+00535200	00535341	005b1c3c	"Are there any caves around here?"
+00535200	00535346	005b1c28	[LOOKING FOR CAVE]
+00535200	00535383	005b1c60	What do you need to know?
+005353a0	005353b3	005b1c7c	I could try to help you with those injuries.
+005353a0	005353bd	005b1cac	[HEALING]
+005353a0	005353c2	005b1cb8	"Please, do heal me."
+005353e0	005353ea	005b1cd0	If you're in a need of metalworks feel free to ask.
+005353e0	005353f4	005b1d04	[ASK BLACKSMITH SERVICES]
+005353e0	005353f9	005b1d20	"I would like to order some metalworks from you."
+00535490	00535540	005b1d54	I'm %s with %s
+00535490	005355df	005b1d64	and %s.
+00535490	0053560f	005b1d6c	and %s with %s.
+00535490	00535625	005b1d7c	but that's about it.
+00535490	0053562c	005b1d94	I can hold a knife if need be but that's about it.
+00535650	00535694	0058c51c	\u0012\r\u001e
+00535650	00535737	005b1f40	Who has beard has the power.
+00535650	0053573e	005b1f58	wer.
+00535650	0053575b	005b1f50	s the power.
+00535650	00535770	005b1f60	The beard doesn't grow in a day.
+00535650	00535789	005b1f70	t grow in a day.
+00535650	005357a1	005b1dc8	Hehehe...
+00535650	005357a9	005b1dd0	.
+00535650	005357ce	005b1dd4	I'm a mere negotiator between the people and the spirit world.
+00535650	005357d3	005b1dd4	I'm a mere negotiator between the people and the spirit world.
+00535650	005357d3	005b1dd8	a mere negotiator between the people and the spirit world.
+00535650	005357d5	005b1dd8	a mere negotiator between the people and the spirit world.
+00535650	005357d7	005b1dda	mere negotiator between the people and the spirit world.
+00535650	005357e2	005b1ea0	Curious you may be, but my expertise is beyond your understanding.
+00535650	005357e9	005b1ee0	g.
+00535650	00535808	005b1eb0	be, but my expertise is beyond your understanding.
+00535650	00535816	005b1ec0	tise is beyond your understanding.
+00535650	00535824	005b1ed0	our understanding.
+00535650	00535842	005b1ee8	Well, at least so far my powers and advises have assured welfare of the people here.
+00535650	00535847	005b1ee8	Well, at least so far my powers and advises have assured welfare of the people here.
+00535650	00535847	005b1eec	, at least so far my powers and advises have assured welfare of the people here.
+00535650	00535849	005b1eec	, at least so far my powers and advises have assured welfare of the people here.
+00535650	0053585f	005b1e14	Well for one, I know songs to sink nosy youngsters into a bog.
+00535650	00535864	005b1e14	Well for one, I know songs to sink nosy youngsters into a bog.
+00535650	00535864	005b1e18	 for one, I know songs to sink nosy youngsters into a bog.
+00535650	00535866	005b1e18	 for one, I know songs to sink nosy youngsters into a bog.
+00535650	00535868	005b1e1a	or one, I know songs to sink nosy youngsters into a bog.
+00535650	0053586e	005b1e58	I'm soothsayer old as time. I know more than I can even remember.
+00535650	00535875	005b1e98	.
+00535650	00535889	005b1e68	ld as time. I know more than I can even remember.
+00535650	00535897	005b1e78	ow more than I can even remember.
+00535650	005358a5	005b1e88	an even remember.
+00535650	005358c9	0058efe4	tv]
+00535650	005358e1	005b1f84	I'm %s in what I do, and my goods are of %s quality.
+00535650	0053595d	005b1fbc	hideworking
+00535650	00535965	005b1fc4	ing
+00535650	0053599d	005b1fd0	aft
+00535650	005359a2	005b1fc8	timbercraft
+00535650	005359c6	005b1fd4	I'm %s in %s 
+00535650	00535a23	005b1d64	and %s.
+00535650	00535a3a	005b1d6c	and %s with %s.
+00535a90	00535abf	005b1fe4	I am listening...
+00535a90	00535af0	005b1c7c	I could try to help you with those injuries.
+00535a90	00535afa	005b1cac	[HEALING]
+00535a90	00535aff	005b1cb8	"Please, do heal me."
+00535a90	00535b2d	005b1cd0	If you're in a need of metalworks feel free to ask.
+00535a90	00535b37	005b1d04	[ASK BLACKSMITH SERVICES]
+00535a90	00535b3c	005b1d20	"I would like to order some metalworks from you."
+00535a90	00535b49	005b1ff8	[RECRUIT HUNTING]
+00535a90	00535b4e	005b200c	"I'm going hunting and could use your company."
+00535a90	00535b5b	005b204c	"I'd like to hire a helping hand. Interested?"
+00535a90	00535b60	005b203c	[RECRUIT WORK]
+00535a90	00535b6d	005b2090	"Do you want to go for a longish adventure with me?"
+00535a90	00535b72	005b207c	[RECRUIT ADVENTURE]
+00535a90	00535b9a	005b20c8	[ASK WEAPON SKILLS]
+00535a90	00535b9f	005b20dc	"I'm curious about your weapon skills?"
+00535a90	00535bac	005b2114	"I'm curious about your skills and expertise?"
+00535a90	00535bb1	005b2104	[ASK SKILLS]
+00535a90	00535c10	005b2144	[LOOKING FOR SAGE]
+00535a90	00535c15	005b2158	"Is there a sage here?"
+00535a90	00535c3a	005b2170	[LOOKING FOR BLACKSMITH]
+00535a90	00535c3f	005b218c	"Is there a blacksmith here?"
+00535c50	00535c6f	005b21ac	[GO AWAY]
+00535c50	00535c74	005b21b8	"Go away! This is my settlement!"
+00535c50	00535ca6	005b21dc	[UNJOIN]
+00535c50	00535cab	005b21e8	"I don't need your help anymore."
+00535c50	00535cc0	005b220c	You are in no position to command me around here.
+00535e80	00535eca	005b2240	I think I'd like to have more food with me.
+00535e80	00535efc	005b226c	I could use some extra weapons.
+00535e80	00535fc7	005b228c	Well, I think I have everything I need to start %s now!
+00535e80	00535fe5	005b22c4	is now your party member.
+005360c0	00536153	005dd348	333333ó?
+005360c0	0053617f	005dd2f0	\u009a\u0099\u0099\u0099\u0099\u0099é?333333ë?ÍÌÌÌÌÌì?\u0014®Gáz\u0014î?ffffffî?\n×£p=\nï?
+005361b0	0053623c	005dd348	333333ó?
+005361b0	00536249	005dd338	\u009a\u0099\u0099\u0099\u0099\u0099ñ?ffffffò?333333ó?
+005361b0	00536286	005dd2f0	\u009a\u0099\u0099\u0099\u0099\u0099é?333333ë?ÍÌÌÌÌÌì?\u0014®Gáz\u0014î?ffffffî?\n×£p=\nï?
+005361b0	00536293	005dd300	ÍÌÌÌÌÌì?\u0014®Gáz\u0014î?ffffffî?\n×£p=\nï?
+00536410	005367c2	0059d0b0	%s/%s.VIL
+00536410	005367e7	0059d0bc	a+b
+00536410	005367ed	0058c478	2\u000c\u001e
+00536410	005367fa	0058f20c	rb+
+00536410	00536800	0058c478	2\u000c\u001e
+00536410	00536812	0058c4bc	L\u000c\u001e
+00536410	0053682e	0058c4d8	^\u000c\u001e
+00536410	00536835	0058c4b4	:\u000c\u001e
+00536410	005368a6	005ddb20	\u0018üÿÿ\u0018üÿÿ\u0018üÿÿ\u0018üÿÿ\u0001
+00536410	00536971	005b19a0	So far you have been given %s of your whole reward. You can claim the rest whenever you please.
+00536410	0053698e	005b22e0	TRADE_DEAL
+00536410	00536995	005b22ec	TRADE_GENEROUS_DEAL
+00536410	00536a02	005b1970	Now you are fully rewarded from our behalf.
+00536410	00536a2a	005b2300	The trade is complete and the goods change their owners.
+00536a70	00536d43	005b19a0	So far you have been given %s of your whole reward. You can claim the rest whenever you please.
+00536a70	00536d59	005b22e0	TRADE_DEAL
+00536a70	00536d62	005b22ec	TRADE_GENEROUS_DEAL
+00536a70	00536d93	005b2340	I'll get your %s here and also give you a rope so you can leash it.
+00536a70	00536e21	005b1970	Now you are fully rewarded from our behalf.
+00536a70	00536e49	005b2300	The trade is complete and the goods change their owners.
+005372b0	00537568	005b2384	It's you who wants %s, not me.
+005372b0	00537613	005b23f8	I'm afraid that %s is too much for me to carry right now.
+005372b0	00537624	005b2438	I wouldn't want to reject those %s, but I'm too burdened to carry them.
+005372b0	00537633	005b23a8	We want furs - tanned furs. Thick and fine furs of the north. You understand?
+005372b0	0053763f	005b23a8	We want furs - tanned furs. Thick and fine furs of the north. You understand?
+005372b0	0053763f	005b23ac	ant furs - tanned furs. Thick and fine furs of the north. You understand?
+005372b0	00537641	005b23ac	ant furs - tanned furs. Thick and fine furs of the north. You understand?
+005372b0	005376a0	005b2480	What!? You consider %s valuable? Well, I do not.
+005372b0	005376d5	0058c4e8	æ\u000c\u001e
+005372b0	005376eb	005b24c8	%s? Those aren't needed.
+005372b0	00537701	005b24e4	You try to trade with %s? No thanks.
+005372b0	00537843	005b2534	We don't need that many %s.
+005372b0	00537854	005b250c	No thanks, we have enough %s already.
+005372b0	005378e2	005b2550	that
+005372b0	00537938	00593f40	meat
+005372b0	0053799c	005931bc	fish
+005372b0	005379fe	005b2560	ducts
+005372b0	00537a06	005b2564	s
+005372b0	00537a18	005b2558	meat products
+005372b0	00537a5e	005b2570	ducts
+005372b0	00537a69	005b2574	s
+005372b0	00537a7b	005b2568	fish products
+005372b0	00537ac7	005b2578	No, we don't need more %s. We have decent reserves already.
+005372b0	00537b42	005b25b4	That %s is not yours.
+005372b0	00537c5a	005b25cc	I don't need any more %s.
+005372b0	00537c89	005b25e8	That %s is not of quality I expect.
+005372b0	00537ca3	005b260c	I certainly don't want your unknown %s.
+005372b0	00537cd3	005b2634	Have that %s tanned first then let's see about it.
+005372b0	00537d14	005b2668	That %s is unworthy in this barter.
+005372b0	00537d23	0058c4e8	æ\u000c\u001e
+005372b0	00537d39	005b24b4	%s? No thank you.
+00537d60	00537ef4	005dd0c4	\n×£=ìQ¸=ÍÌÌ=®Gá=o\u000câ=\u008fÂõ=
+00537d60	00538016	005dd2b0	333333ã?\u008aå\u0096VCâã?ÍÌÌÌÌÌä?\u001f\u0085ëQ¸\u001eå?ffæ?
+00537d60	0053802e	005b2690	I don't want to be greedy so it's best that you make the offer.
+00537d60	0053803c	005b26a0	be greedy so it's best that you make the offer.
+00537d60	0053804a	005b26b0	s best that you make the offer.
+00537d60	00538058	005b26c0	make the offer.
+00537d60	0053807e	005b26d0	I think you simply don't have enough valuable goods to complete this trade.
+00537d60	00538085	005b2718	de.
+00537d60	00538097	005b26e0	ly don't have enough valuable goods to complete this trade.
+00537d60	005380a5	005b26f0	ough valuable goods to complete this trade.
+00537d60	005380b3	005b2700	ods to complete this trade.
+00537d60	005380c1	005b2710	this trade.
+00537d60	0053819a	005b271c	 (being worn)
+00537d60	005381a1	005b2720	ing worn)
+00537d60	005381a9	005b2724	worn)
+00537d60	005381b1	005b2728	)
+00537d60	005381cc	0059149c	, 
+00537d60	0053820c	005b272c	It takes more than this but at this point, how about your
+00537d60	00538213	005b2764	r
+00537d60	00538227	005b273c	an this but at this point, how about your
+00537d60	00538235	005b274c	his point, how about your
+00537d60	00538243	005b275c	bout your
+00537d60	0053827a	005b2768	I think it's best if you make the offers now.
+00537d60	00538284	005b2798	It's hard to decide but at this point, how about your
+00537d60	0053828b	005b27c8	 your
+00537d60	00538296	005b27cc	r
+00537d60	005382aa	005b27a8	ide but at this point, how about your
+00537d60	005382b8	005b27b8	point, how about your
+00537d60	005382cf	005b27d0	You don't seem to be carring anything that actually interests me.
+00537d60	005382d9	005b2818	I doubt you have enough to complete this trade, but I'm somewhat interested in your
+00537d60	005382e0	005b2868	our
+00537d60	005382f2	005b2828	 enough to complete this trade, but I'm somewhat interested in your
+00537d60	00538300	005b2838	ete this trade, but I'm somewhat interested in your
+00537d60	0053830e	005b2848	but I'm somewhat interested in your
+00537d60	0053831c	005b2858	 interested in your
+00537d60	0053832c	005b2870	I think we could come to an agreement if you would give me your
+00537d60	0053833a	005b2880	 come to an agreement if you would give me your
+00537d60	00538348	005b2890	ement if you would give me your
+00537d60	00538356	005b28a0	ld give me your
+00537d60	00538381	005a6364	%s.
+005383b0	0053840c	005b28b0	No, I don't want you to add anything there. I want you to start over and make a new offer.
+005383b0	0053843b	005b1878	chat
+005383b0	00538458	005b290c	trade
+005383b0	0053845d	005b2914	What do you want to trade?
+005383b0	0053846a	005b1878	chat
+005383b0	0053866f	005b2930	However, the rest of your offer is accepted.
+005383b0	00538695	005b2960	That was completely unacceptable offer.
+005386c0	0053870d	005dd300	ÍÌÌÌÌÌì?\u0014®Gáz\u0014î?ffffffî?\n×£p=\nï?
+005386c0	0053871e	005b2988	is just a few more things away
+005386c0	00538725	005b29a0	s away
+005386c0	0053872d	005b2998	re things away
+005386c0	0053873d	005b29a4	ay
+005386c0	00538758	005b29a8	is pleasantly close
+005386c0	0053875f	005b29b8	ose
+005386c0	0053876a	005dd2f0	\u009a\u0099\u0099\u0099\u0099\u0099é?333333ë?ÍÌÌÌÌÌì?\u0014®Gáz\u0014î?ffffffî?\n×£p=\nï?
+005386c0	0053877b	005b29bc	is getting promising
+005386c0	00538782	005b29cc	sing
+005386c0	00538795	005dd2d8	ffffffæ?\n×£p=\nç?
+005386c0	005387a6	005b29d4	compensates for two-thirds
+005386c0	005387ad	005b29ec	ds
+005386c0	005387b6	005b29e4	two-thirds
+005386c0	005387cf	005dd2b0	333333ã?\u008aå\u0096VCâã?ÍÌÌÌÌÌä?\u001f\u0085ëQ¸\u001eå?ffæ?
+005386c0	005387e0	005b29f0	is halfway there
+005386c0	005387ff	005b2a04	needs to be doubled
+005386c0	00538806	005b2a14	led
+005386c0	00538811	005dd290	\u009a\u0099\u0099\u0099\u0099\u0099Ù?\u009a\u0099Ù?
+005386c0	00538822	005b2a18	needs to be tripled
+005386c0	00538829	005b2a28	led
+005386c0	00538834	005dd280	333333Ó?c\u009d>Ã\u001auÙ?\u009a\u0099\u0099\u0099\u0099\u0099Ù?\u009a\u0099Ù?
+005386c0	00538845	005b2a2c	is a good start
+005386c0	0053884f	005dd250	\u009a\u0099\u0099\u0099\u0099\u0099É?ÍÌÌ?
+005386c0	00538860	005b2a3c	is only a start
+005386c0	0053886a	005dd228	\u009a\u0099\u0099\u0099\u0099\u0099¹?)\\u008fÂõ(¼?
+005386c0	0053887d	005b2a4c	is very marginal
+005388a0	0053891b	005b2a60	You want to return our 
+005388a0	0053894a	00594200	%s,
+005388a0	00538a5d	005b1814	so on,
+005388a0	00538a9a	0059285c	.
+005388a0	00538aeb	005b2a78	That's fine. I've got them now.
+005388a0	00538b8b	005b2a98	You just returned all of our goods. Nothing traded.
+005388a0	00538b95	005b2acc	walks away mumbling about waste of time.
+005388a0	00538ca6	005b2af8	The rest is yours to keep, and makes up for %s of your remaining reward.
+005388a0	00538cf1	005b1a00	Your reward covers %s of this. The rest of it you have to pay.
+005388a0	00538d26	005b2b44	TRADE_ACCEPT_OFFER
+005388a0	00538d75	005b2b58	This bargain is fruitless. There's too many items in your pile. Start over, and give me new a offer.
+005388a0	00538d7c	005b2bc0	What you have offered
+005388a0	00538da2	005b2bd8	to get those goods for yourself.
+00538dc0	00538e0a	005b2b44	TRADE_ACCEPT_OFFER
+00538dc0	00538e4c	005b2b58	This bargain is fruitless. There's too many items in your pile. Start over, and give me new a offer.
+00538dc0	00538e5a	005b2bc0	What you have offered
+00538dc0	00538e84	005b2bfc	to get this settled.
+00538dc0	00538e8b	005b2bd8	to get those goods for yourself.
+00538ea0	00538f06	0058c348	\u0008\u000b\u001e
+00538ea0	00538f25	0058c4f0	¸\u000c\u001e
+00538ea0	00538f53	0058c348	\u0008\u000b\u001e
+00538ea0	00538f6d	005a9f04	[%s]
+00538ea0	00538fa7	0059d558	"%s"
+00539050	00539050	005b2c14	[DELIVER]
+00539050	00539055	005b2c20	"I have something for you..."
+00539070	0053909c	0058c350	þ\n\u001e
+00539070	005390b0	005b2c40	[ifcond 
+00539070	005390c1	005b2c40	[ifcond 
+00539070	005390d4	0058c374	"\u000c\u001e
+00539070	00539103	005b2c4c	[ifncond 
+00539070	00539112	005b2c4c	[ifncond 
+00539070	00539125	0058c374	"\u000c\u001e
+00539070	00539153	005b2c58	[ifsemicond 
+00539070	00539162	005b2c58	[ifsemicond 
+00539070	00539175	0058c374	"\u000c\u001e
+00539070	005391a4	005b2c68	[ifsaid 
+00539070	005391b3	005b2c68	[ifsaid 
+00539070	005391c6	0058c374	"\u000c\u001e
+00539070	005391f5	005b2c74	[ifnsaid 
+00539070	00539204	005b2c74	[ifnsaid 
+00539070	00539217	0058c374	"\u000c\u001e
+00539070	00539246	005b2c80	[ifheard 
+00539070	00539259	005b2c80	[ifheard 
+00539070	00539287	0058c348	\u0008\u000b\u001e
+00539070	00539297	0058c374	"\u000c\u001e
+00539070	005392c2	0058c374	"\u000c\u001e
+00539070	00539303	005b2c8c	[ifnheard 
+00539070	00539316	005b2c8c	[ifnheard 
+00539070	00539344	0058c348	\u0008\u000b\u001e
+00539070	00539354	0058c374	"\u000c\u001e
+00539070	0053937f	0058c374	"\u000c\u001e
+00539070	005393c0	005b2c98	[malepc]
+00539070	005393de	005b2ca4	[femalepc]
+00539070	00539428	005b2cb0	[summary]
+00539490	005394a6	005b2cc0	My teachings alone are not enough, but you also need to practice them on your own.
+00539490	005394be	005b2d18	You will notice the value of my advices the next time your %s skills are truly needed.
+00539490	005394e5	005b2d70	teaches you his knowledge of %s.
+00539560	005395b8	005b2d94	gives you %s.
+00539560	00539631	005b2da8	Thus, %d squirrel hides worth of our goods will be handed out to you for free.
+00539560	00539648	005b2df8	Claim your reward whenever you please, all at once or in parts. Just come trade after picking up your selections and we'll reward those goods to you.
+00539560	005396cd	005b2e90	You are rewarded with %d squirrel hides worth of goods of your choice.
+00539700	00539718	005b2ed8	magicmeans
+00539700	0053971d	00594160	0
+00539700	0053972d	0058c374	"\u000c\u001e
+00539700	00539736	00594160	0
+00539700	0053973b	005b2ee4	magicvar
+00539700	0053975f	005b2ef0	tk
+00539700	005397aa	0058c348	\u0008\u000b\u001e
+00539800	00539818	005b16b0	I'm known as
+00539800	0053981d	005b16c0	I am called
+00539800	00539822	005b16cc	My name is
+00539800	00539827	005b16d8	They call me
+00539800	0053982c	005b16e8	I'm
+00539800	0053984e	005b2ef4	%s %s.
+00539890	005398a3	005b2efc	he
+00539890	005398b8	005b2f00	He
+00539890	00539910	005b2f04	I don't know.
+00539890	00539961	0058f464	girl
+00539890	00539967	0058c350	þ\n\u001e
+00539890	005399c7	005b2f14	I think %s is around here, but I don't know where exactly.
+00539890	005399f2	005b2f50	Well, here I am.
+00539890	00539a5a	005b2fb4	A while ago %s was inside 
+00539890	00539a61	005b2fd0	At least a moment ago %s was wandering around here 
+00539890	00539a8e	005b3004	just around the corner
+00539890	00539a93	005b3004	just around the corner
+00539890	00539a93	005b3008	 around the corner
+00539890	00539a95	005b3008	 around the corner
+00539890	00539a97	005b300a	round the corner
+00539890	00539aba	0059dda0	just nearby 
+00539890	00539ac7	0059dda4	 nearby 
+00539890	00539acf	0059dda8	rby 
+00539890	00539b6a	0059285c	.
+00539890	00539b95	005b2f64	%s is right over there, you see.
+00539890	00539bae	005b2f88	%s is right over there, behind your back.
+00539bd0	00539c5b	0058c50c	\u001a\r\u001e
+00539bd0	00539c77	0058c514	b\r\u001e
+00539bd0	00539c8a	0058c520	\n\r\u001e
+00539bd0	00539c95	0058c51c	\u0012\r\u001e
+00539bd0	00539ca7	0058c51c	\u0012\r\u001e
+00539bd0	00539cd3	005b3024	bad.
+00539bd0	00539cd8	005b301c	Not too bad.
+00539bd0	00539cf6	005b302c	Can't complain.
+00539bd0	00539d09	005b3044	right.
+00539bd0	00539d0e	005b303c	Quite alright.
+00539bd0	00539d1c	005b3048	t.
+00539bd0	00539d36	005b3054	ell.
+00539bd0	00539d3b	005b304c	Pretty well.
+00539bd0	00539d56	005b3064	e.
+00539bd0	00539d5c	005b305c	Just fine.
+00539bd0	00539d78	005b3068	Mustn't grumble.
+00539bd0	00539d93	005b3084	se.
+00539bd0	00539d98	005b307c	Been worse.
+00539bd0	00539dce	005b3088	That's what the adults tell me.
+00539bd0	00539e17	005a0044	*old *
+00539bd0	00539e3a	0058c51c	\u0012\r\u001e
+00539bd0	00539e50	0058c51c	\u0012\r\u001e
+00539bd0	00539e73	005b30e0	Days go by.
+00539bd0	00539e7a	005b30c8	Some weather we've had.
+00539bd0	00539e81	005b30a8	What weather we've been having!
+00539bd0	0053a03b	005b30ec	our %s needs help with %s
+00539bd0	0053a08c	005b3108	our %s has been %s
+00539bd0	0053a0be	005b311c	we're living %s now, our %s can explain
+00539bd0	0053a0f0	005b3144	%s. %s can tell you
+00539bd0	0053a126	005b3158	%s just keeps talking about %s
+00539bd0	0053a15c	005b3178	%s wants to have a word with you, about %s
+00539bd0	0053a1c4	005b31a4	But %s.
+00539bd0	0053a1ef	005b31ac	Oh, and %s.
+00539bd0	0053a214	005b31b8	Otherwise, %s.
+00539bd0	0053a239	005b31c8	But it's more interesting that %s.
+00539bd0	0053a25e	005b31ec	Actually, %s.
+00539bd0	0053a283	005b31fc	Mmm. And if it matters to you, %s.
+00539bd0	0053a2a8	005b3220	And as usual lately, %s.
+00539bd0	0053a2ec	005b323c	[NPC SOTU QUERY:%d]
+00539bd0	0053a307	005b3250	"%s, huh?"
+00539bd0	0053a326	005b325c	"Alright, and where is %s then?"
+00539bd0	0053a345	005b3280	"I might want to talk to %s."
+00539bd0	0053a364	005b32a0	"I'd like to hear what %s has to say."
+00539bd0	0053a383	005b32c8	"Okay, but where can I find %s?"
+00539bd0	0053a3aa	0058f464	girl
+00539bd0	0053a3b0	0058c350	þ\n\u001e
+00539bd0	0053a3c6	005b32ec	"Where can I find her?"
+00539bd0	0053a3d4	005b32fc	d her?"
+00539bd0	0053a3de	005b3304	"Where can I find him?"
+00539bd0	0053a3ec	005b3314	d him?"
+00539bd0	0053a40d	005b331c	"Where can I find %s then?"
+00539bd0	0053a432	0058c50c	\u001a\r\u001e
+00539bd0	0053a44e	0058c514	b\r\u001e
+00539bd0	0053a461	0058c520	\n\r\u001e
+0053a520	0053a54d	0058c350	þ\n\u001e
+0053a520	0053a553	005b1acc	TALKLINE
+0053a520	0053a585	0058c374	"\u000c\u001e
+0053a520	0053a5ca	005b3338	[cant cancel]
+0053a520	0053a5e9	005b3348	[reset once]
+0053a520	0053a634	005b3358	[pending:
+0053a520	0053a648	005b3364	pending
+0053a520	0053a682	005b336c	[ol:
+0053a520	0053a696	005b3374	ol
+0053a520	0053a709	005b1acc	TALKLINE
+0053a520	0053a744	0058c374	"\u000c\u001e
+0053a520	0053a75b	005b3378	[once]
+0053a520	0053a76a	005b3380	[ask summary]
+0053a520	0053a7ca	005b3390	<
+0053a520	0053a825	005b3394	[credit reward:
+0053a520	0053a834	005a3ef4	5
+0053a520	0053a839	005b33a4	credit reward
+0053a520	0053a849	0058c374	"\u000c\u001e
+0053a520	0053a866	0058c374	"\u000c\u001e
+0053a520	0053a872	005b33b4	[rwd_item:
+0053a520	0053a881	00594160	0
+0053a520	0053a886	005b33c0	rwd_item
+0053a520	0053a8aa	005b33cc	[rwd_count:
+0053a520	0053a8b9	0058c69c	1
+0053a520	0053a8be	005b33d8	rwd_count
+0053a520	0053a8e2	005b33e4	[escort:
+0053a520	0053a8f1	005a3ef4	5
+0053a520	0053a8f6	005b33f0	escort
+0053a520	0053a922	005b33f8	[claim reward]
+0053a520	0053a93c	005b3408	[claim craft]
+0053a520	0053a983	005b3418	[befriend]
+0053a520	0053a9cd	005b3424	[befoe]
+0053a520	0053aa27	005b342c	[leave]
+0053a520	0053aa4d	005b3434	[sotu_befoe
+0053a520	0053aa61	005b3440	sotu_befoe
+0053a520	0053aa95	005b344c	[repinc
+0053a520	0053aaa8	0058c69c	1
+0053a520	0053aaad	005b3454	repinc
+0053a520	0053ab5d	005b345c	[magic
+0053a520	0053ab72	005b3464	[tk:
+0053a520	0053ab92	005b346c	[keep options]
+0053a520	0053abbb	005b3378	[once]
+0053a520	0053abe6	005b347c	[introduce]
+0053a520	0053ac08	005b3488	Oh, and let me introduce myself.
+0053a520	0053ac1d	005b34ac	[fetch]
+0053a520	0053ac3c	005b34b4	[fetchtip]
+0053a520	0053ac61	005b34c0	[accept]
+0053a520	0053ac81	005b34cc	[area]
+0053a520	0053aca0	005b34d4	[xarea]
+0053a520	0053acc5	005b34dc	[opensq
+0053a520	0053acda	00594160	0
+0053a520	0053acdf	005b34e4	opensq
+0053a520	0053ad15	005b34f4	[openQno
+0053a520	0053ad24	00594160	0
+0053a520	0053ad29	005b3500	openQno
+0053a520	0053ad4f	005b346c	[keep options]
+0053a520	0053ad68	005b3508	[completed]
+0053a520	0053ade9	005b3514	[close]
+0053ae40	0053aebf	0058c350	þ\n\u001e
+0053ae40	0053aec5	0059a170	[
+0053ae40	0053aed8	005b351c	[bird]
+0053af80	0053afce	005b3524	[QUEST COMPLETED]
+0053af80	0053afd3	005b3538	DEBUG COMPLETE QUEST
+0053af80	0053afe0	005b3560	DEBUG ACCEPT QUESTS
+0053af80	0053afe5	005b3550	[DEBUG ACCEPT]
+0053af80	0053aff2	005b3588	DEBUG OPEN SIDEQUESTS
+0053af80	0053aff7	005b3574	[DEBUG SIDEQUESTS]
+0053af80	0053b004	0058c350	þ\n\u001e
+0053af80	0053b00a	005b35a0	QUEST INI
+0053af80	0053b056	005b35ac	silence
+0053af80	0053b072	005b35ac	silence
+0053af80	0053b072	005b35ae	lence
+0053af80	0053b07d	005b35ad	ilence
+0053af80	0053b07d	005b35af	ence
+0053af80	0053b16c	005b3524	[QUEST COMPLETED]
+0053af80	0053b171	005b3538	DEBUG COMPLETE QUEST
+0053af80	0053b17e	005b3588	DEBUG OPEN SIDEQUESTS
+0053af80	0053b183	005b3574	[DEBUG SIDEQUESTS]
+0053af80	0053b190	005b3560	DEBUG ACCEPT QUESTS
+0053af80	0053b195	005b3550	[DEBUG ACCEPT]
+0053af80	0053b1a2	005b3628	FLAGS TO 1
+0053af80	0053b1a7	005b3618	[CONDFLAG 1]
+0053af80	0053b1b4	005b3644	FLAGS TO 2
+0053af80	0053b1b9	005b3634	[CONDFLAG 2]
+0053af80	0053b1d1	005a9f04	[%s]
+0053af80	0053b225	005b35b8	Could it be that the %s I see over there is for me? If so, would you pick it up and deliver...
+0053af80	0053b28e	005b34ec	[ok]
+0053af80	0053b2a3	005b34ec	[ok]
+0053af80	0053b2cf	005b3650	[noname_ok]
+0053af80	0053b30c	005b365c	TALKLINE 0
+0053af80	0053b329	005b3668	DEBUG ACCEPT
+0053af80	0053b338	005b3678	Quest accepted.
+0053af80	0053b349	005b3688	QUEST COMPLETED
+0053af80	0053b36c	005b3698	TALKLINE %d
+0053af80	0053b381	005b3508	[completed]
+0053af80	0053b397	005b3698	TALKLINE %d
+0053b3e0	0053b470	005b36a4	Umm, that is not what I want right now.
+0053b3e0	0053b532	005b36cc	Good! But this is not all I want.
+0053b3e0	0053b5a1	005b36f0	Good! And then %d more and it's all done...
+0053b620	0053b6a3	005b2c14	[DELIVER]
+0053b620	0053b6ac	005b371c	"I will give you what need. Here..."
+0053b620	0053b6b9	005b3768	"Forget about it. I've changed my mind."
+0053b620	0053b6be	005b3758	[RECRUIT CLEAR]
+0053b620	0053b6d1	005b3744	"So take this..."
+0053b620	0053b6de	005b37a4	"Nah, I've changed my mind. Now give my items back."
+0053b620	0053b6e3	005b3794	[RETURN LOANED]
+0053b700	0053b716	005b1878	chat
+0053b700	0053b733	005b37dc	deliver
+0053b700	0053b738	005b37e4	What do you want to give?
+0053b700	0053b747	005b1878	chat
+0053b700	0053b860	005b3800	"I want you to have this %s."
+0053b700	0053b867	005b3820	"Here, take these %s."
+0053b700	0053b8a9	005b3688	QUEST COMPLETED
+0053b700	0053b912	005b3838	I believe that is originally ours. Why don't you rather return it to its place.
+0053b700	0053b933	005b3888	That's something I do not want to hold.
+0053b700	0053b9da	005b38b0	I'm sorry but I can't take that. It's too much for me to carry.
+0053b700	0053ba31	005b38f0	Mmm. Okay.
+0053b700	0053bac6	005b448c	We are even now. Better late than never.
+0053b700	0053bad2	005b4594	We are still not even.
+0053b700	0053badc	005b45ac	What I have now is
+0053b700	0053bb02	005b45c0	to make me happy.
+0053b700	0053bb8b	005b38fc	DELIVER_COMP
+0053b700	0053bc3d	005b43f8	I'm happy to leave with my current equipment. If you let me keep it now my services are paid for.
+0053b700	0053bc47	005b44b8	I'm not happy to leave with my current equipment. I expect you to hand out some decent goods to pay for my services. Let's settle this today.
+0053b700	0053bc51	005b45ac	What I have now is
+0053b700	0053bc77	005b45c0	to make me happy.
+0053b700	0053bcaa	005b390c	DELIVER_GENERAL
+0053b700	0053bcf7	005b391c	DELIVER_HELP
+0053bd20	0053bd49	005b392c	LOWREP_REFUSAL
+0053bda0	0053be35	005ddb20	\u0018üÿÿ\u0018üÿÿ\u0018üÿÿ\u0018üÿÿ\u0001
+0053be70	0053bf6c	005b393c	No. Not until we see %s who left with you again.
+0053be70	0053bfd4	005b3970	No, no, no... I don't think I can handle adventures or longer expeditions right now.
+0053be70	0053c049	005b39c8	That's fine with me. I can come %s. Just be prepared to reward my days of service afterwards.
+0053be70	0053c062	005b3a28	But let me think if I have all the equipment I might need.
+0053c090	0053c1e1	005b3aa4	Our water supply is %s.
+0053c090	0053c20d	005b3a64	We don't really have a water supply here within the village.
+0053c220	0053c2e6	005b3b88	Yes. We have our %s.
+0053c220	0053c378	005b3b40	No, unfortunately not. And I'm afraid there isn't one nearby either.
+0053c220	0053c393	005b3aec	Not here, unfortunately.
+0053c220	0053c3d3	005b3b08	But %s there is a village with a sage.
+0053c220	0053c446	0058c680	%s %s
+0053c220	0053c458	005b3b30	It's %s.
+0053c480	0053c568	005b3c2c	Yes. We are proud to have %s %s as our blacksmith.
+0053c480	0053c57e	005b3b88	Yes. We have our %s.
+0053c480	0053c616	005b3be0	No, there are no blacksmiths around here. You will have to ask elsewhere.
+0053c480	0053c679	005b3ba0	Not here, but you can find a %s blacksmith in a village %s.
+0053c480	0053c6e9	0058c680	%s %s
+0053c480	0053c6fb	005b3b30	It's %s.
+0053c720	0053c7c8	005b3c60	I have no idea if there are any.
+0053c720	0053c7f7	005b3abc	[DIRECTIONS]
+0053c720	0053c7fc	005b3acc	"Well, do you know about ... ?"
+0053c720	0053c830	0058e710	HôX
+0053c720	0053c843	005b3c84	There is a %s in the %s %s.
+0053c720	0053c86e	005b3ca0	It is %s.
+0053c720	0053c8a8	0058e38c	\u0094\u0007Y
+0053c720	0053c8b5	005b3cac	It is %s village.
+0053c720	0053c8dd	005b3cc0	[LOOKING FOR DISTANT VILLAGE]
+0053c720	0053c8e2	005b3ce0	"Yes, I know. How about more distant settlements?"
+0053cb60	0053cb70	005b3d14	I'm sorry. There's a bug. I can't forge that.
+0053cb60	0053cbe0	005b3d44	Looking at what you are carrying now... Hmm.
+0053cc90	0053ccad	005b3d14	I'm sorry. There's a bug. I can't forge that.
+0053cc90	0053cda6	005b3d74	Very well. You shall have %s.
+0053cc90	0053cdcb	005d79e0	TIMESPAN_DAY:%d
+0053cc90	0053cdeb	005b3d94	It will take me %s to make them.
+0053cc90	0053ce04	005b3db8	Come back then, and bring some goods to pay for them. Alright?
+0053cc90	0053ce1a	005b3d74	Very well. You shall have %s.
+0053cc90	0053ce3f	005d79e0	TIMESPAN_DAY:%d
+0053cc90	0053ce5f	005b3df8	It will take me %s to make it.
+0053cc90	0053ce78	005b3e18	Come back then, and bring some goods to pay for it. Alright?
+0053cc90	0053ce9c	005b3e58	[BLACKSMITH FINALIZE ORDER:%d]
+0053cc90	0053ceb0	005b3e78	"Ok, it's a deal."
+0053cc90	0053cec5	005b3e8c	[BLACKSMITH PAYMENT QUERY:%d]
+0053cc90	0053ced9	005b3eac	"What do you want as a payment?"
+0053cc90	0053cee7	005b3ed0	"Umm, I've changed my mind."
+0053cc90	0053ceec	005b1d04	[ASK BLACKSMITH SERVICES]
+0053cf10	0053cf2d	005b3d14	I'm sorry. There's a bug. I can't forge that.
+0053cf10	0053d022	005d79e0	TIMESPAN_DAY:%d
+0053cf10	0053d053	005b3ef0	Alright.
+0053cf10	0053d076	005b3f00	I'll get started with those %s, and expect to see you come claim them after %s.
+0053cf10	0053d084	005b3f50	I'll get started with your %s, and expect to see you come claim it after %s.
+0053d0c0	0053d1f1	0059149c	, 
+0053d0c0	0053d20c	005b3fa0	"I'd like some %s, please."
+0053d0c0	0053d219	005b3fbc	"I'd like to have %s, please."
+0053d0c0	0053d239	005b3fdc	[BLACKSMITH ORDER:%d]
+0053d0c0	0053d286	005b3ff4	I can make you %s.
+0053d0c0	0053d29f	005b1d04	[ASK BLACKSMITH SERVICES]
+0053d0c0	0053d2a4	005b4008	"Umm, actually I need something else."
+0053d2d0	0053d2f7	005b392c	LOWREP_REFUSAL
+0053d2d0	0053d380	005b407c	I surely hope I can trust you this time.
+0053d2d0	0053d38a	005b40a8	So what do you need?
+0053d2d0	0053d3a0	005a0ea8	tool
+0053d2d0	0053d3a9	005a0ea8	tool
+0053d2d0	0053d3a9	005a0eaa	ol
+0053d2d0	0053d3b4	005a0ea9	ool
+0053d2d0	0053d3f1	005b40c0	tools, 
+0053d2d0	0053d3f6	005b40e4	"I need some tools."
+0053d2d0	0053d3fd	005b40c4	s, 
+0053d2d0	0053d402	005b40c8	[BLACKSMITH CATEGORY:TOOL]
+0053d2d0	0053d417	005b40fc	knife
+0053d2d0	0053d422	005b40fc	knife
+0053d2d0	0053d422	005b40fe	ife
+0053d2d0	0053d42d	005b40fd	nife
+0053d2d0	0053d46a	005b4104	knives, 
+0053d2d0	0053d46f	005b412c	"I need a knife."
+0053d2d0	0053d476	005b4108	es, 
+0053d2d0	0053d483	005b4110	[BLACKSMITH CATEGORY:KNIFE]
+0053d2d0	0053d4a0	005b4140	axe
+0053d2d0	0053d4a9	005b4140	axe
+0053d2d0	0053d4a9	005b4142	e
+0053d2d0	0053d4b4	005b4141	xe
+0053d2d0	0053d4f1	005b4144	axes, 
+0053d2d0	0053d4f6	005b4168	"I need an axe."
+0053d2d0	0053d4fd	005b4148	, 
+0053d2d0	0053d50c	005b414c	[BLACKSMITH CATEGORY:AXE]
+0053d2d0	0053d521	005b417c	spear
+0053d2d0	0053d52a	005b417c	spear
+0053d2d0	0053d52a	005b417e	ear
+0053d2d0	0053d535	005b417d	pear
+0053d2d0	0053d572	005b4184	spears, 
+0053d2d0	0053d577	005b41ac	"I need a spear."
+0053d2d0	0053d57e	005b4188	rs, 
+0053d2d0	0053d58b	005b4190	[BLACKSMITH CATEGORY:SPEAR]
+0053d2d0	0053d5a0	005975d0	arrow
+0053d2d0	0053d5a9	005975d0	arrow
+0053d2d0	0053d5a9	005975d2	row
+0053d2d0	0053d5b4	005975d1	rrow
+0053d2d0	0053d5f1	005b41c0	arrowheads, 
+0053d2d0	0053d5f6	005b41ec	"I need some arrowheads."
+0053d2d0	0053d5fd	005b41c4	wheads, 
+0053d2d0	0053d605	005b41c8	ds, 
+0053d2d0	0053d612	005b41d0	[BLACKSMITH CATEGORY:ARROW]
+0053d2d0	0053d627	005b4208	sword
+0053d2d0	0053d632	005b4208	sword
+0053d2d0	0053d632	005b420a	ord
+0053d2d0	0053d63d	005b4209	word
+0053d2d0	0053d67a	005b4210	swords, 
+0053d2d0	0053d67f	005b4238	"I need a sword."
+0053d2d0	0053d686	005b4214	ds, 
+0053d2d0	0053d693	005b421c	[BLACKSMITH CATEGORY:SWORD]
+0053d2d0	0053d6b0	005b424c	helm
+0053d2d0	0053d6b9	005b424c	helm
+0053d2d0	0053d6b9	005b424e	lm
+0053d2d0	0053d6c4	005b424d	elm
+0053d2d0	0053d701	005b4254	a helmet, 
+0053d2d0	0053d706	005b427c	"I need a helmet."
+0053d2d0	0053d70d	005b4258	lmet, 
+0053d2d0	0053d715	005b425c	, 
+0053d2d0	0053d724	005b4260	[BLACKSMITH CATEGORY:HELM]
+0053d2d0	0053d740	005b4290	shield
+0053d2d0	0053d749	005b4290	shield
+0053d2d0	0053d749	005b4292	ield
+0053d2d0	0053d754	005b4291	hield
+0053d2d0	0053d791	005b4298	a shield, 
+0053d2d0	0053d796	005b42c4	"I need a shield."
+0053d2d0	0053d79d	005b429c	ield, 
+0053d2d0	0053d7a5	005b42a0	, 
+0053d2d0	0053d7b4	005b42a4	[BLACKSMITH CATEGORY:SHIELD]
+0053d2d0	0053d7d6	005b3ff4	I can make you %s.
+0053d2d0	0053d803	005b4030	Sorry, but I am all too busy at the moment and can't take new orders now.
+0053d820	0053d834	005b42d8	carefully examines your condition and starts treating your wounds and ailments.
+0053d820	0053d885	0058c51c	\u0012\r\u001e
+0053d820	0053d893	0058c51c	\u0012\r\u001e
+0053d820	0053d8e6	005b4328	I've done the best I can for you. The time will show how well I succeeded. Try to rest now.
+0053d980	0053d993	005b4384	paying your debt
+0053d980	0053da36	005b43b0	It's all yours to keep, and makes up for %s of your remaining reward.
+0053d980	0053da7e	005b1a00	Your reward covers %s of this. The rest of it you have to pay.
+0053d980	0053daa5	005b4398	TRADE_LETS_BARTER
+0053dad0	0053db3f	005b43b0	It's all yours to keep, and makes up for %s of your remaining reward.
+0053dcc0	0053dd15	005b4398	TRADE_LETS_BARTER
+0053dd30	0053dd43	005b1878	chat
+0053dd30	0053dd61	005b45d4	start trading about
+0053dd30	0053dd66	005b45e8	What do you want to trade from me?
+0053dd30	0053dd88	005b1878	chat
+0053dd30	0053ddab	005b460c	"Your goods didn't interest me."
+0053dd30	0053de1f	005b4630	TRADE_BRIEFING
+0053dd30	0053de37	005b4640	My goods don't interest you?
+0053dd30	0053df22	005b4660	etc.
+0053dd30	0053df2c	0058c350	þ\n\u001e
+0053dd30	0053df4a	005b4668	 etc.
+0053dd30	0053df51	005b466c	.
+0053dd30	0053dfe5	005b4398	TRADE_LETS_BARTER
+0053e000	0053e001	005b4670	INTRODUCTION_REMARK
+0053e070	0053e133	005b4684	FAILED_PAYMENT
+0053e170	0053e187	005b4698	You have few moments to leave this area if your life is precious to you. Now run!
+0053e170	0053e1a5	005b46ec	waves at you to go away.
+0053e250	0053e251	005b4708	That is a wise decision. You can walk away unhurt afterwards.
+0053e250	0053e265	005b4748	snatches some of your items.
+0053e2e0	0053e2e1	005b4768	So'll be it, you fool!
+0053e2e0	0053e2eb	005b4780	lets out a loud whistle.
+0053e340	0053e364	005b479c	We want your %s.
+0053e340	0053e37d	005b47b0	Now either give them willingly or we will take them by force?
+0053e340	0053e38c	005b47f0	[ROB FIGHT]
+0053e340	0053e391	005b47fc	"No! You have to fight for them!"
+0053e340	0053e39e	005b482c	"Hmpf. I surrender. Just take them."
+0053e340	0053e3a3	005b4820	[ROB ALLOW]
+0053e3d0	0053e3d1	005b4858	Hah! You think you're tough guy? Now think again. We are going to rob you anyway - like it or not.
+0053e3d0	0053e3e5	005b48c0	If you want to lose some blood too then so'll be it. Now, for the last time, will you hand over your stuff?
+0053e3d0	0053e3f4	005b47f0	[ROB FIGHT]
+0053e3d0	0053e3f9	005b492c	"Never! I will fight back to the last drop of my blood!"
+0053e3d0	0053e406	005b4978	"My stuff?"
+0053e3d0	0053e40b	005b4968	[ROB DEMAND]
+0053e3d0	0053e418	005b4984	"Hmpf. I surrender. Take what you want."
+0053e3d0	0053e41d	005b4820	[ROB ALLOW]
+0053e440	0053e441	005b49b0	Well, we sort of borrow a bit from those who can afford it. Actually, this is a robbery!
+0053e440	0053e455	005b4a10	So either let us take what we want and or we will take it by force...
+0053e440	0053e464	005b4a58	[ROB RESIST]
+0053e440	0053e469	005b4a68	"No. If you want my stuff you have to fight for it."
+0053e440	0053e476	005b4aa0	"Well, it depends on what you want?"
+0053e440	0053e47b	005b4968	[ROB DEMAND]
+0053e440	0053e488	005b4ac8	"I surrender. Take what you want, just spare my life."
+0053e440	0053e48d	005b4820	[ROB ALLOW]
+0053e4b0	0053e4e1	005b4b00	You carry something we want - and we will take it.
+0053e4b0	0053e4eb	005b4b34	Now hand over your stuff willingly and no-one gets hurt, ok?
+0053e4b0	0053e4fa	005b4b74	[ROB QUERY]
+0053e4b0	0053e4ff	005b4b80	"Hah! Why would I give you my stuff?!"
+0053e4b0	0053e50c	005b4ba8	"Hand over what exactly?"
+0053e4b0	0053e511	005b4968	[ROB DEMAND]
+0053e4b0	0053e51e	005b4bc4	"Oh, take what you want, but don't hurt me."
+0053e4b0	0053e523	005b4820	[ROB ALLOW]
+0053e4b0	0053e539	005b4bf4	You have to go away now and I mean it.
+0053e560	0053e5a5	005b4c1c	neuvo
+0053e560	0053e5b1	0058c350	þ\n\u001e
+0053e560	0053e614	005b34ec	[ok]
+0053e560	0053e61a	0058c350	þ\n\u001e
+0053e560	0053e66e	005b35ac	silence
+0053e560	0053e682	005b35ac	silence
+0053e560	0053e682	005b35ae	lence
+0053e560	0053e68d	005b35ad	ilence
+0053e560	0053e68d	005b35af	ence
+0053e560	0053e6c1	005b323c	[NPC SOTU QUERY:%d]
+0053e560	0053e6e8	005b4c24	"Is %s around?"
+0053e560	0053e70b	005b4c34	"I am looking for somebody called %s?"
+0053e560	0053e712	005b4c5c	"Where can I find %s?"
+0053e770	0053e7e9	005b4c74	I'm working on it. Come ask again %s.
+0053e770	0053e830	005b4c9c	It will be ready %s.
+0053e770	0053e846	005b4cb4	Just fine. Rushing doesn't help, though.
+0053e770	0053e892	005b4ce0	BLACKSMITH_UNCLAIMED_ORDER
+0053e770	0053e970	005b1d04	[ASK BLACKSMITH SERVICES]
+0053e770	0053e975	005b4cfc	"I'm very sorry, but I still need some metalworks."
+0053e770	0053e9fb	005b4d30	They are ready and I got them right here, so let's start trading.
+0053e770	0053ea09	005b4d74	It's ready and I have it right here, so let's start trading.
+0053e770	0053ea81	005b4db4	[EXECUTE TRADE]
+0053e770	0053ea86	005b4dc4	"Let's trade then."
+0053e770	0053eaab	005b4dd8	I'm really sorry. Something came up and I couldn't make it this time.
+0053e770	0053eab2	005b4e20	It's ready and you can go get it. I trust you can find it around here by yourself.
+0053e770	0053eabb	005b4e78	It's ready. I left it around, and if you haven't found it then I can't help you.
+0053eb10	0053ebe9	005b4ed0	Of course. You can now find your equipment on the ground at your feet.
+0053ed80	0053ede3	0058c374	"\u000c\u001e
+0053ed80	0053ee32	005b4f18	You want that %s? Very well. Now make a trade and we'll see about that.
+0053ed80	0053ee4b	005b4f60	[TRADE SUGGESTION]
+0053ed80	0053ee58	005b4f60	[TRADE SUGGESTION]
+0053ed80	0053ee58	005b4f62	RADE SUGGESTION]
+0053ed80	0053ee63	005b4f61	TRADE SUGGESTION]
+0053ed80	0053ee63	005b4f63	ADE SUGGESTION]
+0053ed80	0053eeb4	005b4f74	[ITEMPICK]
+0053ed80	0053eec2	005b4f74	[ITEMPICK]
+0053ed80	0053eec2	005b4f76	TEMPICK]
+0053ed80	0053eecd	005b4f75	ITEMPICK]
+0053ed80	0053eecd	005b4f77	EMPICK]
+0053ed80	0053eeee	005b4f80	[DEBT ITEMPICK]
+0053ed80	0053ef02	005b4f80	[DEBT ITEMPICK]
+0053ed80	0053ef02	005b4f82	EBT ITEMPICK]
+0053ed80	0053ef0d	005b4f81	DEBT ITEMPICK]
+0053ed80	0053ef0d	005b4f83	BT ITEMPICK]
+0053ed80	0053ef33	005b4f90	[DEBT SUMMARY]
+0053ed80	0053ef42	005b4f90	[DEBT SUMMARY]
+0053ed80	0053ef42	005b4f92	EBT SUMMARY]
+0053ed80	0053ef4d	005b4f91	DEBT SUMMARY]
+0053ed80	0053ef4d	005b4f93	BT SUMMARY]
+0053ed80	0053ef73	005b2c14	[DELIVER]
+0053ed80	0053ef82	005b2c14	[DELIVER]
+0053ed80	0053ef82	005b2c16	ELIVER]
+0053ed80	0053ef8d	005b2c15	DELIVER]
+0053ed80	0053ef8d	005b2c17	LIVER]
+0053ed80	0053efae	005b3794	[RETURN LOANED]
+0053ed80	0053efc2	005b3794	[RETURN LOANED]
+0053ed80	0053efc2	005b3796	ETURN LOANED]
+0053ed80	0053efcd	005b3795	RETURN LOANED]
+0053ed80	0053efcd	005b3797	TURN LOANED]
+0053ed80	0053f016	005b4fa0	[BYE]
+0053ed80	0053f023	005b4fa0	[BYE]
+0053ed80	0053f023	005b4fa2	YE]
+0053ed80	0053f02e	005b4fa1	BYE]
+0053ed80	0053f02e	005b4fa3	E]
+0053ed80	0053f046	005b4fa8	[GOODBYE]
+0053ed80	0053f053	005b4fa8	[GOODBYE]
+0053ed80	0053f053	005b4faa	OODBYE]
+0053ed80	0053f05e	005b4fa9	GOODBYE]
+0053ed80	0053f05e	005b4fab	ODBYE]
+0053ed80	0053f0a3	005b4b74	[ROB QUERY]
+0053ed80	0053f0b2	005b4b74	[ROB QUERY]
+0053ed80	0053f0b2	005b4b76	OB QUERY]
+0053ed80	0053f0bd	005b4b75	ROB QUERY]
+0053ed80	0053f0bd	005b4b77	B QUERY]
+0053ed80	0053f0ef	005b4968	[ROB DEMAND]
+0053ed80	0053f102	005b4968	[ROB DEMAND]
+0053ed80	0053f102	005b496a	OB DEMAND]
+0053ed80	0053f10d	005b4969	ROB DEMAND]
+0053ed80	0053f10d	005b496b	B DEMAND]
+0053ed80	0053f13f	005b4820	[ROB ALLOW]
+0053ed80	0053f152	005b4820	[ROB ALLOW]
+0053ed80	0053f152	005b4822	OB ALLOW]
+0053ed80	0053f15d	005b4821	ROB ALLOW]
+0053ed80	0053f15d	005b4823	B ALLOW]
+0053ed80	0053f18f	005b47f0	[ROB FIGHT]
+0053ed80	0053f1a2	005b47f0	[ROB FIGHT]
+0053ed80	0053f1a2	005b47f2	OB FIGHT]
+0053ed80	0053f1ad	005b47f1	ROB FIGHT]
+0053ed80	0053f1ad	005b47f3	B FIGHT]
+0053ed80	0053f1df	005b4a58	[ROB RESIST]
+0053ed80	0053f1f2	005b4a58	[ROB RESIST]
+0053ed80	0053f1f2	005b4a5a	OB RESIST]
+0053ed80	0053f1fd	005b4a59	ROB RESIST]
+0053ed80	0053f1fd	005b4a5b	B RESIST]
+0053ed80	0053f22f	005b3618	[CONDFLAG 1]
+0053ed80	0053f242	005b3618	[CONDFLAG 1]
+0053ed80	0053f242	005b361a	ONDFLAG 1]
+0053ed80	0053f24d	005b3619	CONDFLAG 1]
+0053ed80	0053f24d	005b361b	NDFLAG 1]
+0053ed80	0053f27a	005b3634	[CONDFLAG 2]
+0053ed80	0053f287	005b3634	[CONDFLAG 2]
+0053ed80	0053f287	005b3636	ONDFLAG 2]
+0053ed80	0053f292	005b3635	CONDFLAG 2]
+0053ed80	0053f292	005b3637	NDFLAG 2]
+0053ed80	0053f2bf	005b4fb4	[EXIT]
+0053ed80	0053f2d2	005b4fb4	[EXIT]
+0053ed80	0053f2d2	005b4fb6	XIT]
+0053ed80	0053f2dd	005b4fb5	EXIT]
+0053ed80	0053f2dd	005b4fb7	IT]
+0053ed80	0053f2fd	005b4fbc	[REJECT]
+0053ed80	0053f30a	005b4fbc	[REJECT]
+0053ed80	0053f30a	005b4fbe	EJECT]
+0053ed80	0053f315	005b4fbd	REJECT]
+0053ed80	0053f315	005b4fbf	JECT]
+0053ed80	0053f368	005b3abc	[DIRECTIONS]
+0053ed80	0053f375	005b3abc	[DIRECTIONS]
+0053ed80	0053f375	005b3abe	IRECTIONS]
+0053ed80	0053f380	005b3abd	DIRECTIONS]
+0053ed80	0053f380	005b3abf	RECTIONS]
+0053ed80	0053f3c1	005b4fc8	[STAY HERE]
+0053ed80	0053f3d2	005b4fc8	[STAY HERE]
+0053ed80	0053f3d2	005b4fca	TAY HERE]
+0053ed80	0053f3dd	005b4fc9	STAY HERE]
+0053ed80	0053f3dd	005b4fcb	AY HERE]
+0053ed80	0053f40f	005b4fd8	Alright, I will stay here. But whatever you have in your mind don't let it take for too long.
+0053ed80	0053f43f	005b5038	I really don't feel like wanting to wait you here in the wilderness.
+0053ed80	0053f449	005b5080	What do you say if go find a nice local area for me and then talk about this again.
+0053ed80	0053f459	005b50d4	[FOLLOW ME]
+0053ed80	0053f466	005b50d4	[FOLLOW ME]
+0053ed80	0053f466	005b50d6	OLLOW ME]
+0053ed80	0053f471	005b50d5	FOLLOW ME]
+0053ed80	0053f471	005b50d7	LLOW ME]
+0053ed80	0053f4a2	005b50e0	Alright, let's work together then.
+0053ed80	0053f4ce	005b5104	[TRADECLEAR]
+0053ed80	0053f4e2	005b5104	[TRADECLEAR]
+0053ed80	0053f4e2	005b5106	RADECLEAR]
+0053ed80	0053f4ed	005b5105	TRADECLEAR]
+0053ed80	0053f4ed	005b5107	ADECLEAR]
+0053ed80	0053f536	005b5118	Of course. In case you don't want those goods then bring them back where you got them.
+0053ed80	0053f576	005b5170	Of course if you want something else instead.
+0053ed80	0053f5af	005b51a0	Well, give me another offer then if you want it...
+0053ed80	0053f5b9	005b20c8	[ASK WEAPON SKILLS]
+0053ed80	0053f5c6	005b20c8	[ASK WEAPON SKILLS]
+0053ed80	0053f5c6	005b20ca	SK WEAPON SKILLS]
+0053ed80	0053f5d1	005b20c9	ASK WEAPON SKILLS]
+0053ed80	0053f5d1	005b20cb	K WEAPON SKILLS]
+0053ed80	0053f5f2	005b2104	[ASK SKILLS]
+0053ed80	0053f602	005b2104	[ASK SKILLS]
+0053ed80	0053f602	005b2106	SK SKILLS]
+0053ed80	0053f60d	005b2105	ASK SKILLS]
+0053ed80	0053f60d	005b2107	K SKILLS]
+0053ed80	0053f62e	005b3758	[RECRUIT CLEAR]
+0053ed80	0053f642	005b3758	[RECRUIT CLEAR]
+0053ed80	0053f642	005b375a	ECRUIT CLEAR]
+0053ed80	0053f64d	005b3759	RECRUIT CLEAR]
+0053ed80	0053f64d	005b375b	CRUIT CLEAR]
+0053ed80	0053f66e	005b51d8	Alright, fine. Let me know if you need my help some other time.
+0053ed80	0053f67d	005b184c	[PAY DEBT]
+0053ed80	0053f68a	005b184c	[PAY DEBT]
+0053ed80	0053f68a	005b184e	AY DEBT]
+0053ed80	0053f695	005b184d	PAY DEBT]
+0053ed80	0053f695	005b184f	Y DEBT]
+0053ed80	0053f6c0	005b5218	[PERSONAL TRADE]
+0053ed80	0053f6d2	005b5218	[PERSONAL TRADE]
+0053ed80	0053f6d2	005b521a	ERSONAL TRADE]
+0053ed80	0053f6dd	005b5219	PERSONAL TRADE]
+0053ed80	0053f6dd	005b521b	RSONAL TRADE]
+0053ed80	0053f6fe	005b4db4	[EXECUTE TRADE]
+0053ed80	0053f712	005b4db4	[EXECUTE TRADE]
+0053ed80	0053f712	005b4db6	XECUTE TRADE]
+0053ed80	0053f71d	005b4db5	EXECUTE TRADE]
+0053ed80	0053f71d	005b4db7	ECUTE TRADE]
+0053ed80	0053f73e	005b1d04	[ASK BLACKSMITH SERVICES]
+0053ed80	0053f752	005b1d04	[ASK BLACKSMITH SERVICES]
+0053ed80	0053f752	005b1d06	SK BLACKSMITH SERVICES]
+0053ed80	0053f75d	005b1d05	ASK BLACKSMITH SERVICES]
+0053ed80	0053f75d	005b1d07	K BLACKSMITH SERVICES]
+0053ed80	0053f77e	0058c350	þ\n\u001e
+0053ed80	0053f78a	005b522c	[BLACKSMITH CATEGORY:
+0053ed80	0053f799	005b5244	none
+0053ed80	0053f79e	005b524c	BLACKSMITH CATEGORY
+0053ed80	0053f7be	005b5260	[BLACKSMITH ORDER:
+0053ed80	0053f7cd	005969fc	-1
+0053ed80	0053f7d2	005b5274	BLACKSMITH ORDER
+0053ed80	0053f7e2	0058c374	"\u000c\u001e
+0053ed80	0053f7fa	0058c374	"\u000c\u001e
+0053ed80	0053f806	005b5288	[BLACKSMITH FINALIZE ORDER:
+0053ed80	0053f815	005969fc	-1
+0053ed80	0053f81a	005b52a4	BLACKSMITH FINALIZE ORDER
+0053ed80	0053f840	005b52c0	[BLACKSMITH PAYMENT QUERY:
+0053ed80	0053f84f	005969fc	-1
+0053ed80	0053f854	005b52dc	BLACKSMITH PAYMENT QUERY
+0053ed80	0053f874	005b1cac	[HEALING]
+0053ed80	0053f882	005b1cac	[HEALING]
+0053ed80	0053f882	005b1cae	EALING]
+0053ed80	0053f88d	005b1cad	HEALING]
+0053ed80	0053f88d	005b1caf	ALING]
+0053ed80	0053f8ae	005b1ff8	[RECRUIT HUNTING]
+0053ed80	0053f8c2	005b1ff8	[RECRUIT HUNTING]
+0053ed80	0053f8c2	005b1ffa	ECRUIT HUNTING]
+0053ed80	0053f8cd	005b1ff9	RECRUIT HUNTING]
+0053ed80	0053f8cd	005b1ffb	CRUIT HUNTING]
+0053ed80	0053f8fc	005b203c	[RECRUIT WORK]
+0053ed80	0053f909	005b203c	[RECRUIT WORK]
+0053ed80	0053f909	005b203e	ECRUIT WORK]
+0053ed80	0053f914	005b203d	RECRUIT WORK]
+0053ed80	0053f914	005b203f	CRUIT WORK]
+0053ed80	0053f943	005b207c	[RECRUIT ADVENTURE]
+0053ed80	0053f952	005b207c	[RECRUIT ADVENTURE]
+0053ed80	0053f952	005b207e	ECRUIT ADVENTURE]
+0053ed80	0053f95d	005b207d	RECRUIT ADVENTURE]
+0053ed80	0053f95d	005b207f	CRUIT ADVENTURE]
+0053ed80	0053f98d	005b2144	[LOOKING FOR SAGE]
+0053ed80	0053f99a	005b2144	[LOOKING FOR SAGE]
+0053ed80	0053f99a	005b2146	OOKING FOR SAGE]
+0053ed80	0053f9a5	005b2145	LOOKING FOR SAGE]
+0053ed80	0053f9a5	005b2147	OKING FOR SAGE]
+0053ed80	0053f9c6	005b2170	[LOOKING FOR BLACKSMITH]
+0053ed80	0053f9d3	005b2170	[LOOKING FOR BLACKSMITH]
+0053ed80	0053f9d3	005b2172	OOKING FOR BLACKSMITH]
+0053ed80	0053f9de	005b2171	LOOKING FOR BLACKSMITH]
+0053ed80	0053f9de	005b2173	OKING FOR BLACKSMITH]
+0053ed80	0053f9ff	005b1bc0	[LOOKING FOR VILLAGE]
+0053ed80	0053fa12	005b1bc0	[LOOKING FOR VILLAGE]
+0053ed80	0053fa12	005b1bc2	OOKING FOR VILLAGE]
+0053ed80	0053fa1d	005b1bc1	LOOKING FOR VILLAGE]
+0053ed80	0053fa1d	005b1bc3	OKING FOR VILLAGE]
+0053ed80	0053fa3a	0058ddb8	settlement
+0053ed80	0053fa49	005b3cc0	[LOOKING FOR DISTANT VILLAGE]
+0053ed80	0053fa56	005b3cc0	[LOOKING FOR DISTANT VILLAGE]
+0053ed80	0053fa56	005b3cc2	OOKING FOR DISTANT VILLAGE]
+0053ed80	0053fa61	005b3cc1	LOOKING FOR DISTANT VILLAGE]
+0053ed80	0053fa61	005b3cc3	OKING FOR DISTANT VILLAGE]
+0053ed80	0053fa7f	0058ddb8	settlement
+0053ed80	0053fa8e	005b1bf8	[LOOKING FOR LAKE]
+0053ed80	0053faa2	005b1bf8	[LOOKING FOR LAKE]
+0053ed80	0053faa2	005b1bfa	OOKING FOR LAKE]
+0053ed80	0053faad	005b1bf9	LOOKING FOR LAKE]
+0053ed80	0053faad	005b1bfb	OKING FOR LAKE]
+0053ed80	0053faca	0058dd54	lake
+0053ed80	0053fad9	005b1b50	[LOOKING FOR WELL]
+0053ed80	0053fae6	005b1b50	[LOOKING FOR WELL]
+0053ed80	0053fae6	005b1b52	OOKING FOR WELL]
+0053ed80	0053faf1	005b1b51	LOOKING FOR WELL]
+0053ed80	0053faf1	005b1b53	OKING FOR WELL]
+0053ed80	0053fb12	005b1c28	[LOOKING FOR CAVE]
+0053ed80	0053fb22	005b1c28	[LOOKING FOR CAVE]
+0053ed80	0053fb22	005b1c2a	OOKING FOR CAVE]
+0053ed80	0053fb2d	005b1c29	LOOKING FOR CAVE]
+0053ed80	0053fb2d	005b1c2b	OKING FOR CAVE]
+0053ed80	0053fb4a	005b52f8	cave
+0053ed80	0053fb59	005b5300	[TRADECOMPLETE]
+0053ed80	0053fb66	005b5300	[TRADECOMPLETE]
+0053ed80	0053fb66	005b5302	RADECOMPLETE]
+0053ed80	0053fb71	005b5301	TRADECOMPLETE]
+0053ed80	0053fb71	005b5303	ADECOMPLETE]
+0053ed80	0053fba2	005b5310	[TRADEPROCEED]
+0053ed80	0053fbb2	005b5310	[TRADEPROCEED]
+0053ed80	0053fbb2	005b5312	RADEPROCEED]
+0053ed80	0053fbbd	005b5311	TRADEPROCEED]
+0053ed80	0053fbbd	005b5313	ADEPROCEED]
+0053ed80	0053fc34	005dd338	\u009a\u0099\u0099\u0099\u0099\u0099ñ?ffffffò?333333ó?
+0053ed80	0053fc6d	005b5320	Okay, what you can offer me in this trade?
+0053ed80	0053fc77	0058c350	þ\n\u001e
+0053ed80	0053fc7d	005b534c	[CRAFT ORDER QUERY]
+0053ed80	0053fc8a	005b534c	[CRAFT ORDER QUERY]
+0053ed80	0053fc8a	005b534e	RAFT ORDER QUERY]
+0053ed80	0053fc95	005b534d	CRAFT ORDER QUERY]
+0053ed80	0053fc95	005b534f	AFT ORDER QUERY]
+0053ed80	0053fcb6	005b5360	[WHO ARE YOU]
+0053ed80	0053fcc3	005b5360	[WHO ARE YOU]
+0053ed80	0053fcc3	005b5362	HO ARE YOU]
+0053ed80	0053fcce	005b5361	WHO ARE YOU]
+0053ed80	0053fcce	005b5363	O ARE YOU]
+0053ed80	0053fcfc	005b5370	DEBUG SIDEQUESTS
+0053ed80	0053fd37	005b5384	Sidequests opened.
+0053ed80	0053fd41	005b5398	[HOW IS IT GOING]
+0053ed80	0053fd52	005b5398	[HOW IS IT GOING]
+0053ed80	0053fd52	005b539a	OW IS IT GOING]
+0053ed80	0053fd5d	005b5399	HOW IS IT GOING]
+0053ed80	0053fd5d	005b539b	W IS IT GOING]
+0053ed80	0053fd84	005b53ac	[NPC SOTU QUERY:
+0053ed80	0053fd93	00594160	0
+0053ed80	0053fd98	005b53c0	NPC SOTU QUERY
+0053ed80	0053fdac	0058c374	"\u000c\u001e
+0053ed80	0053fdbc	005b53d0	[INTRODUCE]
+0053ed80	0053fdc9	005b53d0	[INTRODUCE]
+0053ed80	0053fdc9	005b53d2	NTRODUCE]
+0053ed80	0053fdd4	005b53d1	INTRODUCE]
+0053ed80	0053fdd4	005b53d3	TRODUCE]
+0053ed80	0053fdfc	005b53dc	[SHUT UP]
+0053ed80	0053fe09	005b53dc	[SHUT UP]
+0053ed80	0053fe09	005b53de	HUT UP]
+0053ed80	0053fe14	005b53dd	SHUT UP]
+0053ed80	0053fe14	005b53df	UT UP]
+0053ed80	0053fe30	005b53e8	shuts up.
+0053ed80	0053fe57	005b53f4	[QUEST 
+0053ed80	0053fe7c	005b53fc	[REPEAT LAST TALK]
+0053ed80	0053fe97	005b5410	[TALKLINE %d]
+0053ed80	0053fea5	005b5420	So... 
+0053ed80	0053fec0	005b5428	[TALKLINE 
+0053ed80	0053feda	005b5434	[FIRE COMMAND]
+0053ed80	0053fee7	005b5434	[FIRE COMMAND]
+0053ed80	0053fee7	005b5436	IRE COMMAND]
+0053ed80	0053fef2	005b5435	FIRE COMMAND]
+0053ed80	0053fef2	005b5437	RE COMMAND]
+0053ed80	0053ff3e	005b54e4	Ok, I'll go light a fire.
+0053ed80	0053ff60	005b54a8	I'm afraid I'm unable to set and light a proper fire here.
+0053ed80	0053ff67	005b5448	But we do have a perfectly good fire already burning. I wouldn't want to set up another one.
+0053ed80	0053ff71	005b5500	[RESTART PAYDEBT]
+0053ed80	0053ff82	005b5500	[RESTART PAYDEBT]
+0053ed80	0053ff82	005b5502	ESTART PAYDEBT]
+0053ed80	0053ff8d	005b5501	RESTART PAYDEBT]
+0053ed80	0053ff8d	005b5503	START PAYDEBT]
+0053ed80	0053ffc9	005b5514	[I STEAL]
+0053ed80	0053ffd6	005b5514	[I STEAL]
+0053ed80	0053ffd6	005b5516	 STEAL]
+0053ed80	0053ffe1	005b5515	I STEAL]
+0053ed80	0053ffe1	005b5517	STEAL]
+0053ed80	00540002	005b5520	You foolish thief!!
+0053ed80	00540022	005b53e8	shuts up.
+0053ed80	0054003b	005b5534	[I WONT PAY]
+0053ed80	00540048	005b5534	[I WONT PAY]
+0053ed80	00540048	005b5536	 WONT PAY]
+0053ed80	00540053	005b5535	I WONT PAY]
+0053ed80	00540053	005b5537	WONT PAY]
+0053ed80	0054006f	005b5544	What!? Are you trying to rob us?
+0053ed80	0054007e	005b5500	[RESTART PAYDEBT]
+0053ed80	00540083	005b5568	No, no, no. I didn't mean that.
+0053ed80	0054009a	005b5588	Yes, I am. This is a robbery!
+0053ed80	0054009f	005b5514	[I STEAL]
+0053ed80	005400ac	005b55a8	[CANT PAY DEBT]
+0053ed80	005400b9	005b55a8	[CANT PAY DEBT]
+0053ed80	005400b9	005b55aa	ANT PAY DEBT]
+0053ed80	005400c4	005b55a9	CANT PAY DEBT]
+0053ed80	005400c4	005b55ab	NT PAY DEBT]
+0053ed80	005400e5	005b21dc	[UNJOIN]
+0053ed80	005400f2	005b21dc	[UNJOIN]
+0053ed80	005400f2	005b21de	NJOIN]
+0053ed80	005400fd	005b21dd	UNJOIN]
+0053ed80	005400fd	005b21df	JOIN]
+0053ed80	00540119	005b55b8	Oh, I was prepared to stay with you a little longer, but if you are absolutely sure my work is done here then I'll be gone.
+0053ed80	00540128	005b5634	[UNJOIN CONFIRM]
+0053ed80	0054012d	005b5648	"I'm sure of it. You can go now."
+0053ed80	0054013a	005b5680	"Well, I think I changed my mind. Please stay."
+0053ed80	0054013f	005b566c	[UNJOIN NOCONFIRM]
+0053ed80	0054014c	005b566c	[UNJOIN NOCONFIRM]
+0053ed80	00540159	005b566c	[UNJOIN NOCONFIRM]
+0053ed80	00540159	005b566e	NJOIN NOCONFIRM]
+0053ed80	00540164	005b566d	UNJOIN NOCONFIRM]
+0053ed80	00540164	005b566f	JOIN NOCONFIRM]
+0053ed80	00540180	005b56b0	Very well, let's wander together for a little longer.
+0053ed80	00540194	005b56e8	So, just tell me if you want me to do something right now.
+0053ed80	0054019e	005b5634	[UNJOIN CONFIRM]
+0053ed80	005401b2	005b5634	[UNJOIN CONFIRM]
+0053ed80	005401b2	005b5636	NJOIN CONFIRM]
+0053ed80	005401bd	005b5635	UNJOIN CONFIRM]
+0053ed80	005401bd	005b5637	JOIN CONFIRM]
+0053ed80	005401de	005b21ac	[GO AWAY]
+0053ed80	005401f2	005b21ac	[GO AWAY]
+0053ed80	005401f2	005b21ae	O AWAY]
+0053ed80	005401fd	005b21ad	GO AWAY]
+0053ed80	005401fd	005b21af	 AWAY]
+0053ed80	0054023a	005b5724	Huh. I didn't mean no harm, but I'll be gone soon.
+0053ed80	0054024b	005b5758	turns around and leaves.
+0053ed80	00540266	005b5774	I won't go nowhere. This place doesn't belong to you.
+0053ed80	00540270	005b57ac	[NODEAL]
+0053ed80	00540282	005b57ac	[NODEAL]
+0053ed80	00540282	005b57ae	ODEAL]
+0053ed80	0054028d	005b57ad	NODEAL]
+0053ed80	0054028d	005b57af	DEAL]
+0053ed80	005402e2	005b57b8	You better pay for what you ordered!
+00540330	00540354	005b57e0	I'll be staying here unless you command me otherwise.
+00540360	00540374	005b5818	MISCHIEF_TELL_OFF
+00540360	005403be	005b58c0	Stop using our raw materials for your own crafts!
+00540360	005403c8	005b582c	Don't use our timber for your own purposes!
+00540360	00540410	005b58f4	You don't seem to respect our property!
+00540360	00540424	005b5904	o respect our property!
+00540360	00540432	005b5914	operty!
+00540360	00540453	005b591c	You are not allowed to %s at our property!
+00540360	00540469	005b5858	Stop pushing things around!
+00540360	00540470	005b5878	We decide what is built in our village. Stop your construction at once!
+00540510	00540530	005b5948	Hah! Trading! I'm not that kind of a person.
+00540510	00540562	005b5978	I'm your companion, not somebody to trade with.
+00540510	0054059b	005b59a8	It's so that you owe me for my services. Don't you talk about trading before that is settled.
+00540510	005405cb	005b5a08	ADULT_TOPIC
+00540510	005405fa	005b5a14	TRADE_STOPPAGE
+00540610	00540788	005b5a2c	er
+00540610	0054078e	005b5a24	a murderer
+00540610	005407e7	005b5a30	:many
+00540610	005407f2	005b5a34	y
+00540610	005407ff	005b5a40	INFO
+00540610	00540804	005b5a38	WOM_BAD_INFO
+00540610	00540821	005b5a50	NEWS
+00540610	00540826	005b5a48	WOM_BAD_NEWS
+00540610	00540843	005b5a60	RUMORS
+00540610	00540848	005b5a58	WOM_BAD_RUMORS
+00540610	00540853	005b5a64	RS
+00540610	005408e0	005b5a68	MURDER_CHARGE
+00540610	0054091c	005b5a78	BANISH_PRECAUTION
+00540610	00540986	005b5a8c	MURDER_SUSPICION
+00540610	005409d0	005b5aa0	THEFT_CHARGE
+00540610	00540a19	005b5a78	BANISH_PRECAUTION
+00540610	00540aaa	005b5ab0	THEFT_SUSPICION
+00540610	00540ac0	005b5a14	TRADE_STOPPAGE
+00540b20	00540b69	005b5ac0	I am hungry. It's your duty to provide me with enough food.
+00540b20	00540b88	005b5afc	I am starving. Some food needs to come my way, and soon!
+00540b20	00540bb6	005b5b38	You must remember that we are still companions.
+00540b20	00540bd5	005b5b68	I warn you not neglect me again or I will head elsewhere.
+00540b20	00540c17	005b5ba4	This was the final straw of your ignorance.
+00540b20	00540c3b	005b5bd0	Our paths will separate now!
+00540b20	00540c8e	005b5bf0	Now it's time for me to go back home. I won't be %s any longer.
+00540b20	00540cbf	005b5c30	You don't seem to be able to escort me where I wanted. I will continue on my own now.
+00540b20	00540cc4	005b5c30	You don't seem to be able to escort me where I wanted. I will continue on my own now.
+00540b20	00540cc4	005b5c34	don't seem to be able to escort me where I wanted. I will continue on my own now.
+00540b20	00540cc8	005b5c34	don't seem to be able to escort me where I wanted. I will continue on my own now.
+00540b20	00540cf9	005d79e0	TIMESPAN_DAY:%d
+00540b20	00540d2f	005b5c88	I will be %s %s more. Then it's time for me to go back home.
+00540b20	00540d61	005d79e0	TIMESPAN_DAY:%d
+00540b20	00540d81	005b5cc8	If we don't get where I wanted within %s I think I have to continue on my own.
+00540b20	00540e56	005b43f8	I'm happy to leave with my current equipment. If you let me keep it now my services are paid for.
+00540b20	00540e70	005b44b8	I'm not happy to leave with my current equipment. I expect you to hand out some decent goods to pay for my services. Let's settle this today.
+00540b20	00540e7a	005b45ac	What I have now is
+00540b20	00540ea0	005b45c0	to make me happy.
+00540ef0	00540f27	005b5d18	GREET
+00540ef0	00540f5a	005b5d20	GREET_MORNING
+00540ef0	00540f8d	005b5d30	GREET_NIGHT
+00540fc0	0054100e	005b5d3c	GREET_LONGER_TIME
+00540fc0	00541033	005b5d50	GREET_LONG_TIME
+00541060	005410b8	005b5d60	[questmode]
+00541060	005410c5	0058c350	þ\n\u001e
+00541060	005410db	005b5d6c	GREET_QUERY
+00541060	0054111a	005b5d78	You owe me some goods for my services.
+00541060	00541124	005b2c14	[DELIVER]
+00541060	00541129	005b2c20	"I have something for you..."
+00541140	005412fe	005b5da0	NPC_CAN_TRADE
+00541140	00541315	005b5db0	To some extent my goods can be given to you for free as a reward, but let's see how it goes.
+00541140	0054131f	005b5218	[PERSONAL TRADE]
+00541140	00541324	005b5e10	"Let's see what I can trade from you."
+00541140	00541342	005b5e38	NPC_CANT_TRADE
+00541140	00541390	005b4630	TRADE_BRIEFING
+005413c0	00541492	005b5d60	[questmode]
+005413c0	0054150c	005b5e48	"How's that %s coming along?"
+005413c0	0054153f	005b5e68	"How are those %s coming along?"
+005413c0	0054154d	005b534c	[CRAFT ORDER QUERY]
+005413c0	00541582	005b35a0	QUEST INI
+005413c0	005415a1	005b5d6c	GREET_QUERY
+005413c0	005415d2	005b5360	[WHO ARE YOU]
+005413c0	005415d7	005b5e8c	"Who are you?"
+005413c0	005415f1	005b5398	[HOW IS IT GOING]
+005413c0	005415f6	005b5e9c	"How is it going?"
+005413c0	00541622	005b5eb0	"I am %s."
+005413c0	00541636	005b53d0	[INTRODUCE]
+005413c0	005416f1	00591e14	TRADE_BANNED
+005413c0	00541702	00591d3c	DROP_OUR_GOODS
+005413c0	005417c8	005b5ebc	So, we talked about me %s... Right?
+005413c0	00541885	005b1858	"I would like to pay my debt."
+005413c0	0054188c	005b5ee0	To some extent our goods will be rewarded to you, but let's see how it is with the selections you've made so far.
+005413c0	00541896	005b5f54	"Very well. Let's settle for the items I've picked."
+005413c0	0054189b	005b184c	[PAY DEBT]
+00541900	00541ebe	005b3698	TALKLINE %d
+00541900	00541f10	005cc664	%s/%d.QST
+00541900	00541f21	0058f978	wb
+00541900	00541f27	0058c478	2\u000c\u001e
+00541900	00541f38	0058c4d8	^\u000c\u001e
+00541900	00541f3f	0058c4b4	:\u000c\u001e
+00541f70	00542282	005b2c14	[DELIVER]
+00541f70	00542287	005b2c20	"I have something for you..."
+00541f70	005422d6	005b5f90	I think you are mistaken. I do not own the animals around here.
+00541f70	005422f4	005b5fd0	Very well, I understand.
+00541f70	005422f9	005b4fa8	[GOODBYE]
+00541f70	00542328	005b5fec	Sorry, but the animals we have are kept for ourselves.
+00541f70	00542343	005b6024	We don't have animals to sell here.
+00541f70	0054234d	005b6048	Ok, no problem.
+00541f70	00542362	005b6058	What kind of animals you need? 
+00541f70	005423b4	005b6078	#%d
+00541f70	0054240c	0059149c	, 
+00541f70	00542448	005b607c	We might have %s for sale, if you are interested.
+00541f70	00542493	005b5300	[TRADECOMPLETE]
+00541f70	00542498	005b60b0	"Ok. It's a deal."
+00541f70	005424a5	005b60c4	"Let me think again..."
+00541f70	005424d9	005b4f74	[ITEMPICK]
+00541f70	005424de	005b60dc	Offer an item
+00541f70	005424eb	005b60ec	"What of my items you'd prefer in this trade?"
+00541f70	005424f0	005b4f60	[TRADE SUGGESTION]
+00541f70	00542506	005b5104	[TRADECLEAR]
+00541f70	0054250b	005b611c	Start the trade again from the start
+00541f70	00542518	005b57ac	[NODEAL]
+00541f70	0054251d	005b6144	"This doesn't please me. It's no deal."
+00541f70	00542547	005b4f74	[ITEMPICK]
+00541f70	0054254c	005b60dc	Offer an item
+00541f70	00542559	005b60ec	"What of my items you'd prefer in this trade?"
+00541f70	0054255e	005b4f60	[TRADE SUGGESTION]
+00541f70	00542574	005b5104	[TRADECLEAR]
+00541f70	00542579	005b611c	Start the trade again from the start
+00541f70	00542586	005b57ac	[NODEAL]
+00541f70	0054258b	005b6144	"This doesn't please me. It's no deal."
+00541f70	005425b0	005b616c	NOT FOR SALE!
+00541f70	005425e0	005b4f80	[DEBT ITEMPICK]
+00541f70	005425e5	005b617c	Offer items for payment
+00541f70	005425f2	005b60ec	"What of my items you'd prefer in this trade?"
+00541f70	005425f7	005b4f60	[TRADE SUGGESTION]
+00541f70	00542604	005b6194	"Remind me about what I owe you?"
+00541f70	00542609	005b4f90	[DEBT SUMMARY]
+00541f70	0054261f	005b55a8	[CANT PAY DEBT]
+00541f70	00542624	005b61b8	"I am not able to pay. Take what is yours."
+00541f70	00542638	005b61e4	"I will never pay you!"
+00541f70	0054263d	005b5534	[I WONT PAY]
+00541f70	00542653	005b611c	Start the trade again from the start
+00541f70	00542658	005b5104	[TRADECLEAR]
+00541f70	00542665	005dda20	\n
+00541f70	00542672	005b61fc	chatopt
+00541f70	00542688	0058c1f8	T÷\u001d
+00541f70	005426aa	005b6204	Choose a line / reaction:
+00541f70	005427c1	005b6220	ESC."Goodbye"
+00541f70	005427dc	005b6230	0.Back to chat mode selection
+00541f70	00542815	005b61fc	chatopt
+00541f70	0054281f	005b61fc	chatopt
+00541f70	005428ec	005b6250	[confirmopt]
+00541f70	005428f2	0058c350	þ\n\u001e
+00541f70	00542902	005b3424	[befoe]
+00541f70	00542908	0058c350	þ\n\u001e
+00541f70	00542974	005b34c0	[accept]
+00541f70	0054297a	0058c350	þ\n\u001e
+00541f70	0054298f	005b3380	[ask summary]
+00541f70	00542995	0058c350	þ\n\u001e
+00541f70	005429af	005b3378	[once]
+00541f70	005429bb	0058c350	þ\n\u001e
+00541f70	00542a35	005cc664	%s/%d.QST
+00541f70	00542a46	0058f978	wb
+00541f70	00542a4c	0058c478	2\u000c\u001e
+00541f70	00542a61	0058c4d8	^\u000c\u001e
+00541f70	00542a68	0058c4b4	:\u000c\u001e
+00541f70	00542a71	0058c350	þ\n\u001e
+00541f70	00542a7a	005b6250	[confirmopt]
+00541f70	00542a89	005b6260	Oh? Could you repeat that if you really mean it.
+00541f70	00542a9a	005b53fc	[REPEAT LAST TALK]
+00541f70	00542a9f	005b6294	"Oops, no, I didn't mean that."
+00541f70	00542ab6	005b3514	[close]
+00541f70	00542b42	005b53fc	[REPEAT LAST TALK]
+00541f70	00542b48	0058c350	þ\n\u001e
+00541f70	00542b69	005b4fa8	[GOODBYE]
+00541f70	00542c54	005ddb20	\u0018üÿÿ\u0018üÿÿ\u0018üÿÿ\u0018üÿÿ\u0001
+00542d30	00542f24	00596a28	%s%s
+005431d0	005431f7	005b62b4	?What do you want to call %s?
+005431d0	00543210	005b62d4	#Type a name: 
+005431d0	00543284	00591a10	SOUND_NORMAL
+005431d0	005432aa	00595ef0	!Canceled.
+00543340	005434f7	005b62e4	Eat now
+00543340	00543502	005b62e8	now
+00543340	0054352a	005b62ec	 (all)
+00543340	00543531	005b62f0	l)
+00543340	0054359a	00595a08	%c.%s
+00543340	00543622	005b62f4	Attack
+00543340	0054362d	005b62f8	ck
+00543340	0054365a	005b62ec	 (all)
+00543340	00543661	005b62f0	l)
+00543340	005436bc	00595a08	%c.%s
+00543340	005437a1	005b62fc	Follow
+00543340	005437a8	00595a08	%c.%s
+00543340	00543851	005b6304	Stay
+00543340	00543858	00595a08	%c.%s
+00543340	00543903	005b630c	Come
+00543340	0054390a	00595a08	%c.%s
+00543340	005439d1	005b6314	I shall name you...
+00543340	005439d8	00595a08	%c.%s
+00543340	00543a49	005b63d0	?It's too far to respond, but you can still shout these commands.
+00543340	00543ab8	00595a08	%c.%s
+00543340	00543b51	005b6328	Group command
+00543340	00543b58	00595a08	%c.%s
+00543340	00543bf1	005b6338	Group command off
+00543340	00543bf8	00595a08	%c.%s
+00543340	00543c5e	005b634c	ANIMAL COMMANDS: %s
+00543340	00543c6e	005b6370	MANDS
+00543340	00543c73	005b6360	ANIMAL GROUP COMMANDS
+00543340	00543c86	005b6374	S
+00543340	00543d56	005b6378	PET_PHRASE:STAY
+00543340	00543df8	00591c78	SOUND_DISAGREEMENT
+00543340	00543e02	00591c8c	I won't do that!
+00543340	00543e1f	005b6388	PET_PHRASE:COME
+00543340	00543e5b	00591ca0	SOUND_AGREEMENT
+00543340	00543eeb	005b6398	PET_PHRASE:ATTACK
+00543340	00543f1c	00595ef0	!Canceled.
+00543340	00543f26	005b6398	PET_PHRASE:ATTACK
+00543340	00543f5d	005b63ac	GOOF_NO_CREATURE
+00543340	00543ff6	005b63c0	TALK_FAR_AWAY
+00544070	005440c4	005b54e4	Ok, I'll go light a fire.
+00544070	005440cb	005b54fc	.
+00544070	005440df	005b54f4	t a fire.
+00544070	005440f1	005b6448	I'm afraid I'm unable to light a proper fire here.
+00544070	005440f8	005b6478	e.
+00544070	00544111	005b6458	nable to light a proper fire here.
+00544070	0054411f	005b6468	 proper fire here.
+00544070	00544128	005b6414	But we have a perfectly good fire already burning.
+00544070	0054412f	005b6444	g.
+00544070	00544148	005b6424	rfectly good fire already burning.
+00544070	00544156	005b6434	e already burning.
+00544190	0054421a	005b647c	Very well. I go fell some good, big trunks down.
+00544190	00544236	005b648c	fell some good, big trunks down.
+00544190	00544244	005b649c	big trunks down.
+00544190	0054425f	005b64b0	I will, as soon as you make sure I have proper equipment and we have proper trees around here.
+00544190	00544264	005b64b0	I will, as soon as you make sure I have proper equipment and we have proper trees around here.
+00544190	00544264	005b64b4	ll, as soon as you make sure I have proper equipment and we have proper trees around here.
+00544190	00544266	005b64b4	ll, as soon as you make sure I have proper equipment and we have proper trees around here.
+00544190	00544268	005b64b6	, as soon as you make sure I have proper equipment and we have proper trees around here.
+00544290	00544311	005b6530	I will, as soon as you make sure I have proper equipment and there are proper trunks around.
+00544290	00544316	005b6530	I will, as soon as you make sure I have proper equipment and there are proper trunks around.
+00544290	00544316	005b6534	ll, as soon as you make sure I have proper equipment and there are proper trunks around.
+00544290	00544318	005b6534	ll, as soon as you make sure I have proper equipment and there are proper trunks around.
+00544290	00544341	0058c51c	\u0012\r\u001e
+00544290	005448c9	005b6510	Very well. I'll start carving.
+00544290	005448d0	005b6528	rving.
+00544290	005448d9	005b652c	g.
+00544290	005448e9	005b6520	start carving.
+00544910	00544991	005b6530	I will, as soon as you make sure I have proper equipment and there are proper trunks around.
+00544910	00544996	005b6530	I will, as soon as you make sure I have proper equipment and there are proper trunks around.
+00544910	00544996	005b6534	ll, as soon as you make sure I have proper equipment and there are proper trunks around.
+00544910	00544998	005b6534	ll, as soon as you make sure I have proper equipment and there are proper trunks around.
+00544910	005449c1	0058c51c	\u0012\r\u001e
+00544910	00544f49	005b6590	Very well. I'll start splitting.
+00544910	00544f5e	005b65a0	start splitting.
+00544f70	00544fb8	005b65c4	t.
+00544f70	00544fbe	005b65b4	I will do my best.
+00544f70	00544fe0	005b65c8	I'm afraid there is nothing butcher here. Bring me at a carcass if there is one.
+00544f70	00544ff9	005b65d8	 is nothing butcher here. Bring me at a carcass if there is one.
+00544f70	00545007	005b65e8	her here. Bring me at a carcass if there is one.
+00544f70	00545015	005b65f8	me at a carcass if there is one.
+00544f70	00545023	005b6608	if there is one.
+00545050	005450be	005b663c	I don't have anything to cook.
+00545050	005450c5	005b6654	 cook.
+00545050	005450ce	005b6658	k.
+00545050	005450de	005b664c	thing to cook.
+00545050	0054517a	005b661c	Very well. I'll start roasting.
+00545050	00545186	005b662c	start roasting.
+005451a0	00545311	005b62f4	Attack
+005451a0	00545318	00595a08	%c.%s
+005451a0	005453a8	00595a08	%c.%s
+005451a0	00545431	005b665c	Light a fire
+005451a0	00545438	00595a08	%c.%s
+005451a0	005454c1	005b666c	Butcher and skin a carcass
+005451a0	005454c8	00595a08	%c.%s
+005451a0	00545551	005b6688	Roast some meat
+005451a0	00545558	00595a08	%c.%s
+005451a0	005455e8	00595a08	%c.%s
+005451a0	00545671	005b6698	Fell some trees
+005451a0	00545678	00595a08	%c.%s
+005451a0	00545701	005b66a8	Carve trunks into logs
+005451a0	00545708	00595a08	%c.%s
+005451a0	00545791	005b66c0	Split trunks into boards
+005451a0	00545798	00595a08	%c.%s
+005451a0	00545828	00595a08	%c.%s
+005451a0	005458d2	005b66dc	Start following again
+005451a0	005458d9	00595a08	%c.%s
+005451a0	00545941	005b66f4	Stay here
+005451a0	00545948	00595a08	%c.%s
+005451a0	005459e3	005b6700	Stop your tasks
+005451a0	005459ea	00595a08	%c.%s
+005451a0	00545a88	00595a08	%c.%s
+005451a0	00545b21	005b6328	Group command
+005451a0	00545b28	00595a08	%c.%s
+005451a0	00545b75	005b673c	DS
+005451a0	00545b7b	005b672c	COMPANION COMMANDS
+005451a0	00545c12	005b6338	Group command off
+005451a0	00545c19	00595a08	%c.%s
+005451a0	00545c6d	005b6710	COMPANION GROUP COMMANDS
+005451a0	00545c86	005b6720	COMMANDS
+005451a0	00545f17	005b6398	PET_PHRASE:ATTACK
+005451a0	00545f48	00595ef0	!Canceled.
+005451a0	00545f6b	005b6398	PET_PHRASE:ATTACK
+005451a0	00545fa2	005b63ac	GOOF_NO_CREATURE
+005451a0	00546079	005b6740	As you wish.
+005451a0	005460f1	005b6740	As you wish.
+005451a0	0054612d	005b6750	Alright, let's move together again.
+005451a0	00546147	005b6778	Alright, I will stay here. But whatever you have in mind don't let it take for too long.
+005451a0	0054617c	005b67d8	No, I won't stay here. We need to find a decent place where I can wait.
+00546200	005462a0	005b6820	You wake up to someone talking to you...
+00546200	005462b1	0059d57c	main
+00546200	005462ef	0059d57c	main
+00546200	00546373	0058c204	\u000c÷\u001d
+00546200	0054639e	005b6854	alk to
+00546200	005463a3	005b684c	who to talk to
+00546200	005463af	005b6858	to
+00546200	005463f5	0059d57c	main
+00546200	00546429	0059415c	*
+00546200	0054643f	005b1878	chat
+00546200	0054646e	0059d57c	main
+00546200	005464a0	005d8878	!That's not allowed on the wilderness map! Press [ENTER] to zoom to the local terrain map.
+00546200	005467ba	005b685c	!There's no one to command! No pets or companions around.
+00546200	005467cc	005b6898	!There are no pets or companions in sight which you could command!
+00546200	005467de	005b68dc	SHOUT_INFO
+00546200	005467fa	0058c4e8	æ\u000c\u001e
+00546200	00546888	00595a08	%c.%s
+00546200	00546911	005b68e8	Choose a target in sight
+00546200	00546918	00595a08	%c.%s
+00546200	0054695f	005b6904	SHOUT A COMMAND TO
+00546200	00546a76	005b6918	?To command pets out of sight use ! key command.
+00546200	00546aab	005b63ac	GOOF_NO_CREATURE
+00546200	00546b3e	005b63c0	TALK_FAR_AWAY
+00546200	00546cb1	005b694c	NPC_DOESNT_RESPOND
+00546200	00546d6f	005b6960	No, %s. We are not talking. Go.
+00546200	00546dbf	005b6980	NPC_TALK_STARTLED
+00546200	00546e19	005b694c	NPC_DOESNT_RESPOND
+00546200	00546e74	005b6998	?Since version 3.63 commanding pets and companions should be now done with ! key command.
+00546200	00546ea6	00591a10	SOUND_NORMAL
+00546200	00546f61	005b69f4	Chat mode
+00546200	00546fa0	005b6a00	G.Greet
+00546200	00546faf	005b6a08	A.Ask for directions
+00546200	00546fbe	005b6a20	C.Command
+00546200	00546fcd	005b6a2c	H.Ask help/company
+00546200	00546fdc	005b6a40	D.Deliver an item
+00546200	00546feb	005b6a54	T.Trade items
+00546200	00547023	005b6a64	B.Buy an animal
+00546200	0054703c	005950c8	ESC.Exit
+00546200	00547107	005b1878	chat
+00546200	00547132	005b6a74	?If you want to command your companion use ! key command.
+00546200	00547149	005b6ab0	=You have gotten involved in a quest.
+00546200	00547153	005b6ad8	_Press [F2] to view quest journal.
+005601c0	005601f9	005d7ec4	?%s?
+005601c0	00560208	0058c350	þ\n\u001e
+005601c0	00560211	005d7ecc	direction
+005601c0	0056023f	005d7ed8	npc_direction
+005601c0	00560279	005d7ee8	var
+005601c0	005602a3	005d7eec	attack_aspect
+005601c0	005602d3	005d7efc	wc_bonus
+005601c0	005602ea	005903bc	%d
+005601c0	005602fc	005d7f08	attack_class
+005601c0	00560313	005903bc	%d
+005601c0	00560325	005d7f18	defense_class
+005601c0	0056033c	005903bc	%d
+005601c0	0056034e	005d7f28	attack_weapon
+005601c0	00560373	005d7f38	attack_bow
+005601c0	005603a3	005d7f44	defend_aspect
+005601c0	005603d3	005d7f54	defend_weapon
+005601c0	00560403	005d7f64	bodypart
+005601c0	00560412	005d7f64	bodypart
+005601c0	00560412	005d7f66	dypart
+005601c0	0056041d	005d7f65	odypart
+005601c0	0056041d	005d7f67	ypart
+005601c0	00560453	005d7f70	bodypart_counterstrike
+005601c0	00560462	005d7f70	bodypart_counterstrike
+005601c0	00560462	005d7f72	dypart_counterstrike
+005601c0	0056046d	005d7f71	odypart_counterstrike
+005601c0	0056046d	005d7f73	ypart_counterstrike
+005601c0	005604a3	005d7f88	wounded_bodypart
+005601c0	005604b2	005d7f88	wounded_bodypart
+005601c0	005604b2	005d7f8a	unded_bodypart
+005601c0	005604bd	005d7f89	ounded_bodypart
+005601c0	005604bd	005d7f8b	nded_bodypart
+005601c0	005604f3	005d7f9c	weapon_slot
+005601c0	00560502	005d7f9c	weapon_slot
+005601c0	00560502	005d7f9e	apon_slot
+005601c0	0056050d	005d7f9d	eapon_slot
+005601c0	0056050d	005d7f9f	pon_slot
+005601c0	0056052f	005903bc	%d
+005601c0	00560541	005d7fa8	attacker
+005601c0	0056054b	005d7fb4	defender
+005601c0	0056055c	005d7fc0	npc
+005601c0	0056056d	005d7fc4	who
+005601c0	0056057e	005d7fc8	plr_
+005601c0	0056059c	005d7fd0	_gender
+005601c0	005605c0	005d7fd8	woman
+005601c0	005605ca	005d7fdc	n
+005601c0	005605d6	005d7fe0	_identity
+005601c0	0056060d	005d7fec	_bad_name
+005601c0	0056063f	005d7ff8	_name
+005601c0	00560663	005d8000	reptitle
+005601c0	00560676	005a49b8	er
+005601c0	0056067c	005a49b0	adventurer
+005601c0	0056068e	005d800c	tra
+005601c0	005606c1	005d8010	ste
+005601c0	005606d0	005d8014	the
+005601c0	005606df	005d8018	thi
+005601c0	00560701	005d801c	misch
+005601c0	00560723	005d8024	hel
+005601c0	0056076b	005a49b8	er
+005601c0	00560771	005a49b0	adventurer
+005601c0	0056078d	005d8028	ind
+005601c0	005607bf	005d8014	the
+005601c0	00560802	005d802c	num
+005601c0	00560817	005903bc	%d
+005601c0	00560829	005d8030	prepdays
+005601c0	0056083e	005903bc	%d
+005601c0	00560850	005d803c	status
+005601c0	00560871	005d8044	item
+005601c0	00560896	005d804c	verbose
+005601c0	005608a5	005d8054	full
+005601c0	005608ba	005d805c	items
+005601c0	005608d2	005d8064	nonum
+005601c0	005608ff	005d806c	_container
+005601c0	00560915	005d8078	(s)
+005601c0	00560933	005d807c	raw
+005601c0	005609a1	0058f7e0	def
+005601c0	005609b0	005d8014	the
+005601c0	005609e2	005d8028	ind
+005601c0	00560a23	005d8080	PC
+005601c0	00560a51	005d8084	ANIMAL
+005601c0	00560a5b	005d8088	AL
+005601c0	00560a8a	005d808c	MASC
+005601c0	00560abb	005d808c	MASC
+005601c0	00560ad3	005d8094	_desc
+005601c0	00560b30	005d809c	_ind
+005601c0	00560b8d	005d80a4	_defdesc
+005601c0	00560b9c	005d8014	the
+005601c0	00560bc8	0058d4ec	the %s
+005601c0	00560bfd	005d80b0	_aggsound
+005601c0	00560c11	005a4b18	swear
+005601c0	00560c1b	005a4b1c	r
+005601c0	00560c35	0058c670	%s
+005601c0	00560c47	005d80bc	_sound
+005601c0	00560c5b	005a4814	sing
+005601c0	00560c7d	0058c670	%s
+00561330	00561358	005aae30	<>
+00561330	00561395	0058c348	\u0008\u000b\u001e
+00561330	00561409	0058c348	\u0008\u000b\u001e
+00561480	005614db	005d8114	I haven't been taught to talk about %s.
+00561480	0056150a	005d813c	messages/%s_chat.txt
+00561480	00561534	0058f708	rt
+00561480	0056153a	0058c478	2\u000c\u001e
+00561480	00561554	00594ff8	.%s.
+00561480	00561581	0058c348	\u0008\u000b\u001e
+00561480	0056161c	0058c4e0	r\u000c\u001e
+00561480	0056162f	0058c350	þ\n\u001e
+00561480	00561682	0058c4b4	:\u000c\u001e
+00561480	005616a3	005d8198	I can't talk about %s.
+00561480	005616d1	005d8154	(tra
+00561480	005616fd	005d815c	(steal
+00561480	00561712	005d8164	(theft)
+00561480	00561734	005d816c	(mis
+00561480	00561756	005d8174	(overall
+00561480	00561778	005d8180	(help
+00561480	0056179a	005d8188	(fam
+00561480	00561810	0058c348	\u0008\u000b\u001e
+00561480	00561832	0058c348	\u0008\u000b\u001e
+00561480	00561879	0058c4f0	¸\u000c\u001e
+00561480	00561889	005d8190	:(
+00561480	00561896	005d8190	:(
+00561480	005618a1	005d8191	(
+00561480	0056191a	005d8194	:)
+00561480	00561927	005d8194	:)
+00561480	00561932	005d8195	)
+00561480	005619f5	0058c350	þ\n\u001e
+00561480	005619fc	0058c4e0	r\u000c\u001e
+00561480	00561a85	0058c348	\u0008\u000b\u001e

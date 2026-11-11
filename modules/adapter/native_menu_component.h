@@ -25,6 +25,10 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled);
 
 using Handle=native_menu_model::Handle;
 Handle active();
+// The source of this actual CFFB0 invocation can be a retained native Menu
+// snapshot. It differs from the live input owner during materialization.
+Handle source();
+bool materializing();
 Handle snapshot(Handle handle);
 Handle input_owner(Handle handle);
 void retain(Handle handle);
