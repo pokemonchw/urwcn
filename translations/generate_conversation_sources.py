@@ -22,15 +22,16 @@ DOMAINS = {
     'material', 'material.animal', 'material.cut-native', 'material.cut',
     'material.field', 'material.word', 'nameatom', 'nearby-object', 'npc',
     'object-description', 'posture', 'quest.culture', 'quest.need', 'quest.title',
-    'reputation', 'skill', 'sound', 'spell', 'status', 'terrain', 'time',
+    'reputation', 'skill', 'sound', 'spell', 'status', 'terrain', 'time', 'injury',
     'track-age', 'track-kind', 'track-size', 'track-subject', 'treatment', 'tree',
-    'unit', 'work',
+    'unit', 'work', 'treasure', 'weather.description',
 }
 
 def lexical_kind(domain):
+    if domain == 'weather.description': return 'w'
     if domain == 'identity': return 'p'
     if domain == 'npc': return 'c'
-    if domain.startswith(('item', 'material', 'crafted')) or domain in ('grammar', 'nameatom', 'flora', 'tree', 'corpse', 'craft'): return 'i'
+    if domain.startswith(('item', 'material', 'crafted')) or domain in ('grammar', 'nameatom', 'flora', 'tree', 'corpse', 'craft', 'injury'): return 'i'
     if domain.startswith('geography') or domain == 'terrain': return 'g'
     if domain == 'direction': return 'd'
     if domain in ('culture', 'culture.native', 'quest.culture'): return 'k'
@@ -77,7 +78,8 @@ def normalized(source, target):
 
 def main():
     manifest = json.loads((ROOT / 'translations/messages/conversation.zh-CN.json').read_text())
-    authored = manifest['forms']
+    authored = manifest['forms'] + json.loads(
+        (ROOT / 'translations/messages/conversation-producers.zh-CN.json').read_text())['forms']
     forms = []
     values = {}
     lexemes = {}
@@ -92,9 +94,22 @@ def main():
         forms.append(row)
         values[(row['domain'], row['source'])] = row['target']
 
+    geography = {'geography.prefix': {}, 'geography.suffix': {}}
     # Read the existing semantic catalog by exact domain. The menu.prefix
     # inventory is deliberately not a lexical source for conversation inputs.
     for line in (ROOT / 'catalog/zh-CN/messages.tsv').read_text().split('\n'):
+        # AE750's three actual carcass-description selectors return these
+        # finite resource words before the ordinary item constructor uses them.
+        if line.startswith('message.template.'):
+            key, target = line.split('\t', 1)
+            domain, _, spelling = key[len('message.template.'):].rpartition('.')
+            if domain in ('CARCASS_CUT', 'CARCASS_DAMAGE', 'CARCASS_EATEN'):
+                source = bytes.fromhex(spelling).decode('utf-8')
+                imported = 'conversation.lexical.' + domain
+                forms.append(dict(source=source, target=target, slots='', kind='i',
+                                  domain=imported, origins=['4AE750 resource selector: ' + domain]))
+                values[(imported, source)] = target
+            continue
         if not line.startswith('message.value.'):
             continue
         key, target = line.split('\t', 1)
@@ -104,6 +119,8 @@ def main():
         original = bytes.fromhex(spelling).decode('utf-8')
         if not original:
             continue
+        if domain in geography:
+            geography[domain][original] = target
         if CONVERSIONS.search(original):
             source, target, slots = normalized(original, target)
             if not MARKERS.sub('', source):
@@ -115,12 +132,20 @@ def main():
             if domain == 'npc' and original == '%s %s': slots = 'cc'
             if domain == 'npc' and original in ('the %s', 'The %s'): slots = 'c'
             if domain == 'identity': slots = slots.replace('t', 'p')
-            if domain == 'geography.format' and original == '%s "%s"': slots = 'tn'
-            if domain == 'geography.format' and original == 'at the region called %s': slots = 'n'
+            # 48E420: Finnish proper name, then A8F50(flags=1)'s English gloss.
+            if domain == 'geography.format' and original == '%s "%s"': slots = 'ng'
+            if domain == 'geography.format' and original == 'at the region called %s': slots = 'g'
             imported = 'conversation.lexical.' + domain
             forms.append(dict(source=source, target=target, slots=slots, kind=kind,
                               domain=imported, origins=['existing semantic source: ' + domain]))
             values[(imported, source)] = target
+            if domain == 'article':
+                # 562BD0/562CF0 retain the item or actor operand's meaning.
+                # Their output is also consumed inside typed leash/item fields.
+                for object_kind in ('i', 'c'):
+                    forms.append(dict(source=source, target=target, slots=object_kind,
+                                      kind=object_kind, domain=imported,
+                                      origins=['562BD0/562CF0 typed object article']))
             if domain in ('crafted-name-format', 'crafted-wood-format'):
                 plural_source = native_plural(source)
                 forms.append(dict(source=plural_source, target=target, slots=slots, kind=kind,
@@ -128,13 +153,30 @@ def main():
                 values[(imported, plural_source)] = target
             continue
         spellings = {original, original.lower(), original[:1].upper() + original[1:]}
-        if domain in ('item', 'npc', 'grammar', 'nameatom', 'crafted-name'):
+        # 535529/535530, 5355CC/5355D3, 5355F5/5355FC pass the native
+        # weapon-skill field through lowercase and 55EFF0, just as item names.
+        if domain in ('item', 'npc', 'grammar', 'nameatom', 'crafted-name', 'skill'):
             spellings.add(native_plural(original))
             spellings.add(native_plural(original).capitalize())
         if domain == 'grammar' and '/' in original:
             spellings.update((original.split('/')[0], original.split('/')[1]))
         for source in spellings:
             lexemes[(source, domain)] = original
+
+    # A8F50 joins the two confirmed place-name tables. Only a trailing prefix
+    # underscore and a leading suffix underscore become the joining space;
+    # this is the native English-gloss branch, never a proper-name rewrite.
+    for prefix, first in geography['geography.prefix'].items():
+        for suffix, second in geography['geography.suffix'].items():
+            if prefix.endswith('_'):
+                source = prefix[:-1] + ' ' + (suffix[1:] if suffix.startswith('_') else suffix)
+            else:
+                source = prefix + (' ' + suffix[1:] if suffix.startswith('_') else suffix)
+            for spelling in sorted({source, source.lower(), source[:1].upper() + source[1:]}):
+                domain = 'conversation.place'
+                forms.append(dict(source=spelling, target=first+second, slots='', kind='g',
+                                  domain=domain, origins=['4A8F50 English-gloss table join']))
+                values[(domain, spelling)] = first + second
 
     # Prefixes/suffixes below are complete native authored append operands.
     appends = sorted({r['source'] for r in authored if not r['slots'] and
@@ -165,7 +207,8 @@ def main():
     catalog = ROOT / 'catalog/zh-CN/messages.tsv'
     existing = [line for line in catalog.read_text().split('\n') if line and
                 not line.startswith('message.value.conversation.form.') and
-                not line.startswith('message.value.conversation.lexical.')]
+                not line.startswith('message.value.conversation.lexical.') and
+                not line.startswith('message.value.conversation.place.')]
     existing.extend('message.value.' + d + '.' + s.encode().hex() + '\t' + t
                     for (d, s), t in sorted(values.items()))
     catalog.write_text('\n'.join(existing) + '\n')

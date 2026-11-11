@@ -1,0 +1,1066 @@
+{
+  "format": 1,
+  "forms": [
+    {
+      "source": "I don't think so.",
+      "slots": "",
+      "kind": "t",
+      "target": "我不这么想。",
+      "origins": [
+        "004aaba0",
+        "0x5a006c"
+      ]
+    },
+    {
+      "source": "Not now, but maybe in the future.",
+      "slots": "",
+      "kind": "t",
+      "target": "现在不行，以后也许可以。",
+      "origins": [
+        "004aaba0",
+        "0x5a00c0"
+      ]
+    },
+    {
+      "source": "I really can't leave from here.",
+      "slots": "",
+      "kind": "t",
+      "target": "我实在走不开。",
+      "origins": [
+        "004aaba0",
+        "0x5a0144"
+      ]
+    },
+    {
+      "source": "There is a treasure you know and would tell me about?",
+      "slots": "",
+      "kind": "t",
+      "target": "你知道有个宝藏，并且愿意告诉我？",
+      "origins": [
+        "00549000",
+        "0x5b7d34"
+      ]
+    },
+    {
+      "source": "Now how about that treasure?",
+      "slots": "",
+      "kind": "t",
+      "target": "现在能说说那个宝藏了吗？",
+      "origins": [
+        "00549000",
+        "0x5b7df4"
+      ]
+    },
+    {
+      "source": "What kind of spells are you talking about?",
+      "slots": "",
+      "kind": "t",
+      "target": "你说的是什么咒语？",
+      "origins": [
+        "00549330",
+        "0x5b7e9c"
+      ]
+    },
+    {
+      "source": "some spells",
+      "slots": "",
+      "kind": "t",
+      "target": "一些咒语",
+      "origins": [
+        "00549330",
+        "0x5b7ee0"
+      ]
+    },
+    {
+      "source": "some old woodsman spells",
+      "slots": "",
+      "kind": "t",
+      "target": "一些古老的林人咒语",
+      "origins": [
+        "00549330",
+        "0x5b7eec"
+      ]
+    },
+    {
+      "source": "some fishing spells",
+      "slots": "",
+      "kind": "t",
+      "target": "一些捕鱼咒语",
+      "origins": [
+        "00549330",
+        "0x5b7f08"
+      ]
+    },
+    {
+      "source": "Now how about that spell?",
+      "slots": "",
+      "kind": "t",
+      "target": "现在能说说那道咒语了吗？",
+      "origins": [
+        "00549330",
+        "0x5b80b8"
+      ]
+    },
+    {
+      "source": "wandering around with you",
+      "slots": "",
+      "kind": "t",
+      "target": "和你四处游历",
+      "origins": [
+        "0055edd0",
+        "0x5d7a28"
+      ]
+    },
+    {
+      "source": "working for you",
+      "slots": "",
+      "kind": "t",
+      "target": "为你工作",
+      "origins": [
+        "0055edd0",
+        "0x5d7a44"
+      ]
+    },
+    {
+      "source": "hunting with you",
+      "slots": "",
+      "kind": "t",
+      "target": "和你一起狩猎",
+      "origins": [
+        "0055edd0",
+        "0x5d7a54"
+      ]
+    },
+    {
+      "source": "exploring the wilderness and adventuring with you",
+      "slots": "",
+      "kind": "t",
+      "target": "和你一同探索荒野、冒险",
+      "origins": [
+        "0055edd0",
+        "0x5d7a68"
+      ]
+    },
+    {
+      "source": " I can reveal it to you as a favour in return, if that pleases you.",
+      "slots": "",
+      "kind": "t",
+      "target": "作为回报，我可以把它告诉你，如果你愿意的话。",
+      "origins": [
+        "00549330",
+        "C"
+      ]
+    },
+    {
+      "source": " I wish you all the luck finding it!",
+      "slots": "",
+      "kind": "t",
+      "target": "祝你顺利找到它！",
+      "origins": [
+        "00549000",
+        "C"
+      ]
+    },
+    {
+      "source": " It is {0}, {1}.",
+      "slots": "tt",
+      "kind": "t",
+      "target": "它{0}，{1}。",
+      "origins": [
+        "00549000",
+        "C"
+      ]
+    },
+    {
+      "source": " They say there is {0} to be found.",
+      "slots": "t",
+      "kind": "t",
+      "target": "据说那里能找到{0}。",
+      "origins": [
+        "00549000",
+        "C"
+      ]
+    },
+    {
+      "source": "I don't think you'll find a companion here until our {0} gets payed.",
+      "slots": "c",
+      "kind": "t",
+      "target": "我们那位{0}还没拿到报酬，在这之前你恐怕在这里找不到伙伴。",
+      "origins": [
+        "004aaba0",
+        "C"
+      ]
+    },
+    {
+      "source": "I have heard there's a treasure {0}. If you care to help me, I can tell you where it's said to be hidden. There is {1} to be found.",
+      "slots": "gt",
+      "kind": "t",
+      "target": "我听说{0}有一处宝藏。如果你愿意帮我，我可以告诉你传说中的藏匿地点。那里能找到{1}。",
+      "origins": [
+        "00549000",
+        "C"
+      ]
+    },
+    {
+      "source": "I hope this spell finds you well. {0}",
+      "slots": "t",
+      "kind": "t",
+      "target": "希望这道咒语能帮到你。{0}",
+      "origins": [
+        "00549330",
+        "C"
+      ]
+    },
+    {
+      "source": "I hope this suits you on your future fishing days. {0}",
+      "slots": "t",
+      "kind": "t",
+      "target": "希望这能帮到你今后的捕鱼。{0}",
+      "origins": [
+        "00549330",
+        "C"
+      ]
+    },
+    {
+      "source": "I hope this will help you on your future hunting days. {0}",
+      "slots": "t",
+      "kind": "t",
+      "target": "希望这能帮到你今后的狩猎。{0}",
+      "origins": [
+        "00549330",
+        "C"
+      ]
+    },
+    {
+      "source": "I reckon your {0} skills are of {1} level so I could surely ",
+      "slots": "tt",
+      "kind": "t",
+      "target": "我看你的{0}技艺处在{1}水平，所以我一定能",
+      "origins": [
+        "00549640",
+        "C"
+      ]
+    },
+    {
+      "source": "I trust you are {0} already, but with my {1} experience I could ",
+      "slots": "tt",
+      "kind": "t",
+      "target": "我知道你已经达到{0}水平，不过凭我的{1}经验，我还是能",
+      "origins": [
+        "00549640",
+        "C"
+      ]
+    },
+    {
+      "source": "It's just a spell a hunter might appreciate. About {0}.",
+      "slots": "t",
+      "kind": "t",
+      "target": "这只是一道猎人可能用得上的咒语，讲的是{0}。",
+      "origins": [
+        "00549330",
+        "C"
+      ]
+    },
+    {
+      "source": "It's just a spell for a fisherman who wants to learn about {0}.",
+      "slots": "t",
+      "kind": "t",
+      "target": "这只是一道捕鱼人可能用得上的咒语，讲的是{0}。",
+      "origins": [
+        "00549330",
+        "C"
+      ]
+    },
+    {
+      "source": "It's some {0} instructions for you then.",
+      "slots": "t",
+      "kind": "t",
+      "target": "那我就给你讲一些{0}的技巧。",
+      "origins": [
+        "00549640",
+        "C"
+      ]
+    },
+    {
+      "source": "It's spell about {0}.",
+      "slots": "t",
+      "kind": "t",
+      "target": "这是一道关于{0}的咒语。",
+      "origins": [
+        "00549330",
+        "C"
+      ]
+    },
+    {
+      "source": "Now I'm eager to have that {0} lesson.",
+      "slots": "t",
+      "kind": "t",
+      "target": "现在我很想听听那堂{0}课。",
+      "origins": [
+        "00549640",
+        "C"
+      ]
+    },
+    {
+      "source": "That doesn't suit me. I have things of my own to take care of.",
+      "slots": "",
+      "kind": "t",
+      "target": "这不合适，我还有自己的事要忙。",
+      "origins": [
+        "004aaba0",
+        "C"
+      ]
+    },
+    {
+      "source": "There's a treasure {0} {1}.",
+      "slots": "tt",
+      "kind": "t",
+      "target": "有一处宝藏{0}{1}。",
+      "origins": [
+        "00549000",
+        "C"
+      ]
+    },
+    {
+      "source": "You could teach me some {0} skills?",
+      "slots": "t",
+      "kind": "t",
+      "target": "你能教我一些{0}技艺吗？",
+      "origins": [
+        "00549640",
+        "C"
+      ]
+    },
+    {
+      "source": "a {0} lesson",
+      "slots": "t",
+      "kind": "t",
+      "target": "一堂{0}课",
+      "origins": [
+        "00549640",
+        "C"
+      ]
+    },
+    {
+      "source": "after {0}",
+      "slots": "h",
+      "kind": "h",
+      "target": "{0}后",
+      "origins": [
+        "00419810",
+        "C"
+      ]
+    },
+    {
+      "source": "knowledge about treasure {0}",
+      "slots": "g",
+      "kind": "t",
+      "target": "关于{0}宝藏的消息",
+      "origins": [
+        "00549000",
+        "C"
+      ]
+    },
+    {
+      "source": "near {0}",
+      "slots": "g",
+      "kind": "g",
+      "target": "在{0}附近",
+      "origins": [
+        "0049b040",
+        "C"
+      ]
+    },
+    {
+      "source": "teach you to improve with that a bit more.",
+      "slots": "",
+      "kind": "t",
+      "target": "教你进一步提高这些本领。",
+      "origins": [
+        "00549640",
+        "C"
+      ]
+    },
+    {
+      "source": "Let your sheep run over your net and it will then be a fortunate one.",
+      "slots": "",
+      "kind": "t",
+      "target": "让羊从渔网上跑过去，这张网就会变得幸运。",
+      "origins": [
+        "004e76c0",
+        "0x5a7630"
+      ]
+    },
+    {
+      "source": "Incantation to stop the wounds from bleeding.",
+      "slots": "",
+      "kind": "t",
+      "target": "止住伤口流血的咒语。",
+      "origins": [
+        "004e76c0",
+        "0x5a8558"
+      ]
+    },
+    {
+      "source": "somekind of reward",
+      "slots": "",
+      "kind": "t",
+      "target": "某种报酬",
+      "origins": [
+        "00548f30",
+        "0x5b7c4c"
+      ]
+    },
+    {
+      "source": "What sort of reward is that?",
+      "slots": "",
+      "kind": "t",
+      "target": "是怎样的报酬？",
+      "origins": [
+        "00548f30",
+        "0x5b7c60"
+      ]
+    },
+    {
+      "source": "Now how about my reward?",
+      "slots": "",
+      "kind": "t",
+      "target": "我的报酬现在怎么样了？",
+      "origins": [
+        "00548f30",
+        "0x5b7cd8"
+      ]
+    },
+    {
+      "source": "Here comes that reward of yours.",
+      "slots": "",
+      "kind": "t",
+      "target": "这就给你说好的报酬。",
+      "origins": [
+        "00548f30",
+        "0x5b7cf4"
+      ]
+    },
+    {
+      "source": "After the bear is brought down its skull eventually needs to be placed to hang in a big lone pine-tree. That completes the hunting and burial ceremony and assures proper circulation of the bear spirit.",
+      "slots": "",
+      "kind": "t",
+      "target": "猎倒熊后，最终要把熊头骨挂在一棵高大、独立的松树上。这样才算完成狩猎和葬礼，确保熊的灵魂顺利轮回。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "All-round way to sacrifice something in order to please or thank the spirits and otherworldly beings in various occasions.",
+      "slots": "",
+      "kind": "t",
+      "target": "在各种场合献上祭品，以取悦或感谢精灵和异界生灵的通用办法。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Baiting a fox-trap at your hunting grounds should be done just around sunset.",
+      "slots": "",
+      "kind": "t",
+      "target": "在猎场给捕狐陷阱放置诱饵，应当选在日落前后。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Be it birds or hares you are after, the loop snares you are about to use are made favorable by leaving them in an ant nest for three nights, and only then picked up and set for a catch.",
+      "slots": "",
+      "kind": "t",
+      "target": "无论捕鸟还是捕野兔，都要先把准备用的套索陷阱放进蚁巢，留上三夜，再取出来设陷捕猎，这样陷阱才会灵验。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Bear hunter's mittens shouldn't be made of whatever material. It is the dog fur mittens you should wear in order to have your weapons to be effective and cut the bear good.",
+      "slots": "",
+      "kind": "t",
+      "target": "猎熊人的手套不能随便选材料。应当戴狗毛皮手套，这样武器才能发挥威力，重创熊。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Bear is a great hunter who always finds its prey, and hunters who carry bear teeth with them can come across hares and game birds as they please.",
+      "slots": "",
+      "kind": "t",
+      "target": "熊是总能找到猎物的好猎手。猎人随身携带熊牙，就能如愿遇见野兔和猎鸟。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Bird thief will come confess if you take three feathers that have remained from the stolen bird and throw them into heated sauna stove after the fire has burnt out. You can also throw the feathers into remains of burnt-out fire which was made on base rock.",
+      "slots": "",
+      "kind": "t",
+      "target": "取三根被偷走的鸟留下的羽毛，等桑拿炉的火熄灭后，扔进仍然滚烫的炉子里，偷鸟贼就会前来认罪。也可以把羽毛扔进岩床上燃尽的火堆余烬中。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Cut twigs from a living spruce tree and set them burning on the most fresh tracks of the missing animal you can find.",
+      "slots": "",
+      "kind": "t",
+      "target": "从活着的云杉上折取枝条，放在你能找到的、失踪动物最新鲜的足迹上点燃。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Forest maids are attracted to come at nighttime campfires in remote forests of spruce and moss by lighting the fire with seven spruce twigs in there along with good pile of other firewood. Sleep on the moss by such fire and they may appear.",
+      "slots": "",
+      "kind": "t",
+      "target": "在偏远的云杉和苔藓森林里燃起夜间营火，加入七根云杉枝和足够的其他柴火，就能吸引森林少女。睡在这样的火堆旁、躺在苔藓上，她们也许就会出现。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Have a capercaillie feather with you when chasing a lynx. The feather is then put on lynx tracks from where it first fled, on its very first escaping tracks. This will burden the lynx, making it more quickly fatigued.",
+      "slots": "",
+      "kind": "t",
+      "target": "追赶猞猁时，带上一根松鸡羽毛。把羽毛放在猞猁最初逃跑时留下的足迹上。这会拖累它，让它更快疲倦。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "I can't speak of it beforehand, but you get a reward of some sort if you help me out.",
+      "slots": "",
+      "kind": "t",
+      "target": "我现在不能预先说出来，不过你帮了我，就会得到某种报酬。",
+      "origins": [
+        "00548f30",
+        "C"
+      ]
+    },
+    {
+      "source": "Incantation to greet earth dwellers and underground creatures upon sleeping on the ground at unfamiliar terrain. Performed to assure good night sleep and to avoid being harmed by the possibly angered underground folk.",
+      "slots": "",
+      "kind": "t",
+      "target": "在陌生地方露宿、睡在地上时，用来向大地居民和地下生灵致意的咒语。施咒能确保安眠，也能避免受到可能被激怒的地下之民伤害。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Loop snares for hares shouldn't be set barehanded but you should always wear mittens, and preferably woollen mittens.",
+      "slots": "",
+      "kind": "t",
+      "target": "设置捕野兔的套索陷阱时，不应赤手操作，要始终戴着手套，最好是羊毛手套。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "The aspen tree for a punt should be felled when it's raining. Carving a punt out of such a log makes it good and fortunate one.",
+      "slots": "",
+      "kind": "t",
+      "target": "制作平底小舟的白杨树，应当在下雨时砍倒。用这样的原木凿出的平底小舟会既好用又幸运。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "The forest can be persuaded to not to hide its thingies when going hunting. It is done by carrying a bread with you which is dropped and left at a spruce on a hill or cliff, and then this specific incantation is cast.",
+      "slots": "",
+      "kind": "t",
+      "target": "出猎时，可以劝说森林不要藏起它的生灵。随身带一块面包，把它放在山丘或峭壁上的一棵云杉旁，然后念诵这道特定的咒语。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "The spirit of the forest can be met and addressed by sacrificing silver at an ant nest. You do it alone at night, and then wait for the spirit to arrive. Do not fear and he may speak and show himself to you before dawn.",
+      "slots": "",
+      "kind": "t",
+      "target": "在蚁巢献上白银，就能见到森林之灵并与之交谈。夜间独自前去献祭，然后等待精灵到来。不要害怕，他可能会在黎明前现身，对你说话。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "The very first fish of the spring that you catch with a fishing rod in open water season should be thrown back into the water to please the spirit of the water and assure your future fishing luck.",
+      "slots": "",
+      "kind": "t",
+      "target": "春季水面解冻后，第一次用鱼竿钓到的鱼，应当放回水中，以取悦水之灵，确保今后的捕鱼好运。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "To get to see spirits of the water you should go stand naked on a rock in the water at night. It must be a single rock or skerry, completely surrounded by water, and the water folk may gather around it at midnight.",
+      "slots": "",
+      "kind": "t",
+      "target": "要见到水中的精灵，就得在夜里赤身站到水中的岩石上。那必须是一块完全被水包围的孤石或礁岩，水族可能会在午夜聚集到那里。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "To make a fox trap favourable leave it laying at doorstep of a building where womenfolk will get to walk over it.",
+      "slots": "",
+      "kind": "t",
+      "target": "要让捕狐陷阱灵验，就把它放在房屋门口，让女人们从上面跨过去。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "Turn around and kick a tree with your heel and the squirrel will then stay still in there, even if it would have been jumping around a lot earlier.",
+      "slots": "",
+      "kind": "t",
+      "target": "转身用脚后跟踢一下树，树上的松鼠就会静止不动，哪怕它之前还在四处乱跳。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "When deadfall trap is made for a bear you should then set the meat bait there completely naked. Then the bear gets in there nicely.",
+      "slots": "",
+      "kind": "t",
+      "target": "为熊做好落石陷阱后，要完全赤身地去放置肉饵，这样熊就会乖乖进到陷阱里。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "When first fish of the spring are caught out at a lake in open water season, make a fish soup or boil them right after returning on shore. When it's cooked, go away from the pot so that the spirit of the water can have the first taste.",
+      "slots": "",
+      "kind": "t",
+      "target": "春季湖面解冻后，第一次在湖上捕到鱼，回到岸边就要立即煮鱼或做鱼汤。煮好后离开锅边，让水之灵先尝第一口。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "When going rod fishing you should first throw the fishing rod into the water, and then you have a good fishing luck.",
+      "slots": "",
+      "kind": "t",
+      "target": "出门垂钓时，应当先把鱼竿扔进水里，这样就会有好的钓鱼运气。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "You get a good catch if you step in the punt backwards and launch it in the water backwards.",
+      "slots": "",
+      "kind": "t",
+      "target": "倒退着踏进平底小舟，再倒退着把它推入水中，就能获得好渔获。",
+      "origins": [
+        "004e76c0",
+        "C"
+      ]
+    },
+    {
+      "source": "on a small {0} island",
+      "slots": "g",
+      "kind": "t",
+      "target": "在一座小小的{0}岛上",
+      "origins": [
+        "00548740",
+        "C"
+      ]
+    },
+    {
+      "source": "treasure of {0} {1}",
+      "slots": "gt",
+      "kind": "t",
+      "target": "{0}{1}的宝藏",
+      "origins": [
+        "00548740",
+        "C"
+      ]
+    },
+    {
+      "source": "within a deep chasm in the {0}",
+      "slots": "g",
+      "kind": "t",
+      "target": "在{0}的一道深沟里",
+      "origins": [
+        "00548740",
+        "C"
+      ]
+    },
+    {
+      "source": "I reckon your {0} skills are of {1} level so I could surely teach you to improve with that a bit more.",
+      "slots": "tt",
+      "kind": "t",
+      "target": "我看你的{0}技艺处在{1}水平，所以我一定能教你进一步提高这些本领。",
+      "origins": [
+        "549640 complete native append"
+      ]
+    },
+    {
+      "source": "I trust you are {0} already, but with my {1} experience I could teach you to improve with that a bit more.",
+      "slots": "tt",
+      "kind": "t",
+      "target": "我知道你已经达到{0}水平，不过凭我的{1}经验，我还是能教你进一步提高这些本领。",
+      "origins": [
+        "549640 complete native append"
+      ]
+    },
+    {
+      "source": "There's a treasure {0} {1}. It is {2}, {3}. They say there is {4} to be found. I wish you all the luck finding it!",
+      "slots": "tgttt",
+      "kind": "t",
+      "target": "有一处宝藏{0}{1}。它{2}，{3}。据说那里能找到{4}。祝你顺利找到它！",
+      "origins": [
+        "549000 four native paragraph appends"
+      ]
+    },
+    {
+      "source": "{0} of {1} origin",
+      "slots": "tk",
+      "kind": "t",
+      "target": "{1}出产的{0}",
+      "origins": [
+        "548740 treasure contents and actual culture append"
+      ]
+    },
+    {
+      "source": "{0} \"{0}\"",
+      "slots": "n",
+      "kind": "g",
+      "target": "{0}“{0}”",
+      "origins": [
+        "48E420 + 4A8F50 named-region branch selects the same proper record twice"
+      ]
+    },
+    {
+      "source": "{0}, {1}",
+      "slots": "gg",
+      "kind": "g",
+      "target": "{0}，{1}",
+      "origins": [
+        "49C7D0 direction and distance append"
+      ]
+    },
+    {
+      "source": "{0} away",
+      "slots": "g",
+      "kind": "g",
+      "target": "相距{0}",
+      "origins": [
+        "49C07A distance suffix"
+      ]
+    },
+    {
+      "source": "{0} or at least {1} kilometers",
+      "slots": "gv",
+      "kind": "g",
+      "target": "{0}，或至少{1}公里",
+      "origins": [
+        "49BFC4 distance append"
+      ]
+    },
+    {
+      "source": "{0} or at least {1} miles",
+      "slots": "gv",
+      "kind": "g",
+      "target": "{0}，或至少{1}英里",
+      "origins": [
+        "49C02F distance append"
+      ]
+    },
+    {
+      "source": "inside {0}",
+      "slots": "g",
+      "kind": "g",
+      "target": "在里面，{0}",
+      "origins": [
+        "49C1DD..49C2C4 native nearby prefix and direction append"
+      ]
+    },
+    {
+      "source": "just around the corner {0}",
+      "slots": "g",
+      "kind": "g",
+      "target": "就在拐角附近，{0}",
+      "origins": [
+        "49C1DD..49C2C4 native nearby prefix and direction append"
+      ]
+    },
+    {
+      "source": "just nearby {0}",
+      "slots": "g",
+      "kind": "g",
+      "target": "就在附近，{0}",
+      "origins": [
+        "49C1DD..49C2C4 native nearby prefix and direction append"
+      ]
+    },
+    {
+      "source": "{0} with wooden hook",
+      "slots": "i",
+      "kind": "i",
+      "target": "{0}（装有木鱼钩）",
+      "origins": [
+        "451F97..4525B4 / 4AEC01..4AEC6A native item suffix append"
+      ]
+    },
+    {
+      "source": "{0} with iron hook",
+      "slots": "i",
+      "kind": "i",
+      "target": "{0}（装有铁鱼钩）",
+      "origins": [
+        "451F97..4525B4 / 4AEC01..4AEC6A native item suffix append"
+      ]
+    },
+    {
+      "source": "{0} with bone hook",
+      "slots": "i",
+      "kind": "i",
+      "target": "{0}（装有骨鱼钩）",
+      "origins": [
+        "451F97..4525B4 / 4AEC01..4AEC6A native item suffix append"
+      ]
+    },
+    {
+      "source": "{0} with no hook",
+      "slots": "i",
+      "kind": "i",
+      "target": "{0}（未装鱼钩）",
+      "origins": [
+        "451F97..4525B4 / 4AEC01..4AEC6A native item suffix append"
+      ]
+    },
+    {
+      "source": "{0} with no string",
+      "slots": "i",
+      "kind": "i",
+      "target": "{0}（未装弦）",
+      "origins": [
+        "451F97..4525B4 / 4AEC01..4AEC6A native item suffix append"
+      ]
+    },
+    {
+      "source": "{0} (skinned)",
+      "slots": "i",
+      "kind": "i",
+      "target": "{0}（已剥皮）",
+      "origins": [
+        "451F97..4525B4 / 4AEC01..4AEC6A native item suffix append"
+      ]
+    },
+    {
+      "source": "{0} (partially skinned)",
+      "slots": "i",
+      "kind": "i",
+      "target": "{0}（部分剥皮）",
+      "origins": [
+        "451F97..4525B4 / 4AEC01..4AEC6A native item suffix append"
+      ]
+    },
+    {
+      "source": "{0}, {1}",
+      "slots": "ii",
+      "kind": "i",
+      "target": "{0}、{1}",
+      "origins": [
+        "4AE8F1..4AEA99 native carcass detail list"
+      ]
+    },
+    {
+      "source": "{0} and more",
+      "slots": "l",
+      "kind": "l",
+      "target": "{0}等等",
+      "origins": [
+        "562ED0 native count-list suffix"
+      ]
+    },
+    {
+      "source": "{0} [age: {1}]",
+      "slots": "iv",
+      "kind": "i",
+      "target": "{0} [年龄：{1}]",
+      "origins": [
+        "4AE750 native age detail append"
+      ]
+    },
+    {
+      "source": "{0} [og weight: {1} - now {2}] Tornpct:{3}",
+      "slots": "ivvv",
+      "kind": "i",
+      "target": "{0} [原重：{1} - 现重：{2}] 破损率：{3}",
+      "origins": [
+        "4AE750 native debug detail append"
+      ]
+    },
+    {
+      "source": "During the day the temperature will be {0} During the night the temperature will be {1}",
+      "slots": "ww",
+      "kind": "t",
+      "target": "白天气温将{0} 夜间气温将{1}",
+      "origins": [
+        "587E31..587E8F native day/night stringstream appends"
+      ]
+    },
+    {
+      "source": "During the night the temperature will be {0} Tomorrow the temperature will be {1}",
+      "slots": "ww",
+      "kind": "t",
+      "target": "夜间气温将{0}明天气温将{1}",
+      "origins": [
+        "587E86..587EE2 native night/tomorrow stringstream appends"
+      ]
+    },
+    {
+      "source": "You are not carrying anything!",
+      "slots": "",
+      "kind": "t",
+      "target": "你身上什么也没带！",
+      "origins": [
+        "455060 -> 455000 -> 006F2C30 -> 53849D/53B77A; native !:?+=> marker removal"
+      ]
+    },
+    {
+      "source": "{0} is not carrying anything!",
+      "slots": "c",
+      "kind": "t",
+      "target": "{0}身上什么也没带！",
+      "origins": [
+        "455060 -> 455000 -> 006F2C30 -> 53849D/53B77A; native !:?+=> marker removal"
+      ]
+    },
+    {
+      "source": "You cannot {0} {1}!",
+      "slots": "ti",
+      "kind": "t",
+      "target": "你不能{0}{1}！",
+      "origins": [
+        "455060 -> 455000 -> 006F2C30 -> 53849D/53B77A; native !:?+=> marker removal"
+      ]
+    },
+    {
+      "source": "You cannot {0} {1} while it is being worn.",
+      "slots": "ti",
+      "kind": "t",
+      "target": "{1}正穿戴着，不能{0}它。",
+      "origins": [
+        "455060 -> 455000 -> 006F2C30 -> 53849D/53B77A; native !:?+=> marker removal"
+      ]
+    },
+    {
+      "source": "You cannot {0} {1} while it is in use.",
+      "slots": "ti",
+      "kind": "t",
+      "target": "{1}正在使用，不能{0}它。",
+      "origins": [
+        "455060 -> 455000 -> 006F2C30 -> 53849D/53B77A; native !:?+=> marker removal"
+      ]
+    },
+    {
+      "source": "You are already wearing that.",
+      "slots": "",
+      "kind": "t",
+      "target": "你已经穿戴着它了。",
+      "origins": [
+        "455060 -> 455000 -> 006F2C30 -> 53849D/53B77A; native !:?+=> marker removal"
+      ]
+    },
+    {
+      "source": "You cannot drop something you are wearing.",
+      "slots": "",
+      "kind": "t",
+      "target": "你不能丢下正在穿戴的东西。",
+      "origins": [
+        "455060 -> 455000 -> 006F2C30 -> 53849D/53B77A; native !:?+=> marker removal"
+      ]
+    },
+    {
+      "source": "Nay, not that one! You are supposed to take off things you are wearing or items you are wielding.",
+      "slots": "",
+      "kind": "t",
+      "target": "不对，不是这个！你要卸下的是正在穿戴或拿在手里的物品。",
+      "origins": [
+        "455060 -> 455000 -> 006F2C30 -> 53849D/53B77A; native !:?+=> marker removal"
+      ]
+    },
+    {
+      "source": "trade",
+      "slots": "",
+      "kind": "t",
+      "target": "交易",
+      "origins": [
+        "NPC SelectInventory callers: 538461, 53B73D, 53DD80"
+      ]
+    },
+    {
+      "source": "give",
+      "slots": "",
+      "kind": "t",
+      "target": "交付",
+      "origins": [
+        "NPC SelectInventory callers: 538461, 53B73D, 53DD80"
+      ]
+    },
+    {
+      "source": "start trading about",
+      "slots": "",
+      "kind": "t",
+      "target": "买下",
+      "origins": [
+        "NPC SelectInventory callers: 538461, 53B73D, 53DD80"
+      ]
+    },
+    {
+      "source": "flails",
+      "slots": "",
+      "kind": "t",
+      "target": "连枷",
+      "origins": [
+        "40FC30 accepted FLAIL weapon-skill spelling; 51B450 field and 535490 plural operation"
+      ]
+    },
+    {
+      "source": "Flails",
+      "slots": "",
+      "kind": "t",
+      "target": "连枷",
+      "origins": [
+        "40FC30 accepted FLAIL weapon-skill spelling; 51B450 field and 535490 plural operation"
+      ]
+    },
+    {
+      "source": "You have some items selected.",
+      "slots": "",
+      "kind": "t",
+      "target": "你已经选中了一些物品。",
+      "origins": [
+        "455060 ESC confirmation -> 006F2C30; native marker removed"
+      ]
+    }
+  ]
+}

@@ -16,6 +16,7 @@ const char* append_pieces[]{
 struct Rule {
     std::string source,slots;char kind;std::string order,domain;
     std::vector<std::string> literals;
+    std::vector<std::size_t> variables;
 };
 struct Grammar {
     std::map<std::string,std::vector<const Form*>> literals;
@@ -25,13 +26,13 @@ struct Grammar {
         for(const auto& lexeme:lexemes) words[lexeme.source].push_back(&lexeme);
         for(const auto& form:forms) {
             if(!*form.slots) {literals[form.source].push_back(&form);continue;}
-            Rule rule{form.source,form.slots,form.kind,form.order,form.domain,{}};
+            Rule rule{form.source,form.slots,form.kind,form.order,form.domain,{},{}};
             std::size_t start=0;
-            for(std::size_t slot=0;slot<rule.slots.size();++slot) {
-                const auto marker="{"+std::to_string(slot)+"}";
-                const auto next=rule.source.find(marker,start);
+            for(auto next=rule.source.find('{',start);next!=std::string::npos;next=rule.source.find('{',start)) {
                 rule.literals.push_back(rule.source.substr(start,next-start));
-                start=next+marker.size();
+                const auto end=rule.source.find('}',next);
+                rule.variables.push_back(static_cast<std::size_t>(std::stoul(rule.source.substr(next+1,end-next-1))));
+                start=end+1;
             }
             rule.literals.push_back(rule.source.substr(start));
             rules.push_back(std::move(rule));
@@ -68,7 +69,7 @@ bool match(const Rule& rule,const std::string& input,std::size_t slot,std::size_
     const auto& literal=rule.literals[slot];
     if(input.compare(position,literal.size(),literal)!=0) return false;
     position+=literal.size();
-    if(slot==rule.slots.size()) {
+    if(slot==rule.variables.size()) {
         if(position!=input.size()) return false;
         values.clear();
         for(std::size_t index=0;index<operands.size();++index) {
@@ -79,11 +80,13 @@ bool match(const Rule& rule,const std::string& input,std::size_t slot,std::size_
         return true;
     }
     const auto& next=rule.literals[slot+1];
+    const auto variable=rule.variables[slot];
+    const bool repeated=std::find(rule.variables.begin(),rule.variables.begin()+slot,variable)!=rule.variables.begin()+slot;
     auto end=next.empty()?position:input.find(next,position);
     while(end!=std::string::npos && end<=input.size()) {
-        operands.push_back(input.substr(position,end-position));
-        if(match(rule,input,slot+1,end,operands,values)) return true;
-        operands.pop_back();
+        const auto operand=input.substr(position,end-position);
+        if(!repeated) operands[variable]=operand;
+        if((!repeated || operands[variable]==operand) && match(rule,input,slot+1,end,operands,values)) return true;
         if(end==input.size()) break;
         end=next.empty()?end+1:input.find(next,end+1);
     }
@@ -114,9 +117,18 @@ bool parse(const std::string& input,char kind,Text& output) {
             output=native_message_source::lookup(TextComponent::message_value,lexeme->key,lexeme->domain);return true;
         }
     }
+    if(kind=='c') {
+        // AD4F0's proper-name branch reads +30h in the two adjacent native
+        // 500-record actor banks (40CF80..40CFA7, 40D318..40D34A).
+        // Match actual names in those fields, never arbitrary unknown English.
+        for(u32 actor=0;actor<1000;++actor) {
+            if(input!=message_source_utf8(at<char>(0x5D51430+actor*0x568))) continue;
+            output=native_message_source::original(input);return true;
+        }
+    }
     for(const auto& rule:data.rules) {
         if(!accepts(kind,rule.kind)) continue;
-        std::vector<std::string> operands;
+        std::vector<std::string> operands(rule.slots.size());
         std::vector<Text> values;
         if(!match(rule,input,0,0,operands,values)) continue;
         // Original parameter order and Chinese grammatical order are both
@@ -127,9 +139,20 @@ bool parse(const std::string& input,char kind,Text& output) {
         for(const auto position:rule.order) {
             const auto index=static_cast<std::size_t>(position-'0');
             output.syntax.push_back("{"+std::to_string(index)+"}");
-            output.children.push_back(std::move(values[index]));
+            output.children.push_back(values[index]);
         }
         return true;
+    }
+    if(kind=='g') {
+        // 4A8F50's named-region branch: the native 96 x 64 region cells
+        // select a proper-name record with bit 8000h. These are game data,
+        // not UI text snapshots or guesses about unrecognized strings.
+        for(u32 region=0;region<96*64;++region) {
+            const auto record=*at<std::uint16_t>(0x54F1200+region*2);
+            if((record&0x8000)==0) continue;
+            if(input!=message_source_utf8(at<char>(0x54F7220+(record&0x7fff)*8))) continue;
+            output=native_message_source::original(input);return true;
+        }
     }
     if(kind=='t') {
         // These are the exact complete authored fragments concatenated by

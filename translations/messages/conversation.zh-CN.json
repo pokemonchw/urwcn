@@ -121,7 +121,7 @@
     {
       "source": " man",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "男子",
       "origins": [
         "identity"
@@ -148,7 +148,7 @@
     {
       "source": " woman",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "女子",
       "origins": [
         "identity"
@@ -993,8 +993,8 @@
     },
     {
       "source": "{0} fellow",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "{0}伙伴",
       "origins": [
         "identity"
@@ -1002,8 +1002,8 @@
     },
     {
       "source": "{0} friend",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "{0}朋友",
       "origins": [
         "identity"
@@ -1011,8 +1011,8 @@
     },
     {
       "source": "{0} guest",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "{0}客人",
       "origins": [
         "identity"
@@ -1083,8 +1083,8 @@
     },
     {
       "source": "{0} my friend",
-      "slots": "n",
-      "kind": "t",
+      "slots": "a",
+      "kind": "p",
       "target": "{0}，我的朋友",
       "origins": [
         "identity"
@@ -1092,8 +1092,8 @@
     },
     {
       "source": "{0} nuisance",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "{0}讨厌鬼",
       "origins": [
         "identity"
@@ -1128,8 +1128,8 @@
     },
     {
       "source": "{0} traveller",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "{0}旅人",
       "origins": [
         "identity"
@@ -1996,7 +1996,7 @@
     {
       "source": "Annoying stranger",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "讨厌的陌生人",
       "origins": [
         "identity"
@@ -2862,7 +2862,7 @@
     {
       "source": "Dear fellow",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "亲爱的伙伴",
       "origins": [
         "identity"
@@ -2916,7 +2916,7 @@
     {
       "source": "Disreputable traveller",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "声名狼藉的旅人",
       "origins": [
         "identity"
@@ -3061,7 +3061,7 @@
     {
       "source": "Driikiläis",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "德里基",
       "origins": [
         "identity"
@@ -3224,7 +3224,7 @@
     {
       "source": "Familiar nuisance",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "眼熟的讨厌鬼",
       "origins": [
         "identity"
@@ -3233,7 +3233,7 @@
     {
       "source": "Familiar visitor",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "熟客",
       "origins": [
         "identity"
@@ -3278,7 +3278,7 @@
     {
       "source": "Fellow",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "同伴",
       "origins": [
         "identity"
@@ -3286,8 +3286,8 @@
     },
     {
       "source": "Fellow {0}",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "同为{0}的伙伴",
       "origins": [
         "identity"
@@ -3449,7 +3449,7 @@
     {
       "source": "Foreign",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "异乡",
       "origins": [
         "identity"
@@ -3494,7 +3494,7 @@
     {
       "source": "Forester",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "林地居民",
       "origins": [
         "identity"
@@ -3503,7 +3503,7 @@
     {
       "source": "Frequent guest",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "常客",
       "origins": [
         "identity"
@@ -3512,7 +3512,7 @@
     {
       "source": "Frequent nuisance",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "常来惹事的家伙",
       "origins": [
         "identity"
@@ -3521,7 +3521,7 @@
     {
       "source": "Friend",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "朋友",
       "origins": [
         "identity"
@@ -3619,8 +3619,8 @@
     },
     {
       "source": "Good {0}",
-      "slots": "p",
-      "kind": "t",
+      "slots": "a",
+      "kind": "p",
       "target": "亲爱的{0}",
       "origins": [
         "identity"
@@ -6997,7 +6997,7 @@
     {
       "source": "Islander",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "岛民",
       "origins": [
         "identity"
@@ -7591,7 +7591,7 @@
     {
       "source": "Kaumolais",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "考莫",
       "origins": [
         "identity"
@@ -7609,7 +7609,7 @@
     {
       "source": "Kiesseläis",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "基耶塞",
       "origins": [
         "identity"
@@ -7618,7 +7618,7 @@
     {
       "source": "Koivulais",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "科伊武",
       "origins": [
         "identity"
@@ -7627,7 +7627,7 @@
     {
       "source": "Kuikka-tribe",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "潜鸟部落",
       "origins": [
         "identity"
@@ -8144,7 +8144,7 @@
     {
       "source": "My friend",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "我的朋友",
       "origins": [
         "identity"
@@ -8306,7 +8306,7 @@
     {
       "source": "Njerpez",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "涅尔佩兹",
       "origins": [
         "identity"
@@ -8503,7 +8503,7 @@
     },
     {
       "source": "No. Not until we see {0} who left with you again.",
-      "slots": "n",
+      "slots": "c",
       "kind": "t",
       "target": "不行。和你一起离开的{0}还没回来，在见到他之前不行。",
       "origins": [
@@ -8765,7 +8765,7 @@
     {
       "source": "Nuisance",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "讨厌鬼",
       "origins": [
         "identity"
@@ -9659,7 +9659,7 @@
     {
       "source": "Owl-tribe",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "猫头鹰部落",
       "origins": [
         "identity"
@@ -9794,7 +9794,7 @@
     {
       "source": "Reemiläis",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "雷埃米",
       "origins": [
         "identity"
@@ -9884,7 +9884,7 @@
     {
       "source": "Sartolais",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "萨尔托",
       "origins": [
         "identity"
@@ -9911,7 +9911,7 @@
     {
       "source": "Seal-tribe",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "海豹部落",
       "origins": [
         "identity"
@@ -10705,7 +10705,7 @@
     {
       "source": "Stranger",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "陌生人",
       "origins": [
         "identity"
@@ -12053,7 +12053,7 @@
     {
       "source": "Traveller",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "旅人",
       "origins": [
         "identity"
@@ -12061,8 +12061,8 @@
     },
     {
       "source": "Travelling {0}",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "旅行中的{0}",
       "origins": [
         "identity"
@@ -12071,7 +12071,7 @@
     {
       "source": "Tribesman",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "同族男子",
       "origins": [
         "identity"
@@ -12080,7 +12080,7 @@
     {
       "source": "Tribeswoman",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "同族女子",
       "origins": [
         "identity"
@@ -12225,8 +12225,8 @@
     },
     {
       "source": "Unfamiliar {0}",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "陌生的{0}",
       "origins": [
         "identity"
@@ -12298,7 +12298,7 @@
     {
       "source": "Vagabond",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "流浪者",
       "origins": [
         "identity"
@@ -14904,7 +14904,7 @@
     {
       "source": "annoying stranger",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "讨厌的陌生人",
       "origins": [
         "identity"
@@ -15012,7 +15012,7 @@
     {
       "source": "dear fellow",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "亲爱的伙伴",
       "origins": [
         "identity"
@@ -15030,7 +15030,7 @@
     {
       "source": "disreputable traveller",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "声名狼藉的旅人",
       "origins": [
         "identity"
@@ -15048,7 +15048,7 @@
     {
       "source": "driikiläis",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "德里基",
       "origins": [
         "identity"
@@ -15075,7 +15075,7 @@
     {
       "source": "familiar nuisance",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "眼熟的讨厌鬼",
       "origins": [
         "identity"
@@ -15084,7 +15084,7 @@
     {
       "source": "familiar visitor",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "熟客",
       "origins": [
         "identity"
@@ -15093,7 +15093,7 @@
     {
       "source": "fellow",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "同伴",
       "origins": [
         "identity"
@@ -15101,8 +15101,8 @@
     },
     {
       "source": "fellow {0}",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "同为{0}的伙伴",
       "origins": [
         "identity"
@@ -15147,7 +15147,7 @@
     {
       "source": "foreign",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "异乡",
       "origins": [
         "identity"
@@ -15165,7 +15165,7 @@
     {
       "source": "forester",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "林地居民",
       "origins": [
         "identity"
@@ -15174,7 +15174,7 @@
     {
       "source": "frequent guest",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "常客",
       "origins": [
         "identity"
@@ -15183,7 +15183,7 @@
     {
       "source": "frequent nuisance",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "常来惹事的家伙",
       "origins": [
         "identity"
@@ -15192,7 +15192,7 @@
     {
       "source": "friend",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "朋友",
       "origins": [
         "identity"
@@ -15209,8 +15209,8 @@
     },
     {
       "source": "good {0}",
-      "slots": "p",
-      "kind": "t",
+      "slots": "a",
+      "kind": "p",
       "target": "亲爱的{0}",
       "origins": [
         "identity"
@@ -15327,7 +15327,7 @@
     {
       "source": "islander",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "岛民",
       "origins": [
         "identity"
@@ -15390,7 +15390,7 @@
     {
       "source": "kaumolais",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "考莫",
       "origins": [
         "identity"
@@ -15399,7 +15399,7 @@
     {
       "source": "kiesseläis",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "基耶塞",
       "origins": [
         "identity"
@@ -15426,7 +15426,7 @@
     {
       "source": "koivulais",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "科伊武",
       "origins": [
         "identity"
@@ -15435,7 +15435,7 @@
     {
       "source": "kuikka-tribe",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "潜鸟部落",
       "origins": [
         "identity"
@@ -15498,7 +15498,7 @@
     {
       "source": "my friend",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "我的朋友",
       "origins": [
         "identity"
@@ -15543,7 +15543,7 @@
     {
       "source": "njerpez",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "涅尔佩兹",
       "origins": [
         "identity"
@@ -15552,7 +15552,7 @@
     {
       "source": "nuisance",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "讨厌鬼",
       "origins": [
         "identity"
@@ -15606,7 +15606,7 @@
     {
       "source": "owl-tribe",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "猫头鹰部落",
       "origins": [
         "identity"
@@ -15633,7 +15633,7 @@
     {
       "source": "reemiläis",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "雷埃米",
       "origins": [
         "identity"
@@ -15651,7 +15651,7 @@
     {
       "source": "sartolais",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "萨尔托",
       "origins": [
         "identity"
@@ -15660,7 +15660,7 @@
     {
       "source": "seal-tribe",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "海豹部落",
       "origins": [
         "identity"
@@ -15768,7 +15768,7 @@
     {
       "source": "stranger",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "陌生人",
       "origins": [
         "identity"
@@ -15975,7 +15975,7 @@
     {
       "source": "traveller",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "旅人",
       "origins": [
         "identity"
@@ -15992,8 +15992,8 @@
     },
     {
       "source": "travelling {0}",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "旅行中的{0}",
       "origins": [
         "identity"
@@ -16002,7 +16002,7 @@
     {
       "source": "tribesman",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "同族男子",
       "origins": [
         "identity"
@@ -16011,7 +16011,7 @@
     {
       "source": "tribeswoman",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "同族女子",
       "origins": [
         "identity"
@@ -16037,8 +16037,8 @@
     },
     {
       "source": "unfamiliar {0}",
-      "slots": "t",
-      "kind": "t",
+      "slots": "p",
+      "kind": "p",
       "target": "陌生的{0}",
       "origins": [
         "identity"
@@ -16047,7 +16047,7 @@
     {
       "source": "vagabond",
       "slots": "",
-      "kind": "t",
+      "kind": "p",
       "target": "流浪者",
       "origins": [
         "identity"
