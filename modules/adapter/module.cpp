@@ -88,6 +88,7 @@ enum Hook : u32 {
     setup_body_first=0x600, credits_append_first=0x700,
     load_saved_empty_panel=0xA00, load_saved_list_panel, load_saved_empty_text, load_saved_key_text,
     load_saved_wait_text, load_saved_progress_source, load_saved_progress_paragraph, load_saved_ready_text,
+    map_loading_text=0xA10,
     ancestors_title=0x900, ancestors_empty, ancestors_order, ancestors_exit,
     ancestors_played, ancestors_living, ancestors_distance, ancestors_previous, ancestors_next,
     ancestors_select, ancestors_select_prefix, ancestors_select_suffix,
@@ -866,6 +867,16 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
         native_component_binding::bind_source(e,native_text_resource::from_request({
             TextComponent::load_saved_progress,original.c_str(),value.c_str()}));
         return Status::ok;
+    }
+    case map_loading_text: {
+        // FA7B0 retains the native panel, progress value and partial upload.
+        // FA823 lends only ShowText's full display input; its five 10DDB0
+        // leaves and 10E700 cursor advance use the existing glyph/width bridge.
+        std::vector<char> encoded;
+        const auto status=translate(TextComponent::world_map_loading,
+            ptr<char>(e.arguments[0]),nullptr,encoded);
+        if(status!=Status::ok) return status;
+        return lend_text(e,encoded,e.arguments[0],Scope::text);
     }
     case ancestors_title: {
         // ESI is DE990's original ECX mode here: -1 is the ancestor list.
@@ -1852,6 +1863,7 @@ Status UWCN_CALL initialize(const HostApi* api) {
         hooks.push_back(call(load_saved_progress_source,0x17E6E7,0x162300,0));
         hooks.push_back(call(load_saved_progress_paragraph,0x17E71C,0x10EB40,4));
         hooks.push_back(call(load_saved_ready_text,0x17E84E,0x10E5A0,3));
+        hooks.push_back(call(map_loading_text,0xFA823,0x10E5A0,3));
     }
     for(u32 i=0;i<std::size(setup_text_calls);++i)
         hooks.push_back(call(setup_body_first+i,setup_text_calls[i].site,0x10E5A0,3));

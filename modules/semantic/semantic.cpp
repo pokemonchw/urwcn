@@ -85,6 +85,7 @@ const char* key(TextComponent component) {
     case TextComponent::load_saved_wait:return "load_saved.wait";
     case TextComponent::load_saved_progress:return "load_saved.progress";
     case TextComponent::load_saved_ready:return "load_saved.ready";
+    case TextComponent::world_map_loading:return "world.map_loading";
     case TextComponent::scenario_village_title:return "scenario.village_title";
     case TextComponent::scenario_introduction_1:return "scenario.introduction_1";
     case TextComponent::scenario_introduction_2:return "scenario.introduction_2";
@@ -285,6 +286,7 @@ Status UWCN_CALL initialize(const HostApi* host) {
                        TextComponent::character_creation_too_easy,TextComponent::character_creation_exit,
                        TextComponent::load_saved_title,TextComponent::load_saved_empty,TextComponent::load_saved_press_key,
                        TextComponent::load_saved_wait,TextComponent::load_saved_progress,TextComponent::load_saved_ready,
+                       TextComponent::world_map_loading,
                        TextComponent::profile_heading,TextComponent::profile_culture_title,TextComponent::profile_sex_title,
                        TextComponent::profile_name_title,TextComponent::profile_random,TextComponent::profile_cultures,
                        TextComponent::profile_back,TextComponent::profile_male,TextComponent::profile_female,

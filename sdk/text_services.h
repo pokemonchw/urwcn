@@ -110,6 +110,7 @@ enum class TextComponent : std::uint32_t {
     world_place_gloss = 0x10100, world_location = 0x10101, world_region = 0x10102,
     world_date = 0x10103, world_scale = 0x10104, world_map_kind = 0x10105,
     world_season = 0x10106, world_month = 0x10107, world_time = 0x10108,
+    world_map_loading = 0x10109,
     message_literal = 0x10200, message_template = 0x10201,
     message_value = 0x10202, message_continue = 0x10203, message_more = 0x10204,
     // Adapter-owned neutral expressions, resolved before the native consumer.

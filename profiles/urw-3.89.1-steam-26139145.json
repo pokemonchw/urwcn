@@ -231,6 +231,20 @@
     ]
   },
   "runtime_verification": "not performed; prohibited by project instructions",
+  "map_loading_progress": {
+    "entry_rva": "0xFA7B0",
+    "text_call": "0xFA823",
+    "text_target": "0x10E5A0",
+    "original_text_rva": "0x1AA280",
+    "progress_call": "0xFA83B",
+    "partial_upload_call": "0xFA853",
+    "scope": "complete LOADING MAP display input in the native map progress function",
+    "preserved": "native visibility branch, panel, progress value, position, style, upload and map loading business",
+    "measurement": "existing 10E700 complete-glyph cursor advance",
+    "drawing": "existing five 10DDB0 full-string leaves immediately paint the native physical-density main surface",
+    "refresh": "next ordinary native map progress draw consumes the current language; map loading is not replayed",
+    "evidence": "docs/evidence/20261111-map-loading-native.md"
+  },
   "load_saved_character": {
     "entry_rva": "0x124E90",
     "scope": "native window title and the two empty-save-list messages",

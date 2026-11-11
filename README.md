@@ -4,6 +4,8 @@
 
 URWCN 是 **Byayoi 同人社区**的《不真实的世界》（UnReal World）汉化作品。
 
+Windows 3.89.1 地图加载窗口的 `LOADING MAP ...` 已接入自己的原生完整文字调用，译为“正在载入地图……”，复用既有中文字形与真实宽度接口，原进度条、窗口和上传流程保持。源码、统一队列编译及正式热发布均完成，当前 Windows PID `364` 的 Catalog 第5代、Semantic 第4代、Adapter 第6代返回 `Applied`；六件旧文件先移入 `回收/`。无需重启，译文由下一次正常地图加载绘制消费；未操作或测试游戏，详见[地图加载提示记录](docs/evidence/20261111-map-loading-native.md)。
+
 Windows 3.89.1 读档进度窗口已补齐“请稍候……”“正在载入……”和“完成！”，原姓名保持，民族复用十文化译名，截图中的 `Kaumolainen` 显示为“考莫人”。此前启动资源加载汉化未涵盖此路径，现已接入实际原生解析器、段落和字宽接口。源码、统一队列编译、正式发布及当前 PID `364` 的兼容交接均完成，Catalog 第3代、Semantic 第2代、Adapter 第4代返回 `Applied`；六件旧文件先移入 `回收/`。无需重启，译文在下次正常读档构建时消费；未操作或测试游戏，画面待用户验收。静态依据和完整回执见[读档进度记录](docs/evidence/20261111-load-character-progress-native.md)。
 
 Windows 3.89.1 确认框按钮空白已按原生生命周期修正：上一批只重建正文，再交给不绘制此类按钮的通用 Menu；现改为重新执行确认 owner 自己的 Panel、Menu 和两个按钮完整构建，在原输入前返回，并修正原生提前返回遗留的绘制状态。退出、保存、死亡及其他确认的103条新增资源继续沿用。源码、统一队列编译及正式 Adapter 热发布完成，当前 Windows PID `364` 的 Adapter 第3代返回 `Applied`，旧件先移入 `回收/`。未操作或测试游戏；详见[按钮空白修正](docs/evidence/20261111-confirmation-buttons-fix.md)和[完整文本提取](docs/evidence/20261111-confirmation-all-text.md)。
