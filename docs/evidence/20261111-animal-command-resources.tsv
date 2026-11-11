@@ -1,0 +1,114 @@
+file	line	key	selector	source	target
+urw_defs.txt	50	IN_DIR	N	north	北方
+urw_defs.txt	51	IN_DIR	NE	north-east	东北方
+urw_defs.txt	52	IN_DIR	E	east	东方
+urw_defs.txt	53	IN_DIR	SE	south-east	东南方
+urw_defs.txt	54	IN_DIR	S	south	南方
+urw_defs.txt	55	IN_DIR	SW	south-west	西南方
+urw_defs.txt	56	IN_DIR	W	west	西方
+urw_defs.txt	57	IN_DIR	NW	north-west	西北方
+urw_defs.txt	58	IN_DIR	*	unkown direction	未知方向
+urw_defs.txt	112	PET_PHRASE	EAT	"&""Eat now, <npc_desc>."""	&“吃吧，<npc_desc>。”
+urw_defs.txt	113	PET_PHRASE	ATTACK	"&""Attack, <npc_desc>, attack!"""	&“攻击，<npc_desc>，攻击！”
+urw_defs.txt	114	PET_PHRASE	STAY	"&""Stay there, <npc_desc>."""	&“待在那里，<npc_desc>。”
+urw_defs.txt	115	PET_PHRASE	COME	"&""Come <npc_desc> come!"""	&“过来，<npc_desc>，过来！”
+urw_msg.txt	330	TALK_FAR_AWAY		_You get no response. Go closer.	_没有回应。走近一些。
+urw_msg.txt	1032	GOOF_NO_CREATURE		!Huh? There's no creature there.	!咦？那里没有生物。
+urw_msg.txt	1050	RESPONSE_CONFUSED	ANIMAL	<npc_desc> tilts its head in confusion.	<npc_desc>困惑地歪着头。
+urw_msg.txt	1051	RESPONSE_CONFUSED	*	<npc_desc> gives a questioning expression.	<npc_desc>露出疑惑的神情。
+urw_msg.txt	1054	RESPONSE_HAPPY	ANIMAL	<npc_desc> gives you a happy look.	<npc_desc>高兴地望着你。
+urw_msg.txt	1055	RESPONSE_HAPPY	*	<npc_desc> smiles happily.	<npc_desc>高兴地笑了。
+urw_sounds.txt	10	SND_PRES	BAWL	bawls	嚎叫
+urw_sounds.txt	11	SND_PRES	BARK	barks	吠叫
+urw_sounds.txt	12	SND_PRES	BELLOW	bellows	低吼
+urw_sounds.txt	13	SND_PRES	COO	coos	咕咕叫
+urw_sounds.txt	14	SND_PRES	COUGH	coughs	咳嗽
+urw_sounds.txt	15	SND_PRES	CROW	crows	啼叫
+urw_sounds.txt	16	SND_PRES	BLEAT	bleats	咩咩叫
+urw_sounds.txt	17	SND_PRES	SNARL	snarls	龇牙咆哮
+urw_sounds.txt	18	SND_PRES	SNORT	snorts	喷鼻息
+urw_sounds.txt	19	SND_PRES	SNUFFLE	snuffles	抽动鼻子
+urw_sounds.txt	20	SND_PRES	SWEAR	swears	咒骂
+urw_sounds.txt	21	SND_PRES	SQUEAK	squeaks	吱吱叫
+urw_sounds.txt	22	SND_PRES	MEOW	meows	喵喵叫
+urw_sounds.txt	23	SND_PRES	GNAW	gnaws	啃咬
+urw_sounds.txt	24	SND_PRES	GRUNT	grunts	哼叫
+urw_sounds.txt	25	SND_PRES	GROWL	growls	咆哮
+urw_sounds.txt	26	SND_PRES	GUFFAW	guffaws	大笑
+urw_sounds.txt	27	SND_PRES	HISS	hisses	嘶叫
+urw_sounds.txt	28	SND_PRES	ROAR	roars	怒吼
+urw_sounds.txt	29	SND_PRES	HOWL	howls	长嚎
+urw_sounds.txt	30	SND_PRES	YELP	yelps	尖叫
+urw_sounds.txt	31	SND_PRES	WHIMPER	whimpers	呜咽
+urw_sounds.txt	32	SND_PRES	SING	sings	鸣唱
+urw_sounds.txt	33	SND_PRES	CROAK	croaks	呱呱叫
+urw_sounds.txt	34	SND_PRES	CALL	calls	鸣叫
+urw_sounds.txt	35	SND_PRES	SQUAWK	squawks	嘎嘎叫
+urw_sounds.txt	36	SND_PRES	WHISTLE	whistles	啸叫
+urw_sounds.txt	37	SND_PRES	*	cries	叫唤
+urw_sounds.txt	42	SND_CONT	BAWL	bawling	嚎叫
+urw_sounds.txt	43	SND_CONT	BARK	barking	吠叫
+urw_sounds.txt	44	SND_CONT	BELLOW	bellowing	低吼
+urw_sounds.txt	45	SND_CONT	COO	cooing	咕咕叫
+urw_sounds.txt	46	SND_CONT	COUGH	coughing	咳嗽
+urw_sounds.txt	47	SND_CONT	CROW	crowing	啼叫
+urw_sounds.txt	48	SND_CONT	BLEAT	bleating	咩咩叫
+urw_sounds.txt	49	SND_CONT	SNARL	snarling	龇牙咆哮
+urw_sounds.txt	50	SND_CONT	SNORT	snorting	喷鼻息
+urw_sounds.txt	51	SND_CONT	SNUFFLE	snuffling	抽动鼻子
+urw_sounds.txt	52	SND_CONT	SWEAR	swearing	咒骂
+urw_sounds.txt	53	SND_CONT	SQUEAK	squeaking	吱吱叫
+urw_sounds.txt	54	SND_CONT	MEOW	meowing	喵喵叫
+urw_sounds.txt	55	SND_CONT	GNAW	gnawing	啃咬
+urw_sounds.txt	56	SND_CONT	GRUNT	grunting	哼叫
+urw_sounds.txt	57	SND_CONT	GROWL	growling	咆哮
+urw_sounds.txt	58	SND_CONT	GUFFAW	guffawing	大笑
+urw_sounds.txt	59	SND_CONT	HISS	hissing	嘶叫
+urw_sounds.txt	60	SND_CONT	ROAR	roaring	怒吼
+urw_sounds.txt	61	SND_CONT	HOWL	howling	长嚎
+urw_sounds.txt	62	SND_CONT	YELP	yelping	尖叫
+urw_sounds.txt	63	SND_CONT	WHIMPER	whimpering	呜咽
+urw_sounds.txt	64	SND_CONT	SING	singing	鸣唱
+urw_sounds.txt	65	SND_CONT	CROAK	croaking	呱呱叫
+urw_sounds.txt	66	SND_CONT	CALL	calling	鸣叫
+urw_sounds.txt	67	SND_CONT	SQUAWK	squawking	嘎嘎叫
+urw_sounds.txt	68	SND_CONT	WHISTLE	whistling	啸叫
+urw_sounds.txt	69	SND_CONT	*	crying	叫唤
+urw_sounds.txt	74	SND_NOUN	BAWL	bawl	嚎叫声
+urw_sounds.txt	75	SND_NOUN	BARK	bark	吠叫声
+urw_sounds.txt	76	SND_NOUN	BELLOW	bellow	低吼声
+urw_sounds.txt	77	SND_NOUN	COO	coo	咕咕声
+urw_sounds.txt	78	SND_NOUN	COUGH	cough	咳嗽声
+urw_sounds.txt	79	SND_NOUN	CROW	crow	啼叫声
+urw_sounds.txt	80	SND_NOUN	CROAK	croak	呱呱声
+urw_sounds.txt	81	SND_NOUN	BLEAT	bleat	咩咩声
+urw_sounds.txt	82	SND_NOUN	SNARL	snarl	咆哮声
+urw_sounds.txt	83	SND_NOUN	SNORT	snort	喷鼻息声
+urw_sounds.txt	84	SND_NOUN	SNUFFLE	snuffle	抽鼻子声
+urw_sounds.txt	85	SND_NOUN	SWEAR	swear	咒骂声
+urw_sounds.txt	86	SND_NOUN	SQUEAK	squeak	吱吱声
+urw_sounds.txt	87	SND_NOUN	MEOW	meow	喵喵声
+urw_sounds.txt	88	SND_NOUN	GNAW	gnaw	啃咬声
+urw_sounds.txt	89	SND_NOUN	GRUNT	grunt	哼哼声
+urw_sounds.txt	90	SND_NOUN	GROWL	growl	咆哮声
+urw_sounds.txt	91	SND_NOUN	GUFFAW	guffaw	大笑声
+urw_sounds.txt	92	SND_NOUN	HISS	hiss	嘶嘶声
+urw_sounds.txt	93	SND_NOUN	ROAR	roar	怒吼声
+urw_sounds.txt	94	SND_NOUN	HOWL	howl	长嚎声
+urw_sounds.txt	95	SND_NOUN	YELP	yelp	尖叫声
+urw_sounds.txt	96	SND_NOUN	WHIMPER	whimper	呜咽声
+urw_sounds.txt	97	SND_NOUN	SING	song	鸣唱声
+urw_sounds.txt	98	SND_NOUN	CALL	call	鸣叫声
+urw_sounds.txt	99	SND_NOUN	SQUAWK	squawk	嘎嘎声
+urw_sounds.txt	100	SND_NOUN	WHISTLE	whistle	啸叫声
+urw_sounds.txt	101	SND_NOUN	*	cry	叫声
+urw_sounds.txt	121	SOUND_NORMAL	*	{<npc_sound>}<npc_defdesc> [SND_PRES:<npc_sound>].	{<npc_sound>}<npc_defdesc>[SND_PRES:<npc_sound>]。
+urw_sounds.txt	122	SOUND_NORMAL	HEAR	{<npc_sound>}You hear a [SND_NOUN:<npc_sound>] from the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]传来[SND_NOUN:<npc_sound>]。
+urw_sounds.txt	135	SOUND_HUNGRY	*	{<npc_sound>}<npc_defdesc> [SND_PRES:<npc_sound>] in hunger.	{<npc_sound>}<npc_defdesc>饥饿地[SND_PRES:<npc_sound>]。
+urw_sounds.txt	136	SOUND_HUNGRY	HEAR	{<npc_sound>}You hear a creature [SND_CONT:<npc_sound>] in hunger in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]有动物饥饿地[SND_CONT:<npc_sound>]。
+urw_sounds.txt	147	SOUND_DISAGREEMENT	*	{<npc_sound>}!<npc_defdesc> [SND_PRES:<npc_sound>] in disagreement.	{<npc_sound>}!<npc_defdesc>不情愿地[SND_PRES:<npc_sound>]。
+urw_sounds.txt	148	SOUND_DISAGREEMENT	HEAR	{<npc_sound>}You hear a creature [SND_CONT:<npc_sound>] in disagreement in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]有动物不情愿地[SND_CONT:<npc_sound>]。
+urw_sounds.txt	151	SOUND_AGREEMENT	*	{<npc_sound>}<npc_defdesc> [SND_PRES:<npc_sound>] in agreement.	{<npc_sound>}<npc_defdesc>[SND_PRES:<npc_sound>]，表示顺从。
+urw_sounds.txt	152	SOUND_AGREEMENT	HEAR	{<npc_sound>}You hear a creature [SND_CONT:<npc_sound>] in agreement in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]有动物顺从地[SND_CONT:<npc_sound>]。
+urw_sounds.txt	155	SOUND_WOUNDED_DISAGREEMENT	*	{<npc_sound>}!<npc_defdesc> only [SND_PRES:<npc_sound>] miserably and refuses to obey.	{<npc_sound>}!<npc_defdesc>只是可怜地[SND_PRES:<npc_sound>]，不肯听从。
+urw_sounds.txt	156	SOUND_WOUNDED_DISAGREEMENT	HEAR	{<npc_sound>}You hear a creature [SND_CONT:<npc_sound>] miserably in the [IN_DIR:<npc_direction>].	{<npc_sound>}你听到[IN_DIR:<npc_direction>]有动物可怜地[SND_CONT:<npc_sound>]。

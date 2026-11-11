@@ -1,16 +1,17 @@
-// Windows native Choose_Name/encyclopedia getst, map text field and key_event boundaries. This file is
+// Windows native Choose_Name/animal-name/encyclopedia getst, map text field and key_event boundaries. This file is
 // included after codec()/metrics(); it owns no UI layout or drawing cache.
 // Static instructions: docs/evidence/20261019-windows-chinese-input.md and
 // docs/evidence/20261110-map-marker-chinese-input.md and
-// docs/evidence/20261111-encyclopedia-chinese-search.md.
+// docs/evidence/20261111-encyclopedia-chinese-search.md and
+// docs/evidence/20261111-animal-commands-native.md.
 namespace native_name_input {
 enum Hook : u32 {
     scope=0x5400,commit,stop_initial,stop_modifiers,edit_dispatch,backspace,
     erase_initial,erase_backspace,erase_random,cursor,uppercase,lowercase,path_capacity,
     showtext_copy,renshowtext_copy,renderer_showtext_copy,
-    marker_edit=0x5410,marker_cursor,marker_finished,marker_extent
+    marker_edit=0x5410,marker_cursor,marker_finished,marker_extent,animal_scope
 };
-// active: 1 = Choose_Name/getst, 2 = map-marker ring editor, 3 = encyclopedia/getst.
+// active: 1 = character/animal name getst, 2 = map-marker ring editor, 3 = encyclopedia/getst.
 struct State { u32 active{},committed{}; };
 State state{};
 bool getst_active() { return state.active==1 || state.active==3; }
@@ -121,6 +122,8 @@ HookSpec native_call(u32 id,u32 site,u32 target,u32 arguments) {
 }
 void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(native_call(scope,0x119ab,0x10f5b0,0));
+    if(windows_build::is_3891())
+        hooks.push_back(native_call(animal_scope,0x143221,0x10f5b0,0));
     // Relative branches are fully implemented by edit_dispatch, never replayed.
     hooks.push_back(instruction(edit_dispatch,0x10f77f,{0x83,0xfb,0x08,0x0f,0x85,0x86,0,0,0}));
     auto erased=instruction(backspace,0x10f7fb,{0x88,0x81,0,0,0,0});
@@ -228,7 +231,7 @@ void set_translation_available(bool available) {
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=true;
     switch(event.id) {
-    case scope:
+    case scope: case animal_scope:
         if(event.phase==NativePhase::before) {
             state={1,0};
             if(translation_available) {

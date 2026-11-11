@@ -1324,6 +1324,7 @@ Status rebuild_native_menu(const NativeEvent& event,bool& rebuilt,u32& selection
 }
 Status bind_chat_lines_menu(native_menu_component::Handle);
 Status bind_chat_line_record(const NativeEvent&);
+void bind_animal_commands_menu(native_menu_component::Handle);
 void bind_chat_mode_menu(native_menu_component::Handle menu) {
     // 146F80 constructs this native Menu; its accepted records remain English.
     // Rebind the same sources both on ordinary CFFB0 and on a live handover.
@@ -1355,6 +1356,15 @@ Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Con
     // Other Menu families already own their retained semantic sources. Their
     // previous materialization path did not re-enter these ambient binders.
     if(native_menu_component::materializing()) return Status::ok;
+    // 143340 opens the same native command Menu for individual and group
+    // commands. Its existing producer retains the typed animal-name source.
+    if(windows_build::is_3891() &&
+       (std::strncmp(at<char>(0x5F54A38),"ANIMAL COMMANDS: ",17)==0 ||
+        std::strcmp(at<char>(0x5F54A38),"ANIMAL GROUP COMMANDS")==0)) {
+        if(consumer==Consumer::plain_title || consumer==Consumer::title_panel)
+            bind_animal_commands_menu(native_menu_component::source());
+        return Status::ok;
+    }
     // 108730 / 47B00 build the help / handcraft English upper rows;
     // 1002B0 copies them through CF990
     // into the real Menu. Bind at CFFB0's complete native text consumers so
@@ -1510,6 +1520,7 @@ Status lend_conversation_display(const NativeEvent&,u32&,Scope,u32);
 #include "windows_inventory.inc"
 #include "windows_profile_age.inc"
 #include "windows_conversation_sources.inc"
+#include "windows_animal_commands.inc"
 #include "windows_conversation_text.inc"
 #include "windows_wielded.inc"
 #include "windows_hud_map_text.inc"

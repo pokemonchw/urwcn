@@ -26,6 +26,17 @@ bool hud_caller(u32 caller) {
     default:return false;
     }
 }
+u32 accepted_caller(const NativeEvent& event) {
+    // The character/animal name CALL scopes replace getst's direct return
+    // with the resident After bridge. Both original callers establish EBP.
+    // NameAnimal's own unhooked 143D40 CALL still returns to 143D45, and its
+    // only getst CALL is 143221. Recover that exact native input owner from
+    // the saved parent frame; no translated prompt or buffer is inspected.
+    if(windows_build::is_3891() && native_name_input::state.active==1 &&
+       *ptr<const u32>(*ptr<const u32>(event.frame->ebp)+4)==host->image_base+0x143D45)
+        return 0x143226;
+    return *ptr<const u32>(event.frame->ebp+4)-static_cast<u32>(host->image_base);
+}
 Flow flow(Root root) {
     return native_message_flow::current({root,0x61A8CE4,static_cast<u32>(TextComponent::message_literal)});
 }
@@ -183,7 +194,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     if(event.id==native_full_language::name_input_result &&
        event.phase!=NativePhase::after && event.frame->eax==static_cast<u32>(-2) &&
        native_language_redraw::pending(native_language_redraw::View::hud)) {
-        const auto caller=*ptr<const u32>(event.frame->ebp+4)-static_cast<u32>(host->image_base);
+        const auto caller=accepted_caller(event);
         if(hud_caller(caller) || caller==0xFECD6) return redraw(event,result,handled,caller);
     }
     if(event.id==native_name_input::edit_dispatch && constructing==Construction::completed) {
@@ -194,7 +205,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     switch(event.id) {
     case entry:
         if(constructing==Construction::none) {
-            const auto caller=*ptr<const u32>(event.frame->ebp+4)-static_cast<u32>(host->image_base);
+            const auto caller=accepted_caller(event);
             if(windows_build::is_3891() && caller==0x3E58E) native_name_input::activate_keyword();
             editing.active=hud_caller(caller);
             if(editing.active) {

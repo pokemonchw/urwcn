@@ -1,0 +1,18 @@
+producer_rva	domain	source	target
+143C64	menu.format	ANIMAL COMMANDS: %s	动物命令：%s
+143C6E	menu.title	ANIMAL GROUP COMMANDS	动物群体命令
+1435A6	menu.label	Eat now	现在进食
+1435A6	menu.label	Eat now (all)	现在全部进食
+1436C8	menu.label	Attack	攻击
+1436C8	menu.label	Attack (all)	全部攻击
+1437B4	menu.label	Follow	跟随
+143864	menu.label	Stay	留下
+143916	menu.label	Come	过来
+1439E4	menu.label	I shall name you...	我要给你取名……
+143B64	menu.label	Group command off	关闭群体命令
+143C04	menu.label	Group command	群体命令
+10049B	menu.label	Cancel	取消
+143A4E	message.literal	?It's too far to respond, but you can still shout these commands.	?距离太远，对方无法回应，但你仍可以喊出这些命令。
+143215	message.literal	#Type a name: 	#输入名称: 
+1432AF	message.literal	!Canceled.	!已取消。
+1431FD	message.format.005b62a4	?What do you want to call %s?	?你想给%s起什么名字？
