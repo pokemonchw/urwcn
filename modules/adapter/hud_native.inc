@@ -8,6 +8,7 @@ enum HudHook : u32 {
     hud_surface_first=0x6000,
     hud_command=0x6100,hud_repeat,hud_help,hud_wielded,
     hud_penalty_first=0x6120,hud_penalty_width=0x6130,hud_penalty_draw,
+    hud_condition_frame_first=0x6140,
     hud_center_first=0x6200,hud_center_fit=0x6210,hud_center_line,hud_center_last,
     hud_center_draw_line,hud_center_draw_last,
     hud_month_append=0x6220,hud_month_paragraph,hud_scale_width,hud_scale_call,hud_scale_text,
@@ -93,6 +94,13 @@ Status hud_identity_display(const NativeEvent& e,const char* original,std::vecto
 }
 Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=true;
+    if(e.id>=hud_condition_frame_first && e.id<hud_condition_frame_first+6) {
+        // 111480 clears [frame_y+1,frame_y+height-1). Keep only its live
+        // exclusive bottom until the immediately following condition text.
+        hud_condition_cell::inner_bottom=static_cast<std::int32_t>(e.frame->edx)+
+            static_cast<std::int32_t>(e.arguments[1])-1;
+        return Status::ok;
+    }
     if(e.id>=hud_surface_first && e.id<hud_surface_first+std::size(hud_surface_calls)) {
         // F8E20 may already have borrowed the encoded label. An enclosing
         // component alone does not establish that this actual label is Chinese.
@@ -100,7 +108,17 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
         // The native arithmetic '+' separator uses the same label primitive.
         // Its statically identified literal remains native punctuation.
         if(e.id==hud_surface_first && e.arguments[0]==address(at<char>(0x1AA240))) return Status::ok;
-        return hud_lend(e,hud_surface_calls[e.id-hud_surface_first].component,0,Scope::text);
+        const auto component=hud_surface_calls[e.id-hud_surface_first].component;
+        if(component==TextComponent::hud_condition) {
+            // F9910 supplies the text origin after its complete native frame
+            // has cleared the interior. Fit the common glyph envelope inside
+            // that actual writable height; the original origin stays intact.
+            hud_condition_cell::line_height=hud_condition_cell::inner_bottom-
+                static_cast<std::int32_t>(e.frame->edx);
+            hud_condition_cell::inner_bottom=0;
+            begin(e,Scope::hud_condition);
+        }
+        return hud_lend(e,component,0,Scope::text);
     }
     if(e.id>=hud_center_first && e.id<hud_center_first+std::size(hud_center_calls)) {
         const auto component=hud_center_calls[e.id-hud_center_first].component;
@@ -254,6 +272,10 @@ Status dispatch_hud(const NativeEvent& e,DispatchResult& result,bool& handled) {
 void append_hud_hooks(std::vector<HookSpec>& hooks) {
     for(u32 i=0;i<std::size(hud_surface_calls);++i)
         hooks.push_back(call(hud_surface_first+i,hud_surface_calls[i].site,0x10E5A0,3));
+    // The original wide/compact branches of the three status components.
+    constexpr u32 condition_frames[]{0xF9F1B,0xF9F57,0xF9FFE,0xFA05A,0xFA17A,0xFA268};
+    for(u32 i=0;i<std::size(condition_frames);++i)
+        hooks.push_back(call(hud_condition_frame_first+i,condition_frames[i],0x111480,3));
     hooks.push_back(call(hud_command,0xF91E7,0x10E5A0,3));
     hooks.push_back(call(hud_repeat,0xF9660,0x114680,2));
     hooks.push_back(call(hud_help,0xFA394,0x114680,2));

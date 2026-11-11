@@ -110,7 +110,7 @@ enum class Scope : u32 {
     native_renderer_resource=0x107,
     known_map_control_first=0x108,known_map_help=0x10E,wounds_help=0x10F,
     known_map_dialog_control_first=0x110,
-    wounds_frame=0x118,
+    wounds_frame=0x118,hud_condition=0x119,
     message_pending=0x200, message_body=0x201
 };
 struct Active {
@@ -123,6 +123,10 @@ struct Active {
     u32 outline;
 };
 std::vector<Active> active;
+
+// Synchronous F9910 frame/text operands. They are consumed in the same native
+// component call and never enter the saved UI state or the font caches.
+namespace hud_condition_cell {std::int32_t inner_bottom{},line_height{};}
 
 // Three original sprintf arguments, borrowed only for the synchronous DEDA0
 // summary call. No row index, position, text or page snapshot is retained.
@@ -272,9 +276,12 @@ render::TextRequest render_request(const char* utf8,std::int32_t x,std::int32_t 
     auto format=*reinterpret_cast<void**>(reinterpret_cast<unsigned char*>(surface)+4);
     unsigned char r{},g{},b{};
     get_rgb(pixel,format,&r,&g,&b);
+    const bool condition=in(Scope::hud_condition);
     return {utf8,surface,*at<void*>(0xA2110CC),x,y,
         static_cast<u32>(r)|(static_cast<u32>(g)<<8)|(static_cast<u32>(b)<<16)|0xFF000000u,
-        10,9,0,0,outline_budget(),domain.width,domain.height};
+        condition?hud_condition_cell::line_height:10,
+        condition?hud_condition_cell::line_height:9,
+        0,0,outline_budget(),domain.width,domain.height};
 }
 Status metrics_at_outline(const char* encoded,u32 outline,render::Metrics& output) {
     if(!chinese_enabled && !in(Scope::profile_identity_unicode)) {
