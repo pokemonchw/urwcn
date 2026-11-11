@@ -32,7 +32,7 @@ enum WindowsEncyclopediaHook : u32 {
     we_select_wait=0x79D4,
     we_map_marker_title=0x79D5,we_map_marker_first=0x79D6,
     we_map_control_first=0x79E8,we_map_control_draw=0x79EE,
-    we_map_zoom_hint,we_map_zoom_keys,we_wounds_help=0x79F1
+    we_map_zoom_hint,we_map_zoom_keys,we_wounds_help=0x79F1,we_keyword_query
 };
 constexpr u32 we_flow_begin=0x57F1;
 const WindowsEncyclopediaTopic* windows_encyclopedia_topic;
@@ -43,6 +43,9 @@ bool windows_encyclopedia_help;
 unsigned windows_encyclopedia_help_record;
 std::uint64_t windows_encyclopedia_record;
 std::map<std::string,std::string> windows_encyclopedia_words;
+// Authored Chinese names map to original GAME.NFO identifiers. This is a
+// dictionary, with no input, page, layout or native resource ownership.
+std::map<std::string,std::string> windows_encyclopedia_keywords;
 struct WindowsUpperSource { u64 token;std::string text; };
 std::vector<WindowsUpperSource> windows_encyclopedia_upper;
 u32 windows_encyclopedia_link_frame;
@@ -84,12 +87,20 @@ Status initialize_windows_encyclopedia() {
 #include "../../src/linux/encyclopedia_links.inc"
     };
     windows_encyclopedia_words.clear();
+    windows_encyclopedia_keywords.clear();
     for(const auto& link:links) {
         std::vector<char> label;
         auto status=windows_culture_text(std::string("link.")+link.key,label);
         if(status!=Status::ok)return status;
         windows_encyclopedia_words.emplace(link.name,label.data());
         windows_encyclopedia_words.emplace(windows_link_spelling(link.name),label.data());
+        windows_encyclopedia_keywords.emplace(label.data(),link.name);
+    }
+    for(const auto& topic:windows_encyclopedia_topics) {
+        std::vector<char> title;
+        const auto status=windows_culture_text(std::string("topic.")+topic.key+".title",title);
+        if(status!=Status::ok)return status;
+        windows_encyclopedia_keywords.emplace(title.data(),topic.name);
     }
     return Status::ok;
 }
@@ -405,6 +416,20 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         return lend_text(e,label,e.arguments[1],Scope::setup_exit,*at<u32>(0x5F54A9C));
     }
     switch(e.id) {
+    case we_keyword_query:
+        if(translation_available && native_name_input::contains_utf8(ptr<char>(e.frame->ecx))) {
+            std::vector<char> encoded;
+            const auto status=native_name_input::display(ptr<char>(e.frame->ecx),encoded);
+            if(status!=Status::ok)return status;
+            const auto keyword=windows_encyclopedia_keywords.find(encoded.data());
+            if(keyword!=windows_encyclopedia_keywords.end()) {
+                // 3E639 supplies the native caller's live local query. Its original
+                // existence check, topic construction and history consume this
+                // English alias; the getst input buffer remains actual UTF-8.
+                std::memcpy(ptr<char>(e.frame->ecx),keyword->second.c_str(),keyword->second.size()+1);
+            }
+        }
+        return Status::ok;
     case we_flow_begin:
         *at<u32>(0x61BBB3C)=60;
         native_link_flow_component::begin({native_root_component::current(),0x3DF74,
@@ -642,6 +667,7 @@ void append_windows_encyclopedia_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(we_preview_summary,0x3CC8A,0x10E5A0,3));
     hooks.push_back(call(we_preview_button,0x3CCF3,0xCFAF0,2));
     if(windows_build::is_3891()) {
+        hooks.push_back(call(we_keyword_query,0x3E63D,0x3C8A0,0));
         hooks.push_back(call(we_preview_scope_first+3,0xD7B80,0x3CA90,0));
         hooks.push_back(call(we_wounds_help,0xFDBA7,0x162530,0));
     }

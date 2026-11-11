@@ -39,7 +39,7 @@ culture.ui.first_timer_title	初次冒险指南
 culture.ui.launch	查看文化介绍
 culture.ui.help_1	高亮的主题包含更多信息。用方向键选择主题后，
 culture.ui.help_2	按ENTER或用鼠标点击，即可查看对应条目。
-culture.ui.help_3	也可以自行输入英文关键词或主题进行搜索。
+culture.ui.help_3	也可以输入中文或英文主题名进行搜索。
 culture.map.title	文化区域
 culture.map.known_areas_title	已知区域地图
 culture.map.indicators_title	文化区域图例

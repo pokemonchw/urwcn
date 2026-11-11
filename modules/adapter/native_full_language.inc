@@ -398,7 +398,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         handled=true;return Status::ok;
     }
     if(event.id==name_input_result && native_language_redraw::pending(View::encyclopedia) &&
-       event.frame->eax==static_cast<u32>(-2) &&
+       event.frame->eax==static_cast<u32>(-2) && !native_name_input::state.committed &&
        *ptr<const u32>(event.frame->ebp+4)==host->image_base+0x3E58E) {
         const auto flip=*at<u32>(0x61BBA5C);
         auto selection=*at<u32>(0x5F54AB0);

@@ -157,6 +157,11 @@ Status redraw(const NativeEvent& event,DispatchResult& result,bool& handled,u32 
 }
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=false;
+    // 3E589's real getst frame owns the encyclopedia keyword buffer. The
+    // existing input CALL also identifies a frame suspended before hot reload.
+    if(event.id==input && windows_build::is_3891() &&
+       *ptr<const u32>(event.frame->ebp+4)==host->image_base+0x3E58E)
+        native_name_input::activate_keyword();
     // The existing Full name_text hook owns this shared CALL and its After
     // scope retirement. Run this narrow semantic callback before Full, then
     // let Full continue its ordinary Unicode scope on the resulting input.
@@ -190,6 +195,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     case entry:
         if(constructing==Construction::none) {
             const auto caller=*ptr<const u32>(event.frame->ebp+4)-static_cast<u32>(host->image_base);
+            if(windows_build::is_3891() && caller==0x3E58E) native_name_input::activate_keyword();
             editing.active=hud_caller(caller);
             if(editing.active) {
                 prune();const auto root=native_root_component::current();const auto current=flow(root);
@@ -215,6 +221,8 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         if(constructing==Construction::completed) {event.frame->eax=13;result.skip_original=1;}
         break;
     case finished:
+        if(windows_build::is_3891() && *ptr<const u32>(event.frame->ebp+4)==host->image_base+0x3E58E)
+            native_name_input::finish_keyword();
         if(constructing==Construction::none && editing.active) {
             sources.find(editing.root)->second.prompts.find(editing.prompt)->second.values.push_back(
                 {editing.color,editing.capacity,editing.shown});

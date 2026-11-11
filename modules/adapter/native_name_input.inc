@@ -1,7 +1,8 @@
-// Windows native Choose_Name/getst, map text field and key_event boundaries. This file is
+// Windows native Choose_Name/encyclopedia getst, map text field and key_event boundaries. This file is
 // included after codec()/metrics(); it owns no UI layout or drawing cache.
 // Static instructions: docs/evidence/20261019-windows-chinese-input.md and
-// docs/evidence/20261110-map-marker-chinese-input.md.
+// docs/evidence/20261110-map-marker-chinese-input.md and
+// docs/evidence/20261111-encyclopedia-chinese-search.md.
 namespace native_name_input {
 enum Hook : u32 {
     scope=0x5400,commit,stop_initial,stop_modifiers,edit_dispatch,backspace,
@@ -9,9 +10,10 @@ enum Hook : u32 {
     showtext_copy,renshowtext_copy,renderer_showtext_copy,
     marker_edit=0x5410,marker_cursor,marker_finished,marker_extent
 };
-// active: 1 = Choose_Name/getst, 2 = the native map-marker ring editor.
+// active: 1 = Choose_Name/getst, 2 = map-marker ring editor, 3 = encyclopedia/getst.
 struct State { u32 active{},committed{}; };
 State state{};
+bool getst_active() { return state.active==1 || state.active==3; }
 struct Api {
     int (__cdecl *SetHint)(const char*,const char*);
     void (__cdecl *StartTextInput)();
@@ -187,6 +189,15 @@ void activate_marker() {
     state={2,0};
     if(translation_available) api.StartTextInput();
 }
+void activate_keyword() {
+    if(state.active==3) return;
+    state={3,0};
+    if(translation_available) api.StartTextInput();
+}
+void finish_keyword() {
+    state={};
+    if(translation_available) api.StopTextInput();
+}
 void append_committed(char* buffer,std::size_t capacity) {
     auto used=std::strlen(buffer);
     for(auto* p=at<unsigned char>(0x5f549b8);*p;) {
@@ -240,7 +251,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         if(translation_available && state.active) result.resume_rva=event.id==stop_initial ? 0xd1c74 : 0xd1cf6;
         return Status::ok;
     case edit_dispatch:
-        if(translation_available && state.active==1 && state.committed) {
+        if(translation_available && getst_active() && state.committed) {
             state.committed=0;
             const auto* text=at<unsigned char>(0x5f549b8);
             if(text[0]=='*' && !text[1]) {
@@ -254,13 +265,13 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         } else result.resume_rva=event.frame->ebx==8 ? 0x10f788 : 0x10f80e;
         return Status::ok;
     case backspace:
-        if(translation_available && state.active==1) {
+        if(translation_available && getst_active()) {
             erase_last(at<unsigned char>(0xa49b9a8));
             result.resume_rva=0x10f801;
         }
         return Status::ok;
     case erase_initial: case erase_backspace: case erase_random:
-        if(translation_available && state.active==1) {
+        if(translation_available && getst_active()) {
             render::Metrics measured{};
             const auto status=measure(at<char>(0xa49b9a8),measured);
             if(status!=Status::ok) return status;
@@ -270,7 +281,7 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         }
         return Status::ok;
     case cursor:
-        return translation_available && state.active==1 && event.phase==NativePhase::before ?
+        return translation_available && getst_active() && event.phase==NativePhase::before ?
             candidate_rectangle(static_cast<int>(event.frame->ecx),static_cast<int>(event.frame->edx),outline_budget()) : Status::ok;
     case marker_edit:
         if(translation_available && state.active==2 && state.committed) {
