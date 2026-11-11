@@ -248,6 +248,20 @@
     "refresh": "common component/cache invalidation rebuilds native display sources; save enumeration is not replayed",
     "evidence": "docs/evidence/20261019-load-saved-character-native.md"
   },
+  "load_character_progress": {
+    "entry_rva": "0x17E4C0",
+    "wait_text_call": "0x17E556",
+    "progress_parser_call": "0x17E6E7",
+    "progress_paragraph_call": "0x17E71C",
+    "ready_text_call": "0x17E84E",
+    "player_name_rva": "0xA32A6E8",
+    "player_culture_id_rva": "0xA32A6F5",
+    "scope": "post-menu saved-character load progress, distinct from startup audio/intro loading",
+    "preserved": "original identity/English progress buffers, Unicode character name, load operations, native paragraph wrapping, layout, input and caches",
+    "drawing": "existing complete native text/paragraph metrics and immediate glyph output at the native surface's actual density",
+    "refresh": "next ordinary native construction; never re-enter the load business function to repaint",
+    "evidence": "docs/evidence/20261111-load-character-progress-native.md"
+  },
   "language_toggle": {
     "shortcut": "Shift+F10",
     "input_hooks": [

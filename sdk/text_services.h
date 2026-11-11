@@ -49,6 +49,7 @@ enum class TextComponent : std::uint32_t {
     ancestors_select_hint = 0x909, ancestors_page = 0x90A,
     ancestors_lived = 0x90B, ancestors_journeyed = 0x90C,
     load_saved_title = 0xA00, load_saved_empty = 0xA01, load_saved_press_key = 0xA02,
+    load_saved_wait = 0xA03, load_saved_progress = 0xA04, load_saved_ready = 0xA05,
     profile_heading = 0xB00, profile_culture_title = 0xB01, profile_sex_title = 0xB02,
     profile_name_title = 0xB03, profile_random = 0xB04, profile_cultures = 0xB05,
     profile_back = 0xB06, profile_male = 0xB07, profile_female = 0xB08, profile_name_help = 0xB09,

@@ -82,6 +82,9 @@ const char* key(TextComponent component) {
     case TextComponent::load_saved_title:return "load_saved.title";
     case TextComponent::load_saved_empty:return "load_saved.empty";
     case TextComponent::load_saved_press_key:return "load_saved.press_key";
+    case TextComponent::load_saved_wait:return "load_saved.wait";
+    case TextComponent::load_saved_progress:return "load_saved.progress";
+    case TextComponent::load_saved_ready:return "load_saved.ready";
     case TextComponent::scenario_village_title:return "scenario.village_title";
     case TextComponent::scenario_introduction_1:return "scenario.introduction_1";
     case TextComponent::scenario_introduction_2:return "scenario.introduction_2";
@@ -244,6 +247,7 @@ bool has_value(TextComponent component) {
            component==TextComponent::ancestors_journeyed ||
            component==TextComponent::profile_start_age ||
            component==TextComponent::creation_complete_enter ||
+           component==TextComponent::load_saved_progress ||
            component==TextComponent::startup_audio || component==TextComponent::startup_audio_failed ||
            is_setup_value(component);
 }
@@ -280,6 +284,7 @@ Status UWCN_CALL initialize(const HostApi* host) {
                        TextComponent::character_creation_custom,TextComponent::character_creation_easy,
                        TextComponent::character_creation_too_easy,TextComponent::character_creation_exit,
                        TextComponent::load_saved_title,TextComponent::load_saved_empty,TextComponent::load_saved_press_key,
+                       TextComponent::load_saved_wait,TextComponent::load_saved_progress,TextComponent::load_saved_ready,
                        TextComponent::profile_heading,TextComponent::profile_culture_title,TextComponent::profile_sex_title,
                        TextComponent::profile_name_title,TextComponent::profile_random,TextComponent::profile_cultures,
                        TextComponent::profile_back,TextComponent::profile_male,TextComponent::profile_female,

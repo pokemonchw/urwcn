@@ -87,6 +87,7 @@ enum Hook : u32 {
     setup_footer, shared_footer_paragraph, setup_exit_scope, setup_exit_text, setup_exit_width,
     setup_body_first=0x600, credits_append_first=0x700,
     load_saved_empty_panel=0xA00, load_saved_list_panel, load_saved_empty_text, load_saved_key_text,
+    load_saved_wait_text, load_saved_progress_source, load_saved_progress_paragraph, load_saved_ready_text,
     ancestors_title=0x900, ancestors_empty, ancestors_order, ancestors_exit,
     ancestors_played, ancestors_living, ancestors_distance, ancestors_previous, ancestors_next,
     ancestors_select, ancestors_select_prefix, ancestors_select_suffix,
@@ -242,7 +243,7 @@ Status resolve_display_text(TextComponent component,const char* original,const c
     if(component==TextComponent::skills_help_record || component==TextComponent::spells_help_record)
         return translate_help_record(component,value,encoded);
     std::string projected_value;
-    if(component==TextComponent::creation_complete_enter) {
+    if(component==TextComponent::creation_complete_enter || component==TextComponent::load_saved_progress) {
         const std::string identity(value);const auto separator=identity.find('|');
         const auto culture_id=static_cast<u32>(std::stoul(identity.substr(0,separator)));
         const auto culture_component=static_cast<TextComponent>(static_cast<u32>(TextComponent::profile_culture_0)+culture_id);
@@ -841,13 +842,30 @@ Status dispatch_native(const NativeEvent& e,DispatchResult& result) {
     case load_saved_empty_panel: case load_saved_list_panel:
         native_menu_component::bind_title(TextComponent::load_saved_title,at<char>(0x5F54A38));
         begin(e,Scope::load_saved_panel); break;
-    case load_saved_empty_text: case load_saved_key_text: {
+    case load_saved_empty_text: case load_saved_key_text:
+    case load_saved_wait_text: case load_saved_ready_text: {
         std::vector<char> encoded;
         const auto component=e.id==load_saved_empty_text
-            ? TextComponent::load_saved_empty : TextComponent::load_saved_press_key;
+            ? TextComponent::load_saved_empty : e.id==load_saved_key_text
+            ? TextComponent::load_saved_press_key : e.id==load_saved_wait_text
+            ? TextComponent::load_saved_wait : TextComponent::load_saved_ready;
         const auto status=translate(component,ptr<char>(e.arguments[0]),nullptr,encoded);
         if(status!=Status::ok) return status;
         return lend_text(e,encoded,e.arguments[0],Scope::text);
+    }
+    case load_saved_progress_source: {
+        // 17E6C2/17E6D4 retain the native "%s %s" identity and English
+        // progress buffer. Only this complete 162300 display input resolves
+        // the actual player culture ID and the unchanged Unicode name.
+        std::string original,name;
+        auto status=decode_parser_original(ptr<char>(e.frame->edx),original);
+        if(status!=Status::ok) return status;
+        status=decode_parser_original(at<char>(0xA32A6E8),name);
+        if(status!=Status::ok) return status;
+        const auto value=std::to_string(*at<unsigned char>(0xA32A6F5))+"|"+name;
+        native_component_binding::bind_source(e,native_text_resource::from_request({
+            TextComponent::load_saved_progress,original.c_str(),value.c_str()}));
+        return Status::ok;
     }
     case ancestors_title: {
         // ESI is DE990's original ECX mode here: -1 is the ancestor list.
@@ -1827,6 +1845,14 @@ Status UWCN_CALL initialize(const HostApi* api) {
         inline_hook(paragraph_width,0x10EE68,{0x8D,0x0C,0xF0,0x8B,0x45,0x08}),
         inline_hook(paragraph_advance,0x10EF57,{0x8D,0x04,0xD8,0x8B,0x9D,0xF8,0xF3,0xFF,0xFF})
     };
+    if(windows_build::is_3891()) {
+        // The post-menu load path is separate from 123DF0 startup progress.
+        // Its native parser and paragraph retain wrapping and all geometry.
+        hooks.push_back(call(load_saved_wait_text,0x17E556,0x10E5A0,3));
+        hooks.push_back(call(load_saved_progress_source,0x17E6E7,0x162300,0));
+        hooks.push_back(call(load_saved_progress_paragraph,0x17E71C,0x10EB40,4));
+        hooks.push_back(call(load_saved_ready_text,0x17E84E,0x10E5A0,3));
+    }
     for(u32 i=0;i<std::size(setup_text_calls);++i)
         hooks.push_back(call(setup_body_first+i,setup_text_calls[i].site,0x10E5A0,3));
     for(u32 i=0;i<std::size(credits_text_calls);++i)
