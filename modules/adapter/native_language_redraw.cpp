@@ -73,8 +73,10 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     HookSpec selection{profile_selection,HookKind::inline_code,0xE6CA6,0,0,5,{0xA1}};
     const auto reroll_position=static_cast<u32>(base+0x217A70);
     std::memcpy(selection.expected+1,&reroll_position,4);hooks.push_back(selection);
-    hooks.push_back({culture_input_result,HookKind::inline_code,0xF8D4,0,0,5,
-        {0x8B,0xD8,0x83,0xFB,0x64}});
+    // F8CD jumps directly to F8D6; leave the manual input's F8D4 MOV
+    // intact and hook the common CMP/JGE block at its actual entry.
+    hooks.push_back({culture_input_result,HookKind::inline_code,0xF8D6,0,0,5,
+        {0x83,0xFB,0x64,0x7D,0x57}});
     HookSpec culture{culture_menu_ready,HookKind::inline_code,0xF67D,0,0,5,{0xA1}};
     const auto current_selection=static_cast<u32>(base+0x5F54AB0);
     std::memcpy(culture.expected+1,&current_selection,4);hooks.push_back(culture);
@@ -95,6 +97,10 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         return Status::ok;
     }
     if(event.id==culture_input_result) {
+        // The inline trampoline copies bytes without relocating JGE.
+        // Continue both original signed-comparison outcomes explicitly;
+        // F932's CMP and F8DB's TEST each replace the comparison flags.
+        result.resume_rva=static_cast<std::int32_t>(event.frame->ebx)>=100 ? 0xF932 : 0xF8DB;
         if(state.rebuilding==culture_rebuilding) {
             // 12EEC..12F2E constructs the original enclosing heading panel.
             // All five native arguments are balanced before its final call.

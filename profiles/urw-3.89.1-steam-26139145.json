@@ -175,12 +175,14 @@
     "drawing": "immediate complete glyphs in the existing native physical-density surface; no text replay or page snapshot",
     "preserved_values": "English culture/menu records including MENULIST.SAV, numeric choices, sex values, name bytes, validation, directory checks, random generation and input actions",
     "refresh": "common component/cache sources reconstruct culture/sex panels and heading/footer; the active name field redraws in the same original input return",
+    "culture_result_boundary": "0xF8D6 covers the shared CMP EBX,100 / JGE 0xF932; signed EBX selects original continuation 0xF932 or 0xF8DB. The automatic branch 0xF8CD enters this boundary directly; manual input retains MOV EBX,EAX at 0xF8D4 and the original D1120 caller return 0xF8D4.",
     "name_field_boundary": "Scene has no separate NameField source; see docs/evidence/20261020-native-name-field-global-wake.md",
     "evidence": [
       "docs/evidence/20261019-character-profile-static.txt",
       "docs/evidence/20261019-character-profile-disassembly.txt",
       "docs/evidence/character-profile-ghidra.c",
-      "docs/evidence/20261019-character-profile-native.md"
+      "docs/evidence/20261019-character-profile-native.md",
+      "docs/evidence/20261111-culture-branch-crash.md"
     ]
   },
   "scenario_village": {
