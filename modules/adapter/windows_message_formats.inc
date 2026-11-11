@@ -948,6 +948,11 @@ const Entry entries[]{
     {0x18447f,0x1aad8c,"format.005aad8c",{{2,"%s",Kind::bound,nullptr}}},
     {0x1844bb,0x1dccb8,"format.005dccb8",{{2,"%s",Kind::domain,"bodypart"}}},
     {0x18454a,0x1dcce8,"format.005dcce8",{{2,"%s",Kind::domain,"frost-severity"},{3,"%s",Kind::domain,"bodypart"}}},
+    // 52C110's three native friendly-fire diagnostic branches. Append so
+    // the existing stable CALL IDs retain their original identities.
+    {0x12c39a,0x1b0ac4,"format.005b0ac4",{{2,"%s",Kind::bound,nullptr},{3,"%d",Kind::signed32,nullptr}}},
+    {0x12c402,0x1b0ad8,"format.005b0ad8",{{2,"%s",Kind::bound,nullptr}}},
+    {0x12c43c,0x1b0ae8,"format.005b0ae8",{{2,"%s",Kind::bound,nullptr}}},
 };
 
 // This is only the synchronous before/after state of one native sprintf call.

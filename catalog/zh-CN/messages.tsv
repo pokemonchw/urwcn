@@ -38948,6 +38948,9 @@ message.value.memorial.form.t.Yv.7b307d206a6f75726e65796564206120746f74616c20646
 message.value.memorial.form.t.Yvv.7b307d2064696564206174207b317d2077696e74657273206f6c642c20686176696e67207370656e74207b327d2064617973206f6620616476656e747572696e67206c6966652e	{0}去世时享年{1}岁，度过了{2}天冒险生涯。
 message.value.memorial.form.t.Z.5468657265207b307d2e	在这里，{0}。
 message.value.memorial.form.t.Z.7b307d2e	{0}。
+message.value.menu.aim-annotation.202d2d20646966666963756c74	 -- 困难
+message.value.menu.aim-annotation.202d2d20747269636b79	 -- 较棘手
+message.value.menu.aim-annotation.202d2d207665727920646966666963756c74	 -- 非常困难
 message.value.menu.aim-suffix.7c202d2d20646966666963756c74	| -- 困难
 message.value.menu.aim-suffix.7c202d2d20747269636b79	| -- 较棘手
 message.value.menu.aim-suffix.7c202d2d207665727920646966666963756c74	| -- 非常困难

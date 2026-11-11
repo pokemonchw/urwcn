@@ -1325,6 +1325,7 @@ Status rebuild_native_menu(const NativeEvent& event,bool& rebuilt,u32& selection
 Status bind_chat_lines_menu(native_menu_component::Handle);
 Status bind_chat_line_record(const NativeEvent&);
 void bind_animal_commands_menu(native_menu_component::Handle);
+Status bind_combat_commands_menu(native_menu_component::Handle,const char*);
 void bind_chat_mode_menu(native_menu_component::Handle menu) {
     // 146F80 constructs this native Menu; its accepted records remain English.
     // Rebind the same sources both on ordinary CFFB0 and on a live handover.
@@ -1356,6 +1357,21 @@ Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Con
     // Other Menu families already own their retained semantic sources. Their
     // previous materialization path did not re-enter these ambient binders.
     if(native_menu_component::materializing()) return Status::ok;
+    // 12C8C7 / 12D564 / 12F0D8 / 12FB28 enter 1002B0, whose D3DB0
+    // call uppercases a display copy. Keep the original menu.title identity.
+    if(windows_build::is_3891()) {
+        const auto* title=at<char>(0x5F54A38);
+        const char* original_title=nullptr;
+        if(std::strcmp(title,"WEAPON ASPECT")==0) original_title="Weapon Aspect";
+        else if(std::strcmp(title,"AIMING ZONE")==0) original_title="Aiming Zone";
+        else if(std::strcmp(title,"DEFENSE MANEUVER")==0) original_title="Defense Maneuver";
+        else if(std::strcmp(title,"SHIELD MODE")==0) original_title="Shield mode";
+        if(original_title) {
+            if(consumer==Consumer::plain_title || consumer==Consumer::title_panel)
+                return bind_combat_commands_menu(native_menu_component::source(),original_title);
+            return Status::ok;
+        }
+    }
     // 143340 opens the same native command Menu for individual and group
     // commands. Its existing producer retains the typed animal-name source.
     if(windows_build::is_3891() &&
@@ -1522,6 +1538,8 @@ Status lend_conversation_display(const NativeEvent&,u32&,Scope,u32);
 #include "windows_conversation_sources.inc"
 #include "windows_message_history.inc"
 #include "windows_animal_commands.inc"
+#include "windows_combat_commands.inc"
+#include "windows_combat_help.inc"
 #include "windows_conversation_text.inc"
 #include "windows_wielded.inc"
 #include "windows_hud_map_text.inc"
@@ -1567,7 +1585,7 @@ Status dispatch_windows_messages(const NativeEvent& event,DispatchResult& result
             windows_message_audit_copies::dispatch,windows_message_late_sources::dispatch,
             windows_wielded::dispatch,windows_hud_map_text::dispatch,windows_wounds::dispatch,
             windows_conversation_text::dispatch,windows_memorial::dispatch,windows_game_tasks::dispatch,
-            windows_message_log::dispatch}) {
+            windows_message_log::dispatch,windows_combat_help::dispatch}) {
         const auto status=dispatch(event,result,handled);
         if(handled) return status;
     }
@@ -1588,6 +1606,7 @@ void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
     windows_message_helpers::append_hooks(hooks);
     windows_message_quests::append_hooks(hooks);
     windows_message_menu_echo::append_hooks(hooks);
+    windows_combat_help::append_hooks(hooks);
     windows_message_menu_return::append_hooks(hooks);
     windows_message_appended::append_hooks(hooks);
     windows_message_transfers::append_hooks(hooks);
