@@ -48,7 +48,8 @@ Status dispatch(const NativeEvent& e,DispatchResult& result,bool& handled) {
         const auto* original=ptr<const char>(e.frame->esp+0x950);
         const native_name_input::UnicodeMeasure unicode(original);
         std::vector<char> encoded;
-        auto status=resolve_display_text(TextComponent::message_value,original,"message.history",encoded);
+        auto status=native_text_resource::resolve_source(windows_message_history::source(original),
+            resolve_display_text,encode_component_original,encoded);
         if(status!=Status::ok) return status;
         render::Metrics measured{};status=metrics_at_outline(encoded.data(),0,measured);
         if(status!=Status::ok) return status;
@@ -62,7 +63,7 @@ Status dispatch(const NativeEvent& e,DispatchResult& result,bool& handled) {
         std::string original;
         const auto status=decode_parser_original(ptr<const char>(e.frame->edx),original);
         if(status==Status::ok)
-            native_component_binding::bind_source(e,source(original.c_str(),"message.history"));
+            native_component_binding::bind_source(e,windows_message_history::source(original.c_str()));
         return status;
     }
     if(e.id==counter_format) {

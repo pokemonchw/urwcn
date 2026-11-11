@@ -1520,6 +1520,7 @@ Status lend_conversation_display(const NativeEvent&,u32&,Scope,u32);
 #include "windows_inventory.inc"
 #include "windows_profile_age.inc"
 #include "windows_conversation_sources.inc"
+#include "windows_message_history.inc"
 #include "windows_animal_commands.inc"
 #include "windows_conversation_text.inc"
 #include "windows_wielded.inc"

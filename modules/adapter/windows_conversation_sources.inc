@@ -23,9 +23,12 @@ struct Grammar {
     std::map<std::string,std::vector<const Form*>> literals;
     std::map<std::string,std::vector<const Lexeme*>> words;
     std::vector<Rule> rules;
-    Grammar() {
-        for(const auto& lexeme:lexemes) words[lexeme.source].push_back(&lexeme);
-        for(const auto& form:forms) {
+    Grammar():Grammar(std::begin(forms),std::end(forms),std::begin(lexemes),std::end(lexemes)) {}
+    Grammar(const Form* first_form,const Form* last_form,
+            const Lexeme* first_word,const Lexeme* last_word) {
+        for(auto word=first_word;word!=last_word;++word) words[word->source].push_back(word);
+        for(auto entry=first_form;entry!=last_form;++entry) {
+            const auto& form=*entry;
             if(!*form.slots) {literals[form.source].push_back(&form);continue;}
             Rule rule{form.source,form.slots,form.kind,form.order,form.domain,{},{}};
             std::size_t start=0;
@@ -68,8 +71,9 @@ bool domain(const std::string& input,char kind,Text& output) {
     }
     return parse(input,kind,output);
 }
+using Domain=bool (*)(const std::string&,char,Text&);
 bool match(const Rule& rule,const std::string& input,std::size_t slot,std::size_t position,
-           std::vector<std::string>& operands,std::vector<Text>& values) {
+           std::vector<std::string>& operands,std::vector<Text>& values,Domain resolve=domain) {
     const auto& literal=rule.literals[slot];
     if(input.compare(position,literal.size(),literal)!=0) return false;
     position+=literal.size();
@@ -78,7 +82,7 @@ bool match(const Rule& rule,const std::string& input,std::size_t slot,std::size_
         values.clear();
         for(std::size_t index=0;index<operands.size();++index) {
             Text value;
-            if(!domain(operands[index],rule.slots[index],value)) return false;
+            if(!resolve(operands[index],rule.slots[index],value)) return false;
             values.push_back(std::move(value));
         }
         return true;
@@ -90,7 +94,7 @@ bool match(const Rule& rule,const std::string& input,std::size_t slot,std::size_
     while(end!=std::string::npos && end<=input.size()) {
         const auto operand=input.substr(position,end-position);
         if(!repeated) operands[variable]=operand;
-        if((!repeated || operands[variable]==operand) && match(rule,input,slot+1,end,operands,values)) return true;
+        if((!repeated || operands[variable]==operand) && match(rule,input,slot+1,end,operands,values,resolve)) return true;
         if(end==input.size()) break;
         end=next.empty()?end+1:input.find(next,end+1);
     }

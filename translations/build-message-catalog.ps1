@@ -88,9 +88,46 @@ function History-Body([string]$text) {
     }
     return $body.ToString()
 }
+# F6664..F6789 applies ASCII sentence case before the history word loop.
+# F66E7 preserves decimal points; F6773 keeps the pending capital across the
+# exact prefix characters at 1A9F1C. The other native flag preserves case.
+function History-Case([string]$text) {
+    $body=[Text.StringBuilder]::new()
+    $capital=$true
+    for($i=0;$i -lt $text.Length;$i++) {
+        $character=$text[$i]
+        if($capital) {
+            if($character -cge 'a' -and $character -cle 'z') { $character=[char]([int]$character-32) }
+            $capital='#!+?:&,=_()1234567890 '.Contains($character)
+        }
+        [void]$body.Append($character)
+        if('.!:?'.Contains($character)) {
+            $capital=!($character -eq '.' -and $i+1 -lt $text.Length -and
+                '0123456789'.Contains($text[$i+1]))
+        }
+    }
+    return $body.ToString()
+}
+# Resource selection has already resolved PC/other selectors in this source
+# inventory. Only entries with no remaining native expansion are whole bodies.
+foreach($entry in $resource.entries) {
+    if($entry.source -match '[<>{}]|\[[A-Z_]+:|%[-+0-9.*lh]*[diuoxXfFeEgGcs]') { continue }
+    $target=History-Body $entry.target
+    $entries['message.value.message.history.'+(Hex-Text (History-Body $entry.source))]=$target
+    $entries['message.value.message.history.'+(Hex-Text (History-Body (History-Case $entry.source)))]=$target
+}
+# Existing embedded-literal wording has precedence when a resource contains
+# the identical complete English sentence.
 foreach($key in @($entries.Keys | Where-Object { $_.StartsWith('message.literal.') })) {
     $literal=[Text.Encoding]::UTF8.GetString([Convert]::FromHexString($key.Substring(16)))
-    $entries['message.value.message.history.'+(Hex-Text (History-Body $literal))]=History-Body $entries[$key]
+    $target=History-Body $entries[$key]
+    $entries['message.value.message.history.'+(Hex-Text (History-Body $literal))]=$target
+    $entries['message.value.message.history.'+(Hex-Text (History-Body (History-Case $literal)))]=$target
+}
+# The native SOUND_NORMAL slot selects one of these complete SND_PRES words.
+# Keep the same selected word identity inside the history sentence grammar.
+foreach($entry in $resource.entries | Where-Object key -eq 'SND_PRES') {
+    $entries['message.value.message.history.sound.'+(Hex-Text $entry.source)]=$entry.target
 }
 $catalog=[Collections.Generic.List[string]]::new()
 $catalog.Add('# Generated from decompiled native message sources and selected resource templates.')

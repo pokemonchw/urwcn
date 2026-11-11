@@ -6,3 +6,12 @@ message.log.ui	Enter a note to log	向日志添加备注
 message.log.ui	You can now write a note which will be added to message log.	现在可以输入一条备注，将其添加到消息日志。
 message.history	HELP AND GAME OPTIONS: Setup options	帮助与游戏选项：设置选项
 message.history	HELP AND GAME OPTIONS: Keyboard commands	帮助与游戏选项：键盘指令
+message.history.form	What do you want to call {0}?	你想给{0}起什么名字？
+message.history.form	ANIMAL COMMANDS: {0}: {1}	动物指令：{0}：{1}
+message.history.form	ANIMAL GROUP COMMANDS: {0}	动物群体指令：{0}
+message.history.form	{0} {1}.	{0}{1}。
+message.history.form	There is {0} here and you take a closer look at this area.	这里有{0}，你仔细查看了这片区域。
+message.history.form	You don't have anything to {0}.	你没有可以{0}的东西。
+message.history.form	The {0}	{0}
+message.history.form	{0}	{0}
+message.history.form	{0} called {1}	{0}（名叫{1}）
