@@ -1,0 +1,128 @@
+2026-11-11 玩家闪退：原生语法调用的驻留桥返回地址被误当原调用点
+
+结论
+
+用户提供 20261111-101503-411-p36140-t19048-1.7z，现场时间为北京时间
+2026-11-11 18:15:03。完整转储确认闪退由汉化 Adapter 的未处理
+std::out_of_range 引起；并非据异常名称推断的栈缓冲区溢出。
+原生 NPC 描述构建器在 AE33A 调用语法函数 161E90，已有 phased CALL
+将返回地址换成 Loader After 桥；Adapter 却仍用 [EBP+4] 推导原调用点，
+导致 grammar_starts 查找越过末尾，再用邻接常量当键执行 map::at。
+
+分析全部基于压缩包、内存转储、相同身份 DLL、原 PE 和源码。
+没有启动游戏、注入运行进程、模拟操作、执行产物、运行或编写测试、添加断言。
+
+文件身份与现场
+
+- 原游戏为 Windows x86 3.89.1 / Steam Build26139145。
+  urw.exe SHA-256：c6ed73642c1b1cb1f86b818c7586224398c2f0554f6114ced31bc40ff071806d。
+  实际加载基址 C60000，文中原生地址均为 RVA。
+- 玩家 release.json 与本机正式 Adapter、Loader、启动器哈希相同。
+  Adapter：0ed81a8da6f18c998cbab643c175ca9eda16930682d95a0a3ab07b4e2f9ce658。
+  Loader：7342e826539dc75f1254c4c266442a0f231c832adef526592a3b89ce3729d07d。
+  启动器：707d56da57872190ab92cf57f74c4821869af337efe96794de770670e527cfd7。
+- process.dmp SHA-256：18535f869f4cfaa7c2c3da43b5bd2dcc262e48b681dd9aafc9af7c8673e5bcc1。
+  完整转储 1096299255 字节，PID36140，故障线程19048。
+- 异常 C0000409、参数7、PC=74CEDA71，位于 ucrtbase!abort+31。
+  调用链对应 Adapter RVA172314 的 __verbose_terminate_handler、
+  RVA132B3B 的 map<unsigned,unsigned>::at 抛出分支、
+  RVA9F1AF 的 native_component_binding::finish_event，继而返回 Adapter 调度。
+  现场和本机 DLL 加载基址不同，符号定位使用 RVA 加本机首选基址66880000。
+- 原生上层栈为 A2649 -> 17DF96 -> 180D5B -> 18B018 -> 18AF15；
+  属于游戏进行中的移动调用链，不将旧的“给牛命名”分析当成本次已确认触发动作。
+
+完整内存中的决定性数据
+
+1. NativeEvent 位于 008FB1B0，phase=inline_before(2)，id=5508，
+   即原生语法入口161E99。NativeFrame：
+   EBP=008FB880，ESP=008FB468，ECX=0，EDX=3。
+2. [008FB884]=0CFE6176，等于现场 Loader 基址0CFE0000+6176，
+   本机相同 Loader 的符号表确认该 RVA 为 urwcn_after_bridge。
+   旧代码据此计算 consumer=0C386171；这不是十二个原生 grammar_starts 之一。
+3. 现场 producer=7B73FA60，恰是十二项 grammar_starts 的末尾；
+   相邻 SummaryRead 常量的首两项为 F9941、1E6EC4。
+   旧代码越界解引用后执行 grammar_starts_at.at(1E6EC4)；该 map 现场为空。
+   同一二进制的反汇编确认 map::at 的失败分支调用 __throw_out_of_range，
+   不是把缺少已登记 capture 的假设当作本次原因。
+4. 线程 TEB=00602000，ThreadLocalStoragePointer=33157580。
+   Loader _tls_index=12，线程 TLS 块=00A9A4B8。
+   静态 Pending 布局为24字节，pending 向量有两项：
+   - Hook C13F，site107E28，targetADCA0，原返回00D67E2D，args008FD1E0。
+   - Hook C849，siteAE33A，target161E90，token99C91A，
+     原返回00D0E33F，args008FB888。
+   第二项直接证明本次实际原调用点为 AE33A，非猜测。
+   其 return slot=args-4=008FB884，与语法函数 EBP+4 完全相同。
+
+源码修正
+
+modules/adapter/native_component_binding.cpp：
+
+- 新增仅存活于原生 CALL Before/After 之间的 grammar_call_sites：
+  键为该次原调用的真实返回槽地址，值取已登记 HookSpec.site_rva。
+  只处理 target161E90 的两个既有 phased CALL：40E78、AE33A。
+- Before 用 NativeFrame.esp 登记；After 用 Host 保留的 arguments-4 退役。
+  src/loader/hook_host.cpp:34..65 对 Before 的 raw+10、arguments raw+11、
+  After 的 call.arguments 明确保证这两个地址指同一槽。
+- 原161E99消费者对已路由 CALL 使用上述身份；十个未替换 CALL 的返回地址
+  继续来自它们的原生栈。十二处直接调用已从原 PE 完整列出。
+  AE33A 对应既有 GrammarStart{AE33A,0}，保留原 ECX=0 起点和 EDX=3。
+  其余实际捕获起点和语法操作仍按原身份处理。
+- configure、restore、shutdown 释放瞬时调用关联。
+  161E90 的原完整函数只有字串/内存操作，没有输入等待、SDL服务点或递归语法调用；
+  因此此关联不跨热发布的输入服务边界，不新增保存格式或修改驻留 ABI。
+  HookSpec、原 CALL、原语法函数及其实际输入均未改变。
+
+修正不捕获并吞掉异常，不为未知调用者新增默认值，不把 map::at 换成补零，
+不跳过语法，不补造字段或兜底路径。调用槽是短期 ABI 来源身份，不是 UI 位置。
+排版、原生语法构建及绘制仍交给既有原生流程。
+
+恢复存档：已确认的另一项失败，待整改
+
+report.txt 记录 serialization_complete=1、emergency_save_committed=0。
+save/GLOOMYWHITE 保留完整序列化副本，尚未成为游戏正式读档目录。
+失败发生于 src/launcher/emergency_save.cpp:306 的 fs::rename(source,recycled)：
+源角色目录在 D: 游戏目录，项目回收目的地在 C:；报告为 Permission denied。
+原目录成功归档和新目录安装两个日志均未出现。
+跨卷目录移转方案尚待整改；本次不通过删除原目录、猜测占用或另建运行包来绕过。
+恢复副本的文件写入完成不代表已损坏内存的业务状态或实际读档得到验收。
+未把玩家存档覆盖到本机游戏，也未运行读档。
+
+既有原生 UI 所有权问题：仍待整改
+
+- native_component_binding.cpp 的 fields 历史字段集合（约56行）和 construct
+  的独立组件构建（约240行）仍属先前登记的所有权退役范围；本次只改语法调用身份。
+- native_ui_scene.cpp:12 的 Child/Container、约314行 cache_saved 的来源快照，
+  仍持有历史组件/语义副本，待整改。
+- native_renderer_component_binding.cpp:42 的 Owner.children、约558行 paint_hud，
+  仍持有 Mod 组件遍历/重建，影响原生布局与缓存所有权，待整改。
+本批编译或发布不等于上述旧实现已符合 AGENTS.md。
+
+交付状态
+
+源码修正、产物编译、正式文件发布均已完成，三者分别有实际文件和回执。
+根入口命令：
+.toolchains/powershell/pwsh -NoLogo -NoProfile -NonInteractive -File ./build.ps1 -Toolchain MinGW -Module adapter -Publish
+
+- 请求 ID：9262a736b50f4525a4b34a48681dd01d。
+- 批次 ID：1323c960a63949ff8d765187fc1cd350。
+- 结果：build/.compile-queue/results/9262a736b50f4525a4b34a48681dd01d.json，
+  Success=true、PublishRequested=true、ReloadRequested=false，已完整读取。
+- 日志：build/.compile-queue/batches/1323c960a63949ff8d765187fc1cd350.log，
+  已完整读取。一次配置、一次增量编译，只重编 native_component_binding.cpp
+  并链接 Adapter；本批无编译警告或错误。提交至批次完成没有再改源码。
+- 正式事务：0c9cca8863a8433a8b8c6b3c903f8c5f，北京时间18:27:22完成。
+- 发布回执：build/mingw-x86/stage/0c9cca8863a8433a8b8c6b3c903f8c5f/publication-result.json，
+  success=true、runtime_requested=false，已完整读取。
+- 正式替换：package/modules/urwcn_adapter.dll、package/metadata/build-hour.txt、
+  package/release.json。根 urwcn_launcher.exe 仍加载同一正式包。
+- 三件旧文件先移入：回收/20261111-182722-0c9cca8863a8433a8b8c6b3c903f8c5f/package/，
+  按原相对路径保存，未覆盖或永久删除。
+- 新 Adapter SHA-256：1e284472d16963bbceae9d6a0151538a23d0ac666a4642317045fb533bd968d7，
+  正式件、构建输出、发布清单一致。
+- 回收 Adapter SHA-256：0ed81a8da6f18c998cbab643c175ca9eda16930682d95a0a3ab07b4e2f9ce658，
+  即本次玩家转储所用旧件。
+
+现场提取在 build/analysis/player-crash-20261111-101503/：
+dump-summary.json、original-crash-path.asm 及解包原件；没有创建平行运行包。
+本次没有游戏运行或测试验收，没有对玩家已崩溃进程热加载，也没有新的 Applied。
+来源识别缺陷已按转储和静态 ABI 修正，不能将编译或发布当作游戏运行验收。

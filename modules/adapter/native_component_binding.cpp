@@ -74,6 +74,10 @@ constexpr GrammarStart grammar_starts[]{
     {0x40E78,0},{0xAE33A,0},{0x13402D,0},{0x138A95,0}
 };
 std::map<u32,u32> grammar_starts_at;
+// The phased CALLs at 40E78 / AE33A replace their native return address with
+// the resident After bridge. Carry the admitted call site through that exact
+// return slot until After; 161E90 has no input wait or recursive grammar call.
+std::map<u32,u32> grammar_call_sites;
 enum class SummaryOperand {layout_zero,layout_ebx,nutrition_esi,nutrition_ecx,hunger_ecx,thirst_multiply,thirst_eax,vigour_edx,warmth_xmm};
 struct SummaryRead {u32 site,field;SummaryOperand operand;};
 constexpr SummaryRead summary_reads[]{
@@ -455,7 +459,7 @@ void configure(std::uintptr_t image_base,const PaintServices& paint_services) {
     base=image_base;services=paint_services;preparing=false;restoring_builder=false;
     parser_owner_depth=0;native_owner_depth=0;source_resolution_depth=0;
     builder_exists=false;builder={};builder_nodes.clear();fields.clear();metadata.clear();
-    calls.clear();parser_bindings.clear();event_inputs.clear();grammar_starts_at.clear();
+    calls.clear();parser_bindings.clear();event_inputs.clear();grammar_starts_at.clear();grammar_call_sites.clear();
 }
 void set_parser_source_decoder(DecodeParserSource decoder) { decode_parser_source=decoder; }
 void set_parser_source_encoder(EncodeParserSource encoder) { encode_parser_source=encoder; }
@@ -525,6 +529,11 @@ void begin_event(const NativeEvent& event) {
     EventInputs input{event.token,event.id,event.frame->ecx,event.frame->edx,{},{},{},{},{},false};
     const auto hook=metadata.find(event.id);
     if(hook!=metadata.end() && hook->second.kind==HookKind::call) {
+        if(hook->second.target_rva==0x161E90) {
+            if(event.phase==NativePhase::before)
+                grammar_call_sites.emplace(event.frame->esp,hook->second.site_rva);
+            else grammar_call_sites.erase(address(event.arguments)-sizeof(u32));
+        }
         const auto count=std::min<u32>(event.argument_count,static_cast<u32>(input.arguments.size()));
         std::copy_n(event.arguments,count,input.arguments.begin());
         const char* original=nullptr;
@@ -687,7 +696,10 @@ Status finish_event(const NativeEvent& event,DispatchResult& result,Status nativ
                 static_cast<u32>(builder.fragments.size()));return Status::ok;
         }
         if(event.id==parser_grammar) {
-            const auto consumer=*pointer<const u32>(event.frame->ebp+4)-static_cast<u32>(base)-5;
+            const auto return_slot=event.frame->ebp+4;
+            const auto phased=grammar_call_sites.find(return_slot);
+            const auto consumer=phased!=grammar_call_sites.end() ? phased->second :
+                *pointer<const u32>(return_slot)-static_cast<u32>(base)-5;
             const auto producer=std::find_if(std::begin(grammar_starts),std::end(grammar_starts),
                 [&](const GrammarStart& start){return start.consumer==consumer;});
             const auto first=producer->capture ? grammar_starts_at.at(producer->capture) : 0u;
@@ -822,11 +834,11 @@ void restore(const void* payload) {
         const auto owner=input.scalar<u64>();const auto component=static_cast<TextComponent>(input.scalar<u32>());
         fields.emplace(std::make_pair(owner,component),input.text());
     }
-    calls.clear();parser_bindings.clear();event_inputs.clear();preparing=false;restoring_builder=false;parser_owner_depth=0;native_owner_depth=0;source_resolution_depth=0;
+    calls.clear();parser_bindings.clear();event_inputs.clear();grammar_call_sites.clear();preparing=false;restoring_builder=false;parser_owner_depth=0;native_owner_depth=0;source_resolution_depth=0;
 }
 void shutdown() {
     base=0;services={};decode_parser_source=nullptr;encode_parser_source=nullptr;fields.clear();metadata.clear();builder={};builder_nodes.clear();
     builder_exists=false;calls.clear();parser_bindings.clear();event_inputs.clear();preparing=false;restoring_builder=false;parser_owner_depth=0;native_owner_depth=0;source_resolution_depth=0;
-    grammar_starts_at.clear();
+    grammar_starts_at.clear();grammar_call_sites.clear();
 }
 }
