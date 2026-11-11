@@ -12,6 +12,7 @@
 #include <filesystem>
 #include <fstream>
 #include <cstdint>
+#include "crash_monitor.h"
 
 static constexpr wchar_t expected_hash[]=L"e0b15bbbe16ffcd95d4ab61f08fe95dea4b95ebe1b3de428dae1d9477a9710d9";
 // Both fixed Windows builds use the native contracts recorded in the profiles.
@@ -69,7 +70,7 @@ static bool write_code(HANDLE process,void* address,const void* data,SIZE_T byte
     const bool restored=VirtualProtectEx(process,address,bytes,previous,&ignored)!=0;
     return ok && restored;
 }
-static bool stop_at_initialized_entry(const PROCESS_INFORMATION& process,DWORD entry_offset) {
+static bool stop_at_initialized_entry(const PROCESS_INFORMATION& process,DWORD entry_offset,urwcn::launcher::CrashMonitor& monitor) {
     // CREATE_PROCESS is delivered before user-mode execution. Arm the exact PE
     // entry, let Windows initialize its imports, then hold the entry instruction.
     // The loader's earlier system breakpoint is not the initialization boundary.
@@ -78,16 +79,13 @@ static bool stop_at_initialized_entry(const PROCESS_INFORMATION& process,DWORD e
     for(;;) {
         DEBUG_EVENT event{};
         if(!WaitForDebugEvent(&event,INFINITE)) return false;
-        DWORD continuation=DBG_CONTINUE;
+        DWORD continuation=monitor.observe(event);
         if(event.dwDebugEventCode==CREATE_PROCESS_DEBUG_EVENT) {
             entry=reinterpret_cast<std::uintptr_t>(event.u.CreateProcessInfo.lpBaseOfImage)+entry_offset;
             SIZE_T bytes=0;
             const bool read=ReadProcessMemory(process.hProcess,reinterpret_cast<void*>(entry),&original,1,&bytes) && bytes==1;
-            if(event.u.CreateProcessInfo.hFile) CloseHandle(event.u.CreateProcessInfo.hFile);
             const unsigned char breakpoint=0xcc;
             if(!read || !write_code(process.hProcess,reinterpret_cast<void*>(entry),&breakpoint,1)) return false;
-        } else if(event.dwDebugEventCode==LOAD_DLL_DEBUG_EVENT) {
-            if(event.u.LoadDll.hFile) CloseHandle(event.u.LoadDll.hFile);
         } else if(event.dwDebugEventCode==EXCEPTION_DEBUG_EVENT) {
             const auto& exception=event.u.Exception.ExceptionRecord;
             if(exception.ExceptionCode==EXCEPTION_BREAKPOINT && reinterpret_cast<std::uintptr_t>(exception.ExceptionAddress)==entry && event.dwThreadId==process.dwThreadId) {
@@ -96,9 +94,11 @@ static bool stop_at_initialized_entry(const PROCESS_INFORMATION& process,DWORD e
                 context.Eip=static_cast<DWORD>(entry);
                 if(!SetThreadContext(process.hThread,&context) || SuspendThread(process.hThread)==static_cast<DWORD>(-1)) return false;
                 if(!ContinueDebugEvent(event.dwProcessId,event.dwThreadId,DBG_CONTINUE)) return false;
-                return DebugActiveProcessStop(process.dwProcessId)!=0;
+                return true;
             }
-            if(!initial_break && exception.ExceptionCode==EXCEPTION_BREAKPOINT) initial_break=true;
+            if(!initial_break && event.u.Exception.dwFirstChance && exception.ExceptionCode==EXCEPTION_BREAKPOINT) {
+                initial_break=true;continuation=DBG_CONTINUE;
+            }
             else continuation=DBG_EXCEPTION_NOT_HANDLED;
         } else if(event.dwDebugEventCode==EXIT_PROCESS_DEBUG_EVENT) {
             ContinueDebugEvent(event.dwProcessId,event.dwThreadId,DBG_CONTINUE); return false;
@@ -112,12 +112,6 @@ static std::uintptr_t remote_module(DWORD process_id,const wchar_t* name) {
     MODULEENTRY32W entry{}; entry.dwSize=sizeof(entry); std::uintptr_t address=0;
     if(Module32FirstW(snapshot,&entry)) do { if(_wcsicmp(entry.szModule,name)==0) { address=reinterpret_cast<std::uintptr_t>(entry.modBaseAddr); break; } } while(Module32NextW(snapshot,&entry));
     CloseHandle(snapshot); return address;
-}
-static bool remote_call(HANDLE process,std::uintptr_t function,void* argument,DWORD& result) {
-    HANDLE thread=CreateRemoteThread(process,nullptr,0,reinterpret_cast<LPTHREAD_START_ROUTINE>(function),argument,0,nullptr);
-    if(!thread) return false;
-    const bool ok=WaitForSingleObject(thread,INFINITE)==WAIT_OBJECT_0 && GetExitCodeThread(thread,&result);
-    CloseHandle(thread); return ok;
 }
 int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int) {
     wchar_t own_path[32768]{}; GetModuleFileNameW(nullptr,own_path,32768);
@@ -168,7 +162,8 @@ int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int) {
         MessageBoxW(nullptr,L"无法设置高清显示启动参数。未启动游戏。",L"URWCN",MB_ICONERROR); return 1;
     }
     if(!CreateProcessW(game.c_str(),command.data(),nullptr,nullptr,FALSE,CREATE_SUSPENDED|DEBUG_ONLY_THIS_PROCESS,nullptr,directory.c_str(),&startup,&process)) { MessageBoxW(nullptr,L"无法创建游戏进程。",L"URWCN",MB_ICONERROR); return 1; }
-    if(!stop_at_initialized_entry(process,game_entry)) {
+    urwcn::launcher::CrashMonitor monitor(process,launcher_directory,game,game_hash);
+    if(!monitor.initialize() || !stop_at_initialized_entry(process,game_entry,monitor)) {
         TerminateProcess(process.hProcess,1); DebugActiveProcessStop(process.dwProcessId); CloseHandle(process.hThread); CloseHandle(process.hProcess);
         MessageBoxW(nullptr,L"无法完成 Windows 加载阶段的入口交接。新建进程已结束，游戏入口未被恢复。",L"URWCN",MB_ICONERROR); return 1;
     }
@@ -182,10 +177,14 @@ int WINAPI wWinMain(HINSTANCE,HINSTANCE,PWSTR,int) {
     void* remote_text=VirtualAllocEx(process.hProcess,nullptr,bytes,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);
     SIZE_T copied=0; DWORD loaded=0,initialized=0;
     bool ok=remote_owner && remote_text && WriteProcessMemory(process.hProcess,remote_text,loader.c_str(),bytes,&copied) && copied==bytes;
-    if(ok) ok=remote_call(process.hProcess,load_address,remote_text,loaded) && loaded;
+    if(ok) ok=monitor.remote_call(load_address,remote_text,loaded) && loaded;
     if(remote_text) VirtualFreeEx(process.hProcess,remote_text,0,MEM_RELEASE);
-    if(ok) ok=remote_call(process.hProcess,static_cast<std::uintptr_t>(loaded)+bootstrap_rva,reinterpret_cast<void*>(static_cast<std::uintptr_t>(process.dwThreadId)),initialized) && initialized==1;
+    if(ok) ok=monitor.remote_call(static_cast<std::uintptr_t>(loaded)+bootstrap_rva,reinterpret_cast<void*>(static_cast<std::uintptr_t>(process.dwThreadId)),initialized) && initialized==1;
     if(ok) ok=ResumeThread(process.hThread)!=static_cast<DWORD>(-1);
     if(!ok) { TerminateProcess(process.hProcess,1); MessageBoxW(nullptr,L"Mod 初始化未完成，新建的挂起进程已结束。请查看 package/urwcn.log。",L"URWCN",MB_ICONERROR); }
-    CloseHandle(process.hThread); CloseHandle(process.hProcess); return ok ? 0 : 1;
+    if(ok) {
+        ok=monitor.run();
+        if(!ok) DebugActiveProcessStop(process.dwProcessId);
+    }
+    CloseHandle(process.hThread); CloseHandle(process.hProcess); return ok ? static_cast<int>(monitor.exit_code()) : 1;
 }
