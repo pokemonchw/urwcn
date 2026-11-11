@@ -63,6 +63,7 @@ bool parse_history(const std::string& input,char kind,Text& output) {
 native_text_resource::TextSource source(const char* original) {
     const auto english=message_source_utf8(original);
     Text text;
+    if(windows_combat_declarations::parse(english,text)) return windows_inventory::expression(original,text);
     if(parse_history(english,'h',text)) return windows_inventory::expression(original,text);
     return native_text_resource::from_request({TextComponent::message_value,english.c_str(),"message.history"});
 }

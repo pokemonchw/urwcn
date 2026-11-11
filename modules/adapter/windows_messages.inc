@@ -2,6 +2,10 @@
 // No UI positions, layout, surfaces, pixels or delayed draw requests live here.
 Status message_translate_value(const char*,const char*,std::string&);
 using MessageText=native_message_source::Text;
+namespace windows_combat_declarations {
+bool parse(const std::string&,MessageText&);
+bool literal_expression(const MessageText&,MessageText&);
+}
 namespace windows_message_values {
 MessageText source(const char*,const char*);
 MessageText tag_source(const char*,const char*);
@@ -390,7 +394,13 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
         auto status=Status::ok;
         bool translated=false,unicode=false;
         if(chinese_enabled) {
-            status=message_project_source(neutral,true,projected);
+            // Retained pre-F492 records have the completed native statement
+            // as a literal. Classify its confirmed display grammar here, so
+            // the live record and every native cache consumer share it.
+            MessageText declaration;
+            const auto& source=windows_combat_declarations::literal_expression(neutral,declaration)
+                ? declaration : neutral;
+            status=message_project_source(source,true,projected);
             if(status==Status::ok) status=codec(layout_op::encode_native,projected.c_str(),encoded);
             translated=status==Status::ok;
         }
