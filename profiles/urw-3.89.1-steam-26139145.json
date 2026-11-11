@@ -18,6 +18,7 @@
     "docs/evidence/intro-disassembly.txt",
     "docs/evidence/intro-story-fade-disassembly.txt",
     "docs/evidence/20261019-intro-poem-native.md",
+    "docs/evidence/20261111-startup-intro-loop-crash.md",
     "docs/evidence/20261019-footer-branding-disassembly.txt",
     "docs/evidence/20261019-footer-branding-native.md",
     "docs/evidence/20261019-about-native-disassembly.txt",
@@ -277,6 +278,16 @@
     "drawing": "existing complete native text/paragraph metrics and immediate glyph output at the native surface's actual density",
     "refresh": "next ordinary native construction; never re-enter the load business function to repaint",
     "evidence": "docs/evidence/20261111-load-character-progress-native.md"
+  },
+  "intro_story_fade": {
+    "function_rva": "0x125240",
+    "hook_id": "0x5212",
+    "hook_rva": "0x125260",
+    "expected_bytes": "8A C3 C0 E0 02",
+    "native_loop_branch": "0x1252DF -> 0x125260",
+    "preserved": "native 63-step fade, color, delay, text calls and input; original MOV AL,BL / SHL AL,2 execute in the resident trampoline",
+    "language_reconstruction": "only the existing synchronous intro reconstruction resumes at original settled-text entry 0x1252E5",
+    "evidence": "docs/evidence/20261111-startup-intro-loop-crash.md"
   },
   "language_toggle": {
     "shortcut": "Shift+F10",

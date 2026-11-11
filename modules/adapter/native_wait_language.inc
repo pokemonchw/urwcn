@@ -71,7 +71,9 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(inline_hook(intro_wait_role,0x125748,{0x3D,0xD0,7,0,0,0x7F,0x1A}));
     hooks.push_back(inline_hook(intro_wait_background,0x125806,{0x3D,0xB8,0x0B,0,0,0x7F,0x1A}));
     hooks.push_back(inline_hook(intro_wait_version,0x125894,{0x3D,0xB8,0x0B,0,0,0x7F,0x1A}));
-    hooks.push_back(inline_hook(intro_story_fade,0x12525D,{0x0F,0x1F,0,0x8A,0xC3}));
+    // 1252DF loops to 125260 after each fade step. Patch the shared MOV/SHL
+    // entry so that the loop cannot enter the displacement of an inline JMP.
+    hooks.push_back(inline_hook(intro_story_fade,0x125260,{0x8A,0xC3,0xC0,0xE0,2}));
     hooks.push_back(inline_hook(intro_story_wait,0x125464,{0x3D,0xB8,0x0B,0,0,0x7F,0x1C}));
     hooks.push_back(call(intro_final_wait,0x125905,0xD3C80,0));
     for(u32 i=0;i<std::size(polls);++i)
