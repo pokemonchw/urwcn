@@ -3,6 +3,7 @@
 // Evidence: docs/evidence/20261110-wield-inventory-native.md.
 // Sacrifice: docs/evidence/20261110-sacrifice-inventory-native.md.
 // Complete caller/text census: docs/evidence/20261110-inventory-all-text.md.
+// Quantity variants: docs/evidence/20261112-quantity-all-text.md.
 Status native_text_limit(std::vector<char>& encoded,std::int32_t maximum,std::int32_t retained,u32 outline) {
     render::Metrics measured{};auto status=metrics_at_outline(encoded.data(),outline,measured);
     if(status!=Status::ok || measured.logical_width<=maximum) return status;
@@ -24,7 +25,8 @@ enum Hook:u32 {
     viewing_all,viewing_category,all_types_format,viewing_width,all_types_width,
     enter_origin,remaining_format,
     extra_text_first=0x18320,weight_copy=0x18340,quantity_format,quantity_more_format,cancel_source,
-    confirmation_text_first=0x18360
+    confirmation_text_first=0x18360,bounded_text_first=0x18370,
+    quantity_custom_format=0x18380,quantity_bounded_format,quantity_bounded_more_format
 };
 struct TextCall {u32 site,target;const char* domain;};
 constexpr TextCall text_calls[]{
@@ -78,6 +80,15 @@ constexpr TextCall confirmation_text_calls[]{
     {0xFBCDE,0x10E5A0,"confirmation.ui"},
     {0xFBD12,0x10E5A0,"confirmation.ui"}
 };
+// FC1D0 owns the minimum-limited selector used by crafting and materials.
+// Its complete native Panel is 115E70, with four stack arguments.
+constexpr TextCall bounded_text_calls[]{
+    {0xFC24D,0x115E70,"inventory.ui"},
+    {0xFC3F1,0x115E70,"inventory.ui"},
+    {0xFC2BF,0xCFAF0,"inventory.ui"},
+    {0xFC374,0xCFAF0,"inventory.ui"},
+    {0xFC489,0x10E5A0,"inventory.ui"}
+};
 
 std::string expression_key(const MessageText& source) {
     std::vector<unsigned char> bytes;native_message_source::write(bytes,source);
@@ -129,16 +140,18 @@ Status resolve_expression(TextComponent component,const char* value,std::vector<
     return native_text_limit(encoded,cells*8-1,(cells-2)*8,0);
 }
 Status bind_text(const NativeEvent& e,const TextCall& c) {
-    const auto argument=c.target==0x116270 ? 2u :
+    const bool panel=c.target==0x116270 || c.target==0x115E70;
+    const auto argument=panel ? 2u :
         c.target==0xCFAF0 || c.target==0x1157B0 ? 1u : 0u;
     const auto* original=ptr<char>(e.arguments[argument]);
     if(c.site==0x55A78 && std::strncmp(original,"...or select ",13)==0)
         return consume_source(e,expression(original,windows_messages::values.at(address(original)).text),0,Scope::text);
-    if(c.site==0x547E1 || c.site==0xFBE1B || c.site==0xFBFB8) {
+    if(c.site==0x547E1 || c.site==0xFBE1B || c.site==0xFBFB8 ||
+       c.site==0xFC24D || c.site==0xFC3F1) {
         if(c.site==0x547E1)
             native_component_binding::note_native_record(e,*ptr<u32>(e.frame->ebp-0x81C));
         return consume_source(e,expression(original,message_source_bound(original)),argument,
-            c.target==0x116270 ? Scope::titled_panel : Scope::text);
+            panel ? Scope::titled_panel : Scope::text);
     }
     if(c.site==0xFBC54 || c.site==0xFBC6D || c.site==0xFB9F5 || c.site==0xFBA0E) {
         // These actual labels are <Y>es / <N>o, with native highlight
@@ -159,7 +172,7 @@ Status bind_text(const NativeEvent& e,const TextCall& c) {
     if(c.site==0x54920) native_component_binding::note_native_record(e,e.frame->edi);
     if(c.site==0x5438E || c.site==0x543D6 || c.site==0x5440F || c.site==0x544E4 || c.site==0x5478B)
         native_component_binding::note_native_record(e,*ptr<u32>(e.frame->ebp-0x81C));
-    const auto scope=c.target==0x116270 || c.target==0x1157B0 ? Scope::titled_panel :
+    const auto scope=panel || c.target==0x1157B0 ? Scope::titled_panel :
         c.target==0xCFAF0 ? Scope::setup_exit : Scope::text;
     return consume_source(e,source,argument,scope);
 }
@@ -197,23 +210,37 @@ void append_hooks(std::vector<HookSpec>& hooks) {
         const auto& c=confirmation_text_calls[i];
         hooks.push_back(call(confirmation_text_first+i,c.site,c.target,c.target==0xCFAF0 ? 2 : 3));
     }
+    for(u32 i=0;i<std::size(bounded_text_calls);++i) {
+        const auto& c=bounded_text_calls[i];
+        hooks.push_back(call(bounded_text_first+i,c.site,c.target,c.target==0x115E70 ? 4 :
+            c.target==0xCFAF0 ? 2 : 3));
+    }
     // 4BD15..4BD1F prepares the exact 4B2F0 return's native copy. The loop
     // backedge starts at 4BD20, after this single source association.
     hooks.push_back(inline_hook(weight_copy,0x4BD15,{0x8B,0xD3,0x2B,0xD0,0x0F,0x1F,0x80,0,0,0,0}));
     hooks.push_back(call(quantity_format,0xFBDE8,0x10D0,3));
     hooks.push_back(call(quantity_more_format,0xFBF99,0x10D0,3));
+    // FBD80's only non-null override comes from FC160's original portions
+    // format. Bind the final native format without rewriting its buffer.
+    hooks.push_back(call(quantity_custom_format,0xFBDFB,0x10D0,3));
+    hooks.push_back(call(quantity_bounded_format,0xFC22F,0x10D0,3));
+    hooks.push_back(call(quantity_bounded_more_format,0xFC3D3,0x10D0,3));
     hooks.push_back(call(cancel_source,0x568C8,0xFBB10,0));
 }
 Status dispatch(const NativeEvent& e,DispatchResult& result,bool& handled) {
     handled=(e.id>=text_first && e.id<=remaining_format) ||
         (e.id>=extra_text_first && e.id<extra_text_first+std::size(extra_text_calls)) ||
         (e.id>=confirmation_text_first && e.id<confirmation_text_first+std::size(confirmation_text_calls)) ||
+        (e.id>=bounded_text_first && e.id<bounded_text_first+std::size(bounded_text_calls)) ||
+        (e.id>=quantity_custom_format && e.id<=quantity_bounded_more_format) ||
         (e.id>=weight_copy && e.id<=cancel_source);
     if(!handled) return Status::ok;
     if(e.id>=extra_text_first && e.id<extra_text_first+std::size(extra_text_calls))
         return e.phase==NativePhase::before ? bind_text(e,extra_text_calls[e.id-extra_text_first]) : Status::ok;
     if(e.id>=confirmation_text_first && e.id<confirmation_text_first+std::size(confirmation_text_calls))
         return e.phase==NativePhase::before ? bind_text(e,confirmation_text_calls[e.id-confirmation_text_first]) : Status::ok;
+    if(e.id>=bounded_text_first && e.id<bounded_text_first+std::size(bounded_text_calls))
+        return e.phase==NativePhase::before ? bind_text(e,bounded_text_calls[e.id-bounded_text_first]) : Status::ok;
     if(e.id==weight_copy) {
         if(e.phase==NativePhase::inline_before) {
             const auto* original=ptr<char>(e.frame->eax);
@@ -221,7 +248,8 @@ Status dispatch(const NativeEvent& e,DispatchResult& result,bool& handled) {
         }
         return Status::ok;
     }
-    if(e.id==quantity_format || e.id==quantity_more_format) {
+    if(e.id==quantity_format || e.id==quantity_more_format ||
+       (e.id>=quantity_custom_format && e.id<=quantity_bounded_more_format)) {
         if(e.phase==NativePhase::after) message_bind_source(ptr<char>(e.arguments[0]),native_message_source::format(
             message_source_lookup("inventory.format",ptr<char>(e.arguments[1])),
             {native_message_source::scalar(native_message_source::Scalar::signed32,e.arguments[2],"%d")},{"%d"}));

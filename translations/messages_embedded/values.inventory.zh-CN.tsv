@@ -143,7 +143,8 @@ inventory.ui	Are you sure to cancel?	确定要取消吗？
 inventory.ui	All	全部
 inventory.ui	Number?	指定数量
 inventory.ui	Enter amount: 	输入数量：
-inventory.format	HOW MANY? (OF TOTAL %d)	选择多少？（共%d件）
+inventory.format	HOW MANY? (OF TOTAL %d)	选择多少？（共%d）
+inventory.format	HOW MANY PORTIONS? (MAX. %d)	选择几份？（最多%d份）
 inventory.ui	What do you want to pick?	准备取走哪些物品？
 inventory.verb	pick	取走的物品
 action		

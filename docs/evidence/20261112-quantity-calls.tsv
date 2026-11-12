@@ -1,0 +1,9 @@
+site_va	target_va	stack_words	bytes	semantic
+004fbdfb	004010d0	3	e8 d0 52 f0 ff	portions format override; original signed maximum
+004fc22f	004010d0	3	e8 9c 4e f0 ff	bounded initial title; original signed maximum
+004fc3d3	004010d0	3	e8 f8 4c f0 ff	bounded manual-entry title; original signed maximum
+004fc24d	00515e70	4	e8 1e 9c 01 00	bounded initial complete native panel; title argument 2
+004fc3f1	00515e70	4	e8 7a 9a 01 00	bounded manual-entry complete native panel; title argument 2
+004fc2bf	004cfaf0	2	e8 2c 38 fd ff	ENTER.All suffix; original action 13
+004fc374	004cfaf0	2	e8 77 37 fd ff	SPACE.Number? suffix; original action 32
+004fc489	0050e5a0	3	e8 12 21 01 00	Enter amount: ; native text cursor

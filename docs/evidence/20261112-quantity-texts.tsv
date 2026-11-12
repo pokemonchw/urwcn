@@ -1,0 +1,14 @@
+current_pe_va	kind	original	zh_cn_or_preserved	domain	consumer_va
+005aa710	format	HOW MANY? (OF TOTAL %d)	选择多少？（共%d）	inventory.format	4FBDE8/4FBF99/4FC22F/4FC3D3
+005aa754	format	HOW MANY PORTIONS? (MAX. %d)	选择几份？（最多%d份）	inventory.format	4FC160 native copy -> 4FBDFB
+005aa728	button suffix	ENTER.All	全部	inventory.ui	4FBE91/4FC2BF; ENTER. preserved
+005aa734	button suffix	SPACE.Number?	指定数量	inventory.ui	4FBF3F/4FC374; SPACE. preserved
+005aa744	text	Enter amount: 	输入数量：	inventory.ui	4FC05F/4FC489
+005aa774	message format	!The minimum is %d, which is now selected.	!最少为%d，现已选取该数量。	format.005aa764	4FC51F -> 4FC52B; existing message source
+005a50b8	keycap	ESC	ESC	native	4FBEB1/4FC2D8; action 27
+005903bc	numeric format	%d	%d	native	4FBEF6 -> 4FBF0E; 4FC324 -> 4FC33B
+0058c8c0	blank text	 	 	native	4FC027/4FC455; original cursor/background operation
+0058c616	empty title/row			native	4FBE5B/4FBF51; 4FC28F/4FC386
+005aa704	cache identifier	askcount	askcount	native	50C540 save / 50C690 restore / 50C4C0 release
+005ac904	input cursor	_	_	native	50F6C6; original input cursor
+0058d6dc	input character format	%c	%c	native	50F86B; original accepted key -> input buffer

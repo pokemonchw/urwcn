@@ -34477,7 +34477,8 @@ message.value.injury.73746f6d6163682d61636865	胃痛
 message.value.injury.76616775652061696c6d656e74	不明病症
 message.value.inventory.format.25632e416c6c207479706573	%c.全部类别
 message.value.inventory.format.2e2e2e6f722073656c656374202564206d6f726520656e74726965732e	……还可选择%d项。
-message.value.inventory.format.484f57204d414e593f20284f4620544f54414c20256429	选择多少？（共%d件）
+message.value.inventory.format.484f57204d414e593f20284f4620544f54414c20256429	选择多少？（共%d）
+message.value.inventory.format.484f57204d414e5920504f5254494f4e533f20284d41582e20256429	选择几份？（最多%d份）
 message.value.inventory.format.56696577696e673a202573	显示：%s
 message.value.inventory.no-verb.53656c65637420616e206974656d20746f20	选择一件物品
 message.value.inventory.no-verb.53656c656374206974656d7320746f20	选择物品
