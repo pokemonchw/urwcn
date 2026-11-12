@@ -1,12 +1,13 @@
-// Windows 3.89.1: the four combat selectors all enter 1002B0. Its 10042B
+// Windows 3.89.1: all upper command menus enter 1002B0. Its 10042B
 // copies each accepted 20C-byte upper row, in order, into CF990's E8-byte
 // records. This binds those native sources; it does not construct a row list.
-// Evidence: docs/evidence/20261111-combat-menu-native.md.
-Status bind_combat_commands_menu(native_menu_component::Handle menu,const char* original_title) {
+// Evidence: docs/evidence/20261111-combat-menu-native.md and
+// docs/evidence/20261112-building-menu-native.md.
+Status bind_upper_commands_menu(native_menu_component::Handle menu,const char* original_title) {
     const auto& records=native_menu_model::paint_records(menu);
     const auto* title=reinterpret_cast<const char*>(records.header.data()+0x18);
-    native_menu_model::bind_title(menu,windows_inventory::expression(title,
-        message_source_lookup("menu.title",original_title)));
+    native_menu_model::bind_title(menu,windows_inventory::expression(title,original_title ?
+        message_source_lookup("menu.title",original_title) : windows_message_menu_echo::echoes.back().title));
     u32 count{};std::memcpy(&count,records.header.data()+0x14,sizeof(count));
     for(u32 index=0;index<count;++index) {
         const auto* record=records.rows.data()+index*native_menu_model::row_stride;
@@ -14,8 +15,12 @@ Status bind_combat_commands_menu(native_menu_component::Handle menu,const char* 
         // 10048C adds an empty separator; the defense builder also supplies
         // its own empty label. Neither is a semantic text consumer.
         if(!*label) continue;
-        const auto* suffix=std::strchr(label,'.')+1;
         u32 action{};std::memcpy(&action,record+0xC8,sizeof(action));
+        // 3CCF3 -> CFAF0 appends action 423h with the native TEXTSPOT
+        // marker after the upper rows. It has no dotted caption or upper
+        // source; 3CA90 paints its F1 caption and owns its hit rectangle.
+        if(action==0x423) continue;
+        const auto* suffix=std::strchr(label,'.')+1;
         if(action==27) {
             // 10049B creates ESC.Cancel independently of the upper records.
             native_menu_model::bind_row(menu,index,native_text_resource::from_request(

@@ -1,0 +1,16 @@
+site_rva	target_rva	native_bytes	purpose
+100525	cffb0	e8 86 fa fc ff	all upper command menu sources
+88fc8	116270	e8 a3 d2 08 00	work title
+89000	10e5a0	e8 9b 55 08 00	time label
+89055	10e5a0	e8 46 55 08 00	progress / continuing label
+89083	10e5a0	e8 18 55 08 00	effort label
+890ed	10e5a0	e8 ae 54 08 00	selected effort
+89138	10e5a0	e8 63 54 08 00	cancel prompt
+89585	10e5a0	e8 16 50 08 00	duration
+89796	10e5a0	e8 05 4e 08 00	resume explanation
+64785	116270	e8 e6 1a 0b 00	requirement title
+64797	162300	e8 64 db 0f 00	requirement introduction
+647b1	10eb40	e8 8a a3 0a 00	native requirement paragraph
+65006	10e5a0	e8 95 95 0a 00	requirement row
+46564	10d0	e8 67 ab fb ff	deconstruction success
+628b3	10d0	e8 18 e8 f9 ff	selected material debug name

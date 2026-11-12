@@ -288,7 +288,7 @@ const Entry entries[]{
     {0x68f34,0x1aad8c,"format.005aad8c",{{2,"%s",Kind::bound,nullptr}}},
     {0x69014,0x19a9a4,"format.0059a9a4",{{2,"%s",Kind::descriptor,nullptr},{3,"%d",Kind::signed32,nullptr}}},
     {0x69048,0x1aad8c,"format.005aad8c",{{2,"%s",Kind::bound,nullptr}}},
-    {0x69182,0x1a9f38,"format.005a9f38",{{2,"%s",Kind::literal,"format.0059a1d0"},{3,"%s",Kind::bound,nullptr},{4,"%s",Kind::literal,"format.0059a1cc"}}},
+    {0x69182,0x1a9f38,"format.005a9f38",{{2,"%s",Kind::literal,"format.0059a1d0"},{3,"%s",Kind::domain,"craft-requirement-description"},{4,"%s",Kind::literal,"format.0059a1cc"}}},
     {0x69222,0x19a9f8,"format.0059a9f8",{{2,"%s",Kind::bound,nullptr}}},
     {0x692d3,0x0,nullptr,{{2,"%s",Kind::bound,nullptr}}},
     {0x693e7,0x19aa68,"format.0059aa68",{{2,"%s",Kind::bound,nullptr}}},
@@ -953,6 +953,11 @@ const Entry entries[]{
     {0x12c39a,0x1b0ac4,"format.005b0ac4",{{2,"%s",Kind::bound,nullptr},{3,"%d",Kind::signed32,nullptr}}},
     {0x12c402,0x1b0ad8,"format.005b0ad8",{{2,"%s",Kind::bound,nullptr}}},
     {0x12c43c,0x1b0ae8,"format.005b0ae8",{{2,"%s",Kind::bound,nullptr}}},
+    // 446020 completes this same native deconstruction branch after its
+    // terrain-name copy; append to retain all existing formatter Hook IDs.
+    {0x46564,0x197088,"format.00597088",{{2,"%s",Kind::domain,"terrain"}}},
+    // 462780's native debug branch prints the selected material's full name.
+    {0x628b3,0x199348,"format.00599348",{{2,"%d",Kind::signed32,nullptr},{3,"%s",Kind::bound,nullptr}}},
 };
 
 // This is only the synchronous before/after state of one native sprintf call.

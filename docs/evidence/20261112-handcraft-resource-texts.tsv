@@ -1,0 +1,31 @@
+key	producer_calls	file	line	selector	source	target
+BIY_CONTINUE	00501e60	urw_msg.txt	795		#You continue working on the %s.	#你继续制作%s。
+COOKING_DONE	00441598	urw_msg.txt	923		+Ok, you finished preparing %s.	+好了，你处理完了%s。
+COOKING_TO_PREPARE	00441598	urw_msg.txt	927		=Ok, you leave %s to cook and prepare.	=好了，你让%s继续烹煮。
+CRAFTING_DONE	00441598	urw_msg.txt	756		=Ok, you obtained %s.	=好了，你得到了%s。
+CRAFTING_DONE_GROUND	00441598	urw_msg.txt	752		=Ok, you made %s here.	=好了，你在这里做出了%s。
+CRAFTING_TO_PREPARE	00441598	urw_msg.txt	760		=Ok, you set and leave %s here to prepare.	=好了，你把%s留在这里加工。
+CRAFTQUALITY_LOWERED	004414da	urw_msg.txt	748		!You fail to maintain the quality of <item_def_verbose> during this step.	!这一步做得不好，<item_def_verbose>的品质下降了。
+DIY_CONTINUE	00441b9e,004438ab,00444bce,00445676,005190f7,005202f1	urw_msg.txt	741		#You continue working on the %s %s.	#你继续制作%s%s。
+DRYING_SET	00521c8e	urw_msg.txt	867		+The %s are now set in loose bundles to dry out fully, after which you can proceed to extract the fibre.	+你把%s松松地捆好，待其彻底晾干后就可以提取纤维。
+EXTRACT_BY_BREAKING	005211cd	urw_msg.txt	882		#Now you need to break and clean away the stems to release and obtain the fibres.	#现在需要折断并清除茎秆，分离出纤维。
+EXTRACT_BY_HAND	005210ff	urw_msg.txt	876		#You proceed to extract fibres from <the_item> simply by hand.	#你开始徒手从<the_item>中抽取纤维。
+EXTRACT_TOO_FEW	0052101c,005215de	urw_msg.txt	879		!That is too few! You need at least <items> to extract practical amount of fibre.	!太少了！至少需要<items>，才能提取出够用的纤维。
+HAFTING_CANT	004449f1	urw_msg.txt	122		!Huh? It's not possible to haft <items_nonum>!	!咦？<items_nonum>没法装柄！
+NOT_SUITABLE_ITEM	0044722b,0044788f,00447ace,0052043d,00520481,00520b2e,00520b56,00520b89,005213ca,00521512	urw_msg.txt	105		!This item is not suitable for that!	!这件物品不适合这样用！
+PHYSREQ_CANT	004dcceb	urw_msg.txt	1002		&With %s, you are in no condition to %s!	&你正%s，没法%s！
+PHYSREQ_STANCE	004dc9eb	urw_msg.txt	1006		&To %s, first you need to get on your feet.	&要%s，得先站起来。
+RAWMAT_INVALID	004692c5	urw_msg.txt	744		!<item> doesn't work as %s!	!<item>不能用作%s！
+REPAIR_CANT	00443e44,004456ba,00445794	urw_msg.txt	976		_It's impossible for you to repair <the_fullitem>.	_你无法修复<the_fullitem>。
+REQ_INV	0046964b	urw_msg.txt	780		+%s in your inventory will be used.	+将使用你物品栏中的%s。
+REQ_MORE	0046a914	urw_msg.txt	769		_That's not enough. Select some more.	_这些还不够，再选一些。
+REQ_NEARBY	0046964b	urw_msg.txt	775		+%s nearby will be used.	+将使用附近的%s。
+REQ_WATER_OK	0046b03d	urw_msg.txt	785		There is plenty of water nearby.	附近有充足的水。
+RETTING_SET	00520da0	urw_msg.txt	864		+You leave the %s to soak in the water, after which they are properly retted.	+你把%s留在水中浸泡，等它们充分沤制。
+RETTING_TOO_COLD	00520e17	urw_msg.txt	861		!The water is too cold for retting! It is not possible now.	!水太冷，无法沤麻！现在做不了。
+SEPARATE_SINEW	00521606	urw_msg.txt	873		#You proceed to start pounding the tendon to separate the sinew fibres.	#你开始捶打肌腱，分离筋纤维。
+TASK_PROMPT_AGGRESSION	00489b77	urw_msg.txt	1044		!Meanwhile, <npc_desc> turns hostile on you...	!这时，<npc_desc>对你产生了敌意……
+TASK_PROMPT_AGG_APPROACH	00489bfd	urw_msg.txt	1041		!Meanwhile, an aggressive <npc_desc> approaches...	!这时，充满敌意的<npc_desc>正靠近……
+TASK_PROMPT_AGG_CREATURE	00489bfd,00489c68	urw_msg.txt	1038		!Meanwhile, an aggressive <npc_desc> enters your view...	!这时，充满敌意的<npc_desc>进入了你的视野……
+TASK_PROMPT_CREATURE	00489c68	urw_msg.txt	1035		:Meanwhile, <npc_ind> enters your view...	:这时，<npc_ind>进入了你的视野……
+TENDON_DRYING_SET	00521c8e	urw_msg.txt	870		+The %s are now left to dry, after which you can proceed to separate the sinew fibre.	+你把%s留下晾干，之后就可以分离筋纤维。

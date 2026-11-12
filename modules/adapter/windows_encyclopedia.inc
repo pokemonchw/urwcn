@@ -375,7 +375,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
             }
             return Status::ok;
         }
-        if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+4) {
+        if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+6) {
             windows_encyclopedia_preview=nullptr;return Status::ok;
         }
         if(e.id==we_help_scope) { windows_encyclopedia_help=false;return Status::ok; }
@@ -383,7 +383,7 @@ Status dispatch_windows_encyclopedia(const NativeEvent& e,DispatchResult& result
         handled=false;return Status::ok;
     }
     if(e.id>=we_source_first&&e.id<we_source_first+3)return Status::ok;
-    if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+4) {
+    if(e.id>=we_preview_scope_first&&e.id<we_preview_scope_first+6) {
         windows_encyclopedia_preview=windows_find_topic(ptr<char>(e.frame->ecx));return Status::ok;
     }
     if(e.id>=we_map_software_first&&e.id<we_map_software_first+std::size(windows_culture_map_calls))
@@ -669,6 +669,11 @@ void append_windows_encyclopedia_hooks(std::vector<HookSpec>& hooks) {
     if(windows_build::is_3891()) {
         hooks.push_back(call(we_keyword_query,0x3E63D,0x3C8A0,0));
         hooks.push_back(call(we_preview_scope_first+3,0xD7B80,0x3CA90,0));
+        // 1002B0 chooses either the selected upper record's actual topic or
+        // the first nonempty topic when the selected record has none. Both
+        // branches construct the same native footer and F1 action row.
+        hooks.push_back(call(we_preview_scope_first+4,0x1005B4,0x3CA90,0));
+        hooks.push_back(call(we_preview_scope_first+5,0x1005F8,0x3CA90,0));
         hooks.push_back(call(we_wounds_help,0xFDBA7,0x162530,0));
     }
     hooks.push_back(call(we_map_software_title,0xE11CD,0x116270,5));

@@ -1,0 +1,44 @@
+family	native_source	original	domain	key	chinese
+title	46980	BUILDING OPTIONS	menu.title	BUILDING OPTIONS	建造选项
+title	46980	WOODEN BUILDING	menu.title	WOODEN BUILDING	木建筑
+title	46980	KOTA	menu.title	KOTA	科塔帐篷
+fixed	46980 / 1002B0	Wooden building	menu.label	Wooden building	木建筑
+fixed	46980 / 1002B0	Kota	menu.label	Kota	科塔帐篷
+fixed	46980 / 1002B0	Post spruce	activity	Post spruce	制云杉撑杆
+fixed	46980 / 1002B0	Continue paused process	activity	Continue paused process	继续暂停的工作
+fixed	46980 / 1002B0	Deconstruct something	activity	Deconstruct something	拆解
+fixed	46980 / 1002B0	General building information	menu.label	General building information	建造基本说明
+fixed	46980 / 1002B0	Cancel	menu.label	Cancel	取消
+fixed	46980 / 1002B0	GRAPHICAL PRESENTATION	menu.label	GRAPHICAL PRESENTATION	图形预览
+building	biy_glossary.txt:3	North-west corner	terrain	north-west corner	西北墙角
+building	biy_glossary.txt:4	Northern wall	terrain	northern wall	北墙
+building	biy_glossary.txt:5	North-east corner	terrain	north-east corner	东北墙角
+building	biy_glossary.txt:6	Western wall	terrain	western wall	西墙
+building	biy_glossary.txt:11	Inside of a building	menu.recipe	ceiling and floor	天花板与地板
+building	biy_glossary.txt:16	Eastern wall	terrain	eastern wall	东墙
+building	biy_glossary.txt:17	South-west corner	terrain	south-west corner	西南墙角
+building	biy_glossary.txt:18	Southern wall	terrain	southern wall	南墙
+building	biy_glossary.txt:19	South-east corner	terrain	south-east corner	东南墙角
+building	biy_glossary.txt:24	Shutter	menu.recipe	wall with a shutter	带窗板的墙
+building	biy_glossary.txt:30	Fireplace	terrain	fireplace	火塘
+building	biy_glossary.txt:33	Door	terrain	door	门
+building	biy_glossary.txt:38	Bench	terrain	bench	长凳
+building	biy_glossary.txt:42	Table	terrain	table	桌子
+building	biy_glossary.txt:46	Sleeping bunk	terrain	sleeping bunk	卧铺
+building	biy_glossary.txt:50	Sauna stove	terrain	sauna stove	桑拿炉
+kota	biy_glossary.txt:62	Framework	terrain	framework	建筑框架
+kota	biy_glossary.txt:65	North-west corner of a kota	terrain	north-west corner of a kota	科塔帐篷西北角
+kota	biy_glossary.txt:66	Northern wall of a kota	terrain	northern wall of a kota	科塔帐篷北壁
+kota	biy_glossary.txt:67	North-east corner of a kota	terrain	north-east corner of a kota	科塔帐篷东北角
+kota	biy_glossary.txt:68	Western wall of a kota	terrain	western wall of a kota	科塔帐篷西壁
+kota	biy_glossary.txt:69	Inside of a kota	terrain	inside of a kota	科塔帐篷内部
+kota	biy_glossary.txt:70	Eastern wall of a kota	terrain	eastern wall of a kota	科塔帐篷东壁
+kota	biy_glossary.txt:71	South-west corner of a kota	terrain	south-west corner of a kota	科塔帐篷西南角
+kota	biy_glossary.txt:72	Southern wall of a kota	terrain	southern wall of a kota	科塔帐篷南壁
+kota	biy_glossary.txt:73	South-east corner of a kota	terrain	south-east corner of a kota	科塔帐篷东南角
+kota	biy_glossary.txt:74	Kota doorway	terrain	kota doorway	科塔帐篷入口
+top	biy_glossary.txt:80	Shelter	terrain	shelter	庇护所
+top	biy_glossary.txt:85	Fence	terrain	fence	围栏
+top	biy_glossary.txt:89	Fence gate	terrain	fence gate	围栏门
+top	biy_glossary.txt:94	Cellar	terrain	cellar	地窖
+footer	3CCF3	Launch UnReal World encyclopedia and learn more	culture.ui	launch_encyclopedia	打开《不真实的世界》百科，了解更多

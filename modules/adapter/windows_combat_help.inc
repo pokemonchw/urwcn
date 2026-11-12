@@ -1,8 +1,10 @@
 // Windows 3.89.1: 12BFD0 selects HITOPT_DEATHBLOW / HITOPT_BUTCHERING
 // and FFC60 copies that accepted English help into 61A88B8. 1002B0 parses
-// the same complete help once to measure it and once to paint it.
+// the same complete help once to measure it and once to paint it. This shared
+// command window also owns the recipe graphic preview's native title panel.
 namespace windows_combat_help {
-enum Hook:u32 { words_measure=0x18C00,words_paint,paragraph_measure,paragraph_paint };
+enum Hook:u32 { words_measure=0x18C00,words_paint,paragraph_measure,paragraph_paint,
+    preview_panel_first=0x18C10,preview_panel_second };
 
 constexpr const char* deathblow=
     "A deathblow is possible. You try to execute a carefully aimed strike to finish this unconscious victim.";
@@ -15,15 +17,25 @@ void append_hooks(std::vector<HookSpec>& hooks) {
     hooks.push_back(call(words_paint,0x100547,0x162300,0));
     hooks.push_back(call(paragraph_measure,0x100381,0x10EB40,4));
     hooks.push_back(call(paragraph_paint,0x100586,0x10EB40,4));
+    hooks.push_back(call(preview_panel_first,0x1004C8,0x115E70,4));
+    hooks.push_back(call(preview_panel_second,0x100682,0x115E70,4));
 }
 
 Status dispatch(const NativeEvent& event,DispatchResult&,bool& handled) {
-    handled=windows_build::is_3891() && event.id>=words_measure && event.id<=paragraph_paint;
+    const bool preview=event.id==preview_panel_first || event.id==preview_panel_second;
+    handled=windows_build::is_3891() &&
+        ((event.id>=words_measure && event.id<=paragraph_paint) || preview);
     if(!handled) return Status::ok;
     const bool paragraph=event.id==paragraph_measure || event.id==paragraph_paint;
     if(event.phase==NativePhase::after) {
-        if(paragraph) native_component_binding::end_native_owner();
+        if(paragraph || preview) native_component_binding::end_native_owner();
         return Status::ok;
+    }
+    if(preview) {
+        native_component_binding::begin_native_owner();
+        return windows_inventory::consume_source(event,native_text_resource::from_request(
+            {TextComponent::message_value,ptr<const char>(event.arguments[2]),"menu.label"}),
+            2,Scope::titled_panel);
     }
     if(!paragraph) {
         // These two complete resource texts are the finite 12BFD0 branches.

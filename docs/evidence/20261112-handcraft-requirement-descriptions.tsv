@@ -1,0 +1,48 @@
+string_va	source	target	consumer
+00599420	Almost any big stone can be used as a primitive grinding stone.	几乎任何大石头都可以用作简易磨石。	469182 format operand 3 -> 46918F F6510
+00599558	Use your hideworking skill to tan a skin of non fur-bearing animal to get leather.	使用制皮技能鞣制无毛动物的皮，可以制成皮革。	469182 format operand 3 -> 46918F F6510
+005998e0	A club is the most useful beater but stones or pieces of firewood will work as a beater as well.	木棒最适合用作敲打工具，石头或柴块也可以。	469182 format operand 3 -> 46918F F6510
+00599bf0	Leather, fur or cured skin of a large animal - typically a reindeer leather.	大型动物的皮革、毛皮或处理过的皮，通常使用驯鹿皮革。	469182 format operand 3 -> 46918F F6510
+00599cc8	Any unprepared meat, fish, mushrooms, berries, vegetables or herbs.	任何未加工的肉、鱼、蘑菇、浆果、蔬菜或草药。	469182 format operand 3 -> 46918F F6510
+00599d10	Flowers and leaves of various plants, which can be harvested by using the AGRICULTURE skill.	各种植物的花和叶，可以使用农耕技能采集。	469182 format operand 3 -> 46918F F6510
+00599d70	A fireplace can be used as an oven after burning proper amount of wood there, but not before the fire has completely burnt out.	炉灶烧过足量木柴后可以用作烤炉，但必须等火完全熄灭。	469182 format operand 3 -> 46918F F6510
+00599df0	Various seeds and leaves can be used to bring extra flavour or nutritional value to food.	各种种子和叶子可以增加食物的风味或营养。	469182 format operand 3 -> 46918F F6510
+00599e4c	Birch-bark can be harvested by using the TIMBERCRAFT skill.	可以使用木工技能采集桦树皮。	469182 format operand 3 -> 46918F F6510
+00599ed8	Fell small trees to get these.	砍倒小树可以取得这些材料。	469182 format operand 3 -> 46918F F6510
+00599f40	Use TIMBERCRAFT skill to cut twigs from a spruce.	使用木工技能可以从云杉上砍取嫩枝。	469182 format operand 3 -> 46918F F6510
+00599f90	To do the this by hand just skip the item selection.	若要徒手完成，跳过物品选择即可。	469182 format operand 3 -> 46918F F6510
+00599fe4	Use textilecraft skill to extract fibres from certain plants.	使用纺织技能可以从某些植物中提取纤维。	469182 format operand 3 -> 46918F F6510
+0059a040	Axe is preferred, but a sturdy knife for chopping and carving wood can be used as a substitute. 	最好使用斧头，也可以用能劈砍和雕刻木材的结实刀具代替。	469182 format operand 3 -> 46918F F6510
+0059ad60	Use hideworking skill to tan a skin of a fur-bearing animal to get hide.	使用制皮技能鞣制有毛动物的皮，可以制成毛皮。	469182 format operand 3 -> 46918F F6510
+0059adc0	A pot durable enough for all kinds of cooking.	足够结实、可用于各种烹饪的锅。	469182 format operand 3 -> 46918F F6510
+0059ae00	A vessel for boiling-based cooking can be either an iron pot or birch-bark pot.	用于煮食的容器，可以是铁锅或桦皮锅。	469182 format operand 3 -> 46918F F6510
+0059ae70	Almost any stave, staff and even a club can be used as a primitive threshing tool if proper flail isn't available.	没有合适的连枷时，几乎任何木棍、手杖，甚至木棒，都可以用作简易脱粒工具。	469182 format operand 3 -> 46918F F6510
+0059af00	Weapon or tool that be used to hammer things in place. The butt of an axe is commonly used but clubs, pieces of firewood or stones can be used as well.	可用于敲击固定物件的武器或工具。通常使用斧背，也可以使用木棒、柴块或石头。	469182 format operand 3 -> 46918F F6510
+0059afb8	Any vegetables excluding berries and mushrooms.	任何蔬菜，不包括浆果和蘑菇。	469182 format operand 3 -> 46918F F6510
+0059b0bc	Various types of cord can be crafted by yourself.	你可以自行制作各种细绳。	469182 format operand 3 -> 46918F F6510
+0059b0f0	Felled tree sapling.	砍倒的树苗。	469182 format operand 3 -> 46918F F6510
+0059b108	Some yarn, cord, rope, and so on. You can craft various types of tying equipment by yourself.	纱线、细绳或绳索等。你可以自行制作各种捆绑材料。	469182 format operand 3 -> 46918F F6510
+0059b168	You can make yarn by yourself using textilecraft skill.	你可以使用纺织技能自行制作纱线。	469182 format operand 3 -> 46918F F6510
+0059b1a0	Any yarn other than sinew yarn. You can make yarn from plant fibres using textilecraft skill.	除筋线以外的任何纱线。你可以使用纺织技能将植物纤维制成纱线。	469182 format operand 3 -> 46918F F6510
+0059b210	You can make fishhooks by yourself from wood or bone.	你可以用木头或骨头自行制作鱼钩。	469182 format operand 3 -> 46918F F6510
+0059b248	You can make bone needles by yourself, or obtain iron needles from a blacksmith.	你可以自行制作骨针，也可以向铁匠购买铁针。	469182 format operand 3 -> 46918F F6510
+0059b2b0	Arrowheads can be made of iron, bone or rock. You can craft some arrowheads by yourself too.	箭头可以用铁、骨头或石块制成。你也可以自行制作一些箭头。	469182 format operand 3 -> 46918F F6510
+0059b320	The shafts used in arrowmaking need to be crafted separately. You can make them by yourself.	制箭所用的箭杆需要另行制作，你可以自行制作箭杆。	469182 format operand 3 -> 46918F F6510
+0059b380	Either leaf tree saplings or wood slats work as a shaft blanks. Wood slats are lumber you can make by yourself.	阔叶树苗或木条都可以作为箭杆坯料。木条是可以自行加工的木料。	469182 format operand 3 -> 46918F F6510
+0059b408	Net floats are made of either birch or pine bark. These can harvested by using the TIMBERCRAFT skill.	渔网浮子用桦树皮或松树皮制成。可以使用木材加工技能采集这些树皮。	469182 format operand 3 -> 46918F F6510
+0059b480	Bowstrings need to be crafted separately out of yarn or thin cord.	弓弦需要用纱线或细绳另行制作。	469182 format operand 3 -> 46918F F6510
+0059b4d0	Axe hafts are carved of wood and be crafted by yourself.	斧柄用木材削成，你可以自行制作。	469182 format operand 3 -> 46918F F6510
+0059b518	There are many kind of iron axe heads for different types of axes. They need to hafted to make a proper working axe.	不同种类的斧头使用不同的铁斧头部件。需要装上柄，才能成为可用的斧头。	469182 format operand 3 -> 46918F F6510
+0059b59c	Spear hafts are carved of wood and be crafted by yourself.	矛柄用木材削成，你可以自行制作。	469182 format operand 3 -> 46918F F6510
+0059b5e8	There are many kind of iron spear heads for different types of spears. They need to hafted to make a proper working spear.	不同种类的矛使用不同的铁矛头。需要给矛头装上柄，才能成为可用的矛。	469182 format operand 3 -> 46918F F6510
+0059b668	Shovel blade is part of the shovel. It needs to hafted to make a proper working shovel.	铲头是铲子的部件，需要装上柄才能成为可用的铲子。	469182 format operand 3 -> 46918F F6510
+0059b6c0	Shovel hafts are carved of wood and be crafted by yourself.	铲柄用木材削成，你可以自行制作。	469182 format operand 3 -> 46918F F6510
+0059b708	Netting needle is a wooden tool used to make nets. It can be crafted by yourself.	织网梭是用于编织渔网的木制工具，你可以自行制作。	469182 format operand 3 -> 46918F F6510
+0059b770	Thin cordage such as yarn or cord. You can craft various tying equipment by yourself.	纱线或细绳等较细的绳线。你可以自行制作各种捆绑材料。	469182 format operand 3 -> 46918F F6510
+0059b7d8	Ropes, or strong spruce withes can be used.	可以使用绳索或结实的云杉柔枝绑条。	469182 format operand 3 -> 46918F F6510
+0059b814	Staves can be made from slender tree trunks.	可以用细树干制作木杖。	469182 format operand 3 -> 46918F F6510
+0059b844	Wooden stakes can be made from slender tree trunks.	可以用细树干制作木桩。	469182 format operand 3 -> 46918F F6510
+0059b908	A length of any type of cloth. Cloth is available for trade among certain cultures.	一段任意种类的布料。可以向某些民族交易购买布料。	469182 format operand 3 -> 46918F F6510
+0059b960	Bandages can be cut from clothing, including leather and fur, or from a length of cloth.	可以将衣物（包括皮衣和毛皮衣物）或一段布料裁成绷带。	469182 format operand 3 -> 46918F F6510
+0059ba54	Use TIMBERCRAFT skill to cut twigs from a birch.	使用木材加工技能从桦树上砍取嫩枝。	469182 format operand 3 -> 46918F F6510
+0059baa8	Either alder/willow bark (peeled by using timbercraft skill) or animal fat can be used as a tanning material.	桤木或柳树的树皮（用木材加工技能剥取）以及动物脂肪，都可以用作鞣皮材料。	469182 format operand 3 -> 46918F F6510

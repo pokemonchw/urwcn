@@ -1,0 +1,21 @@
+callsite_rva	disk_bytes	target_rva	purpose
+00046DBB	e8 f0 94 0b 00	001002B0	building menu
+00046E09	e8 a2 94 0b 00	001002B0	wooden submenu
+00046E3D	e8 6e 94 0b 00	001002B0	kota submenu
+001003B8	e8 d3 f3 fc ff	000CF790	create native menu
+0010041E	e8 6d f5 fc ff	000CF990	empty native row
+0010042B	e8 60 f5 fc ff	000CF990	upper row transfer
+0010048C	e8 ff f4 fc ff	000CF990	separator
+0010049B	e8 f0 f4 fc ff	000CF990	ESC.Cancel
+00100525	e8 86 fa fc ff	000CFFB0	native full draw
+001004C8	e8 a3 59 01 00	00115E70	graphic preview panel initial
+00100682	e8 e9 57 01 00	00115E70	graphic preview panel redraw
+001005B4	e8 d7 c4 f3 ff	0003CA90	first nonempty original topic
+001005F8	e8 93 c4 f3 ff	0003CA90	selected original topic
+0003CBA8	e8 f3 19 0d 00	0010E5A0	preview title
+0003CC8A	e8 11 19 0d 00	0010E5A0	preview summary
+0003CCF3	e8 f8 2d 09 00	000CFAF0	F1 key caption
+00100640	e8 db 0a fd ff	000D1120	native input
+000D027F	e8 1c e3 03 00	0010E5A0	native menu title
+000D031F	e8 5c 43 04 00	00114680	native action row
+000D03C9	e8 d2 e1 03 00	0010E5A0	native annotation

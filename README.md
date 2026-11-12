@@ -1,5 +1,9 @@
 # URWCN · 不真实的世界（UnReal World）简体中文汉化
 
+2026-11-12：已按用户要求将范围纠正为全部手工制作后续业务及消息：完整反编译72个函数，提取120条配方、182处消息调用、47条默认材料说明和制作／中断流程；补齐箭矢等全部子菜单、缺译说明、工作窗口、拆除及生成物品名。源码与98931项词库已完成，统一队列编译及正式热发布完成；当前Windows PID364的Catalog、Adapter第3代返回Applied，三件旧文件先移入回收，无需重启。完整范围见[手工制作业务记录](docs/evidence/20261112-handcraft-business-native.md)与[分支清单](docs/evidence/20261112-handcraft-branches.md)。未运行游戏或测试。
+
+2026-11-12：Windows 3.89.1 建造选项、木建筑与科塔帐篷菜单已补接原生显示来源，包含全部31条原生建造配方、图形预览标题和底部百科题名／摘要／F1说明。已重新反编译26个完整函数并整理所有菜单分支；源码修改、统一队列编译及正式热发布均完成，当前Windows PID364的Catalog、Adapter第2代返回Applied，旧文件先移入回收，无需重启。证据和回执见[建造菜单记录](docs/evidence/20261112-building-menu-native.md)，逐项范围见[完整分支清单](docs/evidence/20261112-building-menu-branches.md)。未启动游戏或运行测试，画面待用户验收。
+
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 URWCN 是 **Byayoi 同人社区**的《不真实的世界》（UnReal World）汉化作品。

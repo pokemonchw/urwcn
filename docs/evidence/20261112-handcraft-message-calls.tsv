@@ -1,0 +1,183 @@
+owner_va	callsite_va	literal_origins_current_pe	source_class	native_argument_evidence	display_path
+00405230	0040526d	0058cffc	current_pe_extraction	final.c / final-operands.tsv	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405230	004052a9		current_pe_extraction	final.c / final-operands.tsv	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405230	0040532e	0058d058	embedded_literal	COPY@0040532e(0x58d058)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405230	00405339	0058d074	current_pe_extraction	final.c / final-operands.tsv	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405860	004058aa	005d8878	embedded_literal	COPY@004058aa(0x5d8868)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405860	00405930	0058d168	embedded_literal	COPY@00405930(0x58d168)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405860	00405979	0058d1d8	embedded_literal	COPY@00405979(0x58d1d8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405860	004059ac	0058d0e0	embedded_literal	COPY@004059ac(0x58d0e0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405860	00405a2e	0058d230	embedded_literal	COPY@00405a2e(0x58d230)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405860	00405d56		buffer_or_expression	PTRSUB@00405d50((register, 0x10, 4),0xfffffbf4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00405860	00405d7d		buffer_or_expression	PTRSUB@00405d77((register, 0x10, 4),0xfffffbf4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00406320	004063ed		buffer_or_expression	PTRSUB@004063e7((register, 0x10, 4),0xfffffb8c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00406320	004064b6	0058d444	embedded_literal	MULTIEQUAL@004064b6(COPY@00406372(0x58d444),PTRSUB@004064b1(0x0,0x65a8cf8))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0043f7f0	0043f958		buffer_or_expression	PTRSUB@0043f958(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0043f7f0	0043fad7		buffer_or_expression	PTRSUB@0043fad7(0x0,0x65a8cf8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00440900	00440a90		buffer_or_expression	PTRSUB@00440a90(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00440900	00440afb		buffer_or_expression	PTRSUB@00440afb(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00440b20	00440de2		buffer_or_expression	PTRSUB@00440de2(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00440b20	00440e46		buffer_or_expression	PTRSUB@00440e46(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00440fe0	00441004	00596584	embedded_literal	COPY@00441004(0x596584)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00441060	004410b0	005965a0	embedded_literal	COPY@004410b0(0x5965a0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00441060	004411c2		buffer_or_expression	PTRSUB@004411c2(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00441060	004412ec	005965e0	embedded_literal	COPY@004412ec(0x5965e0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00441060	004414e1		returned_561b00	CAST@004414da(CALL@004414da(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00441060	004415be		buffer_or_expression	PTRSUB@004415b8((register, 0x10, 4),0xfffffbf4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00441060	004415e8	00596688	embedded_literal	COPY@004415e8(0x596688)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00441060	00441637		buffer_or_expression	PTRSUB@00441631((register, 0x10, 4),0xfffffbf4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00441060	00441661	00596718,0059675c,00596788	embedded_literal	MULTIEQUAL@00441661(COPY@00441648(0x596718),COPY@0044164f(0x59675c),COPY@0044165c(0x596788))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004416a0	0044185e	00593de8	embedded_literal	COPY@0044185e(0x593de8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004416a0	00441bb9		buffer_or_expression	CAST@00441bb9(PTRSUB@00441bb3((register, 0x10, 4),0xfffff5a4))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004416a0	00441ce3		buffer_or_expression	CAST@00441ce3(PTRSUB@00441cdd((register, 0x10, 4),0xfffff5a4))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004416a0	0044202a		buffer_or_expression	PTRSUB@0044202a(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004416a0	004422c8	0059918c	embedded_literal	COPY@004422c8(0x59918c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004416a0	00442315	0059918c	embedded_literal	COPY@00442315(0x59918c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004416a0	00442393	00596888	embedded_literal	COPY@00442393(0x596888)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004436e0	004438c6		buffer_or_expression	PTRSUB@004438c0((register, 0x10, 4),0xfffffa54)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00443d30	00443db7		returned_562d40	CAST@00443db0(CALL@00443db0(0x562d40))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00443d30	00443e4b		returned_561b00	CAST@00443e44(CALL@00443e44(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00443d30	00443ee4		buffer_or_expression	CAST@00443ee4(PTRSUB@00443ede((register, 0x10, 4),0xfffffbf4))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00443d30	00443f30		buffer_or_expression	CAST@00443f30(PTRSUB@00443f2a((register, 0x10, 4),0xfffffbf4))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00443fc0	00444316	00596cd4	embedded_literal	COPY@00444316(0x596cd4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00443fc0	00444468		buffer_or_expression	PTRSUB@00444462((register, 0x10, 4),0xfffffb8c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00443fc0	004444dc	00596c98	embedded_literal	MULTIEQUAL@004444dc(PTRSUB@004444d6((register, 0x10, 4),0xfffffb8c),COPY@0044423d(0x596c98))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00444500	00444570	00596d58	embedded_literal	COPY@00444570(0x596d58)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00444500	004449f8		returned_562d40	MULTIEQUAL@004449f6(CAST@004445c6(CALL@004445c6(0x562d40)),CAST@004449f1(CALL@004449f1(0x561b00)))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00444a30	00444be9		buffer_or_expression	PTRSUB@00444be3((register, 0x10, 4),0xfffffb8c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004450b0	00445391		buffer_or_expression	PTRSUB@00445391(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00445510	00445691		buffer_or_expression	PTRSUB@0044568b((register, 0x10, 4),0xfffffbf4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00445510	00445ba1		returned_561b00	MULTIEQUAL@00445ba1(CAST@004456ba(CALL@004456ba(0x561b00)),PTRSUB@00445b9b((register, 0x10, 4),0xfffffbf4),CAST@004456f8(CALL@004456f8(0x562d40)),CAST@00445794(CALL@00445794(0x561b00)))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00446020	004461b3		buffer_or_expression	PTRSUB@004461b3(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00446020	00446572	00597018	embedded_literal	MULTIEQUAL@00446572(COPY@00446314(0x597018),PTRSUB@0044656c((register, 0x10, 4),0xfffffb88))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00447180	00447232		returned_561b00	CAST@0044722b(CALL@0044722b(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00447180	00447345		buffer_or_expression	PTRSUB@0044733f((register, 0x10, 4),0xfffffbf4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00447180	0044760c	005971ac	embedded_literal	MULTIEQUAL@0044760c(CAST@004471d3(CALL@004471d3(0x562d40)),COPY@00447237(0x5971ac),PTRSUB@00447606((register, 0x10, 4),0xfffffbf4))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00447630	00447736	0059730c,005973ec,0059742c,00597450	embedded_literal	MULTIEQUAL@00447736(PTRSUB@00447730((register, 0x10, 4),0xfffffbf4),COPY@00447840(0x5973ec),COPY@0044785e(0x59742c),COPY@00447880(0x597450),COPY@0044789b(0x59730c))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00447630	0044776c		buffer_or_expression	PTRSUB@00447766((register, 0x10, 4),0xfffffbf4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00447630	00447896		returned_561b00	CAST@0044788f(CALL@0044788f(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00447630	00447ad5		returned_561b00	CAST@00447ace(CALL@00447ace(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00447630	00447adf	0059730c	embedded_literal	MULTIEQUAL@00447adf(CAST@00447678(CALL@00447678(0x562d40)),PTRSUB@00447ab7((register, 0x10, 4),0xfffffbf4),COPY@00447ada(0x59730c))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00448960	00448986	005976a0	embedded_literal	COPY@00448986(0x5976a0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00448960	00448990	005976c8	embedded_literal	COPY@00448990(0x5976c8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00461cf0	004624e3		buffer_or_expression	PTRSUB@004624dd((register, 0x10, 4),0xfffffb8c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00461cf0	004626b1		buffer_or_expression	PTRSUB@004626b1(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00462780	004628f0		buffer_or_expression	PTRSUB@004628f0(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00462780	0046295d		buffer_or_expression	PTRSUB@0046295d(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00462780	00462a0f		buffer_or_expression	PTRSUB@00462a0f(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00462780	00462b57		buffer_or_expression	PTRSUB@00462b57(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00462780	00462c3c		buffer_or_expression	PTRSUB@00462c3c(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00464730	0046482f	005991b8	embedded_literal	COPY@0046482f(0x5991b8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00464730	0046493f	005991b8	embedded_literal	COPY@0046493f(0x5991b8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00464730	00464a65	005991b8	embedded_literal	COPY@00464a65(0x5991b8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00464730	0046522e	0059a13c	embedded_literal	MULTIEQUAL@0046522e(COPY@00465042(0x59a13c),PTRSUB@00465228((register, 0x10, 4),0xfffffbf4))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	00468f41		buffer_or_expression	PTRSUB@00468f41(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	00469055		buffer_or_expression	PTRSUB@00469055(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	0046918f		buffer_or_expression	PTRSUB@0046918f(0x0,0x65a8cf8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	00469231		buffer_or_expression	PTRSUB@0046922a((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	004692e2		buffer_or_expression	PTRSUB@004692db((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	0046935e		returned_562d40	CAST@00469357(CALL@00469357(0x562d40))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	00469380	00595ef0	embedded_literal	COPY@00469380(0x595ef0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	00469429		buffer_or_expression	PTRSUB@00469429(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	004694c7		buffer_or_expression	PTRSUB@004694c0((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	00469682		buffer_or_expression	PTRSUB@0046967b((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	00469f27		buffer_or_expression	PTRSUB@00469f20((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	0046a1d1		buffer_or_expression	PTRSUB@0046a1ca((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00468ac0	0046a91b		returned_561b00	MULTIEQUAL@0046a91b(PTRSUB@0046a095((register, 0x10, 4),0xfffffbb8),CAST@0046a914(CALL@0046a914(0x561b00)))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046aa4f	0059ab8c	embedded_literal	COPY@0046aa4f(0x59ab8c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046aac8	0059abac	embedded_literal	COPY@0046aac8(0x59abac)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046abe2	0059abf0	embedded_literal	COPY@0046abe2(0x59abf0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046ad3b	0059abac,0059ac50	embedded_literal	MULTIEQUAL@0046ad3b(COPY@0046ad36(0x59abac),COPY@0046af1d(0x59ac50))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046ad7c	0059ac28	embedded_literal	COPY@0046ad7c(0x59ac28)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046ae90	0059a88c	embedded_literal	COPY@0046ae90(0x59a88c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046aeaf	0059a88c	embedded_literal	COPY@0046aeaf(0x59a88c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046afa6	0059abac	embedded_literal	COPY@0046afa6(0x59abac)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046b044		returned_561b00	CAST@0046b03d(CALL@0046b03d(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046a940	0046b154		buffer_or_expression	PTRSUB@0046b154(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046b760	0046b7c5		buffer_or_expression	PTRSUB@0046b7c5(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046b760	0046b841		buffer_or_expression	PTRSUB@0046b841(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046b760	0046b8b3		buffer_or_expression	PTRSUB@0046b8b3(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046b760	0046b90b		buffer_or_expression	PTRSUB@0046b90b(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046b760	0046b964		buffer_or_expression	PTRSUB@0046b964(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046b760	0046b9ad		buffer_or_expression	PTRSUB@0046b9ad(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+0046b760	0046ba34	00595ef0	embedded_literal	COPY@0046ba34(0x595ef0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00488bd9	0059cb0c	embedded_literal	COPY@00488bd9(0x59cb0c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00488c5a	0059cb40	embedded_literal	COPY@00488c5a(0x59cb40)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00488c8d	0059cb68	embedded_literal	COPY@00488c8d(0x59cb68)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	004892d0		buffer_or_expression	PTRSUB@004892d0(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	004898c6	0059ccd4	embedded_literal	COPY@004898c6(0x59ccd4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00489b7e		returned_561b00	CAST@00489b77(CALL@00489b77(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00489c04		returned_561b00	CAST@00489bfd(CALL@00489bfd(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00489c6f		returned_561b00	CAST@00489c68(CALL@00489c68(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00489cdf	0059cd78,0059cd94	embedded_literal	MULTIEQUAL@00489cdf(COPY@00489cd3(0x59cd78),COPY@00489cda(0x59cd94))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00489d0c	0059cdc0	embedded_literal	COPY@00489d0c(0x59cdc0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00489d3e	0059cdd4	embedded_literal	COPY@00489d3e(0x59cdd4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	00489d7e	0059ce04	embedded_literal	COPY@00489d7e(0x59ce04)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	0048a02c		buffer_or_expression	CAST@0048a02c(PTRSUB@0048a025((register, 0x10, 4),0xfffff7b8))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	0048a130		buffer_or_expression	PTRSUB@0048a130(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	0048a205	0059ccb0	embedded_literal	COPY@0048a205(0x59ccb0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00488840	0048a248	0059ce60,0059ce88	embedded_literal	MULTIEQUAL@0048a248(COPY@0048a23c(0x59ce60),COPY@0048a243(0x59ce88))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004dc790	004dc925	005a5ed4	embedded_literal	COPY@004dc925(0x5a5ec4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004dc790	004dca0b		buffer_or_expression	PTRSUB@004dca05((register, 0x10, 4),0xfffff3f4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004dc790	004dccc7		buffer_or_expression	PTRSUB@004dccc1((register, 0x10, 4),0xfffff3f4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004dc790	004dcd03		buffer_or_expression	PTRSUB@004dccfd((register, 0x10, 4),0xfffff3f4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004dc790	004dcd29		buffer_or_expression	PTRSUB@004dcd23((register, 0x10, 4),0xfffff3f4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+004dc790	004dcd7a		buffer_or_expression	PTRSUB@004dcd74((register, 0x10, 4),0xfffff3f4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00501cb0	00501d0e		buffer_or_expression	CAST@00501d0e(PTRSUB@00501d08((register, 0x10, 4),0xfffffb8c))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00501cb0	00501e7b		buffer_or_expression	CAST@00501e7b(PTRSUB@00501e75((register, 0x10, 4),0xfffffb8c))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00501cb0	00502136		buffer_or_expression	PTRSUB@00502136(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00501cb0	00502876	005ab3c4	embedded_literal	COPY@00502876(0x5ab3b4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00501cb0	00502a85	005ab3e0,005ab458	embedded_literal	MULTIEQUAL@00502a85(COPY@00502a76(0x5ab448),COPY@00502a80(0x5ab3d0))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00501cb0	00502b53	00593de8,005aafc0,005ab02c,005ab098,005ab120,005ab184,005ab218,005ab258,005ab2d8,005ab330,005ab390	embedded_literal	MULTIEQUAL@00502b53(COPY@00501dbb(0x5aafb0),CAST@00501e4a(PTRSUB@00501e4a((register, 0x10, 4),0xfffffb8c)),COPY@00502021(0x5ab088),COPY@0050202b(0x593de8),COPY@0050276e(0x5ab320),COPY@00502b4e(0x5ab380),COPY@005024c9(0x5ab208),COPY@00502578(0x5ab110),COPY@00501f44(0x5ab01c),COPY@00502444(0x5ab174),CAST@0050248d(PTRSUB@0050248d((register, 0x10, 4),0xfffffb8c)),COPY@00502681(0x5ab2c8),COPY@00502561(0x5ab248))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00517c70	00517d94		buffer_or_expression	PTRSUB@00517d94(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00517c70	00517e37		buffer_or_expression	PTRSUB@00517e37(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00518170	005182de		buffer_or_expression	PTRSUB@005182de(0x0,0x65a9288)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00518fa0	00519112		buffer_or_expression	PTRSUB@0051910c((register, 0x10, 4),0xfffffbf4)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00519560	0051956e	005ad260	embedded_literal	COPY@0051956e(0x5ad250)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00519560	00519748	005ad360	embedded_literal	COPY@00519748(0x5ad350)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00519560	00519752	005ad3a0	embedded_literal	COPY@00519752(0x5ad390)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00519560	00519768	005ad2cc	embedded_literal	COPY@00519768(0x5ad2bc)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00519560	00519772	005ad308	embedded_literal	COPY@00519772(0x5ad2f8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00519560	00519785	005acfbc	embedded_literal	COPY@00519785(0x5acfac)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	0052030b		buffer_or_expression	PTRSUB@00520304((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	005203c8		returned_562d40	CAST@005203c1(CALL@005203c1(0x562d40))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	00520444		returned_561b00	CAST@0052043d(CALL@0052043d(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	0052044e	005ae6cc	embedded_literal	COPY@0052044e(0x5ae6bc)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	00520488		returned_561b00	CAST@00520481(CALL@00520481(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	00520492	005ae710	embedded_literal	COPY@00520492(0x5ae700)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	005204e7	005ae760	embedded_literal	COPY@005204e7(0x5ae750)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	00520543		buffer_or_expression	PTRSUB@0052053c((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	00520589		buffer_or_expression	PTRSUB@00520582((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	005205ba	005ae848	embedded_literal	COPY@005205ba(0x5ae838)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	00520616	00595ef0	embedded_literal	COPY@00520616(0x595ef0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520180	0052065b	005ae874	embedded_literal	COPY@0052065b(0x5ae864)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520a30	00520b35		returned_561b00	CAST@00520b2e(CALL@00520b2e(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520a30	00520b5d		returned_561b00	CAST@00520b56(CALL@00520b56(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520a30	00520b90		returned_561b00	CAST@00520b89(CALL@00520b89(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520a30	00520e1e	00595ef0,005ae8c0,005ae8f8,005ae930,005ae970,005ae9b8	embedded_literal	MULTIEQUAL@00520e1e(COPY@00520aa8(0x595ef0),COPY@00520b1b(0x5ae8b0),COPY@00520b3a(0x5ae8e8),COPY@00520b62(0x5ae920),COPY@00520b73(0x5ae960),COPY@00520b95(0x5ae9a8),CAST@00520a9e(CALL@00520a9e(0x562d40)),CAST@00520e17(CALL@00520e17(0x561b00)))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520e40	00520f8b		buffer_or_expression	PTRSUB@00520f84((register, 0x10, 4),0xfffffbb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520e40	00521106		returned_561b00	CAST@005210ff(CALL@005210ff(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520e40	005211d4		returned_561b00	CAST@005211cd(CALL@005211cd(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520e40	005213d1		returned_561b00	CAST@005213ca(CALL@005213ca(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00520e40	005213db	00595ef0,005aea70	embedded_literal	MULTIEQUAL@005213db(CAST@00520eac(CALL@00520eac(0x562d40)),COPY@00520eb8(0x595ef0),CAST@0052101c(CALL@0052101c(0x561b00)),COPY@005213d6(0x5aea60))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521410	00521493		returned_562d40	CAST@0052148c(CALL@0052148c(0x562d40))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521410	005214b2	00595ef0	embedded_literal	COPY@005214b2(0x595ef0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521410	00521519		returned_561b00	CAST@00521512(CALL@00521512(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521410	00521523	005aeba0	embedded_literal	COPY@00521523(0x5aeb90)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521410	005215e5		returned_561b00	CAST@005215de(CALL@005215de(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521410	0052160d		returned_561b00	CAST@00521606(CALL@00521606(0x561b00))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	00521983		returned_562d40	CAST@0052197c(CALL@0052197c(0x562d40))	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	0052199e	00595ef0	embedded_literal	COPY@0052199e(0x595ef0)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	00521a07	005ae970	embedded_literal	COPY@00521a07(0x5ae960)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	00521a2d	005aec60	embedded_literal	COPY@00521a2d(0x5aec50)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	00521a37	005aec88	embedded_literal	COPY@00521a37(0x5aec78)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	00521a59	005aecc8	embedded_literal	COPY@00521a59(0x5aecb8)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	00521a7b	005aed0c	embedded_literal	COPY@00521a7b(0x5aecfc)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	00521a85	005aed2c	embedded_literal	COPY@00521a85(0x5aed1c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	00521aa9	005aed6c	embedded_literal	COPY@00521aa9(0x5aed5c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00521900	00521ab3	005aed98	embedded_literal	COPY@00521ab3(0x5aed88)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00522150	0052216f	005aef6c	embedded_literal	COPY@0052216f(0x5aef5c)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00522150	00522197	005d8878	embedded_literal	COPY@00522197(0x5d8868)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00522150	005221ed	005d8878	embedded_literal	COPY@005221ed(0x5d8868)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+005638c0	005638ce	005d8878	embedded_literal	COPY@005638ce(0x5d8868)	F6510 original text input; semantic producer / format / resource source -> native_message_flow
+00563950	005639b6	005d8878	embedded_literal	COPY@005639b6(0x5d8868)	F6510 original text input; semantic producer / format / resource source -> native_message_flow

@@ -530,6 +530,16 @@ Status menu(const NativeEvent& event,bool& rebuilt,u32& selected) {
 }
 Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     handled=false;
+    if(windows_build::is_3891() && event.id==command_paint) {
+        handled=true;
+        if(event.phase==NativePhase::after) {
+            upper_commands_painting=false;return Status::ok;
+        }
+        if(constructing==Construction::command) *at<u32>(0x5F54AB0)=preview;
+        const auto status=bind_upper_commands_menu(native_menu_component::active(),nullptr);
+        if(status==Status::ok) upper_commands_painting=true;
+        return status;
+    }
     if(event.id==item_wait || event.id==herb_wait) {
         handled=true;
         if(event.phase==NativePhase::after && event.frame->eax==static_cast<u32>(-2) &&
@@ -643,7 +653,6 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     }
     if((event.id==command_debug_title || event.id==command_debug_wait || event.id==command_input) &&
        constructing==Construction::command) result.skip_original=1;
-    if(event.id==command_paint && constructing==Construction::command) *at<u32>(0x5F54AB0)=preview;
     if((event.id==command_storage && constructing==Construction::command) ||
        (event.id==positioned_storage && constructing==Construction::positioned_command))
         native_menu_component::activate(command_menu);

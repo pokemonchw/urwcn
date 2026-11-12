@@ -1,0 +1,1038 @@
+domain	source	target
+handcraft.work.activity		
+handcraft.work.activity	 (#%D)	（#%d）
+handcraft.work.activity	 (%S LEASH)	（%s牵绳）
+handcraft.work.activity	 (%S)	（%s）
+handcraft.work.activity	 (TIED TO %S)	（拴在%s上）
+handcraft.work.activity	 WITH BONE HOOK	（装有骨鱼钩）
+handcraft.work.activity	 WITH IRON HOOK	（装有铁鱼钩）
+handcraft.work.activity	 WITH NO HOOK	（未装鱼钩）
+handcraft.work.activity	 WITH NO STRING	（未装弦）
+handcraft.work.activity	 WITH WOODEN HOOK	（装有木鱼钩）
+handcraft.work.activity	 WOOD	木材
+handcraft.work.activity	%D %S	%d %s
+handcraft.work.activity	%D FT	%d英尺
+handcraft.work.activity	%S	%s
+handcraft.work.activity	%S %S	%s%s
+handcraft.work.activity	%S OF %S	%s（%s）
+handcraft.work.activity	%S%S	%s%s
+handcraft.work.activity	ACTIVE FISHING	主动捕鱼
+handcraft.work.activity	ALL TYPES	所有类别
+handcraft.work.activity	ANGO	安戈倒钩矛
+handcraft.work.activity	ANGO HEAD	安戈倒钩矛头
+handcraft.work.activity	APPLY TANNING MATERIAL	涂抹鞣料
+handcraft.work.activity	APPLY TRAP IN YOUR INVENTORY	使用背包里的陷阱
+handcraft.work.activity	APRON	围裙
+handcraft.work.activity	ARMOURS & CLOTHES	盔甲与衣物
+handcraft.work.activity	ARMS	双臂
+handcraft.work.activity	ARROW	制作箭
+handcraft.work.activity	ARROW SHAFT	箭杆
+handcraft.work.activity	ARROWHEAD	箭头
+handcraft.work.activity	ARROWMAKING	制作箭矢
+handcraft.work.activity	ARROWS	箭矢
+handcraft.work.activity	ASK FOR DIRECTIONS	问路
+handcraft.work.activity	ASK HELP/COMPANY	请求帮助或结伴
+handcraft.work.activity	ATTACK	攻击
+handcraft.work.activity	ATTACK (ALL)	全部攻击
+handcraft.work.activity	AXE HAFT	斧柄
+handcraft.work.activity	BAG	袋子
+handcraft.work.activity	BAIT A TRAP	给陷阱放诱饵
+handcraft.work.activity	BAKING RECIPES	烘焙食谱
+handcraft.work.activity	BANDAGE	绷带
+handcraft.work.activity	BARLEY	大麦
+handcraft.work.activity	BARLEY GRAINS	大麦粒
+handcraft.work.activity	BARLEY-FLOUR	大麦粉
+handcraft.work.activity	BASTARD SWORD	手半剑
+handcraft.work.activity	BATTLEAXE	战斧
+handcraft.work.activity	BATTLEAXE HEAD	战斧头
+handcraft.work.activity	BATTLESWORD	战斗巨剑
+handcraft.work.activity	BEAR PIPE	熊管草
+handcraft.work.activity	BEAR PIPE FLOWERS	熊管草花
+handcraft.work.activity	BEAR PIPE LEAVES	熊管草叶
+handcraft.work.activity	BEAR PIPE ROOT	熊管草根
+handcraft.work.activity	BEARPAW MUSHROOM	熊掌菇
+handcraft.work.activity	BENCH	长凳
+handcraft.work.activity	BERRY PORRIDGE	浆果粥
+handcraft.work.activity	BIG DEADFALL TRAP	大型压落陷阱
+handcraft.work.activity	BIRCH TWIG	桦树枝
+handcraft.work.activity	BIRCH WITHE	桦树柔枝绑条
+handcraft.work.activity	BIRCH-BARK BASKET	桦皮篮
+handcraft.work.activity	BIRCH-BARK BOX	桦皮盒
+handcraft.work.activity	BIRCH-BARK CAP	桦皮帽
+handcraft.work.activity	BIRCH-BARK NECKLACE	桦皮项链
+handcraft.work.activity	BIRCH-BARK POT	桦皮锅
+handcraft.work.activity	BIRCH-BARK ROPE	桦皮绳
+handcraft.work.activity	BIRCH-BARK SHOES	桦皮鞋
+handcraft.work.activity	BLACK CURRANT	黑加仑
+handcraft.work.activity	BLACK CURRANT BUSH	黑加仑灌木
+handcraft.work.activity	BLACK CURRANTS	黑加仑
+handcraft.work.activity	BLACK EAR MUSHROOM	黑耳菇
+handcraft.work.activity	BLOCK OF %S WOOD	%s木块
+handcraft.work.activity	BLOCK OF WOOD	木块
+handcraft.work.activity	BLUEBERRIES	蓝莓
+handcraft.work.activity	BLUEBERRY	蓝莓
+handcraft.work.activity	BLUEBERRY SHRUB	蓝莓灌木
+handcraft.work.activity	BLUNT	钝击
+handcraft.work.activity	BLUNT ARROW	钝头箭
+handcraft.work.activity	BOARD	木板
+handcraft.work.activity	BOARDS	制木板
+handcraft.work.activity	BODY	躯干
+handcraft.work.activity	BOG FLOWER	沼泽花
+handcraft.work.activity	BOG FLOWER LEAVES	沼泽花叶
+handcraft.work.activity	BOGBEAN	睡菜
+handcraft.work.activity	BOGBEAN LEAVES	睡菜叶
+handcraft.work.activity	BOGBEAN ROOT	睡菜根
+handcraft.work.activity	BOIL	水煮
+handcraft.work.activity	BOIL / HERBAL BEVERAGES	煮食／草药饮料
+handcraft.work.activity	BONE ARROWHEAD	骨箭头
+handcraft.work.activity	BONE FISHHOOK	骨鱼钩
+handcraft.work.activity	BONE SEWING NEEDLE	骨缝衣针
+handcraft.work.activity	BONE TIPPED ARROW	骨镞箭
+handcraft.work.activity	BOWSTRING	制作弓弦
+handcraft.work.activity	BRANCH	树枝
+handcraft.work.activity	BREAM	鳊鱼
+handcraft.work.activity	BROAD AXE	宽刃斧
+handcraft.work.activity	BROAD AXE HEAD	宽刃斧头
+handcraft.work.activity	BROAD BEAN	蚕豆植株
+handcraft.work.activity	BROAD BEANS	蚕豆
+handcraft.work.activity	BROAD KNIFE	宽刃刀
+handcraft.work.activity	BROADHEAD	宽刃箭头
+handcraft.work.activity	BROADHEAD ARROW	宽刃箭
+handcraft.work.activity	BROADSWORD	阔剑
+handcraft.work.activity	BRONZE BALL PENDANT	青铜球吊坠
+handcraft.work.activity	BRONZE BEAR PENDANT	青铜熊吊坠
+handcraft.work.activity	BRONZE BEZEL RING	青铜镶座戒指
+handcraft.work.activity	BRONZE BRACELET	青铜手镯
+handcraft.work.activity	BRONZE BROOCH	青铜胸针
+handcraft.work.activity	BRONZE FLOWER-ORNAMENTED COMB	青铜花纹梳
+handcraft.work.activity	BRONZE HORSE-ORNAMENTED COMB	青铜马纹梳
+handcraft.work.activity	BROWNCOAT MUSHROOM	褐衣菇
+handcraft.work.activity	BUCKLER	小圆盾
+handcraft.work.activity	BUILD A FIRE	生火
+handcraft.work.activity	BUILD SOMETHING	建造
+handcraft.work.activity	BUILD TRAP-FENCE	建造陷阱围栏
+handcraft.work.activity	BUILDING	建造
+handcraft.work.activity	BUILDING A FIRE	生火
+handcraft.work.activity	BURBOT	江鳕
+handcraft.work.activity	BURDOCK	牛蒡
+handcraft.work.activity	BURDOCK LEAVES	牛蒡叶
+handcraft.work.activity	BURDOCK ROOT	牛蒡根
+handcraft.work.activity	BURNING %S	燃烧的%s
+handcraft.work.activity	BUTCHER AND SKIN A CARCASS	分割尸体并剥皮
+handcraft.work.activity	BUTCHERING THE CARCASS	分割尸体
+handcraft.work.activity	BUY AN ANIMAL	购买动物
+handcraft.work.activity	CANCEL	取消
+handcraft.work.activity	CARCASSES	尸体
+handcraft.work.activity	CARPENTRY	木工加工
+handcraft.work.activity	CARVE TRUNKS INTO LOGS	将树干加工为原木
+handcraft.work.activity	CARVING AXE	刨削斧
+handcraft.work.activity	CARVING AXE HEAD	刨削斧头
+handcraft.work.activity	CEILING AND FLOOR	天花板与地板
+handcraft.work.activity	CELLAR	地窖
+handcraft.work.activity	CENTER	中央
+handcraft.work.activity	CHOOSE A TARGET IN SIGHT	选择视野内的目标
+handcraft.work.activity	CHOP BLOCKS OF WOOD	劈木块
+handcraft.work.activity	CLAYWEED	黏土草
+handcraft.work.activity	CLAYWEED LEAVES	黏土草叶
+handcraft.work.activity	CLAYWEED SEEDS	黏土草种子
+handcraft.work.activity	CLEAN THE SKIN	清理兽皮
+handcraft.work.activity	CLOAK	斗篷
+handcraft.work.activity	CLOTH CORD	布绳
+handcraft.work.activity	CLOTH GARMENTS	布衣
+handcraft.work.activity	CLOTHES	衣物
+handcraft.work.activity	CLOUDBERRIES	云莓
+handcraft.work.activity	CLOUDBERRY	云莓
+handcraft.work.activity	CLOUDBERRY BRAMBLE	云莓丛
+handcraft.work.activity	CLUB	棍棒
+handcraft.work.activity	COME	过来
+handcraft.work.activity	COMMAND	下达命令
+handcraft.work.activity	COMMAND PETS AND COMPANIONS	指挥动物与同伴
+handcraft.work.activity	CONTAINERS	容器
+handcraft.work.activity	CONTINUE PAUSED PROCESS	继续暂停的工作
+handcraft.work.activity	COOK	烹饪
+handcraft.work.activity	CORD	细绳
+handcraft.work.activity	COWL	头颈罩
+handcraft.work.activity	CRAFT AN ITEM	制作物品
+handcraft.work.activity	CRAFT MODDED ITEM	制作自定义物品
+handcraft.work.activity	CRANBERRIES	蔓越莓
+handcraft.work.activity	CRANBERRY	蔓越莓
+handcraft.work.activity	CRANBERRY SHRUB	蔓越莓灌木
+handcraft.work.activity	CROSSBOW	弩
+handcraft.work.activity	CROWBERRIES	岩高兰果
+handcraft.work.activity	CROWBERRY	岩高兰果
+handcraft.work.activity	CROWBERRY SHRUB	岩高兰灌木
+handcraft.work.activity	CURE THE SKIN (FOR PRESERVATION)	腌制兽皮（防腐保存）
+handcraft.work.activity	CUT A CARCASS FOR MEAT	肢解取肉
+handcraft.work.activity	DE-HAIR (FOR RAWHIDE/LEATHER)	脱毛（制作生皮或皮革）
+handcraft.work.activity	DECONSTRUCT SOMETHING	拆解
+handcraft.work.activity	DECONSTRUCTING	拆除
+handcraft.work.activity	DEFENSE MANEUVERS	防御动作
+handcraft.work.activity	DELIVER AN ITEM	交付物品
+handcraft.work.activity	DISASSEMBLE A TRAP CONSTRUCTION	拆除陷阱
+handcraft.work.activity	DISASSEMBLING THE TRAP	拆解陷阱
+handcraft.work.activity	DO THAT	这样做
+handcraft.work.activity	DODGE	闪避
+handcraft.work.activity	DOG PIPE	犬管草
+handcraft.work.activity	DOG PIPE LEAVES	犬管草叶
+handcraft.work.activity	DOG PIPE ROOT	犬管草根
+handcraft.work.activity	DOING HANDCRAFT	手工制作
+handcraft.work.activity	DOING TIMBERCRAFT	加工木材
+handcraft.work.activity	DOOR	门
+handcraft.work.activity	DRESS	长裙
+handcraft.work.activity	DRIED FISH SOUP	鱼干汤
+handcraft.work.activity	DRIED MEAT SOUP	肉干汤
+handcraft.work.activity	DROP	丢下
+handcraft.work.activity	DRY (FOR PRESERVATION)	风干保存
+handcraft.work.activity	DRYING	晾干
+handcraft.work.activity	EASTERN WALL	东墙
+handcraft.work.activity	EASTERN WALL OF A KOTA	科塔帐篷东壁
+handcraft.work.activity	EAT NOW	现在进食
+handcraft.work.activity	EAT NOW (ALL)	现在全部进食
+handcraft.work.activity	EDGE	刃击
+handcraft.work.activity	EGG	蛋
+handcraft.work.activity	EMBER-ROASTED TURNIPS	余烬烤芜菁
+handcraft.work.activity	EMPTY A CONTAINER	倒空容器
+handcraft.work.activity	EXAMINING THE PLANT	辨认植物
+handcraft.work.activity	EXIT	退出
+handcraft.work.activity	EXTRACT PLANT FIBRE	提取植物纤维
+handcraft.work.activity	FELL A TREE	伐树
+handcraft.work.activity	FELL SOME TREES	砍一些树
+handcraft.work.activity	FELLING A TREE	砍树
+handcraft.work.activity	FENCE	围栏
+handcraft.work.activity	FENCE GATE	围栏门
+handcraft.work.activity	FILL WITH WATER, OR MILK INTO	盛水或挤奶入容器
+handcraft.work.activity	FIREPLACE	火塘
+handcraft.work.activity	FIREWOOD	柴火
+handcraft.work.activity	FISH RECIPES	鱼类食谱
+handcraft.work.activity	FISH SOUP	鱼汤
+handcraft.work.activity	FISHER'S KNIFE	渔刀
+handcraft.work.activity	FISHING	捕鱼
+handcraft.work.activity	FISHING ROD	钓竿
+handcraft.work.activity	FLAT RYE BREAD	黑麦薄饼
+handcraft.work.activity	FLATBREAD	薄饼
+handcraft.work.activity	FLAX	亚麻
+handcraft.work.activity	FLAX SEEDS	亚麻籽
+handcraft.work.activity	FOLLOW	跟随
+handcraft.work.activity	FOODS	食物
+handcraft.work.activity	FOOTRAGS	裹脚布
+handcraft.work.activity	FRAMEWORK	建筑框架
+handcraft.work.activity	FUR BOOTS	毛皮靴
+handcraft.work.activity	FUR CAP	毛皮帽
+handcraft.work.activity	FUR CLOAK	毛皮斗篷
+handcraft.work.activity	FUR CLOTHES	毛皮衣物
+handcraft.work.activity	FUR HOOD	毛皮兜帽
+handcraft.work.activity	FUR LEGGINGS	毛皮护腿
+handcraft.work.activity	FUR MITTENS	毛皮连指手套
+handcraft.work.activity	FUR OVERCOAT	毛皮大衣
+handcraft.work.activity	FUR SHIRT	毛皮衬衫
+handcraft.work.activity	GAME ENCYCLOPEDIA	游戏百科
+handcraft.work.activity	GENERAL BUILDING INFORMATION	建造基本说明
+handcraft.work.activity	GENERAL TRAPPING INFORMATION	设陷阱基本说明
+handcraft.work.activity	GET UP (STAND)	起身站立
+handcraft.work.activity	GO PRONE (LAY DOWN)	伏地（趴下）
+handcraft.work.activity	GOLDEN ROD	一枝黄花
+handcraft.work.activity	GOLDEN ROD FLOWERS	一枝黄花的花
+handcraft.work.activity	GOLDEN ROD LEAVES	一枝黄花叶
+handcraft.work.activity	GRAINFLAIL	连枷
+handcraft.work.activity	GRAPHICAL PRESENTATION	图形预览
+handcraft.work.activity	GREEN SOUP	青菜汤
+handcraft.work.activity	GREET	打招呼
+handcraft.work.activity	GRIND FLOUR	磨粉
+handcraft.work.activity	GRINDING	研磨
+handcraft.work.activity	GROUP COMMAND	群体命令
+handcraft.work.activity	GROUP COMMAND OFF	关闭群体命令
+handcraft.work.activity	HAFT A SHOVEL	给铲子装柄
+handcraft.work.activity	HAFT A SPEAR	给矛装柄
+handcraft.work.activity	HAFT A TOOL	给工具装柄
+handcraft.work.activity	HAFT A WEAPON OR TOOL	为武器或工具装柄
+handcraft.work.activity	HAFT AN AXE	给斧头装柄
+handcraft.work.activity	HAFTING	安装柄杆
+handcraft.work.activity	HAIRY MUSHROOM	毛菇
+handcraft.work.activity	HANDAXE	手斧
+handcraft.work.activity	HANDAXE HEAD	手斧头
+handcraft.work.activity	HARVEST AND PICK	收获与采集
+handcraft.work.activity	HARVEST AS SHEETS	剥取整片树皮
+handcraft.work.activity	HARVEST DOWN	割下收获
+handcraft.work.activity	HARVESTING BARK	剥取树皮
+handcraft.work.activity	HAUL ITEMS	拖运物品
+handcraft.work.activity	HEAD	头部
+handcraft.work.activity	HEATHER	石南
+handcraft.work.activity	HEATHER FLOWERS	石南花
+handcraft.work.activity	HEAVY CROSSBOW	重弩
+handcraft.work.activity	HEAVY DEADFALL BEAR TRAP	重型压落捕熊陷阱
+handcraft.work.activity	HEMP	大麻
+handcraft.work.activity	HEMP LEAVES	大麻叶
+handcraft.work.activity	HEMP SEEDS	大麻籽
+handcraft.work.activity	HIDE AND SNEAK	隐藏并潜行
+handcraft.work.activity	HIDES & SKINS	兽皮
+handcraft.work.activity	HIGH	高处
+handcraft.work.activity	HUNTING BOW	猎弓
+handcraft.work.activity	HUNTING HORN	猎号
+handcraft.work.activity	HUNTING KNIFE	猎刀
+handcraft.work.activity	I SHALL NAME YOU...	我要给你取名……
+handcraft.work.activity	IGNORE	忽略
+handcraft.work.activity	INSIDE OF A BUILDING	建筑内部
+handcraft.work.activity	INSIDE OF A KOTA	科塔帐篷内部
+handcraft.work.activity	IRON COUDES	铁护肘
+handcraft.work.activity	IRON FISHHOOK	铁鱼钩
+handcraft.work.activity	IRON HELM	铁头盔
+handcraft.work.activity	IRON KNEECOPS	铁护膝
+handcraft.work.activity	IRON SEWING NEEDLE	铁缝衣针
+handcraft.work.activity	IRON SPECTACLE HELM	铁眼罩盔
+handcraft.work.activity	JAVELIN	标枪
+handcraft.work.activity	JOIN ROPES AND CORDS	接长绳索
+handcraft.work.activity	JOINING TYING EQUIPMENT	连接捆绑材料
+handcraft.work.activity	KAUMOLAIS KNIFE	考莫刀
+handcraft.work.activity	KAUMOLAIS SPEAR	考莫长矛
+handcraft.work.activity	KAUMOLAIS SPEAR HEAD	考莫矛头
+handcraft.work.activity	KEYBOARD COMMANDS	键盘指令
+handcraft.work.activity	KNIFE	刀
+handcraft.work.activity	KOTA	科塔帐篷
+handcraft.work.activity	KOTA DOORWAY	科塔帐篷入口
+handcraft.work.activity	LAKE REED	湖苇
+handcraft.work.activity	LAKE REED ROOT	湖苇根
+handcraft.work.activity	LAMELLAR CUIRASS	札甲胸甲
+handcraft.work.activity	LAMELLAR FOREARM GUARDS	札甲前臂护甲
+handcraft.work.activity	LAMELLAR HAUBERK	札甲长身甲
+handcraft.work.activity	LAMELLAR REREBRACES	札甲上臂甲
+handcraft.work.activity	LAMELLAR SHIN GUARDS	札甲护胫
+handcraft.work.activity	LAVARET	白鲑
+handcraft.work.activity	LEATHER BELT	皮腰带
+handcraft.work.activity	LEATHER BOOTS	皮靴
+handcraft.work.activity	LEATHER CAP	皮帽
+handcraft.work.activity	LEATHER CLOTHES	皮革衣物
+handcraft.work.activity	LEATHER CORD	皮细绳
+handcraft.work.activity	LEATHER CUIRASS	皮胸甲
+handcraft.work.activity	LEATHER FOREARM GUARDS	皮前臂护甲
+handcraft.work.activity	LEATHER LEGGINGS	皮护腿
+handcraft.work.activity	LEATHER ROPE	皮粗绳
+handcraft.work.activity	LEATHER SHIN GUARDS	皮护胫
+handcraft.work.activity	LEATHER SHIRT	皮衬衫
+handcraft.work.activity	LEATHER SHOES	皮鞋
+handcraft.work.activity	LEATHER TROUSERS	皮裤
+handcraft.work.activity	LEGGINGS	护腿
+handcraft.work.activity	LEGS	双腿
+handcraft.work.activity	LIGHT A FIRE	生火
+handcraft.work.activity	LIGHT LEVER TRAP	轻型杠杆陷阱
+handcraft.work.activity	LINEN APRON	亚麻围裙
+handcraft.work.activity	LINEN COWL	亚麻头颈罩
+handcraft.work.activity	LINEN DRESS	亚麻长裙
+handcraft.work.activity	LINEN FOOTRAGS	亚麻裹脚布
+handcraft.work.activity	LINEN SHIRT	亚麻衬衫
+handcraft.work.activity	LINEN TROUSERS	亚麻裤
+handcraft.work.activity	LINEN TUNIC	亚麻束腰外衣
+handcraft.work.activity	LINEN UNDERGARMENT	亚麻贴身长衣
+handcraft.work.activity	LINEN UNDERSHIRT	亚麻贴身衬衣
+handcraft.work.activity	LINEN VEIL	亚麻头巾
+handcraft.work.activity	LINGONBERRIES	越橘
+handcraft.work.activity	LINGONBERRY	越橘
+handcraft.work.activity	LINGONBERRY SHRUB	越橘灌木
+handcraft.work.activity	LIPPO	抄网
+handcraft.work.activity	LOG	截木
+handcraft.work.activity	LONG MAIL COWL	加长锁子甲头颈罩
+handcraft.work.activity	LONG MAIL HAUBERK	加长锁子甲长身甲
+handcraft.work.activity	LONGBOW	长弓
+handcraft.work.activity	LOOP SNARE	绳套陷阱
+handcraft.work.activity	LUMBER	木材
+handcraft.work.activity	MACE	钉头锤
+handcraft.work.activity	MAIL COWL	锁子甲头颈罩
+handcraft.work.activity	MAIL HABERGEON	锁子甲短袖甲衣
+handcraft.work.activity	MAIL HAUBERK	锁子甲长身甲
+handcraft.work.activity	MAIL LEGGINGS	锁子甲护腿
+handcraft.work.activity	MAIL MITTENS	锁子甲连指手套
+handcraft.work.activity	MAKE A BOWSTRING	制作弓弦
+handcraft.work.activity	MAKE A HOLE IN THE ICE	凿冰洞
+handcraft.work.activity	MARSH CALLA	水芋
+handcraft.work.activity	MARSH CALLA LEAVES	水芋叶
+handcraft.work.activity	MARSH CALLA ROOT	水芋根
+handcraft.work.activity	MAUL	长柄重槌
+handcraft.work.activity	MEADSWEET	蜜香草
+handcraft.work.activity	MEADSWEET FLOWERS	蜜香草花
+handcraft.work.activity	MEADSWEET LEAVES	蜜香草叶
+handcraft.work.activity	MEAT RECIPES	肉类食谱
+handcraft.work.activity	MEAT SOUP	肉汤
+handcraft.work.activity	MEAT STEW	炖肉
+handcraft.work.activity	MILK	奶
+handcraft.work.activity	MILKWEED	乳草
+handcraft.work.activity	MILKWEED LEAVES	乳草叶
+handcraft.work.activity	MILKWEED ROOT	乳草根
+handcraft.work.activity	MISCELLANEOUS	杂物
+handcraft.work.activity	MISCELLANOUS CLOTHES	其他衣物
+handcraft.work.activity	MODDED HANDCRAFT OPTIONS	模组手工制作选项
+handcraft.work.activity	MOTHER PIPE	母管草
+handcraft.work.activity	MOTHER PIPE FLOWERS	母管草花
+handcraft.work.activity	MOTHER PIPE LEAVES	母管草叶
+handcraft.work.activity	MOTHER PIPE ROOT	母管草根
+handcraft.work.activity	MUSHROOM SOUP	蘑菇汤
+handcraft.work.activity	NET	制作渔网
+handcraft.work.activity	NETMAKING	编织渔网
+handcraft.work.activity	NETTING NEEDLE	织网梭
+handcraft.work.activity	NETTLE	荨麻
+handcraft.work.activity	NETTLE APRON	荨麻布围裙
+handcraft.work.activity	NETTLE COWL	荨麻布头颈罩
+handcraft.work.activity	NETTLE LEAVES	荨麻叶
+handcraft.work.activity	NETTLE SEEDS	荨麻种子
+handcraft.work.activity	NETTLE SHIRT	荨麻布衬衫
+handcraft.work.activity	NETTLE TROUSERS	荨麻布裤
+handcraft.work.activity	NETTLE TUNIC	荨麻布束腰外衣
+handcraft.work.activity	NJERPEZ SCIMITAR	涅尔佩兹弯刀
+handcraft.work.activity	NOAIDI'S MUSHROOM	诺艾迪菇
+handcraft.work.activity	NONE	无
+handcraft.work.activity	NORTH-EAST CORNER	东北墙角
+handcraft.work.activity	NORTH-EAST CORNER OF A KOTA	科塔帐篷东北角
+handcraft.work.activity	NORTH-WEST CORNER	西北墙角
+handcraft.work.activity	NORTH-WEST CORNER OF A KOTA	科塔帐篷西北角
+handcraft.work.activity	NORTHERN BILBERRIES	北地蓝莓
+handcraft.work.activity	NORTHERN BILBERRY	北方越橘
+handcraft.work.activity	NORTHERN BILBERRY SHRUB	北地蓝莓灌木
+handcraft.work.activity	NORTHERN BOW	北方弓
+handcraft.work.activity	NORTHERN KNIFE	北方刀
+handcraft.work.activity	NORTHERN SPEAR	北方长矛
+handcraft.work.activity	NORTHERN SPEAR HEAD	北方矛头
+handcraft.work.activity	NORTHERN WALL	北墙
+handcraft.work.activity	NORTHERN WALL OF A KOTA	科塔帐篷北壁
+handcraft.work.activity	OVEN PORRIDGE	烤粥
+handcraft.work.activity	OVERCOAT	大衣
+handcraft.work.activity	PACK AN ANIMAL	给动物装载货物
+handcraft.work.activity	PADDLE	桨
+handcraft.work.activity	PAW-BOARD FOX TRAP	夹爪板捕狐陷阱
+handcraft.work.activity	PEA	豌豆植株
+handcraft.work.activity	PEA SOUP	豌豆汤
+handcraft.work.activity	PEAS	豌豆
+handcraft.work.activity	PEEL BARK	剥树皮
+handcraft.work.activity	PEEL IN LONG STRIPS	剥成长条
+handcraft.work.activity	PERCH	鲈鱼
+handcraft.work.activity	PIKE	狗鱼
+handcraft.work.activity	PIKE-PERCH	梭鲈
+handcraft.work.activity	PLANT/SOW	种植与播种
+handcraft.work.activity	PLANTS	植物
+handcraft.work.activity	POINT	刺击
+handcraft.work.activity	PORRIDGE	粥
+handcraft.work.activity	PORRIDGE RECIPES	粥类食谱
+handcraft.work.activity	POST SPRUCE	制云杉撑杆
+handcraft.work.activity	POT	锅
+handcraft.work.activity	POUR SOMETHING INTO A CONTAINER	倒入容器
+handcraft.work.activity	PREFERRED TYPES	偏好类别
+handcraft.work.activity	PREPARE THE SOIL	整地
+handcraft.work.activity	PUNT	平底船
+handcraft.work.activity	PUSH/PACK ITEMS	推动或装载物品
+handcraft.work.activity	QUIT AND OPTIONALLY SAVE	退出并选择是否保存
+handcraft.work.activity	QUIT THE GAME	退出游戏
+handcraft.work.activity	RAFT	木筏
+handcraft.work.activity	RASPBERRIES	覆盆子
+handcraft.work.activity	RASPBERRY	覆盆子
+handcraft.work.activity	RASPBERRY BUSH	覆盆子灌木
+handcraft.work.activity	RE-TRIGGERING THE TRAP	重新设置陷阱
+handcraft.work.activity	REDLEGGER MUSHROOM	红脚菇
+handcraft.work.activity	REMOVE A HAFT	拆下柄杆
+handcraft.work.activity	REMOVE THE AXE HAFT	拆下斧柄
+handcraft.work.activity	REMOVE THE HAFT	拆下柄杆
+handcraft.work.activity	REMOVE THE SHOVEL HAFT	拆下铲柄
+handcraft.work.activity	REMOVE THE SPEAR HAFT	拆下矛柄
+handcraft.work.activity	REPAIR WORN-OUT CLOTHES	修补破旧衣物
+handcraft.work.activity	REPAIR WORN-OUT NET	修补破旧渔网
+handcraft.work.activity	REPAIRING	修补
+handcraft.work.activity	RESET TRIGGERED TRAP	重新布设已触发的陷阱
+handcraft.work.activity	REST UNTIL NOT FATIGUED	休息至疲劳消退
+handcraft.work.activity	RETRIEVE A NET	收网
+handcraft.work.activity	RETRIEVING THE NET	收网
+handcraft.work.activity	RETTING	沤麻
+handcraft.work.activity	RINGED MUSHROOM	环纹菇
+handcraft.work.activity	RINSE AND DRY THE SKIN	漂洗并晾干兽皮
+handcraft.work.activity	RIVERPIG	河猪草
+handcraft.work.activity	RIVERPIG ROOT	河猪草根
+handcraft.work.activity	ROACH	拟鲤
+handcraft.work.activity	ROAST IN EMBERS	埋入余烬烘烤
+handcraft.work.activity	ROAST ON FIRE	火烤
+handcraft.work.activity	ROAST SOME MEAT	烤一些肉
+handcraft.work.activity	ROASTED MEAT	烤肉
+handcraft.work.activity	ROCK	岩石
+handcraft.work.activity	ROPE	粗绳
+handcraft.work.activity	ROSEROOT	红景天
+handcraft.work.activity	ROSEROOT LEAVES	红景天叶
+handcraft.work.activity	ROSEROOT ROOT	红景天根
+handcraft.work.activity	ROTTEN 	腐烂的
+handcraft.work.activity	ROUNDSHIELD	圆盾
+handcraft.work.activity	RUN	奔跑
+handcraft.work.activity	RYE	黑麦
+handcraft.work.activity	RYE BREAD	黑麦面包
+handcraft.work.activity	RYE GRAINS	黑麦粒
+handcraft.work.activity	RYE-FLOUR	黑麦粉
+handcraft.work.activity	SALMON	鲑鱼
+handcraft.work.activity	SALT	盐
+handcraft.work.activity	SALT (FOR PRESERVATION)	盐腌保存
+handcraft.work.activity	SALTED MEAT	盐腌肉
+handcraft.work.activity	SAND MUSHROOM	沙菇
+handcraft.work.activity	SAUNA SCOOP	桑拿水勺
+handcraft.work.activity	SAUNA STOVE	桑拿炉
+handcraft.work.activity	SAVE THE GAME	保存游戏
+handcraft.work.activity	SCIMITAR	弯刀
+handcraft.work.activity	SEED PORRIDGE	籽粥
+handcraft.work.activity	SEPARATE SINEW FIBRE	分离肌腱纤维
+handcraft.work.activity	SESTA	撑篙
+handcraft.work.activity	SET A NET	下网
+handcraft.work.activity	SET A TRAP	布设陷阱
+handcraft.work.activity	SETTING THE NET	下网
+handcraft.work.activity	SETTING THE TRAP	设置陷阱
+handcraft.work.activity	SETUP OPTIONS	设置选项
+handcraft.work.activity	SHELTER	庇护所
+handcraft.work.activity	SHINGLE	木瓦
+handcraft.work.activity	SHINGLE BASKET	木片篮
+handcraft.work.activity	SHIRT	衬衫
+handcraft.work.activity	SHORTBOW	短弓
+handcraft.work.activity	SHORTEN ROPES AND CORDS	截短绳索
+handcraft.work.activity	SHORTENING TYING EQUIPMENT	截短捆绑材料
+handcraft.work.activity	SHORTSWORD	短剑
+handcraft.work.activity	SHOVEL	铁铲
+handcraft.work.activity	SHOVEL BLADE	铲头
+handcraft.work.activity	SHOVEL HAFT	铲柄
+handcraft.work.activity	SHUTTER	窗板
+handcraft.work.activity	SICKLE	镰刀
+handcraft.work.activity	SIDE	侧面
+handcraft.work.activity	SILVER BIRD BRACELET	银鸟手镯
+handcraft.work.activity	SILVER CHAIN BRACELET	银链手镯
+handcraft.work.activity	SILVER RING	银戒指
+handcraft.work.activity	SILVER SUN-SYMBOL PENDANT	银太阳纹吊坠
+handcraft.work.activity	SINEW YARN	制作筋线
+handcraft.work.activity	SKI POLE	滑雪杖
+handcraft.work.activity	SKIN AN ANIMAL	剥皮
+handcraft.work.activity	SKINNING CARCASS	给尸体剥皮
+handcraft.work.activity	SKIS	滑雪板
+handcraft.work.activity	SKRAMASAKSI	萨克斯长刀
+handcraft.work.activity	SLEEP	睡觉
+handcraft.work.activity	SLEEPING BUNK	卧铺
+handcraft.work.activity	SLENDER %S TRUNK	细长的%s树干
+handcraft.work.activity	SLENDER TREE TRUNK	细树干
+handcraft.work.activity	SMALL BRONZE BROOCH	小青铜胸针
+handcraft.work.activity	SMALL DEADFALL TRAP	小型压落陷阱
+handcraft.work.activity	SMALL KNIFE	小刀
+handcraft.work.activity	SMALL TRIDENT	小鱼叉
+handcraft.work.activity	SMALL TRIDENT HEAD	小鱼叉头
+handcraft.work.activity	SMOKE (FOR PRESERVATION)	烟熏保存
+handcraft.work.activity	SMOKED FISH SOUP	熏鱼汤
+handcraft.work.activity	SMOKED MEAT	熏肉
+handcraft.work.activity	SMOKED MEAT SOUP	熏肉汤
+handcraft.work.activity	SOAK THE SKIN	浸泡兽皮
+handcraft.work.activity	SOFT MUSHROOM	软菇
+handcraft.work.activity	SOFTEN THE SKIN	揉软兽皮
+handcraft.work.activity	SORREL	酸模
+handcraft.work.activity	SORREL LEAVES	酸模叶
+handcraft.work.activity	SORREL SEEDS	酸模种子
+handcraft.work.activity	SOUTH-EAST CORNER	东南墙角
+handcraft.work.activity	SOUTH-EAST CORNER OF A KOTA	科塔帐篷东南角
+handcraft.work.activity	SOUTH-WEST CORNER	西南墙角
+handcraft.work.activity	SOUTH-WEST CORNER OF A KOTA	科塔帐篷西南角
+handcraft.work.activity	SOUTHERN WALL	南墙
+handcraft.work.activity	SOUTHERN WALL OF A KOTA	科塔帐篷南壁
+handcraft.work.activity	SPEAR	长矛
+handcraft.work.activity	SPEAR HAFT	矛杆
+handcraft.work.activity	SPEAR HEAD	矛头
+handcraft.work.activity	SPIN YARN	纺纱
+handcraft.work.activity	SPINDLE	纺锤
+handcraft.work.activity	SPLIT FIREWOOD	劈柴
+handcraft.work.activity	SPLIT TRUNKS INTO BOARDS	将树干劈成木板
+handcraft.work.activity	SPLITTING AXE	劈柴斧
+handcraft.work.activity	SPLITTING AXE HEAD	劈柴斧头
+handcraft.work.activity	SPOILED 	变质的
+handcraft.work.activity	SPRUCE QUICK-BOW	云杉速制弓
+handcraft.work.activity	SPRUCE TWIG	云杉枝
+handcraft.work.activity	SPRUCE WITHE	云杉柔枝绑条
+handcraft.work.activity	STAFF	木杆
+handcraft.work.activity	STALE	不新鲜的
+handcraft.work.activity	STAND STILL - WAIT AND REST	站定——等待与休息
+handcraft.work.activity	STANDING BY	原地等候
+handcraft.work.activity	STANDING BY UNTIL NOT FATIGUED	休息至疲劳消除
+handcraft.work.activity	START FOLLOWING AGAIN	重新开始跟随
+handcraft.work.activity	STAY	留下
+handcraft.work.activity	STAY HERE	留在这里
+handcraft.work.activity	STONE	石块
+handcraft.work.activity	STONE ARROWHEAD	石箭头
+handcraft.work.activity	STONE KNIFE	石刀
+handcraft.work.activity	STONE TIPPED ARROW	石镞箭
+handcraft.work.activity	STONE-AXE	石斧
+handcraft.work.activity	STONECROP	景天
+handcraft.work.activity	STONECROP LEAVES	景天叶
+handcraft.work.activity	STOP SNEAKING	停止潜行
+handcraft.work.activity	STOP YOUR TASKS	停止工作
+handcraft.work.activity	STRAWBERRIES	草莓
+handcraft.work.activity	STRAWBERRY	草莓
+handcraft.work.activity	STRAWBERRY SHRUB	草莓丛
+handcraft.work.activity	TABLE	桌子
+handcraft.work.activity	TAKE OFF	脱下
+handcraft.work.activity	TALK TO SOMEONE	交谈
+handcraft.work.activity	TAN THE SKIN	鞣皮
+handcraft.work.activity	TELLERVO'S GIFT MUSHROOM	泰勒沃赠礼菇
+handcraft.work.activity	TENDON DRYING	晾干肌腱
+handcraft.work.activity	TEXTILECRAFT	纺织
+handcraft.work.activity	TEXTILES & YARN	纺织品与纱线
+handcraft.work.activity	THRESH (FOR GRAIN/SEEDS/LEAVES)	脱粒（取谷粒、种子或叶片）
+handcraft.work.activity	THROW AN ITEM/SHOOT AN ARROW	投掷物品或射箭
+handcraft.work.activity	TIMBER	木料
+handcraft.work.activity	TOOLS	工具
+handcraft.work.activity	TORCH	火把
+handcraft.work.activity	TRADE ITEMS	交易物品
+handcraft.work.activity	TRANSPORT	搬运
+handcraft.work.activity	TRAP PIT	陷坑
+handcraft.work.activity	TRAP PIT WITH SHARP STAKES	尖桩陷坑
+handcraft.work.activity	TRAPPING	设陷阱
+handcraft.work.activity	TREE TRUNK	树干
+handcraft.work.activity	TRIDENT	三齿鱼叉
+handcraft.work.activity	TRIDENT HEAD	三齿鱼叉头
+handcraft.work.activity	TROUSERS	裤子
+handcraft.work.activity	TROUT	鳟鱼
+handcraft.work.activity	TUNIC	束腰外衣
+handcraft.work.activity	TURNIP	芜菁
+handcraft.work.activity	TURNIP SEEDS	芜菁种子
+handcraft.work.activity	TWIGS AND BRANCHES	收集细枝与树枝
+handcraft.work.activity	TYING EQUIPMENT	绑扎用品
+handcraft.work.activity	UKKO'S MUSHROOM	乌科菇
+handcraft.work.activity	UNDERGARMENT	贴身长衣
+handcraft.work.activity	UNDERSHIRT	贴身衬衣
+handcraft.work.activity	UNPACK AN ANIMAL	卸下动物驮载的货物
+handcraft.work.activity	UNPAID	未付款
+handcraft.work.activity	UTILITY ARTICLES	日用器具
+handcraft.work.activity	VALUABLES	贵重物品
+handcraft.work.activity	VASTA	桑拿桦枝束
+handcraft.work.activity	VEGETABLE RECIPES	蔬菜食谱
+handcraft.work.activity	VEGETABLE SOUP	蔬菜汤
+handcraft.work.activity	VEGETABLE STEW	炖蔬菜
+handcraft.work.activity	VEHICLES	车辆
+handcraft.work.activity	VEIL	头巾
+handcraft.work.activity	WALK (STOP RUNNING)	步行（停止奔跑）
+handcraft.work.activity	WALL WITH A SHUTTER	带窗板的墙
+handcraft.work.activity	WATER	水
+handcraft.work.activity	WATER LILY	睡莲
+handcraft.work.activity	WATER LILY ROOT	睡莲根
+handcraft.work.activity	WEAPONS	武器
+handcraft.work.activity	WEAR	穿戴
+handcraft.work.activity	WESTERN WALL	西墙
+handcraft.work.activity	WESTERN WALL OF A KOTA	科塔帐篷西壁
+handcraft.work.activity	WIDE TRIDENT	宽鱼叉
+handcraft.work.activity	WIDE TRIDENT HEAD	宽鱼叉头
+handcraft.work.activity	WIELD	持用
+handcraft.work.activity	WILD FLOUR	野生植物粉
+handcraft.work.activity	WINTER %S	冬季%s
+handcraft.work.activity	WITHE	制作柔韧枝条绳
+handcraft.work.activity	WOLF PIPE	狼管草
+handcraft.work.activity	WOLF PIPE LEAVES	狼管草叶
+handcraft.work.activity	WOLF PIPE ROOT	狼管草根
+handcraft.work.activity	WOOD 	木制
+handcraft.work.activity	WOOD SLAT	木条
+handcraft.work.activity	WOODEN 	木制的
+handcraft.work.activity	WOODEN BOWL	木碗
+handcraft.work.activity	WOODEN BUILDING	木建筑
+handcraft.work.activity	WOODEN CANTEEN	木水壶
+handcraft.work.activity	WOODEN CUP	木杯
+handcraft.work.activity	WOODEN FISHHOOK	木鱼钩
+handcraft.work.activity	WOODEN MUG	木马克杯
+handcraft.work.activity	WOODEN SHOVEL	木铲
+handcraft.work.activity	WOODEN STAKE	木桩
+handcraft.work.activity	WOODEN TUB	木盆
+handcraft.work.activity	WOODSMAN'S AXE	伐木斧
+handcraft.work.activity	WOODSMAN'S AXE HEAD	伐木斧头
+handcraft.work.activity	WOOLLEN APRON	羊毛围裙
+handcraft.work.activity	WOOLLEN CLOAK	羊毛斗篷
+handcraft.work.activity	WOOLLEN DRESS	羊毛长裙
+handcraft.work.activity	WOOLLEN FOOTRAGS	羊毛裹脚布
+handcraft.work.activity	WOOLLEN LEGGINGS	羊毛护腿
+handcraft.work.activity	WOOLLEN NALBOUND CAP	羊毛单针编织帽
+handcraft.work.activity	WOOLLEN NALBOUND COWL	羊毛单针编织头颈罩
+handcraft.work.activity	WOOLLEN NALBOUND KNEE SOCKS	羊毛单针编织长袜
+handcraft.work.activity	WOOLLEN NALBOUND MITTENS	羊毛单针编织连指手套
+handcraft.work.activity	WOOLLEN NALBOUND SOCKS	羊毛单针编织短袜
+handcraft.work.activity	WOOLLEN OVERCOAT	羊毛大衣
+handcraft.work.activity	WOOLLEN SHIRT	羊毛衬衫
+handcraft.work.activity	WOOLLEN TROUSERS	羊毛裤
+handcraft.work.activity	WOOLLEN TUNIC	羊毛束腰外衣
+handcraft.work.activity	WOOLLEN UNDERGARMENT	羊毛贴身长衣
+handcraft.work.activity	WOOLLEN UNDERSHIRT	羊毛贴身衬衣
+handcraft.work.activity	WOOLLEN VEIL	羊毛头巾
+handcraft.work.activity	WOUND TREATMENT	处理伤口
+handcraft.work.activity	WOUNDS AND INJURIES	伤口与伤病
+handcraft.work.activity	YARROW	蓍草
+handcraft.work.activity	YARROW FLOWERS	蓍草花
+handcraft.work.activity	YARROW LEAVES	蓍草叶
+handcraft.work.activity	YARROW SEEDS	蓍草种子
+handcraft.work.activity	YELLOW FINGERS MUSHROOM	黄指菇
+handcraft.work.activity	YELLOWCOAT MUSHROOM	黄衣菇
+handcraft.work.item	 (#%D)	（#%d）
+handcraft.work.item	 (%S LEASH)	（%s牵绳）
+handcraft.work.item	 (%S)	（%s）
+handcraft.work.item	 (TIED TO %S)	（拴在%s上）
+handcraft.work.item	 WITH BONE HOOK	（装有骨鱼钩）
+handcraft.work.item	 WITH IRON HOOK	（装有铁鱼钩）
+handcraft.work.item	 WITH NO HOOK	（未装鱼钩）
+handcraft.work.item	 WITH NO STRING	（未装弦）
+handcraft.work.item	 WITH WOODEN HOOK	（装有木鱼钩）
+handcraft.work.item	 WOOD	木材
+handcraft.work.item	%D %S	%d %s
+handcraft.work.item	%D FT	%d英尺
+handcraft.work.item	%S	%s
+handcraft.work.item	%S %S	%s%s
+handcraft.work.item	%S OF %S	%s（%s）
+handcraft.work.item	%S%S	%s%s
+handcraft.work.item	ANGO	安戈倒钩矛
+handcraft.work.item	ANGO HEAD	安戈倒钩矛头
+handcraft.work.item	APRON	围裙
+handcraft.work.item	ARROW	箭
+handcraft.work.item	ARROW SHAFT	箭杆
+handcraft.work.item	ARROWHEAD	箭头
+handcraft.work.item	AXE HAFT	斧柄
+handcraft.work.item	BAG	袋子
+handcraft.work.item	BANDAGE	绷带
+handcraft.work.item	BARLEY	大麦
+handcraft.work.item	BARLEY GRAINS	大麦粒
+handcraft.work.item	BARLEY-FLOUR	大麦粉
+handcraft.work.item	BASTARD SWORD	手半剑
+handcraft.work.item	BATTLEAXE	战斧
+handcraft.work.item	BATTLEAXE HEAD	战斧头
+handcraft.work.item	BATTLESWORD	战斗巨剑
+handcraft.work.item	BEAR PIPE	熊管草
+handcraft.work.item	BEAR PIPE FLOWERS	熊管草花
+handcraft.work.item	BEAR PIPE LEAVES	熊管草叶
+handcraft.work.item	BEAR PIPE ROOT	熊管草根
+handcraft.work.item	BEARPAW MUSHROOM	熊掌菇
+handcraft.work.item	BIRCH TWIG	桦树枝
+handcraft.work.item	BIRCH WITHE	桦树柔枝绑条
+handcraft.work.item	BIRCH-BARK BASKET	桦皮篮
+handcraft.work.item	BIRCH-BARK BOX	桦皮盒
+handcraft.work.item	BIRCH-BARK CAP	桦皮帽
+handcraft.work.item	BIRCH-BARK NECKLACE	桦皮项链
+handcraft.work.item	BIRCH-BARK POT	桦皮锅
+handcraft.work.item	BIRCH-BARK ROPE	桦皮绳
+handcraft.work.item	BIRCH-BARK SHOES	桦皮鞋
+handcraft.work.item	BLACK CURRANT	黑加仑
+handcraft.work.item	BLACK CURRANT BUSH	黑加仑灌木
+handcraft.work.item	BLACK CURRANTS	黑加仑
+handcraft.work.item	BLACK EAR MUSHROOM	黑耳菇
+handcraft.work.item	BLOCK OF %S WOOD	%s木块
+handcraft.work.item	BLOCK OF WOOD	木块
+handcraft.work.item	BLUEBERRIES	蓝莓
+handcraft.work.item	BLUEBERRY	蓝莓
+handcraft.work.item	BLUEBERRY SHRUB	蓝莓灌木
+handcraft.work.item	BLUNT ARROW	钝头箭
+handcraft.work.item	BOARD	木板
+handcraft.work.item	BOG FLOWER	沼泽花
+handcraft.work.item	BOG FLOWER LEAVES	沼泽花叶
+handcraft.work.item	BOGBEAN	睡菜
+handcraft.work.item	BOGBEAN LEAVES	睡菜叶
+handcraft.work.item	BOGBEAN ROOT	睡菜根
+handcraft.work.item	BONE ARROWHEAD	骨箭头
+handcraft.work.item	BONE FISHHOOK	骨鱼钩
+handcraft.work.item	BONE SEWING NEEDLE	骨缝衣针
+handcraft.work.item	BONE TIPPED ARROW	骨镞箭
+handcraft.work.item	BOWSTRING	弓弦
+handcraft.work.item	BRANCH	树枝
+handcraft.work.item	BREAM	鳊鱼
+handcraft.work.item	BROAD AXE	宽刃斧
+handcraft.work.item	BROAD AXE HEAD	宽刃斧头
+handcraft.work.item	BROAD BEAN	蚕豆植株
+handcraft.work.item	BROAD BEANS	蚕豆
+handcraft.work.item	BROAD KNIFE	宽刃刀
+handcraft.work.item	BROADHEAD	宽刃箭头
+handcraft.work.item	BROADHEAD ARROW	宽刃箭
+handcraft.work.item	BROADSWORD	阔剑
+handcraft.work.item	BRONZE BALL PENDANT	青铜球吊坠
+handcraft.work.item	BRONZE BEAR PENDANT	青铜熊吊坠
+handcraft.work.item	BRONZE BEZEL RING	青铜镶座戒指
+handcraft.work.item	BRONZE BRACELET	青铜手镯
+handcraft.work.item	BRONZE BROOCH	青铜胸针
+handcraft.work.item	BRONZE FLOWER-ORNAMENTED COMB	青铜花纹梳
+handcraft.work.item	BRONZE HORSE-ORNAMENTED COMB	青铜马纹梳
+handcraft.work.item	BROWNCOAT MUSHROOM	褐衣菇
+handcraft.work.item	BUCKLER	小圆盾
+handcraft.work.item	BURBOT	江鳕
+handcraft.work.item	BURDOCK	牛蒡
+handcraft.work.item	BURDOCK LEAVES	牛蒡叶
+handcraft.work.item	BURDOCK ROOT	牛蒡根
+handcraft.work.item	BURNING %S	燃烧的%s
+handcraft.work.item	CARVING AXE	刨削斧
+handcraft.work.item	CARVING AXE HEAD	刨削斧头
+handcraft.work.item	CLAYWEED	黏土草
+handcraft.work.item	CLAYWEED LEAVES	黏土草叶
+handcraft.work.item	CLAYWEED SEEDS	黏土草种子
+handcraft.work.item	CLOAK	斗篷
+handcraft.work.item	CLOTH CORD	布绳
+handcraft.work.item	CLOUDBERRIES	云莓
+handcraft.work.item	CLOUDBERRY	云莓
+handcraft.work.item	CLOUDBERRY BRAMBLE	云莓丛
+handcraft.work.item	CLUB	棍棒
+handcraft.work.item	CORD	细绳
+handcraft.work.item	COWL	头颈罩
+handcraft.work.item	CRANBERRIES	蔓越莓
+handcraft.work.item	CRANBERRY	蔓越莓
+handcraft.work.item	CRANBERRY SHRUB	蔓越莓灌木
+handcraft.work.item	CROSSBOW	弩
+handcraft.work.item	CROWBERRIES	岩高兰果
+handcraft.work.item	CROWBERRY	岩高兰果
+handcraft.work.item	CROWBERRY SHRUB	岩高兰灌木
+handcraft.work.item	DOG PIPE	犬管草
+handcraft.work.item	DOG PIPE LEAVES	犬管草叶
+handcraft.work.item	DOG PIPE ROOT	犬管草根
+handcraft.work.item	DRESS	长裙
+handcraft.work.item	EGG	蛋
+handcraft.work.item	FIREWOOD	柴火
+handcraft.work.item	FISHER'S KNIFE	渔刀
+handcraft.work.item	FISHING ROD	钓竿
+handcraft.work.item	FLAT RYE BREAD	黑麦薄饼
+handcraft.work.item	FLAX	亚麻
+handcraft.work.item	FLAX SEEDS	亚麻籽
+handcraft.work.item	FOOTRAGS	裹脚布
+handcraft.work.item	FUR BOOTS	毛皮靴
+handcraft.work.item	FUR CAP	毛皮帽
+handcraft.work.item	FUR CLOAK	毛皮斗篷
+handcraft.work.item	FUR HOOD	毛皮兜帽
+handcraft.work.item	FUR LEGGINGS	毛皮护腿
+handcraft.work.item	FUR MITTENS	毛皮连指手套
+handcraft.work.item	FUR OVERCOAT	毛皮大衣
+handcraft.work.item	FUR SHIRT	毛皮衬衫
+handcraft.work.item	GOLDEN ROD	一枝黄花
+handcraft.work.item	GOLDEN ROD FLOWERS	一枝黄花的花
+handcraft.work.item	GOLDEN ROD LEAVES	一枝黄花叶
+handcraft.work.item	GRAINFLAIL	连枷
+handcraft.work.item	HAIRY MUSHROOM	毛菇
+handcraft.work.item	HANDAXE	手斧
+handcraft.work.item	HANDAXE HEAD	手斧头
+handcraft.work.item	HEATHER	石南
+handcraft.work.item	HEATHER FLOWERS	石南花
+handcraft.work.item	HEAVY CROSSBOW	重弩
+handcraft.work.item	HEMP	大麻
+handcraft.work.item	HEMP LEAVES	大麻叶
+handcraft.work.item	HEMP SEEDS	大麻籽
+handcraft.work.item	HUNTING BOW	猎弓
+handcraft.work.item	HUNTING HORN	猎号
+handcraft.work.item	HUNTING KNIFE	猎刀
+handcraft.work.item	IRON COUDES	铁护肘
+handcraft.work.item	IRON FISHHOOK	铁鱼钩
+handcraft.work.item	IRON HELM	铁头盔
+handcraft.work.item	IRON KNEECOPS	铁护膝
+handcraft.work.item	IRON SEWING NEEDLE	铁缝衣针
+handcraft.work.item	IRON SPECTACLE HELM	铁眼罩盔
+handcraft.work.item	JAVELIN	标枪
+handcraft.work.item	KAUMOLAIS KNIFE	考莫刀
+handcraft.work.item	KAUMOLAIS SPEAR	考莫长矛
+handcraft.work.item	KAUMOLAIS SPEAR HEAD	考莫矛头
+handcraft.work.item	KNIFE	刀
+handcraft.work.item	LAKE REED	湖苇
+handcraft.work.item	LAKE REED ROOT	湖苇根
+handcraft.work.item	LAMELLAR CUIRASS	札甲胸甲
+handcraft.work.item	LAMELLAR FOREARM GUARDS	札甲前臂护甲
+handcraft.work.item	LAMELLAR HAUBERK	札甲长身甲
+handcraft.work.item	LAMELLAR REREBRACES	札甲上臂甲
+handcraft.work.item	LAMELLAR SHIN GUARDS	札甲护胫
+handcraft.work.item	LAVARET	白鲑
+handcraft.work.item	LEATHER BELT	皮腰带
+handcraft.work.item	LEATHER BOOTS	皮靴
+handcraft.work.item	LEATHER CAP	皮帽
+handcraft.work.item	LEATHER CORD	皮细绳
+handcraft.work.item	LEATHER CUIRASS	皮胸甲
+handcraft.work.item	LEATHER FOREARM GUARDS	皮前臂护甲
+handcraft.work.item	LEATHER LEGGINGS	皮护腿
+handcraft.work.item	LEATHER ROPE	皮粗绳
+handcraft.work.item	LEATHER SHIN GUARDS	皮护胫
+handcraft.work.item	LEATHER SHIRT	皮衬衫
+handcraft.work.item	LEATHER TROUSERS	皮裤
+handcraft.work.item	LEGGINGS	护腿
+handcraft.work.item	LINEN APRON	亚麻围裙
+handcraft.work.item	LINEN COWL	亚麻头颈罩
+handcraft.work.item	LINEN DRESS	亚麻长裙
+handcraft.work.item	LINEN FOOTRAGS	亚麻裹脚布
+handcraft.work.item	LINEN SHIRT	亚麻衬衫
+handcraft.work.item	LINEN TROUSERS	亚麻裤
+handcraft.work.item	LINEN TUNIC	亚麻束腰外衣
+handcraft.work.item	LINEN UNDERGARMENT	亚麻贴身长衣
+handcraft.work.item	LINEN UNDERSHIRT	亚麻贴身衬衣
+handcraft.work.item	LINEN VEIL	亚麻头巾
+handcraft.work.item	LINGONBERRIES	越橘
+handcraft.work.item	LINGONBERRY	越橘
+handcraft.work.item	LINGONBERRY SHRUB	越橘灌木
+handcraft.work.item	LIPPO	抄网
+handcraft.work.item	LOG	原木
+handcraft.work.item	LONG MAIL COWL	加长锁子甲头颈罩
+handcraft.work.item	LONG MAIL HAUBERK	加长锁子甲长身甲
+handcraft.work.item	LONGBOW	长弓
+handcraft.work.item	LOOP SNARE	绳套陷阱
+handcraft.work.item	MACE	钉头锤
+handcraft.work.item	MAIL COWL	锁子甲头颈罩
+handcraft.work.item	MAIL HABERGEON	锁子甲短袖甲衣
+handcraft.work.item	MAIL HAUBERK	锁子甲长身甲
+handcraft.work.item	MAIL LEGGINGS	锁子甲护腿
+handcraft.work.item	MAIL MITTENS	锁子甲连指手套
+handcraft.work.item	MARSH CALLA	水芋
+handcraft.work.item	MARSH CALLA LEAVES	水芋叶
+handcraft.work.item	MARSH CALLA ROOT	水芋根
+handcraft.work.item	MAUL	长柄重槌
+handcraft.work.item	MEADSWEET	蜜香草
+handcraft.work.item	MEADSWEET FLOWERS	蜜香草花
+handcraft.work.item	MEADSWEET LEAVES	蜜香草叶
+handcraft.work.item	MILK	奶
+handcraft.work.item	MILKWEED	乳草
+handcraft.work.item	MILKWEED LEAVES	乳草叶
+handcraft.work.item	MILKWEED ROOT	乳草根
+handcraft.work.item	MOTHER PIPE	母管草
+handcraft.work.item	MOTHER PIPE FLOWERS	母管草花
+handcraft.work.item	MOTHER PIPE LEAVES	母管草叶
+handcraft.work.item	MOTHER PIPE ROOT	母管草根
+handcraft.work.item	NET	渔网
+handcraft.work.item	NETTING NEEDLE	织网梭
+handcraft.work.item	NETTLE	荨麻
+handcraft.work.item	NETTLE APRON	荨麻布围裙
+handcraft.work.item	NETTLE COWL	荨麻布头颈罩
+handcraft.work.item	NETTLE LEAVES	荨麻叶
+handcraft.work.item	NETTLE SEEDS	荨麻种子
+handcraft.work.item	NETTLE SHIRT	荨麻布衬衫
+handcraft.work.item	NETTLE TROUSERS	荨麻布裤
+handcraft.work.item	NETTLE TUNIC	荨麻布束腰外衣
+handcraft.work.item	NJERPEZ SCIMITAR	涅尔佩兹弯刀
+handcraft.work.item	NOAIDI'S MUSHROOM	诺艾迪菇
+handcraft.work.item	NORTHERN BILBERRIES	北地蓝莓
+handcraft.work.item	NORTHERN BILBERRY	北方越橘
+handcraft.work.item	NORTHERN BILBERRY SHRUB	北地蓝莓灌木
+handcraft.work.item	NORTHERN BOW	北方弓
+handcraft.work.item	NORTHERN KNIFE	北方刀
+handcraft.work.item	NORTHERN SPEAR	北方长矛
+handcraft.work.item	NORTHERN SPEAR HEAD	北方矛头
+handcraft.work.item	OVERCOAT	大衣
+handcraft.work.item	PADDLE	桨
+handcraft.work.item	PAW-BOARD FOX TRAP	夹爪板捕狐陷阱
+handcraft.work.item	PEA	豌豆植株
+handcraft.work.item	PEAS	豌豆
+handcraft.work.item	PERCH	鲈鱼
+handcraft.work.item	PIKE	狗鱼
+handcraft.work.item	PIKE-PERCH	梭鲈
+handcraft.work.item	POT	锅
+handcraft.work.item	PUNT	平底船
+handcraft.work.item	RAFT	木筏
+handcraft.work.item	RASPBERRIES	覆盆子
+handcraft.work.item	RASPBERRY	覆盆子
+handcraft.work.item	RASPBERRY BUSH	覆盆子灌木
+handcraft.work.item	REDLEGGER MUSHROOM	红脚菇
+handcraft.work.item	RINGED MUSHROOM	环纹菇
+handcraft.work.item	RIVERPIG	河猪草
+handcraft.work.item	RIVERPIG ROOT	河猪草根
+handcraft.work.item	ROACH	拟鲤
+handcraft.work.item	ROCK	岩石
+handcraft.work.item	ROPE	粗绳
+handcraft.work.item	ROSEROOT	红景天
+handcraft.work.item	ROSEROOT LEAVES	红景天叶
+handcraft.work.item	ROSEROOT ROOT	红景天根
+handcraft.work.item	ROTTEN 	腐烂的
+handcraft.work.item	ROUNDSHIELD	圆盾
+handcraft.work.item	RYE	黑麦
+handcraft.work.item	RYE BREAD	黑麦面包
+handcraft.work.item	RYE GRAINS	黑麦粒
+handcraft.work.item	RYE-FLOUR	黑麦粉
+handcraft.work.item	SALMON	鲑鱼
+handcraft.work.item	SALT	盐
+handcraft.work.item	SAND MUSHROOM	沙菇
+handcraft.work.item	SAUNA SCOOP	桑拿水勺
+handcraft.work.item	SCIMITAR	弯刀
+handcraft.work.item	SESTA	撑篙
+handcraft.work.item	SHINGLE	木瓦
+handcraft.work.item	SHINGLE BASKET	木片篮
+handcraft.work.item	SHIRT	衬衫
+handcraft.work.item	SHORTBOW	短弓
+handcraft.work.item	SHORTSWORD	短剑
+handcraft.work.item	SHOVEL	铁铲
+handcraft.work.item	SHOVEL BLADE	铲头
+handcraft.work.item	SHOVEL HAFT	铲柄
+handcraft.work.item	SICKLE	镰刀
+handcraft.work.item	SILVER BIRD BRACELET	银鸟手镯
+handcraft.work.item	SILVER CHAIN BRACELET	银链手镯
+handcraft.work.item	SILVER RING	银戒指
+handcraft.work.item	SILVER SUN-SYMBOL PENDANT	银太阳纹吊坠
+handcraft.work.item	SKI POLE	滑雪杖
+handcraft.work.item	SKIS	滑雪板
+handcraft.work.item	SKRAMASAKSI	萨克斯长刀
+handcraft.work.item	SLENDER %S TRUNK	细长的%s树干
+handcraft.work.item	SLENDER TREE TRUNK	细树干
+handcraft.work.item	SMALL BRONZE BROOCH	小青铜胸针
+handcraft.work.item	SMALL KNIFE	小刀
+handcraft.work.item	SMALL TRIDENT	小鱼叉
+handcraft.work.item	SMALL TRIDENT HEAD	小鱼叉头
+handcraft.work.item	SOFT MUSHROOM	软菇
+handcraft.work.item	SORREL	酸模
+handcraft.work.item	SORREL LEAVES	酸模叶
+handcraft.work.item	SORREL SEEDS	酸模种子
+handcraft.work.item	SPEAR	长矛
+handcraft.work.item	SPEAR HAFT	矛杆
+handcraft.work.item	SPEAR HEAD	矛头
+handcraft.work.item	SPINDLE	纺锤
+handcraft.work.item	SPLITTING AXE	劈柴斧
+handcraft.work.item	SPLITTING AXE HEAD	劈柴斧头
+handcraft.work.item	SPOILED 	变质的
+handcraft.work.item	SPRUCE QUICK-BOW	云杉速制弓
+handcraft.work.item	SPRUCE TWIG	云杉枝
+handcraft.work.item	SPRUCE WITHE	云杉柔枝绑条
+handcraft.work.item	STAFF	木杆
+handcraft.work.item	STALE	不新鲜的
+handcraft.work.item	STONE	石块
+handcraft.work.item	STONE ARROWHEAD	石箭头
+handcraft.work.item	STONE KNIFE	石刀
+handcraft.work.item	STONE TIPPED ARROW	石镞箭
+handcraft.work.item	STONE-AXE	石斧
+handcraft.work.item	STONECROP	景天
+handcraft.work.item	STONECROP LEAVES	景天叶
+handcraft.work.item	STRAWBERRIES	草莓
+handcraft.work.item	STRAWBERRY	草莓
+handcraft.work.item	STRAWBERRY SHRUB	草莓丛
+handcraft.work.item	TELLERVO'S GIFT MUSHROOM	泰勒沃赠礼菇
+handcraft.work.item	TORCH	火把
+handcraft.work.item	TREE TRUNK	树干
+handcraft.work.item	TRIDENT	三齿鱼叉
+handcraft.work.item	TRIDENT HEAD	三齿鱼叉头
+handcraft.work.item	TROUSERS	裤子
+handcraft.work.item	TROUT	鳟鱼
+handcraft.work.item	TUNIC	束腰外衣
+handcraft.work.item	TURNIP	芜菁
+handcraft.work.item	TURNIP SEEDS	芜菁种子
+handcraft.work.item	UKKO'S MUSHROOM	乌科菇
+handcraft.work.item	UNDERGARMENT	贴身长衣
+handcraft.work.item	UNDERSHIRT	贴身衬衣
+handcraft.work.item	VASTA	桑拿桦枝束
+handcraft.work.item	VEIL	头巾
+handcraft.work.item	WATER	水
+handcraft.work.item	WATER LILY	睡莲
+handcraft.work.item	WATER LILY ROOT	睡莲根
+handcraft.work.item	WIDE TRIDENT	宽鱼叉
+handcraft.work.item	WIDE TRIDENT HEAD	宽鱼叉头
+handcraft.work.item	WINTER %S	冬季%s
+handcraft.work.item	WOLF PIPE	狼管草
+handcraft.work.item	WOLF PIPE LEAVES	狼管草叶
+handcraft.work.item	WOLF PIPE ROOT	狼管草根
+handcraft.work.item	WOOD 	木制
+handcraft.work.item	WOOD SLAT	木条
+handcraft.work.item	WOODEN 	木制的
+handcraft.work.item	WOODEN BOWL	木碗
+handcraft.work.item	WOODEN CANTEEN	木水壶
+handcraft.work.item	WOODEN CUP	木杯
+handcraft.work.item	WOODEN FISHHOOK	木鱼钩
+handcraft.work.item	WOODEN MUG	木马克杯
+handcraft.work.item	WOODEN SHOVEL	木铲
+handcraft.work.item	WOODEN STAKE	木桩
+handcraft.work.item	WOODEN TUB	木盆
+handcraft.work.item	WOODSMAN'S AXE	伐木斧
+handcraft.work.item	WOODSMAN'S AXE HEAD	伐木斧头
+handcraft.work.item	WOOLLEN APRON	羊毛围裙
+handcraft.work.item	WOOLLEN CLOAK	羊毛斗篷
+handcraft.work.item	WOOLLEN DRESS	羊毛长裙
+handcraft.work.item	WOOLLEN FOOTRAGS	羊毛裹脚布
+handcraft.work.item	WOOLLEN LEGGINGS	羊毛护腿
+handcraft.work.item	WOOLLEN NALBOUND CAP	羊毛单针编织帽
+handcraft.work.item	WOOLLEN NALBOUND COWL	羊毛单针编织头颈罩
+handcraft.work.item	WOOLLEN NALBOUND KNEE SOCKS	羊毛单针编织长袜
+handcraft.work.item	WOOLLEN NALBOUND MITTENS	羊毛单针编织连指手套
+handcraft.work.item	WOOLLEN NALBOUND SOCKS	羊毛单针编织短袜
+handcraft.work.item	WOOLLEN OVERCOAT	羊毛大衣
+handcraft.work.item	WOOLLEN SHIRT	羊毛衬衫
+handcraft.work.item	WOOLLEN TROUSERS	羊毛裤
+handcraft.work.item	WOOLLEN TUNIC	羊毛束腰外衣
+handcraft.work.item	WOOLLEN UNDERGARMENT	羊毛贴身长衣
+handcraft.work.item	WOOLLEN UNDERSHIRT	羊毛贴身衬衣
+handcraft.work.item	WOOLLEN VEIL	羊毛头巾
+handcraft.work.item	YARROW	蓍草
+handcraft.work.item	YARROW FLOWERS	蓍草花
+handcraft.work.item	YARROW LEAVES	蓍草叶
+handcraft.work.item	YARROW SEEDS	蓍草种子
+handcraft.work.item	YELLOW FINGERS MUSHROOM	黄指菇
+handcraft.work.item	YELLOWCOAT MUSHROOM	黄衣菇

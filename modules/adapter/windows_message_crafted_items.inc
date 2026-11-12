@@ -32,6 +32,16 @@ bool material(const std::string& source,MessageText& output) {
         output=native_message_source::format(lookup("crafted-wood-format",wood.pattern),
             {lookup("tree",wood.tree)},{"%s"});output.original=source;return true;
     }
+    // 520CD5 / 521B97 persist these complete plant-name grammars in +9.
+    // 451770 may subsequently sentence-case or lowercase that same name.
+    // Keep the retting state before the generic "dried %s" rule below.
+    for(const auto* pattern:{"Retted %s","retted %s","Dried retted %s","dried retted %s"}) {
+        std::string argument;MessageText child;
+        if(capture(source,pattern,argument) && material(argument,child)) {
+            output=native_message_source::format(lookup("crafted-name-format",pattern),
+                {std::move(child)},{"%s"});output.original=source;return true;
+        }
+    }
     for(const auto& pattern:crafted_patterns) {
         std::string argument;MessageText child;
         if(capture(source,pattern.source,argument) && material(argument,child)) {
@@ -63,7 +73,8 @@ bool material(const std::string& source,MessageText& output) {
     // actual species atom in descriptor +0x31. Its native 25-byte spelling
     // has a dedicated inventory; it is never a creature's proper-name field.
     for(const auto* pattern:{"%s-skin","clean %s-skin","De-haired %s-skin",
-                            "de-haired %s-skin","%s fur","%s leather","%s cut"}) {
+                            "de-haired %s-skin","%s fur","%s leather","%s cut",
+                            "dried %s tendon","Dried %s tendon"}) {
         std::string argument;
         if(capture(source,pattern,argument)) {
             for(const auto& animal:animals) if(argument==animal) {

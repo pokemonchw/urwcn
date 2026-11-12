@@ -1,0 +1,182 @@
+owner_va	callsite_va	format_va	source	handling
+00405860	00405d48	0058d2e8	Ansan asetuksen laatu: %d	registered native semantic producer / formatter
+00405860	00405d6f	0058d308	:@The %s is now set and readied. Don't forget to check it after a day or two.	registered native semantic producer / formatter
+00405df0	00406236	00595a08	%c.%s	registered native semantic producer / formatter
+00406320	004063df	0058d458	+You trigger and release the %s.	registered native semantic producer / formatter
+00406320	004064a9	005a9f48	%s%s%s	registered native semantic producer / formatter
+0043f7f0	0043f94b	005aad9c	? %s	registered native semantic producer / formatter
+0043f7f0	0043faca	005a9f48	%s%s%s	registered native semantic producer / formatter
+00440710	00440747	00596500	%s/%d.QUA	native QUA file path
+00440900	00440a53	0059650c	TKRAJA: %d (%d) MATRAJA: %d (%d) Laatu:%d->%d	registered native semantic producer / formatter
+00440900	00440a83	005aad9c	? %s	registered native semantic producer / formatter
+00440900	00440abe	0059653c	MULTIGAP: %d OGLAATU: %d ALENNUS: %d	registered native semantic producer / formatter
+00440900	00440aee	005aad9c	? %s	registered native semantic producer / formatter
+00440b20	00440cdf	00596564	%d %s	registered native semantic producer / formatter
+00440b20	00440d3b	0058c680	%s %s	registered native semantic producer / formatter
+00440b20	00440da5	0059656c	QLIST #%d = %u	registered native semantic producer / formatter
+00440b20	00440dd5	005aad9c	? %s	registered native semantic producer / formatter
+00440b20	00440e09	0059657c	%u %s,	registered native semantic producer / formatter
+00440b20	00440e39	005aad9c	? %s	registered native semantic producer / formatter
+00441060	00441185	005965d0	QLIST #%d = %d	registered native semantic producer / formatter
+00441060	004411b5	005aad9c	? %s	registered native semantic producer / formatter
+00441060	00441624	005966f0	_This process should be complete %s.	registered native semantic producer / formatter
+004416a0	00441ae4	005913e0	* %s	internal object lookup
+004416a0	00441cd1	00596818	?You can make %u %s from one %s.	registered native semantic producer / formatter
+004416a0	0044201d	005aad9c	? %s	registered native semantic producer / formatter
+004416a0	004421a7	0058c680	%s %s	persistent crafted name; parsed by crafted_patterns at display
+004416a0	00442878	00596500	%s/%d.QUA	native QUA file path
+004436e0	004439c4	00596aa8	REPAIR WORN-OUT %s	native requirement heading; consumed by handcraft_work::activity
+004436e0	00443b35	00596ac8	#%d MCinprocess %d,%d	registered native semantic producer / formatter
+004436e0	00443b65	00596ae0	spent: %d needed: %d	registered native semantic producer / formatter
+004436e0	00443baa	00596af8	after add spent: %d needed: %d	registered native semantic producer / formatter
+00443d30	00443ed6	00596b48	+There's really no need to repair this %s yet.	registered native semantic producer / formatter
+00443d30	00443f22	00596b78	!Unfortunately this %s has been worn out beyond repair.	registered native semantic producer / formatter
+00443fc0	0044445a	00596cf4	+You have removed the %s haft from its head.	registered native semantic producer / formatter
+00443fc0	004444a1	00596d24	=You obtained %s and %s.	registered native semantic producer / formatter
+00443fc0	004444ce	00596c5c	!The %s doesn't have a separate head and haft to remove!	registered native semantic producer / formatter
+004450b0	0044512a	005913e0	* %s	internal object lookup
+004450b0	00445384	005aad9c	? %s	registered native semantic producer / formatter
+00445510	00445a5d	00596ac8	#%d MCinprocess %d,%d	registered native semantic producer / formatter
+00445510	00445a8d	00596ae0	spent: %d needed: %d	registered native semantic producer / formatter
+00445510	00445ad2	00596af8	after add spent: %d needed: %d	registered native semantic producer / formatter
+00445510	00445b93	00596b48	+There's really no need to repair this %s yet.	registered native semantic producer / formatter
+00445510	00445b93	00596b78	!Unfortunately this %s has been worn out beyond repair.	registered native semantic producer / formatter
+00445510	00445b93	00596efc	+You finish repairing your %s.	registered native semantic producer / formatter
+00445bc0	00445c44	00595a08	%c.%s	registered native semantic producer / formatter
+00445bc0	00445cd4	00595a08	%c.%s	registered native semantic producer / formatter
+00445bc0	00445d64	00595a08	%c.%s	registered native semantic producer / formatter
+00445bc0	00445df4	00595a08	%c.%s	registered native semantic producer / formatter
+00446020	00446175	00597004	spent: %d left: %d	registered native semantic producer / formatter
+00446020	004461a6	005aad9c	? %s	registered native semantic producer / formatter
+00446020	00446564	00597088	You successfully deconstructed the %s.	registered native semantic producer / formatter
+00446680	00446824	00595a08	%c.%s	registered native semantic producer / formatter
+00447180	004472fc	0059721c	!One ft %s is too short to be shortened anymore.	registered native semantic producer / formatter
+00447180	00447337	00597250	?How much of this %s %s you want to cut?	registered native semantic producer / formatter
+00447180	0044749b	005972ac	%.4f	native atof numerical operand
+00447180	004475fe	005971ec	!%s %s is too short to be shortened anymore.	registered native semantic producer / formatter
+00447180	004475fe	005972b4	=You cut %s piece from the %s.	registered native semantic producer / formatter
+00447630	00447728	00597348	+You are about to join %s %s to another piece of tying equipment.	registered native semantic producer / formatter
+00447630	0044775e	0059738c	?Now select another %s to join them together.	registered native semantic producer / formatter
+00447630	00447aaf	005974d0	=After tying the two %s together you now got %s %s.	registered native semantic producer / formatter
+00447b00	00447b94	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00447c24	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00447cb4	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00447d44	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00447dd4	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00447e64	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00447ef4	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00447f84	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00448014	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	004480a4	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00448134	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	004481c4	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00448254	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00448324	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	004484f4	00595a08	%c.%s	registered native semantic producer / formatter
+00447b00	00448634	00595a08	%c.%s	registered native semantic producer / formatter
+00461cf0	00461f00	00599228	Kelpoisuus:%s	registered native semantic producer / formatter
+00461cf0	004621ec	0058d4ec	the %s	registered native semantic producer / formatter
+00461cf0	0046220e	0059925c	%s is %s tool here	registered native semantic producer / formatter
+00461cf0	0046224f	00599270	For one step that %s is %s tool	registered native semantic producer / formatter
+00461cf0	004622b1	0058d4ec	the %s	registered native semantic producer / formatter
+00461cf0	004622c6	00599290	%s is used	registered native semantic producer / formatter
+00461cf0	004622f7	0059929c	 but suffers from %s quality.	registered native semantic producer / formatter
+00461cf0	004622f7	005992bc	 and its %s quality certainly helps.	registered native semantic producer / formatter
+00461cf0	00462385	005992e4	 and, what is worse, of %s quality.	registered native semantic producer / formatter
+00461cf0	00462385	00599308	 even though its %s quality counts.	registered native semantic producer / formatter
+00461cf0	004624d5	0059932c	!%s	registered native semantic producer / formatter
+00461cf0	00462674	00599330	use: %d%% maxqua: %d	registered native semantic producer / formatter
+00461cf0	004626a4	005aad9c	? %s	registered native semantic producer / formatter
+00462780	004628b3	00599348	kl #%d %s	registered native semantic producer / formatter
+00462780	004628e3	005aad9c	? %s	registered native semantic producer / formatter
+00462780	00462920	00599354	maara: %u paino: %.2f	registered native semantic producer / formatter
+00462780	00462950	005aad9c	? %s	registered native semantic producer / formatter
+00462780	004629d2	0059936c	painotapa (laskuri nyt: %.2f) painokoklaatu: %.2f	registered native semantic producer / formatter
+00462780	00462a02	005aad9c	? %s	registered native semantic producer / formatter
+00462780	00462a4e	005993a0	maaratapa (laskuri nyt: %u) maarakoklaatu:%d	registered native semantic producer / formatter
+00462780	00462b1a	005993d0	painokoklaatu: %.2f TULOS: %d	registered native semantic producer / formatter
+00462780	00462b4a	005aad9c	? %s	registered native semantic producer / formatter
+00462780	00462bff	005993f0	maarakoklaatu: %d TULOS: %d	registered native semantic producer / formatter
+00462780	00462c2f	005aad9c	? %s	registered native semantic producer / formatter
+00464730	00464b12	0059a0f4	%s * %u	registered native semantic producer / formatter
+00464730	00464b39	0059a0fc	 (of %u)	registered native semantic producer / formatter
+00464730	00464bba	005958ac	%s of %s	registered native semantic producer / formatter
+00464730	00464c04	005958ac	%s of %s	registered native semantic producer / formatter
+00464730	00464c57	005958ac	%s of %s	registered native semantic producer / formatter
+00464730	00464caa	0058c680	%s %s	registered native semantic producer / formatter
+00464730	00464d1b	0058c680	%s %s	registered native semantic producer / formatter
+00464730	00464dc8	0059a110	%s %s * %u	registered native semantic producer / formatter
+00464730	00464e1f	0059a11c	%s of %s * %u	registered native semantic producer / formatter
+00464730	00464e85	005958ac	%s of %s	registered native semantic producer / formatter
+00464730	00464ebb	0058c670	%s	registered native semantic producer / formatter
+00464730	00464eff	0059a0f4	%s * %u	registered native semantic producer / formatter
+00464730	0046505c	0059a168	?(%d) 	registered native semantic producer / formatter
+00464730	00465180	0059a198	 - preferably %s.	registered native semantic producer / formatter
+00464730	004651be	0059a1ac	 (%s).	registered native semantic producer / formatter
+00464730	004651e4	0059a1b4	 - preferably of %s.	registered native semantic producer / formatter
+00468ac0	00468d28	0059a92c	rejected: %s data #%d (chosen already)	registered native semantic producer / formatter
+00468ac0	00468dc4	0059a954	check: %s data #%d	registered native semantic producer / formatter
+00468ac0	00468e59	0059a968	sopiva: %s data: %d,%d	registered native semantic producer / formatter
+00468ac0	00468eff	0059a980	start_invsearch laatu:%d hyvyys:%d	registered native semantic producer / formatter
+00468ac0	00468f34	005aad9c	? %s	registered native semantic producer / formatter
+00468ac0	00469014	0059a9a4	invsopiva: %s inv: %d	registered native semantic producer / formatter
+00468ac0	00469048	005aad9c	? %s	registered native semantic producer / formatter
+00468ac0	00469182	005a9f48	%s%s%s	registered native semantic producer / formatter
+00468ac0	00469222	0059a9f8	:Using %s is optional. Press [ESC] to skip the item selection.	registered native semantic producer / formatter
+00468ac0	004693e7	0059aa68	paras invstash: %s	registered native semantic producer / formatter
+00468ac0	004693e7	0059aa7c	paras datastash: %s	registered native semantic producer / formatter
+00468ac0	0046941c	005aad9c	? %s	registered native semantic producer / formatter
+00468ac0	004694b8	0059aa90	!%u pieces at a time is the maximum. Selecting %u pieces.	registered native semantic producer / formatter
+00468ac0	004695e0	0058d4ec	the %s	registered native semantic producer / formatter
+00468ac0	0046963d	0058d4ec	the %s	registered native semantic producer / formatter
+00468ac0	00469f18	0059aad0	!All of the %s will be used which is far more than needed. You can cancel the task and shorten it to required length at will.	registered native semantic producer / formatter
+00468ac0	0046a08d	0059ab50	!That %s is too short for the purpose.	registered native semantic producer / formatter
+00468ac0	0046a1c2	0059aad0	!All of the %s will be used which is far more than needed. You can cancel the task and shorten it to required length at will.	registered native semantic producer / formatter
+0046a940	0046b117	0059acb0	#%d ot: %d	registered native semantic producer / formatter
+0046a940	0046b147	005aad9c	? %s	registered native semantic producer / formatter
+0046b760	0046b7b8	005aad9c	? %s	registered native semantic producer / formatter
+0046b760	0046b834	005aad9c	? %s	registered native semantic producer / formatter
+0046b760	0046b8a6	005aad9c	? %s	registered native semantic producer / formatter
+0046b760	0046b8fe	005aad9c	? %s	registered native semantic producer / formatter
+0046b760	0046b957	005aad9c	? %s	registered native semantic producer / formatter
+0046b760	0046b9a0	005aad9c	? %s	registered native semantic producer / formatter
+00488840	00488f9f	0059cbd4	%s ...	native work heading; consumed by handcraft_work::work_title
+00488840	00489292	0059cc3c	SPENDSTART %d (MIN %d, SEC: %d)	registered native semantic producer / formatter
+00488840	004892c3	005aad9c	? %s	registered native semantic producer / formatter
+00488840	004893a3	0059cc5c	 1 hour	native duration; consumed by handcraft_work::duration
+00488840	004893b4	0059cc64	 %d hours	native duration; consumed by handcraft_work::duration
+00488840	004893ea	0059cc70	%d minutes	native duration; consumed by handcraft_work::duration
+00488840	004894a7	0059cc7c	%d seconds	native duration; consumed by handcraft_work::duration
+00488840	004894cb	0059cc88	[%d]	native duration debug suffix; original numbers and brackets
+00488840	0048a01d	0059ce9c	#%s helps you with this task.	registered native semantic producer / formatter
+00488840	0048a01d	0059cebc	#%s help you with this task.	registered native semantic producer / formatter
+00488840	0048a01d	0059cedc	#You get some help with this task from %s.	registered native semantic producer / formatter
+00488840	0048a091	0059cf08	TimeHelp (%d pct) activated. Numohelpers: %d : spendtick %d	registered native semantic producer / formatter
+00488840	0048a0f2	0059cf44	SPENDEND l: %d spendtick: %d (MINDONE %d) CompaidCounter: %d	registered native semantic producer / formatter
+00488840	0048a123	005aad9c	? %s	registered native semantic producer / formatter
+004dc790	004dccb9	005a5fcc	_%s needed, but only your %s is in usable condition.	registered native semantic producer / formatter
+004dc790	004dcd1b	005a6014	_%s needed.	registered native semantic producer / formatter
+004dc790	004dcd6c	005a6020	!It will be slow and difficult to %s now.	registered native semantic producer / formatter
+00501cb0	00501d00	005aaf70	rakenna: [%d] pura: [%d]	registered native semantic producer / formatter
+00501cb0	00501e42	005aafe4	!Not possible! There's %s.	registered native semantic producer / formatter
+00501cb0	00501ecf	00596ac8	#%d MCinprocess %d,%d	registered native semantic producer / formatter
+00501cb0	00501efc	00596ae0	spent: %d needed: %d	registered native semantic producer / formatter
+00501cb0	00501f26	005ab010	leftmins: %d spentmins: %d	registered native semantic producer / formatter
+00501cb0	00502129	005aad9c	? %s	registered native semantic producer / formatter
+00501cb0	00502485	005ab1c0	!Placing %s there is either too far or incorrectly aligned from the framework center!	registered native semantic producer / formatter
+00501cb0	0050296e	00596ac8	#%d MCinprocess %d,%d	registered native semantic producer / formatter
+00501cb0	0050299e	00596ae0	spent: %d needed: %d	registered native semantic producer / formatter
+00501cb0	005029f0	00596af8	after add spent: %d needed: %d	registered native semantic producer / formatter
+00517c70	00517d52	005acf04	craftquality: ML:%d success:%d SI:%d	registered native semantic producer / formatter
+00517c70	00517d87	005aad9c	? %s	registered native semantic producer / formatter
+00517c70	00517df4	005acf2c	craftquality tulos: %d	registered native semantic producer / formatter
+00517c70	00517e2a	005aad9c	? %s	registered native semantic producer / formatter
+00518170	005182a3	005acf44	TYOAIKA_mod: %d -> %d	registered native semantic producer / formatter
+00518170	005182d1	005aad9c	? %s	registered native semantic producer / formatter
+00520180	00520534	005ae79c	_You can spin %s of yarn on one go.	registered native semantic producer / formatter
+00520180	0052057a	005ae7c0	_From that stack of fibre you can spin about %s of yarn.	registered native semantic producer / formatter
+00520180	0052057a	005ae800	_From that stack of sinew fibre you can make about %s of sinew yarn.	registered native semantic producer / formatter
+00520a30	00520cd5	005aea14	Retted %s	persistent plant name; new retting grammar at display
+00520e40	00520f7c	005aead0	!Here you can process only %u plants on one go! Selecting %u pieces.	registered native semantic producer / formatter
+00521900	00521b97	005aedf4	Dried retted %s	persistent plant name; new retting grammar at display
+00521900	00521bc3	005aee04	dried %s tendon	persistent tendon name; new animal grammar at display

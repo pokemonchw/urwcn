@@ -1,0 +1,39 @@
+file	line	submenu	domain	source	target
+diy_glossary.txt	5	weapon	craft-requirement-suffix	 (for knapping)	（用于打制石器）
+diy_glossary.txt	6	weapon	craft-requirement-suffix	 (for final sharpening)	（用于最后磨锐）
+diy_glossary.txt	12	weapon	craft-requirement-suffix	 for blade	（用于刀刃）
+diy_glossary.txt	13	weapon	craft-requirement-suffix	 (for knapping)	（用于打制石器）
+diy_glossary.txt	14	weapon	craft-requirement-suffix	 (for final sharpening)	（用于最后磨锐）
+diy_glossary.txt	23	weapon	craft-requirement-suffix	 (for hardening the head)	（用于硬化尖端）
+diy_glossary.txt	49	arrow	craft-requirement-suffix	 (for rough shaping)	（用于粗加工）
+diy_glossary.txt	57	arrow	craft-requirement-suffix	 (for the head)	（用于尖端）
+diy_glossary.txt	58	arrow	craft-requirement-suffix	 (for grinding)	（用于打磨）
+diy_glossary.txt	62	arrow	craft-requirement-suffix	 (for initial shaping)	（用于初步塑形）
+diy_glossary.txt	63	arrow	craft-requirement-suffix	 (for sharpening)	（用于磨锐）
+diy_glossary.txt	96	utility article	craft-requirement	An axe for rough cutting	用于粗砍的斧头
+diy_glossary.txt	97	utility article	craft-requirement	An axe for finishing the shape	用于精修形状的斧头
+diy_glossary.txt	107	utility article	craft-requirement-suffix	 (for initial shaping)	（用于初步塑形）
+diy_glossary.txt	108	utility article	craft-requirement-suffix	 (for sharpening the needle)	（用于磨锐针尖）
+diy_glossary.txt	139	containers	craft-requirement-suffix	 (for the handles)	（用于把手）
+diy_glossary.txt	159	fishing	craft-requirement-suffix	 (for initial shaping)	（用于初步塑形）
+diy_glossary.txt	160	fishing	craft-requirement-suffix	 (for sharpening the hook)	（用于磨锐鱼钩）
+diy_glossary.txt	163	fishing	craft-requirement-suffix	 (for the hoop)	（用于箍圈）
+diy_glossary.txt	164	fishing	craft-requirement-suffix	 (the mesh)	（网眼部分）
+diy_glossary.txt	167	fishing	craft-requirement-suffix	 (for the pole)	（用于长杆）
+diy_glossary.txt	168	fishing	craft-requirement-suffix	 (to shape the pole)	（用于加工长杆）
+diy_glossary.txt	183	tying equipment	craft-requirement-suffix	 (for twisting)	（用于搓捻）
+diy_glossary.txt	187	tying equipment	craft-requirement-suffix	 (for twisting)	（用于搓捻）
+diy_glossary.txt	192	tying equipment	craft-requirement-suffix	 (for twisting)	（用于搓捻）
+diy_glossary.txt	196	tying equipment	craft-requirement-suffix	 (for twisting)	（用于搓捻）
+diy_glossary.txt	202	tying equipment	craft-requirement-suffix	 (for twisting)	（用于搓捻）
+diy_glossary.txt	208	tying equipment	craft-requirement-suffix	 (for twisting)	（用于搓捻）
+diy_glossary.txt	276	transport	craft-requirement-suffix	 (for tying the fur on the underside)	（用于将毛皮绑在底面）
+diy_glossary.txt	277	transport	craft-requirement-suffix	 (for boot bindings)	（用于靴子绑带）
+diy_glossary.txt	282	transport	craft-requirement-suffix	 (for the lower end rim)	（用于底部边框）
+diy_glossary.txt	301	textilecraft	craft-requirement-suffix	 for rough cutting	（用于粗砍）
+biy_glossary.txt	8	building	craft-requirement-suffix	 for carving the logs	（用于修整原木）
+biy_glossary.txt	9	building	craft-requirement-suffix	 for finishing the walls	（用于修整墙壁）
+biy_glossary.txt	21	building	craft-requirement-suffix	 for carving the logs	（用于修整原木）
+biy_glossary.txt	22	building	craft-requirement-suffix	 for finishing the walls	（用于修整墙壁）
+biy_glossary.txt	27	building	craft-requirement-suffix	 for carving the logs	（用于修整原木）
+biy_glossary.txt	28	building	craft-requirement-suffix	 for finishing the walls	（用于修整墙壁）

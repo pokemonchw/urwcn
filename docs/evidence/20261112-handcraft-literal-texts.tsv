@@ -1,0 +1,92 @@
+string_va	source	target	consumer
+0058cffc	!There is no trap!	!这里没有陷阱!	F6510
+0058d058	+Ok. The bait has been set.	+好了，诱饵已放好。	F6510
+0058d074	(Simply throwing or pushing a bait on the trap works also)	(也可以直接把诱饵扔到或推到陷阱上)	F6510
+0058d0e0	!First you need to dig a pit over there! So apply your shovel first. Only then you can make it a trap pit.	!你得先在那里挖个坑!先使用铲子，然后才能把坑做成陷阱。	F6510
+0058d168	!There's no trap construction! Only trap constructions that are fixed, not single items, can be re-triggered.	!这里没有陷阱构筑物!只有固定的陷阱构筑物能够重新布置，单件物品不行。	F6510
+0058d1d8	!The trap is in use, there's no need to trigger it again.	!陷阱已布置好，无需重新布置。	F6510
+0058d230	!There's a trap already! Disassemble the previous trap first if you want to set a new one to that location.	!那里已经有陷阱!想在原处布置新的陷阱，得先拆除旧陷阱。	F6510
+0058d444	!There's no trap!	!这里没有陷阱!	F6510
+00593de8	!Error! Object header not found!	!错误!找不到物品头信息!	F6510
+00595ef0	!Canceled.	!已取消。	F6510
+00596584	!OUT OF QUABUFS! REPORT!	!QUABUFS已耗尽!请报告!	F6510
+005965a0	!Bug found: [esinerunko] uninitialized. Report!	!发现错误:[esinerunko]未初始化。请报告!	F6510
+005965e0	!Bug found: zero qualitylist items. Report!	!发现错误:品质列表为空。请报告!	F6510
+00596688	#Smoking requires continuous maintaining of fire, so remember to warm up the fireplace on daily basis.	#烟熏需要持续维持火势，记得每天给壁炉添火。	F6510
+00596718	_This was the best you could do with the given tools and materials.	_用这些工具和材料，你已经尽力了。	F6510
+0059675c	_Your tools are to blame, not your skills.	_问题出在工具上，不是你的手艺。	F6510
+00596788	_You could have done better, but can't make good out of bad.	_你的手艺本可以做得更好，但劣质材料做不出好东西。	F6510
+00596888	!PROPERTY FAIL! WRONG RAW: selected item has no properties to be derived into Tying Equipment.	!属性错误!原始数据有误:所选物品没有可用于制作绑扎工具的属性。	F6510
+00596c98	!You can remove hafts only from axes, spears and shovels!	!只有斧头、长矛和铲子的柄可以拆除!	F6510
+00596cd4	!BUG! Default haft not found!	!程序错误!找不到默认柄!	F6510
+00596d58	?Axe and spear heads and shovel blades can be hafted to assemble complete working weapons.	?斧头、矛头和铲头都可以装柄，组装成完整可用的武器。	F6510
+00597018	!The framework may not be disassembled as long as it's supporting construction!	!框架仍在支撑建筑，不能拆除!	F6510
+005971ac	_You can shorten only tying equipment such as ropes and cords.	_只有绳索、细绳等绑扎用品可以截短。	F6510
+0059730c	_You can join only tying equipment such as ropes and cords.	_只有绳索、细绳等绑扎用品可以接长。	F6510
+005973ec	!Only the same kind of tying equipment can be joined together.	!只有同一种绑扎用品才能接在一起。	F6510
+0059742c	!Huh? You can't join it to itself.	!咦?不能把它和它自己接起来。	F6510
+00597450	!Maximum tying equipment length is 255 feet. This combination would exceed it.	!绑扎用品最长只能有255英尺，这样接起来就超过了。	F6510
+005976a0	!Modded crafts menu is not available.	!自定义制作菜单不可用。	F6510
+005976c8	?There are no menu categories (mod_menudef_*.txt) or craftable items (mod_diy_*.*) properly defined.	?没有正确定义菜单分类(mod_menudef_*.txt)或可制作物品(mod_diy_*.*)。	F6510
+0059918c	!Bug in LoydettyTarvike() function. Report!	!LoydettyTarvike()函数出错。请报告!	F6510
+005991b8	!Bug in IdkohtaTarvike() function. Report!	!IdkohtaTarvike()函数出错。请报告!	F6510
+0059a13c	Ok, you have all the necessary equipment!	好了，所需装备已经齐全!	F6510
+0059a88c	Ok. There's a carcass beside you.	好的，你身旁有一具尸体。	F6510
+0059ab8c	Ok. You're at suitable terrain.	好的，这里的地形合适。	F6510
+0059abac	!The setting you are at now doesn't meet the requirements!	!当前环境不符合要求!	F6510
+0059abf0	Ok. You're standing on suitable location.	好的，你脚下的位置合适。	F6510
+0059ac28	Ok. You're at suitable location.	好的，你所在的位置合适。	F6510
+0059ac50	!You should have the carcass nearby on the ground, one step away at the most.	!尸体应该放在附近的地面上，离你最多一步。	F6510
+0059cb0c	!That's something you can not do while swimming!	!游泳时不能做这件事!	F6510
+0059cb40	!Get rid of the combat situation first!	!先脱离战斗再说!	F6510
+0059cb68	!It takes far too long to accomplish this task like that! It's practically impossible.	!这样做耗时太久，实际上根本无法完成。	F6510
+0059ccb0	&You have rested away the fatigue.	&经过休息，你已消除疲劳。	F6510
+0059ccd4	#Your task is interrupted.	#你的工作被打断了。	F6510
+0059cd78	!You have been attacked...	!你遭到了攻击……	F6510
+0059cd94	!You're engaged with a hostile creature...	!你与敌对生物发生了冲突……	F6510
+0059cdc0	!You got injured!	!你受伤了!	F6510
+0059cdd4	&Too fatigued to continue! You need a break.	&太疲劳了，无法继续!你需要休息。	F6510
+0059ce04	&You are too tired to continue! You need to sleep.	&太困倦了，无法继续!你需要睡觉。	F6510
+0059ce60	_Task paused, to be continued at will.	_工作已暂停，随时可以继续。	F6510
+0059ce88	!Task cancelled!	!工作已取消!	F6510
+005a5ed4	_You should be standing to perform this properly.	_你应该站起来，才能好好完成这项动作。	F6510
+005aafc0	!There's a built structure already!	!那里已经有建筑了!	F6510
+005ab02c	!There's nothing to continue, nothing under construction.	!没有尚未完工的建筑，无法继续建造。	F6510
+005ab098	!That is something you can't deconstruct!	!那东西不能拆除!	F6510
+005ab120	!You can build that only inside of a building, in a location that has a floor and ceiling present!	!只能在建筑内部同时有地板和屋顶的位置建造!	F6510
+005ab184	!The framework center here should be left open and intact.	!这里的框架中心应该保持空置且完整。	F6510
+005ab218	!The location must be an open area and free of obstacles!	!这里必须是没有障碍物的空地!	F6510
+005ab258	!You can't build a ceiling there yet! There needs to be more solid structures, walls or surrounding ceiling around first.	!那里暂时还不能建屋顶!周围得先有更多牢固的结构、墙壁或其他屋顶。	F6510
+005ab2d8	!You can build a door only to a location in between two solid walls or structures!	!门只能建在两段牢固的墙壁或结构之间!	F6510
+005ab330	!The chosen location being the framework center there should also be open area all around it!	!所选位置是框架中心，其四周也必须留出空地!	F6510
+005ab390	!The chosen location must be clear of any objects.	!所选位置必须清空所有物品。	F6510
+005ab3c4	You start building...	你开始建造……	F6510
+005ab3e0	Ok. Kota may be now built around the framework in a free form with maximum diameter of six meters from wall to wall.	好了，现在可以围绕框架自由搭建科塔帐篷，两面墙之间的最大直径为六米。	F6510
+005ab458	+Ok. You finish the current building job.	+好了，你完成了当前的建造工作。	F6510
+005acfbc	!There's no proper tree to work with!	!没有适合加工的树!	F6510
+005ad260	?Now fell a young spruce to lean against another spruce on its' east or west side.	?现在砍倒一棵小云杉，让它倚在东侧或西侧的另一棵云杉上。	F6510
+005ad2cc	!There's no proper tree for that spruce to lean against!	!没有合适的树供那棵云杉倚靠!	F6510
+005ad308	_Find a young spruce that has another spruce standing either on its' east or west side.	_找一棵东侧或西侧紧邻另一棵云杉的小云杉。	F6510
+005ad360	:The spruce is now felled leaning against another spruce.	:这棵云杉已经砍倒，倚在另一棵云杉上。	F6510
+005ad3a0	_This post spruce with cut twigs laid on the ground now forms a temporary shelter to rest at.	_这棵支架云杉配上铺在地上的枝条，便组成了可供休息的临时遮蔽所。	F6510
+005ae6cc	_To spin yarn you feed fibres extracted from certain plants.	_纺纱需要从某些植物中提取的纤维。	F6510
+005ae710	_To make sinew yarn you need sinew fibres extracted from dried animal tendons.	_制作筋线需要从干燥的动物肌腱中提取筋纤维。	F6510
+005ae760	!This bundle of fibre is too small for any practical use.	!这束纤维太少，没有实际用途。	F6510
+005ae848	?How many meters you want to produce now?	?现在想制作多少米?	F6510
+005ae874	?How many feet you want to produce now?	?现在想制作多少英尺?	F6510
+005ae8c0	!Textilecraft options can't be used for unknown plants!	!不能对未辨识的植物使用纺织技能!	F6510
+005ae8f8	_Retting is for fibre plants such as nettle and hemp.	_沤制适用于荨麻、大麻等纤维植物。	F6510
+005ae930	_Retting is used for unprocessed plants and their straws.	_沤制适用于未经加工的植物及其茎秆。	F6510
+005ae970	!It's already retted and dried. Just proceed with extracting the fibre.	!已经沤制并晾干了，直接提取纤维即可。	F6510
+005ae9b8	_These are already retted, now you need to dry them.	_这些已经沤好了，现在需要晾干。	F6510
+005aea70	_For extracting fibre you need retted and dried fibre plants, or alternatively plain nettles.	_提取纤维需要已经沤制并晾干的纤维植物，也可以直接使用荨麻。	F6510
+005aeba0	_The sinew fibre is separated from animal tendons, which must first be dried before the process can be carried out.	_筋纤维取自动物肌腱，提取前必须先将肌腱晾干。	F6510
+005aec60	!Those are not retted fibre plants!	!那不是已经沤制过的纤维植物!	F6510
+005aec88	_Drying is a used for fibre plants that have been retted first.	_植物纤维必须先经过沤制，才能晾干。	F6510
+005aecc8	!It's already dried. Just proceed with separating the sinew fibre.	!已经晾干了，直接分离筋纤维即可。	F6510
+005aed0c	!That's not an animal tendon!	!那不是动物肌腱!	F6510
+005aed2c	_Tendons can be harvested from decent sized butchered animals.	_屠宰体型足够大的动物可以取得肌腱。	F6510
+005aed6c	!That tendon is spoiled beyond usage!	!这条肌腱已经腐坏，无法使用!	F6510
+005aed98	_You should dry the harvested tendons soon enough so that they won't spoil.	_取得肌腱后应该及时晾干，以免腐坏。	F6510
+005aef6c	!This skill is automatically used when necessary!	!这项技能会在需要时自动使用!	F6510
+005d8878	!That's not allowed on the wilderness map! Press [ENTER] to zoom to the local terrain map.	!不能在荒野地图上这么做!按[ENTER]放大到局部地形图。	F6510

@@ -1,0 +1,121 @@
+file	line	submenu	recipe	label_domain	label_source	target
+diy_glossary.txt	3	weapon	Stone-axe	menu.recipe	Stone-axe	石斧
+diy_glossary.txt	11	weapon	Stone knife	menu.recipe	Stone knife	石刀
+diy_glossary.txt	16	weapon	Club	menu.recipe	Club	棍棒
+diy_glossary.txt	20	weapon	Javelin	menu.recipe	Javelin	标枪
+diy_glossary.txt	25	weapon	Spruce quick-bow	menu.recipe	Spruce quick-bow	云杉速制弓
+diy_glossary.txt	30	weapon	Shortbow	menu.recipe	Shortbow	短弓
+diy_glossary.txt	36	weapon	Longbow	menu.recipe	Longbow	长弓
+diy_glossary.txt	47	arrow	Blunt arrow	menu.recipe	Blunt arrow	钝头箭
+diy_glossary.txt	52	arrow	Arrow shaft	menu.recipe	Arrow shaft	箭杆
+diy_glossary.txt	56	arrow	Stone arrowhead	menu.recipe	Stone arrowhead	石箭头
+diy_glossary.txt	60	arrow	Bone arrowhead	menu.recipe	Bone arrowhead	骨箭头
+diy_glossary.txt	69		Paw-board fox trap	menu.recipe	Paw-board fox trap	夹爪板捕狐陷阱
+diy_glossary.txt	74		Loop snare	menu.recipe	Loop snare	绳套陷阱
+diy_glossary.txt	80	utility article	Grainflail	menu.recipe	Grainflail	连枷
+diy_glossary.txt	86	utility article	Bandage	menu.recipe	Bandage	绷带
+diy_glossary.txt	90	utility article	Torch	menu.recipe	Torch	火把
+diy_glossary.txt	94	utility article	Wooden shovel	menu.recipe	Wooden shovel	木铲
+diy_glossary.txt	100	utility article	Vasta	menu.recipe	Vasta	桑拿桦枝束
+diy_glossary.txt	105	utility article	Bone sewing needle	menu.recipe	Bone sewing needle	骨缝衣针
+diy_glossary.txt	115	containers	Wooden cup	menu.recipe	Wooden cup	木杯
+diy_glossary.txt	120	containers	Wooden bowl	menu.recipe	Wooden bowl	木碗
+diy_glossary.txt	125	containers	Birch-bark box	menu.recipe	Birch-bark box	桦皮盒
+diy_glossary.txt	129	containers	Birch-bark basket	menu.recipe	Birch-bark basket	桦皮篮
+diy_glossary.txt	133	containers	Birch-bark pot	menu.recipe	Birch-bark pot	桦皮锅
+diy_glossary.txt	137	containers	Shingle basket	menu.recipe	Shingle basket	木片篮
+diy_glossary.txt	147	fishing	Fishing rod	menu.recipe	Fishing rod	钓竿
+diy_glossary.txt	153	fishing	Wooden fishhook	menu.recipe	Wooden fishhook	木鱼钩
+diy_glossary.txt	157	fishing	Bone fishhook	menu.recipe	Bone fishhook	骨鱼钩
+diy_glossary.txt	162	fishing	Lippo	menu.recipe	Lippo	抄网
+diy_glossary.txt	170	fishing	Netting needle	menu.recipe	Netting needle	织网梭
+diy_glossary.txt	180	tying equipment	Cloth cord	menu.recipe	Cloth cord	布绳
+diy_glossary.txt	185	tying equipment	Cord	menu.recipe	Cord	细绳
+diy_glossary.txt	189	tying equipment	Leather cord	menu.recipe	Leather cord	皮细绳
+diy_glossary.txt	194	tying equipment	Rope	menu.recipe	Rope	粗绳
+diy_glossary.txt	198	tying equipment	Leather rope	menu.recipe	Leather rope	皮粗绳
+diy_glossary.txt	204	tying equipment	Birch-bark rope	menu.recipe	Birch-bark rope	桦皮绳
+diy_glossary.txt	210	tying equipment	Spruce withe	menu.recipe	Spruce withe	云杉柔枝绑条
+diy_glossary.txt	214	tying equipment	Birch withe	menu.recipe	Birch withe	桦树柔枝绑条
+diy_glossary.txt	223	hafting	Axe haft	menu.recipe	Axe haft	斧柄
+diy_glossary.txt	228	hafting	Spear haft	menu.recipe	Spear haft	矛杆
+diy_glossary.txt	233	hafting	Shovel haft	menu.recipe	Shovel haft	铲柄
+diy_glossary.txt	242	lumber	Wooden stake	menu.recipe	Wooden stake	木桩
+diy_glossary.txt	246	lumber	Staff	menu.recipe	Staff	木杆
+diy_glossary.txt	250	lumber	Wood slat	menu.recipe	Wood slat	木条
+diy_glossary.txt	254	lumber	Shingle	menu.recipe	Shingle	木瓦
+diy_glossary.txt	266	transport	Paddle	menu.recipe	Paddle	桨
+diy_glossary.txt	271	transport	Skis	menu.recipe	Skis	滑雪板
+diy_glossary.txt	279	transport	Ski pole	menu.recipe	Ski pole	滑雪杖
+diy_glossary.txt	285	transport	Raft	menu.recipe	Raft	木筏
+diy_glossary.txt	290	transport	Sesta	menu.recipe	Sesta	撑篙
+diy_glossary.txt	299	textilecraft	Spindle	menu.recipe	Spindle	纺锤
+diy_glossary.txt	309	leather clothes	Leather belt	menu.recipe	Leather belt	皮腰带
+diy_glossary.txt	313	leather clothes	Leather cap	menu.recipe	Leather cap	皮帽
+diy_glossary.txt	319	leather clothes	Leather shirt	menu.recipe	Leather shirt	皮衬衫
+diy_glossary.txt	325	leather clothes	Leather trousers	menu.recipe	Leather trousers	皮裤
+diy_glossary.txt	331	leather clothes	Leather leggings	menu.recipe	Leather leggings	皮护腿
+diy_glossary.txt	338	leather clothes	Leather shoes	menu.recipe	Leather shoes	皮鞋
+diy_glossary.txt	345	leather clothes	Leather boots	menu.recipe	Leather boots	皮靴
+diy_glossary.txt	352	leather clothes	Leather forearm guards	menu.recipe	Leather forearm guards	皮前臂护甲
+diy_glossary.txt	357	leather clothes	Leather shin guards	menu.recipe	Leather shin guards	皮护胫
+diy_glossary.txt	362	leather clothes	Leather cuirass	menu.recipe	Leather cuirass	皮胸甲
+diy_glossary.txt	371	fur clothes	Fur cap	menu.recipe	Fur cap	毛皮帽
+diy_glossary.txt	377	fur clothes	Fur shirt	menu.recipe	Fur shirt	毛皮衬衫
+diy_glossary.txt	383	fur clothes	Fur mittens	menu.recipe	Fur mittens	毛皮连指手套
+diy_glossary.txt	389	fur clothes	Fur leggings	menu.recipe	Fur leggings	毛皮护腿
+diy_glossary.txt	396	fur clothes	Fur hood	menu.recipe	Fur hood	毛皮兜帽
+diy_glossary.txt	401	fur clothes	Fur boots	menu.recipe	Fur boots	毛皮靴
+diy_glossary.txt	407	fur clothes	Fur cloak	menu.recipe	Fur cloak	毛皮斗篷
+diy_glossary.txt	412	fur clothes	Fur overcoat	menu.recipe	Fur overcoat	毛皮大衣
+diy_glossary.txt	422	cloth garments	Undershirt	menu.recipe	Undershirt	贴身衬衣
+diy_glossary.txt	428	cloth garments	Shirt	menu.recipe	Shirt	衬衫
+diy_glossary.txt	434	cloth garments	Leggings	menu.recipe	Leggings	护腿
+diy_glossary.txt	441	cloth garments	Trousers	menu.recipe	Trousers	裤子
+diy_glossary.txt	447	cloth garments	Cloak	menu.recipe	Cloak	斗篷
+diy_glossary.txt	453	cloth garments	Tunic	menu.recipe	Tunic	束腰外衣
+diy_glossary.txt	459	cloth garments	Overcoat	menu.recipe	Overcoat	大衣
+diy_glossary.txt	465	cloth garments	Dress	menu.recipe	Dress	长裙
+diy_glossary.txt	471	cloth garments	Undergarment	menu.recipe	Undergarment	贴身长衣
+diy_glossary.txt	477	cloth garments	Apron	menu.recipe	Apron	围裙
+diy_glossary.txt	484	cloth garments	Cowl	menu.recipe	Cowl	头颈罩
+diy_glossary.txt	490	cloth garments	Veil	menu.recipe	Veil	头巾
+diy_glossary.txt	496	cloth garments	Footrags	menu.recipe	Footrags	裹脚布
+diy_glossary.txt	505	miscellanous clothes	Birch-bark shoes	menu.recipe	Birch-bark shoes	桦皮鞋
+diy_glossary.txt	509	miscellanous clothes	Birch-bark cap	menu.recipe	Birch-bark cap	桦皮帽
+diy_glossary.txt	513	miscellanous clothes	Woollen nalbound cap	menu.recipe	Woollen nalbound cap	羊毛单针编织帽
+diy_glossary.txt	518	miscellanous clothes	Woollen nalbound cowl	menu.recipe	Woollen nalbound cowl	羊毛单针编织头颈罩
+diy_glossary.txt	523	miscellanous clothes	Woollen nalbound mittens	menu.recipe	Woollen nalbound mittens	羊毛单针编织连指手套
+diy_glossary.txt	528	miscellanous clothes	Woollen nalbound knee socks	menu.recipe	Woollen nalbound knee socks	羊毛单针编织长袜
+diy_glossary.txt	533	miscellanous clothes	Woollen nalbound socks	menu.recipe	Woollen nalbound socks	羊毛单针编织短袜
+biy_glossary.txt	3	building	North-west corner	menu.recipe	North-west corner	西北墙角
+biy_glossary.txt	4	building	Northern wall	menu.recipe	Northern wall	北墙
+biy_glossary.txt	5	building	North-east corner	menu.recipe	North-east corner	东北墙角
+biy_glossary.txt	6	building	Western wall	menu.recipe	Western wall	西墙
+biy_glossary.txt	11	building	Inside of a building	menu.recipe	Inside of a building	建筑内部
+biy_glossary.txt	16	building	Eastern wall	menu.recipe	Eastern wall	东墙
+biy_glossary.txt	17	building	South-west corner	menu.recipe	South-west corner	西南墙角
+biy_glossary.txt	18	building	Southern wall	menu.recipe	Southern wall	南墙
+biy_glossary.txt	19	building	South-east corner	menu.recipe	South-east corner	东南墙角
+biy_glossary.txt	24	building	Shutter	menu.recipe	Shutter	窗板
+biy_glossary.txt	30	building	Fireplace	menu.recipe	Fireplace	火塘
+biy_glossary.txt	33	building	Door	menu.recipe	Door	门
+biy_glossary.txt	38	building	Bench	menu.recipe	Bench	长凳
+biy_glossary.txt	42	building	Table	menu.recipe	Table	桌子
+biy_glossary.txt	46	building	Sleeping bunk	menu.recipe	Sleeping bunk	卧铺
+biy_glossary.txt	50	building	Sauna stove	menu.recipe	Sauna stove	桑拿炉
+biy_glossary.txt	62	kota	Framework	menu.recipe	Framework	建筑框架
+biy_glossary.txt	65	kota	North-west corner of a kota	menu.recipe	North-west corner of a kota	科塔帐篷西北角
+biy_glossary.txt	66	kota	Northern wall of a kota	menu.recipe	Northern wall of a kota	科塔帐篷北壁
+biy_glossary.txt	67	kota	North-east corner of a kota	menu.recipe	North-east corner of a kota	科塔帐篷东北角
+biy_glossary.txt	68	kota	Western wall of a kota	menu.recipe	Western wall of a kota	科塔帐篷西壁
+biy_glossary.txt	69	kota	Inside of a kota	menu.recipe	Inside of a kota	科塔帐篷内部
+biy_glossary.txt	70	kota	Eastern wall of a kota	menu.recipe	Eastern wall of a kota	科塔帐篷东壁
+biy_glossary.txt	71	kota	South-west corner of a kota	menu.recipe	South-west corner of a kota	科塔帐篷西南角
+biy_glossary.txt	72	kota	Southern wall of a kota	menu.recipe	Southern wall of a kota	科塔帐篷南壁
+biy_glossary.txt	73	kota	South-east corner of a kota	menu.recipe	South-east corner of a kota	科塔帐篷东南角
+biy_glossary.txt	74	kota	Kota doorway	menu.recipe	Kota doorway	科塔帐篷入口
+biy_glossary.txt	80		Shelter	menu.recipe	Shelter	庇护所
+biy_glossary.txt	85		Fence	menu.recipe	Fence	围栏
+biy_glossary.txt	89		Fence gate	menu.recipe	Fence gate	围栏门
+biy_glossary.txt	94		Cellar	menu.recipe	Cellar	地窖

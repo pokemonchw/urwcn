@@ -1325,7 +1325,8 @@ Status rebuild_native_menu(const NativeEvent& event,bool& rebuilt,u32& selection
 Status bind_chat_lines_menu(native_menu_component::Handle);
 Status bind_chat_line_record(const NativeEvent&);
 void bind_animal_commands_menu(native_menu_component::Handle);
-Status bind_combat_commands_menu(native_menu_component::Handle,const char*);
+Status bind_upper_commands_menu(native_menu_component::Handle,const char*);
+bool upper_commands_painting{};
 void bind_chat_mode_menu(native_menu_component::Handle menu) {
     // 146F80 constructs this native Menu; its accepted records remain English.
     // Rebind the same sources both on ordinary CFFB0 and on a live handover.
@@ -1345,6 +1346,10 @@ void bind_chat_mode_menu(native_menu_component::Handle menu) {
 }
 Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Consumer consumer) {
     using Consumer=native_menu_component::Consumer;
+    // 100525 has already bound every accepted upper-row source before this
+    // synchronous CFFB0 invocation. Do not replace those expressions with a
+    // title-specific label lookup while its native consumers are drawing.
+    if(upper_commands_painting) return Status::ok;
     if(windows_build::is_3891() && std::strcmp(at<char>(0x5F54A38),"Choose a line / reaction:")==0) {
         if(consumer==Consumer::button_row) return bind_chat_line_record(e);
         return Status::ok;
@@ -1357,6 +1362,18 @@ Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Con
     // Other Menu families already own their retained semantic sources. Their
     // previous materialization path did not re-enter these ambient binders.
     if(native_menu_component::materializing()) return Status::ok;
+    // 46980's three menus use the same 1002B0 -> CF990 record transfer as
+    // the combat selectors. Resolve their captured upper-row expressions,
+    // including recipe terrain names and quoted recipe-name overrides.
+    if(windows_build::is_3891()) {
+        const auto* title=at<char>(0x5F54A38);
+        if(std::strcmp(title,"BUILDING OPTIONS")==0 ||
+           std::strcmp(title,"WOODEN BUILDING")==0 || std::strcmp(title,"KOTA")==0) {
+            if(consumer==Consumer::plain_title || consumer==Consumer::title_panel)
+                return bind_upper_commands_menu(native_menu_component::source(),title);
+            return Status::ok;
+        }
+    }
     // 12C8C7 / 12D564 / 12F0D8 / 12FB28 enter 1002B0, whose D3DB0
     // call uppercases a display copy. Keep the original menu.title identity.
     if(windows_build::is_3891()) {
@@ -1368,7 +1385,7 @@ Status bind_menu_consumer_source(const NativeEvent& e,native_menu_component::Con
         else if(std::strcmp(title,"SHIELD MODE")==0) original_title="Shield mode";
         if(original_title) {
             if(consumer==Consumer::plain_title || consumer==Consumer::title_panel)
-                return bind_combat_commands_menu(native_menu_component::source(),original_title);
+                return bind_upper_commands_menu(native_menu_component::source(),original_title);
             return Status::ok;
         }
     }
@@ -1548,6 +1565,7 @@ Status lend_conversation_display(const NativeEvent&,u32&,Scope,u32);
 #include "windows_memorial.inc"
 #include "windows_game_tasks.inc"
 #include "windows_message_log.inc"
+#include "windows_handcraft_work.inc"
 
 Status bind_hud_location(const NativeEvent& e) {
     const auto* original=ptr<char>(e.arguments[1]);
@@ -1586,7 +1604,7 @@ Status dispatch_windows_messages(const NativeEvent& event,DispatchResult& result
             windows_message_audit_copies::dispatch,windows_message_late_sources::dispatch,
             windows_wielded::dispatch,windows_hud_map_text::dispatch,windows_wounds::dispatch,
             windows_conversation_text::dispatch,windows_memorial::dispatch,windows_game_tasks::dispatch,
-            windows_message_log::dispatch,windows_combat_help::dispatch}) {
+            windows_message_log::dispatch,windows_combat_help::dispatch,windows_handcraft_work::dispatch}) {
         const auto status=dispatch(event,result,handled);
         if(handled) return status;
     }
@@ -1625,6 +1643,7 @@ void append_windows_message_hooks(std::vector<HookSpec>& hooks) {
     windows_memorial::append_hooks(hooks);
     windows_game_tasks::append_hooks(hooks);
     windows_message_log::append_hooks(hooks);
+    windows_handcraft_work::append_hooks(hooks);
 }
 std::vector<unsigned char> save_windows_message_state() {
     std::vector<unsigned char> state;
