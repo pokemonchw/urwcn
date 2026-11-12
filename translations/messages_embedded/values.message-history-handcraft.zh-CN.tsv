@@ -1,0 +1,47 @@
+domain	source	target
+message.history.form	{0}: {1}	{0}：{1}
+message.history.form	You see {0} here.	你看到这里有{0}。
+message.history.form	You see {0} there.	你看到那里有{0}。
+message.history.form	You pick up the {0}.	你捡起了{0}。
+message.history.form	Nggggh! {0} is too heavy for you to lift.	唔——！{0}太重了，你搬不动。
+message.history.form	({0}) You need {1}.	（{0}）你需要{1}。
+message.history.form	({0}) You may optionally use {1}.	（{0}）你也可以使用{1}。
+message.history.form	({0}) You need {1} - preferably {2}.	（{0}）你需要{1}，最好使用{2}。
+message.history.form	({0}) You need {1} - preferably of {2}.	（{0}）你需要{1}，最好选用{2}。
+message.history.form	{0} of {1} * {2}	{0}{1}×{2}
+message.history.form	{0} * {1}	{0}×{1}
+message.history.form	{0} (of {1})	{0}（共{1}）
+message.history.form	{0}, or {1}	{0}，或{1}
+message.history.form	{0} or {1}	{0}或{1}
+message.history.form	{0} or by hand	{0}或徒手
+message.history.form	{0} with {1}	{0}，表面有{1}
+message.history	Branches bend and curve above your head here in the majestic temple of the ageless forest as you encounter something.	在这座古老森林的雄伟殿堂里，枝条在你头顶弯曲交错，你遇见了什么。
+message.history	Branches bend and curve above your head here in the majestic temple of the ageless forest as you take a closer look at this area.	在这座古老森林的雄伟殿堂里，枝条在你头顶弯曲交错，你仔细察看这片区域。
+message.history	By the ford ahead you encounter something.	前方就是浅滩，你遇见了什么。
+message.history	By the ford ahead you take a closer look at this area.	前方就是浅滩，你仔细察看这片区域。
+message.history	By the mountains ahead you encounter something.	前方就是山地，你遇见了什么。
+message.history	By the mountains ahead you take a closer look at this area.	前方就是山地，你仔细察看这片区域。
+message.history	By the sea ahead you encounter something.	前方就是海滨，你遇见了什么。
+message.history	By the sea ahead you take a closer look at this area.	前方就是海滨，你仔细察看这片区域。
+message.history	By this lake, where the surface of the water reflects images of both you and the skies above, you encounter something.	在这片湖畔，水面映出你和头顶天空的影像，你遇见了什么。
+message.history	By this lake, where the surface of the water reflects images of both you and the skies above, you take a closer look at this area.	在这片湖畔，水面映出你和头顶天空的影像，你仔细察看这片区域。
+message.history	Here, by the mountains, where the bones of the earth rise high towards the sky you encounter something.	这里依山而立，大地的脊骨高高耸向天空，你遇见了什么。
+message.history	Here, by the mountains, where the bones of the earth rise high towards the sky you take a closer look at this area.	这里依山而立，大地的脊骨高高耸向天空，你仔细察看这片区域。
+message.history	The lake here is resting under a thick ice cover you encounter something.	这里的湖面覆盖着一层厚冰，你遇见了什么。
+message.history	The lake here is resting under a thick ice cover you take a closer look at this area.	这里的湖面覆盖着一层厚冰，你仔细察看这片区域。
+message.history	The mountainside here reveals an entrance to cave.You encounter something.	这里的山坡上露出了一个洞穴入口。你遇见了什么。
+message.history	The mountainside here reveals an entrance to cave.You take a closer look at this area.	这里的山坡上露出了一个洞穴入口。你仔细察看这片区域。
+message.history	The mountainside here reveals an entrance to cave.you encounter something.	这里的山坡上露出了一个洞穴入口。你遇见了什么。
+message.history	The mountainside here reveals an entrance to cave.you take a closer look at this area.	这里的山坡上露出了一个洞穴入口。你仔细察看这片区域。
+message.history	The sound of the surging rapids ahead fills your ears as you encounter something.	前方汹涌急流的声响灌满了你的双耳，你遇见了什么。
+message.history	The sound of the surging rapids ahead fills your ears as you take a closer look at this area.	前方汹涌急流的声响灌满了你的双耳，你仔细察看这片区域。
+message.history	You enter into a camp with few quickly built settlements.You encounter something.	你走进一处营地，里面有几间仓促搭起的住所。你遇见了什么。
+message.history	You enter into a camp with few quickly built settlements.You take a closer look at this area.	你走进一处营地，里面有几间仓促搭起的住所。你仔细察看这片区域。
+message.history	You enter into a camp with few quickly built settlements.you encounter something.	你走进一处营地，里面有几间仓促搭起的住所。你遇见了什么。
+message.history	You enter into a camp with few quickly built settlements.you take a closer look at this area.	你走进一处营地，里面有几间仓促搭起的住所。你仔细察看这片区域。
+message.history	You have come at your settlement and enter the familiar and cosy courtyard.You encounter something.	你回到了自己的聚落，走进熟悉而舒适的院子。你遇见了什么。
+message.history	You have come at your settlement and enter the familiar and cosy courtyard.You take a closer look at this area.	你回到了自己的聚落，走进熟悉而舒适的院子。你仔细察看这片区域。
+message.history	You have come at your settlement and enter the familiar and cosy courtyard.you encounter something.	你回到了自己的聚落，走进熟悉而舒适的院子。你遇见了什么。
+message.history	You have come at your settlement and enter the familiar and cosy courtyard.you take a closer look at this area.	你回到了自己的聚落，走进熟悉而舒适的院子。你仔细察看这片区域。
+message.history	You hear the river flowing peacefully ahead as you encounter something.	你听见前方河水平静流淌的声音，你遇见了什么。
+message.history	You hear the river flowing peacefully ahead as you take a closer look at this area.	你听见前方河水平静流淌的声音，你仔细察看这片区域。

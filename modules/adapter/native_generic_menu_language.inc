@@ -233,10 +233,12 @@ Status dispatch(const NativeEvent& event,DispatchResult& result,bool& handled) {
     if(event.id==history_input) {
         handled=true;
         // FE2B0 has now constructed its complete native kind-100 footer.
-        // Stop only this borrowed construction before it reads a new action.
-        result.resume_rva=continuation(constructing==Construction::history ?
-            reinterpret_cast<const void*>(native_component_calls::urwcn_component_fragment_return) :
-            reinterpret_cast<const void*>(urwcn_generic_history_input));
+        // The borrowed FE2B0 still owns its aligned D4Ch local frame and
+        // saved EDI/ESI/EBX. Its real FEE19 epilogue restores those registers,
+        // checks the native cookie and returns through EBP to history().
+        // A bare fragment RET here would execute the saved EDI as code.
+        result.resume_rva=constructing==Construction::history ? 0xFEE19 :
+            continuation(reinterpret_cast<const void*>(urwcn_generic_history_input));
         return Status::ok;
     }
     if(event.id==query_input || event.id==query_second_input) {
