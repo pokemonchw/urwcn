@@ -108,6 +108,18 @@ function History-Case([string]$text) {
     }
     return $body.ToString()
 }
+# 469182 wraps either the recipe's 4633B0-authored explanation or the
+# selected 46BBF0 default in _( and ). Both consume this exact domain.
+# Derive the complete saved body for both native sources, as for literals.
+foreach($key in @($entries.Keys | Where-Object { $_.StartsWith('message.value.craft-requirement-description.') })) {
+    $prefix='message.value.craft-requirement-description.'
+    $description=[Text.Encoding]::UTF8.GetString([Convert]::FromHexString($key.Substring($prefix.Length)))
+    if(!$description) { continue } # Native empty explanation emits no message.
+    $source='_('+$description+')'
+    $target='（'+$entries[$key]+'）'
+    $entries['message.value.message.history.'+(Hex-Text (History-Body $source))]=$target
+    $entries['message.value.message.history.'+(Hex-Text (History-Body (History-Case $source)))]=$target
+}
 # Resource selection has already resolved PC/other selectors in this source
 # inventory. Only entries with no remaining native expansion are whole bodies.
 foreach($entry in $resource.entries) {

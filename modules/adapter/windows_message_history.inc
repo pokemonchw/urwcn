@@ -22,6 +22,19 @@ const Form history_forms[]{
     {"You see {0} there.","i",'h',"0","message.history.form"},
     {"You pick up the {0}.","i",'h',"0","message.history.form"},
     {"Nggggh! {0} is too heavy for you to lift.","i",'h',"0","message.history.form"},
+    // 441CD1 formats the native yield and two D4020 material/item names.
+    // The Chinese pattern consumes material, yield, then product (2,0,1).
+    {"You can make {0} {1} from one {2}.","qrr",'h',"201","message.history.form"},
+    // urw_combat WIELD_WEAPON / UNWIELD_WEAPON and urw_msg WEAR_OK /
+    // TAKEOFF_OK after native expansion and sentence case in F6510.
+    {"{0} wielded as a primary weapon.","i",'h',"0","message.history.form"},
+    {"{0} wielded as a secondary weapon.","i",'h',"0","message.history.form"},
+    {"{0} wields {1}.","ci",'h',"01","message.history.form"},
+    {"You unwield your {0}.","i",'h',"0","message.history.form"},
+    {"{0} unwields {1}.","ci",'h',"01","message.history.form"},
+    {"You are now wearing {0}.","i",'h',"0","message.history.form"},
+    {"{0} wears {1}.","ci",'h',"01","message.history.form"},
+    {"You take off your {0}.","i",'h',"0","message.history.form"},
     // 464730 constructs the numbered requirement and selected preference.
     {"({0}) You need {1}.","qr",'h',"01","message.history.form"},
     {"({0}) You may optionally use {1}.","qr",'h',"01","message.history.form"},
@@ -48,6 +61,7 @@ const Form history_forms[]{
 const Lexeme history_words[]{
 #include "windows_message_history_words.inc"
 #include "windows_message_history_menu_words.inc"
+#include "windows_message_history_craft_words.inc"
 };
 const Grammar& history_grammar() {
     static const Grammar value=[] {
@@ -55,7 +69,8 @@ const Grammar& history_grammar() {
             std::begin(history_words),std::end(history_words));
         for(const auto& word:lexemes) {
             if(std::strcmp(word.domain,"npc")==0 || std::strcmp(word.domain,"terrain")==0 ||
-               std::strcmp(word.domain,"geography.snow")==0 || std::strcmp(word.domain,"geography.crust")==0)
+               std::strcmp(word.domain,"geography.snow")==0 || std::strcmp(word.domain,"geography.crust")==0 ||
+               std::strcmp(word.domain,"activity")==0)
                 result.words[word.source].push_back(&word);
         }
         return result;
@@ -74,6 +89,7 @@ bool parse_history(const std::string& input,char kind,Text& output) {
     const auto word=data.words.find(input);
     if(word!=data.words.end()) {
         for(const auto* lexeme:word->second) if(kind==lexeme->kind ||
+            (kind=='O' && std::strcmp(lexeme->domain,"activity")==0) ||
             (kind=='S' && std::strcmp(lexeme->domain,"geography.snow")==0) ||
             (kind=='C' && std::strcmp(lexeme->domain,"geography.crust")==0)) {
             output=native_message_source::lookup(TextComponent::message_value,lexeme->key,lexeme->domain);

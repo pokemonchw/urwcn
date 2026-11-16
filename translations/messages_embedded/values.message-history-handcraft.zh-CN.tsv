@@ -4,6 +4,15 @@ message.history.form	You see {0} here.	你看到这里有{0}。
 message.history.form	You see {0} there.	你看到那里有{0}。
 message.history.form	You pick up the {0}.	你捡起了{0}。
 message.history.form	Nggggh! {0} is too heavy for you to lift.	唔——！{0}太重了，你搬不动。
+message.history.form	You can make {0} {1} from one {2}.	用一份{2}可以制作{0}份{1}。
+message.history.form	{0} wielded as a primary weapon.	你将{0}作为主手武器握在手中。
+message.history.form	{0} wielded as a secondary weapon.	你将{0}作为副手武器握在手中。
+message.history.form	{0} wields {1}.	{0}拿起了{1}。
+message.history.form	You unwield your {0}.	你收起了手中的{0}。
+message.history.form	{0} unwields {1}.	{0}收起了手中的{1}。
+message.history.form	You are now wearing {0}.	你现在穿戴着{0}。
+message.history.form	{0} wears {1}.	{0}穿戴着{1}。
+message.history.form	You take off your {0}.	你卸下了{0}。
 message.history.form	({0}) You need {1}.	（{0}）你需要{1}。
 message.history.form	({0}) You may optionally use {1}.	（{0}）你也可以使用{1}。
 message.history.form	({0}) You need {1} - preferably {2}.	（{0}）你需要{1}，最好使用{2}。
